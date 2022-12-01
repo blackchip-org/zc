@@ -1,0 +1,7 @@
+fn inc /a
+    /a 1 add
+
+fn dec /a
+    /a 1 sub
+
+

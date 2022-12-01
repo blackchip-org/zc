@@ -1,0 +1,8 @@
+'sum' def
+    -- start
+    n 1 lte
+    ['exit' goto] if
+    add
+    'start' goto
+    -- exit
+end

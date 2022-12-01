@@ -1,0 +1,31 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Value",
+          "Value": "1234"
+        },
+        {
+          "Node": "Value",
+          "Value": "0xabcd"
+        }
+      ]
+    },
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Invoke",
+          "Name": "foo"
+        },
+        {
+          "Node": "Invoke",
+          "Name": "bar"
+        }
+      ]
+    }
+  ]
+}

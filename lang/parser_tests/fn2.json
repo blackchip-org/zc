@@ -1,0 +1,67 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "Fn",
+      "Name": "inc",
+      "Params": [
+        {
+          "Node": "Ref",
+          "Type": "top",
+          "Name": "a"
+        }
+      ],
+      "Body": [
+        {
+          "Node": "Expr",
+          "Nodes": [
+            {
+              "Node": "Ref",
+              "Type": "top",
+              "Name": "a"
+            },
+            {
+              "Node": "Value",
+              "Value": "1"
+            },
+            {
+              "Node": "Invoke",
+              "Name": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Node": "Fn",
+      "Name": "dec",
+      "Params": [
+        {
+          "Node": "Ref",
+          "Type": "top",
+          "Name": "a"
+        }
+      ],
+      "Body": [
+        {
+          "Node": "Expr",
+          "Nodes": [
+            {
+              "Node": "Ref",
+              "Type": "top",
+              "Name": "a"
+            },
+            {
+              "Node": "Value",
+              "Value": "1"
+            },
+            {
+              "Node": "Invoke",
+              "Name": "sub"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
