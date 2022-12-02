@@ -229,8 +229,7 @@ func (c *Calc) functionContext() *Calc {
 	return dc
 }
 
-func (c *Calc) invokeFunction(node lang.NodeAST) error {
-	fn := node.(*lang.FuncNode)
+func (c *Calc) invokeFunction(fn *lang.FuncNode) error {
 	dc := c.functionContext()
 	for _, param := range fn.Params {
 		val, err := c.Stack.Pop()
@@ -251,8 +250,7 @@ func (c *Calc) invokeFunction(node lang.NodeAST) error {
 	return nil
 }
 
-func (c *Calc) invokeMacro(node lang.NodeAST) error {
-	mac := node.(*lang.MacroNode)
+func (c *Calc) invokeMacro(mac *lang.MacroNode) error {
 	if err := c.evalBody(mac.Expr.Nodes); err != nil {
 		return err
 	}
