@@ -1,3 +1,15 @@
-include basic
-5
-inc
+func sign /a
+	if /a 0 gt
+		'positive'
+	elif /a 0 lt
+		'negative'
+	else
+		'zero'
+
+1 sign
+-1 sign
+0 sign
+
+
+
+

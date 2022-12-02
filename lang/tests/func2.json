@@ -7,7 +7,7 @@
       "Params": [
         {
           "Node": "Ref",
-          "Type": "top",
+          "Type": "/",
           "Name": "a"
         }
       ],
@@ -17,7 +17,7 @@
           "Nodes": [
             {
               "Node": "Ref",
-              "Type": "top",
+              "Type": "/",
               "Name": "a"
             },
             {
@@ -38,7 +38,7 @@
       "Params": [
         {
           "Node": "Ref",
-          "Type": "top",
+          "Type": "/",
           "Name": "a"
         }
       ],
@@ -48,7 +48,7 @@
           "Nodes": [
             {
               "Node": "Ref",
-              "Type": "top",
+              "Type": "/",
               "Name": "a"
             },
             {

@@ -1,0 +1,10 @@
+if 0 gt
+	'positive'
+elif 0 lt
+	'negative'
+else
+	'zero'
+foo
+
+
+

@@ -7,11 +7,13 @@ import (
 
 var All = []zc.ModuleDef{
 	Basic,
+	Bool,
 }
 
 var (
 	PreludeCLI = []string{
 		"basic",
+		"bool",
 	}
 )
 
@@ -21,6 +23,14 @@ var (
 		Scripts: []string{"internal/modules/basic.zc"},
 		Natives: map[string]zc.CalcFunc{
 			"add": native.Add,
+		},
+	}
+	Bool = zc.ModuleDef{
+		Name: "bool",
+		Natives: map[string]zc.CalcFunc{
+			"add": native.Add,
+			"gt":  native.Gt,
+			"lt":  native.Lt,
 		},
 	}
 )

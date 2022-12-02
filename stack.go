@@ -26,6 +26,7 @@ func (s *Stack) Len() int {
 
 func (s *Stack) Pop() (string, error) {
 	if len(s.data) == 0 {
+		//panic("stack empty")
 		return "", errors.New("stack empty")
 	}
 	var top string

@@ -6,13 +6,16 @@ import (
 	"testing"
 )
 
-//go:embed parser_tests/*
+//go:embed tests/*
 var parserTestData embed.FS
 
 func TestParser(t *testing.T) {
 	tests := []string{
 		"dedent2",
 		"expr2",
+		"if-elif-else",
+		"if-else",
+		"if",
 		"func2",
 		"include",
 		"stack",
@@ -21,8 +24,15 @@ func TestParser(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test, func(t *testing.T) {
-			in, _ := parserTestData.ReadFile("parser_tests/" + test + ".zc")
-			out, _ := parserTestData.ReadFile("parser_tests/" + test + ".json")
+			in, err := parserTestData.ReadFile("tests/" + test + ".zc")
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			out, err := parserTestData.ReadFile("tests/" + test + ".json")
+			if err != nil {
+				t.Fatal(err)
+			}
 
 			ast, err := Parse("", in)
 			if err != nil {

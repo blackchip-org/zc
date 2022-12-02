@@ -1,0 +1,46 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "If",
+      "Cases": [
+        {
+          "Node": "IfCase",
+          "Case": {
+            "Node": "Expr",
+            "Nodes": [
+              {
+                "Node": "Value",
+                "Value": "42"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "eq"
+              }
+            ]
+          },
+          "Nodes": [
+            {
+              "Node": "Expr",
+              "Nodes": [
+                {
+                  "Node": "Value",
+                  "Value": "answer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Invoke",
+          "Name": "foo"
+        }
+      ]
+    }
+  ]
+}

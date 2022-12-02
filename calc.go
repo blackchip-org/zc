@@ -105,6 +105,8 @@ func (c *Calc) evalNode(node lang.NodeAST) error {
 	switch n := node.(type) {
 	case *lang.ExprNode:
 		return c.evalExprNode(n)
+	case *lang.IfNode:
+		return c.evalIfNode(n)
 	case *lang.FileNode:
 		return c.evalFileNode(n)
 	case *lang.FuncNode:
@@ -133,6 +135,32 @@ func (c *Calc) evalExprNode(expr *lang.ExprNode) error {
 	}
 	c.Stack = c.main
 	return nil
+}
+
+func (c *Calc) evalIfNode(ifNode *lang.IfNode) error {
+	for _, caseNode := range ifNode.Cases {
+		// Final "else" condition will have no case expression
+		if caseNode.Case == nil {
+			return c.evalBody(caseNode.Nodes)
+		} else {
+			err := c.evalExprNode(caseNode.Case)
+			if err != nil {
+				return err
+			}
+			v, err := c.Stack.Pop()
+			if err != nil {
+				return err
+			}
+			vb, err := ParseBool(v)
+			if err != nil {
+				return err
+			}
+			if vb {
+				return c.evalBody(caseNode.Nodes)
+			}
+		}
+	}
+	panic("unexpected if cases")
 }
 
 func (c *Calc) evalFileNode(file *lang.FileNode) error {
@@ -168,7 +196,10 @@ func (c *Calc) evalInvokeNode(invoke *lang.InvokeNode) error {
 	if !ok {
 		return fmt.Errorf("no such function: %v", invoke.Name)
 	}
-	return fn(c)
+	if err := fn(c); err != nil {
+		return c.err(invoke, err.Error())
+	}
+	return nil
 }
 
 func (c *Calc) evalMacroNode(mac *lang.MacroNode) error {
@@ -338,6 +369,10 @@ func (c *Calc) Println(a any) {
 
 func (c *Calc) Print(a any) {
 	fmt.Fprint(c.Out, a)
+}
+
+func (c *Calc) err(node lang.NodeAST, format string, a ...any) error {
+	return fmt.Errorf("["+node.At().String()+"] "+format, a...)
 }
 
 func (c *Calc) trace(format string, a ...any) {

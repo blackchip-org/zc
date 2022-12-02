@@ -6,7 +6,7 @@
       "Nodes": [
         {
           "Node": "Ref",
-          "Type": "top",
+          "Type": "/",
           "Name": "a"
         },
         {

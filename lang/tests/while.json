@@ -7,7 +7,7 @@
       "Params": [
         {
           "Node": "Ref",
-          "Type": "all",
+          "Type": "//",
           "Name": "a"
         }
       ],
@@ -17,7 +17,7 @@
           "Nodes": [
             {
               "Node": "Ref",
-              "Type": "all",
+              "Type": "//",
               "Name": "a"
             }
           ]

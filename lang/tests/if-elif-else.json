@@ -1,0 +1,87 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "If",
+      "Cases": [
+        {
+          "Node": "IfCase",
+          "Case": {
+            "Node": "Expr",
+            "Nodes": [
+              {
+                "Node": "Value",
+                "Value": "0"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "gt"
+              }
+            ]
+          },
+          "Nodes": [
+            {
+              "Node": "Expr",
+              "Nodes": [
+                {
+                  "Node": "Value",
+                  "Value": "positive"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Node": "IfCase",
+          "Case": {
+            "Node": "Expr",
+            "Nodes": [
+              {
+                "Node": "Value",
+                "Value": "0"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "lt"
+              }
+            ]
+          },
+          "Nodes": [
+            {
+              "Node": "Expr",
+              "Nodes": [
+                {
+                  "Node": "Value",
+                  "Value": "negative"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Node": "IfCase",
+          "Nodes": [
+            {
+              "Node": "Expr",
+              "Nodes": [
+                {
+                  "Node": "Value",
+                  "Value": "zero"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Invoke",
+          "Name": "foo"
+        }
+      ]
+    }
+  ]
+}

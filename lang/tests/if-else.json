@@ -1,0 +1,68 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "If",
+      "Cases": [
+        {
+          "Node": "IfCase",
+          "Case": {
+            "Node": "Expr",
+            "Nodes": [
+              {
+                "Node": "Value",
+                "Value": "2"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "mod"
+              },
+              {
+                "Node": "Value",
+                "Value": "0"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "eq"
+              }
+            ]
+          },
+          "Nodes": [
+            {
+              "Node": "Expr",
+              "Nodes": [
+                {
+                  "Node": "Value",
+                  "Value": "even"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Node": "IfCase",
+          "Nodes": [
+            {
+              "Node": "Expr",
+              "Nodes": [
+                {
+                  "Node": "Value",
+                  "Value": "odd"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Invoke",
+          "Name": "foo"
+        }
+      ]
+    }
+  ]
+}

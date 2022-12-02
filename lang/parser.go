@@ -134,6 +134,51 @@ func (p *parser) parseFunc() (*FuncNode, error) {
 	return fn, err
 }
 
+func (p *parser) parseIf() (*IfNode, error) {
+	ifNode := &IfNode{Pos: p.tok.At}
+
+	caseToken := p.tok
+	p.scan()
+	expr, err := p.parseExpr()
+	if err != nil {
+		return ifNode, err
+	}
+	body, err := p.parseBody()
+	caseNode := &IfCaseNode{Pos: caseToken.At, Case: expr, Nodes: body}
+	ifNode.Cases = append(ifNode.Cases, caseNode)
+	if err != nil {
+		return ifNode, err
+	}
+
+	for {
+		var expr *ExprNode
+		caseToken := p.tok
+		if p.tok.Type == ElifToken {
+			p.scan()
+			expr, err = p.parseExpr()
+			if err != nil {
+				return ifNode, err
+			}
+		} else if p.tok.Type == ElseToken {
+			p.scan()
+			if p.tok.Type != NewlineToken {
+				return ifNode, p.err("expected %v but got %v", NewlineToken, p.tok)
+			}
+			p.scan()
+		} else {
+			break
+		}
+		body, err := p.parseBody()
+
+		caseNode := &IfCaseNode{Pos: caseToken.At, Case: expr, Nodes: body}
+		ifNode.Cases = append(ifNode.Cases, caseNode)
+		if err != nil {
+			return ifNode, err
+		}
+	}
+	return ifNode, nil
+}
+
 func (p *parser) parseInclude() (*IncludeNode, error) {
 	include := &IncludeNode{Pos: p.tok.At}
 
@@ -209,6 +254,8 @@ func (p *parser) parseStatement() (NodeAST, error) {
 		return p.parseExpr()
 	case FuncToken:
 		return p.parseFunc()
+	case IfToken:
+		return p.parseIf()
 	case IdToken:
 		return p.parseExpr()
 	case IncludeToken:
