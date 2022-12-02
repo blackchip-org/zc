@@ -113,6 +113,8 @@ func (c *Calc) evalNode(node lang.NodeAST) error {
 		return c.evalIncludeNode(n)
 	case *lang.InvokeNode:
 		return c.evalInvokeNode(n)
+	case *lang.MacroNode:
+		return c.evalMacroNode(n)
 	case *lang.RefNode:
 		return c.evalRefNode(n)
 	case *lang.StackNode:
@@ -121,6 +123,16 @@ func (c *Calc) evalNode(node lang.NodeAST) error {
 		return c.evalValueNode(n)
 	}
 	panic(fmt.Sprintf("unknown node: %+v", node))
+}
+
+func (c *Calc) evalExprNode(expr *lang.ExprNode) error {
+	for _, node := range expr.Nodes {
+		if err := c.evalNode(node); err != nil {
+			return err
+		}
+	}
+	c.Stack = c.main
+	return nil
 }
 
 func (c *Calc) evalFileNode(file *lang.FileNode) error {
@@ -159,13 +171,11 @@ func (c *Calc) evalInvokeNode(invoke *lang.InvokeNode) error {
 	return fn(c)
 }
 
-func (c *Calc) evalExprNode(expr *lang.ExprNode) error {
-	for _, node := range expr.Nodes {
-		if err := c.evalNode(node); err != nil {
-			return err
-		}
+func (c *Calc) evalMacroNode(mac *lang.MacroNode) error {
+	c.trace("define macro: %v", mac.Name)
+	c.funcs[mac.Name] = func(ic *Calc) error {
+		return ic.invokeMacro(mac)
 	}
-	c.Stack = c.main
 	return nil
 }
 
@@ -237,6 +247,14 @@ func (c *Calc) invokeFunction(node lang.NodeAST) error {
 		val := dc.Stack.MustPop()
 		c.trace("func(%v) return %v", fn.Name, val)
 		c.Stack.Push(val)
+	}
+	return nil
+}
+
+func (c *Calc) invokeMacro(node lang.NodeAST) error {
+	mac := node.(*lang.MacroNode)
+	if err := c.evalBody(mac.Expr.Nodes); err != nil {
+		return err
 	}
 	return nil
 }

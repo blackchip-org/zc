@@ -34,6 +34,7 @@ const (
 	IndentToken
 	IfToken
 	LoopToken
+	MacroToken
 	NewlineToken
 	ReturnToken
 	SemicolonToken
@@ -55,6 +56,7 @@ var tokStr = map[TokenType]string{
 	IndentToken:      "indent",
 	IfToken:          "if",
 	LoopToken:        "loop",
+	MacroToken:       "macro",
 	NewlineToken:     "newline",
 	ReturnToken:      "return",
 	SlashToken:       "/",
@@ -70,6 +72,7 @@ var keywords = map[string]TokenType{
 	"include": IncludeToken,
 	"if":      IfToken,
 	"loop":    LoopToken,
+	"macro":   MacroToken,
 	"while":   WhileToken,
 }
 

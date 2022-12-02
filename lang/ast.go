@@ -60,6 +60,15 @@ type InvokeNode struct {
 func (n InvokeNode) At() Position   { return n.Pos }
 func (n InvokeNode) String() string { return nodeStringJSON(n) }
 
+type MacroNode struct {
+	Pos  Position `json:"-"`
+	Name string
+	Expr *ExprNode
+}
+
+func (n MacroNode) At() Position   { return n.Pos }
+func (n MacroNode) String() string { return nodeStringJSON(n) }
+
 type RefNode struct {
 	Pos  Position `json:"-"`
 	Name string
@@ -185,6 +194,17 @@ func (n InvokeNode) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "Invoke",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n MacroNode) MarshalJSON() ([]byte, error) {
+	type Alias MacroNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Macro",
 		Alias: (Alias)(n),
 	})
 }

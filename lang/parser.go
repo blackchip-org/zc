@@ -150,6 +150,25 @@ func (p *parser) parseInclude() (*IncludeNode, error) {
 	return include, nil
 }
 
+func (p *parser) parseMacro() (*MacroNode, error) {
+	macro := &MacroNode{Pos: p.tok.At}
+
+	p.scan()
+	if p.tok.Type != IdToken {
+		return macro, p.err("expecting %v but got %v", IdToken, p.tok)
+	}
+	macro.Name = p.tok.Literal
+
+	p.scan()
+	expr, err := p.parseExpr()
+	if err != nil {
+		return macro, err
+	}
+	macro.Expr = expr
+
+	return macro, nil
+}
+
 func (p *parser) parseRef() (*RefNode, error) {
 	ref := &RefNode{Pos: p.tok.At}
 
@@ -194,6 +213,8 @@ func (p *parser) parseStatement() (NodeAST, error) {
 		return p.parseExpr()
 	case IncludeToken:
 		return p.parseInclude()
+	case MacroToken:
+		return p.parseMacro()
 	case SlashToken:
 		return p.parseExpr()
 	case ValueToken:
