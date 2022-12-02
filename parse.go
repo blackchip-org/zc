@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/big"
 	"strings"
+
+	"github.com/shopspring/decimal"
 )
 
 func ParseBigInt(v string) (*big.Int, error) {
@@ -24,6 +26,19 @@ func ParseBool(v string) (bool, error) {
 		return false, nil
 	}
 	return false, fmt.Errorf("expecting boolean but got %v", v)
+}
+
+func ParseDecimal(v string) (decimal.Decimal, error) {
+	d, err := decimal.NewFromString(v)
+	if err != nil {
+		return decimal.Zero, fmt.Errorf("expecting decimal but got %v", v)
+	}
+	return d, nil
+}
+
+func IsDecimal(v string) bool {
+	_, ok := ParseDecimal(v)
+	return ok == nil
 }
 
 func ParseRadix(v string) int {

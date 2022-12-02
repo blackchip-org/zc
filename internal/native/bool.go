@@ -69,3 +69,19 @@ func Lt(calc *zc.Calc) error {
 	calc.Stack.Push(zc.FormatBool(r))
 	return nil
 }
+
+func Not(calc *zc.Calc) error {
+	a, err := calc.Stack.Pop()
+	if err != nil {
+		return err
+	}
+
+	ab, err := zc.ParseBool(a)
+	if err != nil {
+		return err
+	}
+
+	rb := !ab
+	calc.Stack.Push(zc.FormatBool(rb))
+	return nil
+}

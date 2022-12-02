@@ -1,7 +1,0 @@
-/test-name;
-
-fn test /name
-    /test-name; name
-
-fn assert /b
-    /b

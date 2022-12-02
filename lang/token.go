@@ -31,6 +31,7 @@ const (
 	FuncToken
 	IdToken
 	IncludeToken
+	ImportToken
 	IndentToken
 	IfToken
 	LoopToken
@@ -53,6 +54,7 @@ var tokStr = map[TokenType]string{
 	FuncToken:        "func",
 	IdToken:          "id",
 	IncludeToken:     "include",
+	ImportToken:      "import",
 	IndentToken:      "indent",
 	IfToken:          "if",
 	LoopToken:        "loop",
@@ -70,6 +72,7 @@ var keywords = map[string]TokenType{
 	"else":    ElseToken,
 	"func":    FuncToken,
 	"include": IncludeToken,
+	"import":  ImportToken,
 	"if":      IfToken,
 	"loop":    LoopToken,
 	"macro":   MacroToken,

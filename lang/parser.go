@@ -195,6 +195,22 @@ func (p *parser) parseInclude() (*IncludeNode, error) {
 	return include, nil
 }
 
+func (p *parser) parseImport() (*ImportNode, error) {
+	importNode := &ImportNode{Pos: p.tok.At}
+
+	p.scan()
+	for p.tok.Type == IdToken {
+		importNode.Names = append(importNode.Names, p.tok.Literal)
+		p.scan()
+	}
+	if p.tok.Type != NewlineToken && p.tok.Type != EndToken {
+		return importNode, p.err("expecting %v but got %v", NewlineToken, p.tok)
+	}
+
+	p.scan()
+	return importNode, nil
+}
+
 func (p *parser) parseMacro() (*MacroNode, error) {
 	macro := &MacroNode{Pos: p.tok.At}
 
@@ -258,6 +274,8 @@ func (p *parser) parseStatement() (NodeAST, error) {
 		return p.parseIf()
 	case IdToken:
 		return p.parseExpr()
+	case ImportToken:
+		return p.parseImport()
 	case IncludeToken:
 		return p.parseInclude()
 	case MacroToken:

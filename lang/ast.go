@@ -44,14 +44,6 @@ type FuncNode struct {
 func (n FuncNode) At() Position   { return n.Pos }
 func (n FuncNode) String() string { return nodeStringJSON(n) }
 
-type IncludeNode struct {
-	Pos   Position `json:"-"`
-	Names []string
-}
-
-func (n IncludeNode) At() Position   { return n.Pos }
-func (n IncludeNode) String() string { return nodeStringJSON(n) }
-
 type IfNode struct {
 	Pos   Position `json:"-"`
 	Cases []*IfCaseNode
@@ -68,6 +60,22 @@ type IfCaseNode struct {
 
 func (n IfCaseNode) At() Position   { return n.Pos }
 func (n IfCaseNode) String() string { return nodeStringJSON(n) }
+
+type ImportNode struct {
+	Pos   Position `json:"-"`
+	Names []string
+}
+
+func (n ImportNode) At() Position   { return n.Pos }
+func (n ImportNode) String() string { return nodeStringJSON(n) }
+
+type IncludeNode struct {
+	Pos   Position `json:"-"`
+	Names []string
+}
+
+func (n IncludeNode) At() Position   { return n.Pos }
+func (n IncludeNode) String() string { return nodeStringJSON(n) }
 
 type InvokeNode struct {
 	Pos  Position `json:"-"`
@@ -211,6 +219,17 @@ func (n IfCaseNode) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "IfCase",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n ImportNode) MarshalJSON() ([]byte, error) {
+	type Alias ImportNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Import",
 		Alias: (Alias)(n),
 	})
 }

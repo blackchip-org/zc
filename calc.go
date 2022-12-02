@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/blackchip-org/zc/lang"
 )
@@ -44,6 +45,7 @@ func NewCalc(config Config) (*Calc, error) {
 	}
 	c.Stack = c.main
 	c.local = c.global
+
 	for name, fn := range builtin {
 		c.funcs[name] = fn
 	}
@@ -92,6 +94,45 @@ func (c *Calc) Define(name string) *Stack {
 	return stack
 }
 
+func (c Calc) Interpolate(v string) (string, error) {
+	var result, name strings.Builder
+
+	inQuote := false
+	inEscape := false
+
+	for _, ch := range v {
+		if ch == '`' && !inQuote && !inEscape {
+			inQuote = true
+		} else if ch == '`' && !inEscape {
+			inQuote = false
+			stack, err := c.StackFor(name.String())
+			if err != nil {
+				return "", fmt.Errorf("no such stack: %v", name.String())
+			}
+			for i, item := range stack.Items() {
+				if i != 0 {
+					result.WriteString("  ")
+				}
+				result.WriteString(item)
+			}
+			name.Reset()
+		} else if ch == '\\' {
+			inEscape = true
+		} else {
+			inEscape = false
+			if inQuote {
+				name.WriteRune(ch)
+			} else {
+				result.WriteRune(ch)
+			}
+		}
+	}
+	if name.Len() > 0 {
+		return "", fmt.Errorf("expected`")
+	}
+	return result.String(), nil
+}
+
 func (c *Calc) evalBody(nodes []lang.NodeAST) error {
 	for _, node := range nodes {
 		if err := c.evalNode(node); err != nil {
@@ -111,6 +152,8 @@ func (c *Calc) evalNode(node lang.NodeAST) error {
 		return c.evalFileNode(n)
 	case *lang.FuncNode:
 		return c.evalFuncNode(n)
+	case *lang.ImportNode:
+		return c.evalImportNode(n)
 	case *lang.IncludeNode:
 		return c.evalIncludeNode(n)
 	case *lang.InvokeNode:
@@ -160,7 +203,7 @@ func (c *Calc) evalIfNode(ifNode *lang.IfNode) error {
 			}
 		}
 	}
-	panic("unexpected if cases")
+	return nil
 }
 
 func (c *Calc) evalFileNode(file *lang.FileNode) error {
@@ -176,6 +219,16 @@ func (c *Calc) evalFuncNode(fn *lang.FuncNode) error {
 	c.trace("define func: %v", fn.Name)
 	c.funcs[fn.Name] = func(ic *Calc) error {
 		return ic.invokeFunction(fn)
+	}
+	return nil
+}
+
+func (c *Calc) evalImportNode(include *lang.ImportNode) error {
+	for _, name := range include.Names {
+		c.trace("import %v", name)
+		if err := c.Import(name); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -241,7 +294,14 @@ func (c *Calc) evalStackNode(node *lang.StackNode) error {
 
 func (c *Calc) evalValueNode(value *lang.ValueNode) error {
 	c.trace("value %v", value.Value)
-	c.Stack.Push(value.Value)
+	interp, err := c.Interpolate(value.Value)
+	if err != nil {
+		return err
+	}
+	if interp != value.Value {
+		c.trace("interpolate %v", interp)
+	}
+	c.Stack.Push(interp)
 	return nil
 }
 
@@ -348,13 +408,25 @@ func (c *Calc) load(name string) (*Calc, error) {
 	return dc, nil
 }
 
-func (c *Calc) Include(name string) error {
-	dc, err := c.load(name)
+func (c *Calc) Include(modName string) error {
+	dc, err := c.load(modName)
 	if err != nil {
 		return err
 	}
-	for name, fn := range dc.funcs {
-		c.funcs[name] = fn
+	for funcName, fn := range dc.funcs {
+		c.funcs[funcName] = fn
+	}
+	return nil
+}
+
+func (c *Calc) Import(modName string) error {
+	dc, err := c.load(modName)
+	if err != nil {
+		return err
+	}
+	for funcName, fn := range dc.funcs {
+		qName := modName + "." + funcName
+		c.funcs[qName] = fn
 	}
 	return nil
 }
