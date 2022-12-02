@@ -1,0 +1,8 @@
+func inc /a
+	/a 1 add
+
+func dec /a
+	/a 1 sub
+
+
+

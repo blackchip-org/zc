@@ -29,6 +29,14 @@ func (s *Stack) Pop() (string, error) {
 	return top, nil
 }
 
+func (s *Stack) MustPop() string {
+	val, err := s.Pop()
+	if err != nil {
+		panic(err)
+	}
+	return val
+}
+
 func (s *Stack) Push(v string) {
 	s.data = append(s.data, v)
 }
@@ -46,4 +54,8 @@ func (s *Stack) Get() (string, error) {
 		return "", errors.New("undefined")
 	}
 	return s.data[0], nil
+}
+
+func (s *Stack) Clear() {
+	s.data = nil
 }

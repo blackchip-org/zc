@@ -54,6 +54,27 @@
           ]
         }
       ]
+    },
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Value",
+          "Value": "1"
+        },
+        {
+          "Node": "Value",
+          "Value": "2"
+        },
+        {
+          "Node": "Value",
+          "Value": "3"
+        },
+        {
+          "Node": "Invoke",
+          "Name": "sum"
+        }
+      ]
     }
   ]
 }

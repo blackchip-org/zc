@@ -11,8 +11,10 @@ var parserTestData embed.FS
 
 func TestParser(t *testing.T) {
 	tests := []string{
+		"dedent2",
 		"expr2",
-		"fn2",
+		"func2",
+		"include",
 		"while",
 	}
 

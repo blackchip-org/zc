@@ -1,0 +1,13 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "Include",
+      "Names": [
+        "foo",
+        "bar",
+        "baz"
+      ]
+    }
+  ]
+}

@@ -10,99 +10,90 @@ type NodeAST interface {
 }
 
 type BadNode struct {
-	Tokens []Token
+	Token Token
 }
 
-func (n BadNode) At() Position   { return n.Tokens[0].At }
+func (n BadNode) At() Position   { return n.Token.At }
 func (n BadNode) String() string { return nodeStringJSON(n) }
 
 type ExprNode struct {
-	NodeAST `json:"-"`
-	Target  *RefNode `json:",omitempty"`
-	Nodes   []NodeAST
+	Pos    Position `json:"-"`
+	Target *RefNode `json:",omitempty"`
+	Nodes  []NodeAST
 }
 
-func (n ExprNode) At() Position {
-	if n.Target == nil {
-		return n.Nodes[0].At()
-	}
-	return n.Target.At()
-}
-
+func (n ExprNode) At() Position   { return n.Pos }
 func (n ExprNode) String() string { return nodeStringJSON(n) }
 
 type FileNode struct {
-	NodeAST `json:"-"`
-	Name    string `json:",omitempty"`
-	Nodes   []NodeAST
+	Pos   Position `json:"-"`
+	Name  string   `json:",omitempty"`
+	Nodes []NodeAST
 }
 
-func (n FileNode) At() Position   { return n.Nodes[0].At() }
+func (n FileNode) At() Position   { return n.Pos }
 func (n FileNode) String() string { return nodeStringJSON(n) }
 
-type FnNode struct {
-	NodeAST `json:"-"`
-	Token   Token `json:"-"`
-	Name    string
-	Params  []NodeAST
-	Body    []NodeAST
+type FuncNode struct {
+	Pos    Position `json:"-"`
+	Name   string
+	Params []*RefNode
+	Body   []NodeAST
 }
 
-func (n FnNode) At() Position   { return n.Token.At }
-func (n FnNode) String() string { return nodeStringJSON(n) }
+func (n FuncNode) At() Position   { return n.Pos }
+func (n FuncNode) String() string { return nodeStringJSON(n) }
+
+type IncludeNode struct {
+	Pos   Position `json:"-"`
+	Names []string
+}
+
+func (n IncludeNode) At() Position   { return n.Pos }
+func (n IncludeNode) String() string { return nodeStringJSON(n) }
 
 type InvokeNode struct {
-	NodeAST `json:"-"`
-	Token   Token `json:"-"`
-	Name    string
+	Pos  Position `json:"-"`
+	Name string
 }
 
-func (n InvokeNode) At() Position   { return n.Token.At }
+func (n InvokeNode) At() Position   { return n.Pos }
 func (n InvokeNode) String() string { return nodeStringJSON(n) }
 
 type RefNode struct {
-	NodeAST `json:"-"`
-	First   Token `json:"-"`
-	Name    string
-	Type    RefType
+	Pos  Position `json:"-"`
+	Name string
+	Type RefType
 }
 
-func (n RefNode) At() Position   { return n.First.At }
+func (n RefNode) At() Position   { return n.Pos }
 func (n RefNode) String() string { return nodeStringJSON(n) }
 
 type RefType int
 
 const (
-	RefInvalid RefType = iota
-	RefTop
-	RefAll
+	InvalidRef RefType = iota
+	TopRef
+	AllRef
 )
 
 func (r RefType) String() string {
 	switch r {
-	case RefTop:
+	case TopRef:
 		return "top"
-	case RefAll:
+	case AllRef:
 		return "all"
 	}
 	return "???"
 }
 
 type ValueNode struct {
-	Token Token `json:"-"`
+	Pos   Position `json:"-"`
 	Value string
 }
 
-func (n ValueNode) At() Position   { return n.Token.At }
+func (n ValueNode) At() Position   { return n.Pos }
 func (n ValueNode) String() string { return nodeStringJSON(n) }
-
-func nodeStringJSON(n NodeAST) string {
-	b, err := json.MarshalIndent(n, "", "  ")
-	if err != nil {
-		return err.Error()
-	}
-	return string(b)
-}
 
 type WhileNode struct {
 	Pos  Position `json:"-"`
@@ -112,6 +103,14 @@ type WhileNode struct {
 
 func (n WhileNode) At() Position   { return n.Pos }
 func (n WhileNode) String() string { return nodeStringJSON(n) }
+
+func nodeStringJSON(n NodeAST) string {
+	b, err := json.MarshalIndent(n, "", "  ")
+	if err != nil {
+		return err.Error()
+	}
+	return string(b)
+}
 
 // Add synthetic field
 // http://choly.ca/post/go-json-marshalling/
@@ -149,13 +148,24 @@ func (n FileNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n FnNode) MarshalJSON() ([]byte, error) {
-	type Alias FnNode
+func (n FuncNode) MarshalJSON() ([]byte, error) {
+	type Alias FuncNode
 	return json.Marshal(&struct {
 		Node string
 		Alias
 	}{
-		Node:  "Fn",
+		Node:  "Func",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n IncludeNode) MarshalJSON() ([]byte, error) {
+	type Alias IncludeNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Include",
 		Alias: (Alias)(n),
 	})
 }

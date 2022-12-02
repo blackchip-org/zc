@@ -6,19 +6,19 @@ import (
 	"unicode/utf8"
 )
 
-const end rune = -1
-
 type Scanner struct {
 	src        []byte
-	ch         rune
-	w          int
-	idx        int
-	pos        Position
-	start      Position
-	lastIndent string
-	// Errors       Errors
-	// ErrorHandler ErrorHandler
+	ch         rune     // current rune being scanned
+	w          int      // width, in bytes, of the current rune
+	idx        int      // index into src of where ch is located
+	pos        Position // file, line, and column where ch is located
+	start      Position // position of the scanner when Next() was called
+	indents    int      // count of current indentation level, one for each tab
+	nextTokens []Token  // pending dedent tokens to emit
 }
+
+// When the src stream is exhausted, ch is set to this value
+const end rune = -1
 
 func NewScanner(file string, src []byte) *Scanner {
 	s := &Scanner{
@@ -33,66 +33,99 @@ func NewScanner(file string, src []byte) *Scanner {
 }
 
 func (s *Scanner) Next() Token {
+	// If there are dedent tokens buffered up, emit those first
+	// before continuing the scan.
+	if len(s.nextTokens) > 0 {
+		var tok Token
+		tok, s.nextTokens = s.nextTokens[0], s.nextTokens[1:]
+		return tok
+	}
+
+	// When at the start of the line, check to see what the current
+	// indentation level is and emit indent and dedent tokens as needed
 	if s.pos.Column == 1 {
 		if tok, yes := s.scanIndent(); yes {
 			return tok
 		}
-	} else {
-		s.skipSpace()
 	}
+
+	s.skipSpace()
+
 	s.start = s.pos
 	next := s.lookahead()
+
+	var tok Token
 	switch {
 	case s.ch == end:
-		return Token{EndToken, "", s.pos}
+		tok = Token{EndToken, "", s.pos}
 	case s.ch == '\n':
-		return s.op(NewlineToken)
+		tok = s.scanOp(NewlineToken)
 	case s.ch == '/':
-		return s.scanSlash()
+		tok = s.scanSlash()
 	case s.ch == '"':
-		return s.scanQuotedValue('"')
+		tok = s.scanQuotedValue('"')
 	case s.ch == '\'':
-		return s.scanQuotedValue('\'')
+		tok = s.scanQuotedValue('\'')
 	case unicode.IsDigit(s.ch):
-		return s.scanValue()
+		tok = s.scanValue()
 	case (s.ch == '-' || s.ch == '+') && unicode.IsDigit(next):
-		return s.scanValue()
-
+		tok = s.scanValue()
+	default:
+		tok = s.scanId()
 	}
-	return s.scanIdent()
+	return tok
 }
 
+func (s *Scanner) scanId() Token {
+	startL := s.idx
+	for s.ch != end && !unicode.IsSpace(s.ch) {
+		s.scan()
+	}
+	lit := string(s.src[startL:s.idx])
+	// If the identifier is a keyword, use the keyword specific token type,
+	// otherwise use IdentToken
+	return Token{LookupKeyword(lit), lit, s.start}
+}
+
+// Returns true if there is an indent/dedent token to emit
 func (s *Scanner) scanIndent() (Token, bool) {
-	var lit strings.Builder
-	for s.ch != end && (s.ch == ' ' || s.ch == '\t') {
-		if s.ch == '\t' {
-			lit.WriteRune(' ')
-			for lit.Len()%8 != 0 {
-				lit.WriteRune(' ')
-			}
-		} else {
-			lit.WriteRune(s.ch)
-		}
+	startL := s.idx
+
+	for s.ch != end && s.ch == '\t' {
 		s.scan()
 	}
-	thisIndent := lit.String()
-	if len(thisIndent) > len(s.lastIndent) {
-		s.lastIndent = thisIndent
-		return Token{IndentToken, thisIndent, s.start}, true
-	} else if len(thisIndent) < len(s.lastIndent) {
-		s.lastIndent = thisIndent
-		return Token{DedentToken, thisIndent, s.start}, true
+	lit := string(s.src[startL:s.idx])
+
+	// Count the number of tabs to determine the indentation level. If this
+	// is the same indentation level of the previous line, do not emit
+	// an indent/dedent token
+	n := len(lit)
+	diff := n - s.indents
+	var token Token
+	if diff == 0 {
+		return token, false
 	}
-	return Token{}, false
+
+	if diff > 0 {
+		token = Token{IndentToken, lit, s.start}
+	} else {
+		token = Token{DedentToken, lit, s.start}
+	}
+	if diff < 0 {
+		diff = -diff
+	}
+
+	// If multiple dedent tokens need to be emitted, emit one now and
+	// put the remaining ones in nextTokens
+	for i := 1; i < diff; i++ {
+		s.nextTokens = append([]Token{token}, s.nextTokens...)
+	}
+	s.indents = n
+
+	return token, true
 }
 
-func (s *Scanner) skipSpace() {
-	for s.ch != end && s.ch != '\n' && unicode.IsSpace(s.ch) {
-		s.scan()
-	}
-}
-
-func (s *Scanner) op(name TokenType) Token {
+func (s *Scanner) scanOp(name TokenType) Token {
 	lit := string(s.ch)
 	s.scan()
 	return Token{name, lit, s.start}
@@ -118,15 +151,6 @@ func (s *Scanner) scanQuotedValue(term rune) Token {
 	return Token{ValueToken, lit.String(), s.start}
 }
 
-func (s *Scanner) scanIdent() Token {
-	startL := s.idx
-	for s.ch != end && !unicode.IsSpace(s.ch) {
-		s.scan()
-	}
-	lit := string(s.src[startL:s.idx])
-	return Token{LookupKeyword(lit), lit, s.start}
-}
-
 func (s *Scanner) scanValue() Token {
 	startL := s.idx
 	for s.ch != end && !unicode.IsSpace(s.ch) {
@@ -143,12 +167,12 @@ func (s *Scanner) scanSlash() Token {
 		if s.ch == end || unicode.IsSpace(s.ch) {
 			return Token{IdToken, "//", s.start}
 		}
-		return Token{AllRefToken, "//", s.start}
+		return Token{DoubleSlashToken, "//", s.start}
 	}
 	if s.ch == end || unicode.IsSpace(s.ch) {
 		return Token{IdToken, "/", s.start}
 	}
-	return Token{TopRefToken, "/", s.start}
+	return Token{SlashToken, "/", s.start}
 }
 
 func (s *Scanner) scan() {
@@ -171,6 +195,13 @@ func (s *Scanner) scan() {
 	s.ch, s.w = utf8.DecodeRune(s.src[s.idx:])
 }
 
+func (s *Scanner) skipSpace() {
+	// Newlines have their own tokens so do not include here
+	for s.ch != end && s.ch != '\n' && unicode.IsSpace(s.ch) {
+		s.scan()
+	}
+}
+
 func (s *Scanner) lookahead() rune {
 	next := s.idx + s.w
 	if next >= len(s.src) {
@@ -179,12 +210,3 @@ func (s *Scanner) lookahead() rune {
 	ch, _ := utf8.DecodeRune(s.src[next:])
 	return ch
 }
-
-// func (s *Scanner) err(format string, a ...any) {
-// 	msg := fmt.Sprintf(format, a...)
-// 	e := fmt.Errorf("%v: %v", l.pos, msg)
-// 	s.Errors = append(s.Errors, e)
-// 	if s.ErrorHandler != nil {
-// 		s.ErrorHandler(e)
-// 	}
-// }

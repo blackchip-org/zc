@@ -5,7 +5,13 @@ import (
 	"github.com/blackchip-org/zc/internal/native"
 )
 
-var Basic = zc.Module{
+var All = []zc.ModuleDef{
+	Basic,
+}
+
+var Basic = zc.ModuleDef{
+	Name:    "basic",
+	Scripts: []string{"internal/modules/basic.zc"},
 	Natives: map[string]zc.NativeFn{
 		"add": native.Add,
 	},

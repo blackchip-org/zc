@@ -1,6 +1,9 @@
 package lang
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Position struct {
 	File   string
@@ -19,51 +22,56 @@ type TokenType int
 
 const (
 	InvalidToken TokenType = iota
-	AllRefToken
 	DedentToken
+	DoubleSlashToken
 	ElifToken
 	ElseToken
 	EndToken
-	FnToken
+	FuncToken
 	IdToken
+	IncludeToken
 	IndentToken
 	IfToken
 	LoopToken
 	NewlineToken
 	ReturnToken
-	TopRefToken
+	SlashToken
 	ValueToken
 	WhileToken
 )
 
 var tokStr = map[TokenType]string{
-	InvalidToken: "invalid",
-	AllRefToken:  "ref",
-	DedentToken:  "dedent",
-	ElifToken:    "elif",
-	ElseToken:    "else",
-	EndToken:     "end",
-	FnToken:      "fn",
-	IdToken:      "id",
-	IndentToken:  "indent",
-	IfToken:      "if",
-	LoopToken:    "loop",
-	NewlineToken: "newline",
-	ReturnToken:  "return",
-	TopRefToken:  "ref",
-	ValueToken:   "value",
-	WhileToken:   "while",
+	InvalidToken:     "invalid",
+	DedentToken:      "dedent",
+	DoubleSlashToken: "//",
+	ElifToken:        "elif",
+	ElseToken:        "else",
+	EndToken:         "end",
+	FuncToken:        "func",
+	IdToken:          "id",
+	IncludeToken:     "include",
+	IndentToken:      "indent",
+	IfToken:          "if",
+	LoopToken:        "loop",
+	NewlineToken:     "newline",
+	ReturnToken:      "return",
+	SlashToken:       "/",
+	ValueToken:       "value",
+	WhileToken:       "while",
 }
 
 var keywords = map[string]TokenType{
-	"elif":  ElifToken,
-	"else":  ElseToken,
-	"fn":    FnToken,
-	"if":    IfToken,
-	"loop":  LoopToken,
-	"while": WhileToken,
+	"elif":    ElifToken,
+	"else":    ElseToken,
+	"func":    FuncToken,
+	"include": IncludeToken,
+	"if":      IfToken,
+	"loop":    LoopToken,
+	"while":   WhileToken,
 }
 
+// If id is a keyword, returns the specific keyword token type, otherwise
+// returns IdToken
 func LookupKeyword(id string) TokenType {
 	tok, ok := keywords[id]
 	if ok {
@@ -87,9 +95,20 @@ type Token struct {
 }
 
 func (t Token) String() string {
-	switch t.Type {
-	case IdToken, ValueToken, AllRefToken, TopRefToken:
-		return fmt.Sprintf("%v(%v)", t.Type, t.Literal)
+	var quoted strings.Builder
+	for _, ch := range t.Literal {
+		switch ch {
+		case '\n':
+			quoted.WriteString("\\n")
+		case '\t':
+			quoted.WriteString("\\t")
+		default:
+			quoted.WriteRune(ch)
+		}
+	}
+
+	if t.Type.String() != t.Literal {
+		return fmt.Sprintf("%v(%v)", t.Type, quoted.String())
 	}
 	return t.Type.String()
 }

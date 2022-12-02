@@ -2,7 +2,7 @@
   "Node": "File",
   "Nodes": [
     {
-      "Node": "Fn",
+      "Node": "Func",
       "Name": "inc",
       "Params": [
         {
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "Node": "Fn",
+      "Node": "Func",
       "Name": "dec",
       "Params": [
         {

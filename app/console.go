@@ -17,7 +17,10 @@ func RunConsole() {
 	line := liner.NewLiner()
 	defer line.Close()
 
-	calc := zc.NewCalc(modules.Prelude)
+	config := zc.Config{
+		ModuleDefs: modules.All,
+	}
+	calc := zc.NewCalc(config)
 	line.SetCtrlCAborts(true)
 	line.SetTabCompletionStyle(liner.TabPrints)
 

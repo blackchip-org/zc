@@ -43,9 +43,9 @@ func TestToken(t *testing.T) {
 		{"", Token{EndToken, "", start}},
 		{"\n", Token{NewlineToken, "\n", start}},
 		{"/", Token{IdToken, "/", start}},
-		{"/foo;", Token{TopRefToken, "/", start}},
+		{"/foo;", Token{SlashToken, "/", start}},
 		{"//", Token{IdToken, "//", start}},
-		{"//foo;", Token{AllRefToken, "//", start}},
+		{"//foo;", Token{DoubleSlashToken, "//", start}},
 	}
 
 	for i, test := range tests {
