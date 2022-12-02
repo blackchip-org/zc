@@ -1,0 +1,13 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "Import",
+      "Names": [
+        "foo",
+        "bar",
+        "baz"
+      ]
+    }
+  ]
+}

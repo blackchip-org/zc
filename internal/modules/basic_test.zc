@@ -1,0 +1,26 @@
+import assert
+
+6 2 add
+9 assert.eq
+
+6.6 2.2 add
+8.8 assert.eq
+
+6 2 sub
+4 assert.eq
+
+6.6 2.2 sub
+4.4 assert.eq
+
+6 2 mul
+12 assert.eq
+
+6.6 2.2 mul
+14.52 assert.eq
+
+6 inc
+7 assert.eq
+
+6 dec
+5 assert.eq
+
