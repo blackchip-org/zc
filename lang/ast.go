@@ -80,9 +80,9 @@ const (
 func (r RefType) String() string {
 	switch r {
 	case TopRef:
-		return "top"
+		return "/"
 	case AllRef:
-		return "all"
+		return "//"
 	}
 	return "???"
 }

@@ -11,19 +11,11 @@ import (
 
 type Config struct {
 	ModuleDefs []ModuleDef
+	Prelude    []string
 	Trace      bool
 }
 
-type CalcFn func() error
-type NativeFn func(*Calc) error
-
-func script(c *Calc, ast lang.NodeAST) CalcFn {
-	return func() error { return c.invokeFunction(ast) }
-}
-
-func native(c *Calc, fn NativeFn) CalcFn {
-	return func() error { return fn(c) }
-}
+type CalcFunc func(*Calc) error
 
 //go:embed internal/modules/*.zc
 var scripts embed.FS
@@ -35,12 +27,12 @@ type Calc struct {
 	main    *Stack
 	global  map[string]*Stack
 	local   map[string]*Stack
-	funcs   map[string]CalcFn
+	funcs   map[string]CalcFunc
 	defs    map[string]ModuleDef
 	modules map[string]*Calc
 }
 
-func NewCalc(config Config) *Calc {
+func NewCalc(config Config) (*Calc, error) {
 	c := &Calc{
 		Out:     os.Stdout,
 		config:  config,
@@ -48,17 +40,22 @@ func NewCalc(config Config) *Calc {
 		global:  make(map[string]*Stack),
 		defs:    make(map[string]ModuleDef),
 		modules: make(map[string]*Calc),
-		funcs:   make(map[string]CalcFn),
+		funcs:   make(map[string]CalcFunc),
 	}
 	c.Stack = c.main
 	c.local = c.global
 	for name, fn := range builtin {
-		c.funcs[name] = native(c, fn)
+		c.funcs[name] = fn
 	}
 	for _, def := range config.ModuleDefs {
 		c.Install(def)
 	}
-	return c
+	for _, prelude := range config.Prelude {
+		if err := c.Include(prelude); err != nil {
+			return nil, err
+		}
+	}
+	return c, nil
 }
 
 func (c *Calc) Eval(src []byte) error {
@@ -137,7 +134,9 @@ func (c *Calc) evalFileNode(file *lang.FileNode) error {
 
 func (c *Calc) evalFuncNode(fn *lang.FuncNode) error {
 	c.trace("define func: %v", fn.Name)
-	c.funcs[fn.Name] = script(c, fn)
+	c.funcs[fn.Name] = func(ic *Calc) error {
+		return ic.invokeFunction(fn)
+	}
 	return nil
 }
 
@@ -157,7 +156,7 @@ func (c *Calc) evalInvokeNode(invoke *lang.InvokeNode) error {
 	if !ok {
 		return fmt.Errorf("no such function: %v", invoke.Name)
 	}
-	return fn()
+	return fn(c)
 }
 
 func (c *Calc) evalExprNode(expr *lang.ExprNode) error {
@@ -228,7 +227,7 @@ func (c *Calc) invokeFunction(node lang.NodeAST) error {
 		if err != nil {
 			return fmt.Errorf("not enough arguments, missing '%v'", param.Name)
 		}
-		c.trace("\tparam %v=%v\n", param.Name, val)
+		c.trace("func(%v) param %v=%v\n", fn.Name, param.Name, val)
 		dc.Define(param.Name).Set(val)
 	}
 	if err := dc.evalBody(fn.Body); err != nil {
@@ -236,7 +235,7 @@ func (c *Calc) invokeFunction(node lang.NodeAST) error {
 	}
 	for dc.Stack.Len() > 0 {
 		val := dc.Stack.MustPop()
-		c.trace("\treturn %v", val)
+		c.trace("func(%v) return %v", fn.Name, val)
 		c.Stack.Push(val)
 	}
 	return nil
@@ -245,7 +244,7 @@ func (c *Calc) invokeFunction(node lang.NodeAST) error {
 type ModuleDef struct {
 	Name    string
 	Scripts []string
-	Natives map[string]NativeFn
+	Natives map[string]CalcFunc
 }
 
 func (c *Calc) moduleContext() *Calc {
@@ -255,7 +254,7 @@ func (c *Calc) moduleContext() *Calc {
 		main:    NewStack(),
 		global:  make(map[string]*Stack),
 		local:   nil,
-		funcs:   make(map[string]CalcFn),
+		funcs:   make(map[string]CalcFunc),
 		defs:    c.defs,
 		modules: c.modules,
 	}
@@ -275,10 +274,14 @@ func (c *Calc) load(name string) (*Calc, error) {
 	if !ok {
 		return nil, fmt.Errorf("no such module: %v", name)
 	}
+	mod, ok := c.modules[def.Name]
+	if ok {
+		return mod, nil
+	}
 
 	dc := c.moduleContext()
 	for name, fn := range def.Natives {
-		dc.funcs[name] = native(dc, fn)
+		dc.funcs[name] = fn
 	}
 
 	for _, path := range def.Scripts {

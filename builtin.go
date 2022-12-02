@@ -1,6 +1,6 @@
 package zc
 
-var builtin = map[string]NativeFn{
+var builtin = map[string]CalcFunc{
 	"clear": clear,
 	"pop":   pop,
 	"z":     clear,

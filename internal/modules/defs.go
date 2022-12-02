@@ -9,10 +9,18 @@ var All = []zc.ModuleDef{
 	Basic,
 }
 
-var Basic = zc.ModuleDef{
-	Name:    "basic",
-	Scripts: []string{"internal/modules/basic.zc"},
-	Natives: map[string]zc.NativeFn{
-		"add": native.Add,
-	},
-}
+var (
+	PreludeCLI = []string{
+		"basic",
+	}
+)
+
+var (
+	Basic = zc.ModuleDef{
+		Name:    "basic",
+		Scripts: []string{"internal/modules/basic.zc"},
+		Natives: map[string]zc.CalcFunc{
+			"add": native.Add,
+		},
+	}
+)

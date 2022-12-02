@@ -10,7 +10,6 @@ import (
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/app"
 	"github.com/blackchip-org/zc/internal/ansi"
-	"github.com/blackchip-org/zc/internal/modules"
 	"github.com/blackchip-org/zc/lang"
 )
 
@@ -34,36 +33,33 @@ func main() {
 	log.SetFlags(0)
 	flag.Parse()
 
+	config := app.DefaultConfig()
+	config.Trace = trace
+	calc, err := zc.NewCalc(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	switch {
 	case scanFile != "":
 		scan()
 	case parseFile != "":
 		parse()
 	case evalFile != "":
-		eval()
+		eval(calc)
 	default:
 		if noAnsi {
 			ansi.Enabled = false
 		}
-		config := zc.Config{
-			ModuleDefs: modules.All,
-			Trace:      trace,
-		}
-		calc := zc.NewCalc(config)
 		app.RunConsole(calc)
 	}
 }
 
-func eval() {
+func eval(calc *zc.Calc) {
 	src, err := ioutil.ReadFile(evalFile)
 	if err != nil {
 		log.Fatalf("unable to read file: %v", err)
 	}
-	config := zc.Config{
-		ModuleDefs: modules.All,
-		Trace:      trace,
-	}
-	calc := zc.NewCalc(config)
 	if err := calc.Eval(src); err != nil {
 		log.Fatal(err)
 	}
