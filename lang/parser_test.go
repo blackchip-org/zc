@@ -15,6 +15,7 @@ func TestParser(t *testing.T) {
 		"expr2",
 		"func2",
 		"include",
+		"stack",
 		"while",
 	}
 

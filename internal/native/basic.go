@@ -7,11 +7,11 @@ import (
 )
 
 func Add(calc *zc.Calc) error {
-	a, err := calc.Stack().Pop()
+	a, err := calc.Stack.Pop()
 	if err != nil {
 		return err
 	}
-	b, err := calc.Stack().Pop()
+	b, err := calc.Stack.Pop()
 	if err != nil {
 		return err
 	}
@@ -27,6 +27,6 @@ func Add(calc *zc.Calc) error {
 
 	var zi big.Int
 	zi.Add(ai, bi)
-	calc.Stack().Push(zc.FormatBigInt(&zi))
+	calc.Stack.Push(zc.FormatBigInt(&zi))
 	return nil
 }

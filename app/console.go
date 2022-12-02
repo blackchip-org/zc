@@ -7,20 +7,15 @@ import (
 
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/internal/ansi"
-	"github.com/blackchip-org/zc/internal/modules"
 	"github.com/peterh/liner"
 )
 
-func RunConsole() {
+func RunConsole(calc *zc.Calc) {
 	log.SetFlags(0)
 
 	line := liner.NewLiner()
 	defer line.Close()
 
-	config := zc.Config{
-		ModuleDefs: modules.All,
-	}
-	calc := zc.NewCalc(config)
 	line.SetCtrlCAborts(true)
 	line.SetTabCompletionStyle(liner.TabPrints)
 
@@ -57,8 +52,8 @@ func RunConsole() {
 	for ; err == nil; text, err = line.Prompt(prompt) {
 		var err error
 		if strings.TrimSpace(text) == "" {
-			if calc.Stack().Len() > 0 {
-				_, err = calc.Stack().Pop()
+			if calc.Stack.Len() > 0 {
+				_, err = calc.Stack.Pop()
 			}
 		} else {
 			err = calc.EvalString(text)
@@ -67,9 +62,9 @@ func RunConsole() {
 		ansi.Write(ansi.ClearScreen)
 		fmt.Println()
 
-		for i, val := range calc.Stack().Items() {
+		for i, val := range calc.Stack.Items() {
 			color := ansi.LightBlue
-			if i == calc.Stack().Len()-1 {
+			if i == calc.Stack.Len()-1 {
 				color = ansi.Bold
 			}
 			ansi.Write(color)

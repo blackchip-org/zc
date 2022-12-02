@@ -45,7 +45,12 @@ func main() {
 		if noAnsi {
 			ansi.Enabled = false
 		}
-		app.RunConsole()
+		config := zc.Config{
+			ModuleDefs: modules.All,
+			Trace:      trace,
+		}
+		calc := zc.NewCalc(config)
+		app.RunConsole(calc)
 	}
 }
 
@@ -56,13 +61,13 @@ func eval() {
 	}
 	config := zc.Config{
 		ModuleDefs: modules.All,
+		Trace:      trace,
 	}
 	calc := zc.NewCalc(config)
-	calc.Trace = trace
 	if err := calc.Eval(src); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(calc.Stack().Items())
+	fmt.Print(calc.Stack.Items())
 }
 
 func parse() {

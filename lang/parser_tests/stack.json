@@ -1,0 +1,32 @@
+{
+  "Node": "File",
+  "Nodes": [
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Ref",
+          "Type": "top",
+          "Name": "a"
+        },
+        {
+          "Node": "Value",
+          "Value": "1234"
+        }
+      ]
+    },
+    {
+      "Node": "Expr",
+      "Nodes": [
+        {
+          "Node": "Stack",
+          "Name": "a"
+        },
+        {
+          "Node": "Value",
+          "Value": "4321"
+        }
+      ]
+    }
+  ]
+}

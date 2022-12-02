@@ -7,11 +7,11 @@ var builtin = map[string]NativeFn{
 }
 
 func clear(calc *Calc) error {
-	calc.Stack().Clear()
+	calc.Stack.Clear()
 	return nil
 }
 
 func pop(calc *Calc) error {
-	_, err := calc.Stack().Pop()
+	_, err := calc.Stack.Pop()
 	return err
 }

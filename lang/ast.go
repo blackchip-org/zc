@@ -87,6 +87,14 @@ func (r RefType) String() string {
 	return "???"
 }
 
+type StackNode struct {
+	Pos  Position `json:"-"`
+	Name string
+}
+
+func (n StackNode) At() Position   { return n.Pos }
+func (n StackNode) String() string { return nodeStringJSON(n) }
+
 type ValueNode struct {
 	Pos   Position `json:"-"`
 	Value string
@@ -190,6 +198,17 @@ func (n RefNode) MarshalJSON() ([]byte, error) {
 	}{
 		Node:  "Ref",
 		Type:  n.Type.String(),
+		Alias: (Alias)(n),
+	})
+}
+
+func (n StackNode) MarshalJSON() ([]byte, error) {
+	type Alias StackNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Stack",
 		Alias: (Alias)(n),
 	})
 }

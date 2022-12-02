@@ -1,6 +1,10 @@
 package zc
 
-import "errors"
+import (
+	"errors"
+	"log"
+	"os"
+)
 
 type Stack struct {
 	data []string
@@ -27,6 +31,7 @@ func (s *Stack) Pop() (string, error) {
 	var top string
 	len := len(s.data)
 	top, s.data = s.data[len-1], s.data[:len-1]
+	s.trace("pop: %v", top)
 	return top, nil
 }
 
@@ -39,10 +44,12 @@ func (s *Stack) MustPop() string {
 }
 
 func (s *Stack) Push(v string) {
+	s.trace("push: %v", v)
 	s.data = append(s.data, v)
 }
 
 func (s *Stack) Set(v string) {
+	s.trace("set: %v", v)
 	if len(s.data) == 0 {
 		s.data = append(s.data, v)
 	} else {
@@ -54,9 +61,23 @@ func (s *Stack) Get() (string, error) {
 	if len(s.data) == 0 {
 		return "", errors.New("undefined")
 	}
+	s.trace("get: %v", s.data[0])
 	return s.data[0], nil
 }
 
 func (s *Stack) Clear() {
+	s.trace("clear")
 	s.data = nil
+}
+
+var traceStack bool
+
+func init() {
+	traceStack = os.Getenv("ZC_TRACE_STACK") == "true"
+}
+
+func (s *Stack) trace(format string, a ...any) {
+	if traceStack {
+		log.Printf("stack: "+format, a...)
+	}
 }

@@ -3,6 +3,7 @@ package lang
 import (
 	"fmt"
 	"strings"
+	"unicode"
 )
 
 type Position struct {
@@ -35,6 +36,7 @@ const (
 	LoopToken
 	NewlineToken
 	ReturnToken
+	SemicolonToken
 	SlashToken
 	ValueToken
 	WhileToken
@@ -56,6 +58,7 @@ var tokStr = map[TokenType]string{
 	NewlineToken:     "newline",
 	ReturnToken:      "return",
 	SlashToken:       "/",
+	SemicolonToken:   ";",
 	ValueToken:       "value",
 	WhileToken:       "while",
 }
@@ -111,4 +114,15 @@ func (t Token) String() string {
 		return fmt.Sprintf("%v(%v)", t.Type, quoted.String())
 	}
 	return t.Type.String()
+}
+
+func IsIdRune(ch rune) bool {
+	if unicode.IsSpace(ch) {
+		return false
+	}
+	switch ch {
+	case end, ';':
+		return false
+	}
+	return true
 }

@@ -30,7 +30,7 @@ func Parse(file string, src []byte) (NodeAST, error) {
 func (p *parser) parseBody() ([]NodeAST, error) {
 	var body []NodeAST
 	if p.tok.Type != IndentToken {
-		return body, fmt.Errorf("expecting %v but got %v", IndentToken, p.tok)
+		return body, p.err("expecting %v but got %v", IndentToken, p.tok)
 	}
 
 	p.scan()
@@ -60,8 +60,12 @@ func (p *parser) parseExpr() (*ExprNode, error) {
 		case DoubleSlashToken, SlashToken:
 			node, err = p.parseRef()
 		case IdToken:
-			node = &InvokeNode{Pos: p.tok.At, Name: p.tok.Literal}
-			p.scan()
+			if p.next.Type == SemicolonToken {
+				node, err = p.parseStack()
+			} else {
+				node = &InvokeNode{Pos: p.tok.At, Name: p.tok.Literal}
+				p.scan()
+			}
 		case NewlineToken, EndToken:
 			done = true
 			p.scan()
@@ -108,7 +112,7 @@ func (p *parser) parseFunc() (*FuncNode, error) {
 
 	p.scan()
 	if p.tok.Type != IdToken {
-		return nil, fmt.Errorf("expecting %v but got %v", IdToken, p.tok)
+		return nil, p.err("expecting %v but got %v", IdToken, p.tok)
 	}
 	fn.Name = p.tok.Literal
 
@@ -121,7 +125,7 @@ func (p *parser) parseFunc() (*FuncNode, error) {
 		fn.Params = append(fn.Params, ref)
 	}
 	if p.tok.Type != NewlineToken {
-		return nil, fmt.Errorf("expecting %v but got %v", NewlineToken, p.tok)
+		return nil, p.err("expecting %v but got %v", NewlineToken, p.tok)
 	}
 
 	p.scan()
@@ -139,7 +143,7 @@ func (p *parser) parseInclude() (*IncludeNode, error) {
 		p.scan()
 	}
 	if p.tok.Type != NewlineToken && p.tok.Type != EndToken {
-		return include, fmt.Errorf("expecting %v but got %v", NewlineToken, p.tok)
+		return include, p.err("expecting %v but got %v", NewlineToken, p.tok)
 	}
 
 	p.scan()
@@ -155,17 +159,29 @@ func (p *parser) parseRef() (*RefNode, error) {
 	case SlashToken:
 		ref.Type = TopRef
 	default:
-		return ref, fmt.Errorf("expected %v or %v but got %v", DoubleSlashToken, SlashToken, p.tok)
+		return ref, p.err("expected %v or %v but got %v", DoubleSlashToken, SlashToken, p.tok)
 	}
 
 	p.scan()
 	if p.tok.Type != IdToken {
-		return ref, fmt.Errorf("expected %v but got %v", IdToken, p.tok)
+		return ref, p.err("expected %v but got %v", IdToken, p.tok)
 	}
 	ref.Name = p.tok.Literal
 
 	p.scan()
 	return ref, nil
+}
+
+func (p *parser) parseStack() (*StackNode, error) {
+	stack := &StackNode{Pos: p.tok.At, Name: p.tok.Literal}
+
+	p.scan()
+	if p.tok.Type != SemicolonToken {
+		return stack, p.err("expecting %v but got %v", SemicolonToken, p.tok)
+	}
+
+	p.scan()
+	return stack, nil
 }
 
 func (p *parser) parseStatement() (NodeAST, error) {

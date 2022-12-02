@@ -55,31 +55,30 @@ func (s *Scanner) Next() Token {
 	s.start = s.pos
 	next := s.lookahead()
 
-	var tok Token
 	switch {
 	case s.ch == end:
-		tok = Token{EndToken, "", s.pos}
+		return Token{EndToken, "", s.pos}
 	case s.ch == '\n':
-		tok = s.scanOp(NewlineToken)
+		return s.scanOp(NewlineToken)
+	case s.ch == ';':
+		return s.scanOp(SemicolonToken)
 	case s.ch == '/':
-		tok = s.scanSlash()
+		return s.scanSlash()
 	case s.ch == '"':
-		tok = s.scanQuotedValue('"')
+		return s.scanQuotedValue('"')
 	case s.ch == '\'':
-		tok = s.scanQuotedValue('\'')
+		return s.scanQuotedValue('\'')
 	case unicode.IsDigit(s.ch):
-		tok = s.scanValue()
+		return s.scanValue()
 	case (s.ch == '-' || s.ch == '+') && unicode.IsDigit(next):
-		tok = s.scanValue()
-	default:
-		tok = s.scanId()
+		return s.scanValue()
 	}
-	return tok
+	return s.scanId()
 }
 
 func (s *Scanner) scanId() Token {
 	startL := s.idx
-	for s.ch != end && !unicode.IsSpace(s.ch) {
+	for s.ch != end && IsIdRune(s.ch) {
 		s.scan()
 	}
 	lit := string(s.src[startL:s.idx])
