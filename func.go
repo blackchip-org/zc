@@ -74,32 +74,32 @@ func Num2(calc *Calc, ops NumOp2) error {
 		return err
 	}
 
-	if IsDecimal(a) || IsDecimal(b) {
-		bd, err := ParseDecimal(b)
+	if IsBigInt(a) && IsBigInt(b) {
+		bi, err := ParseBigInt(b)
 		if err != nil {
 			return err
 		}
-		ad, err := ParseDecimal(a)
+		ai, err := ParseBigInt(a)
 		if err != nil {
 			return err
 		}
+		var zi big.Int
+		ops.BigInt2(&zi, ai, bi)
 
-		zd := ops.Dec2(ad, bd)
-		calc.Stack.Push(FormatDecimal(zd))
+		calc.Stack.Push(FormatBigInt(&zi))
 		return nil
 	}
 
-	bi, err := ParseBigInt(b)
+	bd, err := ParseDecimal(b)
 	if err != nil {
 		return err
 	}
-	ai, err := ParseBigInt(a)
+	ad, err := ParseDecimal(a)
 	if err != nil {
 		return err
 	}
-	var zi big.Int
-	ops.BigInt2(&zi, ai, bi)
 
-	calc.Stack.Push(FormatBigInt(&zi))
+	zd := ops.Dec2(ad, bd)
+	calc.Stack.Push(FormatDecimal(zd))
 	return nil
 }

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc/lang"
+	"github.com/shopspring/decimal"
 )
 
 type Config struct {
@@ -60,13 +61,27 @@ func NewCalc(config Config) (*Calc, error) {
 	return c, nil
 }
 
-func (c *Calc) Eval(src []byte) error {
-	ast, errs := lang.Parse("", src)
-	if errs != nil {
-		return errs
+func (c *Calc) Eval(src []byte) (err error) {
+	defer func() {
+		if p := recover(); p != nil {
+			msg, ok := p.(string)
+			if !ok {
+				panic(p)
+			}
+			if msg == "division by zero" {
+				err = fmt.Errorf("%v", p)
+			} else {
+				panic(p)
+			}
+		}
+	}()
+
+	ast, err := lang.Parse("", src)
+	if err != nil {
+		return
 	}
-	err := c.evalNode(ast)
-	return err
+	err = c.evalNode(ast)
+	return
 }
 
 func (c *Calc) EvalString(src string) error {
@@ -453,4 +468,40 @@ func (c *Calc) trace(format string, a ...any) {
 		fmt.Fprintf(c.Out, format, a...)
 		fmt.Fprintln(c.Out)
 	}
+}
+
+func (c *Calc) PopDecimal() (decimal.Decimal, error) {
+	v, err := c.Stack.Pop()
+	if err != nil {
+		return decimal.Zero, err
+	}
+	d, err := ParseDecimal(v)
+	if err != nil {
+		return decimal.Zero, err
+	}
+	return d, err
+}
+
+func (c *Calc) PopInt() (int, error) {
+	v, err := c.Stack.Pop()
+	if err != nil {
+		return 0, err
+	}
+	i, err := ParseInt(v)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
+}
+
+func (c *Calc) PopInt32() (int32, error) {
+	v, err := c.Stack.Pop()
+	if err != nil {
+		return 0, err
+	}
+	i, err := ParseInt32(v)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
 }
