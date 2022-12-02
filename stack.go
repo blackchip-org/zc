@@ -25,7 +25,8 @@ func (s *Stack) Pop() (string, error) {
 		return "", errors.New("stack empty")
 	}
 	var top string
-	top, s.data = s.data[0], s.data[1:]
+	len := len(s.data)
+	top, s.data = s.data[len-1], s.data[:len-1]
 	return top, nil
 }
 

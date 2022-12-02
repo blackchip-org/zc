@@ -43,6 +43,7 @@ func (s *Scanner) Next() Token {
 
 	// When at the start of the line, check to see what the current
 	// indentation level is and emit indent and dedent tokens as needed
+	s.start = s.pos
 	if s.pos.Column == 1 {
 		if tok, yes := s.scanIndent(); yes {
 			return tok
@@ -183,6 +184,8 @@ func (s *Scanner) scan() {
 	if s.ch == '\n' {
 		s.pos.Line++
 		s.pos.Column = 1
+	} else if s.ch == '\t' {
+		s.pos.Column += 4
 	} else {
 		s.pos.Column++
 	}

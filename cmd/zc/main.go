@@ -9,12 +9,14 @@ import (
 
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/app"
+	"github.com/blackchip-org/zc/internal/ansi"
 	"github.com/blackchip-org/zc/internal/modules"
 	"github.com/blackchip-org/zc/lang"
 )
 
 var (
 	evalFile  string
+	noAnsi    bool
 	parseFile string
 	scanFile  string
 	trace     bool
@@ -22,6 +24,7 @@ var (
 
 func init() {
 	flag.StringVar(&evalFile, "eval", "", "evaluate file")
+	flag.BoolVar(&noAnsi, "no-ansi", false, "disable ANSI control codes")
 	flag.StringVar(&parseFile, "parse", "", "parse file and print out the AST")
 	flag.StringVar(&scanFile, "scan", "", "scan file and print out the tokens")
 	flag.BoolVar(&trace, "trace", false, "trace execution")
@@ -39,6 +42,9 @@ func main() {
 	case evalFile != "":
 		eval()
 	default:
+		if noAnsi {
+			ansi.Enabled = false
+		}
 		app.RunConsole()
 	}
 }

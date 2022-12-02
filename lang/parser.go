@@ -1,6 +1,7 @@
 package lang
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -68,7 +69,7 @@ func (p *parser) parseExpr() (*ExprNode, error) {
 			node = &ValueNode{Pos: p.tok.At, Value: p.tok.Literal}
 			p.scan()
 		default:
-			return expr, fmt.Errorf("unexpected %v", p.tok)
+			return expr, p.err("unexpected %v", p.tok)
 		}
 		if err != nil {
 			return expr, err
@@ -184,7 +185,7 @@ func (p *parser) parseStatement() (NodeAST, error) {
 	case WhileToken:
 		return p.parseWhile()
 	}
-	return &BadNode{Token: p.tok}, fmt.Errorf("unexpected: %v", p.tok)
+	return &BadNode{Token: p.tok}, p.err("unexpected: %v", p.tok)
 }
 
 func (p *parser) parseWhile() (*WhileNode, error) {
@@ -209,4 +210,9 @@ func (p *parser) parseWhile() (*WhileNode, error) {
 func (p *parser) scan() {
 	p.tok = p.next
 	p.next = p.s.Next()
+}
+
+func (p *parser) err(format string, a ...any) error {
+	msg := "[" + p.tok.At.String() + "] " + fmt.Sprintf(format, a...)
+	return errors.New(msg)
 }

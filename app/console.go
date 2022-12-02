@@ -24,33 +24,67 @@ func RunConsole() {
 	line.SetCtrlCAborts(true)
 	line.SetTabCompletionStyle(liner.TabPrints)
 
-	fmt.Print(ansi.ClearScreen)
-	fmt.Print(ansi.MoveToBottom)
+	ansi.Write(ansi.ClearScreen)
+	ansi.Write(ansi.MoveToBottom)
 
-	prompt := fmt.Sprintf("%vzc%v> ", ansi.LightGreen, ansi.Reset)
-	fmt.Print(prompt)
-	text, err := line.Prompt("")
+	prompt := "zc > "
+	text, err := line.Prompt(prompt)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
 
-	for ; err == nil; text, err = line.Prompt("") {
-		err := calc.EvalString(text)
-		fmt.Print(ansi.ClearScreen)
+	// homedir, err := os.UserHomeDir()
+	// if err != nil {
+	// 	log.Fatalf("unable to determine home directory: %v", err)
+	// }
+
+	// historyFile := path.Join(homedir, ".zc-history")
+	// f, err := os.OpenFile(historyFile, os.O_CREATE, 0o640)
+	// if err != nil {
+	// 	log.Printf("unable to save history: %v", err)
+	// 	return
+	// }
+
+	// defer func() {
+	// 	fmt.Println("****** SAVING HISTORY")
+	// 	_, err := line.WriteHistory(f)
+	// 	if err != nil {
+	// 		log.Printf("unable to save history: %v", err)
+	// 	}
+	// 	f.Close()
+	// }()
+
+	for ; err == nil; text, err = line.Prompt(prompt) {
+		var err error
+		if strings.TrimSpace(text) == "" {
+			if calc.Stack().Len() > 0 {
+				_, err = calc.Stack().Pop()
+			}
+		} else {
+			err = calc.EvalString(text)
+		}
+
+		ansi.Write(ansi.ClearScreen)
+		fmt.Println()
+
 		for i, val := range calc.Stack().Items() {
 			color := ansi.LightBlue
 			if i == calc.Stack().Len()-1 {
 				color = ansi.Bold
 			}
-			fmt.Printf("%v%v%v\n", color, val, ansi.Reset)
+			ansi.Write(color)
+			fmt.Println(val)
+			ansi.Write(ansi.Reset)
 		}
 		if err != nil {
-			fmt.Printf("%v(!) %v%v\n", ansi.BrightYellow, err, ansi.Reset)
+			ansi.Write(ansi.BrightYellow)
+			fmt.Printf("(!) %v\n", err)
+			ansi.Write(ansi.Reset)
+		} else {
+			fmt.Println()
 		}
 		if strings.TrimSpace(text) != "" {
 			line.AppendHistory(text)
 		}
-		fmt.Print(prompt)
 	}
-
 }
