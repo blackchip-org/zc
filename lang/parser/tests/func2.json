@@ -1,6 +1,6 @@
 {
   "Node": "File",
-  "Nodes": [
+  "Block": [
     {
       "Node": "Func",
       "Name": "inc",
@@ -11,10 +11,10 @@
           "Name": "a"
         }
       ],
-      "Body": [
+      "Block": [
         {
           "Node": "Expr",
-          "Nodes": [
+          "Expr": [
             {
               "Node": "Ref",
               "Type": "/",
@@ -42,10 +42,10 @@
           "Name": "a"
         }
       ],
-      "Body": [
+      "Block": [
         {
           "Node": "Expr",
-          "Nodes": [
+          "Expr": [
             {
               "Node": "Ref",
               "Type": "/",

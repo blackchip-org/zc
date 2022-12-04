@@ -1,8 +1,8 @@
 {
   "Node": "File",
-  "Nodes": [
+  "Block": [
     {
-      "Node": "Include",
+      "Node": "Import",
       "Names": [
         "foo",
         "bar",

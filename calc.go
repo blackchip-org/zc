@@ -6,7 +6,9 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc/internal"
-	"github.com/blackchip-org/zc/lang"
+	"github.com/blackchip-org/zc/lang/ast"
+	"github.com/blackchip-org/zc/lang/parser"
+	"github.com/blackchip-org/zc/lang/token"
 	"github.com/shopspring/decimal"
 )
 
@@ -28,7 +30,7 @@ type ModuleDef struct {
 }
 
 type Frame struct {
-	Pos  lang.Position
+	Pos  token.Pos
 	Func string
 }
 
@@ -92,7 +94,7 @@ func NewCalc(config Config) (*Calc, error) {
 
 func (c *Calc) Eval(src []byte) (err error) {
 	c.Out.Reset()
-	ast, err := lang.Parse("", src)
+	ast, err := parser.Parse("", src)
 	if err != nil {
 		return
 	}
@@ -254,7 +256,7 @@ func (c *Calc) StackFor(name string) (*Stack, error) {
 	return nil, fmt.Errorf("no such stack: %v", name)
 }
 
-func (c *Calc) evalBody(nodes []lang.NodeAST) error {
+func (c *Calc) evalBlock(nodes []ast.Node) error {
 	for _, node := range nodes {
 		if err := c.evalNode(node); err != nil {
 			return err
@@ -263,38 +265,38 @@ func (c *Calc) evalBody(nodes []lang.NodeAST) error {
 	return nil
 }
 
-func (c *Calc) evalNode(node lang.NodeAST) error {
+func (c *Calc) evalNode(node ast.Node) error {
 	switch n := node.(type) {
-	case *lang.ExprNode:
+	case *ast.ExprNode:
 		return c.evalExprNode(n)
-	case *lang.IfNode:
+	case *ast.IfNode:
 		return c.evalIfNode(n)
-	case *lang.FileNode:
+	case *ast.FileNode:
 		return c.evalFileNode(n)
-	case *lang.FuncNode:
+	case *ast.FuncNode:
 		return c.evalFuncNode(n)
-	case *lang.ImportNode:
+	case *ast.ImportNode:
 		return c.evalImportNode(n)
-	case *lang.IncludeNode:
+	case *ast.IncludeNode:
 		return c.evalIncludeNode(n)
-	case *lang.InvokeNode:
+	case *ast.InvokeNode:
 		return c.evalInvokeNode(n)
-	case *lang.MacroNode:
+	case *ast.MacroNode:
 		return c.evalMacroNode(n)
-	case *lang.RefNode:
+	case *ast.RefNode:
 		return c.evalRefNode(n)
-	case *lang.StackNode:
+	case *ast.StackNode:
 		return c.evalStackNode(n)
-	case *lang.ValueNode:
+	case *ast.ValueNode:
 		return c.evalValueNode(n)
-	case *lang.WhileNode:
+	case *ast.WhileNode:
 		return c.evalWhileNode(n)
 	}
 	panic(fmt.Sprintf("unknown node: %+v", node))
 }
 
-func (c *Calc) evalExprNode(expr *lang.ExprNode) error {
-	for _, node := range expr.Nodes {
+func (c *Calc) evalExprNode(expr *ast.ExprNode) error {
+	for _, node := range expr.Expr {
 		if err := c.evalNode(node); err != nil {
 			return err
 		}
@@ -303,13 +305,13 @@ func (c *Calc) evalExprNode(expr *lang.ExprNode) error {
 	return nil
 }
 
-func (c *Calc) evalIfNode(ifNode *lang.IfNode) error {
+func (c *Calc) evalIfNode(ifNode *ast.IfNode) error {
 	for _, caseNode := range ifNode.Cases {
 		// Final "else" condition will have no case expression
-		if caseNode.Case == nil {
-			return c.evalBody(caseNode.Nodes)
+		if caseNode.Cond == nil {
+			return c.evalBlock(caseNode.Block)
 		} else {
-			err := c.evalExprNode(caseNode.Case)
+			err := c.evalExprNode(caseNode.Cond)
 			if err != nil {
 				return err
 			}
@@ -322,15 +324,15 @@ func (c *Calc) evalIfNode(ifNode *lang.IfNode) error {
 				return err
 			}
 			if vb {
-				return c.evalBody(caseNode.Nodes)
+				return c.evalBlock(caseNode.Block)
 			}
 		}
 	}
 	return nil
 }
 
-func (c *Calc) evalFileNode(file *lang.FileNode) error {
-	for _, line := range file.Nodes {
+func (c *Calc) evalFileNode(file *ast.FileNode) error {
+	for _, line := range file.Block {
 		if err := c.evalNode(line); err != nil {
 			return err
 		}
@@ -338,7 +340,7 @@ func (c *Calc) evalFileNode(file *lang.FileNode) error {
 	return nil
 }
 
-func (c *Calc) evalFuncNode(fn *lang.FuncNode) error {
+func (c *Calc) evalFuncNode(fn *ast.FuncNode) error {
 	c.trace(fn, "define func: %v", fn.Name)
 	c.funcs[fn.Name] = func(ic *Calc) error {
 		return ic.invokeFunction(c, fn)
@@ -346,7 +348,7 @@ func (c *Calc) evalFuncNode(fn *lang.FuncNode) error {
 	return nil
 }
 
-func (c *Calc) evalImportNode(importNode *lang.ImportNode) error {
+func (c *Calc) evalImportNode(importNode *ast.ImportNode) error {
 	for _, name := range importNode.Names {
 		c.trace(importNode, "import %v", name)
 		if err := c.Import(name); err != nil {
@@ -356,7 +358,7 @@ func (c *Calc) evalImportNode(importNode *lang.ImportNode) error {
 	return nil
 }
 
-func (c *Calc) evalIncludeNode(include *lang.IncludeNode) error {
+func (c *Calc) evalIncludeNode(include *ast.IncludeNode) error {
 	for _, name := range include.Names {
 		c.trace(include, "include %v", name)
 		if err := c.Include(name); err != nil {
@@ -366,14 +368,14 @@ func (c *Calc) evalIncludeNode(include *lang.IncludeNode) error {
 	return nil
 }
 
-func (c *Calc) evalInvokeNode(invoke *lang.InvokeNode) error {
+func (c *Calc) evalInvokeNode(invoke *ast.InvokeNode) error {
 	c.trace(invoke, "invoke %v", invoke.Name)
 	fn, ok := c.funcs[invoke.Name]
 	if !ok {
 		return fmt.Errorf("no such function: %v", invoke.Name)
 	}
 	c.frame = Frame{
-		Pos:  invoke.At(),
+		Pos:  invoke.Pos(),
 		Func: invoke.Name,
 	}
 	if err := fn(c); err != nil {
@@ -383,7 +385,7 @@ func (c *Calc) evalInvokeNode(invoke *lang.InvokeNode) error {
 	return nil
 }
 
-func (c *Calc) evalMacroNode(mac *lang.MacroNode) error {
+func (c *Calc) evalMacroNode(mac *ast.MacroNode) error {
 	c.trace(mac, "define macro: %v", mac.Name)
 	c.funcs[mac.Name] = func(_ *Calc) error {
 		return c.invokeMacro(mac)
@@ -391,7 +393,7 @@ func (c *Calc) evalMacroNode(mac *lang.MacroNode) error {
 	return nil
 }
 
-func (c *Calc) evalRefNode(ref *lang.RefNode) error {
+func (c *Calc) evalRefNode(ref *ast.RefNode) error {
 	c.trace(ref, "ref %v%v", ref.Type, ref.Name)
 	stack, err := c.StackFor(ref.Name)
 	if err != nil {
@@ -399,11 +401,11 @@ func (c *Calc) evalRefNode(ref *lang.RefNode) error {
 	}
 
 	switch ref.Type {
-	case lang.AllRef:
+	case ast.AllRef:
 		for _, item := range stack.Items() {
 			c.Stack.Push(item)
 		}
-	case lang.TopRef:
+	case ast.TopRef:
 		top, err := stack.Get()
 		if err != nil {
 			return err
@@ -413,14 +415,14 @@ func (c *Calc) evalRefNode(ref *lang.RefNode) error {
 	return nil
 }
 
-func (c *Calc) evalStackNode(node *lang.StackNode) error {
+func (c *Calc) evalStackNode(node *ast.StackNode) error {
 	c.trace(node, "stack %v", node.Name)
 	stack := c.Define(node.Name)
 	c.Stack = stack
 	return nil
 }
 
-func (c *Calc) evalValueNode(value *lang.ValueNode) error {
+func (c *Calc) evalValueNode(value *ast.ValueNode) error {
 	c.trace(value, "value %v", value.Value)
 	interp, err := c.Interpolate(value.Value)
 	if err != nil {
@@ -433,10 +435,10 @@ func (c *Calc) evalValueNode(value *lang.ValueNode) error {
 	return nil
 }
 
-func (c *Calc) evalWhileNode(while *lang.WhileNode) error {
+func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
 	c.trace(while, "while")
 	for {
-		if err := c.evalExprNode(while.Expr); err != nil {
+		if err := c.evalExprNode(while.Cond); err != nil {
 			return err
 		}
 		result, err := c.PopBool()
@@ -446,7 +448,7 @@ func (c *Calc) evalWhileNode(while *lang.WhileNode) error {
 		if !result {
 			break
 		}
-		if err := c.evalBody(while.Body); err != nil {
+		if err := c.evalBlock(while.Block); err != nil {
 			return err
 		}
 	}
@@ -487,10 +489,10 @@ func functionContext(c *Calc, name string) *Calc {
 	return dc
 }
 
-func (c *Calc) invokeFunction(mod *Calc, fn *lang.FuncNode) error {
+func (c *Calc) invokeFunction(mod *Calc, fn *ast.FuncNode) error {
 	dc := functionContext(mod, fn.Name)
 	for _, param := range fn.Params {
-		if param.Type == lang.TopRef {
+		if param.Type == ast.TopRef {
 			val, err := c.Stack.Pop()
 			if err != nil {
 				return fmt.Errorf("not enough arguments, missing '%v'", param.Name)
@@ -506,7 +508,7 @@ func (c *Calc) invokeFunction(mod *Calc, fn *lang.FuncNode) error {
 			}
 		}
 	}
-	if err := dc.evalBody(fn.Body); err != nil {
+	if err := dc.evalBlock(fn.Block); err != nil {
 		return err
 	}
 	for dc.main.Len() > 0 {
@@ -517,8 +519,8 @@ func (c *Calc) invokeFunction(mod *Calc, fn *lang.FuncNode) error {
 	return nil
 }
 
-func (c *Calc) invokeMacro(mac *lang.MacroNode) error {
-	if err := c.evalBody(mac.Expr.Nodes); err != nil {
+func (c *Calc) invokeMacro(mac *ast.MacroNode) error {
+	if err := c.evalBlock(mac.Expr.Expr); err != nil {
 		return err
 	}
 	return nil
@@ -544,7 +546,7 @@ func (c *Calc) load(name string) (*Calc, error) {
 		if err != nil {
 			return nil, err
 		}
-		ast, err := lang.Parse(def.ScriptPath, src)
+		ast, err := parser.Parse(def.ScriptPath, src)
 		if err != nil {
 			return nil, err
 		}
@@ -561,10 +563,10 @@ func (c *Calc) load(name string) (*Calc, error) {
 	return dc, nil
 }
 
-func (c *Calc) err(node lang.NodeAST, format string, a ...any) error {
+func (c *Calc) err(node ast.Node, format string, a ...any) error {
 	var frames []Frame
 	frames = append(frames, Frame{
-		Pos:  node.At(),
+		Pos:  node.Pos(),
 		Func: c.frame.Func,
 	})
 	for f := c; f != nil; f = f.parent {
@@ -579,9 +581,9 @@ func (c *Calc) err(node lang.NodeAST, format string, a ...any) error {
 	}
 }
 
-func (c *Calc) trace(node lang.NodeAST, format string, a ...any) {
+func (c *Calc) trace(node ast.Node, format string, a ...any) {
 	if c.config.Trace {
 		msg := fmt.Sprintf(format, a...)
-		log.Printf("[%v] eval: %v", node.At(), msg)
+		log.Printf("[%v] eval: %v", node.Pos(), msg)
 	}
 }

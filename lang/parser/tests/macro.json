@@ -1,0 +1,22 @@
+{
+  "Node": "File",
+  "Block": [
+    {
+      "Node": "Macro",
+      "Name": "inc",
+      "Expr": {
+        "Node": "Expr",
+        "Expr": [
+          {
+            "Node": "Value",
+            "Value": "1"
+          },
+          {
+            "Node": "Invoke",
+            "Name": "add"
+          }
+        ]
+      }
+    }
+  ]
+}

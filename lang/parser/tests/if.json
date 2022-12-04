@@ -1,14 +1,14 @@
 {
   "Node": "File",
-  "Nodes": [
+  "Block": [
     {
       "Node": "If",
       "Cases": [
         {
           "Node": "IfCase",
-          "Case": {
+          "Cond": {
             "Node": "Expr",
-            "Nodes": [
+            "Expr": [
               {
                 "Node": "Value",
                 "Value": "42"
@@ -19,10 +19,10 @@
               }
             ]
           },
-          "Nodes": [
+          "Block": [
             {
               "Node": "Expr",
-              "Nodes": [
+              "Expr": [
                 {
                   "Node": "Value",
                   "Value": "answer"
@@ -35,7 +35,7 @@
     },
     {
       "Node": "Expr",
-      "Nodes": [
+      "Expr": [
         {
           "Node": "Invoke",
           "Name": "foo"

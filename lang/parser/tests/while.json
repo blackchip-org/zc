@@ -1,6 +1,6 @@
 {
   "Node": "File",
-  "Nodes": [
+  "Block": [
     {
       "Node": "Func",
       "Name": "sum",
@@ -11,10 +11,10 @@
           "Name": "a"
         }
       ],
-      "Body": [
+      "Block": [
         {
           "Node": "Expr",
-          "Nodes": [
+          "Expr": [
             {
               "Node": "Ref",
               "Type": "//",
@@ -24,9 +24,9 @@
         },
         {
           "Node": "While",
-          "Expr": {
+          "Cond": {
             "Node": "Expr",
-            "Nodes": [
+            "Expr": [
               {
                 "Node": "Invoke",
                 "Name": "n"
@@ -41,10 +41,10 @@
               }
             ]
           },
-          "Body": [
+          "Block": [
             {
               "Node": "Expr",
-              "Nodes": [
+              "Expr": [
                 {
                   "Node": "Invoke",
                   "Name": "add"
@@ -52,27 +52,6 @@
               ]
             }
           ]
-        }
-      ]
-    },
-    {
-      "Node": "Expr",
-      "Nodes": [
-        {
-          "Node": "Value",
-          "Value": "1"
-        },
-        {
-          "Node": "Value",
-          "Value": "2"
-        },
-        {
-          "Node": "Value",
-          "Value": "3"
-        },
-        {
-          "Node": "Invoke",
-          "Name": "sum"
         }
       ]
     }

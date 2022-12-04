@@ -1,106 +1,108 @@
-package lang
+package ast
 
 import (
 	"encoding/json"
+
+	"github.com/blackchip-org/zc/lang/token"
 )
 
-type NodeAST interface {
-	At() Position
+type Node interface {
+	Pos() token.Pos
 	String() string
 }
 
 type BadNode struct {
-	Token Token
+	Token token.Token
 }
 
-func (n BadNode) At() Position   { return n.Token.At }
+func (n BadNode) Pos() token.Pos { return n.Token.Pos }
 func (n BadNode) String() string { return nodeStringJSON(n) }
 
 type ExprNode struct {
-	Pos    Position `json:"-"`
-	Target *RefNode `json:",omitempty"`
-	Nodes  []NodeAST
+	Token  token.Token `json:"-"`
+	Target *RefNode    `json:",omitempty"`
+	Expr   []Node
 }
 
-func (n ExprNode) At() Position   { return n.Pos }
+func (n ExprNode) Pos() token.Pos { return n.Token.Pos }
 func (n ExprNode) String() string { return nodeStringJSON(n) }
 
 type FileNode struct {
-	Pos   Position `json:"-"`
-	Name  string   `json:",omitempty"`
-	Nodes []NodeAST
+	Token token.Token `json:"-"`
+	Name  string      `json:",omitempty"`
+	Block []Node
 }
 
-func (n FileNode) At() Position   { return n.Pos }
+func (n FileNode) Pos() token.Pos { return n.Token.Pos }
 func (n FileNode) String() string { return nodeStringJSON(n) }
 
 type FuncNode struct {
-	Pos    Position `json:"-"`
+	Token  token.Token `json:"-"`
 	Name   string
 	Params []*RefNode
-	Body   []NodeAST
+	Block  []Node
 }
 
-func (n FuncNode) At() Position   { return n.Pos }
+func (n FuncNode) Pos() token.Pos { return n.Token.Pos }
 func (n FuncNode) String() string { return nodeStringJSON(n) }
 
 type IfNode struct {
-	Pos   Position `json:"-"`
+	Token token.Token `json:"-"`
 	Cases []*IfCaseNode
 }
 
-func (n IfNode) At() Position   { return n.Pos }
+func (n IfNode) Pos() token.Pos { return n.Token.Pos }
 func (n IfNode) String() string { return nodeStringJSON(n) }
 
 type IfCaseNode struct {
-	Pos   Position  `json:"-"`
-	Case  *ExprNode `json:",omitempty"` // for the final "else", this is nil
-	Nodes []NodeAST
+	Token token.Token `json:"-"`
+	Cond  *ExprNode   `json:",omitempty"` // for the final "else", this is nil
+	Block []Node
 }
 
-func (n IfCaseNode) At() Position   { return n.Pos }
+func (n IfCaseNode) Pos() token.Pos { return n.Token.Pos }
 func (n IfCaseNode) String() string { return nodeStringJSON(n) }
 
 type ImportNode struct {
-	Pos   Position `json:"-"`
+	Token token.Token `json:"-"`
 	Names []string
 }
 
-func (n ImportNode) At() Position   { return n.Pos }
+func (n ImportNode) Pos() token.Pos { return n.Token.Pos }
 func (n ImportNode) String() string { return nodeStringJSON(n) }
 
 type IncludeNode struct {
-	Pos   Position `json:"-"`
+	Token token.Token `json:"-"`
 	Names []string
 }
 
-func (n IncludeNode) At() Position   { return n.Pos }
+func (n IncludeNode) Pos() token.Pos { return n.Token.Pos }
 func (n IncludeNode) String() string { return nodeStringJSON(n) }
 
 type InvokeNode struct {
-	Pos  Position `json:"-"`
-	Name string
+	Token token.Token `json:"-"`
+	Name  string
 }
 
-func (n InvokeNode) At() Position   { return n.Pos }
+func (n InvokeNode) Pos() token.Pos { return n.Token.Pos }
 func (n InvokeNode) String() string { return nodeStringJSON(n) }
 
 type MacroNode struct {
-	Pos  Position `json:"-"`
-	Name string
-	Expr *ExprNode
+	Token token.Token `json:"-"`
+	Name  string
+	Expr  *ExprNode
 }
 
-func (n MacroNode) At() Position   { return n.Pos }
+func (n MacroNode) Pos() token.Pos { return n.Token.Pos }
 func (n MacroNode) String() string { return nodeStringJSON(n) }
 
 type RefNode struct {
-	Pos  Position `json:"-"`
-	Name string
-	Type RefType
+	Token token.Token `json:"-"`
+	Name  string
+	Type  RefType
 }
 
-func (n RefNode) At() Position   { return n.Pos }
+func (n RefNode) Pos() token.Pos { return n.Token.Pos }
 func (n RefNode) String() string { return nodeStringJSON(n) }
 
 type RefType int
@@ -122,31 +124,31 @@ func (r RefType) String() string {
 }
 
 type StackNode struct {
-	Pos  Position `json:"-"`
-	Name string
+	Token token.Token `json:"-"`
+	Name  string
 }
 
-func (n StackNode) At() Position   { return n.Pos }
+func (n StackNode) Pos() token.Pos { return n.Token.Pos }
 func (n StackNode) String() string { return nodeStringJSON(n) }
 
 type ValueNode struct {
-	Pos   Position `json:"-"`
+	Token token.Token `json:"-"`
 	Value string
 }
 
-func (n ValueNode) At() Position   { return n.Pos }
+func (n ValueNode) Pos() token.Pos { return n.Token.Pos }
 func (n ValueNode) String() string { return nodeStringJSON(n) }
 
 type WhileNode struct {
-	Pos  Position `json:"-"`
-	Expr *ExprNode
-	Body []NodeAST
+	Token token.Token `json:"-"`
+	Cond  *ExprNode
+	Block []Node
 }
 
-func (n WhileNode) At() Position   { return n.Pos }
+func (n WhileNode) Pos() token.Pos { return n.Token.Pos }
 func (n WhileNode) String() string { return nodeStringJSON(n) }
 
-func nodeStringJSON(n NodeAST) string {
+func nodeStringJSON(n Node) string {
 	b, err := json.MarshalIndent(n, "", "  ")
 	if err != nil {
 		return err.Error()

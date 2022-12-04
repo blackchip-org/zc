@@ -1,9 +1,9 @@
 {
   "Node": "File",
-  "Nodes": [
+  "Block": [
     {
       "Node": "Expr",
-      "Nodes": [
+      "Expr": [
         {
           "Node": "Value",
           "Value": "1234"
@@ -16,7 +16,7 @@
     },
     {
       "Node": "Expr",
-      "Nodes": [
+      "Expr": [
         {
           "Node": "Invoke",
           "Name": "foo"

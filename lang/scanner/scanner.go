@@ -1,29 +1,31 @@
-package lang
+package scanner
 
 import (
 	"strings"
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/blackchip-org/zc/lang/token"
 )
 
 type Scanner struct {
 	src        []byte
-	ch         rune     // current rune being scanned
-	w          int      // width, in bytes, of the current rune
-	idx        int      // index into src of where ch is located
-	pos        Position // file, line, and column where ch is located
-	start      Position // position of the scanner when Next() was called
-	indents    int      // count of current indentation level, one for each tab
-	nextTokens []Token  // pending dedent tokens to emit
+	ch         rune          // current rune being scanned
+	w          int           // width, in bytes, of the current rune
+	idx        int           // index into src of where ch is located
+	pos        token.Pos     // file, line, and column where ch is located
+	start      token.Pos     // position of the scanner when Next() was called
+	indents    int           // count of current indentation level, one for each tab
+	nextTokens []token.Token // pending dedent tokens to emit
 }
 
 // When the src stream is exhausted, ch is set to this value
 const end rune = -1
 
-func NewScanner(file string, src []byte) *Scanner {
+func New(file string, src []byte) *Scanner {
 	s := &Scanner{
 		src: src,
-		pos: Position{
+		pos: token.Pos{
 			File: file,
 			Line: 1,
 		},
@@ -32,11 +34,11 @@ func NewScanner(file string, src []byte) *Scanner {
 	return s
 }
 
-func (s *Scanner) Next() Token {
+func (s *Scanner) Next() token.Token {
 	// If there are dedent tokens buffered up, emit those first
 	// before continuing the scan.
 	if len(s.nextTokens) > 0 {
-		var tok Token
+		var tok token.Token
 		tok, s.nextTokens = s.nextTokens[0], s.nextTokens[1:]
 		return tok
 	}
@@ -57,11 +59,11 @@ func (s *Scanner) Next() Token {
 
 	switch {
 	case s.ch == end:
-		return Token{EndToken, "", s.pos}
+		return token.New(token.End, "", s.pos)
 	case s.ch == '\n':
-		return s.scanOp(NewlineToken)
+		return s.scanOp(token.Newline)
 	case s.ch == ';':
-		return s.scanOp(SemicolonToken)
+		return s.scanOp(token.Semicolon)
 	case s.ch == '/':
 		return s.scanSlash()
 	case s.ch == '"':
@@ -76,19 +78,19 @@ func (s *Scanner) Next() Token {
 	return s.scanId()
 }
 
-func (s *Scanner) scanId() Token {
+func (s *Scanner) scanId() token.Token {
 	startL := s.idx
-	for s.ch != end && IsIdRune(s.ch) {
+	for s.ch != end && token.IsIdRune(s.ch) {
 		s.scan()
 	}
 	lit := string(s.src[startL:s.idx])
 	// If the identifier is a keyword, use the keyword specific token type,
 	// otherwise use IdentToken
-	return Token{LookupKeyword(lit), lit, s.start}
+	return token.New(token.LookupKeyword(lit), lit, s.start)
 }
 
 // Returns true if there is an indent/dedent token to emit
-func (s *Scanner) scanIndent() (Token, bool) {
+func (s *Scanner) scanIndent() (token.Token, bool) {
 	startL := s.idx
 
 	for s.ch != end && s.ch == '\t' {
@@ -101,15 +103,15 @@ func (s *Scanner) scanIndent() (Token, bool) {
 	// an indent/dedent token
 	n := len(lit)
 	diff := n - s.indents
-	var token Token
+	var tok token.Token
 	if diff == 0 {
-		return token, false
+		return tok, false
 	}
 
 	if diff > 0 {
-		token = Token{IndentToken, lit, s.start}
+		tok = token.New(token.Indent, lit, s.start)
 	} else {
-		token = Token{DedentToken, lit, s.start}
+		tok = token.New(token.Dedent, lit, s.start)
 	}
 	if diff < 0 {
 		diff = -diff
@@ -118,20 +120,20 @@ func (s *Scanner) scanIndent() (Token, bool) {
 	// If multiple dedent tokens need to be emitted, emit one now and
 	// put the remaining ones in nextTokens
 	for i := 1; i < diff; i++ {
-		s.nextTokens = append([]Token{token}, s.nextTokens...)
+		s.nextTokens = append([]token.Token{tok}, s.nextTokens...)
 	}
 	s.indents = n
 
-	return token, true
+	return tok, true
 }
 
-func (s *Scanner) scanOp(name TokenType) Token {
+func (s *Scanner) scanOp(name token.Type) token.Token {
 	lit := string(s.ch)
 	s.scan()
-	return Token{name, lit, s.start}
+	return token.New(name, lit, s.start)
 }
 
-func (s *Scanner) scanQuotedValue(term rune) Token {
+func (s *Scanner) scanQuotedValue(term rune) token.Token {
 	s.scan()
 	var lit strings.Builder
 	escaping := false
@@ -148,31 +150,31 @@ func (s *Scanner) scanQuotedValue(term rune) Token {
 		s.scan()
 	}
 	s.scan()
-	return Token{ValueToken, lit.String(), s.start}
+	return token.New(token.Value, lit.String(), s.start)
 }
 
-func (s *Scanner) scanValue() Token {
+func (s *Scanner) scanValue() token.Token {
 	startL := s.idx
 	for s.ch != end && !unicode.IsSpace(s.ch) {
 		s.scan()
 	}
 	lit := string(s.src[startL:s.idx])
-	return Token{ValueToken, lit, s.start}
+	return token.New(token.Value, lit, s.start)
 }
 
-func (s *Scanner) scanSlash() Token {
+func (s *Scanner) scanSlash() token.Token {
 	s.scan()
 	if s.ch == '/' {
 		s.scan()
 		if s.ch == end || unicode.IsSpace(s.ch) {
-			return Token{IdToken, "//", s.start}
+			return token.New(token.Id, "//", s.start)
 		}
-		return Token{DoubleSlashToken, "//", s.start}
+		return token.New(token.DoubleSlash, "//", s.start)
 	}
 	if s.ch == end || unicode.IsSpace(s.ch) {
-		return Token{IdToken, "/", s.start}
+		return token.New(token.Id, "/", s.start)
 	}
-	return Token{SlashToken, "/", s.start}
+	return token.New(token.Slash, "/", s.start)
 }
 
 func (s *Scanner) scan() {

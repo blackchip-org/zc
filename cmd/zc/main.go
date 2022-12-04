@@ -10,7 +10,9 @@ import (
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/app"
 	"github.com/blackchip-org/zc/internal/ansi"
-	"github.com/blackchip-org/zc/lang"
+	"github.com/blackchip-org/zc/lang/parser"
+	"github.com/blackchip-org/zc/lang/scanner"
+	"github.com/blackchip-org/zc/lang/token"
 )
 
 var (
@@ -76,7 +78,7 @@ func parse() {
 	if os.Getenv("ZC_TEST") == "true" {
 		parseFile = ""
 	}
-	ast, err := lang.Parse(parseFile, src)
+	ast, err := parser.Parse(parseFile, src)
 	if err != nil {
 		log.Fatalf("parse error:\n%v", err)
 	}
@@ -88,9 +90,9 @@ func scan() {
 	if err != nil {
 		log.Fatalf("unable to read file: %v", err)
 	}
-	scanner := lang.NewScanner(scanFile, src)
+	scanner := scanner.New(scanFile, src)
 	fmt.Println("line col  token")
-	for tok := scanner.Next(); tok.Type != lang.EndToken; tok = scanner.Next() {
-		fmt.Printf("%4d %3d  %v\n", tok.At.Line, tok.At.Column, tok)
+	for tok := scanner.Next(); tok.Type != token.End; tok = scanner.Next() {
+		fmt.Printf("%4d %3d  %v\n", tok.Pos.Line, tok.Pos.Column, tok)
 	}
 }

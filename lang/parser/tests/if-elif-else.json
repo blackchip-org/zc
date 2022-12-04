@@ -1,39 +1,31 @@
 {
   "Node": "File",
-  "Nodes": [
+  "Block": [
     {
       "Node": "If",
       "Cases": [
         {
           "Node": "IfCase",
-          "Case": {
+          "Cond": {
             "Node": "Expr",
-            "Nodes": [
-              {
-                "Node": "Value",
-                "Value": "2"
-              },
-              {
-                "Node": "Invoke",
-                "Name": "mod"
-              },
+            "Expr": [
               {
                 "Node": "Value",
                 "Value": "0"
               },
               {
                 "Node": "Invoke",
-                "Name": "eq"
+                "Name": "gt"
               }
             ]
           },
-          "Nodes": [
+          "Block": [
             {
               "Node": "Expr",
-              "Nodes": [
+              "Expr": [
                 {
                   "Node": "Value",
-                  "Value": "even"
+                  "Value": "positive"
                 }
               ]
             }
@@ -41,13 +33,40 @@
         },
         {
           "Node": "IfCase",
-          "Nodes": [
+          "Cond": {
+            "Node": "Expr",
+            "Expr": [
+              {
+                "Node": "Value",
+                "Value": "0"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "lt"
+              }
+            ]
+          },
+          "Block": [
             {
               "Node": "Expr",
-              "Nodes": [
+              "Expr": [
                 {
                   "Node": "Value",
-                  "Value": "odd"
+                  "Value": "negative"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Node": "IfCase",
+          "Block": [
+            {
+              "Node": "Expr",
+              "Expr": [
+                {
+                  "Node": "Value",
+                  "Value": "zero"
                 }
               ]
             }
@@ -57,7 +76,7 @@
     },
     {
       "Node": "Expr",
-      "Nodes": [
+      "Expr": [
         {
           "Node": "Invoke",
           "Name": "foo"

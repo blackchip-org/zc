@@ -1,9 +1,9 @@
 {
   "Node": "File",
-  "Nodes": [
+  "Block": [
     {
       "Node": "Expr",
-      "Nodes": [
+      "Expr": [
         {
           "Node": "Ref",
           "Type": "/",
@@ -17,7 +17,7 @@
     },
     {
       "Node": "Expr",
-      "Nodes": [
+      "Expr": [
         {
           "Node": "Stack",
           "Name": "a"
