@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"errors"
 	"math/big"
 
 	"github.com/shopspring/decimal"
@@ -40,23 +41,37 @@ func BigInt2(calc *Calc, fn FuncBigInt2) error {
 	return nil
 }
 
-func Dec2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) error {
+func Dec2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) (err error) {
+	defer func() {
+		if p := recover(); p != nil {
+			msg, ok := p.(string)
+			if !ok {
+				panic(p)
+			}
+			if msg == "decimal division by 0" {
+				err = errors.New("division by zero")
+			} else {
+				panic(p)
+			}
+		}
+	}()
+
 	b, err := calc.Stack.Pop()
 	if err != nil {
-		return err
+		return
 	}
 	a, err := calc.Stack.Pop()
 	if err != nil {
-		return err
+		return
 	}
 
 	bd, err := ParseDecimal(b)
 	if err != nil {
-		return err
+		return
 	}
 	ad, err := ParseDecimal(a)
 	if err != nil {
-		return err
+		return
 	}
 
 	zd := fn(ad, bd)

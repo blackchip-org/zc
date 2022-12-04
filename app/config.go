@@ -2,13 +2,13 @@ package app
 
 import (
 	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/internal/modules"
+	"github.com/blackchip-org/zc/internal/zlib"
 )
 
 func DefaultConfig() zc.Config {
 	return zc.Config{
-		ModuleDefs: modules.All,
-		Prelude:    modules.PreludeCLI,
+		ModuleDefs: zlib.All,
+		Prelude:    zlib.PreludeCLI,
 	}
 }
 

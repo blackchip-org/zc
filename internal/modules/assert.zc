@@ -1,3 +1,0 @@
-func eq /a /b
-	if /a /b eq not
-		'assertion failed: `a` != `b`'  abort

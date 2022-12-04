@@ -12,6 +12,10 @@ type Position struct {
 	Column int
 }
 
+func (p Position) IsValid() bool {
+	return p.Line > 0
+}
+
 func (p Position) String() string {
 	if p.File != "" {
 		return fmt.Sprintf("%v:%v:%v", p.File, p.Line, p.Column)

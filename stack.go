@@ -2,16 +2,19 @@ package zc
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 type Stack struct {
+	Name string
 	data []string
 }
 
-func NewStack() *Stack {
-	return &Stack{}
+func NewStack(name string) *Stack {
+	return &Stack{Name: name}
 }
 
 func (s *Stack) Items() []string {
@@ -26,8 +29,7 @@ func (s *Stack) Len() int {
 
 func (s *Stack) Pop() (string, error) {
 	if len(s.data) == 0 {
-		//panic("stack empty")
-		return "", errors.New("stack empty")
+		return "", s.err("stack empty")
 	}
 	var top string
 	len := len(s.data)
@@ -60,7 +62,7 @@ func (s *Stack) Set(v string) {
 
 func (s *Stack) Get() (string, error) {
 	if len(s.data) == 0 {
-		return "", errors.New("undefined")
+		return "", s.err("undefined")
 	}
 	s.trace("get: %v", s.data[0])
 	return s.data[0], nil
@@ -69,6 +71,21 @@ func (s *Stack) Get() (string, error) {
 func (s *Stack) Clear() {
 	s.trace("clear")
 	s.data = nil
+}
+
+func (s *Stack) String() string {
+	var sb strings.Builder
+	for i, item := range s.data {
+		if i != 0 {
+			sb.WriteString(" | ")
+		}
+		sb.WriteString(item)
+	}
+	return sb.String()
+}
+
+func (s *Stack) err(format string, a ...any) error {
+	return errors.New(s.Name + ": " + fmt.Sprintf(format, a...))
 }
 
 var traceStack bool

@@ -139,7 +139,7 @@ func (n ValueNode) String() string { return nodeStringJSON(n) }
 
 type WhileNode struct {
 	Pos  Position `json:"-"`
-	Expr NodeAST
+	Expr *ExprNode
 	Body []NodeAST
 }
 

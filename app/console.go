@@ -68,12 +68,23 @@ func RunConsole(calc *zc.Calc) {
 				color = ansi.Bold
 			}
 			ansi.Write(color)
-			fmt.Println(val)
+			fmt.Print(val)
 			ansi.Write(ansi.Reset)
+			fmt.Println()
 		}
 		if err != nil {
+			calcError, ok := err.(zc.CalcError)
+			if ok {
+				for _, f := range calcError.Frames {
+					fmt.Println(f)
+				}
+			}
 			ansi.Write(ansi.BrightYellow)
 			fmt.Printf("(!) %v\n", err)
+			ansi.Write(ansi.Reset)
+		} else if calc.Out.Len() > 0 {
+			ansi.Write(ansi.LightGreen)
+			fmt.Println(calc.Out.String())
 			ansi.Write(ansi.Reset)
 		} else {
 			fmt.Println()
