@@ -3,24 +3,32 @@ package zc
 import (
 	"log"
 	"math/big"
-	"strconv"
 
 	"github.com/shopspring/decimal"
+	"golang.org/x/text/message"
 )
 
 type decRoundFunc func(decimal.Decimal, int32) decimal.Decimal
 
-var roundModes = map[string]decRoundFunc{
-	"ceil":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundCeil(places) },
-	"down":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundDown(places) },
-	"floor":     func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundFloor(places) },
-	"half-up":   func(d decimal.Decimal, places int32) decimal.Decimal { return d.Round(places) },
-	"half-even": func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundBank(places) },
-	"up":        func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundUp(places) },
-}
+var (
+	printer    = message.NewPrinter(message.MatchLanguage("en"))
+	roundModes = map[string]decRoundFunc{
+		"ceil":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundCeil(places) },
+		"down":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundDown(places) },
+		"floor":     func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundFloor(places) },
+		"half-up":   func(d decimal.Decimal, places int32) decimal.Decimal { return d.Round(places) },
+		"half-even": func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundBank(places) },
+		"up":        func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundUp(places) },
+	}
+)
 
 func FormatBigInt(v *big.Int) string {
-	return v.String()
+	if v.IsUint64() {
+		return printer.Sprint(v.Uint64())
+	} else if v.IsInt64() {
+		return printer.Sprint(v.Int64())
+	}
+	return printer.Sprintf("%d", v)
 }
 
 func FormatBool(v bool) string {
@@ -39,5 +47,12 @@ func FormatDecimal(v decimal.Decimal) string {
 }
 
 func FormatInt(i int) string {
-	return strconv.Itoa(i)
+	return printer.Sprint(i)
+}
+
+func FormatValue(v string) string {
+	if IsInt(v) {
+		return FormatInt(MustParseInt(v))
+	}
+	return v
 }

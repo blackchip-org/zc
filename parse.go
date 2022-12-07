@@ -9,9 +9,20 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+func cleanIntString(v string) string {
+	var sb strings.Builder
+	for _, ch := range v {
+		if ch == ',' {
+			continue
+		}
+		sb.WriteRune(ch)
+	}
+	return sb.String()
+}
+
 func ParseBigInt(v string) (*big.Int, error) {
 	i := new(big.Int)
-	_, ok := i.SetString(v, 0)
+	_, ok := i.SetString(cleanIntString(v), 0)
 	if !ok {
 		return i, fmt.Errorf("expecting integer but got %v", v)
 	}
@@ -43,20 +54,33 @@ func ParseDecimal(v string) (decimal.Decimal, error) {
 }
 
 func IsDecimal(v string) bool {
-	_, ok := ParseDecimal(v)
-	return ok == nil
+	_, err := ParseDecimal(v)
+	return err == nil
 }
 
 func ParseInt(v string) (int, error) {
-	i, err := strconv.ParseInt(v, 0, 64)
+	i, err := strconv.ParseInt(cleanIntString(v), 0, 64)
 	if err != nil {
 		return 0, fmt.Errorf("expecting integer but got %v", v)
 	}
 	return int(i), nil
 }
 
+func IsInt(v string) bool {
+	_, err := ParseInt(v)
+	return err == nil
+}
+
+func MustParseInt(v string) int {
+	i, err := ParseInt(v)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+
 func ParseInt32(v string) (int32, error) {
-	i, err := strconv.ParseInt(v, 0, 32)
+	i, err := strconv.ParseInt(cleanIntString(v), 0, 32)
 	if err != nil {
 		return 0, fmt.Errorf("expecting int32 but got %v", v)
 	}

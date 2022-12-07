@@ -431,7 +431,7 @@ func (c *Calc) evalValueNode(value *ast.ValueNode) error {
 	if interp != value.Value {
 		c.trace(value, "interpolate %v", interp)
 	}
-	c.Stack.Push(interp)
+	c.Stack.Push(FormatValue(interp))
 	return nil
 }
 
