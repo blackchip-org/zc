@@ -286,12 +286,27 @@ func (p *parser) parseStatement() (ast.Node, error) {
 		return p.parseMacro()
 	case token.Slash:
 		return p.parseExpr()
+	case token.Try:
+		return p.parseTry()
 	case token.Value:
 		return p.parseExpr()
 	case token.While:
 		return p.parseWhile()
 	}
 	return &ast.BadNode{Token: p.tok}, p.err("unexpected: %v", p.tok)
+}
+
+func (p *parser) parseTry() (*ast.TryNode, error) {
+	try := &ast.TryNode{Token: p.tok}
+	p.scan()
+
+	expr, err := p.parseExpr()
+	try.Expr = expr
+	if err != nil {
+		return try, err
+	}
+
+	return try, err
 }
 
 func (p *parser) parseWhile() (*ast.WhileNode, error) {

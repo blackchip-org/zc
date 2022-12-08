@@ -59,9 +59,10 @@ type Calc struct {
 	main    *Stack
 	global  map[string]*Stack
 	local   map[string]*Stack
-	funcs   map[string]CalcFunc
+	Funcs   map[string]CalcFunc
+	Exports map[string]CalcFunc
 	defs    map[string]ModuleDef
-	modules map[string]*Calc
+	Modules map[string]*Calc
 }
 
 func NewCalc(config Config) (*Calc, error) {
@@ -72,8 +73,9 @@ func NewCalc(config Config) (*Calc, error) {
 		main:    NewStack("main"),
 		global:  make(map[string]*Stack),
 		defs:    make(map[string]ModuleDef),
-		modules: make(map[string]*Calc),
-		funcs:   make(map[string]CalcFunc),
+		Modules: make(map[string]*Calc),
+		Funcs:   make(map[string]CalcFunc),
+		Exports: make(map[string]CalcFunc),
 	}
 	c.Stack = c.main
 	c.local = c.global
@@ -82,7 +84,7 @@ func NewCalc(config Config) (*Calc, error) {
 		c.Install(def)
 	}
 	for name, fn := range builtin {
-		c.funcs[name] = fn
+		c.Funcs[name] = fn
 	}
 	for _, prelude := range config.Prelude {
 		if err := c.Include(prelude); err != nil {
@@ -124,9 +126,9 @@ func (c *Calc) Import(modName string) error {
 	if err != nil {
 		return err
 	}
-	for funcName, fn := range dc.funcs {
+	for funcName, fn := range dc.Exports {
 		qName := modName + "." + funcName
-		c.funcs[qName] = fn
+		c.Funcs[qName] = fn
 	}
 	return nil
 }
@@ -136,8 +138,8 @@ func (c *Calc) Include(modName string) error {
 	if err != nil {
 		return err
 	}
-	for funcName, fn := range dc.funcs {
-		c.funcs[funcName] = fn
+	for funcName, fn := range dc.Exports {
+		c.Funcs[funcName] = fn
 	}
 	return nil
 }
@@ -287,6 +289,8 @@ func (c *Calc) evalNode(node ast.Node) error {
 		return c.evalRefNode(n)
 	case *ast.StackNode:
 		return c.evalStackNode(n)
+	case *ast.TryNode:
+		return c.evalTryNode(n)
 	case *ast.ValueNode:
 		return c.evalValueNode(n)
 	case *ast.WhileNode:
@@ -342,9 +346,10 @@ func (c *Calc) evalFileNode(file *ast.FileNode) error {
 
 func (c *Calc) evalFuncNode(fn *ast.FuncNode) error {
 	c.trace(fn, "define func: %v", fn.Name)
-	c.funcs[fn.Name] = func(ic *Calc) error {
+	c.Funcs[fn.Name] = func(ic *Calc) error {
 		return ic.invokeFunction(c, fn)
 	}
+	c.Exports[fn.Name] = c.Funcs[fn.Name]
 	return nil
 }
 
@@ -355,6 +360,7 @@ func (c *Calc) evalImportNode(importNode *ast.ImportNode) error {
 			return err
 		}
 	}
+	c.Print("ok")
 	return nil
 }
 
@@ -370,7 +376,7 @@ func (c *Calc) evalIncludeNode(include *ast.IncludeNode) error {
 
 func (c *Calc) evalInvokeNode(invoke *ast.InvokeNode) error {
 	c.trace(invoke, "invoke %v", invoke.Name)
-	fn, ok := c.funcs[invoke.Name]
+	fn, ok := c.Funcs[invoke.Name]
 	if !ok {
 		return fmt.Errorf("no such function: %v", invoke.Name)
 	}
@@ -387,9 +393,10 @@ func (c *Calc) evalInvokeNode(invoke *ast.InvokeNode) error {
 
 func (c *Calc) evalMacroNode(mac *ast.MacroNode) error {
 	c.trace(mac, "define macro: %v", mac.Name)
-	c.funcs[mac.Name] = func(_ *Calc) error {
+	c.Funcs[mac.Name] = func(_ *Calc) error {
 		return c.invokeMacro(mac)
 	}
+	c.Exports[mac.Name] = c.Funcs[mac.Name]
 	return nil
 }
 
@@ -419,6 +426,17 @@ func (c *Calc) evalStackNode(node *ast.StackNode) error {
 	c.trace(node, "stack %v", node.Name)
 	stack := c.Define(node.Name)
 	c.Stack = stack
+	return nil
+}
+
+func (c *Calc) evalTryNode(node *ast.TryNode) error {
+	c.trace(node, "try")
+	if err := c.evalExprNode(node.Expr); err != nil {
+		c.Stack.Push(err.Error())
+		c.Stack.Push(FormatBool(false))
+	} else {
+		c.Stack.Push(FormatBool(true))
+	}
 	return nil
 }
 
@@ -463,9 +481,10 @@ func (c *Calc) moduleContext(name string) *Calc {
 		config:  c.config,
 		main:    NewStack("main"),
 		global:  make(map[string]*Stack),
-		funcs:   make(map[string]CalcFunc),
+		Funcs:   make(map[string]CalcFunc),
+		Exports: make(map[string]CalcFunc),
 		defs:    c.defs,
-		modules: c.modules,
+		Modules: c.Modules,
 	}
 	dc.Stack = dc.main
 	dc.local = dc.global
@@ -481,9 +500,10 @@ func functionContext(c *Calc, name string) *Calc {
 		main:    NewStack("main"),
 		global:  c.global,
 		local:   make(map[string]*Stack),
-		funcs:   c.funcs,
+		Funcs:   c.Funcs,
+		Exports: c.Exports,
 		defs:    c.defs,
-		modules: c.modules,
+		Modules: c.Modules,
 	}
 	dc.Stack = dc.main
 	return dc
@@ -531,14 +551,15 @@ func (c *Calc) load(name string) (*Calc, error) {
 	if !ok {
 		return nil, fmt.Errorf("no such module: %v", name)
 	}
-	mod, ok := c.modules[def.Name]
+	mod, ok := c.Modules[def.Name]
 	if ok {
 		return mod, nil
 	}
 
 	dc := c.moduleContext(name)
 	for name, fn := range def.Natives {
-		dc.funcs[name] = fn
+		dc.Funcs[name] = fn
+		dc.Exports[name] = fn
 	}
 
 	if def.ScriptPath != "" {
@@ -556,10 +577,10 @@ func (c *Calc) load(name string) (*Calc, error) {
 	}
 
 	for name, fn := range builtin {
-		dc.funcs[name] = fn
+		dc.Funcs[name] = fn
 	}
 
-	c.modules[def.Name] = dc
+	c.Modules[def.Name] = dc
 	return dc, nil
 }
 

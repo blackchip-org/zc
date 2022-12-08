@@ -131,6 +131,14 @@ type StackNode struct {
 func (n StackNode) Pos() token.Pos { return n.Token.Pos }
 func (n StackNode) String() string { return nodeStringJSON(n) }
 
+type TryNode struct {
+	Token token.Token `json:"-"`
+	Expr  *ExprNode
+}
+
+func (n TryNode) Pos() token.Pos { return n.Token.Pos }
+func (n TryNode) String() string { return nodeStringJSON(n) }
+
 type ValueNode struct {
 	Token token.Token `json:"-"`
 	Value string
@@ -289,6 +297,17 @@ func (n StackNode) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "Stack",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n TryNode) MarshalJSON() ([]byte, error) {
+	type Alias TryNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Try",
 		Alias: (Alias)(n),
 	})
 }

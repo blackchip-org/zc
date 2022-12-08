@@ -20,6 +20,7 @@ func TestParser(t *testing.T) {
 		"import",
 		"include",
 		"stack",
+		"try",
 		"while",
 	}
 

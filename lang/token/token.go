@@ -48,6 +48,7 @@ const (
 	Return
 	Semicolon
 	Slash
+	Try
 	Value
 	While
 )
@@ -71,6 +72,7 @@ var tokStr = map[Type]string{
 	Return:      "return",
 	Slash:       "/",
 	Semicolon:   ";",
+	Try:         "try",
 	Value:       "value",
 	While:       "while",
 }
@@ -84,6 +86,7 @@ var keywords = map[string]Type{
 	"if":      If,
 	"loop":    Loop,
 	"macro":   Macro,
+	"try":     Try,
 	"while":   While,
 }
 
