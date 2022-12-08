@@ -1,0 +1,49 @@
+{
+  "Node": "File",
+  "Block": [
+    {
+      "Node": "For",
+      "Stack": {
+        "Node": "Stack",
+        "Name": "item"
+      },
+      "Expr": {
+        "Node": "Expr",
+        "Expr": [
+          {
+            "Node": "Value",
+            "Value": "1"
+          },
+          {
+            "Node": "Value",
+            "Value": "2"
+          },
+          {
+            "Node": "Value",
+            "Value": "3"
+          }
+        ]
+      },
+      "Block": [
+        {
+          "Node": "Expr",
+          "Expr": [
+            {
+              "Node": "Ref",
+              "Type": "/",
+              "Name": "item"
+            },
+            {
+              "Node": "Value",
+              "Value": "2"
+            },
+            {
+              "Node": "Invoke",
+              "Name": "mul"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

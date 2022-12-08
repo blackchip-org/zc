@@ -1,6 +1,6 @@
 func run //files
-	for file in files
-		import /file:testing
+	for file; files
+		import testing; file 
 		globals; testing globals
 		for global in globals
 			if /global 'test-' starts-with

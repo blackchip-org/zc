@@ -1,0 +1,2 @@
+for item; 1 2 3
+	/item 2 mul

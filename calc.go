@@ -277,6 +277,8 @@ func (c *Calc) evalNode(node ast.Node) error {
 		return c.evalIfNode(n)
 	case *ast.FileNode:
 		return c.evalFileNode(n)
+	case *ast.ForNode:
+		return c.evalForNode(n)
 	case *ast.FuncNode:
 		return c.evalFuncNode(n)
 	case *ast.ImportNode:
@@ -340,6 +342,26 @@ func (c *Calc) evalIfNode(ifNode *ast.IfNode) error {
 func (c *Calc) evalFileNode(file *ast.FileNode) error {
 	for _, line := range file.Block {
 		if err := c.evalNode(line); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (c *Calc) evalForNode(node *ast.ForNode) error {
+	c.trace(node, "for %v %v", node.Stack, node.Expr)
+
+	expr := NewStack("")
+	c.Stack = expr
+	if err := c.evalExprNode(node.Expr); err != nil {
+		return err
+	}
+	c.Stack = c.main
+
+	i := c.Define(node.Stack.Name)
+	for _, item := range expr.Items() {
+		i.Set(item)
+		if err := c.evalBlock(node.Block); err != nil {
 			return err
 		}
 	}
@@ -581,6 +603,7 @@ func (c *Calc) load(name string) (*Calc, error) {
 	for name, fn := range builtin {
 		dc.Funcs[name] = fn
 	}
+	dc.Funcs["eval"] = eval
 
 	c.Modules[def.Name] = dc
 	return dc, nil

@@ -1,6 +1,5 @@
 {
   "Node": "File",
-  "Name": "lang/parser/tests/try.zc",
   "Block": [
     {
       "Node": "Func",

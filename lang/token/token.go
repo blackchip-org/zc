@@ -36,6 +36,7 @@ const (
 	Elif
 	Else
 	End
+	For
 	Func
 	Id
 	Include
@@ -60,6 +61,7 @@ var tokStr = map[Type]string{
 	Elif:        "elif",
 	Else:        "else",
 	End:         "end",
+	For:         "for",
 	Func:        "func",
 	Id:          "id",
 	Include:     "include",
@@ -80,6 +82,7 @@ var tokStr = map[Type]string{
 var keywords = map[string]Type{
 	"elif":    Elif,
 	"else":    Else,
+	"for":     For,
 	"func":    Func,
 	"include": Include,
 	"import":  Import,

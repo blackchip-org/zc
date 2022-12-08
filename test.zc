@@ -1,0 +1,4 @@
+import test
+
+'zc:zlib/basic_test.zc'
+test.run

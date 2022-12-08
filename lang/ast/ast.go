@@ -36,6 +36,16 @@ type FileNode struct {
 func (n FileNode) Pos() token.Pos { return n.Token.Pos }
 func (n FileNode) String() string { return nodeStringJSON(n) }
 
+type ForNode struct {
+	Token token.Token `json:"-"`
+	Stack *StackNode
+	Expr  *ExprNode
+	Block []Node
+}
+
+func (n ForNode) Pos() token.Pos { return n.Token.Pos }
+func (n ForNode) String() string { return nodeStringJSON(n) }
+
 type FuncNode struct {
 	Token  token.Token `json:"-"`
 	Name   string
@@ -196,6 +206,17 @@ func (n FileNode) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "File",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n ForNode) MarshalJSON() ([]byte, error) {
+	type Alias ForNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "For",
 		Alias: (Alias)(n),
 	})
 }

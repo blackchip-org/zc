@@ -111,6 +111,30 @@ func (p *parser) parseFile() ([]ast.Node, error) {
 	return nodes, nil
 }
 
+func (p *parser) parseFor() (*ast.ForNode, error) {
+	node := &ast.ForNode{Token: p.tok}
+
+	p.scan()
+	stack, err := p.parseStack()
+	node.Stack = stack
+	if err != nil {
+		return node, err
+	}
+
+	expr, err := p.parseExpr()
+	node.Expr = expr
+	if err != nil {
+		return node, err
+	}
+
+	block, err := p.parseBlock()
+	node.Block = block
+	if err != nil {
+		return node, err
+	}
+	return node, nil
+}
+
 func (p *parser) parseFunc() (*ast.FuncNode, error) {
 	fn := &ast.FuncNode{Token: p.tok}
 
@@ -272,6 +296,8 @@ func (p *parser) parseStatement() (ast.Node, error) {
 	switch p.tok.Type {
 	case token.DoubleSlash:
 		return p.parseExpr()
+	case token.For:
+		return p.parseFor()
 	case token.Func:
 		return p.parseFunc()
 	case token.If:

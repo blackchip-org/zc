@@ -13,6 +13,7 @@ func TestParser(t *testing.T) {
 	tests := []string{
 		"dedent2",
 		"expr2",
+		"for",
 		"func2",
 		"if-elif-else",
 		"if-else",
