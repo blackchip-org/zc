@@ -46,6 +46,14 @@ func copy_(calc *Calc) error {
 	return nil
 }
 
+func eval(calc *Calc) error {
+	node, err := calc.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	return calc.EvalString(node)
+}
+
 func n(calc *Calc) error {
 	n := calc.Stack.Len()
 	calc.Stack.Push(FormatInt(n))

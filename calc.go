@@ -86,6 +86,8 @@ func NewCalc(config Config) (*Calc, error) {
 	for name, fn := range builtin {
 		c.Funcs[name] = fn
 	}
+	c.Funcs["eval"] = eval
+
 	for _, prelude := range config.Prelude {
 		if err := c.Include(prelude); err != nil {
 			return nil, err
