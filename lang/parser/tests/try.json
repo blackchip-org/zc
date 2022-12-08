@@ -1,0 +1,42 @@
+{
+  "Node": "File",
+  "Name": "lang/parser/tests/try.zc",
+  "Block": [
+    {
+      "Node": "Func",
+      "Name": "bad",
+      "Params": null,
+      "Block": [
+        {
+          "Node": "Expr",
+          "Expr": [
+            {
+              "Node": "Invoke",
+              "Name": "s1"
+            },
+            {
+              "Node": "Value",
+              "Value": "0"
+            },
+            {
+              "Node": "Invoke",
+              "Name": "div"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Node": "Try",
+      "Expr": {
+        "Node": "Expr",
+        "Expr": [
+          {
+            "Node": "Invoke",
+            "Name": "bad"
+          }
+        ]
+      }
+    }
+  ]
+}

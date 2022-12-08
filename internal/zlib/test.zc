@@ -1,0 +1,12 @@
+func run //files
+	for file in files
+		import /file:testing
+		globals; testing globals
+		for global in globals
+			if /global 'test-' starts-with
+				try /name eval
+				if neq
+					err; pop
+					'FAIL: `name`: `err`' print
+				else
+					'pass: /name'
