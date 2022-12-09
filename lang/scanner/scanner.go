@@ -57,6 +57,10 @@ func (s *Scanner) Next() token.Token {
 	s.start = s.pos
 	next := s.lookahead()
 
+	if s.ch == '#' {
+		s.skipComment()
+	}
+
 	switch {
 	case s.ch == end:
 		return token.New(token.End, "", s.pos)
@@ -221,6 +225,24 @@ func (s *Scanner) scan() {
 func (s *Scanner) skipSpace() {
 	// Newlines have their own tokens so do not include here
 	for s.ch != end && s.ch != '\n' && unicode.IsSpace(s.ch) {
+		s.scan()
+	}
+}
+
+func (s *Scanner) skipComment() {
+	s.scan()
+	if s.ch == '=' {
+		s.scan()
+		for s.ch != end && !(s.ch == '=' && s.lookahead() == '#') {
+			s.scan()
+		}
+		s.scan()
+		s.scan()
+	} else {
+		s.scan()
+		for s.ch != end && s.ch != '\n' {
+			s.scan()
+		}
 		s.scan()
 	}
 }

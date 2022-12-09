@@ -1,0 +1,50 @@
+import assert
+
+func test-eq
+    1 1 eq
+    assert.t
+    1 2 eq
+    assert.f
+
+func test-eq-int
+    1234 '1,234' eq
+    assert.t
+
+func test-gt
+    1 0 gt
+    assert.t
+    0 0 gt
+    assert.f
+    -1 0 gt
+    assert.f
+
+func test-gte
+    1 0 gte
+    assert.t
+    0 0 gte
+    assert.t
+    -1 0 gte
+    assert.f
+
+func test-lt
+    1 0 lt
+    assert.f
+    0 0 lt
+    assert.f
+    -1 0 lt
+    assert.t
+
+func test-lte
+    1 0 lte
+    assert.f
+    0 0 lte
+    assert.t
+    -1 0 lte
+    assert.t
+
+func test-neq
+    1 1 neq
+    assert.f
+    1 2 neq
+    assert.t
+

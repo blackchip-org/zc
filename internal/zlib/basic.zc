@@ -1,10 +1,7 @@
 include bool
 
-func dec /a
-	/a -1 add
-
-func inc /a
-	/a 1 add
+macro dec -1 add
+macro inc 1 add
 
 func sum //a
 	0

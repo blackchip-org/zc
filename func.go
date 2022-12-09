@@ -7,41 +7,50 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type FuncBigInt2 func(*big.Int, *big.Int, *big.Int)
-type FuncDec2 func(decimal.Decimal, decimal.Decimal) decimal.Decimal
+type FuncBigIntNumOp2 func(*big.Int, *big.Int, *big.Int)
+type FuncDecimalNumOp2 func(decimal.Decimal, decimal.Decimal) decimal.Decimal
 
-type NumOp2 struct {
-	BigInt2 FuncBigInt2
-	Dec2    FuncDec2
+type FuncsNumOp2 struct {
+	BigInt  FuncBigIntNumOp2
+	Decimal FuncDecimalNumOp2
 }
 
-func BigInt2(calc *Calc, fn FuncBigInt2) error {
-	b, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
-	a, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
+type FuncBigIntCompOp func(*big.Int, *big.Int) bool
+type FuncBoolCompOp func(bool, bool) bool
+type FuncDecimalCompOp func(decimal.Decimal, decimal.Decimal) bool
+type FuncStringCompOp func(string, string) bool
 
-	bi, err := ParseBigInt(b)
+type FuncsCompOp struct {
+	BigInt  FuncBigIntCompOp
+	Bool    FuncBoolCompOp
+	Decimal FuncDecimalCompOp
+	String  FuncStringCompOp
+}
+
+func BigIntNumOp2(calc *Calc, fn FuncBigIntNumOp2) error {
+	a, b, err := calc.PopBigInt2()
 	if err != nil {
 		return err
 	}
-	ai, err := ParseBigInt(a)
-	if err != nil {
-		return err
-	}
+	var r big.Int
+	fn(&r, a, b)
 
-	var zi big.Int
-	fn(&zi, ai, bi)
-
-	calc.Stack.Push(FormatBigInt(&zi))
+	calc.Stack.Push(FormatBigInt(&r))
 	return nil
 }
 
-func Dec2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) (err error) {
+func BigIntCompOp(calc *Calc, fn FuncBigIntCompOp) error {
+	a, b, err := calc.PopBigInt2()
+	if err != nil {
+		return err
+	}
+	r := fn(a, b)
+
+	calc.Stack.Push(FormatBool(r))
+	return nil
+}
+
+func DecNumOp2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) (err error) {
 	defer func() {
 		if p := recover(); p != nil {
 			msg, ok := p.(string)
@@ -56,35 +65,29 @@ func Dec2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Deci
 		}
 	}()
 
-	b, err := calc.Stack.Pop()
-	if err != nil {
-		return
-	}
-	a, err := calc.Stack.Pop()
+	a, b, err := calc.PopDecimal2()
 	if err != nil {
 		return
 	}
 
-	bd, err := ParseDecimal(b)
-	if err != nil {
-		return
-	}
-	ad, err := ParseDecimal(a)
-	if err != nil {
-		return
-	}
-
-	zd := fn(ad, bd)
-	calc.Stack.Push(FormatDecimal(zd))
+	r := fn(a, b)
+	calc.Stack.Push(FormatDecimal(r))
 	return nil
 }
 
-func Num2(calc *Calc, ops NumOp2) error {
-	b, err := calc.Stack.Pop()
+func DecCompOp(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) bool) (err error) {
+	a, b, err := calc.PopDecimal2()
 	if err != nil {
-		return err
+		return
 	}
-	a, err := calc.Stack.Pop()
+
+	r := fn(a, b)
+	calc.Stack.Push(FormatBool(r))
+	return nil
+}
+
+func NumOp2(calc *Calc, ops FuncsNumOp2) error {
+	a, b, err := calc.Pop2()
 	if err != nil {
 		return err
 	}
@@ -99,7 +102,7 @@ func Num2(calc *Calc, ops NumOp2) error {
 			return err
 		}
 		var zi big.Int
-		ops.BigInt2(&zi, ai, bi)
+		ops.BigInt(&zi, ai, bi)
 
 		calc.Stack.Push(FormatBigInt(&zi))
 		return nil
@@ -114,7 +117,32 @@ func Num2(calc *Calc, ops NumOp2) error {
 		return err
 	}
 
-	zd := ops.Dec2(ad, bd)
+	zd := ops.Decimal(ad, bd)
 	calc.Stack.Push(FormatDecimal(zd))
+	return nil
+}
+
+func CompOp(calc *Calc, ops FuncsCompOp) error {
+	a, b, err := calc.Pop2()
+	if err != nil {
+		return err
+	}
+
+	var result bool
+	switch {
+	case IsBool(a) && IsBool(b):
+		x, y := MustParseBool(a), MustParseBool(b)
+		result = ops.Bool(x, y)
+	case IsBigInt(a) && IsBigInt(b):
+		x, y := MustParseBigInt(a), MustParseBigInt(b)
+		result = ops.BigInt(x, y)
+	case IsDecimal(a) && IsDecimal(b):
+		x, y := MustParseDecimal(a), MustParseDecimal(b)
+		result = ops.Decimal(x, y)
+	default:
+		result = ops.String(a, b)
+	}
+
+	calc.Stack.Push(FormatBool(result))
 	return nil
 }

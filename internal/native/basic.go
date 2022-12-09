@@ -19,38 +19,38 @@ func opMulDec(a decimal.Decimal, b decimal.Decimal) decimal.Decimal { return a.M
 func opPowDec(a decimal.Decimal, b decimal.Decimal) decimal.Decimal { return a.Pow(b) }
 func opSubDec(a decimal.Decimal, b decimal.Decimal) decimal.Decimal { return a.Sub(b) }
 
-func AddBigInt(calc *zc.Calc) error { return zc.BigInt2(calc, opAddBigInt) }
-func DivBigInt(calc *zc.Calc) error { return zc.BigInt2(calc, opDivBigInt) }
-func MulBigInt(calc *zc.Calc) error { return zc.BigInt2(calc, opMulBigInt) }
-func PowBigInt(calc *zc.Calc) error { return zc.BigInt2(calc, opPowBigInt) }
-func SubBigInt(calc *zc.Calc) error { return zc.BigInt2(calc, opSubBigInt) }
+func AddBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opAddBigInt) }
+func DivBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opDivBigInt) }
+func MulBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opMulBigInt) }
+func PowBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opPowBigInt) }
+func SubBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opSubBigInt) }
 
-func AddDec(calc *zc.Calc) error { return zc.Dec2(calc, opAddDec) }
-func DivDec(calc *zc.Calc) error { return zc.Dec2(calc, opDivDec) }
-func MulDec(calc *zc.Calc) error { return zc.Dec2(calc, opMulDec) }
-func PowDec(calc *zc.Calc) error { return zc.Dec2(calc, opPowDec) }
-func SubDec(calc *zc.Calc) error { return zc.Dec2(calc, opSubDec) }
+func AddDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opAddDec) }
+func DivDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opDivDec) }
+func MulDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opMulDec) }
+func PowDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opPowDec) }
+func SubDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opSubDec) }
 
 var (
-	opAdd = zc.NumOp2{
-		BigInt2: opAddBigInt,
-		Dec2:    opAddDec,
+	opAdd = zc.FuncsNumOp2{
+		BigInt:  opAddBigInt,
+		Decimal: opAddDec,
 	}
-	opMul = zc.NumOp2{
-		BigInt2: opMulBigInt,
-		Dec2:    opMulDec,
+	opMul = zc.FuncsNumOp2{
+		BigInt:  opMulBigInt,
+		Decimal: opMulDec,
 	}
-	opPow = zc.NumOp2{
-		BigInt2: opPowBigInt,
-		Dec2:    opPowDec,
+	opPow = zc.FuncsNumOp2{
+		BigInt:  opPowBigInt,
+		Decimal: opPowDec,
 	}
-	opSub = zc.NumOp2{
-		BigInt2: opSubBigInt,
-		Dec2:    opSubDec,
+	opSub = zc.FuncsNumOp2{
+		BigInt:  opSubBigInt,
+		Decimal: opSubDec,
 	}
 )
 
-func Add(calc *zc.Calc) error { return zc.Num2(calc, opAdd) }
-func Mul(calc *zc.Calc) error { return zc.Num2(calc, opMul) }
-func Pow(calc *zc.Calc) error { return zc.Num2(calc, opPow) }
-func Sub(calc *zc.Calc) error { return zc.Num2(calc, opSub) }
+func Add(calc *zc.Calc) error { return zc.NumOp2(calc, opAdd) }
+func Mul(calc *zc.Calc) error { return zc.NumOp2(calc, opMul) }
+func Pow(calc *zc.Calc) error { return zc.NumOp2(calc, opPow) }
+func Sub(calc *zc.Calc) error { return zc.NumOp2(calc, opSub) }

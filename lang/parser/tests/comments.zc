@@ -1,0 +1,12 @@
+# This is a comment
+
+func inc /a
+    # This is a comment
+    /a 1 add
+
+#===
+This is a block comment
+===#
+
+func dec /a
+    /a -1 add

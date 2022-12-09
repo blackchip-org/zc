@@ -1,0 +1,2 @@
+macro true 'true'
+macro false 'false'

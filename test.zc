@@ -2,4 +2,5 @@ import test
 
 'zc:test/str.zc'
 'zc:test/basic.zc'
+'zc:test/bool.zc'
 test.run

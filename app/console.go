@@ -76,7 +76,10 @@ func RunConsole(calc *zc.Calc) {
 			calcError, ok := err.(zc.CalcError)
 			if ok {
 				for _, f := range calcError.Frames {
-					fmt.Println(f)
+					fmt.Printf("%v @ %v:%v\n", f.Pos.File, f.Pos.Line, f.Pos.Column)
+					if f.Func != "" {
+						fmt.Printf("\t%v\n", f.Func)
+					}
 				}
 			}
 			ansi.Write(ansi.BrightYellow)

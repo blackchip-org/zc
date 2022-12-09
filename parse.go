@@ -34,6 +34,14 @@ func IsBigInt(v string) bool {
 	return err == nil
 }
 
+func MustParseBigInt(v string) *big.Int {
+	i, err := ParseBigInt(v)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+
 func ParseBool(v string) (bool, error) {
 	vl := strings.ToLower(v)
 	switch vl {
@@ -43,6 +51,19 @@ func ParseBool(v string) (bool, error) {
 		return false, nil
 	}
 	return false, fmt.Errorf("expecting boolean but got %v", v)
+}
+
+func IsBool(v string) bool {
+	_, err := ParseBool(v)
+	return err == nil
+}
+
+func MustParseBool(v string) bool {
+	b, err := ParseBool(v)
+	if err != nil {
+		panic(err)
+	}
+	return b
 }
 
 func ParseDecimal(v string) (decimal.Decimal, error) {
@@ -56,6 +77,14 @@ func ParseDecimal(v string) (decimal.Decimal, error) {
 func IsDecimal(v string) bool {
 	_, err := ParseDecimal(v)
 	return err == nil
+}
+
+func MustParseDecimal(v string) decimal.Decimal {
+	d, err := ParseDecimal(v)
+	if err != nil {
+		panic(err)
+	}
+	return d
 }
 
 func ParseInt(v string) (int, error) {

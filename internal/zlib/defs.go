@@ -61,11 +61,15 @@ var (
 		},
 	}
 	Bool = zc.ModuleDef{
-		Name: "bool",
+		Name:       "bool",
+		ScriptPath: "zc:zlib/bool.zc",
 		Natives: map[string]zc.CalcFunc{
 			"eq":  native.Eq,
+			"neq": native.Neq,
 			"gt":  native.Gt,
+			"gte": native.Gte,
 			"lt":  native.Lt,
+			"lte": native.Lte,
 			"not": native.Not,
 		},
 	}

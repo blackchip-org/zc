@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/big"
 	"strings"
 
 	"github.com/blackchip-org/zc/internal"
@@ -52,11 +53,9 @@ func (c CalcError) Error() string {
 type CalcFunc func(*Calc) error
 
 type Calc struct {
-	Out   *strings.Builder
-	Stack *Stack
-	name  string
-	//parent  *Calc
-	//frame   Frame
+	Out     *strings.Builder
+	Stack   *Stack
+	name    string
 	config  Config
 	main    *Stack
 	global  map[string]*Stack
@@ -221,6 +220,42 @@ func (c Calc) Interpolate(v string) (string, error) {
 	return result.String(), nil
 }
 
+func (c *Calc) Pop2() (string, string, error) {
+	b, err := c.Stack.Pop()
+	if err != nil {
+		return "", "", err
+	}
+	a, err := c.Stack.Pop()
+	if err != nil {
+		return "", "", err
+	}
+	return a, b, nil
+}
+
+func (c *Calc) PopBigInt() (*big.Int, error) {
+	v, err := c.Stack.Pop()
+	if err != nil {
+		return nil, err
+	}
+	r, err := ParseBigInt(v)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func (c *Calc) PopBigInt2() (*big.Int, *big.Int, error) {
+	b, err := c.PopBigInt()
+	if err != nil {
+		return nil, nil, err
+	}
+	a, err := c.PopBigInt()
+	if err != nil {
+		return nil, nil, err
+	}
+	return a, b, nil
+}
+
 func (c *Calc) PopBool() (bool, error) {
 	v, err := c.Stack.Pop()
 	if err != nil {
@@ -243,6 +278,18 @@ func (c *Calc) PopDecimal() (decimal.Decimal, error) {
 		return decimal.Zero, err
 	}
 	return d, err
+}
+
+func (c *Calc) PopDecimal2() (decimal.Decimal, decimal.Decimal, error) {
+	b, err := c.PopDecimal()
+	if err != nil {
+		return decimal.Zero, decimal.Zero, err
+	}
+	a, err := c.PopDecimal()
+	if err != nil {
+		return decimal.Zero, decimal.Zero, err
+	}
+	return a, b, nil
 }
 
 func (c *Calc) PopInt() (int, error) {
@@ -373,6 +420,7 @@ func (c *Calc) evalIfNode(ifNode *ast.IfNode) error {
 				if err := c.evalBlock(caseNode.Block); err != nil {
 					return err
 				}
+				break
 			}
 		}
 	}
@@ -452,23 +500,16 @@ func (c *Calc) evalInvokeNode(node *ast.InvokeNode) error {
 	if !ok {
 		return c.err(node, fmt.Errorf("no such function: %v", node.Name))
 	}
-	// c.frame = Frame{
-	// 	Pos:  invoke.Pos(),
-	// 	Func: invoke.Name,
-	// }
-	// c.trace(invoke, "adding frame %v", c.frame)
 	if err := fn(c); err != nil {
 		return c.chain(node, err)
 	}
-	// c.trace(invoke, "removing frame %v", c.frame)
-	// c.frame = Frame{}
 	return nil
 }
 
 func (c *Calc) evalMacroNode(mac *ast.MacroNode) error {
 	c.trace(mac, "define macro: %v", mac.Name)
-	c.Funcs[mac.Name] = func(_ *Calc) error {
-		return c.invokeMacro(mac)
+	c.Funcs[mac.Name] = func(caller *Calc) error {
+		return caller.invokeMacro(mac)
 	}
 	c.Exports[mac.Name] = c.Funcs[mac.Name]
 	return nil
@@ -549,9 +590,8 @@ func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
 
 func (c *Calc) moduleContext(name string) *Calc {
 	dc := &Calc{
-		Out:  c.Out,
-		name: name,
-		//parent:  c,
+		Out:     c.Out,
+		name:    name,
 		config:  c.config,
 		main:    NewStack("main"),
 		global:  make(map[string]*Stack),
@@ -567,9 +607,8 @@ func (c *Calc) moduleContext(name string) *Calc {
 
 func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 	dc := &Calc{
-		Out:  c.Out,
-		name: c.name + "." + node.Name,
-		//parent:  c,
+		Out:     c.Out,
+		name:    c.name + "." + node.Name,
 		config:  c.config,
 		main:    NewStack("main"),
 		global:  c.global,
@@ -578,10 +617,6 @@ func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 		Exports: c.Exports,
 		defs:    c.defs,
 		Modules: c.Modules,
-		// frame: Frame{
-		// 	Pos:  node.Pos(),
-		// 	Func: node.Name,
-		// },
 	}
 	dc.Stack = dc.main
 	return dc
@@ -666,30 +701,6 @@ func (c *Calc) load(def ModuleDef) (*Calc, error) {
 	return dc, nil
 }
 
-// func (c *Calc) err(node ast.Node, format string, a ...any) error {
-// 	var frames []Frame
-// 	// frames = append(frames, Frame{
-// 	// 	Pos:  node.Pos(),
-// 	// 	Func: c.frame.Func,
-// 	// })
-// 	panic("where am i")
-// 	fmt.Printf("*** THE FRAMES ARE\n")
-// 	for f := c; f != nil; f = f.parent {
-// 		fmt.Printf("CALC NAME: %v\n", f.name)
-// 		frame := Frame{
-// 			Pos:  f.frame.Pos,
-// 			Func: f.frame.Func,
-// 		}
-// 		fmt.Println(frame)
-// 		frames = append(frames, frame)
-// 	}
-// 	fmt.Println("DONE")
-// 	return CalcError{
-// 		Message: fmt.Sprintf(format, a...),
-// 		Frames:  frames,
-// 	}
-// }
-
 func (c *Calc) chain(node *ast.InvokeNode, err error) error {
 	frame := Frame{Pos: node.Pos()}
 
@@ -722,8 +733,10 @@ func (c *Calc) err(node ast.Node, err error) error {
 func (c *Calc) trace(node ast.Node, format string, a ...any) {
 	if c.config.Trace {
 		msg := fmt.Sprintf(format, a...)
-		log.Printf("%v(%v)", c.Stack.Name, c.Stack)
-		log.Printf("%v %v", node.Pos(), msg)
-		log.Println()
+		if c.Stack.Len() > 0 {
+			log.Printf("eval: %v(%v)", c.Stack.Name, c.Stack)
+		}
+		log.Printf("eval:     %v @ %v", msg, node.Pos())
+		//log.Println()
 	}
 }

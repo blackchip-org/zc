@@ -25,6 +25,8 @@ var builtin = map[string]CalcFunc{
 	"round-mode=": roundModeGet,
 	"recv":        recv,
 	"send":        send,
+	"trace":       trace,
+	"trace-off":   traceOff,
 	"undef":       undef,
 }
 
@@ -174,6 +176,16 @@ func send(calc *Calc) error {
 		return err
 	}
 	calc.main.Push(a)
+	return nil
+}
+
+func trace(calc *Calc) error {
+	calc.config.Trace = true
+	return nil
+}
+
+func traceOff(calc *Calc) error {
+	calc.config.Trace = false
 	return nil
 }
 

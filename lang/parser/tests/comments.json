@@ -1,0 +1,71 @@
+{
+  "Node": "File",
+  "Block": [
+    {
+      "Node": "Func",
+      "Name": "inc",
+      "Params": [
+        {
+          "Node": "Ref",
+          "Type": "/",
+          "Name": "a"
+        }
+      ],
+      "Block": [
+        {
+          "Node": "Expr",
+          "Expr": [
+            {
+              "Node": "Invoke",
+              "Name": ""
+            },
+            {
+              "Node": "Ref",
+              "Type": "/",
+              "Name": "a"
+            },
+            {
+              "Node": "Value",
+              "Value": "1"
+            },
+            {
+              "Node": "Invoke",
+              "Name": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Node": "Func",
+      "Name": "dec",
+      "Params": [
+        {
+          "Node": "Ref",
+          "Type": "/",
+          "Name": "a"
+        }
+      ],
+      "Block": [
+        {
+          "Node": "Expr",
+          "Expr": [
+            {
+              "Node": "Ref",
+              "Type": "/",
+              "Name": "a"
+            },
+            {
+              "Node": "Value",
+              "Value": "-1"
+            },
+            {
+              "Node": "Invoke",
+              "Name": "add"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
