@@ -31,6 +31,7 @@ type Type int
 
 const (
 	Invalid Type = iota
+	Comma
 	Dedent
 	DoubleSlash
 	Elif
@@ -56,6 +57,7 @@ const (
 
 var tokStr = map[Type]string{
 	Invalid:     "invalid",
+	Comma:       ",",
 	Dedent:      "dedent",
 	DoubleSlash: "//",
 	Elif:        "elif",
@@ -145,7 +147,7 @@ func IsIdRune(ch rune) bool {
 		return false
 	}
 	switch ch {
-	case ';':
+	case ';', ',':
 		return false
 	}
 	return true

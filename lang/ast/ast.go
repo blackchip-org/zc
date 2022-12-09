@@ -74,12 +74,18 @@ func (n IfCaseNode) Pos() token.Pos { return n.Token.Pos }
 func (n IfCaseNode) String() string { return nodeStringJSON(n) }
 
 type ImportNode struct {
-	Token token.Token `json:"-"`
-	Names []string
+	Token   token.Token `json:"-"`
+	Modules []ModuleRef
 }
 
 func (n ImportNode) Pos() token.Pos { return n.Token.Pos }
 func (n ImportNode) String() string { return nodeStringJSON(n) }
+
+type ModuleRef struct {
+	Zlib  bool
+	Name  string
+	Alias string
+}
 
 type IncludeNode struct {
 	Token token.Token `json:"-"`

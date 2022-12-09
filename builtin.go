@@ -3,6 +3,8 @@ package zc
 import (
 	"errors"
 	"fmt"
+	"os"
+	"strings"
 )
 
 var builtin = map[string]CalcFunc{
@@ -11,16 +13,19 @@ var builtin = map[string]CalcFunc{
 	"clear":       clear,
 	"copy":        copy_,
 	"cp":          copy_,
+	"exit":        exit,
 	"n":           n,
 	"places":      places,
 	"places=":     placesGet,
 	"pop":         pop,
 	"print":       print,
+	"println":     println,
 	"round":       round,
 	"round-mode":  roundMode,
 	"round-mode=": roundModeGet,
 	"recv":        recv,
 	"send":        send,
+	"undef":       undef,
 }
 
 func abort(calc *Calc) error {
@@ -51,7 +56,20 @@ func eval(calc *Calc) error {
 	if err != nil {
 		return err
 	}
-	return calc.EvalString(node)
+	return calc.EvalString("<eval>", node)
+}
+
+func exit(calc *Calc) error {
+	a, err := calc.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	code, err := ParseInt(a)
+	if err != nil {
+		return err
+	}
+	os.Exit(code)
+	return nil
 }
 
 func n(calc *Calc) error {
@@ -88,7 +106,16 @@ func print(calc *Calc) error {
 	if err != nil {
 		return err
 	}
-	calc.Print(a)
+	fmt.Print(a)
+	return nil
+}
+
+func println(calc *Calc) error {
+	a, err := calc.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	fmt.Println(a)
 	return nil
 }
 
@@ -147,5 +174,23 @@ func send(calc *Calc) error {
 		return err
 	}
 	calc.main.Push(a)
+	return nil
+}
+
+func undef(calc *Calc) error {
+	target, err := calc.Stack.Pop()
+	if err != nil {
+		return err
+	}
+
+	var n = 0
+	for name := range calc.Funcs {
+		parts := strings.Split(name, ".")
+		if parts[0] == target {
+			delete(calc.Funcs, name)
+			n++
+		}
+	}
+	calc.Printf("%v undefined", n)
 	return nil
 }

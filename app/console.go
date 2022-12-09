@@ -51,15 +51,15 @@ func RunConsole(calc *zc.Calc) {
 
 	for ; err == nil; text, err = line.Prompt(prompt) {
 		var err error
+		ansi.Write(ansi.ClearScreen)
 		if strings.TrimSpace(text) == "" {
 			if calc.Stack.Len() > 0 {
 				_, err = calc.Stack.Pop()
 			}
 		} else {
-			err = calc.EvalString(text)
+			err = calc.EvalString("<cli>", text)
 		}
 
-		ansi.Write(ansi.ClearScreen)
 		fmt.Println()
 
 		for i, val := range calc.Stack.Items() {

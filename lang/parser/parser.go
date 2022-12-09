@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"fmt"
+	"path"
 
 	"github.com/blackchip-org/zc/lang/ast"
 	"github.com/blackchip-org/zc/lang/scanner"
@@ -224,19 +225,35 @@ func (p *parser) parseInclude() (*ast.IncludeNode, error) {
 }
 
 func (p *parser) parseImport() (*ast.ImportNode, error) {
-	importNode := &ast.ImportNode{Token: p.tok}
+	node := &ast.ImportNode{Token: p.tok}
 
 	p.scan()
-	for p.tok.Type == token.Id {
-		importNode.Names = append(importNode.Names, p.tok.Literal)
+	for p.tok.Type == token.Id || p.tok.Type == token.Value {
+		ref := ast.ModuleRef{Name: p.tok.Literal, Zlib: p.tok.Type == token.Id}
+		if !ref.Zlib {
+			base := path.Base(ref.Name)
+			ext := path.Ext(base)
+			ref.Alias = base[:len(base)-len(ext)]
+		}
 		p.scan()
+
+		if p.tok.Type == token.Id {
+			ref.Alias = p.tok.Literal
+			p.scan()
+		}
+
+		if p.tok.Type == token.Comma {
+			p.scan()
+		}
+		node.Modules = append(node.Modules, ref)
 	}
+
 	if p.tok.Type != token.Newline && p.tok.Type != token.End {
-		return importNode, p.err("expecting %v but got %v", token.Newline, p.tok)
+		return node, p.err("expecting %v but got %v", token.Newline, p.tok)
 	}
 
 	p.scan()
-	return importNode, nil
+	return node, nil
 }
 
 func (p *parser) parseMacro() (*ast.MacroNode, error) {

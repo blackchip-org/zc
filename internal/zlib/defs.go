@@ -11,10 +11,15 @@ var All = []zc.ModuleDef{
 	Bool,
 	Runtime,
 	Str,
+	Test,
 }
 
 var (
 	PreludeCLI = []string{
+		"basic",
+		"str",
+	}
+	PreludeDev = []string{
 		"basic",
 		"bool",
 		"str",
@@ -24,11 +29,11 @@ var (
 var (
 	Assert = zc.ModuleDef{
 		Name:       "assert",
-		ScriptPath: "zlib/assert.zc",
+		ScriptPath: "zc:zlib/assert.zc",
 	}
 	Basic = zc.ModuleDef{
 		Name:       "basic",
-		ScriptPath: "zlib/basic.zc",
+		ScriptPath: "zc:zlib/basic.zc",
 		Natives: map[string]zc.CalcFunc{
 			"+":     native.Add,
 			"/":     native.DivDec,
@@ -74,7 +79,12 @@ var (
 	Str = zc.ModuleDef{
 		Name: "str",
 		Natives: map[string]zc.CalcFunc{
-			"len": native.Len,
+			"len":         native.Len,
+			"starts-with": native.StartsWith,
 		},
+	}
+	Test = zc.ModuleDef{
+		Name:       "test",
+		ScriptPath: "zc:zlib/test.zc",
 	}
 )

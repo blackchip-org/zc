@@ -62,10 +62,18 @@ func eval(calc *zc.Calc) {
 	if err != nil {
 		log.Fatalf("unable to read file: %v", err)
 	}
-	if err := calc.Eval(src); err != nil {
-		log.Fatal(err)
+	if err := calc.Eval(evalFile, src); err != nil {
+		log.Print(err)
+		if cErr, ok := err.(zc.CalcError); ok {
+			for _, frame := range cErr.Frames {
+				log.Println(frame)
+			}
+		}
+		os.Exit(1)
 	}
-	fmt.Print(calc.Stack.Items())
+	for _, item := range calc.Stack.Items() {
+		fmt.Println(item)
+	}
 }
 
 func parse() {

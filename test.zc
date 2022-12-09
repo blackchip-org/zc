@@ -1,4 +1,5 @@
 import test
 
-'zc:zlib/basic_test.zc'
+'zc:test/str.zc'
+'zc:test/basic.zc'
 test.run

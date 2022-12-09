@@ -2,6 +2,7 @@ package zc
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"strings"
 
@@ -19,7 +20,8 @@ var (
 
 type Config struct {
 	ModuleDefs []ModuleDef
-	Prelude    []string
+	PreludeCLI []string
+	PreludeDev []string
 	Trace      bool
 }
 
@@ -50,11 +52,11 @@ func (c CalcError) Error() string {
 type CalcFunc func(*Calc) error
 
 type Calc struct {
-	Out     *strings.Builder
-	Stack   *Stack
-	name    string
-	parent  *Calc
-	frame   Frame
+	Out   *strings.Builder
+	Stack *Stack
+	name  string
+	//parent  *Calc
+	//frame   Frame
 	config  Config
 	main    *Stack
 	global  map[string]*Stack
@@ -88,7 +90,7 @@ func NewCalc(config Config) (*Calc, error) {
 	}
 	c.Funcs["eval"] = eval
 
-	for _, prelude := range config.Prelude {
+	for _, prelude := range config.PreludeCLI {
 		if err := c.Include(prelude); err != nil {
 			return nil, err
 		}
@@ -96,9 +98,9 @@ func NewCalc(config Config) (*Calc, error) {
 	return c, nil
 }
 
-func (c *Calc) Eval(src []byte) (err error) {
+func (c *Calc) Eval(name string, src []byte) (err error) {
 	c.Out.Reset()
-	ast, err := parser.Parse("", src)
+	ast, err := parser.Parse(name, src)
 	if err != nil {
 		return
 	}
@@ -107,8 +109,8 @@ func (c *Calc) Eval(src []byte) (err error) {
 	return
 }
 
-func (c *Calc) EvalString(src string) error {
-	return c.Eval([]byte(src))
+func (c *Calc) EvalString(name string, src string) error {
+	return c.Eval(name, []byte(src))
 }
 
 func (c *Calc) Define(name string) *Stack {
@@ -123,20 +125,47 @@ func (c *Calc) Define(name string) *Stack {
 	return stack
 }
 
-func (c *Calc) Import(modName string) error {
-	dc, err := c.load(modName)
+func (c *Calc) import_(def ModuleDef, prefix string) error {
+	dc, err := c.load(def)
 	if err != nil {
 		return err
 	}
 	for funcName, fn := range dc.Exports {
-		qName := modName + "." + funcName
+		var qName string
+		if prefix != "" {
+			qName = prefix + "." + funcName
+		} else {
+			qName = funcName
+		}
 		c.Funcs[qName] = fn
 	}
 	return nil
 }
 
+func (c *Calc) Import(modName string, alias string) error {
+	def, ok := c.defs[modName]
+	if !ok {
+		return fmt.Errorf("no such module: %v", modName)
+	}
+
+	prefix := modName
+	if alias != "" {
+		prefix = alias
+	}
+	return c.import_(def, prefix)
+}
+
+func (c *Calc) ImportFile(file string, name string) error {
+	def := ModuleDef{Name: name, ScriptPath: file}
+	return c.import_(def, name)
+}
+
 func (c *Calc) Include(modName string) error {
-	dc, err := c.load(modName)
+	def, ok := c.defs[modName]
+	if !ok {
+		return fmt.Errorf("no such module: %v", modName)
+	}
+	dc, err := c.load(def)
 	if err != nil {
 		return err
 	}
@@ -260,10 +289,18 @@ func (c *Calc) StackFor(name string) (*Stack, error) {
 	return nil, fmt.Errorf("no such stack: %v", name)
 }
 
+func (c *Calc) LoadFile(p string) ([]byte, error) {
+	if strings.HasPrefix(p, "zc:") {
+		p = p[3:]
+		return internal.Scripts.ReadFile(p)
+	}
+	return ioutil.ReadFile(p)
+}
+
 func (c *Calc) evalBlock(nodes []ast.Node) error {
 	for _, node := range nodes {
 		if err := c.evalNode(node); err != nil {
-			return err
+			return c.err(node, err)
 		}
 	}
 	return nil
@@ -306,7 +343,7 @@ func (c *Calc) evalNode(node ast.Node) error {
 func (c *Calc) evalExprNode(expr *ast.ExprNode) error {
 	for _, node := range expr.Expr {
 		if err := c.evalNode(node); err != nil {
-			return err
+			return c.err(node, err)
 		}
 	}
 	c.Stack = c.main
@@ -317,22 +354,25 @@ func (c *Calc) evalIfNode(ifNode *ast.IfNode) error {
 	for _, caseNode := range ifNode.Cases {
 		// Final "else" condition will have no case expression
 		if caseNode.Cond == nil {
-			return c.evalBlock(caseNode.Block)
+			if err := c.evalBlock(caseNode.Block); err != nil {
+				return c.err(caseNode, err)
+			}
 		} else {
-			err := c.evalExprNode(caseNode.Cond)
-			if err != nil {
-				return err
+			if err := c.evalExprNode(caseNode.Cond); err != nil {
+				return c.err(caseNode.Cond, err)
 			}
 			v, err := c.Stack.Pop()
 			if err != nil {
-				return err
+				return c.err(caseNode.Cond, err)
 			}
 			vb, err := ParseBool(v)
 			if err != nil {
-				return err
+				return c.err(caseNode.Cond, err)
 			}
 			if vb {
-				return c.evalBlock(caseNode.Block)
+				if err := c.evalBlock(caseNode.Block); err != nil {
+					return err
+				}
 			}
 		}
 	}
@@ -349,22 +389,24 @@ func (c *Calc) evalFileNode(file *ast.FileNode) error {
 }
 
 func (c *Calc) evalForNode(node *ast.ForNode) error {
-	c.trace(node, "for %v %v", node.Stack, node.Expr)
+	c.trace(node, "for(%v) start", node.Stack.Name)
 
 	expr := NewStack("")
 	c.Stack = expr
 	if err := c.evalExprNode(node.Expr); err != nil {
-		return err
+		return c.err(node.Expr, err)
 	}
 	c.Stack = c.main
 
 	i := c.Define(node.Stack.Name)
 	for _, item := range expr.Items() {
+		c.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
 		i.Set(item)
 		if err := c.evalBlock(node.Block); err != nil {
 			return err
 		}
 	}
+	c.trace(node, "for(%v) end", node.Stack.Name)
 	return nil
 }
 
@@ -378,40 +420,48 @@ func (c *Calc) evalFuncNode(fn *ast.FuncNode) error {
 }
 
 func (c *Calc) evalImportNode(importNode *ast.ImportNode) error {
-	for _, name := range importNode.Names {
-		c.trace(importNode, "import %v", name)
-		if err := c.Import(name); err != nil {
-			return err
+	for _, ref := range importNode.Modules {
+		c.trace(importNode, "import %v %v", ref.Name, ref.Alias)
+		if ref.Zlib {
+			if err := c.Import(ref.Name, ref.Alias); err != nil {
+				return c.err(importNode, err)
+			}
+		} else {
+			if err := c.ImportFile(ref.Name, ref.Alias); err != nil {
+				return c.err(importNode, err)
+			}
 		}
 	}
 	c.Print("ok")
 	return nil
 }
 
-func (c *Calc) evalIncludeNode(include *ast.IncludeNode) error {
-	for _, name := range include.Names {
-		c.trace(include, "include %v", name)
+func (c *Calc) evalIncludeNode(node *ast.IncludeNode) error {
+	for _, name := range node.Names {
+		c.trace(node, "include %v", name)
 		if err := c.Include(name); err != nil {
-			return err
+			return c.err(node, err)
 		}
 	}
 	return nil
 }
 
-func (c *Calc) evalInvokeNode(invoke *ast.InvokeNode) error {
-	c.trace(invoke, "invoke %v", invoke.Name)
-	fn, ok := c.Funcs[invoke.Name]
+func (c *Calc) evalInvokeNode(node *ast.InvokeNode) error {
+	c.trace(node, "invoke %v", node.Name)
+	fn, ok := c.Funcs[node.Name]
 	if !ok {
-		return fmt.Errorf("no such function: %v", invoke.Name)
+		return c.err(node, fmt.Errorf("no such function: %v", node.Name))
 	}
-	c.frame = Frame{
-		Pos:  invoke.Pos(),
-		Func: invoke.Name,
-	}
+	// c.frame = Frame{
+	// 	Pos:  invoke.Pos(),
+	// 	Func: invoke.Name,
+	// }
+	// c.trace(invoke, "adding frame %v", c.frame)
 	if err := fn(c); err != nil {
-		return err
+		return c.chain(node, err)
 	}
-	c.frame = Frame{}
+	// c.trace(invoke, "removing frame %v", c.frame)
+	// c.frame = Frame{}
 	return nil
 }
 
@@ -428,7 +478,7 @@ func (c *Calc) evalRefNode(ref *ast.RefNode) error {
 	c.trace(ref, "ref %v%v", ref.Type, ref.Name)
 	stack, err := c.StackFor(ref.Name)
 	if err != nil {
-		return err
+		return c.err(ref, err)
 	}
 
 	switch ref.Type {
@@ -439,7 +489,7 @@ func (c *Calc) evalRefNode(ref *ast.RefNode) error {
 	case ast.TopRef:
 		top, err := stack.Get()
 		if err != nil {
-			return err
+			return c.err(ref, err)
 		}
 		c.Stack.Push(top)
 	}
@@ -468,7 +518,7 @@ func (c *Calc) evalValueNode(value *ast.ValueNode) error {
 	c.trace(value, "value %v", value.Value)
 	interp, err := c.Interpolate(value.Value)
 	if err != nil {
-		return c.err(value, err.Error())
+		return c.err(value, err)
 	}
 	if interp != value.Value {
 		c.trace(value, "interpolate %v", interp)
@@ -481,11 +531,11 @@ func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
 	c.trace(while, "while")
 	for {
 		if err := c.evalExprNode(while.Cond); err != nil {
-			return err
+			return c.err(while.Cond, err)
 		}
 		result, err := c.PopBool()
 		if err != nil {
-			return err
+			return c.err(while.Cond, err)
 		}
 		if !result {
 			break
@@ -499,9 +549,9 @@ func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
 
 func (c *Calc) moduleContext(name string) *Calc {
 	dc := &Calc{
-		Out:     c.Out,
-		name:    name,
-		parent:  c,
+		Out:  c.Out,
+		name: name,
+		//parent:  c,
 		config:  c.config,
 		main:    NewStack("main"),
 		global:  make(map[string]*Stack),
@@ -515,11 +565,11 @@ func (c *Calc) moduleContext(name string) *Calc {
 	return dc
 }
 
-func functionContext(c *Calc, name string) *Calc {
+func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 	dc := &Calc{
-		Out:     c.Out,
-		name:    c.name + "." + name,
-		parent:  c,
+		Out:  c.Out,
+		name: c.name + "." + node.Name,
+		//parent:  c,
 		config:  c.config,
 		main:    NewStack("main"),
 		global:  c.global,
@@ -528,13 +578,17 @@ func functionContext(c *Calc, name string) *Calc {
 		Exports: c.Exports,
 		defs:    c.defs,
 		Modules: c.Modules,
+		// frame: Frame{
+		// 	Pos:  node.Pos(),
+		// 	Func: node.Name,
+		// },
 	}
 	dc.Stack = dc.main
 	return dc
 }
 
 func (c *Calc) invokeFunction(mod *Calc, fn *ast.FuncNode) error {
-	dc := functionContext(mod, fn.Name)
+	dc := functionContext(mod, fn)
 	for _, param := range fn.Params {
 		if param.Type == ast.TopRef {
 			val, err := c.Stack.Pop()
@@ -560,6 +614,7 @@ func (c *Calc) invokeFunction(mod *Calc, fn *ast.FuncNode) error {
 		c.trace(fn, "func(%v) return %v", fn.Name, val)
 		c.Stack.Push(val)
 	}
+	c.trace(fn, "func(%v) end", fn.Name)
 	return nil
 }
 
@@ -570,24 +625,31 @@ func (c *Calc) invokeMacro(mac *ast.MacroNode) error {
 	return nil
 }
 
-func (c *Calc) load(name string) (*Calc, error) {
-	def, ok := c.defs[name]
-	if !ok {
-		return nil, fmt.Errorf("no such module: %v", name)
+func (c *Calc) load(def ModuleDef) (*Calc, error) {
+	dc := c.moduleContext(def.Name)
+
+	for name, fn := range builtin {
+		dc.Funcs[name] = fn
 	}
-	mod, ok := c.Modules[def.Name]
-	if ok {
-		return mod, nil
+	dc.Funcs["eval"] = eval
+
+	for _, prelude := range c.config.PreludeDev {
+		mod, ok := c.Modules[prelude]
+		if !ok {
+			continue
+		}
+		for name, fn := range mod.Exports {
+			dc.Funcs[name] = fn
+		}
 	}
 
-	dc := c.moduleContext(name)
 	for name, fn := range def.Natives {
 		dc.Funcs[name] = fn
 		dc.Exports[name] = fn
 	}
 
 	if def.ScriptPath != "" {
-		src, err := internal.Scripts.ReadFile(def.ScriptPath)
+		src, err := dc.LoadFile(def.ScriptPath)
 		if err != nil {
 			return nil, err
 		}
@@ -600,36 +662,68 @@ func (c *Calc) load(name string) (*Calc, error) {
 		}
 	}
 
-	for name, fn := range builtin {
-		dc.Funcs[name] = fn
-	}
-	dc.Funcs["eval"] = eval
-
 	c.Modules[def.Name] = dc
 	return dc, nil
 }
 
-func (c *Calc) err(node ast.Node, format string, a ...any) error {
-	var frames []Frame
-	frames = append(frames, Frame{
-		Pos:  node.Pos(),
-		Func: c.frame.Func,
-	})
-	for f := c; f != nil; f = f.parent {
-		frames = append(frames, Frame{
-			Pos:  f.frame.Pos,
-			Func: f.frame.Func,
-		})
+// func (c *Calc) err(node ast.Node, format string, a ...any) error {
+// 	var frames []Frame
+// 	// frames = append(frames, Frame{
+// 	// 	Pos:  node.Pos(),
+// 	// 	Func: c.frame.Func,
+// 	// })
+// 	panic("where am i")
+// 	fmt.Printf("*** THE FRAMES ARE\n")
+// 	for f := c; f != nil; f = f.parent {
+// 		fmt.Printf("CALC NAME: %v\n", f.name)
+// 		frame := Frame{
+// 			Pos:  f.frame.Pos,
+// 			Func: f.frame.Func,
+// 		}
+// 		fmt.Println(frame)
+// 		frames = append(frames, frame)
+// 	}
+// 	fmt.Println("DONE")
+// 	return CalcError{
+// 		Message: fmt.Sprintf(format, a...),
+// 		Frames:  frames,
+// 	}
+// }
+
+func (c *Calc) chain(node *ast.InvokeNode, err error) error {
+	frame := Frame{Pos: node.Pos()}
+
+	errCalc, ok := err.(CalcError)
+	if ok {
+		if len(errCalc.Frames) > 0 {
+			errCalc.Frames[len(errCalc.Frames)-1].Func = node.Name
+		}
+		errCalc.Frames = append(errCalc.Frames, frame)
+		return errCalc
 	}
 	return CalcError{
-		Message: fmt.Sprintf(format, a...),
-		Frames:  frames,
+		Message: err.Error(),
+		Frames:  []Frame{frame},
+	}
+}
+
+func (c *Calc) err(node ast.Node, err error) error {
+	errCalc, ok := err.(CalcError)
+	if ok {
+		return errCalc
+	}
+	frame := Frame{Pos: node.Pos()}
+	return CalcError{
+		Message: err.Error(),
+		Frames:  []Frame{frame},
 	}
 }
 
 func (c *Calc) trace(node ast.Node, format string, a ...any) {
 	if c.config.Trace {
 		msg := fmt.Sprintf(format, a...)
-		log.Printf("[%v] eval: %v", node.Pos(), msg)
+		log.Printf("%v(%v)", c.Stack.Name, c.Stack)
+		log.Printf("%v %v", node.Pos(), msg)
+		log.Println()
 	}
 }

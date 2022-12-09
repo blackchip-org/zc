@@ -1,12 +1,27 @@
+import runtime
+
 func run //files
-	for file; files
-		import testing; file 
-		globals; testing globals
-		for global in globals
-			if /global 'test-' starts-with
-				try /name eval
-				if neq
-					err; pop
-					'FAIL: `name`: `err`' print
+	pass; 0
+	fail; 0
+	for file; //files
+		'' println
+		/file println
+		'import \'`file`\' testing' eval
+		exports; clear 'testing' runtime.exports
+		for export; //exports
+			if /export 'test-' starts-with
+				try 'testing.`export`' eval
+				if not
+					err; recv
+					'  FAIL: `export`: `err`' println
+					fail; inc
 				else
-					'pass: /name'
+					'  pass: `export`' println
+					pass; inc
+		'testing' undef
+	'' println
+	'`pass` tests passed, `fail` failed' println
+	'' println
+	if /fail 0 gt
+		1 exit
+

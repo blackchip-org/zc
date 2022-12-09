@@ -60,6 +60,8 @@ func (s *Scanner) Next() token.Token {
 	switch {
 	case s.ch == end:
 		return token.New(token.End, "", s.pos)
+	case s.ch == ',':
+		return s.scanOp(token.Comma)
 	case s.ch == '\n':
 		return s.scanOp(token.Newline)
 	case s.ch == ';':

@@ -1,3 +1,5 @@
+import bool
+
 func eq /a /b
-	if /a /b eq not
+	if /a /b bool.eq bool.not
 		'assertion failed: `a` != `b`'  abort

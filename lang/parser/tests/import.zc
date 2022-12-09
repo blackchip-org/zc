@@ -1,1 +1,1 @@
-import foo bar baz
+import foo bar, baz, 'example/test_cases.zc' testing, 'example/fun.zc', 'x'

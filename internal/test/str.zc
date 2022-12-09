@@ -1,0 +1,13 @@
+import assert
+
+func test-len
+	'abcd' len
+	4 assert.eq
+	'' len
+	0 assert.eq
+
+func test-starts-with
+	'foobar' 'foo' starts-with
+	'true' assert.eq
+	'foobar' 'bar' starts-with
+	'false' assert.eq
