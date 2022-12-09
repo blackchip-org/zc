@@ -9,6 +9,7 @@ var All = []zc.ModuleDef{
 	Assert,
 	Basic,
 	Bool,
+	Prog,
 	Runtime,
 	Str,
 	Test,
@@ -73,6 +74,14 @@ var (
 			"lte": native.Lte,
 			"not": native.Not,
 			"or":  native.Or,
+		},
+	}
+	Prog = zc.ModuleDef{
+		Name: "prog",
+		Natives: map[string]zc.CalcFunc{
+			"bin": native.Bin,
+			"hex": native.Hex,
+			"oct": native.Oct,
 		},
 	}
 	Runtime = zc.ModuleDef{

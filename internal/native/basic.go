@@ -25,11 +25,11 @@ func MulBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opMulBigInt) 
 func PowBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opPowBigInt) }
 func SubBigInt(calc *zc.Calc) error { return zc.BigIntNumOp2(calc, opSubBigInt) }
 
-func AddDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opAddDec) }
-func DivDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opDivDec) }
-func MulDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opMulDec) }
-func PowDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opPowDec) }
-func SubDec(calc *zc.Calc) error { return zc.DecNumOp2(calc, opSubDec) }
+func AddDec(calc *zc.Calc) error { return zc.DecimalNumOp2(calc, opAddDec) }
+func DivDec(calc *zc.Calc) error { return zc.DecimalNumOp2(calc, opDivDec) }
+func MulDec(calc *zc.Calc) error { return zc.DecimalNumOp2(calc, opMulDec) }
+func PowDec(calc *zc.Calc) error { return zc.DecimalNumOp2(calc, opPowDec) }
+func SubDec(calc *zc.Calc) error { return zc.DecimalNumOp2(calc, opSubDec) }
 
 var (
 	opAdd = zc.FuncsNumOp2{

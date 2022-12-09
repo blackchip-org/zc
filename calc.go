@@ -220,6 +220,15 @@ func (c Calc) Interpolate(v string) (string, error) {
 	return result.String(), nil
 }
 
+func (c *Calc) Peek2() (string, string, error) {
+	items := c.Stack.Items()
+	n := len(items)
+	if n < 2 {
+		return "", "", fmt.Errorf("%v: stack empty", c.Stack.Name)
+	}
+	return items[n-2], items[n-1], nil
+}
+
 func (c *Calc) Pop2() (string, string, error) {
 	b, err := c.Stack.Pop()
 	if err != nil {

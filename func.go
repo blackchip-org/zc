@@ -27,15 +27,39 @@ type FuncsCompOp struct {
 
 type FuncBoolOp func(bool, bool) bool
 
+func resolveRadix(rx int, ry int) int {
+	switch {
+	case rx == 16 || rx == 16:
+		return 16
+	case rx == 8 || rx == 8:
+		return 8
+	case rx == 2 || rx == 2:
+		return 2
+	}
+	return 10
+}
+
 func BigIntNumOp2(calc *Calc, fn FuncBigIntNumOp2) error {
-	a, b, err := calc.PopBigInt2()
+	x, y, err := calc.Pop2()
 	if err != nil {
 		return err
 	}
-	var r big.Int
-	fn(&r, a, b)
 
-	calc.Stack.Push(FormatBigInt(&r))
+	a, err := ParseBigInt(x)
+	if err != nil {
+		return err
+	}
+
+	b, err := ParseBigInt(y)
+	if err != nil {
+		return err
+	}
+
+	var c big.Int
+	fn(&c, a, b)
+
+	radix := resolveRadix(ParseRadix(x), ParseRadix(y))
+	calc.Stack.Push(FormatBigIntBase(&c, radix))
 	return nil
 }
 
@@ -61,7 +85,7 @@ func BoolOp2(calc *Calc, fn FuncBoolOp) error {
 	return nil
 }
 
-func DecNumOp2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) (err error) {
+func DecimalNumOp2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) (err error) {
 	defer func() {
 		if p := recover(); p != nil {
 			msg, ok := p.(string)
@@ -86,7 +110,7 @@ func DecNumOp2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal
 	return nil
 }
 
-func DecCompOp(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) bool) (err error) {
+func DecimalCompOp(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) bool) (err error) {
 	a, b, err := calc.PopDecimal2()
 	if err != nil {
 		return
@@ -98,28 +122,16 @@ func DecCompOp(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) bool) (
 }
 
 func NumOp2(calc *Calc, ops FuncsNumOp2) error {
-	a, b, err := calc.Pop2()
+	a, b, err := calc.Peek2()
 	if err != nil {
 		return err
 	}
 
 	switch {
 	case IsBigInt(a) && IsBigInt(b):
-		x, y := MustParseBigInt(a), MustParseBigInt(b)
-		var z big.Int
-		ops.BigInt(&z, x, y)
-		calc.Stack.Push(FormatBigInt(&z))
+		return BigIntNumOp2(calc, ops.BigInt)
 	default:
-		x, err := ParseDecimal(a)
-		if err != nil {
-			return err
-		}
-		y, err := ParseDecimal(b)
-		if err != nil {
-			return err
-		}
-		z := ops.Decimal(x, y)
-		calc.Stack.Push(FormatDecimal(z))
+		return DecimalNumOp2(calc, ops.Decimal)
 	}
 	return nil
 }

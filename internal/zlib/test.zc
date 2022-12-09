@@ -13,7 +13,7 @@ func run //files
 			if /export 'test-' starts-with
 				try 'testing.`export`' eval
 				if not
-					err; recv
+					err; clear recv
 					'  FAIL: `export`: `err`' println
 					fail; inc
 				else

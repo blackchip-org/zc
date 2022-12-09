@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"fmt"
 	"log"
 	"math/big"
 
@@ -31,6 +32,18 @@ func FormatBigInt(v *big.Int) string {
 	return printer.Sprintf("%d", v)
 }
 
+func FormatBigIntBase(v *big.Int, radix int) string {
+	switch radix {
+	case 16:
+		return fmt.Sprintf("0x%x", v)
+	case 8:
+		return fmt.Sprintf("0o%o", v)
+	case 2:
+		return fmt.Sprintf("0b%b", v)
+	}
+	return FormatBigInt(v)
+}
+
 func FormatBool(v bool) string {
 	if v {
 		return "true"
@@ -51,6 +64,10 @@ func FormatInt(i int) string {
 }
 
 func FormatValue(v string) string {
+	r := ParseRadix(v)
+	if r != 10 {
+		return v
+	}
 	if IsInt(v) {
 		return FormatInt(MustParseInt(v))
 	}

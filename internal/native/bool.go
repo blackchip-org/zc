@@ -38,12 +38,12 @@ func GteBigInt(calc *zc.Calc) error { return zc.BigIntCompOp(calc, opGteBigInt) 
 func LtBigInt(calc *zc.Calc) error  { return zc.BigIntCompOp(calc, opLtBigInt) }
 func LteBigInt(calc *zc.Calc) error { return zc.BigIntCompOp(calc, opLteBigInt) }
 
-func EqDecimal(calc *zc.Calc) error  { return zc.DecCompOp(calc, opEqDecimal) }
-func NeqDecimal(calc *zc.Calc) error { return zc.DecCompOp(calc, opEqDecimal) }
-func GtDecimal(calc *zc.Calc) error  { return zc.DecCompOp(calc, opEqDecimal) }
-func GteDecimal(calc *zc.Calc) error { return zc.DecCompOp(calc, opEqDecimal) }
-func LtDecimal(calc *zc.Calc) error  { return zc.DecCompOp(calc, opEqDecimal) }
-func LteDecimal(calc *zc.Calc) error { return zc.DecCompOp(calc, opEqDecimal) }
+func EqDecimal(calc *zc.Calc) error  { return zc.DecimalCompOp(calc, opEqDecimal) }
+func NeqDecimal(calc *zc.Calc) error { return zc.DecimalCompOp(calc, opEqDecimal) }
+func GtDecimal(calc *zc.Calc) error  { return zc.DecimalCompOp(calc, opEqDecimal) }
+func GteDecimal(calc *zc.Calc) error { return zc.DecimalCompOp(calc, opEqDecimal) }
+func LtDecimal(calc *zc.Calc) error  { return zc.DecimalCompOp(calc, opEqDecimal) }
+func LteDecimal(calc *zc.Calc) error { return zc.DecimalCompOp(calc, opEqDecimal) }
 
 var (
 	opEq = zc.FuncsCompOp{
