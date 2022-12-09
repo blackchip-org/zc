@@ -93,12 +93,23 @@ func (s *Scanner) scanId() token.Token {
 
 // Returns true if there is an indent/dedent token to emit
 func (s *Scanner) scanIndent() (token.Token, bool) {
-	startL := s.idx
+	var indent strings.Builder
 
-	for s.ch != end && s.ch == '\t' {
+	spaces := 0
+	for s.ch != end && (s.ch == '\t' || s.ch == ' ') {
+		if s.ch == ' ' {
+			spaces += 1
+			if spaces == 4 {
+				spaces = 0
+				indent.WriteRune('\t')
+			}
+		} else {
+			spaces = 0
+			indent.WriteRune('\t')
+		}
 		s.scan()
 	}
-	lit := string(s.src[startL:s.idx])
+	lit := indent.String()
 
 	// Count the number of tabs to determine the indentation level. If this
 	// is the same indentation level of the previous line, do not emit

@@ -20,6 +20,8 @@ func TestParser(t *testing.T) {
 		"if",
 		"import",
 		"include",
+		"indent_spaces",
+		"indent_tabs",
 		"stack",
 		"try",
 		"while",

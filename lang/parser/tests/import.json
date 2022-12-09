@@ -3,10 +3,32 @@
   "Block": [
     {
       "Node": "Import",
-      "Names": [
-        "foo",
-        "bar",
-        "baz"
+      "Modules": [
+        {
+          "Zlib": true,
+          "Name": "foo",
+          "Alias": "bar"
+        },
+        {
+          "Zlib": true,
+          "Name": "baz",
+          "Alias": ""
+        },
+        {
+          "Zlib": false,
+          "Name": "example/test_cases.zc",
+          "Alias": "testing"
+        },
+        {
+          "Zlib": false,
+          "Name": "example/fun.zc",
+          "Alias": "fun"
+        },
+        {
+          "Zlib": false,
+          "Name": "x",
+          "Alias": "x"
+        }
       ]
     }
   ]
