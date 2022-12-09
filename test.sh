@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go run cmd/zc/main.go -eval internal/modules/basic_test.zc
+go run cmd/zc/main.go -eval ./test.zc

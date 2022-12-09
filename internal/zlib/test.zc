@@ -3,6 +3,7 @@ import runtime
 func run //files
 	pass; 0
 	fail; 0
+
 	for file; //files
 		'' println
 		/file println
@@ -19,6 +20,7 @@ func run //files
 					'  pass: `export`' println
 					pass; inc
 		'testing' undef
+
 	'' println
 	'`pass` tests passed, `fail` failed' println
 	'' println

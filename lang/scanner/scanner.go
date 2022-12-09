@@ -98,18 +98,24 @@ func (s *Scanner) scanIndent() (token.Token, bool) {
 	spaces := 0
 	for s.ch != end && (s.ch == '\t' || s.ch == ' ') {
 		if s.ch == ' ' {
-			spaces += 1
+			spaces++
 			if spaces == 4 {
 				spaces = 0
 				indent.WriteRune('\t')
 			}
-		} else {
+		} else if s.ch == '\t' {
 			spaces = 0
 			indent.WriteRune('\t')
 		}
 		s.scan()
 	}
+
 	lit := indent.String()
+
+	// If the entire line is blank, ignore it
+	if (s.ch == end || s.ch == '\n') && strings.TrimSpace(lit) == "" {
+		return token.Token{}, false
+	}
 
 	// Count the number of tabs to determine the indentation level. If this
 	// is the same indentation level of the previous line, do not emit
