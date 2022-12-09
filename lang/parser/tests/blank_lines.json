@@ -1,0 +1,59 @@
+{
+  "Node": "File",
+  "Block": [
+    {
+      "Node": "Func",
+      "Name": "sum",
+      "Params": [
+        {
+          "Node": "Ref",
+          "Type": "//",
+          "Name": "a"
+        }
+      ],
+      "Block": [
+        {
+          "Node": "Expr",
+          "Expr": [
+            {
+              "Node": "Ref",
+              "Type": "//",
+              "Name": "a"
+            }
+          ]
+        },
+        {
+          "Node": "While",
+          "Cond": {
+            "Node": "Expr",
+            "Expr": [
+              {
+                "Node": "Invoke",
+                "Name": "n"
+              },
+              {
+                "Node": "Value",
+                "Value": "1"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "gt"
+              }
+            ]
+          },
+          "Block": [
+            {
+              "Node": "Expr",
+              "Expr": [
+                {
+                  "Node": "Invoke",
+                  "Name": "add"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
