@@ -16,16 +16,16 @@ type FuncsNumOp2 struct {
 }
 
 type FuncBigIntCompOp func(*big.Int, *big.Int) bool
-type FuncBoolCompOp func(bool, bool) bool
 type FuncDecimalCompOp func(decimal.Decimal, decimal.Decimal) bool
 type FuncStringCompOp func(string, string) bool
 
 type FuncsCompOp struct {
 	BigInt  FuncBigIntCompOp
-	Bool    FuncBoolCompOp
 	Decimal FuncDecimalCompOp
 	String  FuncStringCompOp
 }
+
+type FuncBoolOp func(bool, bool) bool
 
 func BigIntNumOp2(calc *Calc, fn FuncBigIntNumOp2) error {
 	a, b, err := calc.PopBigInt2()
@@ -46,6 +46,17 @@ func BigIntCompOp(calc *Calc, fn FuncBigIntCompOp) error {
 	}
 	r := fn(a, b)
 
+	calc.Stack.Push(FormatBool(r))
+	return nil
+}
+
+func BoolOp2(calc *Calc, fn FuncBoolOp) error {
+	a, b, err := calc.PopBool2()
+	if err != nil {
+		return err
+	}
+
+	r := fn(a, b)
 	calc.Stack.Push(FormatBool(r))
 	return nil
 }
@@ -92,33 +103,24 @@ func NumOp2(calc *Calc, ops FuncsNumOp2) error {
 		return err
 	}
 
-	if IsBigInt(a) && IsBigInt(b) {
-		bi, err := ParseBigInt(b)
+	switch {
+	case IsBigInt(a) && IsBigInt(b):
+		x, y := MustParseBigInt(a), MustParseBigInt(b)
+		var z big.Int
+		ops.BigInt(&z, x, y)
+		calc.Stack.Push(FormatBigInt(&z))
+	default:
+		x, err := ParseDecimal(a)
 		if err != nil {
 			return err
 		}
-		ai, err := ParseBigInt(a)
+		y, err := ParseDecimal(b)
 		if err != nil {
 			return err
 		}
-		var zi big.Int
-		ops.BigInt(&zi, ai, bi)
-
-		calc.Stack.Push(FormatBigInt(&zi))
-		return nil
+		z := ops.Decimal(x, y)
+		calc.Stack.Push(FormatDecimal(z))
 	}
-
-	bd, err := ParseDecimal(b)
-	if err != nil {
-		return err
-	}
-	ad, err := ParseDecimal(a)
-	if err != nil {
-		return err
-	}
-
-	zd := ops.Decimal(ad, bd)
-	calc.Stack.Push(FormatDecimal(zd))
 	return nil
 }
 
@@ -130,9 +132,6 @@ func CompOp(calc *Calc, ops FuncsCompOp) error {
 
 	var result bool
 	switch {
-	case IsBool(a) && IsBool(b):
-		x, y := MustParseBool(a), MustParseBool(b)
-		result = ops.Bool(x, y)
 	case IsBigInt(a) && IsBigInt(b):
 		x, y := MustParseBigInt(a), MustParseBigInt(b)
 		result = ops.BigInt(x, y)

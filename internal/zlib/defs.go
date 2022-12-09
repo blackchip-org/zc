@@ -64,6 +64,7 @@ var (
 		Name:       "bool",
 		ScriptPath: "zc:zlib/bool.zc",
 		Natives: map[string]zc.CalcFunc{
+			"and": native.And,
 			"eq":  native.Eq,
 			"neq": native.Neq,
 			"gt":  native.Gt,
@@ -71,6 +72,7 @@ var (
 			"lt":  native.Lt,
 			"lte": native.Lte,
 			"not": native.Not,
+			"or":  native.Or,
 		},
 	}
 	Runtime = zc.ModuleDef{

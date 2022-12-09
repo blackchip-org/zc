@@ -1,2 +1,5 @@
 macro true 'true'
 macro false 'false'
+
+macro t 'true'
+macro f 'false'

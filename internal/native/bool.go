@@ -28,8 +28,8 @@ func opGteString(a string, b string) bool { return a >= b }
 func opLtString(a string, b string) bool  { return a < b }
 func opLteString(a string, b string) bool { return a <= b }
 
-func opEqBool(a bool, b bool) bool  { return a == b }
-func opNeqBool(a bool, b bool) bool { return a != b }
+func opAnd(a bool, b bool) bool { return a && b }
+func opOr(a bool, b bool) bool  { return a || b }
 
 func EqBigInt(calc *zc.Calc) error  { return zc.BigIntCompOp(calc, opEqBigInt) }
 func NeqBigInt(calc *zc.Calc) error { return zc.BigIntCompOp(calc, opNeqBigInt) }
@@ -48,13 +48,11 @@ func LteDecimal(calc *zc.Calc) error { return zc.DecCompOp(calc, opEqDecimal) }
 var (
 	opEq = zc.FuncsCompOp{
 		BigInt:  opEqBigInt,
-		Bool:    opEqBool,
 		Decimal: opEqDecimal,
 		String:  opEqString,
 	}
 	opNeq = zc.FuncsCompOp{
 		BigInt:  opNeqBigInt,
-		Bool:    opNeqBool,
 		Decimal: opNeqDecimal,
 		String:  opNeqString,
 	}
@@ -86,6 +84,9 @@ func Gt(calc *zc.Calc) error  { return zc.CompOp(calc, opGt) }
 func Gte(calc *zc.Calc) error { return zc.CompOp(calc, opGte) }
 func Lt(calc *zc.Calc) error  { return zc.CompOp(calc, opLt) }
 func Lte(calc *zc.Calc) error { return zc.CompOp(calc, opLte) }
+
+func And(calc *zc.Calc) error { return zc.BoolOp2(calc, opAnd) }
+func Or(calc *zc.Calc) error  { return zc.BoolOp2(calc, opOr) }
 
 func Not(calc *zc.Calc) error {
 	a, err := calc.PopBool()

@@ -268,6 +268,18 @@ func (c *Calc) PopBool() (bool, error) {
 	return b, nil
 }
 
+func (c *Calc) PopBool2() (bool, bool, error) {
+	b, err := c.PopBool()
+	if err != nil {
+		return false, false, err
+	}
+	a, err := c.PopBool()
+	if err != nil {
+		return false, false, err
+	}
+	return a, b, nil
+}
+
 func (c *Calc) PopDecimal() (decimal.Decimal, error) {
 	v, err := c.Stack.Pop()
 	if err != nil {

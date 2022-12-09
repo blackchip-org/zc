@@ -1,5 +1,13 @@
 import assert
 
+func test-and
+    t t and
+    assert.t
+    f t and
+    assert.f
+    f f and
+    assert.f
+
 func test-eq
     1 1 eq
     assert.t
@@ -48,3 +56,10 @@ func test-neq
     1 2 neq
     assert.t
 
+func test-or
+    t t or
+    assert.t
+    t f or
+    assert.t
+    f f or
+    assert.f
