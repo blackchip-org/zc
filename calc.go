@@ -177,6 +177,20 @@ func (c *Calc) Include(modName string) error {
 	return nil
 }
 
+func (c *Calc) IncludeFile(file string) error {
+	src, err := c.LoadFile(file)
+	if err != nil {
+		return err
+	}
+
+	ast, err := parser.Parse(file, src)
+	if err != nil {
+		return nil
+	}
+
+	return c.evalNode(ast)
+}
+
 func (c *Calc) Install(def ModuleDef) {
 	if def.Name == "" {
 		panic(fmt.Sprintf("unable to install a module with no name: %+v", def))
@@ -516,9 +530,16 @@ func (c *Calc) evalImportNode(node *ast.ImportNode) error {
 }
 
 func (c *Calc) evalIncludeNode(node *ast.IncludeNode) error {
-	c.trace(node, "include %v", node.Name)
-	if err := c.Include(node.Name); err != nil {
-		return c.err(node, err)
+	mod := node.Module
+	c.trace(node, "include %v", mod.Name)
+	if mod.Zlib {
+		if err := c.Include(mod.Name); err != nil {
+			return c.err(node, err)
+		}
+	} else {
+		if err := c.IncludeFile(mod.Name); err != nil {
+			return c.err(node, err)
+		}
 	}
 	c.Info = "ok"
 	return nil

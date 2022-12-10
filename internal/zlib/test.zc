@@ -23,7 +23,4 @@ func run //files
 
 	'' println
 	'`pass` tests passed, `fail` failed' println
-	'' println
-	if /fail 0 gt
-		1 exit
 

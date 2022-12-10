@@ -11,6 +11,30 @@ type Node interface {
 	String() string
 }
 
+type ModuleRef struct {
+	Zlib  bool
+	Name  string
+	Alias string
+}
+
+type RefType int
+
+const (
+	InvalidRef RefType = iota
+	TopRef
+	AllRef
+)
+
+func (r RefType) String() string {
+	switch r {
+	case TopRef:
+		return "/"
+	case AllRef:
+		return "//"
+	}
+	return "???"
+}
+
 type BadNode struct {
 	Token token.Token
 }
@@ -81,15 +105,9 @@ type ImportNode struct {
 func (n ImportNode) Pos() token.Pos { return n.Token.Pos }
 func (n ImportNode) String() string { return nodeStringJSON(n) }
 
-type ModuleRef struct {
-	Zlib  bool
-	Name  string
-	Alias string
-}
-
 type IncludeNode struct {
-	Token token.Token `json:"-"`
-	Name  string
+	Token  token.Token `json:"-"`
+	Module ModuleRef
 }
 
 func (n IncludeNode) Pos() token.Pos { return n.Token.Pos }
@@ -120,24 +138,6 @@ type RefNode struct {
 
 func (n RefNode) Pos() token.Pos { return n.Token.Pos }
 func (n RefNode) String() string { return nodeStringJSON(n) }
-
-type RefType int
-
-const (
-	InvalidRef RefType = iota
-	TopRef
-	AllRef
-)
-
-func (r RefType) String() string {
-	switch r {
-	case TopRef:
-		return "/"
-	case AllRef:
-		return "//"
-	}
-	return "???"
-}
 
 type StackNode struct {
 	Token token.Token `json:"-"`

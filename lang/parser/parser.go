@@ -212,10 +212,20 @@ func (p *parser) parseInclude() (*ast.IncludeNode, error) {
 	node := &ast.IncludeNode{Token: p.tok}
 
 	p.scan()
-	if p.tok.Type != token.Id {
-		return node, p.err("expecting %v byt got %v", token.Id, p.tok)
+	switch p.tok.Type {
+	case token.Id:
+		node.Module.Name = p.tok.Literal
+		node.Module.Zlib = true
+	case token.Value:
+		node.Module.Name = p.tok.Literal
+	default:
+		return node, p.err("expecting %v or %v but got %v", token.Id, token.Value, p.tok)
 	}
-	node.Name = p.tok.Literal
+
+	p.scan()
+	if p.tok.Type != token.Newline && p.tok.Type != token.End {
+		return node, p.err("expecting %v but got %v", token.Newline, p.tok)
+	}
 
 	p.scan()
 	return node, nil
@@ -355,7 +365,7 @@ func (p *parser) parseUse() (*ast.UseNode, error) {
 
 	p.scan()
 	if p.tok.Type != token.Id {
-		return node, p.err("expecting %v byt got %v", token.Id, p.tok)
+		return node, p.err("expecting %v but got %v", token.Id, p.tok)
 	}
 	node.Name = p.tok.Literal
 
