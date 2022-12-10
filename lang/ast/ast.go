@@ -74,8 +74,8 @@ func (n IfCaseNode) Pos() token.Pos { return n.Token.Pos }
 func (n IfCaseNode) String() string { return nodeStringJSON(n) }
 
 type ImportNode struct {
-	Token   token.Token `json:"-"`
-	Modules []ModuleRef
+	Token  token.Token `json:"-"`
+	Module ModuleRef
 }
 
 func (n ImportNode) Pos() token.Pos { return n.Token.Pos }
@@ -89,7 +89,7 @@ type ModuleRef struct {
 
 type IncludeNode struct {
 	Token token.Token `json:"-"`
-	Names []string
+	Name  string
 }
 
 func (n IncludeNode) Pos() token.Pos { return n.Token.Pos }
@@ -154,6 +154,14 @@ type TryNode struct {
 
 func (n TryNode) Pos() token.Pos { return n.Token.Pos }
 func (n TryNode) String() string { return nodeStringJSON(n) }
+
+type UseNode struct {
+	Token token.Token `json:"-"`
+	Name  string
+}
+
+func (n UseNode) Pos() token.Pos { return n.Token.Pos }
+func (n UseNode) String() string { return nodeStringJSON(n) }
 
 type ValueNode struct {
 	Token token.Token `json:"-"`
@@ -335,6 +343,17 @@ func (n TryNode) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "Try",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n UseNode) MarshalJSON() ([]byte, error) {
+	type Alias UseNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Use",
 		Alias: (Alias)(n),
 	})
 }

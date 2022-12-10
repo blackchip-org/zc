@@ -1,0 +1,37 @@
+{
+  "Node": "File",
+  "Block": [
+    {
+      "Node": "Include",
+      "Name": "foo"
+    },
+    {
+      "Node": "Import",
+      "Module": {
+        "Zlib": true,
+        "Name": "foo",
+        "Alias": ""
+      }
+    },
+    {
+      "Node": "Import",
+      "Module": {
+        "Zlib": true,
+        "Name": "foo",
+        "Alias": "bar"
+      }
+    },
+    {
+      "Node": "Import",
+      "Module": {
+        "Zlib": false,
+        "Name": "foo",
+        "Alias": "bar"
+      }
+    },
+    {
+      "Node": "Use",
+      "Name": "foo"
+    }
+  ]
+}

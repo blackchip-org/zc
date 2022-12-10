@@ -28,6 +28,7 @@ type Config struct {
 
 type ModuleDef struct {
 	Name       string
+	Include    bool
 	ScriptPath string
 	Natives    map[string]CalcFunc
 }
@@ -54,6 +55,7 @@ type CalcFunc func(*Calc) error
 
 type Calc struct {
 	Out     *strings.Builder
+	Info    string
 	Stack   *Stack
 	name    string
 	config  Config
@@ -99,6 +101,7 @@ func NewCalc(config Config) (*Calc, error) {
 
 func (c *Calc) Eval(name string, src []byte) (err error) {
 	c.Out.Reset()
+	c.Info = ""
 	ast, err := parser.Parse(name, src)
 	if err != nil {
 		return
@@ -400,6 +403,8 @@ func (c *Calc) evalNode(node ast.Node) error {
 		return c.evalStackNode(n)
 	case *ast.TryNode:
 		return c.evalTryNode(n)
+	case *ast.UseNode:
+		return c.evalUseNode(n)
 	case *ast.ValueNode:
 		return c.evalValueNode(n)
 	case *ast.WhileNode:
@@ -488,30 +493,34 @@ func (c *Calc) evalFuncNode(fn *ast.FuncNode) error {
 	return nil
 }
 
-func (c *Calc) evalImportNode(importNode *ast.ImportNode) error {
-	for _, ref := range importNode.Modules {
-		c.trace(importNode, "import %v %v", ref.Name, ref.Alias)
-		if ref.Zlib {
-			if err := c.Import(ref.Name, ref.Alias); err != nil {
-				return c.err(importNode, err)
-			}
-		} else {
-			if err := c.ImportFile(ref.Name, ref.Alias); err != nil {
-				return c.err(importNode, err)
-			}
+func (c *Calc) evalImportNode(node *ast.ImportNode) error {
+	mod := node.Module
+
+	if mod.Alias != "" {
+		c.trace(node, "import %v %v", mod.Name, mod.Alias)
+	} else {
+		c.trace(node, "import %v", mod.Name)
+	}
+
+	if mod.Zlib {
+		if err := c.Import(mod.Name, mod.Alias); err != nil {
+			return c.err(node, err)
+		}
+	} else {
+		if err := c.ImportFile(mod.Name, mod.Alias); err != nil {
+			return c.err(node, err)
 		}
 	}
-	c.Print("ok")
+	c.Info = "ok"
 	return nil
 }
 
 func (c *Calc) evalIncludeNode(node *ast.IncludeNode) error {
-	for _, name := range node.Names {
-		c.trace(node, "include %v", name)
-		if err := c.Include(name); err != nil {
-			return c.err(node, err)
-		}
+	c.trace(node, "include %v", node.Name)
+	if err := c.Include(node.Name); err != nil {
+		return c.err(node, err)
 	}
+	c.Info = "ok"
 	return nil
 }
 
@@ -572,6 +581,26 @@ func (c *Calc) evalTryNode(node *ast.TryNode) error {
 		c.Stack.Push(FormatBool(false))
 	} else {
 		c.Stack.Push(FormatBool(true))
+	}
+	return nil
+}
+
+func (c *Calc) evalUseNode(node *ast.UseNode) error {
+	c.trace(node, "use %v", node.Name)
+	def, ok := c.defs[node.Name]
+	if !ok {
+		return c.err(node, fmt.Errorf("no such module: %v", node.Name))
+	}
+	if def.Include {
+		if err := c.Include(node.Name); err != nil {
+			return c.err(node, err)
+		}
+		c.Info = "ok, included"
+	} else {
+		if err := c.Import(node.Name, ""); err != nil {
+			return c.err(node, err)
+		}
+		c.Info = "ok, imported"
 	}
 	return nil
 }

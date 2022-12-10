@@ -85,9 +85,9 @@ func RunConsole(calc *zc.Calc) {
 			ansi.Write(ansi.BrightYellow)
 			fmt.Printf("(!) %v\n", err)
 			ansi.Write(ansi.Reset)
-		} else if calc.Out.Len() > 0 {
+		} else if calc.Info != "" {
 			ansi.Write(ansi.LightGreen)
-			fmt.Println(calc.Out.String())
+			fmt.Println(calc.Info)
 			ansi.Write(ansi.Reset)
 		} else {
 			fmt.Println()

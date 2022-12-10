@@ -34,6 +34,7 @@ var (
 	}
 	Basic = zc.ModuleDef{
 		Name:       "basic",
+		Include:    true,
 		ScriptPath: "zc:zlib/basic.zc",
 		Natives: map[string]zc.CalcFunc{
 			"+":     native.Add,
@@ -63,6 +64,7 @@ var (
 	}
 	Bool = zc.ModuleDef{
 		Name:       "bool",
+		Include:    true,
 		ScriptPath: "zc:zlib/bool.zc",
 		Natives: map[string]zc.CalcFunc{
 			"and": native.And,
@@ -77,7 +79,8 @@ var (
 		},
 	}
 	Prog = zc.ModuleDef{
-		Name: "prog",
+		Name:    "prog",
+		Include: true,
 		Natives: map[string]zc.CalcFunc{
 			"bin": native.Bin,
 			"hex": native.Hex,
@@ -92,7 +95,8 @@ var (
 		},
 	}
 	Str = zc.ModuleDef{
-		Name: "str",
+		Name:    "str",
+		Include: true,
 		Natives: map[string]zc.CalcFunc{
 			"len":         native.Len,
 			"starts-with": native.StartsWith,

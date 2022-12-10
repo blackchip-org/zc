@@ -31,7 +31,6 @@ type Type int
 
 const (
 	Invalid Type = iota
-	Comma
 	Dedent
 	DoubleSlash
 	Elif
@@ -51,13 +50,13 @@ const (
 	Semicolon
 	Slash
 	Try
+	Use
 	Value
 	While
 )
 
 var tokStr = map[Type]string{
 	Invalid:     "invalid",
-	Comma:       ",",
 	Dedent:      "dedent",
 	DoubleSlash: "//",
 	Elif:        "elif",
@@ -77,6 +76,7 @@ var tokStr = map[Type]string{
 	Slash:       "/",
 	Semicolon:   ";",
 	Try:         "try",
+	Use:         "use",
 	Value:       "value",
 	While:       "while",
 }
@@ -92,6 +92,7 @@ var keywords = map[string]Type{
 	"loop":    Loop,
 	"macro":   Macro,
 	"try":     Try,
+	"use":     Use,
 	"while":   While,
 }
 

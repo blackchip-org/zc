@@ -209,43 +209,39 @@ func (p *parser) parseIf() (*ast.IfNode, error) {
 }
 
 func (p *parser) parseInclude() (*ast.IncludeNode, error) {
-	include := &ast.IncludeNode{Token: p.tok}
+	node := &ast.IncludeNode{Token: p.tok}
 
 	p.scan()
-	for p.tok.Type == token.Id {
-		include.Names = append(include.Names, p.tok.Literal)
-		p.scan()
+	if p.tok.Type != token.Id {
+		return node, p.err("expecting %v byt got %v", token.Id, p.tok)
 	}
-	if p.tok.Type != token.Newline && p.tok.Type != token.End {
-		return include, p.err("expecting %v but got %v", token.Newline, p.tok)
-	}
+	node.Name = p.tok.Literal
 
 	p.scan()
-	return include, nil
+	return node, nil
 }
 
 func (p *parser) parseImport() (*ast.ImportNode, error) {
 	node := &ast.ImportNode{Token: p.tok}
 
 	p.scan()
-	for p.tok.Type == token.Id || p.tok.Type == token.Value {
-		ref := ast.ModuleRef{Name: p.tok.Literal, Zlib: p.tok.Type == token.Id}
-		if !ref.Zlib {
-			base := path.Base(ref.Name)
-			ext := path.Ext(base)
-			ref.Alias = base[:len(base)-len(ext)]
-		}
+	switch p.tok.Type {
+	case token.Id:
+		node.Module.Name = p.tok.Literal
+		node.Module.Zlib = true
+	case token.Value:
+		node.Module.Name = p.tok.Literal
+		base := path.Base(node.Module.Name)
+		ext := path.Ext(base)
+		node.Module.Alias = base[:len(base)-len(ext)]
+	default:
+		return node, p.err("expecting %v or %v but got %v", token.Id, token.Value, p.tok)
+	}
+
+	p.scan()
+	if p.tok.Type == token.Id {
+		node.Module.Alias = p.tok.Literal
 		p.scan()
-
-		if p.tok.Type == token.Id {
-			ref.Alias = p.tok.Literal
-			p.scan()
-		}
-
-		if p.tok.Type == token.Comma {
-			p.scan()
-		}
-		node.Modules = append(node.Modules, ref)
 	}
 
 	if p.tok.Type != token.Newline && p.tok.Type != token.End {
@@ -331,6 +327,8 @@ func (p *parser) parseStatement() (ast.Node, error) {
 		return p.parseExpr()
 	case token.Try:
 		return p.parseTry()
+	case token.Use:
+		return p.parseUse()
 	case token.Value:
 		return p.parseExpr()
 	case token.While:
@@ -350,6 +348,19 @@ func (p *parser) parseTry() (*ast.TryNode, error) {
 	}
 
 	return try, err
+}
+
+func (p *parser) parseUse() (*ast.UseNode, error) {
+	node := &ast.UseNode{Token: p.tok}
+
+	p.scan()
+	if p.tok.Type != token.Id {
+		return node, p.err("expecting %v byt got %v", token.Id, p.tok)
+	}
+	node.Name = p.tok.Literal
+
+	p.scan()
+	return node, nil
 }
 
 func (p *parser) parseWhile() (*ast.WhileNode, error) {
