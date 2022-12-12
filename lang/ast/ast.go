@@ -35,6 +35,15 @@ func (r RefType) String() string {
 	return "???"
 }
 
+type AliasNode struct {
+	Token token.Token
+	From  string
+	To    string
+}
+
+func (n AliasNode) Pos() token.Pos { return n.Token.Pos }
+func (n AliasNode) String() string { return nodeStringJSON(n) }
+
 type BadNode struct {
 	Token token.Token
 }
@@ -130,6 +139,15 @@ type MacroNode struct {
 func (n MacroNode) Pos() token.Pos { return n.Token.Pos }
 func (n MacroNode) String() string { return nodeStringJSON(n) }
 
+type NativeNode struct {
+	Token  token.Token `json:"-"`
+	Name   string
+	Export string `json:",omitempty"`
+}
+
+func (n NativeNode) Pos() token.Pos { return n.Token.Pos }
+func (n NativeNode) String() string { return nodeStringJSON(n) }
+
 type RefNode struct {
 	Token token.Token `json:"-"`
 	Name  string
@@ -191,6 +209,17 @@ func nodeStringJSON(n Node) string {
 
 // Add synthetic field
 // http://choly.ca/post/go-json-marshalling/
+
+func (n AliasNode) MarshalJSON() ([]byte, error) {
+	type Alias AliasNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Alias",
+		Alias: (Alias)(n),
+	})
+}
 
 func (n BadNode) MarshalJSON() ([]byte, error) {
 	type Alias BadNode
@@ -309,6 +338,17 @@ func (n MacroNode) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "Macro",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n NativeNode) MarshalJSON() ([]byte, error) {
+	type Alias NativeNode
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Native",
 		Alias: (Alias)(n),
 	})
 }

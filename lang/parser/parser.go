@@ -32,6 +32,30 @@ func Parse(file string, src []byte) (ast.Node, error) {
 	return root, err
 }
 
+func (p *parser) parseAlias() (*ast.AliasNode, error) {
+	node := &ast.AliasNode{Token: p.tok}
+
+	p.scan()
+	if p.tok.Type != token.Id {
+		return node, p.err("expecting %v but got %v", token.Id, p.tok)
+	}
+	node.From = p.tok.Literal
+
+	p.scan()
+	if p.tok.Type != token.Id {
+		return node, p.err("expecting %v but got %v", token.Id, p.tok)
+	}
+	node.To = p.tok.Literal
+
+	p.scan()
+	if p.tok.Type != token.Newline && p.tok.Type != token.End {
+		return node, p.err("expecting %v but got %v", token.Newline, p.tok)
+	}
+
+	p.scan()
+	return node, nil
+}
+
 func (p *parser) parseBlock() ([]ast.Node, error) {
 	var body []ast.Node
 	if p.tok.Type != token.Indent {
@@ -44,7 +68,7 @@ func (p *parser) parseBlock() ([]ast.Node, error) {
 			p.scan()
 			continue
 		}
-		stmt, err := p.parseStatement()
+		stmt, err := p.parseStatementNested()
 		body = append(body, stmt)
 		if err != nil {
 			return body, err
@@ -105,7 +129,7 @@ func (p *parser) parseFile() ([]ast.Node, error) {
 		case token.Newline:
 			p.scan()
 		default:
-			stmt, err := p.parseStatement()
+			stmt, err := p.parseStatementTop()
 			nodes = append(nodes, stmt)
 			if err != nil {
 				return nodes, err
@@ -284,6 +308,29 @@ func (p *parser) parseMacro() (*ast.MacroNode, error) {
 	return macro, nil
 }
 
+func (p *parser) parseNative() (*ast.NativeNode, error) {
+	node := &ast.NativeNode{Token: p.tok}
+
+	p.scan()
+	if p.tok.Type != token.Id {
+		return node, p.err("expecting %v but got %v", token.Id, p.tok)
+	}
+	node.Name = p.tok.Literal
+
+	p.scan()
+	if p.tok.Type == token.Id {
+		node.Export = p.tok.Literal
+		p.scan()
+	}
+
+	if p.tok.Type != token.Newline && p.tok.Type != token.End {
+		return node, p.err("expecting %v but got %v", token.Newline, p.tok)
+	}
+
+	p.scan()
+	return node, nil
+}
+
 func (p *parser) parseRef() (*ast.RefNode, error) {
 	ref := &ast.RefNode{Token: p.tok}
 
@@ -318,32 +365,42 @@ func (p *parser) parseStack() (*ast.StackNode, error) {
 	return stack, nil
 }
 
-func (p *parser) parseStatement() (ast.Node, error) {
+func (p *parser) parseStatementTop() (ast.Node, error) {
 	switch p.tok.Type {
-	case token.DoubleSlash:
-		return p.parseExpr()
-	case token.For:
-		return p.parseFor()
+	case token.Alias:
+		return p.parseAlias()
 	case token.Func:
 		return p.parseFunc()
-	case token.If:
-		return p.parseIf()
-	case token.Id:
-		return p.parseExpr()
 	case token.Import:
 		return p.parseImport()
 	case token.Include:
 		return p.parseInclude()
 	case token.Macro:
 		return p.parseMacro()
+	case token.Native:
+		return p.parseNative()
+	case token.Use:
+		return p.parseUse()
+	}
+	return p.parseStatementNested()
+}
+
+func (p *parser) parseStatementNested() (ast.Node, error) {
+	switch p.tok.Type {
+	case token.DoubleSlash:
+		return p.parseExpr()
+	case token.For:
+		return p.parseFor()
+	case token.If:
+		return p.parseIf()
+	case token.Id:
+		return p.parseExpr()
 	case token.Slash:
 		return p.parseExpr()
 	case token.String:
 		return p.parseExpr()
 	case token.Try:
 		return p.parseTry()
-	case token.Use:
-		return p.parseUse()
 	case token.Value:
 		return p.parseExpr()
 	case token.While:

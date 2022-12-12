@@ -419,6 +419,8 @@ func (c *Calc) evalBlock(nodes []ast.Node) error {
 
 func (c *Calc) evalNode(node ast.Node) error {
 	switch n := node.(type) {
+	case *ast.AliasNode:
+		return c.evalAliasNode(n)
 	case *ast.ExprNode:
 		return c.evalExprNode(n)
 	case *ast.IfNode:
@@ -437,6 +439,8 @@ func (c *Calc) evalNode(node ast.Node) error {
 		return c.evalInvokeNode(n)
 	case *ast.MacroNode:
 		return c.evalMacroNode(n)
+	case *ast.NativeNode:
+		return c.evalNativeNode(n)
 	case *ast.RefNode:
 		return c.evalRefNode(n)
 	case *ast.StackNode:
@@ -451,6 +455,18 @@ func (c *Calc) evalNode(node ast.Node) error {
 		return c.evalWhileNode(n)
 	}
 	panic(fmt.Sprintf("unknown node: %+v", node))
+}
+
+func (c *Calc) evalAliasNode(node *ast.AliasNode) error {
+	c.trace(node, "alias %v %v", node.From, node.To)
+	fn, ok := c.Funcs[node.From]
+	if !ok {
+		return c.err(node, fmt.Errorf("no such function or macro: %v", node.From))
+	}
+	c.Funcs[node.To] = fn
+	c.Exports[node.To] = fn
+	c.Info = "ok"
+	return nil
 }
 
 func (c *Calc) evalExprNode(expr *ast.ExprNode) error {
@@ -589,6 +605,10 @@ func (c *Calc) evalMacroNode(mac *ast.MacroNode) error {
 		return caller.invokeMacro(mac)
 	}
 	c.Exports[mac.Name] = c.Funcs[mac.Name]
+	return nil
+}
+
+func (c *Calc) evalNativeNode(node *ast.NativeNode) error {
 	return nil
 }
 

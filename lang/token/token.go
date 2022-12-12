@@ -31,6 +31,7 @@ type Type int
 
 const (
 	Invalid Type = iota
+	Alias
 	Dedent
 	DoubleSlash
 	Elif
@@ -45,6 +46,7 @@ const (
 	If
 	Loop
 	Macro
+	Native
 	Newline
 	Return
 	Semicolon
@@ -58,6 +60,7 @@ const (
 
 var tokStr = map[Type]string{
 	Invalid:     "invalid",
+	Alias:       "alias",
 	Dedent:      "dedent",
 	DoubleSlash: "//",
 	Elif:        "elif",
@@ -71,6 +74,7 @@ var tokStr = map[Type]string{
 	Indent:      "indent",
 	If:          "if",
 	Loop:        "loop",
+	Native:      "native",
 	Macro:       "macro",
 	Newline:     "newline",
 	Return:      "return",
@@ -84,6 +88,7 @@ var tokStr = map[Type]string{
 }
 
 var keywords = map[string]Type{
+	"alias":   Alias,
 	"elif":    Elif,
 	"else":    Else,
 	"for":     For,
@@ -93,6 +98,7 @@ var keywords = map[string]Type{
 	"if":      If,
 	"loop":    Loop,
 	"macro":   Macro,
+	"native":  Native,
 	"try":     Try,
 	"use":     Use,
 	"while":   While,
