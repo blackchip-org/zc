@@ -1,4 +1,4 @@
-package zlib
+package native
 
 import (
 	"math/big"

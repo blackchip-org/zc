@@ -85,7 +85,7 @@ func BoolOp2(calc *Calc, fn FuncBoolOp) error {
 	return nil
 }
 
-func DecimalNumOp2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) (err error) {
+func DecNumOp2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) decimal.Decimal) (err error) {
 	defer func() {
 		if p := recover(); p != nil {
 			msg, ok := p.(string)
@@ -110,10 +110,21 @@ func DecimalNumOp2(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) dec
 	return nil
 }
 
-func DecimalCompOp(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) bool) (err error) {
+func DecCompOp(calc *Calc, fn func(a decimal.Decimal, b decimal.Decimal) bool) (err error) {
 	a, b, err := calc.PopDecimal2()
 	if err != nil {
 		return
+	}
+
+	r := fn(a, b)
+	calc.Stack.Push(FormatBool(r))
+	return nil
+}
+
+func StringCompOp(calc *Calc, fn func(a string, b string) bool) error {
+	a, b, err := calc.Pop2()
+	if err != nil {
+		return err
 	}
 
 	r := fn(a, b)
@@ -131,9 +142,8 @@ func NumOp2(calc *Calc, ops FuncsNumOp2) error {
 	case IsBigInt(a) && IsBigInt(b):
 		return BigIntNumOp2(calc, ops.BigInt)
 	default:
-		return DecimalNumOp2(calc, ops.Decimal)
+		return DecNumOp2(calc, ops.Decimal)
 	}
-	return nil
 }
 
 func CompOp(calc *Calc, ops FuncsCompOp) error {

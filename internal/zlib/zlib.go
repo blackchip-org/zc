@@ -7,11 +7,16 @@ import (
 var All = []zc.ModuleDef{
 	Assert,
 	Bool,
+	DecBool,
+	DecMath,
 	Math,
+	IntBool,
+	IntMath,
 	Prog,
 	Runtime,
 	Stack,
 	Str,
+	StrBool,
 	Test,
 }
 
@@ -19,7 +24,6 @@ var (
 	PreludeCLI = []string{
 		"math",
 		"stack",
-		"str",
 	}
 	PreludeDev = []string{
 		"bool",
@@ -50,34 +54,70 @@ var (
 			"or":  Or,
 		},
 	}
+	DecBool = zc.ModuleDef{
+		Name:       "dec-bool",
+		ScriptPath: "zc:zlib/dec-bool.zc",
+		Natives: map[string]zc.CalcFunc{
+			"eq":  EqDec,
+			"gt":  GtDec,
+			"gte": GteDec,
+			"neq": NeqDec,
+			"lt":  LtDec,
+			"lte": LteDec,
+		},
+	}
+	DecMath = zc.ModuleDef{
+		Name:       "dec-math",
+		ScriptPath: "zc:zlib/dec-math.zc",
+		Natives: map[string]zc.CalcFunc{
+			"add": AddDec,
+			"div": DivDec,
+			"mul": MulDec,
+			"pow": PowDec,
+			"sub": SubDec,
+		},
+	}
 	Math = zc.ModuleDef{
 		Name:       "math",
 		Include:    true,
 		ScriptPath: "zc:zlib/math.zc",
 		Natives: map[string]zc.CalcFunc{
-			"+":     Add,
-			"/":     DivDec,
-			"*":     Mul,
-			"-":     Sub,
-			"a":     Add,
-			"d":     DivDec,
-			"m":     Mul,
-			"s":     Sub,
-			"add":   Add,
-			"add-d": AddDec,
-			"add-i": AddBigInt,
-			"div":   DivDec,
-			"div-d": DivDec,
-			"div-i": DivBigInt,
-			"mul":   Mul,
-			"mul-d": MulDec,
-			"mul-i": MulBigInt,
-			"pow":   Pow,
-			"pow-d": PowDec,
-			"pow-i": PowBigInt,
-			"sub":   Sub,
-			"sub-d": SubDec,
-			"sub-i": SubBigInt,
+			"+":   Add,
+			"/":   DivDec,
+			"*":   Mul,
+			"-":   Sub,
+			"a":   Add,
+			"d":   DivDec,
+			"m":   Mul,
+			"s":   Sub,
+			"add": Add,
+			"div": DivDec,
+			"mul": Mul,
+			"pow": Pow,
+			"sub": Sub,
+		},
+	}
+	IntBool = zc.ModuleDef{
+		Name:       "int-bool",
+		ScriptPath: "zc:zlib/int-bool.zc",
+		Natives: map[string]zc.CalcFunc{
+			"eq":  EqBigInt,
+			"gt":  GtBigInt,
+			"gte": GteBigInt,
+			"neq": NeqBigInt,
+			"lt":  LtBigInt,
+			"lte": LteBigInt,
+		},
+	}
+	IntMath = zc.ModuleDef{
+		Name:       "int-math",
+		ScriptPath: "zc:zlib/int-math.zc",
+		Natives: map[string]zc.CalcFunc{
+			"add": AddBigInt,
+			"div": DivBigInt,
+			"mul": MulBigInt,
+			"pow": PowBigInt,
+			"sub": SubBigInt,
 		},
 	}
 	Prog = zc.ModuleDef{
@@ -89,16 +129,28 @@ var (
 			"oct": Oct,
 		},
 	}
-	Stack = zc.ModuleDef{
-		Name:       "stack",
-		Include:    true,
-		ScriptPath: "zc:zlib/stack.zc",
-	}
 	Runtime = zc.ModuleDef{
 		Name: "runtime",
 		Natives: map[string]zc.CalcFunc{
 			"exports": Exports,
 			"funcs":   Funcs,
+		},
+	}
+	Stack = zc.ModuleDef{
+		Name:       "stack",
+		Include:    true,
+		ScriptPath: "zc:zlib/stack.zc",
+	}
+	StrBool = zc.ModuleDef{
+		Name:       "str-bool",
+		ScriptPath: "zc:zlib/str-bool.zc",
+		Natives: map[string]zc.CalcFunc{
+			"eq":  EqStr,
+			"gt":  GtStr,
+			"gte": GteStr,
+			"neq": NeqStr,
+			"lt":  LtStr,
+			"lte": LteStr,
 		},
 	}
 	Str = zc.ModuleDef{
