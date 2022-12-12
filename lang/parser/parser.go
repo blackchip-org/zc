@@ -39,13 +39,13 @@ func (p *parser) parseAlias() (*ast.AliasNode, error) {
 	if p.tok.Type != token.Id {
 		return node, p.err("expecting %v but got %v", token.Id, p.tok)
 	}
-	node.From = p.tok.Literal
+	node.To = p.tok.Literal
 
 	p.scan()
 	if p.tok.Type != token.Id {
 		return node, p.err("expecting %v but got %v", token.Id, p.tok)
 	}
-	node.To = p.tok.Literal
+	node.From = p.tok.Literal
 
 	p.scan()
 	if p.tok.Type != token.Newline && p.tok.Type != token.End {

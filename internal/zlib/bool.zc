@@ -3,5 +3,5 @@ macro false 'false'
 
 native eq 
 
-alias true t 
-alias false f 
+alias t true 
+alias f false 
