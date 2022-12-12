@@ -10,8 +10,8 @@ Basic mathematical operations.
 | [add](#add)             | `a`, `+` | Addition
 | [div](#div)             | `d`, `/` | Division
 | [mul](#mul)             | `m`, `*` | Multiplication
+| [pow](#pow)             | `**`     | Exponentiation
 | [sub](#sub)             | `s`, `-` | Subtraction
-
 
 ## add
 
@@ -60,6 +60,22 @@ Example:
 | `6`     | `6`
 | `2`     | `6 \| 2`
 | `m`     | `12`
+
+## pow
+
+Raises the value of `a` to the power of `b`.
+
+    ( a:Num b:Num -- Num )
+
+Alias: `**`
+
+Example:
+
+| Input   | Stack
+|---------|-------------|
+| `6`     | `6`
+| `2`     | `6 \| 2`
+| `pow`   | `36`
 
 ## sub
 

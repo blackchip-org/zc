@@ -24,6 +24,7 @@ var (
 	PreludeCLI = []string{
 		"math",
 		"stack",
+		"str", // TODO: This should only be in dev
 	}
 	PreludeDev = []string{
 		"bool",
