@@ -33,6 +33,9 @@ func testFile(t *testing.T, file fs.File) {
 	fn := ""
 
 	for scanner.Scan() {
+		if scanner.Err() != nil {
+			t.Fatal(scanner.Err())
+		}
 		line := scanner.Text()
 		if strings.HasPrefix(line, "## ") {
 			fn = line[3:]
@@ -64,9 +67,6 @@ func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
 
 	for {
 		line := scanner.Text()
-		if scanner.Err() != nil {
-			t.Fatal(scanner.Err())
-		}
 		fields := strings.SplitN(line, "|", 3)
 		if len(fields) != 3 {
 			break
@@ -79,6 +79,8 @@ func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
 		out = strings.ReplaceAll(out, "\\|", "|")
 		out = strings.TrimSpace(out)
 
+		t.Log(in)
+
 		if err := c.EvalString("", in); err != nil {
 			t.Fatal(err)
 		}
@@ -86,5 +88,8 @@ func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
 			t.Fatalf("\n have: %v \n want: %v", c.Stack.String(), out)
 		}
 		scanner.Scan()
+		if scanner.Err() != nil {
+			t.Fatal(scanner.Err())
+		}
 	}
 }

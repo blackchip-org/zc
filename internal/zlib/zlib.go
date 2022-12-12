@@ -2,7 +2,6 @@ package zlib
 
 import (
 	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/internal/native"
 )
 
 var All = []zc.ModuleDef{
@@ -40,15 +39,15 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/bool.zc",
 		Natives: map[string]zc.CalcFunc{
-			"and": native.And,
-			"eq":  native.Eq,
-			"neq": native.Neq,
-			"gt":  native.Gt,
-			"gte": native.Gte,
-			"lt":  native.Lt,
-			"lte": native.Lte,
-			"not": native.Not,
-			"or":  native.Or,
+			"and": And,
+			"eq":  Eq,
+			"neq": Neq,
+			"gt":  Gt,
+			"gte": Gte,
+			"lt":  Lt,
+			"lte": Lte,
+			"not": Not,
+			"or":  Or,
 		},
 	}
 	Math = zc.ModuleDef{
@@ -56,38 +55,38 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/math.zc",
 		Natives: map[string]zc.CalcFunc{
-			"+":     native.Add,
-			"/":     native.DivDec,
-			"*":     native.Mul,
-			"-":     native.Sub,
-			"a":     native.Add,
-			"d":     native.DivDec,
-			"m":     native.Mul,
-			"s":     native.Sub,
-			"add":   native.Add,
-			"add-d": native.AddDec,
-			"add-i": native.AddBigInt,
-			"div":   native.DivDec,
-			"div-d": native.DivDec,
-			"div-i": native.DivBigInt,
-			"mul":   native.Mul,
-			"mul-d": native.MulDec,
-			"mul-i": native.MulBigInt,
-			"pow":   native.Pow,
-			"pow-d": native.PowDec,
-			"pow-i": native.PowBigInt,
-			"sub":   native.Sub,
-			"sub-d": native.SubDec,
-			"sub-i": native.SubBigInt,
+			"+":     Add,
+			"/":     DivDec,
+			"*":     Mul,
+			"-":     Sub,
+			"a":     Add,
+			"d":     DivDec,
+			"m":     Mul,
+			"s":     Sub,
+			"add":   Add,
+			"add-d": AddDec,
+			"add-i": AddBigInt,
+			"div":   DivDec,
+			"div-d": DivDec,
+			"div-i": DivBigInt,
+			"mul":   Mul,
+			"mul-d": MulDec,
+			"mul-i": MulBigInt,
+			"pow":   Pow,
+			"pow-d": PowDec,
+			"pow-i": PowBigInt,
+			"sub":   Sub,
+			"sub-d": SubDec,
+			"sub-i": SubBigInt,
 		},
 	}
 	Prog = zc.ModuleDef{
 		Name:    "prog",
 		Include: true,
 		Natives: map[string]zc.CalcFunc{
-			"bin": native.Bin,
-			"hex": native.Hex,
-			"oct": native.Oct,
+			"bin": Bin,
+			"hex": Hex,
+			"oct": Oct,
 		},
 	}
 	Stack = zc.ModuleDef{
@@ -98,16 +97,16 @@ var (
 	Runtime = zc.ModuleDef{
 		Name: "runtime",
 		Natives: map[string]zc.CalcFunc{
-			"exports": native.Exports,
-			"funcs":   native.Funcs,
+			"exports": Exports,
+			"funcs":   Funcs,
 		},
 	}
 	Str = zc.ModuleDef{
 		Name:    "str",
 		Include: true,
 		Natives: map[string]zc.CalcFunc{
-			"len":         native.Len,
-			"starts-with": native.StartsWith,
+			"len":         Len,
+			"starts-with": StartsWith,
 		},
 	}
 	Test = zc.ModuleDef{

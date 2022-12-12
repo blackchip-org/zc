@@ -44,8 +44,8 @@ func TestParseBigIntInvalid(t *testing.T) {
 
 func TestParseRadix(t *testing.T) {
 	tests := []struct {
-		s    string
-		want int
+		s     string
+		radix int
 	}{
 		{"1234", 10},
 		{"abcd", 10},
@@ -57,9 +57,9 @@ func TestParseRadix(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.s, func(t *testing.T) {
-			have := ParseRadix(test.s)
-			if have != test.want {
-				t.Errorf("\n have: %v \n want: %v", have, test.want)
+			radix := ParseRadix(test.s)
+			if radix != test.radix {
+				t.Errorf("\n have: %v \n want: %v", radix, test.radix)
 			}
 		})
 	}

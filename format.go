@@ -4,15 +4,14 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"strings"
 
 	"github.com/shopspring/decimal"
-	"golang.org/x/text/message"
 )
 
 type decRoundFunc func(decimal.Decimal, int32) decimal.Decimal
 
 var (
-	printer    = message.NewPrinter(message.MatchLanguage("en"))
 	roundModes = map[string]decRoundFunc{
 		"ceil":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundCeil(places) },
 		"down":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundDown(places) },
@@ -23,13 +22,95 @@ var (
 	}
 )
 
-func FormatBigInt(v *big.Int) string {
-	if v.IsUint64() {
-		return printer.Sprint(v.Uint64())
-	} else if v.IsInt64() {
-		return printer.Sprint(v.Int64())
+func parseDigits(sep rune, v string) ([]rune, []rune) {
+	var intDigits, fracDigits []rune
+	inInt := true
+	for _, ch := range v {
+		if ch == sep {
+			if !inInt {
+				fracDigits = append(fracDigits, ch)
+			}
+			inInt = false
+		} else if inInt {
+			intDigits = append(intDigits, ch)
+		} else {
+			fracDigits = append(fracDigits, ch)
+		}
 	}
-	return printer.Sprintf("%d", v)
+	return intDigits, fracDigits
+}
+
+func FormatNumberString(v string, opts NumberFormatOptions) string {
+	var digits strings.Builder
+	intDigits, fracDigits := parseDigits('.', v)
+
+	if opts.IntPat == "" {
+		digits.WriteString(string(intDigits))
+	} else {
+		var intResult []rune
+		intPat := []rune(opts.IntPat)
+
+		idxPat := len(opts.IntPat) - 1
+		idxDig := len(intDigits) - 1
+		for idxDig >= 0 {
+			if intDigits[idxDig] == '-' {
+				intResult = append([]rune{intDigits[idxDig]}, intResult...)
+				idxDig--
+			} else if intPat[idxPat] == '0' {
+				intResult = append([]rune{intDigits[idxDig]}, intResult...)
+				idxDig--
+				idxPat--
+			} else {
+				intResult = append([]rune{intPat[idxPat]}, intResult...)
+				idxPat--
+			}
+			if idxPat < 0 {
+				idxPat = len(intPat) - 1
+			}
+		}
+		digits.WriteString(string(intResult))
+	}
+
+	if len(fracDigits) == 0 {
+		return digits.String()
+	}
+
+	point := opts.Point
+	if point == 0 {
+		point = '.'
+	}
+	digits.WriteRune(point)
+
+	if opts.FracPat == "" {
+		digits.WriteString(string(fracDigits))
+	} else {
+		var fracResult []rune
+		fracPat := []rune(opts.FracPat)
+
+		idxPat := 0
+		idxDig := 0
+		for idxDig < len(fracDigits) {
+			if fracPat[idxPat] == '0' {
+				fracResult = append(fracDigits, fracResult[idxDig])
+				idxDig++
+				idxPat++
+			} else {
+				fracResult = append(fracDigits, fracPat[idxPat])
+				idxPat++
+			}
+			if idxPat >= len(fracDigits) {
+				idxPat = 0
+			}
+		}
+		digits.WriteString(string(fracResult))
+	}
+
+	return digits.String()
+
+}
+
+func FormatBigInt(v *big.Int) string {
+	return fmt.Sprintf("%d", v)
 }
 
 func FormatBigIntBase(v *big.Int, radix int) string {
@@ -60,16 +141,20 @@ func FormatDecimal(v decimal.Decimal) string {
 }
 
 func FormatInt(i int) string {
-	return printer.Sprint(i)
+	return fmt.Sprintf("%v", i)
 }
 
 func FormatValue(v string) string {
 	r := ParseRadix(v)
-	if r != 10 {
+	switch {
+	case r != 10:
 		return v
-	}
-	if IsInt(v) {
-		return FormatInt(MustParseInt(v))
+	case IsBigInt(v):
+		v := FormatBigIntBase(MustParseBigInt(v), r)
+		return FormatNumberString(v, NumberFormat)
+	case IsDecimal(v):
+		v := FormatDecimal(MustParseDecimal(v))
+		return FormatNumberString(v, NumberFormat)
 	}
 	return v
 }

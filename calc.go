@@ -14,9 +14,35 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+type NumberFormatOptions struct {
+	IntPat  string
+	Point   rune
+	FracPat string
+}
+
+func (n NumberFormatOptions) Separators() map[rune]struct{} {
+	seps := make(map[rune]struct{})
+	for _, pat := range []string{n.IntPat, n.FracPat} {
+		for _, ch := range pat {
+			if ch != '0' {
+				seps[ch] = struct{}{}
+			}
+		}
+	}
+	return seps
+}
+
+func DefaultNumberFormatOptions() NumberFormatOptions {
+	return NumberFormatOptions{
+		IntPat: ",000",
+		Point:  '.',
+	}
+}
+
 var (
-	Places    int32  = 16
-	RoundMode string = "half-up"
+	Places       int32  = 16
+	RoundMode    string = "half-up"
+	NumberFormat        = DefaultNumberFormatOptions()
 )
 
 type Config struct {

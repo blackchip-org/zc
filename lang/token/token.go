@@ -146,11 +146,12 @@ func (t Token) String() string {
 }
 
 func IsIdRune(ch rune) bool {
-	if unicode.IsSpace(ch) {
+	switch {
+	case unicode.IsSpace(ch):
 		return false
-	}
-	switch ch {
-	case ';', ',':
+	case unicode.Is(unicode.Sc, ch):
+		return false
+	case ch == ';', ch == ',':
 		return false
 	}
 	return true

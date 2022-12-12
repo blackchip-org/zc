@@ -5,6 +5,14 @@ Boolean operations.
 - Prelude: dev
 - Use: include
 
+Comparision operations are parsed as numerics when possible. Therefore the following values are considered equal:
+
+- `1234.56`
+- `1234.560`
+- `1,234.56`
+- `$1,234.56`
+- `+1,234.56`
+
 | Operation         | Alias | Description
 |-------------------|-------|---------------
 | [and](#and)       |       | Logical conjunction
@@ -41,17 +49,17 @@ Places `true` on the stack if `a` and `b` are equal to each other, otherwise `fa
 
     ( a:Val b:Val -- Bool )
 
-Example:
+Examples:
 
-| Input    | Stack
-|----------|-------------|
-| `1234`   | `1,234`
-| `'1234'` | `1,234 \| 1234`
-| `eq`     | `true`
-| `clear`  |
-| `1.1`    | `1.1`
-| `1.10`   | `1.1 \| 1.10`
-| `eq`     | `true`
+| Input                  | Stack
+|------------------------|-------------|
+| `1234.56 1,234.56 eq`  | `true`
+| `clear`                |
+| `1234.56 1234.560 eq`  | `true`
+| `clear`                |
+| `1234.56 $1,234.56 eq` | `true`
+| `clear`                |
+| `1234.56 +1,234.56 eq` | `true`
 
 ## false
 
