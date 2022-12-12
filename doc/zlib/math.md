@@ -15,9 +15,9 @@ Basic mathematical operations.
 
 ## add
 
-Adds two numbers, `a + b` and puts the `sum` on the stack.
+Adds two numbers, `a + b`, and puts the result on the stack.
 
-    ( a:Num b:Num -- sum:Num )
+    ( a:Num b:Num -- Num )
 
 Aliases: `a`, `+`
 
@@ -31,9 +31,9 @@ Example:
 
 ## div
 
-Divides two numbers, `a / b` and puts the `quotient` on the stack.
+Divides two numbers, `a / b` and puts the result on the stack.
 
-    ( a:Num b:Num -- quotient:Num )
+    ( a:Num b:Num -- Num )
 
 Aliases: `d`, `/`
 
@@ -47,9 +47,9 @@ Example:
 
 ## mul
 
-Multiplies two numbers, `a * b`, and puts the `product` on the stack.
+Multiplies two numbers, `a * b`, and puts the result on the stack.
 
-    ( a:num b:num -- product:num )
+    ( a:Num b:Num -- Num )
 
 Aliases: `m`, `*`
 
@@ -63,9 +63,9 @@ Example:
 
 ## sub
 
-Subtracts two numbers, `a - b` and puts the `difference` on the stack.
+Subtracts two numbers, `a - b`, and puts the result on the stack.
 
-    ( a:Num b:Num -- difference:Num )
+    ( a:Num b:Num -- Num )
 
 Aliases: `s`, `-`
 

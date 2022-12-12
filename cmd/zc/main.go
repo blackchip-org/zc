@@ -16,19 +16,23 @@ import (
 )
 
 var (
-	evalFile  string
+	fileEval  string
+	lineEval  string
 	noAnsi    bool
 	parseFile string
 	scanFile  string
 	trace     bool
+	use       string
 )
 
 func init() {
-	flag.StringVar(&evalFile, "eval", "", "evaluate file")
+	flag.StringVar(&lineEval, "eval", "", "evaluate argument")
+	flag.StringVar(&fileEval, "file", "", "evaluate file")
 	flag.BoolVar(&noAnsi, "no-ansi", false, "disable ANSI control codes")
 	flag.StringVar(&parseFile, "parse", "", "parse file and print out the AST")
 	flag.StringVar(&scanFile, "scan", "", "scan file and print out the tokens")
 	flag.BoolVar(&trace, "trace", false, "trace execution")
+	flag.StringVar(&use, "use", "", "include or import this module")
 }
 
 func main() {
@@ -41,14 +45,21 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if use != "" {
+		if err := calc.EvalString("<cli>", "use "+use); err != nil {
+			log.Fatal(err)
+		}
+	}
 
 	switch {
 	case scanFile != "":
 		scan()
 	case parseFile != "":
 		parse()
-	case evalFile != "":
-		eval(calc)
+	case fileEval != "":
+		evalFile(calc)
+	case lineEval != "":
+		evalLine(calc)
 	default:
 		if noAnsi {
 			ansi.Enabled = false
@@ -57,12 +68,20 @@ func main() {
 	}
 }
 
-func eval(calc *zc.Calc) {
-	src, err := ioutil.ReadFile(evalFile)
+func evalLine(calc *zc.Calc) {
+	evalResults(calc, calc.EvalString("<cli>", lineEval))
+}
+
+func evalFile(calc *zc.Calc) {
+	src, err := os.ReadFile(fileEval)
 	if err != nil {
 		log.Fatalf("unable to read file: %v", err)
 	}
-	if err := calc.Eval(evalFile, src); err != nil {
+	evalResults(calc, calc.Eval(fileEval, src))
+}
+
+func evalResults(calc *zc.Calc, err error) {
+	if err != nil {
 		log.Print(err)
 		if cErr, ok := err.(zc.CalcError); ok {
 			for _, frame := range cErr.Frames {

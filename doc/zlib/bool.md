@@ -20,6 +20,7 @@ Comparision operations are parsed as numerics when possible. Therefore the follo
 | [false](#false)   | `f`   | False
 | [gt](#gt)         |       | Greater than
 | [gte](#gte)       |       | Greater than or equals
+| [iif](#iif)       |       | Immediate if
 | [true](#true)     | `t`   | True
 | [lt](#lt)         |       | Less than
 | [lte](#lte)       |       | Less than or equals
@@ -31,17 +32,17 @@ Comparision operations are parsed as numerics when possible. Therefore the follo
 
 The logical conjunction of `a` and `b` is placed on the stack.
 
-    ( a:Bool b:Bool -- and:Bool )
+    ( a:Bool b:Bool -- Bool )
 
 Example:
 
-| Input   | Stack
-|---------|-------------|
-| `t`     | `true`
-| `t`     | `true \| true`
-| `and`   | `true`
-| `f`     | `true \| false`
-| `and`   | `false`
+| Input       | Stack
+|-------------|-------------|
+| `t t and`   | `true`
+| `clear`     |
+| `t f and`   | `false`
+| `clear`     |
+| `f f and`   | `false`
 
 ## eq
 
@@ -49,7 +50,7 @@ Places `true` on the stack if `a` and `b` are equal to each other, otherwise `fa
 
     ( a:Val b:Val -- Bool )
 
-Examples:
+Example:
 
 | Input                  | Stack
 |------------------------|-------------|
@@ -76,7 +77,7 @@ Example:
 
 ## gt
 
-If `a` is greater then `b` then `true` is placed on the stack, otherwise `false`.
+If `a` is greater than `b` then `true` is placed on the stack, otherwise `false`.
 
     ( a:Val b:Val -- Bool )
 
@@ -89,4 +90,120 @@ Example:
 | `0 0 gt`   | `false`
 | `clear`    |
 | `-1 0 gt`  | `false`
+
+## gte
+
+If `a` is greater than or equal to `b` then `true` is placed on the stack, otherwise `false`.
+
+    ( a:Val b:Val -- Bool )
+
+Example:
+
+| Input      | Stack
+|------------|-------------|
+| `1 0 gte`  | `true`
+| `clear`    |
+| `0 0 gte`  | `true`
+| `clear`    |
+| `-1 0 gt`  | `false`
+
+## iif
+
+If `c` is true then `a` is placed on the stack, otherwise `b`.
+
+    ( c=true  a:Val b:Val -- a:Val ); or
+    ( c=false a:Val b:Val -- b:Val )
+
+Example:
+
+| Input        | Stack
+|--------------|-------------|
+| `true`       | `true`
+| `'yes' 'no'` | `true \| yes \| no`
+| `iif`        | `yes`
+
+## true
+
+Places `true` on the stack.
+
+    ( -- 'true' )
+
+Example:
+
+| Input    | Stack
+|----------|-------------|
+| `true`   | `true`
+
+## lt
+
+If `a` is less than `b`, then `true` is placed on the stack, otherwise `false`.
+
+    ( a:Val b:Val -- Bool )
+
+Example:
+
+| Input      | Stack
+|------------|-------------|
+| `1 0 lt`   | `false`
+| `clear`    |
+| `0 0 lt`   | `false`
+| `clear`    |
+| `-1 0 lt`  | `true`
+
+## lte
+
+If `a` is less than or equal to `b`, then `true` is placed on the stack, otherwise `false`.
+
+    ( a:Val b:Val -- Bool )
+
+Example:
+
+| Input      | Stack
+|------------|-------------|
+| `1 0 lte`  | `false`
+| `clear`    |
+| `0 0 lte`  | `true`
+| `clear`    |
+| `-1 0 lte` | `true`
+
+## neq
+
+Places `true` on the stack if `a` and `b` are not equal to each other, otherwise `false`.
+
+    ( a:Val b:Val -- Bool )
+
+Example:
+
+| Input                  | Stack
+|------------------------|-------------|
+| `123 123 neq`          | `false`
+| `clear`                |
+| `123 456 neq`          | `true`
+
+## not
+
+Places `true` on the stack if `a` is false, otherwise `true`
+
+Example:
+
+| Input                  | Stack
+|------------------------|-------------|
+| `true not`             | `false`
+| `not`                  | `true`
+
+## or
+
+The logical disjunction of `a` and `b` is placed on the stack.
+
+    ( a:Bool b:Bool -- Bool )
+
+Example:
+
+| Input       | Stack
+|-------------|-------------|
+| `t t or`    | `true`
+| `clear`     |
+| `t f or`    | `true`
+| `clear`     |
+| `f f or`    | `false`
 

@@ -178,7 +178,7 @@ func (p *parser) parseFunc() (*ast.FuncNode, error) {
 		if err != nil {
 			return nil, err
 		}
-		fn.Params = append(fn.Params, ref)
+		fn.Params = append([]*ast.RefNode{ref}, fn.Params...)
 	}
 	if p.tok.Type != token.Newline {
 		return nil, p.err("expecting %v but got %v", token.Newline, p.tok)

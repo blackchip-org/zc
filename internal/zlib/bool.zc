@@ -1,7 +1,27 @@
-macro true 'true'
+native and
+
 macro false 'false'
+alias f false
 
-native eq 
+native gt
 
-alias t true 
-alias f false 
+native gte
+
+func iif /expr /tval /fval
+    if /expr
+        /tval
+    else
+        /fval
+
+macro true 'true'
+alias t true
+
+native lt
+
+native lte
+
+native neq
+
+native not
+
+native or
