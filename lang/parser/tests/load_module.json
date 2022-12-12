@@ -3,7 +3,11 @@
   "Block": [
     {
       "Node": "Include",
-      "Name": "foo"
+      "Module": {
+        "Zlib": true,
+        "Name": "foo",
+        "Alias": ""
+      }
     },
     {
       "Node": "Import",

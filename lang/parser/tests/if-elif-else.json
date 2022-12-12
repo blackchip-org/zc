@@ -11,6 +11,7 @@
             "Expr": [
               {
                 "Node": "Value",
+                "IsString": false,
                 "Value": "0"
               },
               {
@@ -25,6 +26,7 @@
               "Expr": [
                 {
                   "Node": "Value",
+                  "IsString": true,
                   "Value": "positive"
                 }
               ]
@@ -38,6 +40,7 @@
             "Expr": [
               {
                 "Node": "Value",
+                "IsString": false,
                 "Value": "0"
               },
               {
@@ -52,6 +55,7 @@
               "Expr": [
                 {
                   "Node": "Value",
+                  "IsString": true,
                   "Value": "negative"
                 }
               ]
@@ -66,6 +70,7 @@
               "Expr": [
                 {
                   "Node": "Value",
+                  "IsString": true,
                   "Value": "zero"
                 }
               ]

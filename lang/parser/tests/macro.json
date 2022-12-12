@@ -9,6 +9,7 @@
         "Expr": [
           {
             "Node": "Value",
+            "IsString": false,
             "Value": "1"
           },
           {

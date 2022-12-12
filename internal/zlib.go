@@ -2,5 +2,5 @@ package internal
 
 import "embed"
 
-//go:embed zlib/*.zc test/*.zc
-var Scripts embed.FS
+//go:embed zlib/* test/*
+var Files embed.FS

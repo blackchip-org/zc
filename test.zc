@@ -1,7 +1,0 @@
-import test
-
-'zc:test/basic.zc'
-'zc:test/bool.zc'
-'zc:test/prog.zc'
-'zc:test/str.zc'
-test.run

@@ -49,6 +49,7 @@ const (
 	Return
 	Semicolon
 	Slash
+	String
 	Try
 	Use
 	Value
@@ -73,8 +74,9 @@ var tokStr = map[Type]string{
 	Macro:       "macro",
 	Newline:     "newline",
 	Return:      "return",
-	Slash:       "/",
 	Semicolon:   ";",
+	Slash:       "/",
+	String:      "string",
 	Try:         "try",
 	Use:         "use",
 	Value:       "value",

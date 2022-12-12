@@ -9,17 +9,13 @@ import (
 
 var builtin = map[string]CalcFunc{
 	"abort":       abort,
-	"c":           clear,
-	"clear":       clear,
-	"copy":        copy_,
-	"cp":          copy_,
 	"exit":        exit,
-	"n":           n,
 	"places":      places,
 	"places=":     placesGet,
-	"pop":         pop,
 	"print":       print,
 	"println":     println,
+	"n":           n,
+	"nothing":     nothing,
 	"round":       round,
 	"round-mode":  roundMode,
 	"round-mode=": roundModeGet,
@@ -36,21 +32,6 @@ func abort(calc *Calc) error {
 		return errors.New("aborted")
 	}
 	return errors.New(a)
-}
-
-func clear(calc *Calc) error {
-	calc.Stack.Clear()
-	return nil
-}
-
-func copy_(calc *Calc) error {
-	a, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
-	calc.Stack.Push(a)
-	calc.Stack.Push(a)
-	return nil
 }
 
 func eval(calc *Calc) error {
@@ -72,17 +53,6 @@ func exit(calc *Calc) error {
 	}
 	os.Exit(code)
 	return nil
-}
-
-func n(calc *Calc) error {
-	n := calc.Stack.Len()
-	calc.Stack.Push(FormatInt(n))
-	return nil
-}
-
-func pop(calc *Calc) error {
-	_, err := calc.Stack.Pop()
-	return err
 }
 
 func places(calc *Calc) error {
@@ -118,6 +88,15 @@ func println(calc *Calc) error {
 		return err
 	}
 	fmt.Println(a)
+	return nil
+}
+
+func n(calc *Calc) error {
+	calc.Stack.Push(FormatInt(calc.Stack.Len()))
+	return nil
+}
+
+func nothing(calc *Calc) error {
 	return nil
 }
 

@@ -23,4 +23,5 @@ func run //files
 
 	'' println
 	'`pass` tests passed, `fail` failed' println
+	/fail 0 eq
 

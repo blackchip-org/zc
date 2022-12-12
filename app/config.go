@@ -13,6 +13,10 @@ func DefaultConfig() zc.Config {
 	}
 }
 
-func NewDefaultCalc() (*zc.Calc, error) {
-	return zc.NewCalc(DefaultConfig())
+func NewDefaultCalc() *zc.Calc {
+	calc, err := zc.NewCalc(DefaultConfig())
+	if err != nil {
+		panic(err)
+	}
+	return calc
 }

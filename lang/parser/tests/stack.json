@@ -11,6 +11,7 @@
         },
         {
           "Node": "Value",
+          "IsString": false,
           "Value": "1234"
         }
       ]
@@ -24,6 +25,7 @@
         },
         {
           "Node": "Value",
+          "IsString": false,
           "Value": "4321"
         }
       ]

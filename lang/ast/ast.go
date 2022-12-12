@@ -164,8 +164,9 @@ func (n UseNode) Pos() token.Pos { return n.Token.Pos }
 func (n UseNode) String() string { return nodeStringJSON(n) }
 
 type ValueNode struct {
-	Token token.Token `json:"-"`
-	Value string
+	Token    token.Token `json:"-"`
+	IsString bool
+	Value    string
 }
 
 func (n ValueNode) Pos() token.Pos { return n.Token.Pos }

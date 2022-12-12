@@ -74,6 +74,9 @@ func (p *parser) parseExpr() (*ast.ExprNode, error) {
 		case token.Newline, token.End:
 			done = true
 			p.scan()
+		case token.String:
+			node = &ast.ValueNode{Token: p.tok, Value: p.tok.Literal, IsString: true}
+			p.scan()
 		case token.Value:
 			node = &ast.ValueNode{Token: p.tok, Value: p.tok.Literal}
 			p.scan()
@@ -216,7 +219,7 @@ func (p *parser) parseInclude() (*ast.IncludeNode, error) {
 	case token.Id:
 		node.Module.Name = p.tok.Literal
 		node.Module.Zlib = true
-	case token.Value:
+	case token.String, token.Value:
 		node.Module.Name = p.tok.Literal
 	default:
 		return node, p.err("expecting %v or %v but got %v", token.Id, token.Value, p.tok)
@@ -239,7 +242,7 @@ func (p *parser) parseImport() (*ast.ImportNode, error) {
 	case token.Id:
 		node.Module.Name = p.tok.Literal
 		node.Module.Zlib = true
-	case token.Value:
+	case token.String, token.Value:
 		node.Module.Name = p.tok.Literal
 		base := path.Base(node.Module.Name)
 		ext := path.Ext(base)
@@ -334,6 +337,8 @@ func (p *parser) parseStatement() (ast.Node, error) {
 	case token.Macro:
 		return p.parseMacro()
 	case token.Slash:
+		return p.parseExpr()
+	case token.String:
 		return p.parseExpr()
 	case token.Try:
 		return p.parseTry()

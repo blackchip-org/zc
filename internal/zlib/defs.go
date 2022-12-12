@@ -7,22 +7,25 @@ import (
 
 var All = []zc.ModuleDef{
 	Assert,
-	Basic,
 	Bool,
+	Math,
 	Prog,
 	Runtime,
+	Stack,
 	Str,
 	Test,
 }
 
 var (
 	PreludeCLI = []string{
-		"basic",
+		"math",
+		"stack",
 		"str",
 	}
 	PreludeDev = []string{
-		"basic",
 		"bool",
+		"math",
+		"stack",
 		"str",
 	}
 )
@@ -32,10 +35,26 @@ var (
 		Name:       "assert",
 		ScriptPath: "zc:zlib/assert.zc",
 	}
-	Basic = zc.ModuleDef{
-		Name:       "basic",
+	Bool = zc.ModuleDef{
+		Name:       "bool",
 		Include:    true,
-		ScriptPath: "zc:zlib/basic.zc",
+		ScriptPath: "zc:zlib/bool.zc",
+		Natives: map[string]zc.CalcFunc{
+			"and": native.And,
+			"eq":  native.Eq,
+			"neq": native.Neq,
+			"gt":  native.Gt,
+			"gte": native.Gte,
+			"lt":  native.Lt,
+			"lte": native.Lte,
+			"not": native.Not,
+			"or":  native.Or,
+		},
+	}
+	Math = zc.ModuleDef{
+		Name:       "math",
+		Include:    true,
+		ScriptPath: "zc:zlib/math.zc",
 		Natives: map[string]zc.CalcFunc{
 			"+":     native.Add,
 			"/":     native.DivDec,
@@ -62,22 +81,6 @@ var (
 			"sub-i": native.SubBigInt,
 		},
 	}
-	Bool = zc.ModuleDef{
-		Name:       "bool",
-		Include:    true,
-		ScriptPath: "zc:zlib/bool.zc",
-		Natives: map[string]zc.CalcFunc{
-			"and": native.And,
-			"eq":  native.Eq,
-			"neq": native.Neq,
-			"gt":  native.Gt,
-			"gte": native.Gte,
-			"lt":  native.Lt,
-			"lte": native.Lte,
-			"not": native.Not,
-			"or":  native.Or,
-		},
-	}
 	Prog = zc.ModuleDef{
 		Name:    "prog",
 		Include: true,
@@ -86,6 +89,11 @@ var (
 			"hex": native.Hex,
 			"oct": native.Oct,
 		},
+	}
+	Stack = zc.ModuleDef{
+		Name:       "stack",
+		Include:    true,
+		ScriptPath: "zc:zlib/stack.zc",
 	}
 	Runtime = zc.ModuleDef{
 		Name: "runtime",

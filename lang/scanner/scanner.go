@@ -71,9 +71,9 @@ func (s *Scanner) Next() token.Token {
 	case s.ch == '/':
 		return s.scanSlash()
 	case s.ch == '"':
-		return s.scanQuotedValue('"')
+		return s.scanString('"')
 	case s.ch == '\'':
-		return s.scanQuotedValue('\'')
+		return s.scanString('\'')
 	case unicode.IsDigit(s.ch):
 		return s.scanValue()
 	case (s.ch == '-' || s.ch == '+') && unicode.IsDigit(next):
@@ -154,7 +154,7 @@ func (s *Scanner) scanOp(name token.Type) token.Token {
 	return token.New(name, lit, s.start)
 }
 
-func (s *Scanner) scanQuotedValue(term rune) token.Token {
+func (s *Scanner) scanString(term rune) token.Token {
 	s.scan()
 	var lit strings.Builder
 	escaping := false
@@ -171,7 +171,7 @@ func (s *Scanner) scanQuotedValue(term rune) token.Token {
 		s.scan()
 	}
 	s.scan()
-	return token.New(token.Value, lit.String(), s.start)
+	return token.New(token.String, lit.String(), s.start)
 }
 
 func (s *Scanner) scanValue() token.Token {

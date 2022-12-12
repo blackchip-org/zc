@@ -1,0 +1,12 @@
+include math
+
+func clear //a
+    nothing
+
+func dup /a
+    /a /a
+
+func drop /a
+    nothing
+
+

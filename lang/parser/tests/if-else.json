@@ -11,6 +11,7 @@
             "Expr": [
               {
                 "Node": "Value",
+                "IsString": false,
                 "Value": "2"
               },
               {
@@ -19,6 +20,7 @@
               },
               {
                 "Node": "Value",
+                "IsString": false,
                 "Value": "0"
               },
               {
@@ -33,6 +35,7 @@
               "Expr": [
                 {
                   "Node": "Value",
+                  "IsString": true,
                   "Value": "even"
                 }
               ]
@@ -47,6 +50,7 @@
               "Expr": [
                 {
                   "Node": "Value",
+                  "IsString": true,
                   "Value": "odd"
                 }
               ]

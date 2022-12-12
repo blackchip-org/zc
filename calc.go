@@ -377,7 +377,7 @@ func (c *Calc) StackFor(name string) (*Stack, error) {
 func (c *Calc) LoadFile(p string) ([]byte, error) {
 	if strings.HasPrefix(p, "zc:") {
 		p = p[3:]
-		return internal.Scripts.ReadFile(p)
+		return internal.Files.ReadFile(p)
 	}
 	return ioutil.ReadFile(p)
 }
@@ -635,7 +635,12 @@ func (c *Calc) evalValueNode(value *ast.ValueNode) error {
 	if interp != value.Value {
 		c.trace(value, "interpolate %v", interp)
 	}
-	c.Stack.Push(FormatValue(interp))
+
+	if value.IsString {
+		c.Stack.Push(interp)
+	} else {
+		c.Stack.Push(FormatValue(interp))
+	}
 	return nil
 }
 

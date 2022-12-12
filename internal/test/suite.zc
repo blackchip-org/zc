@@ -1,0 +1,7 @@
+import test
+
+'zc:test/zlib/bool.zc'
+'zc:test/zlib/math.zc'
+'zc:test/zlib/prog.zc'
+'zc:test/zlib/str.zc'
+test.run

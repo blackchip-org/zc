@@ -12,14 +12,17 @@
         "Expr": [
           {
             "Node": "Value",
+            "IsString": false,
             "Value": "1"
           },
           {
             "Node": "Value",
+            "IsString": false,
             "Value": "2"
           },
           {
             "Node": "Value",
+            "IsString": false,
             "Value": "3"
           }
         ]
@@ -35,6 +38,7 @@
             },
             {
               "Node": "Value",
+              "IsString": false,
               "Value": "2"
             },
             {

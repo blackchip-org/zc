@@ -29,11 +29,11 @@ type FuncBoolOp func(bool, bool) bool
 
 func resolveRadix(rx int, ry int) int {
 	switch {
-	case rx == 16 || rx == 16:
+	case rx == 16 || ry == 16:
 		return 16
-	case rx == 8 || rx == 8:
+	case rx == 8 || ry == 8:
 		return 8
-	case rx == 2 || rx == 2:
+	case rx == 2 || ry == 2:
 		return 2
 	}
 	return 10
