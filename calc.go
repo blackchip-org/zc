@@ -332,7 +332,7 @@ func (c *Calc) PopBool2() (bool, bool, error) {
 	return a, b, nil
 }
 
-func (c *Calc) PopDecimal() (decimal.Decimal, error) {
+func (c *Calc) PopFix() (decimal.Decimal, error) {
 	v, err := c.Stack.Pop()
 	if err != nil {
 		return decimal.Zero, err
@@ -344,12 +344,12 @@ func (c *Calc) PopDecimal() (decimal.Decimal, error) {
 	return d, err
 }
 
-func (c *Calc) PopDecimal2() (decimal.Decimal, decimal.Decimal, error) {
-	b, err := c.PopDecimal()
+func (c *Calc) PopFix2() (decimal.Decimal, decimal.Decimal, error) {
+	b, err := c.PopFix()
 	if err != nil {
 		return decimal.Zero, decimal.Zero, err
 	}
-	a, err := c.PopDecimal()
+	a, err := c.PopFix()
 	if err != nil {
 		return decimal.Zero, decimal.Zero, err
 	}

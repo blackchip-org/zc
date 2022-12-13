@@ -117,7 +117,7 @@ func round(calc *Calc) error {
 	if err != nil {
 		return err
 	}
-	value, err := calc.PopDecimal()
+	value, err := calc.PopFix()
 	if err != nil {
 		return err
 	}

@@ -1,5 +1,15 @@
 include bool
 
+alias a add
+alias + add
+alias d div
+alias / div
+alias m mul
+alias * mul
+alias s sub
+alias - sub
+alias ** pow
+
 macro dec -1 add
 macro inc 1 add
 
