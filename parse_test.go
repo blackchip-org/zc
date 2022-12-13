@@ -14,9 +14,10 @@ func TestParseBigInt(t *testing.T) {
 		{"0xffd2", new(big.Int).SetInt64(65490)},
 	}
 
+	c := NewCalc()
 	for _, test := range tests {
 		t.Run(test.s, func(t *testing.T) {
-			have, err := ParseBigInt(test.s)
+			have, err := c.ParseBigInt(test.s)
 			if err != nil {
 				t.Fatalf("unexpected error: %v", err)
 			}
@@ -32,9 +33,10 @@ func TestParseBigIntInvalid(t *testing.T) {
 		"abcd",
 	}
 
+	c := NewCalc()
 	for _, test := range tests {
 		t.Run(test, func(t *testing.T) {
-			_, err := ParseBigInt(test)
+			_, err := c.ParseBigInt(test)
 			if err == nil {
 				t.Errorf("expecting error")
 			}

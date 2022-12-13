@@ -33,7 +33,7 @@ func (c *Calc) PopBigInt() (*big.Int, error) {
 	if err != nil {
 		return nil, err
 	}
-	r, err := ParseBigInt(v)
+	r, err := c.ParseBigInt(v)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *Calc) PopBool() (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	b, err := ParseBool(v)
+	b, err := c.ParseBool(v)
 	if err != nil {
 		return false, err
 	}
@@ -81,7 +81,7 @@ func (c *Calc) PopFix() (decimal.Decimal, error) {
 	if err != nil {
 		return decimal.Zero, err
 	}
-	d, err := ParseDecimal(v)
+	d, err := c.ParseDecimal(v)
 	if err != nil {
 		return decimal.Zero, err
 	}
@@ -105,7 +105,7 @@ func (c *Calc) PopInt() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := ParseInt(v)
+	i, err := c.ParseInt(v)
 	if err != nil {
 		return 0, err
 	}
@@ -117,7 +117,7 @@ func (c *Calc) PopInt32() (int32, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := ParseInt32(v)
+	i, err := c.ParseInt32(v)
 	if err != nil {
 		return 0, err
 	}

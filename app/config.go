@@ -14,7 +14,7 @@ func DefaultConfig() zc.Config {
 }
 
 func NewDefaultCalc() *zc.Calc {
-	calc, err := zc.NewCalc(DefaultConfig())
+	calc, err := zc.NewCalcWithConfig(DefaultConfig())
 	if err != nil {
 		panic(err)
 	}

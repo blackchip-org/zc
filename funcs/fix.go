@@ -20,7 +20,7 @@ func EvalUnaryFix(calc *zc.Calc, fn UnaryFix) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(zc.FormatDecimal(b))
+	calc.Stack.Push(calc.FormatDecimal(b))
 	return nil
 }
 
@@ -48,7 +48,7 @@ func EvalBinaryFix(calc *zc.Calc, fn BinaryFix) (err error) {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(zc.FormatDecimal(r))
+	calc.Stack.Push(calc.FormatDecimal(r))
 	return nil
 }
 
@@ -61,6 +61,6 @@ func EvalCompareFix(calc *zc.Calc, fn CompareFix) (err error) {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(zc.FormatBool(c))
+	calc.Stack.Push(calc.FormatBool(c))
 	return nil
 }

@@ -33,9 +33,10 @@ func TestFormatNumberString(t *testing.T) {
 		{"1111000011110000", "1111_0000__1111_0000", optBin},
 	}
 
+	c := NewCalc()
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			have := FormatNumberString(test.in, test.opts)
+			have := c.FormatNumberString(test.in, test.opts)
 			if have != test.want {
 				t.Errorf("\n have: %v \n want: %v", have, test.want)
 			}

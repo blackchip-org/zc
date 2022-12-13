@@ -41,7 +41,7 @@ func main() {
 
 	config := app.DefaultConfig()
 	config.Trace = trace
-	calc, err := zc.NewCalc(config)
+	calc, err := zc.NewCalcWithConfig(config)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -43,7 +43,7 @@ func exit(calc *Calc) error {
 	if err != nil {
 		return err
 	}
-	code, err := ParseInt(a)
+	code, err := calc.ParseInt(a)
 	if err != nil {
 		return err
 	}
@@ -65,12 +65,12 @@ func places(calc *Calc) error {
 }
 
 func placesGet(calc *Calc) error {
-	calc.Stack.Push(FormatInt(int(Places)))
+	calc.Stack.Push(calc.FormatInt(int(Places)))
 	return nil
 }
 
 func n(calc *Calc) error {
-	calc.Stack.Push(FormatInt(calc.Stack.Len()))
+	calc.Stack.Push(calc.FormatInt(calc.Stack.Len()))
 	return nil
 }
 
@@ -89,7 +89,7 @@ func round(calc *Calc) error {
 	}
 	fn := roundModes[RoundMode]
 	r := fn(value, places)
-	calc.Stack.Push(FormatDecimal(r))
+	calc.Stack.Push(calc.FormatDecimal(r))
 	return nil
 }
 

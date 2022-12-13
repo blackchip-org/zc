@@ -22,7 +22,7 @@ var (
 	}
 )
 
-func parseDigits(sep rune, v string) ([]rune, []rune) {
+func (c *Calc) parseDigits(sep rune, v string) ([]rune, []rune) {
 	var intDigits, fracDigits []rune
 	inInt := true
 	for _, ch := range v {
@@ -40,9 +40,9 @@ func parseDigits(sep rune, v string) ([]rune, []rune) {
 	return intDigits, fracDigits
 }
 
-func FormatNumberString(v string, opts NumberFormatOptions) string {
+func (c *Calc) FormatNumberString(v string, opts NumberFormatOptions) string {
 	var digits strings.Builder
-	intDigits, fracDigits := parseDigits('.', v)
+	intDigits, fracDigits := c.parseDigits('.', v)
 
 	if opts.IntPat == "" {
 		digits.WriteString(string(intDigits))
@@ -109,11 +109,11 @@ func FormatNumberString(v string, opts NumberFormatOptions) string {
 
 }
 
-func FormatBigInt(v *big.Int) string {
+func (c *Calc) FormatBigInt(v *big.Int) string {
 	return fmt.Sprintf("%d", v)
 }
 
-func FormatBigIntBase(v *big.Int, radix int) string {
+func (c *Calc) FormatBigIntBase(v *big.Int, radix int) string {
 	switch radix {
 	case 16:
 		return fmt.Sprintf("0x%x", v)
@@ -122,17 +122,17 @@ func FormatBigIntBase(v *big.Int, radix int) string {
 	case 2:
 		return fmt.Sprintf("0b%b", v)
 	}
-	return FormatBigInt(v)
+	return c.FormatBigInt(v)
 }
 
-func FormatBool(v bool) string {
+func (c *Calc) FormatBool(v bool) string {
 	if v {
 		return "true"
 	}
 	return "false"
 }
 
-func FormatDecimal(v decimal.Decimal) string {
+func (c *Calc) FormatDecimal(v decimal.Decimal) string {
 	fn, ok := roundModes[RoundMode]
 	if !ok {
 		log.Panicf("invalid rounding mode: %v", RoundMode)
@@ -140,21 +140,21 @@ func FormatDecimal(v decimal.Decimal) string {
 	return fn(v, Places).String()
 }
 
-func FormatInt(i int) string {
+func (c *Calc) FormatInt(i int) string {
 	return fmt.Sprintf("%v", i)
 }
 
-func FormatValue(v string) string {
+func (c *Calc) FormatValue(v string) string {
 	r := ParseRadix(v)
 	switch {
 	case r != 10:
 		return v
-	case IsBigInt(v):
-		v := FormatBigIntBase(MustParseBigInt(v), r)
-		return FormatNumberString(v, NumberFormat)
-	case IsDecimal(v):
-		v := FormatDecimal(MustParseDecimal(v))
-		return FormatNumberString(v, NumberFormat)
+	case c.IsBigInt(v):
+		v := c.FormatBigIntBase(c.MustParseBigInt(v), r)
+		return c.FormatNumberString(v, NumberFormat)
+	case c.IsDecimal(v):
+		v := c.FormatDecimal(c.MustParseDecimal(v))
+		return c.FormatNumberString(v, NumberFormat)
 	}
 	return v
 }

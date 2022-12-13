@@ -94,7 +94,7 @@ func (c *Calc) evalIfNode(ifNode *ast.IfNode) error {
 			if err != nil {
 				return c.err(caseNode.Cond, err)
 			}
-			vb, err := ParseBool(v)
+			vb, err := c.ParseBool(v)
 			if err != nil {
 				return c.err(caseNode.Cond, err)
 			}
@@ -256,9 +256,9 @@ func (c *Calc) evalTryNode(node *ast.TryNode) error {
 	c.trace(node, "try")
 	if err := c.evalExprNode(node.Expr); err != nil {
 		c.Stack.Push(err.Error())
-		c.Stack.Push(FormatBool(false))
+		c.Stack.Push(c.FormatBool(false))
 	} else {
-		c.Stack.Push(FormatBool(true))
+		c.Stack.Push(c.FormatBool(true))
 	}
 	return nil
 }
@@ -296,7 +296,7 @@ func (c *Calc) evalValueNode(value *ast.ValueNode) error {
 	if value.IsString {
 		c.Stack.Push(interp)
 	} else {
-		c.Stack.Push(FormatValue(interp))
+		c.Stack.Push(c.FormatValue(interp))
 	}
 	return nil
 }

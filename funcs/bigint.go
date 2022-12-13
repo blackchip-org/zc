@@ -19,7 +19,7 @@ func EvalUnaryBigInt(calc *zc.Calc, fn UnaryBigInt) error {
 	if err := fn(&c, a); err != nil {
 		return err
 	}
-	calc.Stack.Push(zc.FormatBigInt(&c))
+	calc.Stack.Push(calc.FormatBigInt(&c))
 	return nil
 }
 
@@ -29,12 +29,12 @@ func EvalBinaryBigInt(calc *zc.Calc, fn BinaryBigInt) error {
 		return err
 	}
 
-	a, err := zc.ParseBigInt(x)
+	a, err := calc.ParseBigInt(x)
 	if err != nil {
 		return err
 	}
 
-	b, err := zc.ParseBigInt(y)
+	b, err := calc.ParseBigInt(y)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func EvalBinaryBigInt(calc *zc.Calc, fn BinaryBigInt) error {
 	}
 
 	radix := resolveRadix(zc.ParseRadix(x), zc.ParseRadix(y))
-	calc.Stack.Push(zc.FormatBigIntBase(&c, radix))
+	calc.Stack.Push(calc.FormatBigIntBase(&c, radix))
 	return nil
 }
 
@@ -58,7 +58,7 @@ func EvalCompareBigInt(calc *zc.Calc, fn CompareBigInt) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(zc.FormatBool(c))
+	calc.Stack.Push(calc.FormatBool(c))
 	return nil
 }
 

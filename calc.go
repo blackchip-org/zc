@@ -93,7 +93,15 @@ type Calc struct {
 	Modules map[string]*Calc
 }
 
-func NewCalc(config Config) (*Calc, error) {
+func NewCalc() *Calc {
+	c, err := NewCalcWithConfig(Config{})
+	if err != nil {
+		panic(err)
+	}
+	return c
+}
+
+func NewCalcWithConfig(config Config) (*Calc, error) {
 	c := &Calc{
 		Out:     &strings.Builder{},
 		name:    "<cli>",

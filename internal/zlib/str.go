@@ -13,7 +13,7 @@ func Len(calc *zc.Calc) error {
 	}
 
 	r := len(a)
-	calc.Stack.Push(zc.FormatInt(r))
+	calc.Stack.Push(calc.FormatInt(r))
 	return nil
 }
 
@@ -29,6 +29,6 @@ func StartsWith(calc *zc.Calc) error {
 	}
 
 	r := strings.HasPrefix(str, prefix)
-	calc.Stack.Push(zc.FormatBool(r))
+	calc.Stack.Push(calc.FormatBool(r))
 	return nil
 }
