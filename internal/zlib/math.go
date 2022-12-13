@@ -1,80 +1,9 @@
 package zlib
 
 import (
-	"math/big"
-
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/funcs"
-	"github.com/shopspring/decimal"
 )
-
-func bigIntMod(z *big.Int, a *big.Int, b *big.Int) {
-	var q big.Int
-	q.DivMod(a, b, z)
-}
-
-func bigIntSign(z *big.Int, a *big.Int) {
-	z.SetInt64(int64(a.Sign()))
-}
-
-func fixSign(a decimal.Decimal) decimal.Decimal {
-	return decimal.NewFromInt(int64(a.Sign()))
-}
-
-func opAbsBigInt(z *big.Int, a *big.Int) error             { z.Abs(a); return nil }
-func opAddBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Add(a, b); return nil }
-func opCeilBigInt(z *big.Int, a *big.Int) error            { z.Set(a); return nil }
-func opDivBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Div(a, b); return nil }
-func opFloorBigInt(z *big.Int, a *big.Int) error           { z.Set(a); return nil }
-func opModBigInt(z *big.Int, a *big.Int, b *big.Int) error { bigIntMod(z, a, b); return nil }
-func opMulBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Mul(a, b); return nil }
-func opNegBigInt(z *big.Int, a *big.Int) error             { z.Neg(a); return nil }
-func opPowBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Exp(a, b, nil); return nil }
-func opRemBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Rem(a, b); return nil }
-func opSignBigInt(z *big.Int, a *big.Int) error            { bigIntSign(z, a); return nil }
-func opSubBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Sub(a, b); return nil }
-
-func opAbsFix(a decimal.Decimal) (decimal.Decimal, error)                    { return a.Abs(), nil }
-func opAddFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Add(b), nil }
-func opCeilFix(a decimal.Decimal) (decimal.Decimal, error)                   { return a.Ceil(), nil }
-func opDivFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Div(b), nil }
-func opFloorFix(a decimal.Decimal) (decimal.Decimal, error)                  { return a.Floor(), nil }
-func opMulFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Mul(b), nil }
-func opNegFix(a decimal.Decimal) (decimal.Decimal, error)                    { return a.Neg(), nil }
-func opModFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Mod(b), nil }
-func opPowFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Pow(b), nil }
-func opSignFix(a decimal.Decimal) (decimal.Decimal, error)                   { return fixSign(a), nil }
-func opSubFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Sub(b), nil }
-
-func opRemFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) {
-	return decimal.Zero, zc.ErrUnsupported("fix-rem")
-}
-
-func AbsBigInt(calc *zc.Calc) error   { return funcs.EvalUnaryBigInt(calc, opAbsBigInt) }
-func AddBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opAddBigInt) }
-func CeilBigInt(calc *zc.Calc) error  { return funcs.EvalUnaryBigInt(calc, opCeilBigInt) }
-func DivBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opDivBigInt) }
-func FloorBigInt(calc *zc.Calc) error { return funcs.EvalUnaryBigInt(calc, opCeilBigInt) }
-func ModBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opModBigInt) }
-func MulBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opMulBigInt) }
-func NegBigInt(calc *zc.Calc) error   { return funcs.EvalUnaryBigInt(calc, opNegBigInt) }
-func PowBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opPowBigInt) }
-func RemBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opRemBigInt) }
-func SignBigInt(calc *zc.Calc) error  { return funcs.EvalUnaryBigInt(calc, opSignBigInt) }
-func SubBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opSubBigInt) }
-
-func AbsFix(calc *zc.Calc) error   { return funcs.EvalUnaryFix(calc, opAbsFix) }
-func AddFix(calc *zc.Calc) error   { return funcs.EvalBinaryFix(calc, opAddFix) }
-func CeilFix(calc *zc.Calc) error  { return funcs.EvalUnaryFix(calc, opCeilFix) }
-func DivFix(calc *zc.Calc) error   { return funcs.EvalBinaryFix(calc, opDivFix) }
-func FloorFix(calc *zc.Calc) error { return funcs.EvalUnaryFix(calc, opCeilFix) }
-func ModFix(calc *zc.Calc) error   { return funcs.EvalBinaryFix(calc, opModFix) }
-func MulFix(calc *zc.Calc) error   { return funcs.EvalBinaryFix(calc, opMulFix) }
-func NegFix(calc *zc.Calc) error   { return funcs.EvalUnaryFix(calc, opNegFix) }
-func PowFix(calc *zc.Calc) error   { return funcs.EvalBinaryFix(calc, opPowFix) }
-func RemFix(calc *zc.Calc) error   { return funcs.EvalBinaryFix(calc, opRemFix) }
-func SignFix(calc *zc.Calc) error  { return funcs.EvalUnaryFix(calc, opSignFix) }
-func SubFix(calc *zc.Calc) error   { return funcs.EvalBinaryFix(calc, opSubFix) }
 
 var (
 	opAbs = funcs.UnaryOps{

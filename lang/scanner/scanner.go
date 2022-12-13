@@ -165,7 +165,16 @@ func (s *Scanner) scanString(term rune) token.Token {
 		if s.ch == '\\' {
 			escaping = true
 		} else {
-			lit.WriteRune(s.ch)
+			if escaping {
+				switch s.ch {
+				case 'n':
+					lit.WriteRune('\n')
+				default:
+					lit.WriteRune(s.ch)
+				}
+			} else {
+				lit.WriteRune(s.ch)
+			}
 			escaping = false
 		}
 		s.scan()

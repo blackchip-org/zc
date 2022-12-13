@@ -24,7 +24,7 @@ Basic mathematical operations with integers.
 
 If `a` is less than zero, the negated value of `a`, otherwise `a`.
 
-    ( a:Int -- abs:Int )
+    ( a:BigInt -- abs:BigInt )
 
 Example:
 
@@ -38,7 +38,7 @@ Example:
 
 Adds the value of `b` to `a`.
 
-    ( a:Int b:Int -- add:Int )
+    ( a:BigInt b:BigInt -- add:BigInt )
 
 Aliases: `a`, `+`
 
@@ -55,7 +55,7 @@ Example:
 
 The identity operation with integers.
 
-    ( a:Int -- a:Int )
+    ( a:BigInt -- a:BigInt )
 
 Example:
 
@@ -69,7 +69,7 @@ Example:
 
 Divides the value of `a` by `b`.
 
-    ( a:Int b:Int -- div:Int )
+    ( a:BigInt b:BigInt -- div:BigInt )
 
 Aliases: `d`, `/`
 
@@ -86,7 +86,7 @@ Example:
 
 The identity operation with integers.
 
-    ( a:Int -- a:Int )
+    ( a:BigInt -- a:BigInt )
 
 Example:
 
@@ -100,7 +100,7 @@ Example:
 
 The modulus when `a` is divided by `b`.
 
-    ( a:Int b:Int -- mod:Int )
+    ( a:BigInt b:BigInt -- mod:BigInt )
 
 Example:
 
@@ -115,7 +115,7 @@ Example:
 
 Changes the sign of `a`.
 
-    ( a:Int -- neg:Int )
+    ( a:BigInt -- neg:BigInt )
 
 Example:
 
@@ -130,7 +130,7 @@ Example:
 
 Multiplies `a` by `b`.
 
-    ( a:Int b:Int -- Num )
+    ( a:BigInt b:BigInt -- mul:Big )
 
 Aliases: `m`, `*`
 
@@ -147,7 +147,7 @@ Example:
 
 Raises `a` to the power of `b`.
 
-    ( a:Int b:Int -- Num )
+    ( a:BigInt b:BigInt -- pow:BigInt )
 
 Alias: `**`
 
@@ -164,7 +164,7 @@ Example:
 
 The remainder when `a` is divided by `b`.
 
-    ( a:Int b:Int -- rem:Int )
+    ( a:BigInt b:BigInt -- rem:BigInt )
 
 Example:
 
@@ -184,7 +184,7 @@ If:
 * `a` is zero: `0`
 
 ```
-( a:Int -- sign:Int )
+( a:BigInt -- sign:BigInt )
 ```
 
 Example:
@@ -202,7 +202,7 @@ Example:
 
 Subtracts `b` from `a`.
 
-    ( a:Int b:Int -- sub:Int )
+    ( a:BigInt b:BigInt -- sub:BigInt )
 
 Aliases: `s`, `-`
 

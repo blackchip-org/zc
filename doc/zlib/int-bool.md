@@ -18,7 +18,7 @@ Boolean operations using integer math.
 
 `true` if `a` and `b` are equal, otherwise `false`.
 
-    ( a:Int b:Int -- eq:Bool )
+    ( a:BigInt b:BigInt -- eq:Bool )
 
 Example:
 
@@ -33,7 +33,7 @@ Example:
 
 `true` if `a` is greater than `b`, otherwise `false`.
 
-    ( a:Int b:Int -- gt:Bool )
+    ( a:BigInt b:BigInt -- gt:Bool )
 
 Example:
 
@@ -50,7 +50,7 @@ Example:
 
 `true` if `a` is greater than or equal to `b`, otherwise `false`.
 
-    ( a:Int b:Int -- gt:Bool )
+    ( a:BigInt b:BigInt -- gt:Bool )
 
 Example:
 
@@ -67,7 +67,7 @@ Example:
 
 `true` if `a` is less than `b`, otherwise `false`.
 
-    ( a:Int b:Int -- lt:Bool )
+    ( a:BigInt b:BigInt -- lt:Bool )
 
 Example:
 
@@ -84,7 +84,7 @@ Example:
 
 `true` if `a` is less than or equal to `b`, otherwise `false`.
 
-    ( a:Int b:Int -- lte:Bool )
+    ( a:BigInt b:BigInt -- lte:Bool )
 
 Example:
 
@@ -101,7 +101,7 @@ Example:
 
 `true` if `a` and `b` are not equal to each other, otherwise `false`.
 
-    ( a:Int b:Int -- neq:Bool )
+    ( a:BigInt b:BigInt -- neq:Bool )
 
 | Input         | Stack
 |---------------|-------------|
