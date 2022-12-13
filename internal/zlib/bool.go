@@ -41,11 +41,11 @@ func LtBigInt(calc *zc.Calc) error  { return funcs.EvalCompareBigInt(calc, opLtB
 func LteBigInt(calc *zc.Calc) error { return funcs.EvalCompareBigInt(calc, opLteBigInt) }
 
 func EqFix(calc *zc.Calc) error  { return funcs.EvalCompareFix(calc, opEqFix) }
-func GtFix(calc *zc.Calc) error  { return funcs.EvalCompareFix(calc, opEqFix) }
-func GteFix(calc *zc.Calc) error { return funcs.EvalCompareFix(calc, opEqFix) }
-func NeqFix(calc *zc.Calc) error { return funcs.EvalCompareFix(calc, opEqFix) }
-func LtFix(calc *zc.Calc) error  { return funcs.EvalCompareFix(calc, opEqFix) }
-func LteFix(calc *zc.Calc) error { return funcs.EvalCompareFix(calc, opEqFix) }
+func GtFix(calc *zc.Calc) error  { return funcs.EvalCompareFix(calc, opGtFix) }
+func GteFix(calc *zc.Calc) error { return funcs.EvalCompareFix(calc, opGteFix) }
+func NeqFix(calc *zc.Calc) error { return funcs.EvalCompareFix(calc, opNeqFix) }
+func LtFix(calc *zc.Calc) error  { return funcs.EvalCompareFix(calc, opLtFix) }
+func LteFix(calc *zc.Calc) error { return funcs.EvalCompareFix(calc, opLteFix) }
 
 func EqStr(calc *zc.Calc) error  { return funcs.EvalCompareStr(calc, opEqString) }
 func GtStr(calc *zc.Calc) error  { return funcs.EvalCompareStr(calc, opGtString) }

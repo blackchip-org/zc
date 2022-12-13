@@ -30,9 +30,9 @@ Comparison operations are parsed as numerics when possible. Therefore the follow
 
 ## and
 
-The logical conjunction of `a` and `b` is placed on the stack.
+The logical conjunction of `a` and `b`.
 
-    ( a:Bool b:Bool -- Bool )
+    ( a:Bool b:Bool -- and:Bool )
 
 Example:
 
@@ -46,9 +46,9 @@ Example:
 
 ## eq
 
-Places `true` on the stack if `a` and `b` are equal to each other, otherwise `false`.
+`true` if `a` and `b` are equal, otherwise `false`.
 
-    ( a:Val b:Val -- Bool )
+    ( a:Val b:Val -- eq:Bool )
 
 Example:
 
@@ -77,9 +77,9 @@ Example:
 
 ## gt
 
-If `a` is greater than `b` then `true` is placed on the stack, otherwise `false`.
+`true` if `a` is greater than `b`, otherwise `false`.
 
-    ( a:Val b:Val -- Bool )
+    ( a:Val b:Val -- gt:Bool )
 
 Example:
 
@@ -93,9 +93,9 @@ Example:
 
 ## gte
 
-If `a` is greater than or equal to `b` then `true` is placed on the stack, otherwise `false`.
+`true` if `a` is greater than or equal to `b`, otherwise `false`.
 
-    ( a:Val b:Val -- Bool )
+    ( a:Val b:Val -- gte:Bool )
 
 Example:
 
@@ -109,10 +109,10 @@ Example:
 
 ## iif
 
-If `c` is true then `a` is placed on the stack, otherwise `b`.
+`t` if `cond` is `true`, otherwise `f`.
 
-    ( c=true  a:Val b:Val -- a:Val ); or
-    ( c=false a:Val b:Val -- b:Val )
+    ( cond=true  t:Val f:Val -- iif:Val ); or
+    ( cond=false t:Val f:Val -- iif:Val )
 
 Example:
 
@@ -136,9 +136,9 @@ Example:
 
 ## lt
 
-If `a` is less than `b`, then `true` is placed on the stack, otherwise `false`.
+`true` if `a` is less than `b`, otherwise `false`.
 
-    ( a:Val b:Val -- Bool )
+    ( a:Val b:Val -- lt:Bool )
 
 Example:
 
@@ -152,9 +152,9 @@ Example:
 
 ## lte
 
-If `a` is less than or equal to `b`, then `true` is placed on the stack, otherwise `false`.
+`true` if `a` is less than or equal to `b`, otherwise `false`.
 
-    ( a:Val b:Val -- Bool )
+    ( a:Val b:Val -- lte:Bool )
 
 Example:
 
@@ -168,9 +168,9 @@ Example:
 
 ## neq
 
-Places `true` on the stack if `a` and `b` are not equal to each other, otherwise `false`.
+`true` if `a` and `b` are not equal to each other, otherwise `false`.
 
-    ( a:Val b:Val -- Bool )
+    ( a:Val b:Val -- neq:Bool )
 
 Example:
 
@@ -180,9 +180,12 @@ Example:
 | `clear`                |
 | `123 456 neq`          | `true`
 
+
 ## not
 
-Places `true` on the stack if `a` is false, otherwise `true`
+`true` if `a` is false, otherwise `false`
+
+    ( a:Bool -- not:Bool )
 
 Example:
 
@@ -191,11 +194,12 @@ Example:
 | `true not`             | `false`
 | `not`                  | `true`
 
+
 ## or
 
-The logical disjunction of `a` and `b` is placed on the stack.
+The logical disjunction of `a` and `b`.
 
-    ( a:Bool b:Bool -- Bool )
+    ( a:Bool b:Bool -- or:Bool )
 
 Example:
 

@@ -17,11 +17,6 @@ func bigIntSign(z *big.Int, a *big.Int) {
 	z.SetInt64(int64(a.Sign()))
 }
 
-func fixRem(a decimal.Decimal, b decimal.Decimal) decimal.Decimal {
-	_, rem := a.QuoRem(a, zc.Places)
-	return rem
-}
-
 func fixSign(a decimal.Decimal) decimal.Decimal {
 	return decimal.NewFromInt(int64(a.Sign()))
 }
@@ -48,9 +43,12 @@ func opMulFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { r
 func opNegFix(a decimal.Decimal) (decimal.Decimal, error)                    { return a.Neg(), nil }
 func opModFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Mod(b), nil }
 func opPowFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Pow(b), nil }
-func opRemFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Pow(b), nil }
 func opSignFix(a decimal.Decimal) (decimal.Decimal, error)                   { return fixSign(a), nil }
 func opSubFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Sub(b), nil }
+
+func opRemFix(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) {
+	return decimal.Zero, zc.ErrUnsupported("fix-rem")
+}
 
 func AbsBigInt(calc *zc.Calc) error   { return funcs.EvalUnaryBigInt(calc, opAbsBigInt) }
 func AddBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opAddBigInt) }

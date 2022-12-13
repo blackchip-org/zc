@@ -56,7 +56,7 @@ var (
 		},
 	}
 	FixBool = zc.ModuleDef{
-		Name:       "dec-bool",
+		Name:       "fix-bool",
 		ScriptPath: "zc:zlib/fix-bool.zc",
 		Natives: map[string]zc.CalcFunc{
 			"eq":  EqFix,
@@ -68,7 +68,7 @@ var (
 		},
 	}
 	FixMath = zc.ModuleDef{
-		Name:       "dec-math",
+		Name:       "fix-math",
 		ScriptPath: "zc:zlib/fix-math.zc",
 		Natives: map[string]zc.CalcFunc{
 			"abs":   AbsFix,

@@ -1,19 +1,16 @@
-# math
+# int-math
 
-Basic mathematical operations.
+Basic mathematical operations with integers.
 
-- Prelude: user, dev
-- Use: include
+- Use: import
 
 | Operation               | Alias    | Description
 |-------------------------|----------|------------
 | [abs](#abs)             |          | Absolute value
 | [add](#add)             | `a`, `+` | Addition
 | [ceil](#ceil)           |          | Ceiling
-| [dec](#dec)             | `--`     | Decrement
 | [div](#div)             | `d`, `/` | Division
 | [floor](#floor)         |          | Floor
-| [inc](#inc)             | `++`     | Increment
 | [mod](#mod)             |          | Modulus
 | [mul](#mul)             | `m`, `*` | Multiplication
 | [neg](#neg)             |          | Negation
@@ -27,7 +24,7 @@ Basic mathematical operations.
 
 If `a` is less than zero, the negated value of `a`, otherwise `a`.
 
-    ( a:Num -- abs:Num )
+    ( a:Int -- abs:Int )
 
 Example:
 
@@ -41,7 +38,7 @@ Example:
 
 Adds the value of `b` to `a`.
 
-    ( a:Num b:Num -- add:Num )
+    ( a:Int b:Int -- add:Int )
 
 Aliases: `a`, `+`
 
@@ -56,39 +53,23 @@ Example:
 
 ## ceil
 
-The nearest integer value greater than or equal to `a`.
+The identity operation with integers.
 
-    ( a:Num -- ceil:Num )
-
-Example:
-
-| Input   | Stack
-|---------|-------------|
-| `6.12`  | `6.12`
-| `ceil`  | `7`
-
-
-## dec
-
-Decrements the value of `a` by `1`.
-
-    ( a:Num -- dec:Num )
-
-Alias: `--`
+    ( a:Int -- a:Int )
 
 Example:
 
 | Input   | Stack
 |---------|-------------|
 | `6`     | `6`
-| `dec`   | `5`
+| `floor` | `6`
 
 
 ## div
 
 Divides the value of `a` by `b`.
 
-    ( a:Num b:Num -- div:Num )
+    ( a:Int b:Int -- div:Int )
 
 Aliases: `d`, `/`
 
@@ -103,39 +84,23 @@ Example:
 
 ## floor
 
-The nearest integer value less than or equal to `a`.
+The identity operation with integers.
 
-    ( a:Num -- floor:Num )
-
-Example:
-
-| Input   | Stack
-|---------|-------------|
-| `6.12`  | `6.12`
-| `floor`  | `6`
-
-
-## inc
-
-Increments the value of `a` by `1`.
-
-    ( a:Num -- inc:Num )
-
-Alias: `++`
+    ( a:Int -- a:Int )
 
 Example:
 
 | Input   | Stack
 |---------|-------------|
 | `6`     | `6`
-| `inc`   | `7`
+| `floor` | `6`
 
 
 ## mod
 
 The modulus when `a` is divided by `b`.
 
-    ( a:Num b:Num -- mod:Num )
+    ( a:Int b:Int -- mod:Int )
 
 Example:
 
@@ -150,7 +115,7 @@ Example:
 
 Changes the sign of `a`.
 
-    ( a:Num -- neg:Num )
+    ( a:Int -- neg:Int )
 
 Example:
 
@@ -165,7 +130,7 @@ Example:
 
 Multiplies `a` by `b`.
 
-    ( a:Num b:Num -- Num )
+    ( a:Int b:Int -- Num )
 
 Aliases: `m`, `*`
 
@@ -182,7 +147,7 @@ Example:
 
 Raises `a` to the power of `b`.
 
-    ( a:Num b:Num -- Num )
+    ( a:Int b:Int -- Num )
 
 Alias: `**`
 
@@ -199,7 +164,7 @@ Example:
 
 The remainder when `a` is divided by `b`.
 
-    ( a:Num b:Num -- rem:Num )
+    ( a:Int b:Int -- rem:Int )
 
 Example:
 
@@ -219,7 +184,7 @@ If:
 * `a` is zero: `0`
 
 ```
-( a:Num -- sign:Int )
+( a:Int -- sign:Int )
 ```
 
 Example:
@@ -237,7 +202,7 @@ Example:
 
 Subtracts `b` from `a`.
 
-    ( a:Num b:Num -- sub:Num )
+    ( a:Int b:Int -- sub:Int )
 
 Aliases: `s`, `-`
 
