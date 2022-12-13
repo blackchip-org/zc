@@ -17,8 +17,6 @@ var builtin = map[string]CalcFunc{
 	"round":       round,
 	"round-mode":  roundMode,
 	"round-mode=": roundModeGet,
-	"recv":        recv,
-	"send":        send,
 	"trace":       trace,
 	"trace-off":   traceOff,
 	"undef":       undef,
@@ -80,18 +78,6 @@ func nothing(calc *Calc) error {
 	return nil
 }
 
-func recv(calc *Calc) error {
-	if calc.Stack == calc.main {
-		return errors.New("on main stack")
-	}
-	a, err := calc.main.Pop()
-	if err != nil {
-		return err
-	}
-	calc.Stack.Push(a)
-	return nil
-}
-
 func round(calc *Calc) error {
 	places, err := calc.PopInt32()
 	if err != nil {
@@ -123,18 +109,6 @@ func roundMode(calc *Calc) error {
 
 func roundModeGet(calc *Calc) error {
 	calc.Stack.Push(RoundMode)
-	return nil
-}
-
-func send(calc *Calc) error {
-	if calc.Stack == calc.main {
-		return errors.New("on main stack")
-	}
-	a, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
-	calc.main.Push(a)
 	return nil
 }
 

@@ -109,6 +109,7 @@ func NewCalc(config Config) (*Calc, error) {
 		Natives: make(map[string]CalcFunc),
 	}
 	c.Stack = c.main
+	c.global["main"] = c.Stack
 	c.local = c.global
 
 	for _, def := range config.ModuleDefs {
@@ -736,6 +737,7 @@ func (c *Calc) moduleContext(name string) *Calc {
 		defs:    c.defs,
 		Modules: c.Modules,
 	}
+	dc.global["main"] = dc.main
 	dc.Stack = dc.main
 	dc.local = dc.global
 	return dc
@@ -755,6 +757,7 @@ func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 		defs:    c.defs,
 		Modules: c.Modules,
 	}
+	dc.local["main"] = dc.main
 	dc.Stack = dc.main
 	return dc
 }
