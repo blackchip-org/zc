@@ -5,7 +5,7 @@ Boolean operations.
 - Prelude: dev
 - Use: include
 
-Comparision operations are parsed as numerics when possible. Therefore the following values are considered equal:
+Comparison operations are parsed as numerics when possible. Therefore the following values are considered equal:
 
 - `1234.56`
 - `1234.560`

@@ -2,7 +2,7 @@
 
 Basic mathematical operations.
 
-- Prelude: cli, dev
+- Prelude: user, dev
 - Use: include
 
 | Operation               | Alias    | Description
@@ -16,7 +16,7 @@ Basic mathematical operations.
 | [inc](#inc)             | `++`     | Increment
 | [mod](#mod)             |          | Modulus
 | [mul](#mul)             | `m`, `*` | Multiplication
-[ [neg](#neg)             |          | Negation
+| [neg](#neg)             |          | Negation
 | [pow](#pow)             | `**`     | Exponentiation
 | [rem](#rem)             |          | Remainder
 | [sign](#sign)           |          | Sign
@@ -209,11 +209,14 @@ Example:
 ## sign
 
 If:
-    - `a` is negative: `-1`
-    - `a` is positive: `1`
-    - `a` is zero: `0`
 
-    ( a:Num -- sign:Int )
+* `a` is negative: `-1`
+* `a` is positive: `1`
+* `a` is zero: `0`
+
+```
+( a:Num -- sign:Int )
+```
 
 Example:
 

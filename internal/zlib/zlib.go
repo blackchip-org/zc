@@ -21,7 +21,7 @@ var All = []zc.ModuleDef{
 }
 
 var (
-	PreludeCLI = []string{
+	PreludeUser = []string{
 		"math",
 		"stack",
 		"str", // TODO: This should only be in dev
