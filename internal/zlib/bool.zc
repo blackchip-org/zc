@@ -1,11 +1,15 @@
 native and
+native eq
+native gt
+native gte
+native lt
+native lte
+native neq
+native not
+native or
 
 macro false 'false'
-alias f false
-
-native gt
-
-native gte
+macro true 'true'
 
 func iif /expr /tval /fval
     if /expr
@@ -13,15 +17,6 @@ func iif /expr /tval /fval
     else
         /fval
 
-macro true 'true'
+alias f false
 alias t true
 
-native lt
-
-native lte
-
-native neq
-
-native not
-
-native or

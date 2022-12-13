@@ -90,6 +90,7 @@ type Calc struct {
 	local   map[string]*Stack
 	Funcs   map[string]CalcFunc
 	Exports map[string]CalcFunc
+	Natives map[string]CalcFunc
 	defs    map[string]ModuleDef
 	Modules map[string]*Calc
 }
@@ -105,6 +106,7 @@ func NewCalc(config Config) (*Calc, error) {
 		Modules: make(map[string]*Calc),
 		Funcs:   make(map[string]CalcFunc),
 		Exports: make(map[string]CalcFunc),
+		Natives: make(map[string]CalcFunc),
 	}
 	c.Stack = c.main
 	c.local = c.global
@@ -458,7 +460,7 @@ func (c *Calc) evalNode(node ast.Node) error {
 }
 
 func (c *Calc) evalAliasNode(node *ast.AliasNode) error {
-	c.trace(node, "alias %v %v", node.From, node.To)
+	c.trace(node, "alias %v %v", node.To, node.From)
 	fn, ok := c.Funcs[node.From]
 	if !ok {
 		return c.err(node, fmt.Errorf("no such function or macro: %v", node.From))
@@ -609,6 +611,17 @@ func (c *Calc) evalMacroNode(mac *ast.MacroNode) error {
 }
 
 func (c *Calc) evalNativeNode(node *ast.NativeNode) error {
+	c.trace(node, "native %v", strings.Join([]string{node.Name, node.Export}, " "))
+	export := node.Export
+	if export == "" {
+		export = node.Name
+	}
+	fn, ok := c.Natives[node.Name]
+	if !ok {
+		return c.err(node, fmt.Errorf("no such native: %v", node.Name))
+	}
+	c.Funcs[node.Name] = fn
+	c.Exports[export] = fn
 	return nil
 }
 
@@ -719,6 +732,7 @@ func (c *Calc) moduleContext(name string) *Calc {
 		global:  make(map[string]*Stack),
 		Funcs:   make(map[string]CalcFunc),
 		Exports: make(map[string]CalcFunc),
+		Natives: make(map[string]CalcFunc),
 		defs:    c.defs,
 		Modules: c.Modules,
 	}
@@ -737,6 +751,7 @@ func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 		local:   make(map[string]*Stack),
 		Funcs:   c.Funcs,
 		Exports: c.Exports,
+		Natives: c.Natives,
 		defs:    c.defs,
 		Modules: c.Modules,
 	}
@@ -792,6 +807,8 @@ func (c *Calc) load(def ModuleDef) (*Calc, error) {
 
 	for _, prelude := range c.config.PreludeDev {
 		mod, ok := c.Modules[prelude]
+		// TODO: Continue here on error for the case when bootstrapping
+		// the prelude itself. Might be a better way to handle this.
 		if !ok {
 			continue
 		}
@@ -801,8 +818,7 @@ func (c *Calc) load(def ModuleDef) (*Calc, error) {
 	}
 
 	for name, fn := range def.Natives {
-		dc.Funcs[name] = fn
-		dc.Exports[name] = fn
+		dc.Natives[name] = fn
 	}
 
 	if def.ScriptPath != "" {

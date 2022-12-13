@@ -135,8 +135,9 @@ var (
 		},
 	}
 	Prog = zc.ModuleDef{
-		Name:    "prog",
-		Include: true,
+		Name:       "prog",
+		Include:    true,
+		ScriptPath: "zc:zlib/prog.zc",
 		Natives: map[string]zc.CalcFunc{
 			"bin": Bin,
 			"hex": Hex,
@@ -144,7 +145,8 @@ var (
 		},
 	}
 	Runtime = zc.ModuleDef{
-		Name: "runtime",
+		Name:       "runtime",
+		ScriptPath: "zc:zlib/runtime.zc",
 		Natives: map[string]zc.CalcFunc{
 			"exports": Exports,
 			"funcs":   Funcs,
@@ -168,8 +170,9 @@ var (
 		},
 	}
 	Str = zc.ModuleDef{
-		Name:    "str",
-		Include: true,
+		Name:       "str",
+		Include:    true,
+		ScriptPath: "zc:zlib/str.zc",
 		Natives: map[string]zc.CalcFunc{
 			"len":         Len,
 			"starts-with": StartsWith,

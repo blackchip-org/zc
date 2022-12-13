@@ -1,14 +1,17 @@
 include bool
 
-alias a add
-alias + add
-alias d div
-alias / div
-alias m mul
-alias * mul
-alias s sub
-alias - sub
-alias ** pow
+native abs
+native add
+native ceil
+native div
+native floor
+native mod
+native mul
+native neg
+native pow
+native rem
+native sign
+native sub
 
 macro dec -1 add
 macro inc 1 add
@@ -19,4 +22,13 @@ func sum //a
 	while n 1 gt
 		add
 
+alias a add
+alias + add
+alias d div
+alias / div
+alias m mul
+alias * mul
+alias s sub
+alias - sub
+alias ** pow
 
