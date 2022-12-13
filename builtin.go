@@ -2,24 +2,18 @@ package zc
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"strings"
 )
 
 var builtin = map[string]CalcFunc{
-	"abort":       abort,
-	"exit":        exit,
-	"places":      places,
-	"places=":     placesGet,
-	"n":           n,
-	"nothing":     nothing,
-	"round":       round,
-	"round-mode":  roundMode,
-	"round-mode=": roundModeGet,
-	"trace":       trace,
-	"trace-off":   traceOff,
-	"undef":       undef,
+	"abort":     abort,
+	"exit":      exit,
+	"n":         n,
+	"nothing":   nothing,
+	"trace":     trace,
+	"trace-off": traceOff,
+	"undef":     undef,
 }
 
 func abort(calc *Calc) error {
@@ -51,64 +45,12 @@ func exit(calc *Calc) error {
 	return nil
 }
 
-func places(calc *Calc) error {
-	places, err := calc.PopInt32()
-	if err != nil {
-		return err
-	}
-	if places < 0 {
-		return fmt.Errorf("invalid number of places: %v", places)
-	}
-	calc.Settings.Places = places
-	calc.Info = "ok"
-	return nil
-}
-
-func placesGet(calc *Calc) error {
-	calc.Stack.Push(calc.FormatInt(int(calc.Settings.Places)))
-	return nil
-}
-
 func n(calc *Calc) error {
 	calc.Stack.Push(calc.FormatInt(calc.Stack.Len()))
 	return nil
 }
 
 func nothing(calc *Calc) error {
-	return nil
-}
-
-func round(calc *Calc) error {
-	places, err := calc.PopInt32()
-	if err != nil {
-		return err
-	}
-	value, err := calc.PopFix()
-	if err != nil {
-		return err
-	}
-	fn := roundModes[calc.Settings.RoundMode]
-	r := fn(value, places)
-	calc.Stack.Push(calc.FormatDecimal(r))
-	return nil
-}
-
-func roundMode(calc *Calc) error {
-	mode, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
-	_, ok := roundModes[mode]
-	if !ok {
-		return fmt.Errorf("invalid rounding mode: %v", mode)
-	}
-	calc.Settings.RoundMode = mode
-	calc.Print("ok")
-	return err
-}
-
-func roundModeGet(calc *Calc) error {
-	calc.Stack.Push(calc.Settings.RoundMode)
 	return nil
 }
 

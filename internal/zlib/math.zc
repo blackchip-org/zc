@@ -10,6 +10,7 @@ native mul
 native neg
 native pow
 native rem
+native round
 native sign
 native sub
 
@@ -30,5 +31,6 @@ alias m mul
 alias * mul
 alias s sub
 alias - sub
+alias r round
 alias ** pow
 

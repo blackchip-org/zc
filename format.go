@@ -9,19 +9,6 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type decRoundFunc func(decimal.Decimal, int32) decimal.Decimal
-
-var (
-	roundModes = map[string]decRoundFunc{
-		"ceil":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundCeil(places) },
-		"down":      func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundDown(places) },
-		"floor":     func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundFloor(places) },
-		"half-up":   func(d decimal.Decimal, places int32) decimal.Decimal { return d.Round(places) },
-		"half-even": func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundBank(places) },
-		"up":        func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundUp(places) },
-	}
-)
-
 func (c *Calc) parseDigits(sep rune, v string) ([]rune, []rune) {
 	var intDigits, fracDigits []rune
 	inInt := true
@@ -133,9 +120,9 @@ func (c *Calc) FormatBool(v bool) string {
 }
 
 func (c *Calc) FormatDecimal(v decimal.Decimal) string {
-	fn, ok := roundModes[c.Settings.RoundMode]
+	fn, ok := RoundingFuncsFix[c.Settings.RoundingMode]
 	if !ok {
-		log.Panicf("invalid rounding mode: %v", c.Settings.RoundMode)
+		log.Panicf("invalid rounding mode: %v", c.Settings.RoundingMode)
 	}
 
 	return fn(v, c.Settings.Places).String()

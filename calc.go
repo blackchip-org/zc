@@ -14,14 +14,14 @@ import (
 
 type Settings struct {
 	Places       int32
-	RoundMode    string
+	RoundingMode RoundingMode
 	NumberFormat NumberFormatOptions
 }
 
 func DefaultSettings() *Settings {
 	return &Settings{
 		Places:       16,
-		RoundMode:    "half-up",
+		RoundingMode: RoundingModeHalfUp,
 		NumberFormat: DefaultNumberFormatOptions(),
 	}
 }
@@ -50,12 +50,6 @@ func DefaultNumberFormatOptions() NumberFormatOptions {
 		Point:  '.',
 	}
 }
-
-var (
-	//Places       int32  = 16
-	RoundMode    string = "half-up"
-	NumberFormat        = DefaultNumberFormatOptions()
-)
 
 type Config struct {
 	ModuleDefs []ModuleDef
@@ -147,8 +141,6 @@ func NewCalcWithConfig(config Config) (*Calc, error) {
 			return nil, err
 		}
 	}
-
-	c.Define("conf-places").Set("16")
 
 	return c, nil
 }

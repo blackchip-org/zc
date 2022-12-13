@@ -205,6 +205,7 @@ func (c *Calc) evalMacroNode(mac *ast.MacroNode) error {
 		return caller.invokeMacro(mac)
 	}
 	c.Exports[mac.Name] = c.Funcs[mac.Name]
+	c.Info = "ok"
 	return nil
 }
 

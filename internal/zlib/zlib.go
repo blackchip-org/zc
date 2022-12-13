@@ -7,6 +7,7 @@ import (
 var All = []zc.ModuleDef{
 	Assert,
 	Bool,
+	Conf,
 	FixBool,
 	FixMath,
 	Math,
@@ -23,12 +24,14 @@ var All = []zc.ModuleDef{
 
 var (
 	PreludeUser = []string{
+		"conf",
 		"math",
 		"stack",
 		"str", // TODO: This should only be in dev
 	}
 	PreludeDev = []string{
 		"bool",
+		"conf",
 		"math",
 		"stack",
 		"str",
@@ -54,6 +57,16 @@ var (
 			"lte": Lte,
 			"not": Not,
 			"or":  Or,
+		},
+	}
+	Conf = zc.ModuleDef{
+		Name:       "conf",
+		ScriptPath: "zc:zlib/conf.zc",
+		Natives: map[string]zc.CalcFunc{
+			"places":  Places,
+			"places=": PlacesGet,
+			"round":   RoundMode,
+			"round=":  RoundModeGet,
 		},
 	}
 	FixBool = zc.ModuleDef{
@@ -101,6 +114,7 @@ var (
 			"neg":   Neg,
 			"pow":   Pow,
 			"rem":   Rem,
+			"round": Round,
 			"sign":  Sign,
 			"sub":   Sub,
 		},
