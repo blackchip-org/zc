@@ -12,6 +12,20 @@ import (
 	"github.com/blackchip-org/zc/lang/token"
 )
 
+type Settings struct {
+	Places       int32
+	RoundMode    string
+	NumberFormat NumberFormatOptions
+}
+
+func DefaultSettings() *Settings {
+	return &Settings{
+		Places:       16,
+		RoundMode:    "half-up",
+		NumberFormat: DefaultNumberFormatOptions(),
+	}
+}
+
 type NumberFormatOptions struct {
 	IntPat  string
 	Point   rune
@@ -38,7 +52,7 @@ func DefaultNumberFormatOptions() NumberFormatOptions {
 }
 
 var (
-	Places       int32  = 16
+	//Places       int32  = 16
 	RoundMode    string = "half-up"
 	NumberFormat        = DefaultNumberFormatOptions()
 )
@@ -78,19 +92,20 @@ func (c CalcError) Error() string {
 type CalcFunc func(*Calc) error
 
 type Calc struct {
-	Out     *strings.Builder
-	Info    string
-	Stack   *Stack
-	name    string
-	config  Config
-	main    *Stack
-	global  map[string]*Stack
-	local   map[string]*Stack
-	Funcs   map[string]CalcFunc
-	Exports map[string]CalcFunc
-	Natives map[string]CalcFunc
-	defs    map[string]ModuleDef
-	Modules map[string]*Calc
+	Out      *strings.Builder
+	Info     string
+	Stack    *Stack
+	name     string
+	config   Config
+	main     *Stack
+	global   map[string]*Stack
+	local    map[string]*Stack
+	Funcs    map[string]CalcFunc
+	Exports  map[string]CalcFunc
+	Natives  map[string]CalcFunc
+	defs     map[string]ModuleDef
+	Modules  map[string]*Calc
+	Settings *Settings
 }
 
 func NewCalc() *Calc {
@@ -103,16 +118,17 @@ func NewCalc() *Calc {
 
 func NewCalcWithConfig(config Config) (*Calc, error) {
 	c := &Calc{
-		Out:     &strings.Builder{},
-		name:    "<cli>",
-		config:  config,
-		main:    NewStack("main"),
-		global:  make(map[string]*Stack),
-		defs:    make(map[string]ModuleDef),
-		Modules: make(map[string]*Calc),
-		Funcs:   make(map[string]CalcFunc),
-		Exports: make(map[string]CalcFunc),
-		Natives: make(map[string]CalcFunc),
+		Out:      &strings.Builder{},
+		name:     "<cli>",
+		config:   config,
+		main:     NewStack("main"),
+		global:   make(map[string]*Stack),
+		defs:     make(map[string]ModuleDef),
+		Modules:  make(map[string]*Calc),
+		Funcs:    make(map[string]CalcFunc),
+		Exports:  make(map[string]CalcFunc),
+		Natives:  make(map[string]CalcFunc),
+		Settings: DefaultSettings(),
 	}
 	c.Stack = c.main
 	c.global["main"] = c.Stack
@@ -131,6 +147,9 @@ func NewCalcWithConfig(config Config) (*Calc, error) {
 			return nil, err
 		}
 	}
+
+	c.Define("conf-places").Set("16")
+
 	return c, nil
 }
 
@@ -233,7 +252,7 @@ func (c *Calc) Install(def ModuleDef) {
 	c.defs[def.Name] = def
 }
 
-func (c Calc) Interpolate(v string) (string, error) {
+func (c *Calc) Interpolate(v string) (string, error) {
 	var result, name strings.Builder
 
 	inQuote := false

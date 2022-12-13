@@ -59,13 +59,13 @@ func places(calc *Calc) error {
 	if places < 0 {
 		return fmt.Errorf("invalid number of places: %v", places)
 	}
-	Places = places
-	calc.Printf("ok")
+	calc.Settings.Places = places
+	calc.Info = "ok"
 	return nil
 }
 
 func placesGet(calc *Calc) error {
-	calc.Stack.Push(calc.FormatInt(int(Places)))
+	calc.Stack.Push(calc.FormatInt(int(calc.Settings.Places)))
 	return nil
 }
 
@@ -87,7 +87,7 @@ func round(calc *Calc) error {
 	if err != nil {
 		return err
 	}
-	fn := roundModes[RoundMode]
+	fn := roundModes[calc.Settings.RoundMode]
 	r := fn(value, places)
 	calc.Stack.Push(calc.FormatDecimal(r))
 	return nil
@@ -102,13 +102,13 @@ func roundMode(calc *Calc) error {
 	if !ok {
 		return fmt.Errorf("invalid rounding mode: %v", mode)
 	}
-	RoundMode = mode
+	calc.Settings.RoundMode = mode
 	calc.Print("ok")
 	return err
 }
 
 func roundModeGet(calc *Calc) error {
-	calc.Stack.Push(RoundMode)
+	calc.Stack.Push(calc.Settings.RoundMode)
 	return nil
 }
 

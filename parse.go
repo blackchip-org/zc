@@ -12,7 +12,7 @@ import (
 
 func (c *Calc) cleanNumString(v string) string {
 	var sb strings.Builder
-	seps := NumberFormat.Separators()
+	seps := c.Settings.NumberFormat.Separators()
 	for _, ch := range v {
 		if _, ok := seps[ch]; ok {
 			continue

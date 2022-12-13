@@ -133,11 +133,12 @@ func (c *Calc) FormatBool(v bool) string {
 }
 
 func (c *Calc) FormatDecimal(v decimal.Decimal) string {
-	fn, ok := roundModes[RoundMode]
+	fn, ok := roundModes[c.Settings.RoundMode]
 	if !ok {
-		log.Panicf("invalid rounding mode: %v", RoundMode)
+		log.Panicf("invalid rounding mode: %v", c.Settings.RoundMode)
 	}
-	return fn(v, Places).String()
+
+	return fn(v, c.Settings.Places).String()
 }
 
 func (c *Calc) FormatInt(i int) string {
@@ -151,10 +152,10 @@ func (c *Calc) FormatValue(v string) string {
 		return v
 	case c.IsBigInt(v):
 		v := c.FormatBigIntBase(c.MustParseBigInt(v), r)
-		return c.FormatNumberString(v, NumberFormat)
+		return c.FormatNumberString(v, c.Settings.NumberFormat)
 	case c.IsDecimal(v):
 		v := c.FormatDecimal(c.MustParseDecimal(v))
-		return c.FormatNumberString(v, NumberFormat)
+		return c.FormatNumberString(v, c.Settings.NumberFormat)
 	}
 	return v
 }

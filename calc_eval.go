@@ -323,16 +323,17 @@ func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
 
 func (c *Calc) moduleContext(name string) *Calc {
 	dc := &Calc{
-		Out:     c.Out,
-		name:    name,
-		config:  c.config,
-		main:    NewStack("main"),
-		global:  make(map[string]*Stack),
-		Funcs:   make(map[string]CalcFunc),
-		Exports: make(map[string]CalcFunc),
-		Natives: make(map[string]CalcFunc),
-		defs:    c.defs,
-		Modules: c.Modules,
+		Out:      c.Out,
+		name:     name,
+		config:   c.config,
+		main:     NewStack("main"),
+		global:   make(map[string]*Stack),
+		Funcs:    make(map[string]CalcFunc),
+		Exports:  make(map[string]CalcFunc),
+		Natives:  make(map[string]CalcFunc),
+		defs:     c.defs,
+		Modules:  c.Modules,
+		Settings: c.Settings,
 	}
 	dc.global["main"] = dc.main
 	dc.Stack = dc.main
@@ -342,17 +343,18 @@ func (c *Calc) moduleContext(name string) *Calc {
 
 func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 	dc := &Calc{
-		Out:     c.Out,
-		name:    c.name + "." + node.Name,
-		config:  c.config,
-		main:    NewStack("main"),
-		global:  c.global,
-		local:   make(map[string]*Stack),
-		Funcs:   c.Funcs,
-		Exports: c.Exports,
-		Natives: c.Natives,
-		defs:    c.defs,
-		Modules: c.Modules,
+		Out:      c.Out,
+		name:     c.name + "." + node.Name,
+		config:   c.config,
+		main:     NewStack("main"),
+		global:   c.global,
+		local:    make(map[string]*Stack),
+		Funcs:    c.Funcs,
+		Exports:  c.Exports,
+		Natives:  c.Natives,
+		defs:     c.defs,
+		Modules:  c.Modules,
+		Settings: c.Settings,
 	}
 	dc.local["main"] = dc.main
 	dc.Stack = dc.main
