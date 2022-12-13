@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/peterh/liner v1.2.2
 	github.com/shopspring/decimal v1.3.1
-	golang.org/x/text v0.5.0
 )
 
 require (
