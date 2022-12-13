@@ -12,6 +12,7 @@ var All = []zc.ModuleDef{
 	Math,
 	IntBool,
 	IntMath,
+	Io,
 	Prog,
 	Runtime,
 	Stack,
@@ -132,6 +133,13 @@ var (
 			"rem":   RemBigInt,
 			"sign":  SignBigInt,
 			"sub":   SubBigInt,
+		},
+	}
+	Io = zc.ModuleDef{
+		Name:       "io",
+		ScriptPath: "zc:zlib/io.zc",
+		Natives: map[string]zc.CalcFunc{
+			"print": Print,
 		},
 	}
 	Prog = zc.ModuleDef{

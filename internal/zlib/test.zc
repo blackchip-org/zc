@@ -1,3 +1,4 @@
+import io
 import runtime
 
 func run //files
@@ -5,8 +6,7 @@ func run //files
 	fail; 0
 
 	for file; //files
-		'' println
-		/file println
+		'\n`file`\n' io.print
 		'import \'`file`\' testing' eval
 		exports; clear 'testing' runtime.exports
 		for export; //exports
@@ -14,14 +14,13 @@ func run //files
 				try 'testing.`export`' eval
 				if not
 					err; clear recv
-					'  FAIL: `export`: `err`' println
+					'  FAIL: `export`: `err`\n' io.print
 					fail; inc
 				else
-					'  pass: `export`' println
+					'  pass: `export`\n' io.print
 					pass; inc
 		'testing' undef
 
-	'' println
-	'`pass` tests passed, `fail` failed' println
+	'\n`pass` tests passed, `fail` failed' io.print
 	/fail 0 eq
 

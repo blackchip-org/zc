@@ -12,8 +12,6 @@ var builtin = map[string]CalcFunc{
 	"exit":        exit,
 	"places":      places,
 	"places=":     placesGet,
-	"print":       print,
-	"println":     println,
 	"n":           n,
 	"nothing":     nothing,
 	"round":       round,
@@ -70,24 +68,6 @@ func places(calc *Calc) error {
 
 func placesGet(calc *Calc) error {
 	calc.Stack.Push(FormatInt(int(Places)))
-	return nil
-}
-
-func print(calc *Calc) error {
-	a, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
-	fmt.Print(a)
-	return nil
-}
-
-func println(calc *Calc) error {
-	a, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
-	fmt.Println(a)
 	return nil
 }
 
