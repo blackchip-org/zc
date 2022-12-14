@@ -67,7 +67,7 @@ func Sign(calc *zc.Calc) error  { return funcs.EvalUnaryNum(calc, opSign) }
 func Sub(calc *zc.Calc) error   { return funcs.EvalBinaryNum(calc, opSub) }
 
 func Round(calc *zc.Calc) error {
-	places, err := calc.PopInt32()
+	places, err := calc.Stack.PopInt32()
 	if err != nil {
 		return err
 	}
@@ -80,6 +80,6 @@ func Round(calc *zc.Calc) error {
 		return fmt.Errorf("invalid rounding mode: %v", calc.Settings.RoundingMode)
 	}
 	r := fn(value, places)
-	calc.Stack.Push(calc.FormatDecimal(r))
+	calc.Stack.Push(calc.Value.FormatFix(r))
 	return nil
 }

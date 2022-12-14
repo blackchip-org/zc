@@ -8,13 +8,13 @@ import (
 )
 
 type Stack struct {
-	Name string
-	calc *Calc
-	data []string
+	Name  string
+	value *ValueOps
+	data  []string
 }
 
-func NewStack(c *Calc, name string) *Stack {
-	return &Stack{Name: name, calc: c}
+func NewStack(ops *ValueOps, name string) *Stack {
+	return &Stack{Name: name, value: ops}
 }
 
 func (s *Stack) Items() []string {
@@ -106,7 +106,7 @@ func (s *Stack) PopBigInt() (*big.Int, error) {
 	if err != nil {
 		return nil, err
 	}
-	r, err := s.calc.ParseBigInt(v)
+	r, err := s.value.ParseBigInt(v)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +130,7 @@ func (s *Stack) PopBool() (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	b, err := s.calc.ParseBool(v)
+	b, err := s.value.ParseBool(v)
 	if err != nil {
 		return false, err
 	}
@@ -154,7 +154,7 @@ func (s *Stack) PopFix() (decimal.Decimal, error) {
 	if err != nil {
 		return decimal.Zero, err
 	}
-	d, err := s.calc.ParseDecimal(v)
+	d, err := s.value.ParseFix(v)
 	if err != nil {
 		return decimal.Zero, err
 	}
@@ -178,19 +178,19 @@ func (s *Stack) PopInt() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.calc.ParseInt(v)
+	i, err := s.value.ParseInt(v)
 	if err != nil {
 		return 0, err
 	}
 	return i, nil
 }
 
-func (c *Calc) PopInt32() (int32, error) {
-	v, err := c.Stack.Pop()
+func (s *Stack) PopInt32() (int32, error) {
+	v, err := s.Pop()
 	if err != nil {
 		return 0, err
 	}
-	i, err := c.ParseInt32(v)
+	i, err := s.value.ParseInt32(v)
 	if err != nil {
 		return 0, err
 	}

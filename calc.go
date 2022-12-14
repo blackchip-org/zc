@@ -52,10 +52,11 @@ func DefaultNumberFormatOptions() NumberFormatOptions {
 }
 
 type Config struct {
-	ModuleDefs []ModuleDef
-	PreludeCLI []string
-	PreludeDev []string
-	Trace      bool
+	ModuleDefs  []ModuleDef
+	PreludeCLI  []string
+	PreludeDev  []string
+	Trace       bool
+	ValueConfig ValueConfig
 }
 
 type ModuleDef struct {
@@ -87,6 +88,7 @@ type CalcFunc func(*Calc) error
 
 type Calc struct {
 	Out      *strings.Builder
+	Value    *ValueOps
 	Info     string
 	Stack    *Stack
 	name     string
@@ -113,6 +115,7 @@ func NewCalc() *Calc {
 func NewCalcWithConfig(config Config) (*Calc, error) {
 	c := &Calc{
 		Out:      &strings.Builder{},
+		Value:    &ValueOps{Conf: config.ValueConfig},
 		name:     "<cli>",
 		config:   config,
 		global:   make(map[string]*Stack),
@@ -123,7 +126,7 @@ func NewCalcWithConfig(config Config) (*Calc, error) {
 		Natives:  make(map[string]CalcFunc),
 		Settings: DefaultSettings(),
 	}
-	c.main = NewStack(c, "main")
+	c.main = NewStack(c.Value, "main")
 	c.Stack = c.main
 	c.global["main"] = c.Stack
 	c.local = c.global
@@ -166,7 +169,7 @@ func (c *Calc) Define(name string) *Stack {
 	if !ok {
 		stack, ok = c.global[name]
 		if !ok {
-			stack = NewStack(c, name)
+			stack = NewStack(c.Value, name)
 			c.local[name] = stack
 		}
 	}
@@ -397,7 +400,7 @@ func (c *Calc) evalIfNode(ifNode *ast.IfNode) error {
 			if err != nil {
 				return c.err(caseNode.Cond, err)
 			}
-			vb, err := c.ParseBool(v)
+			vb, err := c.Value.ParseBool(v)
 			if err != nil {
 				return c.err(caseNode.Cond, err)
 			}
@@ -424,7 +427,7 @@ func (c *Calc) evalFileNode(file *ast.FileNode) error {
 func (c *Calc) evalForNode(node *ast.ForNode) error {
 	c.trace(node, "for(%v) start", node.Stack.Name)
 
-	expr := NewStack(c, "")
+	expr := NewStack(c.Value, "")
 	c.Stack = expr
 	if err := c.evalExprNode(node.Expr); err != nil {
 		return c.err(node.Expr, err)
@@ -560,9 +563,9 @@ func (c *Calc) evalTryNode(node *ast.TryNode) error {
 	c.trace(node, "try")
 	if err := c.evalExprNode(node.Expr); err != nil {
 		c.Stack.Push(err.Error())
-		c.Stack.Push(c.FormatBool(false))
+		c.Stack.Push(c.Value.FormatBool(false))
 	} else {
-		c.Stack.Push(c.FormatBool(true))
+		c.Stack.Push(c.Value.FormatBool(true))
 	}
 	return nil
 }
@@ -600,7 +603,7 @@ func (c *Calc) evalValueNode(value *ast.ValueNode) error {
 	if value.IsString {
 		c.Stack.Push(interp)
 	} else {
-		c.Stack.Push(c.FormatValue(interp))
+		c.Stack.Push(c.Value.FormatValue(interp))
 	}
 	return nil
 }
@@ -628,6 +631,7 @@ func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
 func (c *Calc) moduleContext(name string) *Calc {
 	dc := &Calc{
 		Out:      c.Out,
+		Value:    c.Value,
 		name:     name,
 		config:   c.config,
 		global:   make(map[string]*Stack),
@@ -638,7 +642,7 @@ func (c *Calc) moduleContext(name string) *Calc {
 		Modules:  c.Modules,
 		Settings: c.Settings,
 	}
-	dc.main = NewStack(dc, "main")
+	dc.main = NewStack(dc.Value, "main")
 	dc.global["main"] = dc.main
 	dc.Stack = dc.main
 	dc.local = dc.global
@@ -648,6 +652,7 @@ func (c *Calc) moduleContext(name string) *Calc {
 func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 	dc := &Calc{
 		Out:      c.Out,
+		Value:    c.Value,
 		name:     c.name + "." + node.Name,
 		config:   c.config,
 		global:   c.global,
@@ -659,7 +664,7 @@ func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 		Modules:  c.Modules,
 		Settings: c.Settings,
 	}
-	dc.main = NewStack(c, "main")
+	dc.main = NewStack(dc.Value, "main")
 	dc.local["main"] = dc.main
 	dc.Stack = dc.main
 	return dc

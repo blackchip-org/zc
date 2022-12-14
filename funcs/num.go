@@ -19,7 +19,7 @@ func EvalUnaryNum(calc *zc.Calc, ops UnaryOps) error {
 	}
 
 	switch {
-	case calc.IsBigInt(a):
+	case calc.Value.IsBigInt(a):
 		return EvalUnaryBigInt(calc, ops.BigInt)
 	default:
 		return EvalUnaryFix(calc, ops.Fix)
@@ -33,7 +33,7 @@ func EvalBinaryNum(calc *zc.Calc, ops BinaryOps) error {
 	}
 
 	switch {
-	case calc.IsBigInt(a) && calc.IsBigInt(b):
+	case calc.Value.IsBigInt(a) && calc.Value.IsBigInt(b):
 		return EvalBinaryBigInt(calc, ops.BigInt)
 	default:
 		return EvalBinaryFix(calc, ops.Fix)

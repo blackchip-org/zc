@@ -17,11 +17,11 @@ func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
 	var result bool
 
 	switch {
-	case calc.IsBigInt(a) && calc.IsBigInt(b):
-		x, y := calc.MustParseBigInt(a), calc.MustParseBigInt(b)
+	case calc.Value.IsBigInt(a) && calc.Value.IsBigInt(b):
+		x, y := calc.Value.MustParseBigInt(a), calc.Value.MustParseBigInt(b)
 		result, err = ops.BigInt(x, y)
-	case calc.IsDecimal(a) && calc.IsDecimal(b):
-		x, y := calc.MustParseDecimal(a), calc.MustParseDecimal(b)
+	case calc.Value.IsFix(a) && calc.Value.IsFix(b):
+		x, y := calc.Value.MustParseFix(a), calc.Value.MustParseFix(b)
 		result, err = ops.Fix(x, y)
 	default:
 		result, err = ops.String(a, b)
@@ -29,6 +29,6 @@ func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.FormatBool(result))
+	calc.Stack.Push(calc.Value.FormatBool(result))
 	return nil
 }

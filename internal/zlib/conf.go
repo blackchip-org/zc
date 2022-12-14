@@ -7,20 +7,20 @@ import (
 )
 
 func Places(calc *zc.Calc) error {
-	places, err := calc.PopInt32()
+	places, err := calc.Stack.PopInt32()
 	if err != nil {
 		return err
 	}
 	if places < 0 {
 		return fmt.Errorf("invalid number of places: %v", places)
 	}
-	calc.Settings.Places = places
+	calc.Value.Conf.Places = places
 	calc.Info = "ok"
 	return nil
 }
 
 func PlacesGet(calc *zc.Calc) error {
-	calc.Stack.Push(calc.FormatInt(int(calc.Settings.Places)))
+	calc.Stack.Push(calc.Value.FormatInt(int(calc.Value.Conf.Places)))
 	return nil
 }
 
