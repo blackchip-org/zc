@@ -6,7 +6,7 @@ type UnaryBool func(bool) (bool, error)
 type BinaryBool func(bool, bool) (bool, error)
 
 func EvalUnaryBool(calc *zc.Calc, fn UnaryBool) error {
-	a, err := calc.PopBool()
+	a, err := calc.Stack.PopBool()
 	if err != nil {
 		return err
 	}
@@ -19,7 +19,7 @@ func EvalUnaryBool(calc *zc.Calc, fn UnaryBool) error {
 }
 
 func EvalBinaryBool(calc *zc.Calc, fn BinaryBool) error {
-	a, b, err := calc.PopBool2()
+	a, b, err := calc.Stack.PopBool2()
 	if err != nil {
 		return err
 	}

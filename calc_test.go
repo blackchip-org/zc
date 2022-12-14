@@ -20,7 +20,7 @@ func TestInterpolate(t *testing.T) {
 			if err != nil {
 				log.Panicf("unexpected error: %v", err)
 			}
-			calc.Define("answer").Set("42")
+			calc.Define("answer").Push("42")
 			stack := calc.Define("list")
 			stack.Push("one")
 			stack.Push("two")

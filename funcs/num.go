@@ -13,7 +13,7 @@ type BinaryOps struct {
 }
 
 func EvalUnaryNum(calc *zc.Calc, ops UnaryOps) error {
-	a, err := calc.Stack.Get()
+	a, err := calc.Stack.Peek()
 	if err != nil {
 		return err
 	}
@@ -27,7 +27,7 @@ func EvalUnaryNum(calc *zc.Calc, ops UnaryOps) error {
 }
 
 func EvalBinaryNum(calc *zc.Calc, ops BinaryOps) error {
-	a, b, err := calc.Peek2()
+	a, b, err := calc.Stack.Peek2()
 	if err != nil {
 		return err
 	}

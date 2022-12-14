@@ -16,7 +16,7 @@ func TestZlib(t *testing.T) {
 	if err := c.Eval(fileName, src); err != nil {
 		t.Fatal(err)
 	}
-	b, err := c.PopBool()
+	b, err := c.Stack.PopBool()
 	if err != nil {
 		t.Fatal(err)
 	}

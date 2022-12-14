@@ -7,7 +7,7 @@ import (
 )
 
 func Bin(calc *zc.Calc) error {
-	v, err := calc.PopBigInt()
+	v, err := calc.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
@@ -16,7 +16,7 @@ func Bin(calc *zc.Calc) error {
 }
 
 func Hex(calc *zc.Calc) error {
-	v, err := calc.PopBigInt()
+	v, err := calc.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
@@ -25,7 +25,7 @@ func Hex(calc *zc.Calc) error {
 }
 
 func Oct(calc *zc.Calc) error {
-	v, err := calc.PopBigInt()
+	v, err := calc.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}

@@ -11,7 +11,7 @@ type BinaryBigInt func(*big.Int, *big.Int, *big.Int) error
 type CompareBigInt func(*big.Int, *big.Int) (bool, error)
 
 func EvalUnaryBigInt(calc *zc.Calc, fn UnaryBigInt) error {
-	a, err := calc.PopBigInt()
+	a, err := calc.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func EvalUnaryBigInt(calc *zc.Calc, fn UnaryBigInt) error {
 }
 
 func EvalBinaryBigInt(calc *zc.Calc, fn BinaryBigInt) error {
-	x, y, err := calc.Pop2()
+	x, y, err := calc.Stack.Pop2()
 	if err != nil {
 		return err
 	}
@@ -50,7 +50,7 @@ func EvalBinaryBigInt(calc *zc.Calc, fn BinaryBigInt) error {
 }
 
 func EvalCompareBigInt(calc *zc.Calc, fn CompareBigInt) error {
-	a, b, err := calc.PopBigInt2()
+	a, b, err := calc.Stack.PopBigInt2()
 	if err != nil {
 		return err
 	}

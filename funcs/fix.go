@@ -12,7 +12,7 @@ type BinaryFix func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, error)
 type CompareFix func(decimal.Decimal, decimal.Decimal) (bool, error)
 
 func EvalUnaryFix(calc *zc.Calc, fn UnaryFix) error {
-	a, err := calc.PopFix()
+	a, err := calc.Stack.PopFix()
 	if err != nil {
 		return err
 	}
@@ -39,7 +39,7 @@ func EvalBinaryFix(calc *zc.Calc, fn BinaryFix) (err error) {
 		}
 	}()
 
-	a, b, err := calc.PopFix2()
+	a, b, err := calc.Stack.PopFix2()
 	if err != nil {
 		return
 	}
@@ -53,7 +53,7 @@ func EvalBinaryFix(calc *zc.Calc, fn BinaryFix) (err error) {
 }
 
 func EvalCompareFix(calc *zc.Calc, fn CompareFix) (err error) {
-	a, b, err := calc.PopFix2()
+	a, b, err := calc.Stack.PopFix2()
 	if err != nil {
 		return
 	}

@@ -71,7 +71,7 @@ func Round(calc *zc.Calc) error {
 	if err != nil {
 		return err
 	}
-	value, err := calc.PopFix()
+	value, err := calc.Stack.PopFix()
 	if err != nil {
 		return err
 	}

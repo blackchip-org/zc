@@ -9,7 +9,7 @@ type CompareOps struct {
 }
 
 func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
-	a, b, err := calc.Pop2()
+	a, b, err := calc.Stack.Pop2()
 	if err != nil {
 		return err
 	}

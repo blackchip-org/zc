@@ -5,7 +5,7 @@ import "github.com/blackchip-org/zc"
 type CompareStr func(string, string) (bool, error)
 
 func EvalCompareStr(calc *zc.Calc, fn CompareStr) error {
-	a, b, err := calc.Pop2()
+	a, b, err := calc.Stack.Pop2()
 	if err != nil {
 		return err
 	}

@@ -1,20 +1,20 @@
 package zc
 
 import (
-	"errors"
-	"fmt"
-	"log"
-	"os"
+	"math/big"
 	"strings"
+
+	"github.com/shopspring/decimal"
 )
 
 type Stack struct {
 	Name string
+	calc *Calc
 	data []string
 }
 
-func NewStack(name string) *Stack {
-	return &Stack{Name: name}
+func NewStack(c *Calc, name string) *Stack {
+	return &Stack{Name: name, calc: c}
 }
 
 func (s *Stack) Items() []string {
@@ -27,50 +27,30 @@ func (s *Stack) Len() int {
 	return len(s.data)
 }
 
-func (s *Stack) Pop() (string, error) {
-	if len(s.data) == 0 {
-		return "", s.err("stack empty")
-	}
-	var top string
-	len := len(s.data)
-	top, s.data = s.data[len-1], s.data[:len-1]
-	s.trace("pop: %v", top)
-	return top, nil
-}
-
-func (s *Stack) MustPop() string {
-	val, err := s.Pop()
-	if err != nil {
-		panic(err)
-	}
-	return val
-}
-
 func (s *Stack) Push(v string) {
-	s.trace("push: %v", v)
 	s.data = append(s.data, v)
 }
 
-func (s *Stack) Set(v string) {
-	s.trace("set: %v", v)
-	if len(s.data) == 0 {
-		s.data = append(s.data, v)
-	} else {
-		s.data[0] = v
-	}
-}
+// func (s *Stack) Set(v string) {
+// 	s.trace("set: %v", v)
+// 	if len(s.data) == 0 {
+// 		s.data = append(s.data, v)
+// 	} else {
+// 		s.data[0] = v
+// 	}
+// }
 
-func (s *Stack) Get() (string, error) {
-	if len(s.data) == 0 {
-		return "", s.err("undefined")
-	}
-	s.trace("get: %v", s.data[0])
-	return s.data[0], nil
-}
+// func (s *Stack) Get() (string, error) {
+// 	if len(s.data) == 0 {
+// 		return "", s.err("undefined")
+// 	}
+// 	s.trace("get: %v", s.data[0])
+// 	return s.data[0], nil
+// }
 
-func (s *Stack) Clear() {
-	s.trace("clear")
+func (s *Stack) Clear() *Stack {
 	s.data = nil
+	return s
 }
 
 func (s *Stack) String() string {
@@ -84,18 +64,143 @@ func (s *Stack) String() string {
 	return sb.String()
 }
 
-func (s *Stack) err(format string, a ...any) error {
-	return errors.New(s.Name + ": " + fmt.Sprintf(format, a...))
-}
-
-var traceStack bool
-
-func init() {
-	traceStack = os.Getenv("ZC_TRACE_STACK") == "true"
-}
-
-func (s *Stack) trace(format string, a ...any) {
-	if traceStack {
-		log.Printf("stack: "+format, a...)
+func (s *Stack) Peek() (string, error) {
+	if len(s.data) == 0 {
+		return "", EmptyStackError{Name: s.Name}
 	}
+	return s.data[0], nil
+}
+
+func (s *Stack) Peek2() (string, string, error) {
+	n := len(s.data)
+	if n < 2 {
+		return "", "", EmptyStackError{Name: s.Name}
+	}
+	return s.data[n-2], s.data[n-1], nil
+}
+
+func (s *Stack) Pop() (string, error) {
+	n := len(s.data)
+	if n == 0 {
+		return "", EmptyStackError{Name: s.Name}
+	}
+	var top string
+	top, s.data = s.data[n-1], s.data[:n-1]
+	return top, nil
+}
+
+func (s *Stack) Pop2() (string, string, error) {
+	b, err := s.Pop()
+	if err != nil {
+		return "", "", err
+	}
+	a, err := s.Pop()
+	if err != nil {
+		return "", "", err
+	}
+	return a, b, nil
+}
+
+func (s *Stack) PopBigInt() (*big.Int, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return nil, err
+	}
+	r, err := s.calc.ParseBigInt(v)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func (s *Stack) PopBigInt2() (*big.Int, *big.Int, error) {
+	b, err := s.PopBigInt()
+	if err != nil {
+		return nil, nil, err
+	}
+	a, err := s.PopBigInt()
+	if err != nil {
+		return nil, nil, err
+	}
+	return a, b, nil
+}
+
+func (s *Stack) PopBool() (bool, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return false, err
+	}
+	b, err := s.calc.ParseBool(v)
+	if err != nil {
+		return false, err
+	}
+	return b, nil
+}
+
+func (s *Stack) PopBool2() (bool, bool, error) {
+	b, err := s.PopBool()
+	if err != nil {
+		return false, false, err
+	}
+	a, err := s.PopBool()
+	if err != nil {
+		return false, false, err
+	}
+	return a, b, nil
+}
+
+func (s *Stack) PopFix() (decimal.Decimal, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return decimal.Zero, err
+	}
+	d, err := s.calc.ParseDecimal(v)
+	if err != nil {
+		return decimal.Zero, err
+	}
+	return d, err
+}
+
+func (s *Stack) PopFix2() (decimal.Decimal, decimal.Decimal, error) {
+	b, err := s.PopFix()
+	if err != nil {
+		return decimal.Zero, decimal.Zero, err
+	}
+	a, err := s.PopFix()
+	if err != nil {
+		return decimal.Zero, decimal.Zero, err
+	}
+	return a, b, nil
+}
+
+func (s *Stack) PopInt() (int, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return 0, err
+	}
+	i, err := s.calc.ParseInt(v)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
+}
+
+func (c *Calc) PopInt32() (int32, error) {
+	v, err := c.Stack.Pop()
+	if err != nil {
+		return 0, err
+	}
+	i, err := c.ParseInt32(v)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
+}
+
+func (s *Stack) MustPop() string {
+	val, err := s.Pop()
+	if err != nil {
+		panic(err)
+	}
+	return val
 }
