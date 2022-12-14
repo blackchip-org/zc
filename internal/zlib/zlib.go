@@ -30,10 +30,11 @@ var (
 		"str", // TODO: This should only be in dev
 	}
 	PreludeDev = []string{
+		"dev",
+		"stack",
 		"bool",
 		"conf",
 		"math",
-		"stack",
 		"str",
 	}
 )
@@ -67,6 +68,18 @@ var (
 			"places=": PlacesGet,
 			"round":   RoundMode,
 			"round=":  RoundModeGet,
+		},
+	}
+	Dev = zc.ModuleDef{
+		Name: "dev",
+		Natives: map[string]zc.CalcFunc{
+			"abort":     Abort,
+			"eval":      Eval,
+			"exit":      Exit,
+			"nothing":   Nothing,
+			"trace":     Trace,
+			"trace-off": TraceOff,
+			"undef":     Undef,
 		},
 	}
 	FixedBool = zc.ModuleDef{
@@ -178,6 +191,9 @@ var (
 		Name:       "stack",
 		Include:    true,
 		ScriptPath: "zc:zlib/stack.zc",
+		Natives: map[string]zc.CalcFunc{
+			"n": N,
+		},
 	}
 	StrBool = zc.ModuleDef{
 		Name:       "str-bool",

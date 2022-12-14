@@ -25,7 +25,8 @@ func RunConsole(calc *zc.Calc) {
 	prompt := "zc > "
 	text, err := line.Prompt(prompt)
 	if err != nil {
-		log.Fatalf("error: %v", err)
+		log.Printf("error: %v", err)
+		return
 	}
 
 	// homedir, err := os.UserHomeDir()

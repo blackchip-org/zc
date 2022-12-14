@@ -92,7 +92,7 @@ type Calc struct {
 	Info     string
 	Stack    *Stack
 	name     string
-	config   Config
+	Config   Config
 	main     *Stack
 	global   map[string]*Stack
 	local    map[string]*Stack
@@ -117,7 +117,7 @@ func NewCalcWithConfig(config Config) (*Calc, error) {
 		Out:      &strings.Builder{},
 		Val:      &config.ValueOps,
 		name:     "<cli>",
-		config:   config,
+		Config:   config,
 		global:   make(map[string]*Stack),
 		defs:     make(map[string]ModuleDef),
 		Modules:  make(map[string]*Calc),
@@ -134,10 +134,6 @@ func NewCalcWithConfig(config Config) (*Calc, error) {
 	for _, def := range config.ModuleDefs {
 		c.Install(def)
 	}
-	for name, fn := range builtin {
-		c.Funcs[name] = fn
-	}
-	c.Funcs["eval"] = eval
 
 	for _, prelude := range config.PreludeCLI {
 		if err := c.Include(prelude); err != nil {
@@ -625,7 +621,7 @@ func (c *Calc) moduleContext(name string) *Calc {
 		Out:      c.Out,
 		Val:      c.Val,
 		name:     name,
-		config:   c.config,
+		Config:   c.Config, // FIXME: This should not be saved
 		global:   make(map[string]*Stack),
 		Funcs:    make(map[string]CalcFunc),
 		Exports:  make(map[string]CalcFunc),
@@ -646,7 +642,7 @@ func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 		Out:      c.Out,
 		Val:      c.Val,
 		name:     c.name + "." + node.Name,
-		config:   c.config,
+		Config:   c.Config,
 		global:   c.global,
 		local:    make(map[string]*Stack),
 		Funcs:    c.Funcs,
@@ -703,12 +699,7 @@ func (c *Calc) invokeMacro(mac *ast.MacroNode) error {
 func (c *Calc) load(def ModuleDef) (*Calc, error) {
 	dc := c.moduleContext(def.Name)
 
-	for name, fn := range builtin {
-		dc.Funcs[name] = fn
-	}
-	dc.Funcs["eval"] = eval
-
-	for _, prelude := range c.config.PreludeDev {
+	for _, prelude := range c.Config.PreludeDev {
 		mod, ok := c.Modules[prelude]
 		// TODO: Continue here on error for the case when bootstrapping
 		// the prelude itself. Might be a better way to handle this.
@@ -772,7 +763,7 @@ func (c *Calc) err(node ast.Node, err error) error {
 }
 
 func (c *Calc) trace(node ast.Node, format string, a ...any) {
-	if c.config.Trace {
+	if c.Config.Trace {
 		msg := fmt.Sprintf(format, a...)
 		if c.Stack.Len() > 0 {
 			log.Printf("eval: %v(%v)", c.Stack.Name, c.Stack)
