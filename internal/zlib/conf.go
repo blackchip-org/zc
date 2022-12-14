@@ -14,13 +14,13 @@ func Places(calc *zc.Calc) error {
 	if places < 0 {
 		return fmt.Errorf("invalid number of places: %v", places)
 	}
-	calc.Val.Conf.Places = places
+	calc.Val.Places = places
 	calc.Info = "ok"
 	return nil
 }
 
 func PlacesGet(calc *zc.Calc) error {
-	calc.Stack.Push(calc.Val.FormatInt(int(calc.Val.Conf.Places)))
+	calc.Stack.Push(calc.Val.FormatInt(int(calc.Val.Places)))
 	return nil
 }
 

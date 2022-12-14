@@ -11,7 +11,7 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type ValueConfig struct {
+type ValueOps struct {
 	Places       int32
 	RoundingMode RoundingMode
 	IntPat       string
@@ -19,8 +19,8 @@ type ValueConfig struct {
 	FracPat      string
 }
 
-func DefaultValueConfig() ValueConfig {
-	return ValueConfig{
+func DefaultValueOps() ValueOps {
+	return ValueOps{
 		Places:       16,
 		RoundingMode: RoundingModeHalfUp,
 		IntPat:       ",000",
@@ -28,11 +28,7 @@ func DefaultValueConfig() ValueConfig {
 	}
 }
 
-type ValueOps struct {
-	Conf ValueConfig
-}
-
-func (o *ValueOps) parseDigits(sep rune, v string) ([]rune, []rune) {
+func (o ValueOps) parseDigits(sep rune, v string) ([]rune, []rune) {
 	var intDigits, fracDigits []rune
 	inInt := true
 	for _, ch := range v {
@@ -50,17 +46,17 @@ func (o *ValueOps) parseDigits(sep rune, v string) ([]rune, []rune) {
 	return intDigits, fracDigits
 }
 
-func (o *ValueOps) FormatNumberString(v string) string {
+func (o ValueOps) FormatNumberString(v string) string {
 	var digits strings.Builder
 	intDigits, fracDigits := o.parseDigits('.', v)
 
-	if o.Conf.IntPat == "" {
+	if o.IntPat == "" {
 		digits.WriteString(string(intDigits))
 	} else {
 		var intResult []rune
-		intPat := []rune(o.Conf.IntPat)
+		intPat := []rune(o.IntPat)
 
-		idxPat := len(o.Conf.IntPat) - 1
+		idxPat := len(o.IntPat) - 1
 		idxDig := len(intDigits) - 1
 		for idxDig >= 0 {
 			if intDigits[idxDig] == '-' {
@@ -85,17 +81,17 @@ func (o *ValueOps) FormatNumberString(v string) string {
 		return digits.String()
 	}
 
-	point := o.Conf.Point
+	point := o.Point
 	if point == 0 {
 		point = '.'
 	}
 	digits.WriteRune(point)
 
-	if o.Conf.FracPat == "" {
+	if o.FracPat == "" {
 		digits.WriteString(string(fracDigits))
 	} else {
 		var fracResult []rune
-		fracPat := []rune(o.Conf.FracPat)
+		fracPat := []rune(o.FracPat)
 
 		idxPat := 0
 		idxDig := 0
@@ -119,11 +115,11 @@ func (o *ValueOps) FormatNumberString(v string) string {
 
 }
 
-func (o *ValueOps) FormatBigInt(v *big.Int) string {
+func (o ValueOps) FormatBigInt(v *big.Int) string {
 	return fmt.Sprintf("%d", v)
 }
 
-func (o *ValueOps) FormatBigIntBase(v *big.Int, radix int) string {
+func (o ValueOps) FormatBigIntBase(v *big.Int, radix int) string {
 	switch radix {
 	case 16:
 		return fmt.Sprintf("0x%x", v)
@@ -135,27 +131,27 @@ func (o *ValueOps) FormatBigIntBase(v *big.Int, radix int) string {
 	return o.FormatBigInt(v)
 }
 
-func (o *ValueOps) FormatBool(v bool) string {
+func (o ValueOps) FormatBool(v bool) string {
 	if v {
 		return "true"
 	}
 	return "false"
 }
 
-func (o *ValueOps) FormatFixed(v decimal.Decimal) string {
-	fn, ok := RoundingFuncsFix[o.Conf.RoundingMode]
+func (o ValueOps) FormatFixed(v decimal.Decimal) string {
+	fn, ok := RoundingFuncsFix[o.RoundingMode]
 	if !ok {
-		log.Panicf("invalid rounding mode: %v", o.Conf.RoundingMode)
+		log.Panicf("invalid rounding mode: %v", o.RoundingMode)
 	}
 
-	return fn(v, o.Conf.Places).String()
+	return fn(v, o.Places).String()
 }
 
-func (o *ValueOps) FormatInt(i int) string {
+func (o ValueOps) FormatInt(i int) string {
 	return fmt.Sprintf("%v", i)
 }
 
-func (o *ValueOps) FormatValue(v string) string {
+func (o ValueOps) FormatValue(v string) string {
 	r := ParseRadix(v)
 	switch {
 	case r != 10:
@@ -170,7 +166,7 @@ func (o *ValueOps) FormatValue(v string) string {
 	return v
 }
 
-func (o *ValueOps) cleanNumString(v string) string {
+func (o ValueOps) cleanNumString(v string) string {
 	var sb strings.Builder
 	// FIXME
 	// seps := c.Settings.NumberFormat.Separators()
@@ -189,7 +185,7 @@ func (o *ValueOps) cleanNumString(v string) string {
 	return sb.String()
 }
 
-func (o *ValueOps) ParseBigInt(v string) (*big.Int, error) {
+func (o ValueOps) ParseBigInt(v string) (*big.Int, error) {
 	i := new(big.Int)
 	_, ok := i.SetString(o.cleanNumString(v), 0)
 	if !ok {
@@ -198,12 +194,12 @@ func (o *ValueOps) ParseBigInt(v string) (*big.Int, error) {
 	return i, nil
 }
 
-func (o *ValueOps) IsBigInt(v string) bool {
+func (o ValueOps) IsBigInt(v string) bool {
 	_, err := o.ParseBigInt(v)
 	return err == nil
 }
 
-func (o *ValueOps) MustParseBigInt(v string) *big.Int {
+func (o ValueOps) MustParseBigInt(v string) *big.Int {
 	i, err := o.ParseBigInt(v)
 	if err != nil {
 		panic(err)
@@ -211,7 +207,7 @@ func (o *ValueOps) MustParseBigInt(v string) *big.Int {
 	return i
 }
 
-func (o *ValueOps) ParseBool(v string) (bool, error) {
+func (o ValueOps) ParseBool(v string) (bool, error) {
 	vl := strings.ToLower(v)
 	switch vl {
 	case "true":
@@ -222,12 +218,12 @@ func (o *ValueOps) ParseBool(v string) (bool, error) {
 	return false, fmt.Errorf("expecting boolean but got %v", v)
 }
 
-func (o *ValueOps) IsBool(v string) bool {
+func (o ValueOps) IsBool(v string) bool {
 	_, err := o.ParseBool(v)
 	return err == nil
 }
 
-func (o *ValueOps) MustParseBool(v string) bool {
+func (o ValueOps) MustParseBool(v string) bool {
 	b, err := o.ParseBool(v)
 	if err != nil {
 		panic(err)
@@ -235,7 +231,7 @@ func (o *ValueOps) MustParseBool(v string) bool {
 	return b
 }
 
-func (o *ValueOps) ParseFixed(v string) (decimal.Decimal, error) {
+func (o ValueOps) ParseFixed(v string) (decimal.Decimal, error) {
 	d, err := decimal.NewFromString(o.cleanNumString(v))
 	if err != nil {
 		return decimal.Zero, fmt.Errorf("expecting fixed-point but got %v", v)
@@ -243,12 +239,12 @@ func (o *ValueOps) ParseFixed(v string) (decimal.Decimal, error) {
 	return d, nil
 }
 
-func (o *ValueOps) IsFixed(v string) bool {
+func (o ValueOps) IsFixed(v string) bool {
 	_, err := o.ParseFixed(v)
 	return err == nil
 }
 
-func (o *ValueOps) MustParseFixed(v string) decimal.Decimal {
+func (o ValueOps) MustParseFixed(v string) decimal.Decimal {
 	d, err := o.ParseFixed(v)
 	if err != nil {
 		panic(err)
@@ -256,7 +252,7 @@ func (o *ValueOps) MustParseFixed(v string) decimal.Decimal {
 	return d
 }
 
-func (o *ValueOps) ParseInt(v string) (int, error) {
+func (o ValueOps) ParseInt(v string) (int, error) {
 	i, err := strconv.ParseInt(o.cleanNumString(v), 0, 64)
 	if err != nil {
 		return 0, fmt.Errorf("expecting integer but got %v", v)
@@ -264,12 +260,12 @@ func (o *ValueOps) ParseInt(v string) (int, error) {
 	return int(i), nil
 }
 
-func (o *ValueOps) IsInt(v string) bool {
+func (o ValueOps) IsInt(v string) bool {
 	_, err := o.ParseInt(v)
 	return err == nil
 }
 
-func (o *ValueOps) MustParseInt(v string) int {
+func (o ValueOps) MustParseInt(v string) int {
 	i, err := o.ParseInt(v)
 	if err != nil {
 		panic(err)
@@ -277,7 +273,7 @@ func (o *ValueOps) MustParseInt(v string) int {
 	return i
 }
 
-func (o *ValueOps) ParseInt32(v string) (int32, error) {
+func (o ValueOps) ParseInt32(v string) (int32, error) {
 	i, err := strconv.ParseInt(o.cleanNumString(v), 0, 32)
 	if err != nil {
 		return 0, fmt.Errorf("expecting int32 but got %v", v)

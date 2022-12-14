@@ -7,10 +7,10 @@ import (
 
 func DefaultConfig() zc.Config {
 	return zc.Config{
-		ModuleDefs:  zlib.All,
-		PreludeCLI:  zlib.PreludeUser,
-		PreludeDev:  zlib.PreludeDev,
-		ValueConfig: zc.DefaultValueConfig(),
+		ModuleDefs: zlib.All,
+		PreludeCLI: zlib.PreludeUser,
+		PreludeDev: zlib.PreludeDev,
+		ValueOps:   zc.DefaultValueOps(),
 	}
 }
 

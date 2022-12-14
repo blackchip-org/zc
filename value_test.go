@@ -14,7 +14,7 @@ func TestParseBigInt(t *testing.T) {
 		{"0xffd2", new(big.Int).SetInt64(65490)},
 	}
 
-	value := ValueOps{Conf: DefaultValueConfig()}
+	value := DefaultValueOps()
 	for _, test := range tests {
 		t.Run(test.s, func(t *testing.T) {
 			have, err := value.ParseBigInt(test.s)
@@ -33,7 +33,7 @@ func TestParseBigIntInvalid(t *testing.T) {
 		"abcd",
 	}
 
-	value := ValueOps{Conf: DefaultValueConfig()}
+	value := DefaultValueOps()
 	for _, test := range tests {
 		t.Run(test, func(t *testing.T) {
 			_, err := value.ParseBigInt(test)
@@ -68,40 +68,39 @@ func TestParseRadix(t *testing.T) {
 }
 
 func TestFormatNumberString(t *testing.T) {
-	confDefault := DefaultValueConfig()
-	confFR := ValueConfig{
+	opsDefault := DefaultValueOps()
+	opsFR := ValueOps{
 		IntPat: ".000",
 		Point:  ',',
 	}
-	confBin := ValueConfig{
+	opsBin := ValueOps{
 		IntPat: "__0000_0000",
 	}
-	confEmpty := ValueConfig{}
+	opsEmpty := ValueOps{}
 
 	tests := []struct {
 		in   string
 		want string
-		conf ValueConfig
+		ops  ValueOps
 	}{
-		{"1", "1", confDefault},
-		{"123", "123", confDefault},
-		{"1234", "1,234", confDefault},
-		{"123456", "123,456", confDefault},
-		{"1234567", "1,234,567", confDefault},
-		{"-123", "-123", confDefault},
-		{".123", ".123", confDefault},
-		{".12345", ".12345", confDefault},
-		{"1234567.8901", "1,234,567.8901", confDefault},
-		{"1234567.8901", "1234567.8901", confEmpty},
-		{"1234567.8901", "1.234.567,8901", confFR},
-		{"11110000", "1111_0000", confBin},
-		{"1111000011110000", "1111_0000__1111_0000", confBin},
+		{"1", "1", opsDefault},
+		{"123", "123", opsDefault},
+		{"1234", "1,234", opsDefault},
+		{"123456", "123,456", opsDefault},
+		{"1234567", "1,234,567", opsDefault},
+		{"-123", "-123", opsDefault},
+		{".123", ".123", opsDefault},
+		{".12345", ".12345", opsDefault},
+		{"1234567.8901", "1,234,567.8901", opsDefault},
+		{"1234567.8901", "1234567.8901", opsEmpty},
+		{"1234567.8901", "1.234.567,8901", opsFR},
+		{"11110000", "1111_0000", opsBin},
+		{"1111000011110000", "1111_0000__1111_0000", opsBin},
 	}
 
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			value := ValueOps{Conf: test.conf}
-			have := value.FormatNumberString(test.in)
+			have := test.ops.FormatNumberString(test.in)
 			if have != test.want {
 				t.Errorf("\n have: %v \n want: %v", have, test.want)
 			}

@@ -52,11 +52,11 @@ func DefaultNumberFormatOptions() NumberFormatOptions {
 }
 
 type Config struct {
-	ModuleDefs  []ModuleDef
-	PreludeCLI  []string
-	PreludeDev  []string
-	Trace       bool
-	ValueConfig ValueConfig
+	ModuleDefs []ModuleDef
+	PreludeCLI []string
+	PreludeDev []string
+	Trace      bool
+	ValueOps   ValueOps
 }
 
 type ModuleDef struct {
@@ -115,7 +115,7 @@ func NewCalc() *Calc {
 func NewCalcWithConfig(config Config) (*Calc, error) {
 	c := &Calc{
 		Out:      &strings.Builder{},
-		Val:      &ValueOps{Conf: config.ValueConfig},
+		Val:      &config.ValueOps,
 		name:     "<cli>",
 		config:   config,
 		global:   make(map[string]*Stack),
