@@ -4,7 +4,7 @@ import "github.com/blackchip-org/zc"
 
 type CompareOps struct {
 	BigInt CompareBigInt
-	Fix    CompareFix
+	Fixed  CompareFixed
 	String CompareStr
 }
 
@@ -17,18 +17,18 @@ func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
 	var result bool
 
 	switch {
-	case calc.Value.IsBigInt(a) && calc.Value.IsBigInt(b):
-		x, y := calc.Value.MustParseBigInt(a), calc.Value.MustParseBigInt(b)
+	case calc.Val.IsBigInt(a) && calc.Val.IsBigInt(b):
+		x, y := calc.Val.MustParseBigInt(a), calc.Val.MustParseBigInt(b)
 		result, err = ops.BigInt(x, y)
-	case calc.Value.IsFix(a) && calc.Value.IsFix(b):
-		x, y := calc.Value.MustParseFix(a), calc.Value.MustParseFix(b)
-		result, err = ops.Fix(x, y)
+	case calc.Val.IsFixed(a) && calc.Val.IsFixed(b):
+		x, y := calc.Val.MustParseFixed(a), calc.Val.MustParseFixed(b)
+		result, err = ops.Fixed(x, y)
 	default:
 		result, err = ops.String(a, b)
 	}
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Value.FormatBool(result))
+	calc.Stack.Push(calc.Val.FormatBool(result))
 	return nil
 }

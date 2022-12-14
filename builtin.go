@@ -37,7 +37,7 @@ func exit(calc *Calc) error {
 	if err != nil {
 		return err
 	}
-	code, err := calc.Value.ParseInt(a)
+	code, err := calc.Val.ParseInt(a)
 	if err != nil {
 		return err
 	}
@@ -46,7 +46,7 @@ func exit(calc *Calc) error {
 }
 
 func n(calc *Calc) error {
-	calc.Stack.Push(calc.Value.FormatInt(calc.Stack.Len()))
+	calc.Stack.Push(calc.Val.FormatInt(calc.Stack.Len()))
 	return nil
 }
 

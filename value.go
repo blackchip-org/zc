@@ -142,7 +142,7 @@ func (o *ValueOps) FormatBool(v bool) string {
 	return "false"
 }
 
-func (o *ValueOps) FormatFix(v decimal.Decimal) string {
+func (o *ValueOps) FormatFixed(v decimal.Decimal) string {
 	fn, ok := RoundingFuncsFix[o.Conf.RoundingMode]
 	if !ok {
 		log.Panicf("invalid rounding mode: %v", o.Conf.RoundingMode)
@@ -163,8 +163,8 @@ func (o *ValueOps) FormatValue(v string) string {
 	case o.IsBigInt(v):
 		v := o.FormatBigIntBase(o.MustParseBigInt(v), r)
 		return o.FormatNumberString(v)
-	case o.IsFix(v):
-		v := o.FormatFix(o.MustParseFix(v))
+	case o.IsFixed(v):
+		v := o.FormatFixed(o.MustParseFixed(v))
 		return o.FormatNumberString(v)
 	}
 	return v
@@ -235,7 +235,7 @@ func (o *ValueOps) MustParseBool(v string) bool {
 	return b
 }
 
-func (o *ValueOps) ParseFix(v string) (decimal.Decimal, error) {
+func (o *ValueOps) ParseFixed(v string) (decimal.Decimal, error) {
 	d, err := decimal.NewFromString(o.cleanNumString(v))
 	if err != nil {
 		return decimal.Zero, fmt.Errorf("expecting fixed-point but got %v", v)
@@ -243,13 +243,13 @@ func (o *ValueOps) ParseFix(v string) (decimal.Decimal, error) {
 	return d, nil
 }
 
-func (o *ValueOps) IsFix(v string) bool {
-	_, err := o.ParseFix(v)
+func (o *ValueOps) IsFixed(v string) bool {
+	_, err := o.ParseFixed(v)
 	return err == nil
 }
 
-func (o *ValueOps) MustParseFix(v string) decimal.Decimal {
-	d, err := o.ParseFix(v)
+func (o *ValueOps) MustParseFixed(v string) decimal.Decimal {
+	d, err := o.ParseFixed(v)
 	if err != nil {
 		panic(err)
 	}

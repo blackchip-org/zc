@@ -1,4 +1,4 @@
-# fix-bool
+# fixed-bool
 
 Boolean operations using fixed-point math.
 
@@ -18,7 +18,7 @@ Boolean operations using fixed-point math.
 
 `true` if `a` and `b` are equal, otherwise `false`.
 
-    ( a:Fix b:Fix -- eq:Bool )
+    ( a:Fixed b:Fixed -- eq:Bool )
 
 Example:
 
@@ -33,7 +33,7 @@ Example:
 
 `true` if `a` is greater than `b`, otherwise `false`.
 
-    ( a:Fix b:Fix -- gt:Bool )
+    ( a:Fixed b:Fixed -- gt:Bool )
 
 Example:
 
@@ -50,7 +50,7 @@ Example:
 
 `true` if `a` is greater than or equal to `b`, otherwise `false`.
 
-    ( a:Fix b:Fix -- gt:Bool )
+    ( a:Fixed b:Fixed -- gt:Bool )
 
 Example:
 
@@ -67,7 +67,7 @@ Example:
 
 `true` if `a` is less than `b`, otherwise `false`.
 
-    ( a:Fix b:Fix -- lt:Bool )
+    ( a:Fixed b:Fixed -- lt:Bool )
 
 Example:
 
@@ -84,7 +84,7 @@ Example:
 
 `true` if `a` is less than or equal to `b`, otherwise `false`.
 
-    ( a:Fix b:Fix -- lte:Bool )
+    ( a:Fixed b:Fixed -- lte:Bool )
 
 Example:
 
@@ -101,7 +101,7 @@ Example:
 
 `true` if `a` and `b` are not equal to each other, otherwise `false`.
 
-    ( a:Fix b:Fix -- neq:Bool )
+    ( a:Fixed b:Fixed -- neq:Bool )
 
 | Input         | Stack
 |---------------|-------------|

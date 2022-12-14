@@ -4,12 +4,12 @@ import "github.com/blackchip-org/zc"
 
 type UnaryOps struct {
 	BigInt UnaryBigInt
-	Fix    UnaryFix
+	Fixed  UnaryFixed
 }
 
 type BinaryOps struct {
 	BigInt BinaryBigInt
-	Fix    BinaryFix
+	Fixed  BinaryFixed
 }
 
 func EvalUnaryNum(calc *zc.Calc, ops UnaryOps) error {
@@ -19,10 +19,10 @@ func EvalUnaryNum(calc *zc.Calc, ops UnaryOps) error {
 	}
 
 	switch {
-	case calc.Value.IsBigInt(a):
+	case calc.Val.IsBigInt(a):
 		return EvalUnaryBigInt(calc, ops.BigInt)
 	default:
-		return EvalUnaryFix(calc, ops.Fix)
+		return EvalUnaryFixed(calc, ops.Fixed)
 	}
 }
 
@@ -33,9 +33,9 @@ func EvalBinaryNum(calc *zc.Calc, ops BinaryOps) error {
 	}
 
 	switch {
-	case calc.Value.IsBigInt(a) && calc.Value.IsBigInt(b):
+	case calc.Val.IsBigInt(a) && calc.Val.IsBigInt(b):
 		return EvalBinaryBigInt(calc, ops.BigInt)
 	default:
-		return EvalBinaryFix(calc, ops.Fix)
+		return EvalBinaryFixed(calc, ops.Fixed)
 	}
 }

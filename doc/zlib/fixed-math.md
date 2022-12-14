@@ -1,4 +1,4 @@
-# fix-math
+# fixed-math
 
 Basic mathematical operations with fixed-point numbers.
 
@@ -24,7 +24,7 @@ Basic mathematical operations with fixed-point numbers.
 
 If `a` is less than zero, the negated value of `a`, otherwise `a`.
 
-    ( a:Fix -- abs:Fix )
+    ( a:Fixed -- abs:Fixed )
 
 Example:
 
@@ -38,7 +38,7 @@ Example:
 
 Adds the value of `b` to `a`.
 
-    ( a:Fix b:Fix -- add:Fix )
+    ( a:Fixed b:Fixed -- add:Fixed )
 
 Aliases: `a`, `+`
 
@@ -55,7 +55,7 @@ Example:
 
 The nearest integer value greater than or equal to `a`.
 
-    ( a:Fix -- ceil:Fix )
+    ( a:Fixed -- ceil:Fixed )
 
 Example:
 
@@ -69,7 +69,7 @@ Example:
 
 Divides the value of `a` by `b`.
 
-    ( a:Fix b:Fix -- div:Fix )
+    ( a:Fixed b:Fixed -- div:Fixed )
 
 Aliases: `d`, `/`
 
@@ -86,7 +86,7 @@ Example:
 
 The nearest integer value less than or equal to `a`.
 
-    ( a:Fix -- floor:Fix )
+    ( a:Fixed -- floor:Fixed )
 
 Example:
 
@@ -100,7 +100,7 @@ Example:
 
 The modulus when `a` is divided by `b`.
 
-    ( a:Fix b:Fix -- mod:Fix )
+    ( a:Fixed b:Fixed -- mod:Fixed )
 
 Example:
 
@@ -115,7 +115,7 @@ Example:
 
 Changes the sign of `a`.
 
-    ( a:Fix -- neg:Fix )
+    ( a:Fixed -- neg:Fixed )
 
 Example:
 
@@ -130,7 +130,7 @@ Example:
 
 Multiplies `a` by `b`.
 
-    ( a:Fix b:Fix -- Num )
+    ( a:Fixed b:Fixed -- Num )
 
 Aliases: `m`, `*`
 
@@ -147,7 +147,7 @@ Example:
 
 Raises `a` to the power of `b`.
 
-    ( a:Fix b:Fix -- Num )
+    ( a:Fixed b:Fixed -- Num )
 
 Alias: `**`
 
@@ -169,7 +169,7 @@ If:
 * `a` is zero: `0`
 
 ```
-( a:Fix -- sign:Fix )
+( a:Fixed -- sign:Fixed )
 ```
 
 Example:
@@ -187,7 +187,7 @@ Example:
 
 Subtracts `b` from `a`.
 
-    ( a:Fix b:Fix -- sub:Fix )
+    ( a:Fixed b:Fixed -- sub:Fixed )
 
 Aliases: `s`, `-`
 

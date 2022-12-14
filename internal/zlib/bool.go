@@ -12,32 +12,32 @@ func opOr(a bool, b bool) (bool, error)  { return a || b, nil }
 var (
 	opEq = funcs.CompareOps{
 		BigInt: opEqBigInt,
-		Fix:    opEqFix,
+		Fixed:  opEqFixed,
 		String: opEqString,
 	}
 	opNeq = funcs.CompareOps{
 		BigInt: opNeqBigInt,
-		Fix:    opNeqFix,
+		Fixed:  opNeqFixed,
 		String: opNeqString,
 	}
 	opGt = funcs.CompareOps{
 		BigInt: opGtBigInt,
-		Fix:    opGtFix,
+		Fixed:  opGtFixed,
 		String: opGtString,
 	}
 	opGte = funcs.CompareOps{
 		BigInt: opGteBigInt,
-		Fix:    opGteFix,
+		Fixed:  opGteFixed,
 		String: opGteString,
 	}
 	opLt = funcs.CompareOps{
 		BigInt: opLtBigInt,
-		Fix:    opLtFix,
+		Fixed:  opLtFixed,
 		String: opLtString,
 	}
 	opLte = funcs.CompareOps{
 		BigInt: opLteBigInt,
-		Fix:    opLteFix,
+		Fixed:  opLteFixed,
 		String: opLteString,
 	}
 )

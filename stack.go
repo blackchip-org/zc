@@ -149,24 +149,24 @@ func (s *Stack) PopBool2() (bool, bool, error) {
 	return a, b, nil
 }
 
-func (s *Stack) PopFix() (decimal.Decimal, error) {
+func (s *Stack) PopFixed() (decimal.Decimal, error) {
 	v, err := s.Pop()
 	if err != nil {
 		return decimal.Zero, err
 	}
-	d, err := s.value.ParseFix(v)
+	d, err := s.value.ParseFixed(v)
 	if err != nil {
 		return decimal.Zero, err
 	}
 	return d, err
 }
 
-func (s *Stack) PopFix2() (decimal.Decimal, decimal.Decimal, error) {
-	b, err := s.PopFix()
+func (s *Stack) PopFixed2() (decimal.Decimal, decimal.Decimal, error) {
+	b, err := s.PopFixed()
 	if err != nil {
 		return decimal.Zero, decimal.Zero, err
 	}
-	a, err := s.PopFix()
+	a, err := s.PopFixed()
 	if err != nil {
 		return decimal.Zero, decimal.Zero, err
 	}

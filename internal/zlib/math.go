@@ -10,47 +10,47 @@ import (
 var (
 	opAbs = funcs.UnaryOps{
 		BigInt: opAbsBigInt,
-		Fix:    opAbsFix,
+		Fixed:  opAbsFixed,
 	}
 	opAdd = funcs.BinaryOps{
 		BigInt: opAddBigInt,
-		Fix:    opAddFix,
+		Fixed:  opAddFixed,
 	}
 	opCeil = funcs.UnaryOps{
 		BigInt: opCeilBigInt,
-		Fix:    opCeilFix,
+		Fixed:  opCeilFixed,
 	}
 	opFloor = funcs.UnaryOps{
 		BigInt: opFloorBigInt,
-		Fix:    opFloorFix,
+		Fixed:  opFloorFixed,
 	}
 	opMul = funcs.BinaryOps{
 		BigInt: opMulBigInt,
-		Fix:    opMulFix,
+		Fixed:  opMulFixed,
 	}
 	opMod = funcs.BinaryOps{
 		BigInt: opModBigInt,
-		Fix:    opModFix,
+		Fixed:  opModFixed,
 	}
 	opNeg = funcs.UnaryOps{
 		BigInt: opNegBigInt,
-		Fix:    opNegFix,
+		Fixed:  opNegFixed,
 	}
 	opPow = funcs.BinaryOps{
 		BigInt: opPowBigInt,
-		Fix:    opPowFix,
+		Fixed:  opPowFixed,
 	}
 	opRem = funcs.BinaryOps{
 		BigInt: opRemBigInt,
-		Fix:    opRemFix,
+		Fixed:  opRemFixed,
 	}
 	opSign = funcs.UnaryOps{
 		BigInt: opSignBigInt,
-		Fix:    opSignFix,
+		Fixed:  opSignFixed,
 	}
 	opSub = funcs.BinaryOps{
 		BigInt: opSubBigInt,
-		Fix:    opSubFix,
+		Fixed:  opSubFixed,
 	}
 )
 
@@ -71,7 +71,7 @@ func Round(calc *zc.Calc) error {
 	if err != nil {
 		return err
 	}
-	value, err := calc.Stack.PopFix()
+	value, err := calc.Stack.PopFixed()
 	if err != nil {
 		return err
 	}
@@ -80,6 +80,6 @@ func Round(calc *zc.Calc) error {
 		return fmt.Errorf("invalid rounding mode: %v", calc.Settings.RoundingMode)
 	}
 	r := fn(value, places)
-	calc.Stack.Push(calc.Value.FormatFix(r))
+	calc.Stack.Push(calc.Val.FormatFixed(r))
 	return nil
 }

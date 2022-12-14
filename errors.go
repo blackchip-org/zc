@@ -1,11 +1,11 @@
 package zc
 
-import (
-	"fmt"
-)
+type UnsupportedError struct {
+	Name string
+}
 
-func ErrUnsupported(name string) error {
-	return fmt.Errorf("unsupported operation: %v", name)
+func (e UnsupportedError) Error() string {
+	return "unsupported operation: " + e.Name
 }
 
 type EmptyStackError struct {
