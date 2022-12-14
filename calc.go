@@ -227,7 +227,7 @@ func (c *Calc) Include(modName string) error {
 }
 
 func (c *Calc) IncludeFile(file string) error {
-	src, err := c.LoadFile(file)
+	src, err := LoadFile(file)
 	if err != nil {
 		return err
 	}
@@ -304,14 +304,6 @@ func (c *Calc) StackFor(name string) (*Stack, error) {
 		return stack, nil
 	}
 	return nil, fmt.Errorf("no such stack: %v", name)
-}
-
-func (c *Calc) LoadFile(p string) ([]byte, error) {
-	if strings.HasPrefix(p, "zc:") {
-		p = p[3:]
-		return internal.Files.ReadFile(p)
-	}
-	return os.ReadFile(p)
 }
 
 func (c *Calc) evalBlock(nodes []ast.Node) error {
@@ -733,7 +725,7 @@ func (c *Calc) load(def ModuleDef) (*Calc, error) {
 	}
 
 	if def.ScriptPath != "" {
-		src, err := dc.LoadFile(def.ScriptPath)
+		src, err := LoadFile(def.ScriptPath)
 		if err != nil {
 			return nil, err
 		}
@@ -788,4 +780,12 @@ func (c *Calc) trace(node ast.Node, format string, a ...any) {
 		log.Printf("eval:     %v @ %v", msg, node.Pos())
 		//log.Println()
 	}
+}
+
+func LoadFile(p string) ([]byte, error) {
+	if strings.HasPrefix(p, "zc:") {
+		p = p[3:]
+		return internal.Files.ReadFile(p)
+	}
+	return os.ReadFile(p)
 }
