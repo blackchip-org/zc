@@ -75,9 +75,9 @@ func Round(calc *zc.Calc) error {
 	if err != nil {
 		return err
 	}
-	fn, ok := zc.RoundingFuncsFix[calc.Settings.RoundingMode]
+	fn, ok := zc.RoundingFuncsFix[calc.Val.RoundingMode]
 	if !ok {
-		return fmt.Errorf("invalid rounding mode: %v", calc.Settings.RoundingMode)
+		return fmt.Errorf("invalid rounding mode: %v", calc.Val.RoundingMode)
 	}
 	r := fn(value, places)
 	calc.Stack.Push(calc.Val.FormatFixed(r))

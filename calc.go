@@ -12,44 +12,17 @@ import (
 	"github.com/blackchip-org/zc/lang/token"
 )
 
-type Settings struct {
-	Places       int32
-	RoundingMode RoundingMode
-	NumberFormat NumberFormatOptions
-}
-
-func DefaultSettings() *Settings {
-	return &Settings{
-		Places:       16,
-		RoundingMode: RoundingModeHalfUp,
-		NumberFormat: DefaultNumberFormatOptions(),
-	}
-}
-
-type NumberFormatOptions struct {
-	IntPat  string
-	Point   rune
-	FracPat string
-}
-
-func (n NumberFormatOptions) Separators() map[rune]struct{} {
-	seps := make(map[rune]struct{})
-	for _, pat := range []string{n.IntPat, n.FracPat} {
-		for _, ch := range pat {
-			if ch != '0' {
-				seps[ch] = struct{}{}
-			}
-		}
-	}
-	return seps
-}
-
-func DefaultNumberFormatOptions() NumberFormatOptions {
-	return NumberFormatOptions{
-		IntPat: ",000",
-		Point:  '.',
-	}
-}
+// func (n NumberFormatOptions) Separators() map[rune]struct{} {
+// 	seps := make(map[rune]struct{})
+// 	for _, pat := range []string{n.IntPat, n.FracPat} {
+// 		for _, ch := range pat {
+// 			if ch != '0' {
+// 				seps[ch] = struct{}{}
+// 			}
+// 		}
+// 	}
+// 	return seps
+// }
 
 type Config struct {
 	ModuleDefs []ModuleDef
@@ -87,21 +60,20 @@ func (c CalcError) Error() string {
 type CalcFunc func(*Calc) error
 
 type Calc struct {
-	Out      *strings.Builder
-	Val      *ValueOps
-	Info     string
-	Stack    *Stack
-	name     string
-	Config   Config
-	main     *Stack
-	global   map[string]*Stack
-	local    map[string]*Stack
-	Funcs    map[string]CalcFunc
-	Exports  map[string]CalcFunc
-	Natives  map[string]CalcFunc
-	defs     map[string]ModuleDef
-	Modules  map[string]*Calc
-	Settings *Settings
+	Out     *strings.Builder
+	Val     *ValueOps
+	Info    string
+	Stack   *Stack
+	name    string
+	Config  Config
+	main    *Stack
+	global  map[string]*Stack
+	local   map[string]*Stack
+	Funcs   map[string]CalcFunc
+	Exports map[string]CalcFunc
+	Natives map[string]CalcFunc
+	defs    map[string]ModuleDef
+	Modules map[string]*Calc
 }
 
 func NewCalc() *Calc {
@@ -114,17 +86,16 @@ func NewCalc() *Calc {
 
 func NewCalcWithConfig(config Config) (*Calc, error) {
 	c := &Calc{
-		Out:      &strings.Builder{},
-		Val:      &config.ValueOps,
-		name:     "<cli>",
-		Config:   config,
-		global:   make(map[string]*Stack),
-		defs:     make(map[string]ModuleDef),
-		Modules:  make(map[string]*Calc),
-		Funcs:    make(map[string]CalcFunc),
-		Exports:  make(map[string]CalcFunc),
-		Natives:  make(map[string]CalcFunc),
-		Settings: DefaultSettings(),
+		Out:     &strings.Builder{},
+		Val:     &config.ValueOps,
+		name:    "<cli>",
+		Config:  config,
+		global:  make(map[string]*Stack),
+		defs:    make(map[string]ModuleDef),
+		Modules: make(map[string]*Calc),
+		Funcs:   make(map[string]CalcFunc),
+		Exports: make(map[string]CalcFunc),
+		Natives: make(map[string]CalcFunc),
 	}
 	c.main = NewStack(c.Val, "main")
 	c.Stack = c.main
@@ -135,12 +106,22 @@ func NewCalcWithConfig(config Config) (*Calc, error) {
 		c.Install(def)
 	}
 
+	for _, prelude := range config.PreludeDev {
+		def, ok := c.defs[prelude]
+		if !ok {
+			return nil, fmt.Errorf("no such module: %v", prelude)
+		}
+		if _, err := c.load(def); err != nil {
+			return nil, err
+		}
+
+	}
+
 	for _, prelude := range config.PreludeCLI {
 		if err := c.Include(prelude); err != nil {
 			return nil, err
 		}
 	}
-
 	return c, nil
 }
 
@@ -618,17 +599,16 @@ func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
 
 func (c *Calc) moduleContext(name string) *Calc {
 	dc := &Calc{
-		Out:      c.Out,
-		Val:      c.Val,
-		name:     name,
-		Config:   c.Config, // FIXME: This should not be saved
-		global:   make(map[string]*Stack),
-		Funcs:    make(map[string]CalcFunc),
-		Exports:  make(map[string]CalcFunc),
-		Natives:  make(map[string]CalcFunc),
-		defs:     c.defs,
-		Modules:  c.Modules,
-		Settings: c.Settings,
+		Out:     c.Out,
+		Val:     c.Val,
+		name:    name,
+		Config:  c.Config, // FIXME: This should not be saved
+		global:  make(map[string]*Stack),
+		Funcs:   make(map[string]CalcFunc),
+		Exports: make(map[string]CalcFunc),
+		Natives: make(map[string]CalcFunc),
+		defs:    c.defs,
+		Modules: c.Modules,
 	}
 	dc.main = NewStack(dc.Val, "main")
 	dc.global["main"] = dc.main
@@ -639,18 +619,17 @@ func (c *Calc) moduleContext(name string) *Calc {
 
 func functionContext(c *Calc, node *ast.FuncNode) *Calc {
 	dc := &Calc{
-		Out:      c.Out,
-		Val:      c.Val,
-		name:     c.name + "." + node.Name,
-		Config:   c.Config,
-		global:   c.global,
-		local:    make(map[string]*Stack),
-		Funcs:    c.Funcs,
-		Exports:  c.Exports,
-		Natives:  c.Natives,
-		defs:     c.defs,
-		Modules:  c.Modules,
-		Settings: c.Settings,
+		Out:     c.Out,
+		Val:     c.Val,
+		name:    c.name + "." + node.Name,
+		Config:  c.Config,
+		global:  c.global,
+		local:   make(map[string]*Stack),
+		Funcs:   c.Funcs,
+		Exports: c.Exports,
+		Natives: c.Natives,
+		defs:    c.defs,
+		Modules: c.Modules,
 	}
 	dc.main = NewStack(dc.Val, "main")
 	dc.local["main"] = dc.main
@@ -697,12 +676,14 @@ func (c *Calc) invokeMacro(mac *ast.MacroNode) error {
 }
 
 func (c *Calc) load(def ModuleDef) (*Calc, error) {
+	if mod, ok := c.Modules[def.Name]; ok {
+		return mod, nil
+	}
+
 	dc := c.moduleContext(def.Name)
 
 	for _, prelude := range c.Config.PreludeDev {
 		mod, ok := c.Modules[prelude]
-		// TODO: Continue here on error for the case when bootstrapping
-		// the prelude itself. Might be a better way to handle this.
 		if !ok {
 			continue
 		}

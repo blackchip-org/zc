@@ -8,6 +8,7 @@ var All = []zc.ModuleDef{
 	Assert,
 	Bool,
 	Conf,
+	Dev,
 	FixedBool,
 	FixedMath,
 	Math,
@@ -71,7 +72,8 @@ var (
 		},
 	}
 	Dev = zc.ModuleDef{
-		Name: "dev",
+		Name:       "dev",
+		ScriptPath: "zc:zlib/dev.zc",
 		Natives: map[string]zc.CalcFunc{
 			"abort":     Abort,
 			"eval":      Eval,

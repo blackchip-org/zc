@@ -33,12 +33,12 @@ func RoundMode(calc *zc.Calc) error {
 	if !ok {
 		return fmt.Errorf("invalid rounding mode: %v", a)
 	}
-	calc.Settings.RoundingMode = mode
+	calc.Val.RoundingMode = mode
 	calc.Print("ok")
 	return err
 }
 
 func RoundModeGet(calc *zc.Calc) error {
-	calc.Stack.Push(calc.Settings.RoundingMode.String())
+	calc.Stack.Push(calc.Val.RoundingMode.String())
 	return nil
 }

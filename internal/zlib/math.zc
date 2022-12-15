@@ -1,7 +1,3 @@
-# fixme -- these includes shouldn't be here
-include bool
-include stack
-
 native abs
 native add
 native ceil
