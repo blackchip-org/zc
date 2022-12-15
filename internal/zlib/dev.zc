@@ -1,0 +1,7 @@
+native abort
+native eval
+native exit
+native nothing
+native trace
+native trace-off
+native undef
