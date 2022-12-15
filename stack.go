@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"fmt"
 	"math/big"
 	"strings"
 
@@ -31,23 +32,6 @@ func (s *Stack) Push(v string) {
 	s.data = append(s.data, v)
 }
 
-// func (s *Stack) Set(v string) {
-// 	s.trace("set: %v", v)
-// 	if len(s.data) == 0 {
-// 		s.data = append(s.data, v)
-// 	} else {
-// 		s.data[0] = v
-// 	}
-// }
-
-// func (s *Stack) Get() (string, error) {
-// 	if len(s.data) == 0 {
-// 		return "", s.err("undefined")
-// 	}
-// 	s.trace("get: %v", s.data[0])
-// 	return s.data[0], nil
-// }
-
 func (s *Stack) Clear() *Stack {
 	s.data = nil
 	return s
@@ -66,7 +50,7 @@ func (s *Stack) String() string {
 
 func (s *Stack) Peek() (string, error) {
 	if len(s.data) == 0 {
-		return "", EmptyStackError{Name: s.Name}
+		return "", fmt.Errorf("%v: stack empty", s.Name)
 	}
 	return s.data[0], nil
 }
@@ -74,7 +58,7 @@ func (s *Stack) Peek() (string, error) {
 func (s *Stack) Peek2() (string, string, error) {
 	n := len(s.data)
 	if n < 2 {
-		return "", "", EmptyStackError{Name: s.Name}
+		return "", "", fmt.Errorf("%v: stack empty", s.Name)
 	}
 	return s.data[n-2], s.data[n-1], nil
 }
@@ -82,7 +66,7 @@ func (s *Stack) Peek2() (string, string, error) {
 func (s *Stack) Pop() (string, error) {
 	n := len(s.data)
 	if n == 0 {
-		return "", EmptyStackError{Name: s.Name}
+		return "", fmt.Errorf("%v: stack empty", s.Name)
 	}
 	var top string
 	top, s.data = s.data[n-1], s.data[:n-1]

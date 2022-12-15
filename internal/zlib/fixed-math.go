@@ -1,6 +1,8 @@
 package zlib
 
 import (
+	"errors"
+
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/funcs"
 	"github.com/shopspring/decimal"
@@ -23,7 +25,7 @@ func opSignFixed(a decimal.Decimal) (decimal.Decimal, error)                   {
 func opSubFixed(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) { return a.Sub(b), nil }
 
 func opRemFixed(a decimal.Decimal, b decimal.Decimal) (decimal.Decimal, error) {
-	return decimal.Zero, zc.UnsupportedError{Name: "fix-rem"}
+	return decimal.Zero, errors.New("unsupported operation: fix-rem")
 }
 
 func AbsFixed(calc *zc.Calc) error   { return funcs.EvalUnaryFixed(calc, opAbsFixed) }
