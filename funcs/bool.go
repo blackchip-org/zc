@@ -14,7 +14,7 @@ func EvalUnaryBool(calc *zc.Calc, fn UnaryBool) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBool(b))
+	calc.Stack.PushBool(b)
 	return nil
 }
 
@@ -27,6 +27,6 @@ func EvalBinaryBool(calc *zc.Calc, fn BinaryBool) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBool(c))
+	calc.Stack.PushBool(c)
 	return nil
 }

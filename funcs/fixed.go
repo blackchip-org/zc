@@ -20,7 +20,7 @@ func EvalUnaryFixed(calc *zc.Calc, fn UnaryFixed) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatFixed(b))
+	calc.Stack.PushFixed(b)
 	return nil
 }
 
@@ -48,7 +48,7 @@ func EvalBinaryFixed(calc *zc.Calc, fn BinaryFixed) (err error) {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatFixed(r))
+	calc.Stack.PushFixed(r)
 	return nil
 }
 
@@ -61,6 +61,6 @@ func EvalCompareFixed(calc *zc.Calc, fn CompareFixed) (err error) {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBool(c))
+	calc.Stack.PushBool(c)
 	return nil
 }

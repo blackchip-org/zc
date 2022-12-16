@@ -13,6 +13,6 @@ func EvalCompareStr(calc *zc.Calc, fn CompareStr) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBool(c))
+	calc.Stack.PushBool(c)
 	return nil
 }

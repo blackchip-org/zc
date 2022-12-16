@@ -20,7 +20,7 @@ func Places(calc *zc.Calc) error {
 }
 
 func PlacesGet(calc *zc.Calc) error {
-	calc.Stack.Push(calc.Val.FormatInt(int(calc.Val.Places)))
+	calc.Stack.PushInt32(calc.Val.Places)
 	return nil
 }
 

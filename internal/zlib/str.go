@@ -29,6 +29,6 @@ func StartsWith(calc *zc.Calc) error {
 	}
 
 	r := strings.HasPrefix(str, prefix)
-	calc.Stack.Push(calc.Val.FormatBool(r))
+	calc.Stack.PushBool(r)
 	return nil
 }

@@ -180,7 +180,7 @@ func (o ValueOps) FormatBigInt(v *big.Int) string {
 	return fmt.Sprintf("%d", v)
 }
 
-func (o ValueOps) FormatBigIntBase(v *big.Int, radix int) string {
+func (o ValueOps) FormatBigIntWithRadix(v *big.Int, radix int) string {
 	sign := ""
 	if v.Sign() < 0 {
 		sign = "-"
@@ -215,8 +215,28 @@ func (o ValueOps) FormatFixed(v decimal.Decimal) string {
 	return fn(v, o.Places).String()
 }
 
-func (o ValueOps) FormatInt(i int) string {
+func (o ValueOps) FormatInt64(i int64) string {
 	return fmt.Sprintf("%v", i)
+}
+
+func (o ValueOps) FormatInt32(i int32) string {
+	return o.FormatInt64(int64(i))
+}
+
+func (o ValueOps) FormatInt(i int) string {
+	return o.FormatInt64(int64(i))
+}
+
+func (o ValueOps) FormatUint64(i uint64) string {
+	return fmt.Sprintf("%v", i)
+}
+
+func (o ValueOps) FormatUint32(i uint32) string {
+	return o.FormatUint64(uint64(i))
+}
+
+func (o ValueOps) FormatUint(i uint) string {
+	return o.FormatUint64(uint64(i))
 }
 
 func (o ValueOps) FormatValue(v string) string {
@@ -225,7 +245,7 @@ func (o ValueOps) FormatValue(v string) string {
 	case r != 10:
 		return v
 	case o.IsBigInt(v):
-		v := o.FormatBigIntBase(o.MustParseBigInt(v), r)
+		v := o.FormatBigIntWithRadix(o.MustParseBigInt(v), r)
 		return o.FormatNumberString(v)
 	case o.IsFixed(v):
 		v := o.FormatFixed(o.MustParseFixed(v))

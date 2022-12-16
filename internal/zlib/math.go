@@ -80,6 +80,6 @@ func Round(calc *zc.Calc) error {
 		return fmt.Errorf("invalid rounding mode: %v", calc.Val.RoundingMode)
 	}
 	r := fn(value, places)
-	calc.Stack.Push(calc.Val.FormatFixed(r))
+	calc.Stack.PushFixed(r)
 	return nil
 }

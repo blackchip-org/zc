@@ -544,9 +544,9 @@ func (c *Calc) evalTryNode(node *ast.TryNode) error {
 	c.trace(node, "try")
 	if err := c.evalExprNode(node.Expr); err != nil {
 		c.Stack.Push(err.Error())
-		c.Stack.Push(c.Val.FormatBool(false))
+		c.Stack.PushBool(false)
 	} else {
-		c.Stack.Push(c.Val.FormatBool(true))
+		c.Stack.PushBool(true)
 	}
 	return nil
 }
@@ -584,7 +584,7 @@ func (c *Calc) evalValueNode(value *ast.ValueNode) error {
 	if value.IsString {
 		c.Stack.Push(interp)
 	} else {
-		c.Stack.Push(c.Val.FormatValue(interp))
+		c.Stack.PushValue(interp)
 	}
 	return nil
 }

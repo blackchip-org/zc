@@ -29,6 +29,6 @@ func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBool(result))
+	calc.Stack.PushBool(result)
 	return nil
 }

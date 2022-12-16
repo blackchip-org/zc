@@ -9,13 +9,13 @@ import (
 )
 
 type Stack struct {
-	Name  string
-	value *ValueOps
-	data  []string
+	Name string
+	val  *ValueOps
+	data []string
 }
 
 func NewStack(ops *ValueOps, name string) *Stack {
-	return &Stack{Name: name, value: ops}
+	return &Stack{Name: name, val: ops}
 }
 
 func (s *Stack) Items() []string {
@@ -90,7 +90,7 @@ func (s *Stack) PopBigInt() (*big.Int, error) {
 	if err != nil {
 		return nil, err
 	}
-	r, err := s.value.ParseBigInt(v)
+	r, err := s.val.ParseBigInt(v)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (s *Stack) PopBigIntWithRadix() (*big.Int, int, error) {
 	if err != nil {
 		return nil, 0, err
 	}
-	r, err := s.value.ParseBigInt(v)
+	r, err := s.val.ParseBigInt(v)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -126,7 +126,7 @@ func (s *Stack) PopBool() (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	b, err := s.value.ParseBool(v)
+	b, err := s.val.ParseBool(v)
 	if err != nil {
 		return false, err
 	}
@@ -150,7 +150,7 @@ func (s *Stack) PopFixed() (decimal.Decimal, error) {
 	if err != nil {
 		return decimal.Zero, err
 	}
-	d, err := s.value.ParseFixed(v)
+	d, err := s.val.ParseFixed(v)
 	if err != nil {
 		return decimal.Zero, err
 	}
@@ -174,7 +174,7 @@ func (s *Stack) PopInt() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.value.ParseInt(v)
+	i, err := s.val.ParseInt(v)
 	if err != nil {
 		return 0, err
 	}
@@ -186,7 +186,7 @@ func (s *Stack) PopInt32() (int32, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.value.ParseInt32(v)
+	i, err := s.val.ParseInt32(v)
 	if err != nil {
 		return 0, err
 	}
@@ -198,11 +198,55 @@ func (s *Stack) PopUint() (uint, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.value.ParseUint(v)
+	i, err := s.val.ParseUint(v)
 	if err != nil {
 		return 0, err
 	}
 	return i, nil
+}
+
+func (s *Stack) PushBigInt(v *big.Int) {
+	s.Push(s.val.FormatBigInt(v))
+}
+
+func (s *Stack) PushBigIntWithRadix(v *big.Int, radix int) {
+	s.Push(s.val.FormatBigIntWithRadix(v, radix))
+}
+
+func (s *Stack) PushBool(v bool) {
+	s.Push(s.val.FormatBool(v))
+}
+
+func (s *Stack) PushFixed(v decimal.Decimal) {
+	s.Push(s.val.FormatFixed(v))
+}
+
+func (s *Stack) PushInt(v int) {
+	s.Push(s.val.FormatInt(v))
+}
+
+func (s *Stack) PushInt32(v int32) {
+	s.Push(s.val.FormatInt32(v))
+}
+
+func (s *Stack) PushInt64(v int64) {
+	s.Push(s.val.FormatInt64(v))
+}
+
+func (s *Stack) PushUint(v uint) {
+	s.Push(s.val.FormatUint(v))
+}
+
+func (s *Stack) PushUint32(v uint32) {
+	s.Push(s.val.FormatUint32(v))
+}
+
+func (s *Stack) PushUint64(v uint64) {
+	s.Push(s.val.FormatUint64(v))
+}
+
+func (s *Stack) PushValue(v string) {
+	s.Push(s.val.FormatValue(v))
 }
 
 func (s *Stack) MustPop() string {

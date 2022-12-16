@@ -22,7 +22,7 @@ func Bin(calc *zc.Calc) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBigIntBase(v, 2))
+	calc.Stack.PushBigIntWithRadix(v, 2)
 	return nil
 }
 
@@ -36,7 +36,7 @@ func Bit(calc *zc.Calc) error {
 		return err
 	}
 	bit := a.Bit(i)
-	calc.Stack.Push(calc.Val.FormatInt(int(bit)))
+	calc.Stack.PushUint(bit)
 	return nil
 }
 
@@ -45,7 +45,7 @@ func Dec(calc *zc.Calc) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBigIntBase(v, 10))
+	calc.Stack.PushBigIntWithRadix(v, 10)
 	return nil
 }
 
@@ -54,7 +54,7 @@ func Hex(calc *zc.Calc) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBigIntBase(v, 16))
+	calc.Stack.PushBigIntWithRadix(v, 16)
 	return nil
 }
 
@@ -64,7 +64,7 @@ func LenBitwise(calc *zc.Calc) error {
 		return err
 	}
 	bitLen := a.BitLen()
-	calc.Stack.Push(calc.Val.FormatInt(bitLen))
+	calc.Stack.PushInt(bitLen)
 	return nil
 }
 
@@ -79,7 +79,7 @@ func Lsh(calc *zc.Calc) error {
 	}
 	var z big.Int
 	z.Lsh(a, n)
-	calc.Stack.Push(calc.Val.FormatBigIntBase(&z, r))
+	calc.Stack.PushBigIntWithRadix(&z, r)
 	return nil
 }
 
@@ -88,7 +88,7 @@ func Oct(calc *zc.Calc) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBigIntBase(v, 8))
+	calc.Stack.PushBigIntWithRadix(v, 8)
 	return nil
 }
 
@@ -103,6 +103,6 @@ func Rsh(calc *zc.Calc) error {
 	}
 	var z big.Int
 	z.Rsh(a, n)
-	calc.Stack.Push(calc.Val.FormatBigIntBase(&z, r))
+	calc.Stack.PushBigIntWithRadix(&z, r)
 	return nil
 }
