@@ -3,10 +3,10 @@ native n
 func clear //a
     nothing
 
-func dup /a
-    /a /a
-
 func drop /a
     nothing
+
+func dup /a
+    /a /a
 
 alias c clear

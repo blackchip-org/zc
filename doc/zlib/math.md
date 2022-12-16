@@ -221,7 +221,7 @@ Example:
 
 The sum of all items on the stack.
 
-    ( Num... -- sum:Num )
+    ( ...:Num -- sum:Num )
 
 Example:
 
