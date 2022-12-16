@@ -24,7 +24,7 @@ Example:
 | Input       | Stack
 |-------------|-------------|
 | `1 2`       | `1 \| 2`
-| `try eq`    | `assertion failed: 1 == 2 | false`
+| `try eq`    | `assertion failed: 1 == 2 \| false`
 
 
 ## f
@@ -38,7 +38,7 @@ Example:
 | Input       | Stack
 |-------------|-------------|
 | `'true'`    | `true`
-| `try f`     | `assertion failed: not false | false`
+| `try f`     | `assertion failed: not false \| false`
 
 
 ## t
@@ -52,7 +52,7 @@ Example:
 | Input       | Stack
 |-------------|-------------|
 | `'false'`   | `false`
-| `try t`     | `assertion failed: not true | false`
+| `try t`     | `assertion failed: not true \| false`
 
 
 
