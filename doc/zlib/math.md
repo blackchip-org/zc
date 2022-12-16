@@ -19,6 +19,7 @@ Basic mathematical operations.
 | [rem](#rem)             |          | Remainder
 | [sign](#sign)           |          | Sign
 | [sub](#sub)             | `s`, `-` | Subtraction
+| [sum](#sum)             |          | Sum
 
 
 ## abs
@@ -207,8 +208,27 @@ Subtracts `b` from `a`.
 
 Aliases: `s`, `-`
 
+Example:
+
 | Input         | Stack
 |---------------|-------------|
 | `6`           | `6`
 | `2`           | `6 \| 2`
 | `s`           | `4`
+
+
+## sum
+
+The sum of all items on the stack.
+
+    ( Num... -- sum:Num )
+
+Example:
+
+| Input         | Stack
+|---------------|-------------|
+| `1`           | `1`
+| `2`           | `1 \| 2`
+| `3`           | `1 \| 2 \| 3`
+| `4`           | `1 \| 2 \| 3 \| 4`
+| `sum`         | `10`
