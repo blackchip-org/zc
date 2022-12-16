@@ -61,7 +61,7 @@ func testFile(t *testing.T, file fs.File) {
 func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
 	c := app.NewDefaultCalc()
 
-	if err := c.Include(mod); err != nil {
+	if err := c.Use(mod); err != nil {
 		t.Fatal(err)
 	}
 

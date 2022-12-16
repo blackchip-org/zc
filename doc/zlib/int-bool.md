@@ -22,11 +22,11 @@ Boolean operations using integer math.
 
 Example:
 
-| Input        | Stack
-|--------------|------------------|
-| `'1234`      | `1234`
-| `1,234`      | `1234 \| 1,234`
-| `eq`         | `true`
+| Input         | Stack
+|---------------|------------------
+| `'1234`       | `1234`
+| `1,234`       | `1234 \| 1,234`
+| `int-bool.eq` | `true`
 
 
 ## gt
@@ -37,13 +37,13 @@ Example:
 
 Example:
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 gt`   | `true`
-| `clear`    |
-| `0 0 gt`   | `false`
-| `clear`    |
-| `-1 0 gt`  | `false`
+| Input               | Stack
+|---------------------|-------------
+| `1 0 int-bool.gt`   | `true`
+| `clear`             |
+| `0 0 int-bool.gt`   | `false`
+| `clear`             |
+| `-1 0 int-bool.gt`  | `false`
 
 
 ## gte
@@ -54,13 +54,13 @@ Example:
 
 Example:
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 gte`  | `true`
-| `clear`    |
-| `0 0 gte`  | `true`
-| `clear`    |
-| `-1 0 gte` | `false`
+| Input               | Stack
+|---------------------|-------------
+| `1 0 int-bool.gte`  | `true`
+| `clear`             |
+| `0 0 int-bool.gte`  | `true`
+| `clear`             |
+| `-1 0 int-bool.gte` | `false`
 
 
 ## lt
@@ -71,13 +71,13 @@ Example:
 
 Example:
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 lt`   | `false`
-| `clear`    |
-| `0 0 lt`   | `false`
-| `clear`    |
-| `-1 0 lt`  | `true`
+| Input               | Stack
+|---------------------|-------------
+| `1 0 int-bool.lt`   | `false`
+| `clear`             |
+| `0 0 int-bool.lt`   | `false`
+| `clear`             |
+| `-1 0 int-bool.lt`  | `true`
 
 
 ## lte
@@ -88,13 +88,13 @@ Example:
 
 Example:
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 lte`  | `false`
-| `clear`    |
-| `0 0 lte`  | `true`
-| `clear`    |
-| `-1 0 lte` | `true`
+| Input               | Stack
+|---------------------|-------------
+| `1 0 int-bool.lte`  | `false`
+| `clear`             |
+| `0 0 int-bool.lte`  | `true`
+| `clear`             |
+| `-1 0 int-bool.lte` | `true`
 
 
 ## neq
@@ -103,10 +103,10 @@ Example:
 
     ( a:BigInt b:BigInt -- neq:Bool )
 
-| Input         | Stack
-|---------------|-------------|
-| `1 2 neq`     | `true`
-| `clear`       |
-| `2 2 neq`     | `false`
+| Input              | Stack
+|--------------------|-------------
+| `1 2 int-bool.neq` | `true`
+| `clear`            |
+| `2 2 int-bool.neq` | `false`
 
 

@@ -21,10 +21,10 @@ Checks that `a` is equal to `b` and aborts execution if not.
 
 Example:
 
-| Input       | Stack
-|-------------|-------------|
-| `1 2`       | `1 \| 2`
-| `try eq`    | `assertion failed: 1 == 2 \| false`
+| Input           | Stack
+|-----------------|-------------
+| `1 2`           | `1 \| 2`
+| `try assert.eq` | `assertion failed: 1 == 2 \| false`
 
 
 ## f
@@ -35,10 +35,10 @@ Checks that `a` is false and aborts execution if not.
 
 Example:
 
-| Input       | Stack
-|-------------|-------------|
-| `'true'`    | `true`
-| `try f`     | `assertion failed: not false \| false`
+| Input           | Stack
+|-----------------|-------------
+| `'true'`        | `true`
+| `try assert.f`  | `assertion failed: not false \| false`
 
 
 ## t
@@ -49,10 +49,10 @@ Checks that `a` is true and aborts execution if not.
 
 Example:
 
-| Input       | Stack
-|-------------|-------------|
-| `'false'`   | `false`
-| `try t`     | `assertion failed: not true \| false`
+| Input           | Stack
+|-----------------|-------------
+| `'false'`       | `false`
+| `try assert.t`  | `assertion failed: not true \| false`
 
 
 

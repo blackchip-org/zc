@@ -1,6 +1,13 @@
+native abs
 native add
+native ceil
 native div
+native floor
 native mul
+native mod
+native neg
 native pow
+native rem
+native sign
 native sub
 

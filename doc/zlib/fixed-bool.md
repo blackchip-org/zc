@@ -22,11 +22,11 @@ Boolean operations using fixed-point math.
 
 Example:
 
-| Input        | Stack
-|--------------|------------------|
-| `'1234.56'`  | `1234.56`
-| `1,234.56`   | `1234.56 \| 1,234.56`
-| `eq`         | `true`
+| Input            | Stack
+|------------------|------------------
+| `'1234.56'`      | `1234.56`
+| `1,234.56`       | `1234.56 \| 1,234.56`
+| `fixed-bool.eq`  | `true`
 
 
 ## gt
@@ -37,13 +37,13 @@ Example:
 
 Example:
 
-| Input         | Stack
-|---------------|-------------|
-| `3.3 2.2 gt`  | `true`
-| `clear`       |
-| `2.2 2.2 gt`  | `false`
-| `clear`       |
-| `1.1 2.2 gt`  | `false`
+| Input                    | Stack
+|--------------------------|-------------
+| `3.3 2.2 fixed-bool.gt`  | `true`
+| `clear`                  |
+| `2.2 2.2 fixed-bool.gt`  | `false`
+| `clear`                  |
+| `1.1 2.2 fixed-bool.gt`  | `false`
 
 
 ## gte
@@ -54,13 +54,13 @@ Example:
 
 Example:
 
-| Input         | Stack
-|---------------|-------------|
-| `3.3 2.2 gte` | `true`
-| `clear`       |
-| `2.2 2.2 gte` | `true`
-| `clear`       |
-| `1.1 2.2 gte` | `false`
+| Input                    | Stack
+|--------------------------|-------------
+| `3.3 2.2 fixed-bool.gte` | `true`
+| `clear`                  |
+| `2.2 2.2 fixed-bool.gte` | `true`
+| `clear`                  |
+| `1.1 2.2 fixed-bool.gte` | `false`
 
 
 ## lt
@@ -71,13 +71,13 @@ Example:
 
 Example:
 
-| Input         | Stack
-|---------------|-------------|
-| `3.3 2.2 lt`  | `false`
-| `clear`       |
-| `2.2 2.2 lt`  | `false`
-| `clear`       |
-| `1.1 2.2 lt`  | `true`
+| Input                    | Stack
+|--------------------------|-------------
+| `3.3 2.2 fixed-bool.lt`  | `false`
+| `clear`                  |
+| `2.2 2.2 fixed-bool.lt`  | `false`
+| `clear`                  |
+| `1.1 2.2 fixed-bool.lt`  | `true`
 
 
 ## lte
@@ -88,13 +88,14 @@ Example:
 
 Example:
 
-| Input         | Stack
-|---------------|-------------|
-| `3.3 2.2 lte` | `false`
-| `clear`       |
-| `2.2 2.2 lte` | `true`
-| `clear`       |
-| `1.1 2.2 lte` | `true`
+| Input                    | Stack
+|--------------------------|-------------
+| `3.3 2.2 fixed-bool.lte` | `false`
+| `clear`                  |
+| `2.2 2.2 fixed-bool.lte` | `true`
+| `clear`                  |
+| `1.1 2.2 fixed-bool.lte` | `true`
+
 
 
 ## neq
@@ -103,9 +104,9 @@ Example:
 
     ( a:Fixed b:Fixed -- neq:Bool )
 
-| Input         | Stack
-|---------------|-------------|
-| `3.3 2.2 neq` | `true`
-| `clear`       |
-| `2.2 2.2 neq` | `false`
+| Input                    | Stack
+|--------------------------|-------------
+| `3.3 2.2 fixed-bool.neq` | `true`
+| `clear`                  |
+| `2.2 2.2 fixed-bool.neq` | `false`
 

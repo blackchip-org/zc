@@ -6,7 +6,7 @@ Input/output functions
 
 | Operation               | Description
 |-------------------------|------------
-| print                   | Displays string to the console
+| print                   | Displays value to the console
 
 
 ## print
@@ -20,5 +20,5 @@ Example:
 | Input        | Stack
 |--------------|------------------|
 | `'foobar`    | `foobar`
-| `print`      |
+| `io.print`   |
 

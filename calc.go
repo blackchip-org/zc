@@ -118,7 +118,7 @@ func NewCalcWithConfig(config Config) (*Calc, error) {
 	}
 
 	for _, prelude := range config.PreludeCLI {
-		if err := c.Include(prelude); err != nil {
+		if err := c.Use(prelude); err != nil {
 			return nil, err
 		}
 	}

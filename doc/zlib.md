@@ -6,6 +6,7 @@ The zc standard library.
 |-----|------|-----|--------------------------------|------------------
 |     |      |     | [assert](zlib/assert.md)       | Assertions
 | Inc |      | Dev | [bool](zlib/bool.md)           | Boolean operations
+|     | User | Dev | [conf](zlib/conf.md)           | Configuration and settings
 |     |      |     | [fixed-bool](zlib/fix-bool.md) | Boolean operations using fixed-point math
 |     |      |     | [fixed-math](zlib/fix-math.md) | Basic mathematical operations with fixed-point numbers
 |     |      |     | [int-bool](zlib/int-bool.md)   | Boolean operations using integer math

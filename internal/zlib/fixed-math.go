@@ -32,7 +32,7 @@ func AbsFixed(calc *zc.Calc) error   { return funcs.EvalUnaryFixed(calc, opAbsFi
 func AddFixed(calc *zc.Calc) error   { return funcs.EvalBinaryFixed(calc, opAddFixed) }
 func CeilFixed(calc *zc.Calc) error  { return funcs.EvalUnaryFixed(calc, opCeilFixed) }
 func DivFixed(calc *zc.Calc) error   { return funcs.EvalBinaryFixed(calc, opDivFixed) }
-func FloorFixed(calc *zc.Calc) error { return funcs.EvalUnaryFixed(calc, opCeilFixed) }
+func FloorFixed(calc *zc.Calc) error { return funcs.EvalUnaryFixed(calc, opFloorFixed) }
 func ModFixed(calc *zc.Calc) error   { return funcs.EvalBinaryFixed(calc, opModFixed) }
 func MulFixed(calc *zc.Calc) error   { return funcs.EvalBinaryFixed(calc, opMulFixed) }
 func NegFixed(calc *zc.Calc) error   { return funcs.EvalUnaryFixed(calc, opNegFixed) }
