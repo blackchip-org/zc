@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"math/bits"
 	"strconv"
 	"strings"
 	"unicode"
@@ -180,13 +181,20 @@ func (o ValueOps) FormatBigInt(v *big.Int) string {
 }
 
 func (o ValueOps) FormatBigIntBase(v *big.Int, radix int) string {
+	sign := ""
+	if v.Sign() < 0 {
+		sign = "-"
+	}
+	var absV big.Int
+	absV.Abs(v)
+
 	switch radix {
 	case 16:
-		return fmt.Sprintf("0x%x", v)
+		return fmt.Sprintf("%v0x%x", sign, &absV)
 	case 8:
-		return fmt.Sprintf("0o%o", v)
+		return fmt.Sprintf("%v0o%o", sign, &absV)
 	case 2:
-		return fmt.Sprintf("0b%b", v)
+		return fmt.Sprintf("%v0b%b", sign, &absV)
 	}
 	return o.FormatBigInt(v)
 }
@@ -249,7 +257,7 @@ func (o ValueOps) ParseBigInt(v string) (*big.Int, error) {
 	i := new(big.Int)
 	_, ok := i.SetString(o.cleanNumString(v), 0)
 	if !ok {
-		return i, fmt.Errorf("expecting integer but got %v", v)
+		return i, fmt.Errorf("expecting BigInt but got %v", v)
 	}
 	return i, nil
 }
@@ -275,7 +283,7 @@ func (o ValueOps) ParseBool(v string) (bool, error) {
 	case "false":
 		return false, nil
 	}
-	return false, fmt.Errorf("expecting boolean but got %v", v)
+	return false, fmt.Errorf("expecting Bool but got %v", v)
 }
 
 func (o ValueOps) IsBool(v string) bool {
@@ -294,7 +302,7 @@ func (o ValueOps) MustParseBool(v string) bool {
 func (o ValueOps) ParseFixed(v string) (decimal.Decimal, error) {
 	d, err := decimal.NewFromString(o.cleanNumString(v))
 	if err != nil {
-		return decimal.Zero, fmt.Errorf("expecting fixed-point but got %v", v)
+		return decimal.Zero, fmt.Errorf("expecting Fixed but got %v", v)
 	}
 	return d, nil
 }
@@ -315,7 +323,7 @@ func (o ValueOps) MustParseFixed(v string) decimal.Decimal {
 func (o ValueOps) ParseInt(v string) (int, error) {
 	i, err := strconv.ParseInt(o.cleanNumString(v), 0, 64)
 	if err != nil {
-		return 0, fmt.Errorf("expecting integer but got %v", v)
+		return 0, fmt.Errorf("expecting Int but got %v", v)
 	}
 	return int(i), nil
 }
@@ -336,9 +344,17 @@ func (o ValueOps) MustParseInt(v string) int {
 func (o ValueOps) ParseInt32(v string) (int32, error) {
 	i, err := strconv.ParseInt(o.cleanNumString(v), 0, 32)
 	if err != nil {
-		return 0, fmt.Errorf("expecting int32 but got %v", v)
+		return 0, fmt.Errorf("expecting Int32 but got %v", v)
 	}
 	return int32(i), nil
+}
+
+func (o ValueOps) ParseUint(v string) (uint, error) {
+	i, err := strconv.ParseUint(o.cleanNumString(v), 0, bits.UintSize)
+	if err != nil {
+		return 0, fmt.Errorf("expecting Uint but got %v", v)
+	}
+	return uint(i), nil
 }
 
 func ParseRadix(v string) int {

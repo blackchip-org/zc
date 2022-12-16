@@ -217,6 +217,18 @@ func (c *Calc) IncludeFile(file string) error {
 	return c.evalNode(ast)
 }
 
+func (c *Calc) Use(mod string) error {
+	def, ok := c.defs[mod]
+	if !ok {
+		return fmt.Errorf("no such module: %v", mod)
+	}
+
+	if def.Include {
+		return c.Include(mod)
+	}
+	return c.Import(mod, "")
+}
+
 func (c *Calc) Install(def ModuleDef) {
 	if def.Name == "" {
 		panic(fmt.Sprintf("unable to install a module with no name: %+v", def))

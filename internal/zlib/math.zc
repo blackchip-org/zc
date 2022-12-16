@@ -12,9 +12,6 @@ native round
 native sign
 native sub
 
-macro dec -1 add
-macro inc 1 add
-
 func sum //a
 	0
 	//a

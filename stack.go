@@ -97,6 +97,18 @@ func (s *Stack) PopBigInt() (*big.Int, error) {
 	return r, nil
 }
 
+func (s *Stack) PopBigIntWithRadix() (*big.Int, int, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return nil, 0, err
+	}
+	r, err := s.value.ParseBigInt(v)
+	if err != nil {
+		return nil, 0, err
+	}
+	return r, ParseRadix(v), nil
+}
+
 func (s *Stack) PopBigInt2() (*big.Int, *big.Int, error) {
 	b, err := s.PopBigInt()
 	if err != nil {
@@ -175,6 +187,18 @@ func (s *Stack) PopInt32() (int32, error) {
 		return 0, err
 	}
 	i, err := s.value.ParseInt32(v)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
+}
+
+func (s *Stack) PopUint() (uint, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return 0, err
+	}
+	i, err := s.value.ParseUint(v)
 	if err != nil {
 		return 0, err
 	}

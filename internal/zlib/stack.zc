@@ -9,3 +9,4 @@ func dup /a
 func drop /a
     nothing
 
+alias c clear

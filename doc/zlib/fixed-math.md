@@ -11,7 +11,6 @@ Basic mathematical operations with fixed-point numbers.
 | [ceil](#ceil)           |          | Ceiling
 | [div](#div)             | `d`, `/` | Division
 | [floor](#floor)         |          | Floor
-| [inc](#inc)             | `++`     | Increment
 | [mod](#mod)             |          | Modulus
 | [mul](#mul)             | `m`, `*` | Multiplication
 | [neg](#neg)             |          | Negation

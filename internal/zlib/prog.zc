@@ -1,3 +1,12 @@
+native and
 native bin
+native bit
+native dec
 native hex
+native len
+native lsh
+native not
 native oct
+native or
+native rsh
+native xor

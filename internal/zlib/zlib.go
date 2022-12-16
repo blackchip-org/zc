@@ -176,9 +176,18 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/prog.zc",
 		Natives: map[string]zc.CalcFunc{
+			"and": AndBitwise,
 			"bin": Bin,
+			"bit": Bit,
+			"dec": Dec,
 			"hex": Hex,
+			"len": LenBitwise,
+			"lsh": Lsh,
+			"not": NotBitwise,
 			"oct": Oct,
+			"or":  OrBitwise,
+			"rsh": Rsh,
+			"xor": Xor,
 		},
 	}
 	Runtime = zc.ModuleDef{

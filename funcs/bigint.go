@@ -11,7 +11,7 @@ type BinaryBigInt func(*big.Int, *big.Int, *big.Int) error
 type CompareBigInt func(*big.Int, *big.Int) (bool, error)
 
 func EvalUnaryBigInt(calc *zc.Calc, fn UnaryBigInt) error {
-	a, err := calc.Stack.PopBigInt()
+	a, r, err := calc.Stack.PopBigIntWithRadix()
 	if err != nil {
 		return err
 	}
@@ -19,7 +19,7 @@ func EvalUnaryBigInt(calc *zc.Calc, fn UnaryBigInt) error {
 	if err := fn(&c, a); err != nil {
 		return err
 	}
-	calc.Stack.Push(calc.Val.FormatBigInt(&c))
+	calc.Stack.Push(calc.Val.FormatBigIntBase(&c, r))
 	return nil
 }
 

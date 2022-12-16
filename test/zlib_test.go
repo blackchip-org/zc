@@ -9,7 +9,6 @@ import (
 
 func TestZlib(t *testing.T) {
 	c := app.NewDefaultCalc()
-	c.Config.Trace = true
 	fileName := "zc:test/suite.zc"
 	src, err := zc.LoadFile(fileName)
 	if err != nil {

@@ -15,10 +15,10 @@ func run //files
 				if not
 					err; clear /main
 					'  FAIL: `export`: `err`\n' io.print
-					fail; inc
+					fail; 1 add
 				else
 					'  pass: `export`\n' io.print
-					pass; inc
+					pass; 1 add
 		'testing' undef
 
 	'\n`pass` tests passed, `fail` failed' io.print

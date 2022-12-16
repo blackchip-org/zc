@@ -10,10 +10,8 @@ Basic mathematical operations.
 | [abs](#abs)             |          | Absolute value
 | [add](#add)             | `a`, `+` | Addition
 | [ceil](#ceil)           |          | Ceiling
-| [dec](#dec)             | `--`     | Decrement
 | [div](#div)             | `d`, `/` | Division
 | [floor](#floor)         |          | Floor
-| [inc](#inc)             | `++`     | Increment
 | [mod](#mod)             |          | Modulus
 | [mul](#mul)             | `m`, `*` | Multiplication
 | [neg](#neg)             |          | Negation
@@ -68,22 +66,6 @@ Example:
 | `ceil`  | `7`
 
 
-## dec
-
-Decrements the value of `a` by `1`.
-
-    ( a:Num -- dec:Num )
-
-Alias: `--`
-
-Example:
-
-| Input   | Stack
-|---------|-------------|
-| `6`     | `6`
-| `dec`   | `5`
-
-
 ## div
 
 Divides the value of `a` by `b`.
@@ -113,22 +95,6 @@ Example:
 |---------|-------------|
 | `6.12`  | `6.12`
 | `floor`  | `6`
-
-
-## inc
-
-Increments the value of `a` by `1`.
-
-    ( a:Num -- inc:Num )
-
-Alias: `++`
-
-Example:
-
-| Input   | Stack
-|---------|-------------|
-| `6`     | `6`
-| `inc`   | `7`
 
 
 ## mod
