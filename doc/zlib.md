@@ -14,4 +14,5 @@ The zc standard library.
 |     |      |     | [io](zlib/io.md)               | Input/output functions
 | Inc | User | Dev | [math](zlib/math.md)           | Basic mathematical operations
 | Inc |      |     | [prog](zlib/prog.md)           | Programmer's calculator
+| Inc | User | Dev | [stack](zlib/stack.md)         | Stack manipulations
 | Inc |      | Dev | [str](zlib/str.md)             | String operations
