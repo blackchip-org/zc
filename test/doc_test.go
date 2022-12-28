@@ -61,7 +61,7 @@ func testFile(t *testing.T, file fs.File) {
 func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
 	c := app.NewDefaultCalc()
 
-	if err := c.Use(mod); err != nil {
+	if err := c.EvalString("", "use "+mod); err != nil {
 		t.Fatal(err)
 	}
 
@@ -84,8 +84,8 @@ func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
 		if err := c.EvalString("", in); err != nil {
 			t.Fatal(err)
 		}
-		if c.Stack.String() != out {
-			t.Fatalf("\n have: %v \n want: %v", c.Stack.String(), out)
+		if c.Env.Stack.String() != out {
+			t.Fatalf("\n have: %v \n want: %v", c.Env.Stack.String(), out)
 		}
 		scanner.Scan()
 		if scanner.Err() != nil {

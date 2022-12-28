@@ -14,9 +14,9 @@ func opGteBigInt(a *big.Int, b *big.Int) (bool, error) { return a.Cmp(b) >= 0, n
 func opLtBigInt(a *big.Int, b *big.Int) (bool, error)  { return a.Cmp(b) < 0, nil }
 func opLteBigInt(a *big.Int, b *big.Int) (bool, error) { return a.Cmp(b) <= 0, nil }
 
-func EqBigInt(calc *zc.Calc) error  { return funcs.EvalCompareBigInt(calc, opEqBigInt) }
-func GtBigInt(calc *zc.Calc) error  { return funcs.EvalCompareBigInt(calc, opGtBigInt) }
-func GteBigInt(calc *zc.Calc) error { return funcs.EvalCompareBigInt(calc, opGteBigInt) }
-func NeqBigInt(calc *zc.Calc) error { return funcs.EvalCompareBigInt(calc, opNeqBigInt) }
-func LtBigInt(calc *zc.Calc) error  { return funcs.EvalCompareBigInt(calc, opLtBigInt) }
-func LteBigInt(calc *zc.Calc) error { return funcs.EvalCompareBigInt(calc, opLteBigInt) }
+func EqBigInt(env *zc.Env) error  { return funcs.EvalCompareBigInt(env, opEqBigInt) }
+func GtBigInt(env *zc.Env) error  { return funcs.EvalCompareBigInt(env, opGtBigInt) }
+func GteBigInt(env *zc.Env) error { return funcs.EvalCompareBigInt(env, opGteBigInt) }
+func NeqBigInt(env *zc.Env) error { return funcs.EvalCompareBigInt(env, opNeqBigInt) }
+func LtBigInt(env *zc.Env) error  { return funcs.EvalCompareBigInt(env, opLtBigInt) }
+func LteBigInt(env *zc.Env) error { return funcs.EvalCompareBigInt(env, opLteBigInt) }

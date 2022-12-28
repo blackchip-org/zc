@@ -3,33 +3,29 @@ package zc
 import (
 	"fmt"
 	"log"
+	"math/big"
+	"math/bits"
 	"os"
+	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/blackchip-org/zc/internal"
-	"github.com/blackchip-org/zc/lang/ast"
 	"github.com/blackchip-org/zc/lang/parser"
 	"github.com/blackchip-org/zc/lang/token"
+	"github.com/shopspring/decimal"
 )
 
-// func (n NumberFormatOptions) Separators() map[rune]struct{} {
-// 	seps := make(map[rune]struct{})
-// 	for _, pat := range []string{n.IntPat, n.FracPat} {
-// 		for _, ch := range pat {
-// 			if ch != '0' {
-// 				seps[ch] = struct{}{}
-// 			}
-// 		}
-// 	}
-// 	return seps
-// }
-
 type Config struct {
-	ModuleDefs []ModuleDef
-	PreludeCLI []string
-	PreludeDev []string
-	Trace      bool
-	ValueOps   ValueOps
+	ModuleDefs   []ModuleDef
+	PreludeCLI   []string
+	PreludeDev   []string
+	Trace        bool
+	Places       int32
+	RoundingMode RoundingMode
+	IntPat       string
+	Point        rune
+	FracPat      string
 }
 
 type ModuleDef struct {
@@ -38,6 +34,8 @@ type ModuleDef struct {
 	ScriptPath string
 	Natives    map[string]CalcFunc
 }
+
+type CalcFunc func(*Env) error
 
 type Frame struct {
 	Pos  token.Pos
@@ -57,655 +55,92 @@ func (c CalcError) Error() string {
 	return c.Message
 }
 
-type CalcFunc func(*Calc) error
-
 type Calc struct {
-	Out     *strings.Builder
-	Val     *ValueOps
-	Info    string
-	Stack   *Stack
-	name    string
-	Config  Config
-	main    *Stack
-	global  map[string]*Stack
-	local   map[string]*Stack
-	Funcs   map[string]CalcFunc
-	Exports map[string]CalcFunc
-	Natives map[string]CalcFunc
-	defs    map[string]ModuleDef
-	Modules map[string]*Calc
+	Config
+	Out        *strings.Builder
+	Info       string
+	Env        *Env
+	ModuleDefs map[string]ModuleDef
+	Modules    map[string]*Env
+	Natives    map[string]CalcFunc
 }
 
-func NewCalc() *Calc {
-	c, err := NewCalcWithConfig(Config{})
-	if err != nil {
-		panic(err)
-	}
-	return c
-}
-
-func NewCalcWithConfig(config Config) (*Calc, error) {
+func NewCalc(conf Config) (*Calc, error) {
 	c := &Calc{
-		Out:     &strings.Builder{},
-		Val:     &config.ValueOps,
-		name:    "<cli>",
-		Config:  config,
-		global:  make(map[string]*Stack),
-		defs:    make(map[string]ModuleDef),
-		Modules: make(map[string]*Calc),
-		Funcs:   make(map[string]CalcFunc),
-		Exports: make(map[string]CalcFunc),
-		Natives: make(map[string]CalcFunc),
+		Config:     conf,
+		Modules:    make(map[string]*Env),
+		Natives:    make(map[string]CalcFunc),
+		ModuleDefs: make(map[string]ModuleDef),
 	}
-	c.main = NewStack(c.Val, "main")
-	c.Stack = c.main
-	c.global["main"] = c.Stack
-	c.local = c.global
-
-	for _, def := range config.ModuleDefs {
-		c.Install(def)
+	for _, def := range conf.ModuleDefs {
+		c.ModuleDefs[def.Name] = def
 	}
 
-	for _, prelude := range config.PreludeDev {
-		def, ok := c.defs[prelude]
+	c.Env = NewEnv(c)
+
+	for _, preName := range c.PreludeDev {
+		def, ok := c.ModuleDefs[preName]
 		if !ok {
-			return nil, fmt.Errorf("no such module: %v", prelude)
+			return nil, fmt.Errorf("no such prelude module: %v", preName)
 		}
-		if _, err := c.load(def); err != nil {
-			return nil, err
-		}
-
-	}
-
-	for _, prelude := range config.PreludeCLI {
-		if err := c.Use(prelude); err != nil {
+		if _, err := c.Load(def); err != nil {
 			return nil, err
 		}
 	}
+
+	for _, preName := range c.PreludeCLI {
+		def, ok := c.ModuleDefs[preName]
+		if !ok {
+			return nil, fmt.Errorf("no such prelude module: %v", preName)
+		}
+		env, err := c.Env.Import(def, "")
+		if err != nil {
+			return nil, err
+		}
+		for _, export := range env.Exports {
+			c.Env.Funcs[export] = env.Funcs[export]
+		}
+	}
+
 	return c, nil
 }
 
-func (c *Calc) Eval(name string, src []byte) (err error) {
-	c.Out.Reset()
+func (c *Calc) Eval(name string, src []byte) error {
 	c.Info = ""
-	ast, err := parser.Parse(name, src)
+	root, err := parser.Parse(name, src)
 	if err != nil {
-		return
+		return err
 	}
-	err = c.evalNode(ast)
-
-	return
+	return c.Env.evalNode(root)
 }
 
 func (c *Calc) EvalString(name string, src string) error {
 	return c.Eval(name, []byte(src))
 }
 
-func (c *Calc) Define(name string) *Stack {
-	stack, ok := c.local[name]
-	if !ok {
-		stack, ok = c.global[name]
-		if !ok {
-			stack = NewStack(c.Val, name)
-			c.local[name] = stack
-		}
-	}
-	return stack
-}
-
-func (c *Calc) import_(def ModuleDef, prefix string) error {
-	dc, err := c.load(def)
-	if err != nil {
-		return err
-	}
-	for funcName, fn := range dc.Exports {
-		var qName string
-		if prefix != "" {
-			qName = prefix + "." + funcName
-		} else {
-			qName = funcName
-		}
-		c.Funcs[qName] = fn
-	}
-	return nil
-}
-
-func (c *Calc) Import(modName string, alias string) error {
-	def, ok := c.defs[modName]
-	if !ok {
-		return fmt.Errorf("no such module: %v", modName)
-	}
-
-	prefix := modName
-	if alias != "" {
-		prefix = alias
-	}
-	return c.import_(def, prefix)
-}
-
-func (c *Calc) ImportFile(file string, name string) error {
-	def := ModuleDef{Name: name, ScriptPath: file}
-	return c.import_(def, name)
-}
-
-func (c *Calc) Include(modName string) error {
-	def, ok := c.defs[modName]
-	if !ok {
-		return fmt.Errorf("no such module: %v", modName)
-	}
-	dc, err := c.load(def)
-	if err != nil {
-		return err
-	}
-	for funcName, fn := range dc.Exports {
-		c.Funcs[funcName] = fn
-	}
-	return nil
-}
-
-func (c *Calc) IncludeFile(file string) error {
-	src, err := LoadFile(file)
-	if err != nil {
-		return err
-	}
-
-	ast, err := parser.Parse(file, src)
-	if err != nil {
-		return nil
-	}
-
-	return c.evalNode(ast)
-}
-
-func (c *Calc) Use(mod string) error {
-	def, ok := c.defs[mod]
-	if !ok {
-		return fmt.Errorf("no such module: %v", mod)
-	}
-
-	if def.Include {
-		return c.Include(mod)
-	}
-	return c.Import(mod, "")
-}
-
-func (c *Calc) Install(def ModuleDef) {
-	if def.Name == "" {
-		panic(fmt.Sprintf("unable to install a module with no name: %+v", def))
-	}
-	c.defs[def.Name] = def
-}
-
-func (c *Calc) Interpolate(v string) (string, error) {
-	var result, name strings.Builder
-
-	inQuote := false
-	inEscape := false
-
-	for _, ch := range v {
-		if ch == '`' && !inQuote && !inEscape {
-			inQuote = true
-		} else if ch == '`' && !inEscape {
-			inQuote = false
-			stack, err := c.StackFor(name.String())
-			if err != nil {
-				return "", fmt.Errorf("no such stack: %v", name.String())
-			}
-			for i, item := range stack.Items() {
-				if i != 0 {
-					result.WriteString("  ")
-				}
-				result.WriteString(item)
-			}
-			name.Reset()
-		} else if ch == '\\' {
-			inEscape = true
-		} else {
-			inEscape = false
-			if inQuote {
-				name.WriteRune(ch)
-			} else {
-				result.WriteRune(ch)
-			}
-		}
-	}
-	if name.Len() > 0 {
-		return "", fmt.Errorf("expected`")
-	}
-	return result.String(), nil
-}
-
-func (c *Calc) Printf(format string, a ...any) {
-	c.Out.WriteString(fmt.Sprintf(format, a...))
-}
-
-func (c *Calc) Print(a any) {
-	c.Out.WriteString(fmt.Sprint(a))
-}
-
-func (c *Calc) StackFor(name string) (*Stack, error) {
-	stack, ok := c.local[name]
-	if ok {
-		return stack, nil
-	}
-	stack, ok = c.global[name]
-	if ok {
-		return stack, nil
-	}
-	return nil, fmt.Errorf("no such stack: %v", name)
-}
-
-func (c *Calc) evalBlock(nodes []ast.Node) error {
-	for _, node := range nodes {
-		if err := c.evalNode(node); err != nil {
-			return c.err(node, err)
-		}
-	}
-	return nil
-}
-
-func (c *Calc) evalNode(node ast.Node) error {
-	switch n := node.(type) {
-	case *ast.AliasNode:
-		return c.evalAliasNode(n)
-	case *ast.ExprNode:
-		return c.evalExprNode(n)
-	case *ast.IfNode:
-		return c.evalIfNode(n)
-	case *ast.FileNode:
-		return c.evalFileNode(n)
-	case *ast.ForNode:
-		return c.evalForNode(n)
-	case *ast.FuncNode:
-		return c.evalFuncNode(n)
-	case *ast.ImportNode:
-		return c.evalImportNode(n)
-	case *ast.IncludeNode:
-		return c.evalIncludeNode(n)
-	case *ast.InvokeNode:
-		return c.evalInvokeNode(n)
-	case *ast.MacroNode:
-		return c.evalMacroNode(n)
-	case *ast.NativeNode:
-		return c.evalNativeNode(n)
-	case *ast.RefNode:
-		return c.evalRefNode(n)
-	case *ast.StackNode:
-		return c.evalStackNode(n)
-	case *ast.TryNode:
-		return c.evalTryNode(n)
-	case *ast.UseNode:
-		return c.evalUseNode(n)
-	case *ast.ValueNode:
-		return c.evalValueNode(n)
-	case *ast.WhileNode:
-		return c.evalWhileNode(n)
-	}
-	panic(fmt.Sprintf("unknown node: %+v", node))
-}
-
-func (c *Calc) evalAliasNode(node *ast.AliasNode) error {
-	c.trace(node, "alias %v %v", node.To, node.From)
-	fn, ok := c.Funcs[node.From]
-	if !ok {
-		return c.err(node, fmt.Errorf("no such function or macro: %v", node.From))
-	}
-	c.Funcs[node.To] = fn
-	c.Exports[node.To] = fn
-	c.Info = "ok"
-	return nil
-}
-
-func (c *Calc) evalExprNode(expr *ast.ExprNode) error {
-	for _, node := range expr.Expr {
-		if err := c.evalNode(node); err != nil {
-			return c.err(node, err)
-		}
-	}
-	c.Stack = c.main
-	return nil
-}
-
-func (c *Calc) evalIfNode(ifNode *ast.IfNode) error {
-	for _, caseNode := range ifNode.Cases {
-		// Final "else" condition will have no case expression
-		if caseNode.Cond == nil {
-			if err := c.evalBlock(caseNode.Block); err != nil {
-				return c.err(caseNode, err)
-			}
-		} else {
-			if err := c.evalExprNode(caseNode.Cond); err != nil {
-				return c.err(caseNode.Cond, err)
-			}
-			v, err := c.Stack.Pop()
-			if err != nil {
-				return c.err(caseNode.Cond, err)
-			}
-			vb, err := c.Val.ParseBool(v)
-			if err != nil {
-				return c.err(caseNode.Cond, err)
-			}
-			if vb {
-				if err := c.evalBlock(caseNode.Block); err != nil {
-					return err
-				}
-				break
-			}
-		}
-	}
-	return nil
-}
-
-func (c *Calc) evalFileNode(file *ast.FileNode) error {
-	for _, line := range file.Block {
-		if err := c.evalNode(line); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (c *Calc) evalForNode(node *ast.ForNode) error {
-	c.trace(node, "for(%v) start", node.Stack.Name)
-
-	expr := NewStack(c.Val, "")
-	c.Stack = expr
-	if err := c.evalExprNode(node.Expr); err != nil {
-		return c.err(node.Expr, err)
-	}
-	c.Stack = c.main
-
-	i := c.Define(node.Stack.Name)
-	for _, item := range expr.Items() {
-		c.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
-		i.Clear().Push(item)
-		if err := c.evalBlock(node.Block); err != nil {
-			return err
-		}
-	}
-	c.trace(node, "for(%v) end", node.Stack.Name)
-	return nil
-}
-
-func (c *Calc) evalFuncNode(fn *ast.FuncNode) error {
-	c.trace(fn, "define func: %v", fn.Name)
-	c.Funcs[fn.Name] = func(ic *Calc) error {
-		return ic.invokeFunction(c, fn)
-	}
-	c.Exports[fn.Name] = c.Funcs[fn.Name]
-	return nil
-}
-
-func (c *Calc) evalImportNode(node *ast.ImportNode) error {
-	mod := node.Module
-
-	if mod.Alias != "" {
-		c.trace(node, "import %v %v", mod.Name, mod.Alias)
-	} else {
-		c.trace(node, "import %v", mod.Name)
-	}
-
-	if mod.Zlib {
-		if err := c.Import(mod.Name, mod.Alias); err != nil {
-			return c.err(node, err)
-		}
-	} else {
-		if err := c.ImportFile(mod.Name, mod.Alias); err != nil {
-			return c.err(node, err)
-		}
-	}
-	c.Info = "ok"
-	return nil
-}
-
-func (c *Calc) evalIncludeNode(node *ast.IncludeNode) error {
-	mod := node.Module
-	c.trace(node, "include %v", mod.Name)
-	if mod.Zlib {
-		if err := c.Include(mod.Name); err != nil {
-			return c.err(node, err)
-		}
-	} else {
-		if err := c.IncludeFile(mod.Name); err != nil {
-			return c.err(node, err)
-		}
-	}
-	c.Info = "ok"
-	return nil
-}
-
-func (c *Calc) evalInvokeNode(node *ast.InvokeNode) error {
-	c.trace(node, "invoke %v", node.Name)
-	fn, ok := c.Funcs[node.Name]
-	if !ok {
-		return c.err(node, fmt.Errorf("no such function: %v", node.Name))
-	}
-	if err := fn(c); err != nil {
-		return c.chain(node, err)
-	}
-	return nil
-}
-
-func (c *Calc) evalMacroNode(mac *ast.MacroNode) error {
-	c.trace(mac, "define macro: %v", mac.Name)
-	c.Funcs[mac.Name] = func(caller *Calc) error {
-		return caller.invokeMacro(mac)
-	}
-	c.Exports[mac.Name] = c.Funcs[mac.Name]
-	c.Info = "ok"
-	return nil
-}
-
-func (c *Calc) evalNativeNode(node *ast.NativeNode) error {
-	c.trace(node, "native %v", strings.Join([]string{node.Name, node.Export}, " "))
-	export := node.Export
-	if export == "" {
-		export = node.Name
-	}
-	fn, ok := c.Natives[node.Name]
-	if !ok {
-		return c.err(node, fmt.Errorf("no such native: %v", node.Name))
-	}
-	c.Funcs[node.Name] = fn
-	c.Exports[export] = fn
-	return nil
-}
-
-func (c *Calc) evalRefNode(ref *ast.RefNode) error {
-	c.trace(ref, "ref %v%v", ref.Type, ref.Name)
-	stack, err := c.StackFor(ref.Name)
-	if err != nil {
-		return c.err(ref, err)
-	}
-
-	switch ref.Type {
-	case ast.AllRef:
-		for _, item := range stack.Items() {
-			c.Stack.Push(item)
-		}
-	case ast.TopRef:
-		top, err := stack.Peek()
-		if err != nil {
-			return c.err(ref, err)
-		}
-		c.Stack.Push(top)
-	}
-	return nil
-}
-
-func (c *Calc) evalStackNode(node *ast.StackNode) error {
-	c.trace(node, "stack %v", node.Name)
-	stack := c.Define(node.Name)
-	c.Stack = stack
-	return nil
-}
-
-func (c *Calc) evalTryNode(node *ast.TryNode) error {
-	c.trace(node, "try")
-	if err := c.evalExprNode(node.Expr); err != nil {
-		c.Stack.Push(err.Error())
-		c.Stack.PushBool(false)
-	} else {
-		c.Stack.PushBool(true)
-	}
-	return nil
-}
-
-func (c *Calc) evalUseNode(node *ast.UseNode) error {
-	c.trace(node, "use %v", node.Name)
-	def, ok := c.defs[node.Name]
-	if !ok {
-		return c.err(node, fmt.Errorf("no such module: %v", node.Name))
-	}
-	if def.Include {
-		if err := c.Include(node.Name); err != nil {
-			return c.err(node, err)
-		}
-		c.Info = "ok, included"
-	} else {
-		if err := c.Import(node.Name, ""); err != nil {
-			return c.err(node, err)
-		}
-		c.Info = "ok, imported"
-	}
-	return nil
-}
-
-func (c *Calc) evalValueNode(value *ast.ValueNode) error {
-	c.trace(value, "value %v", value.Value)
-	interp, err := c.Interpolate(value.Value)
-	if err != nil {
-		return c.err(value, err)
-	}
-	if interp != value.Value {
-		c.trace(value, "interpolate %v", interp)
-	}
-
-	if value.IsString {
-		c.Stack.Push(interp)
-	} else {
-		c.Stack.PushValue(interp)
-	}
-	return nil
-}
-
-func (c *Calc) evalWhileNode(while *ast.WhileNode) error {
-	c.trace(while, "while")
-	for {
-		if err := c.evalExprNode(while.Cond); err != nil {
-			return c.err(while.Cond, err)
-		}
-		result, err := c.Stack.PopBool()
-		if err != nil {
-			return c.err(while.Cond, err)
-		}
-		if !result {
-			break
-		}
-		if err := c.evalBlock(while.Block); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (c *Calc) moduleContext(name string) *Calc {
-	dc := &Calc{
-		Out:     c.Out,
-		Val:     c.Val,
-		name:    name,
-		Config:  c.Config, // FIXME: This should not be saved
-		global:  make(map[string]*Stack),
-		Funcs:   make(map[string]CalcFunc),
-		Exports: make(map[string]CalcFunc),
-		Natives: make(map[string]CalcFunc),
-		defs:    c.defs,
-		Modules: c.Modules,
-	}
-	dc.main = NewStack(dc.Val, "main")
-	dc.global["main"] = dc.main
-	dc.Stack = dc.main
-	dc.local = dc.global
-	return dc
-}
-
-func functionContext(c *Calc, node *ast.FuncNode) *Calc {
-	dc := &Calc{
-		Out:     c.Out,
-		Val:     c.Val,
-		name:    c.name + "." + node.Name,
-		Config:  c.Config,
-		global:  c.global,
-		local:   make(map[string]*Stack),
-		Funcs:   c.Funcs,
-		Exports: c.Exports,
-		Natives: c.Natives,
-		defs:    c.defs,
-		Modules: c.Modules,
-	}
-	dc.main = NewStack(dc.Val, "main")
-	dc.local["main"] = dc.main
-	dc.Stack = dc.main
-	return dc
-}
-
-func (c *Calc) invokeFunction(mod *Calc, fn *ast.FuncNode) error {
-	dc := functionContext(mod, fn)
-	for _, param := range fn.Params {
-		if param.Type == ast.TopRef {
-			val, err := c.Stack.Pop()
-			if err != nil {
-				return fmt.Errorf("not enough arguments, missing '%v'", param.Name)
-			}
-			c.trace(fn, "func(%v) param %v=%v\n", fn.Name, param.Name, val)
-			dc.Define(param.Name).Clear().Push(val)
-		} else {
-			c.trace(fn, "func(%v) param %v=%v", fn.Name, param.Name, c.Stack.Items())
-			target := dc.Define(param.Name)
-			for c.Stack.Len() > 0 {
-				val := c.Stack.MustPop()
-				target.Push(val)
-			}
-		}
-	}
-	if err := dc.evalBlock(fn.Block); err != nil {
-		return err
-	}
-	for dc.main.Len() > 0 {
-		val := dc.main.MustPop()
-		c.trace(fn, "func(%v) return %v", fn.Name, val)
-		c.Stack.Push(val)
-	}
-	c.trace(fn, "func(%v) end", fn.Name)
-	return nil
-}
-
-func (c *Calc) invokeMacro(mac *ast.MacroNode) error {
-	if err := c.evalBlock(mac.Expr.Expr); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (c *Calc) load(def ModuleDef) (*Calc, error) {
+func (c *Calc) Load(def ModuleDef) (*Env, error) {
 	if mod, ok := c.Modules[def.Name]; ok {
 		return mod, nil
 	}
 
-	dc := c.moduleContext(def.Name)
+	env := NewEnv(c)
+	env.Module = def.Name
 
-	for _, prelude := range c.Config.PreludeDev {
-		mod, ok := c.Modules[prelude]
+	for _, preName := range c.PreludeDev {
+		mod, ok := c.Modules[preName]
 		if !ok {
 			continue
 		}
-		for name, fn := range mod.Exports {
-			dc.Funcs[name] = fn
+		for _, name := range mod.Exports {
+			// FIXME: look at use for qName?
+			env.Funcs[name] = mod.Funcs[name]
 		}
 	}
 
-	for name, fn := range def.Natives {
-		dc.Natives[name] = fn
+	if def.Natives != nil {
+		for name, fn := range def.Natives {
+			c.Natives[name] = fn
+		}
 	}
 
 	if def.ScriptPath != "" {
@@ -717,54 +152,378 @@ func (c *Calc) load(def ModuleDef) (*Calc, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := dc.evalNode(ast); err != nil {
+		if err := env.evalNode(ast); err != nil {
 			return nil, err
 		}
 	}
 
-	c.Modules[def.Name] = dc
-	return dc, nil
+	c.Modules[def.Name] = env
+	return env, nil
 }
 
-func (c *Calc) chain(node *ast.InvokeNode, err error) error {
-	frame := Frame{Pos: node.Pos()}
-
-	errCalc, ok := err.(CalcError)
-	if ok {
-		if len(errCalc.Frames) > 0 {
-			errCalc.Frames[len(errCalc.Frames)-1].Func = node.Name
+func (c *Calc) parseDigits(sep rune, v string) ([]rune, []rune) {
+	var intDigits, fracDigits []rune
+	inInt := true
+	for _, ch := range v {
+		if ch == sep {
+			if !inInt {
+				fracDigits = append(fracDigits, ch)
+			}
+			inInt = false
+		} else if inInt {
+			intDigits = append(intDigits, ch)
+		} else {
+			fracDigits = append(fracDigits, ch)
 		}
-		errCalc.Frames = append(errCalc.Frames, frame)
-		return errCalc
 	}
-	return CalcError{
-		Message: err.Error(),
-		Frames:  []Frame{frame},
-	}
+	return intDigits, fracDigits
 }
 
-func (c *Calc) err(node ast.Node, err error) error {
-	errCalc, ok := err.(CalcError)
-	if ok {
-		return errCalc
-	}
-	frame := Frame{Pos: node.Pos()}
-	return CalcError{
-		Message: err.Error(),
-		Frames:  []Frame{frame},
-	}
-}
+func (c *Calc) FormatNumberString(v string) string {
+	var digits strings.Builder
+	intDigits, fracDigits := c.parseDigits('.', v)
 
-func (c *Calc) trace(node ast.Node, format string, a ...any) {
-	if c.Config.Trace {
-		msg := fmt.Sprintf(format, a...)
-		if c.Stack.Len() > 0 {
-			log.Printf("eval: %v(%v)", c.Stack.Name, c.Stack)
+	if c.IntPat == "" {
+		digits.WriteString(string(intDigits))
+	} else {
+		var intResult []rune
+		intPat := []rune(c.IntPat)
+
+		idxPat := len(c.IntPat) - 1
+		idxDig := len(intDigits) - 1
+		for idxDig >= 0 {
+			if intDigits[idxDig] == '-' {
+				intResult = append([]rune{intDigits[idxDig]}, intResult...)
+				idxDig--
+			} else if intPat[idxPat] == '0' {
+				intResult = append([]rune{intDigits[idxDig]}, intResult...)
+				idxDig--
+				idxPat--
+			} else {
+				intResult = append([]rune{intPat[idxPat]}, intResult...)
+				idxPat--
+			}
+			if idxPat < 0 {
+				idxPat = len(intPat) - 1
+			}
 		}
-		log.Printf("eval:     %v @ %v", msg, node.Pos())
-		//log.Println()
+		digits.WriteString(string(intResult))
 	}
+
+	if len(fracDigits) == 0 {
+		return digits.String()
+	}
+
+	point := c.Point
+	if point == 0 {
+		point = '.'
+	}
+	digits.WriteRune(point)
+
+	if c.FracPat == "" {
+		digits.WriteString(string(fracDigits))
+	} else {
+		var fracResult []rune
+		fracPat := []rune(c.FracPat)
+
+		idxPat := 0
+		idxDig := 0
+		for idxDig < len(fracDigits) {
+			if fracPat[idxPat] == '0' {
+				fracResult = append(fracDigits, fracResult[idxDig])
+				idxDig++
+				idxPat++
+			} else {
+				fracResult = append(fracDigits, fracPat[idxPat])
+				idxPat++
+			}
+			if idxPat >= len(fracDigits) {
+				idxPat = 0
+			}
+		}
+		digits.WriteString(string(fracResult))
+	}
+
+	return digits.String()
+
 }
+
+func (c *Calc) FormatBigInt(v *big.Int) string {
+	return fmt.Sprintf("%d", v)
+}
+
+func (c *Calc) FormatBigIntWithRadix(v *big.Int, radix int) string {
+	sign := ""
+	if v.Sign() < 0 {
+		sign = "-"
+	}
+	var absV big.Int
+	absV.Abs(v)
+
+	switch radix {
+	case 16:
+		return fmt.Sprintf("%v0x%x", sign, &absV)
+	case 8:
+		return fmt.Sprintf("%v0o%o", sign, &absV)
+	case 2:
+		return fmt.Sprintf("%v0b%b", sign, &absV)
+	}
+	return c.FormatBigInt(v)
+}
+
+func (c *Calc) FormatBool(v bool) string {
+	if v {
+		return "true"
+	}
+	return "false"
+}
+
+func (c *Calc) FormatFixed(v decimal.Decimal) string {
+	fn, ok := RoundingFuncsFix[c.RoundingMode]
+	if !ok {
+		log.Panicf("invalid rounding mode: %v", c.RoundingMode)
+	}
+
+	return fn(v, c.Places).String()
+}
+
+func (c *Calc) FormatInt64(i int64) string {
+	return fmt.Sprintf("%v", i)
+}
+
+func (c *Calc) FormatInt32(i int32) string {
+	return c.FormatInt64(int64(i))
+}
+
+func (c *Calc) FormatInt(i int) string {
+	return c.FormatInt64(int64(i))
+}
+
+func (c *Calc) FormatUint64(i uint64) string {
+	return fmt.Sprintf("%v", i)
+}
+
+func (c *Calc) FormatUint32(i uint32) string {
+	return c.FormatUint64(uint64(i))
+}
+
+func (c *Calc) FormatUint(i uint) string {
+	return c.FormatUint64(uint64(i))
+}
+
+func (c *Calc) FormatValue(v string) string {
+	r := ParseRadix(v)
+	switch {
+	case r != 10:
+		return v
+	case c.IsBigInt(v):
+		v := c.FormatBigIntWithRadix(c.MustParseBigInt(v), r)
+		return c.FormatNumberString(v)
+	case c.IsFixed(v):
+		v := c.FormatFixed(c.MustParseFixed(v))
+		return c.FormatNumberString(v)
+	}
+	return v
+}
+
+func (c *Calc) cleanNumString(v string) string {
+	var sb strings.Builder
+	// FIXME
+	// seps := c.Settings.NumberFormat.Separators()
+	for _, ch := range v {
+		// if _, ok := seps[ch]; ok {
+		// 	continue
+		// }
+		if ch == ',' {
+			continue
+		}
+		if unicode.Is(unicode.Sc, ch) {
+			continue
+		}
+		sb.WriteRune(ch)
+	}
+	return sb.String()
+}
+
+func (c *Calc) ParseBigInt(v string) (*big.Int, error) {
+	i := new(big.Int)
+	_, ok := i.SetString(c.cleanNumString(v), 0)
+	if !ok {
+		return i, fmt.Errorf("expecting BigInt but got %v", v)
+	}
+	return i, nil
+}
+
+func (c *Calc) IsBigInt(v string) bool {
+	_, err := c.ParseBigInt(v)
+	return err == nil
+}
+
+func (c *Calc) MustParseBigInt(v string) *big.Int {
+	i, err := c.ParseBigInt(v)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+
+func (c *Calc) ParseBool(v string) (bool, error) {
+	vl := strings.ToLower(v)
+	switch vl {
+	case "true":
+		return true, nil
+	case "false":
+		return false, nil
+	}
+	return false, fmt.Errorf("expecting Bool but got %v", v)
+}
+
+func (c *Calc) IsBool(v string) bool {
+	_, err := c.ParseBool(v)
+	return err == nil
+}
+
+func (c *Calc) MustParseBool(v string) bool {
+	b, err := c.ParseBool(v)
+	if err != nil {
+		panic(err)
+	}
+	return b
+}
+
+func (c *Calc) ParseFixed(v string) (decimal.Decimal, error) {
+	d, err := decimal.NewFromString(c.cleanNumString(v))
+	if err != nil {
+		return decimal.Zero, fmt.Errorf("expecting Fixed but got %v", v)
+	}
+	return d, nil
+}
+
+func (c *Calc) IsFixed(v string) bool {
+	_, err := c.ParseFixed(v)
+	return err == nil
+}
+
+func (c *Calc) MustParseFixed(v string) decimal.Decimal {
+	d, err := c.ParseFixed(v)
+	if err != nil {
+		panic(err)
+	}
+	return d
+}
+
+func (c *Calc) ParseInt(v string) (int, error) {
+	i, err := strconv.ParseInt(c.cleanNumString(v), 0, 64)
+	if err != nil {
+		return 0, fmt.Errorf("expecting Int but got %v", v)
+	}
+	return int(i), nil
+}
+
+func (c *Calc) IsInt(v string) bool {
+	_, err := c.ParseInt(v)
+	return err == nil
+}
+
+func (c *Calc) MustParseInt(v string) int {
+	i, err := c.ParseInt(v)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+
+func (c *Calc) ParseInt32(v string) (int32, error) {
+	i, err := strconv.ParseInt(c.cleanNumString(v), 0, 32)
+	if err != nil {
+		return 0, fmt.Errorf("expecting Int32 but got %v", v)
+	}
+	return int32(i), nil
+}
+
+func (c *Calc) ParseUint(v string) (uint, error) {
+	i, err := strconv.ParseUint(c.cleanNumString(v), 0, bits.UintSize)
+	if err != nil {
+		return 0, fmt.Errorf("expecting Uint but got %v", v)
+	}
+	return uint(i), nil
+}
+
+func ParseRadix(v string) int {
+	if len(v) < 2 {
+		return 10
+	}
+	prefix := strings.ToLower(v[:2])
+	switch prefix {
+	case "0b":
+		return 2
+	case "0o":
+		return 8
+	case "0x":
+		return 16
+	}
+	return 10
+}
+
+type RoundingMode int
+
+const (
+	RoundingModeHalfUp RoundingMode = iota
+	RoundingModeCeil
+	RoundingModeDown
+	RoundingModeFloor
+	RoundingModeHalfEven
+	RoundingModeUp
+)
+
+func (r RoundingMode) String() string {
+	switch r {
+	case RoundingModeHalfUp:
+		return "half-up"
+	case RoundingModeCeil:
+		return "ceil"
+	case RoundingModeDown:
+		return "down"
+	case RoundingModeFloor:
+		return "floor"
+	case RoundingModeHalfEven:
+		return "half-even"
+	case RoundingModeUp:
+		return "up"
+	}
+	panic("unknown rounding mode")
+}
+
+func ParseRoundingMode(v string) (RoundingMode, bool) {
+	switch strings.ToLower(v) {
+	case "half-up":
+		return RoundingModeHalfUp, true
+	case "ceil":
+		return RoundingModeCeil, true
+	case "down":
+		return RoundingModeDown, true
+	case "floor":
+		return RoundingModeFloor, true
+	case "half-even":
+		return RoundingModeHalfEven, true
+	case "up":
+		return RoundingModeUp, true
+	}
+	return 0, false
+}
+
+type RoundingFuncFix func(decimal.Decimal, int32) decimal.Decimal
+
+var (
+	RoundingFuncsFix = map[RoundingMode]RoundingFuncFix{
+		RoundingModeCeil:     func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundCeil(places) },
+		RoundingModeDown:     func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundDown(places) },
+		RoundingModeFloor:    func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundFloor(places) },
+		RoundingModeHalfUp:   func(d decimal.Decimal, places int32) decimal.Decimal { return d.Round(places) },
+		RoundingModeHalfEven: func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundBank(places) },
+		RoundingModeUp:       func(d decimal.Decimal, places int32) decimal.Decimal { return d.RoundUp(places) },
+	}
+)
 
 func LoadFile(p string) ([]byte, error) {
 	if strings.HasPrefix(p, "zc:") {

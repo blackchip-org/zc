@@ -6,26 +6,26 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
-func Places(calc *zc.Calc) error {
-	places, err := calc.Stack.PopInt32()
+func Places(env *zc.Env) error {
+	places, err := env.Stack.PopInt32()
 	if err != nil {
 		return err
 	}
 	if places < 0 {
 		return fmt.Errorf("invalid number of places: %v", places)
 	}
-	calc.Val.Places = places
-	calc.Info = "ok"
+	env.Calc.Places = places
+	env.Calc.Info = "ok"
 	return nil
 }
 
-func PlacesGet(calc *zc.Calc) error {
-	calc.Stack.PushInt32(calc.Val.Places)
+func PlacesGet(env *zc.Env) error {
+	env.Stack.PushInt32(env.Calc.Places)
 	return nil
 }
 
-func RoundMode(calc *zc.Calc) error {
-	a, err := calc.Stack.Pop()
+func RoundMode(env *zc.Env) error {
+	a, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
@@ -33,12 +33,12 @@ func RoundMode(calc *zc.Calc) error {
 	if !ok {
 		return fmt.Errorf("invalid rounding mode: %v", a)
 	}
-	calc.Val.RoundingMode = mode
-	calc.Print("ok")
+	env.Calc.RoundingMode = mode
+	env.Calc.Info = "ok"
 	return err
 }
 
-func RoundModeGet(calc *zc.Calc) error {
-	calc.Stack.Push(calc.Val.RoundingMode.String())
+func RoundModeGet(env *zc.Env) error {
+	env.Stack.Push(env.Calc.RoundingMode.String())
 	return nil
 }

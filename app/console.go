@@ -54,8 +54,8 @@ func RunConsole(calc *zc.Calc) {
 		var err error
 		ansi.Write(ansi.ClearScreen)
 		if strings.TrimSpace(text) == "" {
-			if calc.Stack.Len() > 0 {
-				_, err = calc.Stack.Pop()
+			if calc.Env.Stack.Len() > 0 {
+				_, err = calc.Env.Stack.Pop()
 			}
 		} else {
 			err = calc.EvalString("<cli>", text)
@@ -63,9 +63,9 @@ func RunConsole(calc *zc.Calc) {
 
 		fmt.Println()
 
-		for i, val := range calc.Stack.Items() {
+		for i, val := range calc.Env.Stack.Items() {
 			color := ansi.LightBlue
-			if i == calc.Stack.Len()-1 {
+			if i == calc.Env.Stack.Len()-1 {
 				color = ansi.Bold
 			}
 			ansi.Write(color)

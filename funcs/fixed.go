@@ -11,8 +11,8 @@ type UnaryFixed func(decimal.Decimal) (decimal.Decimal, error)
 type BinaryFixed func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, error)
 type CompareFixed func(decimal.Decimal, decimal.Decimal) (bool, error)
 
-func EvalUnaryFixed(calc *zc.Calc, fn UnaryFixed) error {
-	a, err := calc.Stack.PopFixed()
+func EvalUnaryFixed(env *zc.Env, fn UnaryFixed) error {
+	a, err := env.Stack.PopFixed()
 	if err != nil {
 		return err
 	}
@@ -20,11 +20,11 @@ func EvalUnaryFixed(calc *zc.Calc, fn UnaryFixed) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushFixed(b)
+	env.Stack.PushFixed(b)
 	return nil
 }
 
-func EvalBinaryFixed(calc *zc.Calc, fn BinaryFixed) (err error) {
+func EvalBinaryFixed(env *zc.Env, fn BinaryFixed) (err error) {
 	defer func() {
 		if p := recover(); p != nil {
 			msg, ok := p.(string)
@@ -39,7 +39,7 @@ func EvalBinaryFixed(calc *zc.Calc, fn BinaryFixed) (err error) {
 		}
 	}()
 
-	a, b, err := calc.Stack.PopFixed2()
+	a, b, err := env.Stack.PopFixed2()
 	if err != nil {
 		return
 	}
@@ -48,12 +48,12 @@ func EvalBinaryFixed(calc *zc.Calc, fn BinaryFixed) (err error) {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushFixed(r)
+	env.Stack.PushFixed(r)
 	return nil
 }
 
-func EvalCompareFixed(calc *zc.Calc, fn CompareFixed) (err error) {
-	a, b, err := calc.Stack.PopFixed2()
+func EvalCompareFixed(env *zc.Env, fn CompareFixed) (err error) {
+	a, b, err := env.Stack.PopFixed2()
 	if err != nil {
 		return
 	}
@@ -61,6 +61,6 @@ func EvalCompareFixed(calc *zc.Calc, fn CompareFixed) (err error) {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBool(c)
+	env.Stack.PushBool(c)
 	return nil
 }

@@ -8,8 +8,8 @@ type CompareOps struct {
 	String CompareStr
 }
 
-func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
-	a, b, err := calc.Stack.Pop2()
+func EvalCompareVal(env *zc.Env, ops CompareOps) error {
+	a, b, err := env.Stack.Pop2()
 	if err != nil {
 		return err
 	}
@@ -17,11 +17,11 @@ func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
 	var result bool
 
 	switch {
-	case calc.Val.IsBigInt(a) && calc.Val.IsBigInt(b):
-		x, y := calc.Val.MustParseBigInt(a), calc.Val.MustParseBigInt(b)
+	case env.Calc.IsBigInt(a) && env.Calc.IsBigInt(b):
+		x, y := env.Calc.MustParseBigInt(a), env.Calc.MustParseBigInt(b)
 		result, err = ops.BigInt(x, y)
-	case calc.Val.IsFixed(a) && calc.Val.IsFixed(b):
-		x, y := calc.Val.MustParseFixed(a), calc.Val.MustParseFixed(b)
+	case env.Calc.IsFixed(a) && env.Calc.IsFixed(b):
+		x, y := env.Calc.MustParseFixed(a), env.Calc.MustParseFixed(b)
 		result, err = ops.Fixed(x, y)
 	default:
 		result, err = ops.String(a, b)
@@ -29,6 +29,6 @@ func EvalCompareVal(calc *zc.Calc, ops CompareOps) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBool(result)
+	env.Stack.PushBool(result)
 	return nil
 }

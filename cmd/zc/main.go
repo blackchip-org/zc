@@ -41,7 +41,7 @@ func main() {
 
 	config := app.DefaultConfig()
 	config.Trace = trace
-	calc, err := zc.NewCalcWithConfig(config)
+	calc, err := zc.NewCalc(config)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -90,7 +90,7 @@ func evalResults(calc *zc.Calc, err error) {
 		}
 		os.Exit(1)
 	}
-	for _, item := range calc.Stack.Items() {
+	for _, item := range calc.Env.Stack.Items() {
 		fmt.Println(item)
 	}
 }

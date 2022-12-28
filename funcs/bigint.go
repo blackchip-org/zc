@@ -10,8 +10,8 @@ type UnaryBigInt func(*big.Int, *big.Int) error
 type BinaryBigInt func(*big.Int, *big.Int, *big.Int) error
 type CompareBigInt func(*big.Int, *big.Int) (bool, error)
 
-func EvalUnaryBigInt(calc *zc.Calc, fn UnaryBigInt) error {
-	a, r, err := calc.Stack.PopBigIntWithRadix()
+func EvalUnaryBigInt(env *zc.Env, fn UnaryBigInt) error {
+	a, r, err := env.Stack.PopBigIntWithRadix()
 	if err != nil {
 		return err
 	}
@@ -19,22 +19,22 @@ func EvalUnaryBigInt(calc *zc.Calc, fn UnaryBigInt) error {
 	if err := fn(&c, a); err != nil {
 		return err
 	}
-	calc.Stack.PushBigIntWithRadix(&c, r)
+	env.Stack.PushBigIntWithRadix(&c, r)
 	return nil
 }
 
-func EvalBinaryBigInt(calc *zc.Calc, fn BinaryBigInt) error {
-	x, y, err := calc.Stack.Pop2()
+func EvalBinaryBigInt(env *zc.Env, fn BinaryBigInt) error {
+	x, y, err := env.Stack.Pop2()
 	if err != nil {
 		return err
 	}
 
-	a, err := calc.Val.ParseBigInt(x)
+	a, err := env.Calc.ParseBigInt(x)
 	if err != nil {
 		return err
 	}
 
-	b, err := calc.Val.ParseBigInt(y)
+	b, err := env.Calc.ParseBigInt(y)
 	if err != nil {
 		return err
 	}
@@ -45,12 +45,12 @@ func EvalBinaryBigInt(calc *zc.Calc, fn BinaryBigInt) error {
 	}
 
 	radix := resolveRadix(zc.ParseRadix(x), zc.ParseRadix(y))
-	calc.Stack.PushBigIntWithRadix(&c, radix)
+	env.Stack.PushBigIntWithRadix(&c, radix)
 	return nil
 }
 
-func EvalCompareBigInt(calc *zc.Calc, fn CompareBigInt) error {
-	a, b, err := calc.Stack.PopBigInt2()
+func EvalCompareBigInt(env *zc.Env, fn CompareBigInt) error {
+	a, b, err := env.Stack.PopBigInt2()
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func EvalCompareBigInt(calc *zc.Calc, fn CompareBigInt) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBool(c)
+	env.Stack.PushBool(c)
 	return nil
 }
 

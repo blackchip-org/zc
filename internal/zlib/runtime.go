@@ -1,47 +1,47 @@
 package zlib
 
 import (
-	"fmt"
+	"errors"
 	"sort"
 
 	"github.com/blackchip-org/zc"
 )
 
-func Exports(calc *zc.Calc) error {
-	var mod *zc.Calc
-	var ok bool
+func Exports(env *zc.Env) error {
+	return errors.New("not implemented")
+	// 	var mod *zc.Calc
+	// 	var ok bool
 
-	name, err := calc.Stack.Pop()
-	if err != nil {
-		return fmt.Errorf("expecting module name")
-	}
+	// 	name, err := env.Stack.Pop()
+	// 	if err != nil {
+	// 		return fmt.Errorf("expecting module name")
+	// 	}
 
-	mod, ok = calc.Modules[name]
-	if !ok {
-		return fmt.Errorf("no such module: %v", name)
-	}
+	// 	mod, ok = env.Modules[name]
+	// 	if !ok {
+	// 		return fmt.Errorf("no such module: %v", name)
+	// 	}
 
-	var funcs []string
-	for f := range mod.Exports {
-		funcs = append(funcs, f)
-	}
-	sort.Strings(funcs)
-	for _, f := range funcs {
-		calc.Stack.Push(f)
-	}
+	// 	var funcs []string
+	// 	for f := range mod.Exports {
+	// 		funcs = append(funcs, f)
+	// 	}
+	// 	sort.Strings(funcs)
+	// 	for _, f := range funcs {
+	// 		env.Stack.Push(f)
+	// 	}
 
-	return nil
+	// return nil
 }
 
-func Funcs(calc *zc.Calc) error {
+func Funcs(env *zc.Env) error {
 	var funcs []string
-	for f := range calc.Funcs {
+	for f := range env.Funcs {
 		funcs = append(funcs, f)
 	}
 	sort.Strings(funcs)
 	for _, f := range funcs {
-		calc.Stack.Push(f)
+		env.Stack.Push(f)
 	}
-
 	return nil
 }

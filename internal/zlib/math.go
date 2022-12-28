@@ -54,32 +54,32 @@ var (
 	}
 )
 
-func Abs(calc *zc.Calc) error   { return funcs.EvalUnaryNum(calc, opAbs) }
-func Add(calc *zc.Calc) error   { return funcs.EvalBinaryNum(calc, opAdd) }
-func Ceil(calc *zc.Calc) error  { return funcs.EvalUnaryNum(calc, opCeil) }
-func Floor(calc *zc.Calc) error { return funcs.EvalUnaryNum(calc, opFloor) }
-func Mod(calc *zc.Calc) error   { return funcs.EvalBinaryNum(calc, opMod) }
-func Mul(calc *zc.Calc) error   { return funcs.EvalBinaryNum(calc, opMul) }
-func Neg(calc *zc.Calc) error   { return funcs.EvalUnaryNum(calc, opNeg) }
-func Pow(calc *zc.Calc) error   { return funcs.EvalBinaryNum(calc, opPow) }
-func Rem(calc *zc.Calc) error   { return funcs.EvalBinaryNum(calc, opRem) }
-func Sign(calc *zc.Calc) error  { return funcs.EvalUnaryNum(calc, opSign) }
-func Sub(calc *zc.Calc) error   { return funcs.EvalBinaryNum(calc, opSub) }
+func Abs(env *zc.Env) error   { return funcs.EvalUnaryNum(env, opAbs) }
+func Add(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opAdd) }
+func Ceil(env *zc.Env) error  { return funcs.EvalUnaryNum(env, opCeil) }
+func Floor(env *zc.Env) error { return funcs.EvalUnaryNum(env, opFloor) }
+func Mod(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opMod) }
+func Mul(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opMul) }
+func Neg(env *zc.Env) error   { return funcs.EvalUnaryNum(env, opNeg) }
+func Pow(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opPow) }
+func Rem(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opRem) }
+func Sign(env *zc.Env) error  { return funcs.EvalUnaryNum(env, opSign) }
+func Sub(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opSub) }
 
-func Round(calc *zc.Calc) error {
-	places, err := calc.Stack.PopInt32()
+func Round(env *zc.Env) error {
+	places, err := env.Stack.PopInt32()
 	if err != nil {
 		return err
 	}
-	value, err := calc.Stack.PopFixed()
+	value, err := env.Stack.PopFixed()
 	if err != nil {
 		return err
 	}
-	fn, ok := zc.RoundingFuncsFix[calc.Val.RoundingMode]
+	fn, ok := zc.RoundingFuncsFix[env.Calc.RoundingMode]
 	if !ok {
-		return fmt.Errorf("invalid rounding mode: %v", calc.Val.RoundingMode)
+		return fmt.Errorf("invalid rounding mode: %v", env.Calc.RoundingMode)
 	}
 	r := fn(value, places)
-	calc.Stack.PushFixed(r)
+	env.Stack.PushFixed(r)
 	return nil
 }

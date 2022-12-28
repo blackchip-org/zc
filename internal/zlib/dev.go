@@ -3,33 +3,32 @@ package zlib
 import (
 	"errors"
 	"os"
-	"strings"
 
 	"github.com/blackchip-org/zc"
 )
 
-func Abort(calc *zc.Calc) error {
-	a, err := calc.Stack.Pop()
+func Abort(env *zc.Env) error {
+	a, err := env.Stack.Pop()
 	if err != nil {
 		return errors.New("aborted")
 	}
 	return errors.New(a)
 }
 
-func Eval(calc *zc.Calc) error {
-	node, err := calc.Stack.Pop()
+func Eval(env *zc.Env) error {
+	node, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
-	return calc.EvalString("<eval>", node)
+	return env.Calc.EvalString("<eval>", node)
 }
 
-func Exit(calc *zc.Calc) error {
-	a, err := calc.Stack.Pop()
+func Exit(env *zc.Env) error {
+	a, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
-	code, err := calc.Val.ParseInt(a)
+	code, err := env.Calc.ParseInt(a)
 	if err != nil {
 		return err
 	}
@@ -37,35 +36,36 @@ func Exit(calc *zc.Calc) error {
 	return nil
 }
 
-func Nothing(calc *zc.Calc) error {
+func Nothing(env *zc.Env) error {
 	return nil
 }
 
-func Trace(calc *zc.Calc) error {
-	calc.Config.Trace = true
+func Trace(env *zc.Env) error {
+	env.Calc.Trace = true
 	return nil
 }
 
-func TraceOff(calc *zc.Calc) error {
-	calc.Config.Trace = false
+func TraceOff(env *zc.Env) error {
+	env.Calc.Trace = false
 	return nil
 }
 
 // FIXME: This should be handled better. Maybe a statement?
-func Undef(calc *zc.Calc) error {
-	target, err := calc.Stack.Pop()
-	if err != nil {
-		return err
-	}
+func Undef(env *zc.Env) error {
+	return errors.New("not implemented")
+	// target, err := env.Stack.Pop()
+	// if err != nil {
+	// 	return err
+	// }
 
-	var n = 0
-	for name := range calc.Funcs {
-		parts := strings.Split(name, ".")
-		if parts[0] == target {
-			delete(calc.Funcs, name)
-			n++
-		}
-	}
-	calc.Printf("%v undefined", n)
-	return nil
+	// var n = 0
+	// for name := range env.funcs {
+	// 	parts := strings.Split(name, ".")
+	// 	if parts[0] == target {
+	// 		delete(env.Funcs, name)
+	// 		n++
+	// 	}
+	// }
+	// env.Printf("%v undefined", n)
+	// return nil
 }

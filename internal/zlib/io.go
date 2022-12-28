@@ -6,8 +6,8 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
-func Print(calc *zc.Calc) error {
-	a, err := calc.Stack.Pop()
+func Print(env *zc.Env) error {
+	a, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}

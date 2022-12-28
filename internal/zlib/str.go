@@ -6,29 +6,29 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
-func Len(calc *zc.Calc) error {
-	a, err := calc.Stack.Pop()
+func Len(env *zc.Env) error {
+	a, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
 
 	r := len(a)
-	calc.Stack.Push(calc.Val.FormatInt(r))
+	env.Stack.Push(env.Calc.FormatInt(r))
 	return nil
 }
 
-func StartsWith(calc *zc.Calc) error {
-	prefix, err := calc.Stack.Pop()
+func StartsWith(env *zc.Env) error {
+	prefix, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
 
-	str, err := calc.Stack.Pop()
+	str, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
 
 	r := strings.HasPrefix(str, prefix)
-	calc.Stack.PushBool(r)
+	env.Stack.PushBool(r)
 	return nil
 }

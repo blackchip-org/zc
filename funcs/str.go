@@ -4,8 +4,8 @@ import "github.com/blackchip-org/zc"
 
 type CompareStr func(string, string) (bool, error)
 
-func EvalCompareStr(calc *zc.Calc, fn CompareStr) error {
-	a, b, err := calc.Stack.Pop2()
+func EvalCompareStr(env *zc.Env, fn CompareStr) error {
+	a, b, err := env.Stack.Pop2()
 	if err != nil {
 		return err
 	}
@@ -13,6 +13,6 @@ func EvalCompareStr(calc *zc.Calc, fn CompareStr) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBool(c)
+	env.Stack.PushBool(c)
 	return nil
 }

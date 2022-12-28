@@ -42,13 +42,13 @@ var (
 	}
 )
 
-func Eq(calc *zc.Calc) error  { return funcs.EvalCompareVal(calc, opEq) }
-func Neq(calc *zc.Calc) error { return funcs.EvalCompareVal(calc, opNeq) }
-func Gt(calc *zc.Calc) error  { return funcs.EvalCompareVal(calc, opGt) }
-func Gte(calc *zc.Calc) error { return funcs.EvalCompareVal(calc, opGte) }
-func Lt(calc *zc.Calc) error  { return funcs.EvalCompareVal(calc, opLt) }
-func Lte(calc *zc.Calc) error { return funcs.EvalCompareVal(calc, opLte) }
+func Eq(env *zc.Env) error  { return funcs.EvalCompareVal(env, opEq) }
+func Neq(env *zc.Env) error { return funcs.EvalCompareVal(env, opNeq) }
+func Gt(env *zc.Env) error  { return funcs.EvalCompareVal(env, opGt) }
+func Gte(env *zc.Env) error { return funcs.EvalCompareVal(env, opGte) }
+func Lt(env *zc.Env) error  { return funcs.EvalCompareVal(env, opLt) }
+func Lte(env *zc.Env) error { return funcs.EvalCompareVal(env, opLte) }
 
-func And(calc *zc.Calc) error { return funcs.EvalBinaryBool(calc, opAnd) }
-func Not(calc *zc.Calc) error { return funcs.EvalUnaryBool(calc, opNot) }
-func Or(calc *zc.Calc) error  { return funcs.EvalBinaryBool(calc, opOr) }
+func And(env *zc.Env) error { return funcs.EvalBinaryBool(env, opAnd) }
+func Not(env *zc.Env) error { return funcs.EvalUnaryBool(env, opNot) }
+func Or(env *zc.Env) error  { return funcs.EvalBinaryBool(env, opOr) }

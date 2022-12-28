@@ -29,15 +29,15 @@ func opRemBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Rem(a, b); return
 func opSignBigInt(z *big.Int, a *big.Int) error            { bigIntSign(z, a); return nil }
 func opSubBigInt(z *big.Int, a *big.Int, b *big.Int) error { z.Sub(a, b); return nil }
 
-func AbsBigInt(calc *zc.Calc) error   { return funcs.EvalUnaryBigInt(calc, opAbsBigInt) }
-func AddBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opAddBigInt) }
-func CeilBigInt(calc *zc.Calc) error  { return funcs.EvalUnaryBigInt(calc, opCeilBigInt) }
-func DivBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opDivBigInt) }
-func FloorBigInt(calc *zc.Calc) error { return funcs.EvalUnaryBigInt(calc, opCeilBigInt) }
-func ModBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opModBigInt) }
-func MulBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opMulBigInt) }
-func NegBigInt(calc *zc.Calc) error   { return funcs.EvalUnaryBigInt(calc, opNegBigInt) }
-func PowBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opPowBigInt) }
-func RemBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opRemBigInt) }
-func SignBigInt(calc *zc.Calc) error  { return funcs.EvalUnaryBigInt(calc, opSignBigInt) }
-func SubBigInt(calc *zc.Calc) error   { return funcs.EvalBinaryBigInt(calc, opSubBigInt) }
+func AbsBigInt(env *zc.Env) error   { return funcs.EvalUnaryBigInt(env, opAbsBigInt) }
+func AddBigInt(env *zc.Env) error   { return funcs.EvalBinaryBigInt(env, opAddBigInt) }
+func CeilBigInt(env *zc.Env) error  { return funcs.EvalUnaryBigInt(env, opCeilBigInt) }
+func DivBigInt(env *zc.Env) error   { return funcs.EvalBinaryBigInt(env, opDivBigInt) }
+func FloorBigInt(env *zc.Env) error { return funcs.EvalUnaryBigInt(env, opCeilBigInt) }
+func ModBigInt(env *zc.Env) error   { return funcs.EvalBinaryBigInt(env, opModBigInt) }
+func MulBigInt(env *zc.Env) error   { return funcs.EvalBinaryBigInt(env, opMulBigInt) }
+func NegBigInt(env *zc.Env) error   { return funcs.EvalUnaryBigInt(env, opNegBigInt) }
+func PowBigInt(env *zc.Env) error   { return funcs.EvalBinaryBigInt(env, opPowBigInt) }
+func RemBigInt(env *zc.Env) error   { return funcs.EvalBinaryBigInt(env, opRemBigInt) }
+func SignBigInt(env *zc.Env) error  { return funcs.EvalUnaryBigInt(env, opSignBigInt) }
+func SubBigInt(env *zc.Env) error   { return funcs.EvalBinaryBigInt(env, opSubBigInt) }

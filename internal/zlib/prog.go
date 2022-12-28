@@ -12,97 +12,97 @@ func opNotBitwise(z *big.Int, a *big.Int) error             { z.Not(a); return n
 func opOrBitwise(z *big.Int, a *big.Int, b *big.Int) error  { z.Or(a, b); return nil }
 func opXor(z *big.Int, a *big.Int, b *big.Int) error        { z.Xor(a, b); return nil }
 
-func AndBitwise(calc *zc.Calc) error { return funcs.EvalBinaryBigInt(calc, opAndBitwise) }
-func NotBitwise(calc *zc.Calc) error { return funcs.EvalUnaryBigInt(calc, opNotBitwise) }
-func OrBitwise(calc *zc.Calc) error  { return funcs.EvalBinaryBigInt(calc, opOrBitwise) }
-func Xor(calc *zc.Calc) error        { return funcs.EvalBinaryBigInt(calc, opXor) }
+func AndBitwise(env *zc.Env) error { return funcs.EvalBinaryBigInt(env, opAndBitwise) }
+func NotBitwise(env *zc.Env) error { return funcs.EvalUnaryBigInt(env, opNotBitwise) }
+func OrBitwise(env *zc.Env) error  { return funcs.EvalBinaryBigInt(env, opOrBitwise) }
+func Xor(env *zc.Env) error        { return funcs.EvalBinaryBigInt(env, opXor) }
 
-func Bin(calc *zc.Calc) error {
-	v, err := calc.Stack.PopBigInt()
+func Bin(env *zc.Env) error {
+	v, err := env.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBigIntWithRadix(v, 2)
+	env.Stack.PushBigIntWithRadix(v, 2)
 	return nil
 }
 
-func Bit(calc *zc.Calc) error {
-	i, err := calc.Stack.PopInt()
+func Bit(env *zc.Env) error {
+	i, err := env.Stack.PopInt()
 	if err != nil {
 		return err
 	}
-	a, err := calc.Stack.PopBigInt()
+	a, err := env.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
 	bit := a.Bit(i)
-	calc.Stack.PushUint(bit)
+	env.Stack.PushUint(bit)
 	return nil
 }
 
-func Dec(calc *zc.Calc) error {
-	v, err := calc.Stack.PopBigInt()
+func Dec(env *zc.Env) error {
+	v, err := env.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBigIntWithRadix(v, 10)
+	env.Stack.PushBigIntWithRadix(v, 10)
 	return nil
 }
 
-func Hex(calc *zc.Calc) error {
-	v, err := calc.Stack.PopBigInt()
+func Hex(env *zc.Env) error {
+	v, err := env.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBigIntWithRadix(v, 16)
+	env.Stack.PushBigIntWithRadix(v, 16)
 	return nil
 }
 
-func LenBitwise(calc *zc.Calc) error {
-	a, err := calc.Stack.PopBigInt()
+func LenBitwise(env *zc.Env) error {
+	a, err := env.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
 	bitLen := a.BitLen()
-	calc.Stack.PushInt(bitLen)
+	env.Stack.PushInt(bitLen)
 	return nil
 }
 
-func Lsh(calc *zc.Calc) error {
-	n, err := calc.Stack.PopUint()
+func Lsh(env *zc.Env) error {
+	n, err := env.Stack.PopUint()
 	if err != nil {
 		return err
 	}
-	a, r, err := calc.Stack.PopBigIntWithRadix()
+	a, r, err := env.Stack.PopBigIntWithRadix()
 	if err != nil {
 		return err
 	}
 	var z big.Int
 	z.Lsh(a, n)
-	calc.Stack.PushBigIntWithRadix(&z, r)
+	env.Stack.PushBigIntWithRadix(&z, r)
 	return nil
 }
 
-func Oct(calc *zc.Calc) error {
-	v, err := calc.Stack.PopBigInt()
+func Oct(env *zc.Env) error {
+	v, err := env.Stack.PopBigInt()
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBigIntWithRadix(v, 8)
+	env.Stack.PushBigIntWithRadix(v, 8)
 	return nil
 }
 
-func Rsh(calc *zc.Calc) error {
-	n, err := calc.Stack.PopUint()
+func Rsh(env *zc.Env) error {
+	n, err := env.Stack.PopUint()
 	if err != nil {
 		return err
 	}
-	a, r, err := calc.Stack.PopBigIntWithRadix()
+	a, r, err := env.Stack.PopBigIntWithRadix()
 	if err != nil {
 		return err
 	}
 	var z big.Int
 	z.Rsh(a, n)
-	calc.Stack.PushBigIntWithRadix(&z, r)
+	env.Stack.PushBigIntWithRadix(&z, r)
 	return nil
 }

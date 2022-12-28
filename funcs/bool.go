@@ -5,8 +5,8 @@ import "github.com/blackchip-org/zc"
 type UnaryBool func(bool) (bool, error)
 type BinaryBool func(bool, bool) (bool, error)
 
-func EvalUnaryBool(calc *zc.Calc, fn UnaryBool) error {
-	a, err := calc.Stack.PopBool()
+func EvalUnaryBool(env *zc.Env, fn UnaryBool) error {
+	a, err := env.Stack.PopBool()
 	if err != nil {
 		return err
 	}
@@ -14,12 +14,12 @@ func EvalUnaryBool(calc *zc.Calc, fn UnaryBool) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBool(b)
+	env.Stack.PushBool(b)
 	return nil
 }
 
-func EvalBinaryBool(calc *zc.Calc, fn BinaryBool) error {
-	a, b, err := calc.Stack.PopBool2()
+func EvalBinaryBool(env *zc.Env, fn BinaryBool) error {
+	a, b, err := env.Stack.PopBool2()
 	if err != nil {
 		return err
 	}
@@ -27,6 +27,6 @@ func EvalBinaryBool(calc *zc.Calc, fn BinaryBool) error {
 	if err != nil {
 		return err
 	}
-	calc.Stack.PushBool(c)
+	env.Stack.PushBool(c)
 	return nil
 }

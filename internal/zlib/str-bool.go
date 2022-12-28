@@ -12,9 +12,9 @@ func opGteString(a string, b string) (bool, error) { return a >= b, nil }
 func opLtString(a string, b string) (bool, error)  { return a < b, nil }
 func opLteString(a string, b string) (bool, error) { return a <= b, nil }
 
-func EqStr(calc *zc.Calc) error  { return funcs.EvalCompareStr(calc, opEqString) }
-func GtStr(calc *zc.Calc) error  { return funcs.EvalCompareStr(calc, opGtString) }
-func GteStr(calc *zc.Calc) error { return funcs.EvalCompareStr(calc, opGteString) }
-func NeqStr(calc *zc.Calc) error { return funcs.EvalCompareStr(calc, opNeqString) }
-func LtStr(calc *zc.Calc) error  { return funcs.EvalCompareStr(calc, opLtString) }
-func LteStr(calc *zc.Calc) error { return funcs.EvalCompareStr(calc, opLteString) }
+func EqStr(env *zc.Env) error  { return funcs.EvalCompareStr(env, opEqString) }
+func GtStr(env *zc.Env) error  { return funcs.EvalCompareStr(env, opGtString) }
+func GteStr(env *zc.Env) error { return funcs.EvalCompareStr(env, opGteString) }
+func NeqStr(env *zc.Env) error { return funcs.EvalCompareStr(env, opNeqString) }
+func LtStr(env *zc.Env) error  { return funcs.EvalCompareStr(env, opLtString) }
+func LteStr(env *zc.Env) error { return funcs.EvalCompareStr(env, opLteString) }

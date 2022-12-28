@@ -12,30 +12,30 @@ type BinaryOps struct {
 	Fixed  BinaryFixed
 }
 
-func EvalUnaryNum(calc *zc.Calc, ops UnaryOps) error {
-	a, err := calc.Stack.Peek()
+func EvalUnaryNum(env *zc.Env, ops UnaryOps) error {
+	a, err := env.Stack.Peek()
 	if err != nil {
 		return err
 	}
 
 	switch {
-	case calc.Val.IsBigInt(a):
-		return EvalUnaryBigInt(calc, ops.BigInt)
+	case env.Calc.IsBigInt(a):
+		return EvalUnaryBigInt(env, ops.BigInt)
 	default:
-		return EvalUnaryFixed(calc, ops.Fixed)
+		return EvalUnaryFixed(env, ops.Fixed)
 	}
 }
 
-func EvalBinaryNum(calc *zc.Calc, ops BinaryOps) error {
-	a, b, err := calc.Stack.Peek2()
+func EvalBinaryNum(env *zc.Env, ops BinaryOps) error {
+	a, b, err := env.Stack.Peek2()
 	if err != nil {
 		return err
 	}
 
 	switch {
-	case calc.Val.IsBigInt(a) && calc.Val.IsBigInt(b):
-		return EvalBinaryBigInt(calc, ops.BigInt)
+	case env.Calc.IsBigInt(a) && env.Calc.IsBigInt(b):
+		return EvalBinaryBigInt(env, ops.BigInt)
 	default:
-		return EvalBinaryFixed(calc, ops.Fixed)
+		return EvalBinaryFixed(env, ops.Fixed)
 	}
 }

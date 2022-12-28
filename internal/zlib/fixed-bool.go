@@ -13,9 +13,9 @@ func opGteFixed(a decimal.Decimal, b decimal.Decimal) (bool, error) { return a.C
 func opLtFixed(a decimal.Decimal, b decimal.Decimal) (bool, error)  { return a.Cmp(b) < 0, nil }
 func opLteFixed(a decimal.Decimal, b decimal.Decimal) (bool, error) { return a.Cmp(b) <= 0, nil }
 
-func EqFixed(calc *zc.Calc) error  { return funcs.EvalCompareFixed(calc, opEqFixed) }
-func GtFixed(calc *zc.Calc) error  { return funcs.EvalCompareFixed(calc, opGtFixed) }
-func GteFixed(calc *zc.Calc) error { return funcs.EvalCompareFixed(calc, opGteFixed) }
-func NeqFixed(calc *zc.Calc) error { return funcs.EvalCompareFixed(calc, opNeqFixed) }
-func LtFixed(calc *zc.Calc) error  { return funcs.EvalCompareFixed(calc, opLtFixed) }
-func LteFixed(calc *zc.Calc) error { return funcs.EvalCompareFixed(calc, opLteFixed) }
+func EqFixed(env *zc.Env) error  { return funcs.EvalCompareFixed(env, opEqFixed) }
+func GtFixed(env *zc.Env) error  { return funcs.EvalCompareFixed(env, opGtFixed) }
+func GteFixed(env *zc.Env) error { return funcs.EvalCompareFixed(env, opGteFixed) }
+func NeqFixed(env *zc.Env) error { return funcs.EvalCompareFixed(env, opNeqFixed) }
+func LtFixed(env *zc.Env) error  { return funcs.EvalCompareFixed(env, opLtFixed) }
+func LteFixed(env *zc.Env) error { return funcs.EvalCompareFixed(env, opLteFixed) }
