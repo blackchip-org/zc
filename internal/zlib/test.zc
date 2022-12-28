@@ -8,7 +8,7 @@ func run //files
 	for file; //files
 		'\n`file`\n' io.print
 		'import \'`file`\' testing' eval
-		exports; clear 'testing' runtime.exports
+		exports; clear '`file`' runtime.exports
 		for export; //exports
 			if /export 'test-' starts-with
 				try 'testing.`export`' eval
@@ -19,8 +19,7 @@ func run //files
 				else
 					'  pass: `export`\n' io.print
 					pass; 1 add
-		'testing' undef
 
-	'\n`pass` tests passed, `fail` failed' io.print
+	'\n`pass` tests passed, `fail` failed\n' io.print
 	/fail 0 eq
 

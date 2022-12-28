@@ -226,13 +226,13 @@ func (e *Env) evalNativeNode(node *ast.NativeNode) error {
 	e.trace(node, "native %v", strings.Join([]string{node.Name, node.Export}, " "))
 	export := node.Export
 	if export == "" {
-		export = node.Name // FIXME
+		export = node.Name
 	}
 	fn, ok := e.Calc.Natives[node.Name]
 	if !ok {
 		return e.err(node, fmt.Errorf("no such native: %v", node.Name))
 	}
-	e.Funcs[node.Name] = fn
+	e.Funcs[export] = fn
 	if e.Module != "" {
 		e.Exports = append(e.Exports, node.Name)
 	}

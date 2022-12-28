@@ -93,12 +93,13 @@ func NewCalc(conf Config) (*Calc, error) {
 		if !ok {
 			return nil, fmt.Errorf("no such prelude module: %v", preName)
 		}
-		env, err := c.Env.Import(def, "")
+		prefix := ""
+		if !def.Include {
+			prefix = def.Name
+		}
+		_, err := c.Env.Import(def, prefix)
 		if err != nil {
 			return nil, err
-		}
-		for _, export := range env.Exports {
-			c.Env.Funcs[export] = env.Funcs[export]
 		}
 	}
 
@@ -132,7 +133,6 @@ func (c *Calc) Load(def ModuleDef) (*Env, error) {
 			continue
 		}
 		for _, name := range mod.Exports {
-			// FIXME: look at use for qName?
 			env.Funcs[name] = mod.Funcs[name]
 		}
 	}

@@ -1,37 +1,33 @@
 package zlib
 
 import (
-	"errors"
+	"fmt"
 	"sort"
 
 	"github.com/blackchip-org/zc"
 )
 
 func Exports(env *zc.Env) error {
-	return errors.New("not implemented")
-	// 	var mod *zc.Calc
-	// 	var ok bool
+	var mod *zc.Env
+	var ok bool
 
-	// 	name, err := env.Stack.Pop()
-	// 	if err != nil {
-	// 		return fmt.Errorf("expecting module name")
-	// 	}
+	name, err := env.Stack.Pop()
+	if err != nil {
+		return fmt.Errorf("expecting module name")
+	}
 
-	// 	mod, ok = env.Modules[name]
-	// 	if !ok {
-	// 		return fmt.Errorf("no such module: %v", name)
-	// 	}
+	mod, ok = env.Calc.Modules[name]
+	if !ok {
+		return fmt.Errorf("no such module: %v", name)
+	}
+	funcs := make([]string, len(mod.Exports))
+	copy(funcs, mod.Exports)
+	sort.Strings(funcs)
+	for _, f := range funcs {
+		env.Stack.Push(f)
+	}
 
-	// 	var funcs []string
-	// 	for f := range mod.Exports {
-	// 		funcs = append(funcs, f)
-	// 	}
-	// 	sort.Strings(funcs)
-	// 	for _, f := range funcs {
-	// 		env.Stack.Push(f)
-	// 	}
-
-	// return nil
+	return nil
 }
 
 func Funcs(env *zc.Env) error {

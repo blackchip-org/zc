@@ -28,10 +28,6 @@ func test-add-bin
 	0b1 0b01 add
 	0b10 assert.eq
 
-func test-dec
-	6 dec
-	5 assert.eq
-
 func test-div
 	6 2 div
 	3 assert.eq
