@@ -161,6 +161,37 @@ func (c *Calc) Load(def ModuleDef) (*Env, error) {
 	return env, nil
 }
 
+func (c *Calc) WordCompleter(line string, pos int) (string, []string, string) {
+	endPos := pos
+	for ; endPos < len(line); endPos++ {
+		if line[endPos] == ' ' {
+			break
+		}
+	}
+	startPos := pos
+	if startPos >= len(line) {
+		startPos = len(line) - 1
+	}
+	for ; startPos > 0; startPos-- {
+		if line[startPos] == ' ' {
+			startPos++
+			break
+		}
+	}
+	prefix := line[:startPos]
+	word := line[startPos:endPos]
+	suffix := line[endPos:]
+
+	var candidates []string
+	for name := range c.Env.Funcs {
+		if strings.HasPrefix(name, word) {
+			candidates = append(candidates, name)
+		}
+	}
+	//fmt.Printf("\n[%v] (%v)[%v] [%v]\n", prefix, word, candidates, suffix)
+	return prefix, candidates, suffix
+}
+
 func (c *Calc) parseDigits(sep rune, v string) ([]rune, []rune) {
 	var intDigits, fracDigits []rune
 	inInt := true

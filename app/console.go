@@ -23,6 +23,7 @@ func RunConsole(calc *zc.Calc) {
 
 	line.SetCtrlCAborts(true)
 	line.SetTabCompletionStyle(liner.TabPrints)
+	line.SetWordCompleter(calc.WordCompleter)
 
 	ansi.Write(ansi.ClearScreen)
 	ansi.Write(ansi.MoveToBottom)
