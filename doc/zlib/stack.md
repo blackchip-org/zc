@@ -10,7 +10,7 @@ Stack manipulations.
 
 | Operation               | Alias    | Description
 |-------------------------|----------|------------
-| [clear](#abs)           | `c`      | Clear
+| [clear](#clear)         | `c`      | Clear
 | [drop](#drop)           |          | Drop top item
 | [dup](#dup)             |          | Duplicate top item
 | [n](#n)                 |          | Number of items on the stack

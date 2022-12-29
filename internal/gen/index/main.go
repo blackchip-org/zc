@@ -12,6 +12,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 
 	"github.com/blackchip-org/zc"
@@ -22,6 +23,7 @@ var (
 	indexDirective = regexp.MustCompile(`<!-- *index *-->`)
 	tableHeader    = regexp.MustCompile(`.*Operation.*Description`)
 	operationName  = regexp.MustCompile(`\[(.*)\]\((.*)\)`)
+	aliasFormat    = regexp.MustCompile("\\`[^\\`]+\\`")
 )
 
 type Entry struct {
@@ -76,12 +78,12 @@ func main() {
 	}
 	defer out.Close()
 
-	fmt.Fprint(out, "# index\n")
+	fmt.Fprint(out, "# index\n\n")
 
 	thisHeading := rune(0)
 	for _, key := range keys {
 		heading, _ := utf8.DecodeRuneInString(key)
-		if heading != thisHeading {
+		if unicode.IsLetter(heading) && heading != thisHeading {
 			fmt.Fprintf(out, "\n## %v\n\n", string(heading))
 			thisHeading = heading
 		}
@@ -140,7 +142,7 @@ func indexTable(file string, mod string, scanner *bufio.Scanner) {
 		if len(fields) < 3 {
 			break
 		}
-		var name, anchor /*aliases,*/, description string
+		var name, anchor, aliases, description string
 		matches := operationName.FindStringSubmatch(fields[1])
 		if matches == nil {
 			log.Printf("unexpected operation format: %v", fields[1])
@@ -151,18 +153,26 @@ func indexTable(file string, mod string, scanner *bufio.Scanner) {
 		if len(fields) == 3 {
 			description = strings.TrimSpace(fields[2])
 		} else {
-			//aliases = fields[2]
+			aliases = fields[2]
 			description = strings.TrimSpace(fields[3])
 		}
 
-		entry := Entry{
-			Func:        name,
-			Anchor:      anchor,
-			Description: description,
-			File:        file,
-			Module:      mod,
+		names := []string{name}
+		matches = aliasFormat.FindAllString(aliases, -1)
+		for _, match := range matches {
+			names = append(names, match[1:len(match)-1])
 		}
-		addEntry(entry)
+
+		for _, name := range names {
+			entry := Entry{
+				Func:        name,
+				Anchor:      anchor,
+				Description: description,
+				File:        file,
+				Module:      mod,
+			}
+			addEntry(entry)
+		}
 	}
 }
 

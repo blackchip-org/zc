@@ -1,7 +1,14 @@
 # index
 
+- [*](zlib/math.md#mul): Multiplication
+- [**](zlib/math.md#pow): Exponentiation
+- [+](zlib/math.md#add): Addition
+- [-](zlib/math.md#sub): Subtraction
+- [/](zlib/math.md#div): Division
+
 ## a
 
+- [a](zlib/math.md#add): Addition
 - abs
   - [fixed-math.abs](zlib/fixed-math.md#abs): Absolute value
   - [int-math.abs](zlib/int-math.md#abs): Absolute value
@@ -21,14 +28,16 @@
 
 ## c
 
+- [c](zlib/stack.md#clear): Clear
 - ceil
   - [fixed-math.ceil](zlib/fixed-math.md#ceil): Ceiling
   - [int-math.ceil](zlib/int-math.md#ceil): Ceiling
   - [math.ceil](zlib/math.md#ceil): Ceiling
-- [clear](zlib/stack.md#abs): Clear
+- [clear](zlib/stack.md#clear): Clear
 
 ## d
 
+- [d](zlib/math.md#div): Division
 - [dec](zlib/prog.md#dec): Convert to decimal
 - div
   - [fixed-math.div](zlib/fixed-math.md#div): Division
@@ -47,7 +56,9 @@
 
 ## f
 
-- [f](zlib/assert.md#f): Assert false
+- f
+  - [assert.f](zlib/assert.md#f): Assert false
+  - [bool.f](zlib/bool.md#false): False
 - [false](zlib/bool.md#false): False
 - floor
   - [fixed-math.floor](zlib/fixed-math.md#floor): Floor
@@ -90,6 +101,7 @@
 
 ## m
 
+- [m](zlib/math.md#mul): Multiplication
 - mod
   - [fixed-math.mod](zlib/fixed-math.md#mod): Modulus
   - [int-math.mod](zlib/int-math.md#mod): Modulus
@@ -140,6 +152,7 @@
 
 ## s
 
+- [s](zlib/math.md#sub): Subtraction
 - sign
   - [fixed-math.sign](zlib/fixed-math.md#sign): Sign
   - [int-math.sign](zlib/int-math.md#sign): Sign
@@ -153,7 +166,9 @@
 
 ## t
 
-- [t](zlib/assert.md#t): Assert true
+- t
+  - [assert.t](zlib/assert.md#t): Assert true
+  - [bool.t](zlib/bool.md#true): True
 - [true](zlib/bool.md#true): True
 
 ## x
