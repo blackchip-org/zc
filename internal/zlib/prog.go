@@ -22,7 +22,7 @@ func Bin(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	env.Stack.PushBigIntWithRadix(v, 2)
+	env.Stack.PushBigIntWithAttrs(v, zc.FormatAttrs{Radix: 2})
 	return nil
 }
 
@@ -45,7 +45,7 @@ func Dec(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	env.Stack.PushBigIntWithRadix(v, 10)
+	env.Stack.PushBigIntWithAttrs(v, zc.FormatAttrs{Radix: 10})
 	return nil
 }
 
@@ -54,7 +54,7 @@ func Hex(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	env.Stack.PushBigIntWithRadix(v, 16)
+	env.Stack.PushBigIntWithAttrs(v, zc.FormatAttrs{Radix: 16})
 	return nil
 }
 
@@ -73,13 +73,13 @@ func Lsh(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	a, r, err := env.Stack.PopBigIntWithRadix()
+	a, attrs, err := env.Stack.PopBigIntWithAttrs()
 	if err != nil {
 		return err
 	}
 	var z big.Int
 	z.Lsh(a, n)
-	env.Stack.PushBigIntWithRadix(&z, r)
+	env.Stack.PushBigIntWithAttrs(&z, attrs)
 	return nil
 }
 
@@ -88,7 +88,7 @@ func Oct(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	env.Stack.PushBigIntWithRadix(v, 8)
+	env.Stack.PushBigIntWithAttrs(v, zc.FormatAttrs{Radix: 8})
 	return nil
 }
 
@@ -97,12 +97,12 @@ func Rsh(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	a, r, err := env.Stack.PopBigIntWithRadix()
+	a, attrs, err := env.Stack.PopBigIntWithAttrs()
 	if err != nil {
 		return err
 	}
 	var z big.Int
 	z.Rsh(a, n)
-	env.Stack.PushBigIntWithRadix(&z, r)
+	env.Stack.PushBigIntWithAttrs(&z, attrs)
 	return nil
 }

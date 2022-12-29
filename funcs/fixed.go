@@ -39,7 +39,15 @@ func EvalBinaryFixed(env *zc.Env, fn BinaryFixed) (err error) {
 		}
 	}()
 
-	a, b, err := env.Stack.PopFixed2()
+	sa, sb, err := env.Stack.Pop2()
+	if err != nil {
+		return
+	}
+	a, err := env.Calc.ParseFixed(sa)
+	if err != nil {
+		return
+	}
+	b, err := env.Calc.ParseFixed(sb)
 	if err != nil {
 		return
 	}
@@ -48,7 +56,9 @@ func EvalBinaryFixed(env *zc.Env, fn BinaryFixed) (err error) {
 	if err != nil {
 		return err
 	}
-	env.Stack.PushFixed(r)
+
+	attrs := zc.ParseFormatAttrs(sa, sb)
+	env.Stack.PushFixedWithAttrs(r, attrs)
 	return nil
 }
 

@@ -97,16 +97,16 @@ func (s *Stack) PopBigInt() (*big.Int, error) {
 	return r, nil
 }
 
-func (s *Stack) PopBigIntWithRadix() (*big.Int, int, error) {
+func (s *Stack) PopBigIntWithAttrs() (*big.Int, FormatAttrs, error) {
 	v, err := s.Pop()
 	if err != nil {
-		return nil, 0, err
+		return nil, FormatAttrs{}, err
 	}
 	r, err := s.calc.ParseBigInt(v)
 	if err != nil {
-		return nil, 0, err
+		return nil, FormatAttrs{}, err
 	}
-	return r, ParseRadix(v), nil
+	return r, ParseFormatAttrs(v), nil
 }
 
 func (s *Stack) PopBigInt2() (*big.Int, *big.Int, error) {
@@ -221,8 +221,8 @@ func (s *Stack) PushBigInt(v *big.Int) {
 	s.Push(s.calc.FormatBigInt(v))
 }
 
-func (s *Stack) PushBigIntWithRadix(v *big.Int, radix int) {
-	s.Push(s.calc.FormatBigIntWithRadix(v, radix))
+func (s *Stack) PushBigIntWithAttrs(v *big.Int, attrs FormatAttrs) {
+	s.Push(s.calc.FormatBigIntWithAttrs(v, attrs))
 }
 
 func (s *Stack) PushBool(v bool) {
@@ -231,6 +231,10 @@ func (s *Stack) PushBool(v bool) {
 
 func (s *Stack) PushFixed(v decimal.Decimal) {
 	s.Push(s.calc.FormatFixed(v))
+}
+
+func (s *Stack) PushFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) {
+	s.Push(s.calc.FormatFixedWithAttrs(v, attrs))
 }
 
 func (s *Stack) PushFloat(v float64) {

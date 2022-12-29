@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 
 	"github.com/blackchip-org/zc/internal"
 	"github.com/blackchip-org/zc/lang/parser"
@@ -27,12 +28,13 @@ type Config struct {
 	PreludeCLI   []string
 	PreludeDev   []string
 	Trace        bool
-	Places       int32
+	Precision    int32
 	RoundingMode RoundingMode
 	IntFormat    string
 	Point        rune
 	FracFormat   string
 	MinDigits    uint
+	NoCurrency   bool
 }
 
 type ModuleDef struct {
@@ -60,6 +62,12 @@ type CalcError struct {
 
 func (c CalcError) Error() string {
 	return c.Message
+}
+
+type FormatAttrs struct {
+	Radix    int
+	Currency rune
+	Fix      Fix
 }
 
 type Calc struct {
@@ -296,7 +304,7 @@ func (c *Calc) FormatBigInt(v *big.Int) string {
 	return c.FormatNumberString(v.String())
 }
 
-func (c *Calc) FormatBigIntWithRadix(v *big.Int, radix int) string {
+func (c *Calc) FormatBigIntWithAttrs(v *big.Int, attrs FormatAttrs) string {
 	sign := ""
 	if v.Sign() < 0 {
 		sign = "-"
@@ -304,7 +312,7 @@ func (c *Calc) FormatBigIntWithRadix(v *big.Int, radix int) string {
 	var absV big.Int
 	absV.Abs(v)
 
-	switch radix {
+	switch attrs.Radix {
 	case 16:
 		return fmt.Sprintf("%v0x%x", sign, &absV)
 	case 8:
@@ -312,7 +320,8 @@ func (c *Calc) FormatBigIntWithRadix(v *big.Int, radix int) string {
 	case 2:
 		return fmt.Sprintf("%v0b%b", sign, &absV)
 	}
-	return c.FormatBigInt(v)
+	s := c.FormatBigInt(v)
+	return c.addCurrencySymbol(attrs, s)
 }
 
 func (c *Calc) FormatBool(v bool) string {
@@ -328,8 +337,13 @@ func (c *Calc) FormatFixed(v decimal.Decimal) string {
 		log.Panicf("invalid rounding mode: %v", c.RoundingMode)
 	}
 
-	s := fn(v, c.Places).String()
+	s := fn(v, c.Precision).String()
 	return c.FormatNumberString(s)
+}
+
+func (c *Calc) FormatFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) string {
+	s := c.FormatFixed(v)
+	return c.addCurrencySymbol(attrs, s)
 }
 
 func (c *Calc) FormatFloat(f float64) string {
@@ -361,14 +375,14 @@ func (c *Calc) FormatUint(i uint) string {
 }
 
 func (c *Calc) FormatValue(v string) string {
-	r := ParseRadix(v)
+	attrs := ParseFormatAttrs(v)
 	switch {
-	case r != 10:
+	case attrs.Radix != 10:
 		return v
 	case c.IsBigInt(v):
-		return c.FormatBigIntWithRadix(c.MustParseBigInt(v), r)
+		return c.FormatBigIntWithAttrs(c.MustParseBigInt(v), attrs)
 	case c.IsFixed(v):
-		return c.FormatFixed(c.MustParseFixed(v))
+		return c.FormatFixedWithAttrs(c.MustParseFixed(v), attrs)
 	}
 	return v
 }
@@ -611,4 +625,58 @@ func LoadFile(p string) ([]byte, error) {
 		return internal.Files.ReadFile(p)
 	}
 	return os.ReadFile(p)
+}
+
+type Fix int
+
+const (
+	NoFix Fix = iota
+	Prefix
+	Suffix
+)
+
+func ParseCurrencySymbol(v string) (rune, Fix) {
+	prefix, _ := utf8.DecodeRuneInString(v)
+	if unicode.Is(unicode.Sc, prefix) {
+		return prefix, Prefix
+	}
+	suffix, _ := utf8.DecodeLastRuneInString(v)
+	if unicode.Is(unicode.Sc, suffix) {
+		return suffix, Suffix
+	}
+	return rune(0), NoFix
+}
+
+func (c *Calc) addCurrencySymbol(attrs FormatAttrs, v string) string {
+	if c.NoCurrency {
+		return v
+	}
+	switch attrs.Fix {
+	case Prefix:
+		return string(attrs.Currency) + v
+	case Suffix:
+		return v + string(attrs.Currency)
+	}
+	return v
+}
+
+func ParseFormatAttrs(xs ...string) FormatAttrs {
+	attrs := FormatAttrs{}
+	badCurrency := false
+
+	for _, x := range xs {
+		radix := ParseRadix(x)
+		if attrs.Radix == 0 || attrs.Radix == 10 || radix > attrs.Radix {
+			attrs.Radix = radix
+		}
+		sym, fix := ParseCurrencySymbol(x)
+		if fix != NoFix && !badCurrency {
+			if attrs.Currency != rune(0) && attrs.Currency != sym {
+				badCurrency = true
+			} else {
+				attrs.Currency, attrs.Fix = sym, fix
+			}
+		}
+	}
+	return attrs
 }

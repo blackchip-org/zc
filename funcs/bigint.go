@@ -11,7 +11,7 @@ type BinaryBigInt func(*big.Int, *big.Int, *big.Int) error
 type CompareBigInt func(*big.Int, *big.Int) (bool, error)
 
 func EvalUnaryBigInt(env *zc.Env, fn UnaryBigInt) error {
-	a, r, err := env.Stack.PopBigIntWithRadix()
+	a, attrs, err := env.Stack.PopBigIntWithAttrs()
 	if err != nil {
 		return err
 	}
@@ -19,7 +19,7 @@ func EvalUnaryBigInt(env *zc.Env, fn UnaryBigInt) error {
 	if err := fn(&c, a); err != nil {
 		return err
 	}
-	env.Stack.PushBigIntWithRadix(&c, r)
+	env.Stack.PushBigIntWithAttrs(&c, attrs)
 	return nil
 }
 
@@ -44,8 +44,8 @@ func EvalBinaryBigInt(env *zc.Env, fn BinaryBigInt) error {
 		return err
 	}
 
-	radix := resolveRadix(zc.ParseRadix(x), zc.ParseRadix(y))
-	env.Stack.PushBigIntWithRadix(&c, radix)
+	attrs := zc.ParseFormatAttrs(x, y)
+	env.Stack.PushBigIntWithAttrs(&c, attrs)
 	return nil
 }
 
@@ -60,16 +60,4 @@ func EvalCompareBigInt(env *zc.Env, fn CompareBigInt) error {
 	}
 	env.Stack.PushBool(c)
 	return nil
-}
-
-func resolveRadix(rx int, ry int) int {
-	switch {
-	case rx == 16 || ry == 16:
-		return 16
-	case rx == 8 || ry == 8:
-		return 8
-	case rx == 2 || ry == 2:
-		return 2
-	}
-	return 10
 }

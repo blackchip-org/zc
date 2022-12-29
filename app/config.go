@@ -10,7 +10,7 @@ func DefaultConfig() zc.Config {
 		ModuleDefs:   zlib.All,
 		PreludeCLI:   zlib.PreludeUser,
 		PreludeDev:   zlib.PreludeDev,
-		Places:       16,
+		Precision:    16,
 		RoundingMode: zc.RoundingModeHalfUp,
 		IntFormat:    ",000",
 		Point:        '.',

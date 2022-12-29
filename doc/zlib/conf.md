@@ -11,13 +11,14 @@ Configurations and settings
 
 | Operation                   | Description
 |-----------------------------|----------------
-| [places](#places)           | Sets the number of places after the decimal point
-| [places=](#places)          | Gets the number of places after the decimal point
+| [precision](#precision)     | Sets the precision for fixed-point math
+| [precision=](#precision=)   | Gets the prevision for fixed-point math
 
+## precision
 
-## places
-
-Sets the number of places to use after the decimal point to `a`
+Sets the precision to `a` for fixed-point math which is the number of digits
+used after the decimal point. Extra digits are rounded using the current
+rounding mode.
 
     ( a:Int32 -- )
 
@@ -25,17 +26,17 @@ Example:
 
 <!-- test: places -->
 
-| Input            | Stack
-|------------------|---------------------|
-| `2 3 div`        | `0.6666666666666667`
-| `clear`          |
-| `2 conf.places`  |
-| `2 3 div`        | `0.67`
+| Input               | Stack
+|---------------------|---------------------|
+| `2 3 div`           | `0.6666666666666667`
+| `clear`             |
+| `2 conf.precision`  |
+| `2 3 div`           | `0.67`
 
 
-## places=
+## precision=
 
-Gets the number of places after the decimal point
+Gets the precision for fixed-point math.
 
     ( -- places:Int32 )
 
@@ -43,7 +44,7 @@ Example:
 
 <!-- test: places= -->
 
-| Input            | Stack
-|------------------|---------------------|
-| `conf.places=`   | `16`
+| Input               | Stack
+|---------------------|---------------------|
+| `conf.precision=`   | `16`
 

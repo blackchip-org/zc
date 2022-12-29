@@ -46,21 +46,21 @@ func MinDigitsGet(env *zc.Env) error {
 	return nil
 }
 
-func Places(env *zc.Env) error {
-	places, err := env.Stack.PopInt32()
+func Precision(env *zc.Env) error {
+	prec, err := env.Stack.PopInt32()
 	if err != nil {
 		return err
 	}
-	if places < 0 {
-		return fmt.Errorf("invalid number of places: %v", places)
+	if prec < 0 {
+		return fmt.Errorf("invalid precision: %v", prec)
 	}
-	env.Calc.Places = places
+	env.Calc.Precision = prec
 	env.Calc.Info = "ok"
 	return nil
 }
 
-func PlacesGet(env *zc.Env) error {
-	env.Stack.PushInt32(env.Calc.Places)
+func PrecisionGet(env *zc.Env) error {
+	env.Stack.PushInt32(env.Calc.Precision)
 	return nil
 }
 

@@ -111,3 +111,25 @@ func TestFormatNumberString(t *testing.T) {
 		})
 	}
 }
+
+func TestParseCurrencySymbol(t *testing.T) {
+	tests := []struct {
+		in     string
+		symbol rune
+		fix    Fix
+	}{
+		{"1234", rune(0), NoFix},
+		{"$1234", '$', Prefix},
+		{"1234$", '$', Suffix},
+		{"€1234$", '€', Prefix},
+	}
+
+	for _, test := range tests {
+		t.Run(test.in, func(t *testing.T) {
+			symbol, fix := ParseCurrencySymbol(test.in)
+			if symbol != test.symbol || fix != test.fix {
+				t.Errorf("\n have: %v %v \n want: %v %v", string(symbol), fix, string(test.symbol), test.fix)
+			}
+		})
+	}
+}
