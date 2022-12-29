@@ -2,18 +2,21 @@
 
 A fun RPN calculator.
 
+- [zlib](doc/zlib.md): Standard library
+- [index](doc/index.md): Operation index
+
 When I'm at a terminal prompt and I need to use a calculator, `bc` has always
 been my tool of choice. I thought it would be fun to write a calculator myself
-but with some of my preferences built in. Those preferences are:
+but with some items from my wish list built in. Those items are:
 
-- Stack based calculator. Typing in a value places it on the stack. An
+- A Stack based calculator. Typing in a value places it on the stack. An
 operation consumes values on the stack and places its results back on the
 stack.
-- Minimize the use of the shift key. Instead of using `+` for addition,
+- To minimize the use of the shift key. Instead of using `+` for addition,
 use `add` or `a` which is easier to type.
 - Use arbitrary sized integers and fixed point math by default. `1.1 2.2 add`
 should be `3.3` and not `3.3000000000000003`.
-- More than a simple calculator. Need an external tool to lookup, compute,
+- Be more than a simple calculator. Need an external tool to lookup, compute,
 or calculate? Put in the calculator as a module instead.
 - Backed with a scripting language. When an operation is not directly
 supported by native libraries, write the implementation in the scripting
@@ -42,7 +45,8 @@ word is separated by whitespace. A word can be either a:
 
 - *value*: Starts with a numeric character, a decimal point,
 or a `+` or `-` sign. Values are placed onto the stack.
-- *operation*: Invokes a function with the given name. Parameters are consumed from the stack and results are placed on the stack.
+- *operation*: Invokes a function with the given name. Parameters are consumed
+from the stack and results are placed on the stack.
 
 If `2 3 a` is entered at the prompt, the values of `2` and `3` are placed on
 the stack, the `a` operation (for addition) is executed, the values are
@@ -56,7 +60,9 @@ Examples of calculator use will be presented in a table such as:
 |---------|-------------
 | `2 3 a` | `5`
 
-The *Input* column shows the text entered at the prompt and the *Stack* column shows the contents of the stack after the line is evaluated. Each word could have been placed on a separate line:
+The *Input* column shows the text entered at the prompt and the *Stack* column
+shows the contents of the stack after the line is evaluated. Each word could
+have been placed on a separate line:
 
 <!-- test: simple_addition_2 -->
 
@@ -66,7 +72,8 @@ The *Input* column shows the text entered at the prompt and the *Stack* column s
 | `3`     | `2 \| 3`
 | `a`     | `5`
 
-If there a multiple items on the stack, they are notated by using a pipe `|` character to separate each item. The item on the right is the top of the stack.
+If there a multiple items on the stack, they are notated by using a pipe `|`
+character to separate each item. The item on the right is the top of the stack.
 
 The basic math operations are:
 
@@ -77,13 +84,15 @@ The basic math operations are:
 | `mul`, `m`, `*` | Multiplication
 | `div`, `d`, `/` | Division
 
-For each of these operations there are three separate names. For addition there is:
+For each of these operations there are three separate names. For addition there
+is:
 
 - `a`: Easy to type without having to use the shift key
 - `add`: Easy to read in scripts or documentation
 - `+`: Easy to type if you have a keyboard with a number pad.
 
-Additional basic math operations can be found in the documentation for the [math](doc/zlib/math.md) module.
+Additional basic math operations can be found in the documentation for the
+[math](doc/zlib/math.md) module.
 
 ## Example
 
@@ -116,7 +125,9 @@ The entry into the calculator looks like the following:
 
 ## Text
 
-To use text as a value, surround it with single quotes. If the text value is the only item on the line, an ending quote is not required. The following computes the length, in characters, of the given text:
+To use text as a value, surround it with single quotes. If the text value is
+the only item on the line, an ending quote is not required. The following
+computes the length, in characters, of the given text:
 
 <!-- test: text -->
 
@@ -127,13 +138,35 @@ To use text as a value, surround it with single quotes. If the text value is the
 
 ## Numbers
 
-Thousands separators are added by default:
+Thousands separators are ignored when parsing numbers and added by default
+when formatting numbers:
 
 <!-- test: thousands_separator -->
 
-| Input      | Stack
-|------------|-------------------
-| `2 16 pow` | `65,536`
+| Input         | Stack
+|---------------|-------------------
+| `65,536 sqrt` | `256`
+| `2 pow`       | `65,536`
+
+Use `conf.int-format` and `conf.point` to change the thousands separator
+and decimal point:
+
+<!-- test: european_numbers -->
+
+| Input                     | Stack
+|---------------------------|-------------------
+| `'.000' conf.int-format`  |
+| `','    conf.point`       |
+| `12345 10 div`            | `1.234,5`
+
+Disable thousands separators with:
+
+<!-- test: disable_thousands_separator -->
+
+| Input                     | Stack
+|---------------------------|-------------------
+| `'0' conf.int-format`     |
+| `256 2 pow`               | `65536`
 
 
 

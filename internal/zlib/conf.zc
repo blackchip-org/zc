@@ -1,4 +1,10 @@
+native int-format
+native int-format=
+native min-digits
+native min-digits=
 native places
 native places=
+native point
+native point=
 native round
 native round=

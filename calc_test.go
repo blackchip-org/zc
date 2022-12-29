@@ -69,15 +69,15 @@ func TestParseRadix(t *testing.T) {
 
 func TestFormatNumberString(t *testing.T) {
 	confDefault := Config{
-		IntPat: ",000",
-		Point:  '.',
+		IntFormat: ",000",
+		Point:     '.',
 	}
 	confFR := Config{
-		IntPat: ".000",
-		Point:  ',',
+		IntFormat: ".000",
+		Point:     ',',
 	}
 	confBin := Config{
-		IntPat: "__0000_0000",
+		IntFormat: "__0000_0000",
 	}
 	confEmpty := Config{}
 

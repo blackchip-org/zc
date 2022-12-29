@@ -12,7 +12,7 @@ func DefaultConfig() zc.Config {
 		PreludeDev:   zlib.PreludeDev,
 		Places:       16,
 		RoundingMode: zc.RoundingModeHalfUp,
-		IntPat:       ",000",
+		IntFormat:    ",000",
 		Point:        '.',
 	}
 }

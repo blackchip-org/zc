@@ -17,6 +17,11 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+const (
+	ValidSeparators = ",. _"
+	ValidPoints     = ",."
+)
+
 type Config struct {
 	ModuleDefs   []ModuleDef
 	PreludeCLI   []string
@@ -24,9 +29,10 @@ type Config struct {
 	Trace        bool
 	Places       int32
 	RoundingMode RoundingMode
-	IntPat       string
+	IntFormat    string
 	Point        rune
-	FracPat      string
+	FracFormat   string
+	MinDigits    uint
 }
 
 type ModuleDef struct {
@@ -216,13 +222,13 @@ func (c *Calc) FormatNumberString(v string) string {
 	var digits strings.Builder
 	intDigits, fracDigits := c.parseDigits('.', v)
 
-	if c.IntPat == "" {
+	if c.IntFormat == "" {
 		digits.WriteString(string(intDigits))
 	} else {
 		var intResult []rune
-		intPat := []rune(c.IntPat)
+		intPat := []rune(c.IntFormat)
 
-		idxPat := len(c.IntPat) - 1
+		idxPat := len(c.IntFormat) - 1
 		idxDig := len(intDigits) - 1
 		for idxDig >= 0 {
 			if intDigits[idxDig] == '-' {
@@ -243,6 +249,13 @@ func (c *Calc) FormatNumberString(v string) string {
 		digits.WriteString(string(intResult))
 	}
 
+	diff := int(c.MinDigits) - len(fracDigits)
+	if c.MinDigits > 0 && diff > 0 {
+		for i := 0; i < diff; i++ {
+			fracDigits = append(fracDigits, '0')
+		}
+	}
+
 	if len(fracDigits) == 0 {
 		return digits.String()
 	}
@@ -253,11 +266,11 @@ func (c *Calc) FormatNumberString(v string) string {
 	}
 	digits.WriteRune(point)
 
-	if c.FracPat == "" {
+	if c.FracFormat == "" {
 		digits.WriteString(string(fracDigits))
 	} else {
 		var fracResult []rune
-		fracPat := []rune(c.FracPat)
+		fracPat := []rune(c.FracFormat)
 
 		idxPat := 0
 		idxDig := 0
@@ -362,17 +375,29 @@ func (c *Calc) FormatValue(v string) string {
 
 func (c *Calc) cleanNumString(v string) string {
 	var sb strings.Builder
-	// FIXME
-	// seps := c.Settings.NumberFormat.Separators()
+	var buf strings.Builder
+
+	seenPoint := false
+
 	for _, ch := range v {
-		// if _, ok := seps[ch]; ok {
-		// 	continue
-		// }
-		if ch == ',' {
+		if ch == c.Point {
+			seenPoint = true
+			buf.WriteRune(ch)
+			continue
+		}
+		if ch == '0' && seenPoint {
+			buf.WriteRune(ch)
+			continue
+		}
+		if strings.ContainsRune(ValidSeparators, ch) {
 			continue
 		}
 		if unicode.Is(unicode.Sc, ch) {
 			continue
+		}
+		if buf.Len() > 0 {
+			sb.WriteString(buf.String())
+			buf.Reset()
 		}
 		sb.WriteRune(ch)
 	}
@@ -447,7 +472,7 @@ func (c *Calc) MustParseFixed(v string) decimal.Decimal {
 }
 
 func (c *Calc) ParseFloat(v string) (float64, error) {
-	f, err := strconv.ParseFloat(v, 64)
+	f, err := strconv.ParseFloat(c.cleanNumString(v), 64)
 	if err != nil {
 		return 0, fmt.Errorf("expecting Float but got %v", v)
 	}

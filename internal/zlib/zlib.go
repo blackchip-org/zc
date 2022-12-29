@@ -65,10 +65,16 @@ var (
 		Name:       "conf",
 		ScriptPath: "zc:zlib/conf.zc",
 		Natives: map[string]zc.CalcFunc{
-			"places":  Places,
-			"places=": PlacesGet,
-			"round":   RoundMode,
-			"round=":  RoundModeGet,
+			"int-format":  IntFormat,
+			"int-format=": IntFormatGet,
+			"min-digits":  MinDigits,
+			"min-digits=": MinDigitsGet,
+			"places":      Places,
+			"places=":     PlacesGet,
+			"point":       Point,
+			"point=":      PointGet,
+			"round":       RoundMode,
+			"round=":      RoundModeGet,
 		},
 	}
 	Dev = zc.ModuleDef{
