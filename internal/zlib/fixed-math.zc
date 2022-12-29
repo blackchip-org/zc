@@ -8,4 +8,5 @@ native mul
 native neg
 native pow
 native sign
+native sqrt
 native sub

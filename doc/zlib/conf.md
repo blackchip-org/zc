@@ -1,9 +1,13 @@
+<!-- mod: conf -->
+
 # conf
 
 Configurations and settings
 
 - Prelude: user, dev
 - Use: import
+
+<!-- index -->
 
 | Operation                   | Description
 |-----------------------------|----------------
@@ -18,6 +22,8 @@ Sets the number of places to use after the decimal point to `a`
     ( a:Int32 -- )
 
 Example:
+
+<!-- test: places -->
 
 | Input            | Stack
 |------------------|---------------------|
@@ -34,6 +40,8 @@ Gets the number of places after the decimal point
     ( -- places:Int32 )
 
 Example:
+
+<!-- test: places= -->
 
 | Input            | Stack
 |------------------|---------------------|

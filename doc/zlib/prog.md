@@ -1,8 +1,12 @@
+<!-- mod: prog -->
+
 # prog
 
 Programmer's calculator.
 
 - Use: include
+
+<!-- index -->
 
 | Operation               | Description
 |-------------------------|-----------------------
@@ -28,6 +32,8 @@ The bitwise and of `a` and `b`.
 
 Example:
 
+<!-- test: and -->
+
 | Input       | Stack
 |-------------|-------------|
 | `0b1100`    | `0b1100`
@@ -41,6 +47,8 @@ Convert the value of `a` to a binary number.
     ( a:BigInt -- dec:BigInt )
 
 Example:
+
+<!-- test: bin -->
 
 | Input       | Stack
 |-------------|-------------|
@@ -56,6 +64,8 @@ The value of the `b`th bit of `a`.
 
 Example:
 
+<!-- test: bit -->
+
 | Input       | Stack
 |-------------|-------------|
 | `0b100`     | `0b100`
@@ -69,6 +79,8 @@ Convert the value of `a` to a decimal number.
     ( a:BigInt -- dec:BigInt )
 
 Example:
+
+<!-- test: dec -->
 
 | Input       | Stack
 |-------------|-------------|
@@ -84,6 +96,8 @@ Convert the value of `a` to a hexadecimal number.
 
 Example:
 
+<!-- test: hex -->
+
 | Input       | Stack
 |-------------|-------------|
 | `0b1111`    | `0b1111`
@@ -98,11 +112,12 @@ The length of `a` in bits.
 
 Example:
 
+<!-- test: len -->
+
 | Input       | Stack
 |-------------|-------------|
 | `0b1111`    | `0b1111`
 | `len`       | `4`
-
 
 ## lsh
 
@@ -111,6 +126,8 @@ Shifts all bits in `a` to the left by `b`
     ( a:BigInt b:Uint -- lsh:BigInt )
 
 Example:
+
+<!-- test: lsh -->
 
 | Input       | Stack
 |-------------|-------------|
@@ -126,6 +143,8 @@ The bitwise not of `a` and `b`.
 
 Example:
 
+<!-- test: not -->
+
 | Input       | Stack
 |-------------|-------------|
 | `0b101`     | `0b101`
@@ -140,6 +159,8 @@ Convert the value of `a` to an octal number.
 
 Example:
 
+<!-- test: oct -->
+
 | Input       | Stack
 |-------------|-------------|
 | `0b1111`    | `0b1111`
@@ -153,6 +174,8 @@ The bitwise or of `a` and `b`.
     ( a:BigInt b:BigInt -- and:BigInt )
 
 Example:
+
+<!-- test: or -->
 
 | Input       | Stack
 |-------------|-------------|
@@ -169,6 +192,8 @@ Shifts all bits in `a` to the right by `b`
 
 Example:
 
+<!-- test: rsh -->
+
 | Input       | Stack
 |-------------|-------------|
 | `0b1000`    | `0b1000`
@@ -182,6 +207,8 @@ The bitwise exclusive of `a` and `b`.
     ( a:BigInt b:BigInt -- and:BigInt )
 
 Example:
+
+<!-- test: xor -->
 
 | Input       | Stack
 |-------------|-------------|

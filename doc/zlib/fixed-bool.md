@@ -1,8 +1,12 @@
+<!-- mod: fixed-bool -->
+
 # fixed-bool
 
 Boolean operations using fixed-point math.
 
 - Use: import
+
+<!-- index -->
 
 | Operation         | Description
 |-------------------|----------------
@@ -22,6 +26,8 @@ Boolean operations using fixed-point math.
 
 Example:
 
+<!-- test: eq -->
+
 | Input            | Stack
 |------------------|------------------
 | `'1234.56'`      | `1234.56`
@@ -36,6 +42,8 @@ Example:
     ( a:Fixed b:Fixed -- gt:Bool )
 
 Example:
+
+<!-- test: gt -->
 
 | Input                    | Stack
 |--------------------------|-------------
@@ -54,6 +62,8 @@ Example:
 
 Example:
 
+<!-- test: gte -->
+
 | Input                    | Stack
 |--------------------------|-------------
 | `3.3 2.2 fixed-bool.gte` | `true`
@@ -70,6 +80,8 @@ Example:
     ( a:Fixed b:Fixed -- lt:Bool )
 
 Example:
+
+<!-- test: lt -->
 
 | Input                    | Stack
 |--------------------------|-------------
@@ -88,6 +100,8 @@ Example:
 
 Example:
 
+<!-- test: lte -->
+
 | Input                    | Stack
 |--------------------------|-------------
 | `3.3 2.2 fixed-bool.lte` | `false`
@@ -96,13 +110,13 @@ Example:
 | `clear`                  |
 | `1.1 2.2 fixed-bool.lte` | `true`
 
-
-
 ## neq
 
 `true` if `a` and `b` are not equal to each other, otherwise `false`.
 
     ( a:Fixed b:Fixed -- neq:Bool )
+
+<!-- test: neq -->
 
 | Input                    | Stack
 |--------------------------|-------------

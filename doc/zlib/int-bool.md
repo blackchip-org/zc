@@ -1,8 +1,12 @@
+<!-- mod: int-bool -->
+
 # int-bool
 
 Boolean operations using integer math.
 
 - Use: import
+
+<!-- index -->
 
 | Operation         | Description
 |-------------------|----------------
@@ -22,6 +26,8 @@ Boolean operations using integer math.
 
 Example:
 
+<!-- test: eq -->
+
 | Input         | Stack
 |---------------|------------------
 | `'1234`       | `1234`
@@ -36,6 +42,8 @@ Example:
     ( a:BigInt b:BigInt -- gt:Bool )
 
 Example:
+
+<!-- test: gt -->
 
 | Input               | Stack
 |---------------------|-------------
@@ -54,6 +62,8 @@ Example:
 
 Example:
 
+<!-- test: gte -->
+
 | Input               | Stack
 |---------------------|-------------
 | `1 0 int-bool.gte`  | `true`
@@ -70,6 +80,8 @@ Example:
     ( a:BigInt b:BigInt -- lt:Bool )
 
 Example:
+
+<!-- test: lt-->
 
 | Input               | Stack
 |---------------------|-------------
@@ -88,6 +100,8 @@ Example:
 
 Example:
 
+<!-- test: lte -->
+
 | Input               | Stack
 |---------------------|-------------
 | `1 0 int-bool.lte`  | `false`
@@ -102,6 +116,10 @@ Example:
 `true` if `a` and `b` are not equal to each other, otherwise `false`.
 
     ( a:BigInt b:BigInt -- neq:Bool )
+
+Example:
+
+<!-- test: neq -->
 
 | Input              | Stack
 |--------------------|-------------

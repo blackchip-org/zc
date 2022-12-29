@@ -1,9 +1,13 @@
+<!-- mod: math -->
+
 # math
 
 Basic mathematical operations.
 
 - Prelude: user, dev
 - Use: include
+
+<!-- index -->
 
 | Operation               | Alias    | Description
 |-------------------------|----------|------------
@@ -30,6 +34,8 @@ If `a` is less than zero, the negated value of `a`, otherwise `a`.
 
 Example:
 
+<!-- test: abs -->
+
 | Input   | Stack
 |---------|-------------|
 | `-6`    | `-6`
@@ -46,6 +52,8 @@ Aliases: `a`, `+`
 
 Example:
 
+<!-- test: add -->
+
 | Input   | Stack
 |---------|-------------|
 | `6`     | `6`
@@ -60,6 +68,8 @@ The nearest integer value greater than or equal to `a`.
     ( a:Num -- ceil:Num )
 
 Example:
+
+<!-- test: ceil -->
 
 | Input   | Stack
 |---------|-------------|
@@ -77,6 +87,8 @@ Aliases: `d`, `/`
 
 Example:
 
+<!-- test: div -->
+
 | Input   | Stack
 |---------|-------------|
 | `6`     | `6`
@@ -92,6 +104,8 @@ The nearest integer value less than or equal to `a`.
 
 Example:
 
+<!-- test: floor -->
+
 | Input   | Stack
 |---------|-------------|
 | `6.12`  | `6.12`
@@ -105,6 +119,8 @@ The modulus when `a` is divided by `b`.
     ( a:Num b:Num -- mod:Num )
 
 Example:
+
+<!-- test: mod -->
 
 | Input   | Stack
 |---------|-------------|
@@ -120,6 +136,8 @@ Changes the sign of `a`.
     ( a:Num -- neg:Num )
 
 Example:
+
+<!-- test: neg -->
 
 | Input   | Stack
 |---------|-------------|
@@ -138,6 +156,8 @@ Aliases: `m`, `*`
 
 Example:
 
+<!-- test: mul -->
+
 | Input   | Stack
 |---------|-------------|
 | `6`     | `6`
@@ -155,6 +175,8 @@ Alias: `**`
 
 Example:
 
+<!-- test: pow -->
+
 | Input   | Stack
 |---------|-------------|
 | `6`     | `6`
@@ -169,6 +191,8 @@ The remainder when `a` is divided by `b`.
     ( a:Num b:Num -- rem:Num )
 
 Example:
+
+<!-- test: rem -->
 
 | Input   | Stack
 |---------|-------------|
@@ -191,6 +215,8 @@ If:
 
 Example:
 
+<!-- test: sign -->
+
 | Input     | Stack
 |-----------|-------------|
 | `-6 sign` | `-1`
@@ -210,6 +236,8 @@ Aliases: `s`, `-`
 
 Example:
 
+<!-- test: sub -->
+
 | Input         | Stack
 |---------------|-------------|
 | `6`           | `6`
@@ -224,6 +252,8 @@ The sum of all items on the stack.
     ( ...:Num -- sum:Num )
 
 Example:
+
+<!-- test: sum -->
 
 | Input         | Stack
 |---------------|-------------|

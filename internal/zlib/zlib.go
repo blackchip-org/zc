@@ -114,6 +114,13 @@ var (
 			"sub":   SubFixed,
 		},
 	}
+	FloatMath = zc.ModuleDef{
+		Name:       "float-math",
+		ScriptPath: "zc:zlib/float-math.zc",
+		Natives: map[string]zc.CalcFunc{
+			"sqrt": SqrtFloat,
+		},
+	}
 	Math = zc.ModuleDef{
 		Name:       "math",
 		Include:    true,
@@ -131,6 +138,7 @@ var (
 			"rem":   Rem,
 			"round": Round,
 			"sign":  Sign,
+			"sqrt":  Sqrt,
 			"sub":   Sub,
 		},
 	}

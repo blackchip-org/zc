@@ -6,6 +6,7 @@ import (
 	"math/big"
 	"math/bits"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"unicode"
@@ -188,6 +189,7 @@ func (c *Calc) WordCompleter(line string, pos int) (string, []string, string) {
 			candidates = append(candidates, name)
 		}
 	}
+	sort.Strings(candidates)
 	//fmt.Printf("\n[%v] (%v)[%v] [%v]\n", prefix, word, candidates, suffix)
 	return prefix, candidates, suffix
 }
@@ -274,13 +276,11 @@ func (c *Calc) FormatNumberString(v string) string {
 		}
 		digits.WriteString(string(fracResult))
 	}
-
 	return digits.String()
-
 }
 
 func (c *Calc) FormatBigInt(v *big.Int) string {
-	return fmt.Sprintf("%d", v)
+	return c.FormatNumberString(v.String())
 }
 
 func (c *Calc) FormatBigIntWithRadix(v *big.Int, radix int) string {
@@ -315,7 +315,12 @@ func (c *Calc) FormatFixed(v decimal.Decimal) string {
 		log.Panicf("invalid rounding mode: %v", c.RoundingMode)
 	}
 
-	return fn(v, c.Places).String()
+	s := fn(v, c.Places).String()
+	return c.FormatNumberString(s)
+}
+
+func (c *Calc) FormatFloat(f float64) string {
+	return fmt.Sprintf("%v", f)
 }
 
 func (c *Calc) FormatInt64(i int64) string {
@@ -348,11 +353,9 @@ func (c *Calc) FormatValue(v string) string {
 	case r != 10:
 		return v
 	case c.IsBigInt(v):
-		v := c.FormatBigIntWithRadix(c.MustParseBigInt(v), r)
-		return c.FormatNumberString(v)
+		return c.FormatBigIntWithRadix(c.MustParseBigInt(v), r)
 	case c.IsFixed(v):
-		v := c.FormatFixed(c.MustParseFixed(v))
-		return c.FormatNumberString(v)
+		return c.FormatFixed(c.MustParseFixed(v))
 	}
 	return v
 }
@@ -437,6 +440,27 @@ func (c *Calc) IsFixed(v string) bool {
 
 func (c *Calc) MustParseFixed(v string) decimal.Decimal {
 	d, err := c.ParseFixed(v)
+	if err != nil {
+		panic(err)
+	}
+	return d
+}
+
+func (c *Calc) ParseFloat(v string) (float64, error) {
+	f, err := strconv.ParseFloat(v, 64)
+	if err != nil {
+		return 0, fmt.Errorf("expecting Float but got %v", v)
+	}
+	return f, nil
+}
+
+func (c *Calc) IsFloat(v string) bool {
+	_, err := c.ParseFloat(v)
+	return err == nil
+}
+
+func (c *Calc) MustParseFloat(v string) float64 {
+	d, err := c.ParseFloat(v)
 	if err != nil {
 		panic(err)
 	}

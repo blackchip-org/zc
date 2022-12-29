@@ -10,6 +10,7 @@ native pow
 native rem
 native round
 native sign
+native sqrt
 native sub
 
 func sum //a

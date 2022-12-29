@@ -1,8 +1,12 @@
+<!-- mod: fixed-math -->
+
 # fixed-math
 
 Basic mathematical operations with fixed-point numbers.
 
 - Use: import
+
+<!-- index -->
 
 | Operation               | Description
 |-------------------------|-----------------------
@@ -27,6 +31,8 @@ If `a` is less than zero, the negated value of `a`, otherwise `a`.
 
 Example:
 
+<!-- test: abs -->
+
 | Input            | Stack
 |------------------|-------------
 | `-6.6`           | `-6.6`
@@ -40,6 +46,8 @@ Adds the value of `b` to `a`.
     ( a:Fixed b:Fixed -- add:Fixed )
 
 Example:
+
+<!-- test: add -->
 
 | Input            | Stack
 |------------------|-------------
@@ -56,6 +64,8 @@ The nearest integer value greater than or equal to `a`.
 
 Example:
 
+<!-- test: ceil -->
+
 | Input             | Stack
 |-------------------|-------------
 | `6.12`            | `6.12`
@@ -69,6 +79,8 @@ Divides the value of `a` by `b`.
     ( a:Fixed b:Fixed -- div:Fixed )
 
 Example:
+
+<!-- test: div -->
 
 | Input            | Stack
 |------------------|-------------
@@ -85,6 +97,8 @@ The nearest integer value less than or equal to `a`.
 
 Example:
 
+<!-- test: floor -->
+
 | Input              | Stack
 |--------------------|-------------
 | `6.12`             | `6.12`
@@ -98,6 +112,8 @@ The modulus when `a` is divided by `b`.
     ( a:Fixed b:Fixed -- mod:Fixed )
 
 Example:
+
+<!-- test: mod -->
 
 | Input            | Stack
 |------------------|-------------
@@ -114,6 +130,8 @@ Changes the sign of `a`.
 
 Example:
 
+<!-- test: neg -->
+
 | Input            | Stack
 |------------------|-------------
 | `-6.6`           | `-6.6`
@@ -129,6 +147,8 @@ Multiplies `a` by `b`.
 
 Example:
 
+<!-- test: mul -->
+
 | Input            | Stack
 |------------------|-------------
 | `6.6`            | `6.6`
@@ -143,6 +163,8 @@ Raises `a` to the power of `b`.
     ( a:Fixed b:Fixed -- Num )
 
 Example:
+
+<!-- test: pow -->
 
 | Input            | Stack
 |------------------|-------------
@@ -165,6 +187,8 @@ If:
 
 Example:
 
+<!-- test: sign -->
+
 | Input                  | Stack
 |------------------------|-------------
 | `-6.6 fixed-math.sign` | `-1`
@@ -179,6 +203,8 @@ Example:
 Subtracts `b` from `a`.
 
     ( a:Fixed b:Fixed -- sub:Fixed )
+
+<!-- test: sub -->
 
 | Input            | Stack
 |------------------|-------------

@@ -1,9 +1,13 @@
+<!-- mod: str -->
+
 # str
 
 String operations
 
 - Prelude: dev
 - Use: include
+
+<!-- index -->
 
 | Operation                   | Description
 |-----------------------------|----------------
@@ -19,6 +23,8 @@ Length of string `a`.
 
 Example:
 
+<!-- test: len -->
+
 | Input        | Stack
 |--------------|------------------|
 | `'abcd`      | `abcd`
@@ -32,6 +38,8 @@ Example:
     ( a:Str b:Str -- starts-with:Bool )
 
 Example:
+
+<!-- test: starts-with -->
 
 | Input               | Stack
 |---------------------|------------------|

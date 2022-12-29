@@ -3,66 +3,99 @@ package test
 import (
 	"bufio"
 	"io/fs"
+	"path"
+	"regexp"
 	"strings"
 	"testing"
 
+	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/app"
-	"github.com/blackchip-org/zc/doc"
+)
+
+var (
+	modDirective = regexp.MustCompile(`<!-- mod: *([\w-]+) *-->`)
+	testBanner   = regexp.MustCompile(`<!-- test: *(\w+) *-->`)
+	tableHeader  = regexp.MustCompile(`.*Input.*Stack`)
 )
 
 func TestDoc(t *testing.T) {
-	files, err := doc.Files.ReadDir("zlib")
-	if err != nil {
-		t.Fatal(err)
+	files := []string{
+		"README.md",
+	}
+	dirs := []string{
+		"doc/zlib",
 	}
 
-	for _, file := range files {
-		t.Run(file.Name(), func(t *testing.T) {
-			f, err := doc.Files.Open("zlib/" + file.Name())
+	for _, dir := range dirs {
+		entries, err := zc.Files.ReadDir(dir)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, entry := range entries {
+			files = append(files, path.Join(dir, entry.Name()))
+		}
+	}
+
+	for _, name := range files {
+		t.Run(name, func(t *testing.T) {
+			file, err := zc.Files.Open(name)
 			if err != nil {
 				t.Fatal(err)
 			}
-			testFile(t, f)
+			testFile(t, file)
 		})
 	}
 }
 
 func testFile(t *testing.T, file fs.File) {
 	scanner := bufio.NewScanner(file)
+	testName := ""
 	mod := ""
-	fn := ""
 
 	for scanner.Scan() {
 		if scanner.Err() != nil {
 			t.Fatal(scanner.Err())
 		}
 		line := scanner.Text()
-		if strings.HasPrefix(line, "## ") {
-			fn = line[3:]
+
+		matches := modDirective.FindStringSubmatch(line)
+		if matches != nil {
+			mod = matches[1]
 			continue
 		}
-		if strings.HasPrefix(line, "# ") {
-			mod = line[2:]
+
+		matches = testBanner.FindStringSubmatch(line)
+		if matches == nil {
 			continue
 		}
-		fields := strings.Split(line, "|")
-		if len(fields) == 3 &&
-			strings.TrimSpace(fields[1]) == "Input" &&
-			strings.TrimSpace(fields[2]) == "Stack" {
+		testName = matches[1]
+
+		t.Run(testName, func(t *testing.T) {
+			for scanner.Scan() {
+				line = scanner.Text()
+				if strings.TrimSpace(line) != "" || scanner.Err() != nil {
+					break
+				}
+			}
+			line = scanner.Text()
+			if !tableHeader.MatchString(line) {
+				t.Fatalf("expected table header but got: %v", line)
+			}
 			scanner.Scan()
 			scanner.Scan()
-			t.Run(fn, func(t *testing.T) {
-				testTable(t, mod, scanner)
-			})
-		}
+			testTable(t, mod, scanner)
+		})
+
 	}
 }
 
 func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
 	c := app.NewDefaultCalc()
 
-	if err := c.EvalString("", "use "+mod); err != nil {
-		t.Fatal(err)
+	if mod != "" {
+		if err := c.EvalString("", "use "+mod); err != nil {
+			t.Fatal(err)
+		}
 	}
 
 	for {

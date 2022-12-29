@@ -5,6 +5,7 @@ import "github.com/blackchip-org/zc"
 type UnaryOps struct {
 	BigInt UnaryBigInt
 	Fixed  UnaryFixed
+	Float  UnaryFloat
 }
 
 type BinaryOps struct {
@@ -21,9 +22,12 @@ func EvalUnaryNum(env *zc.Env, ops UnaryOps) error {
 	switch {
 	case env.Calc.IsBigInt(a):
 		return EvalUnaryBigInt(env, ops.BigInt)
-	default:
+	case ops.Fixed != nil:
 		return EvalUnaryFixed(env, ops.Fixed)
+	case ops.Float != nil :
+		return EvalUnaryFloat(env, ops.Float)
 	}
+	panic("unsupported operation")
 }
 
 func EvalBinaryNum(env *zc.Env, ops BinaryOps) error {

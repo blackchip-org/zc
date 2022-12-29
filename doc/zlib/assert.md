@@ -1,3 +1,5 @@
+<!-- mod: assert -->
+
 # assert
 
 Assertions.
@@ -5,6 +7,8 @@ Assertions.
 For each assertion function, if the checked condition is not true, the current execution is aborted.
 
 - Use: import
+
+<!-- index -->
 
 | Operation             | Description
 |-----------------------|-----------------------
@@ -21,6 +25,8 @@ Checks that `a` is equal to `b` and aborts execution if not.
 
 Example:
 
+<!-- test: eq -->
+
 | Input           | Stack
 |-----------------|-------------
 | `1 2`           | `1 \| 2`
@@ -35,6 +41,8 @@ Checks that `a` is false and aborts execution if not.
 
 Example:
 
+<!-- test: f -->
+
 | Input           | Stack
 |-----------------|-------------
 | `'true'`        | `true`
@@ -48,6 +56,8 @@ Checks that `a` is true and aborts execution if not.
     ( a:Bool -- )
 
 Example:
+
+<!-- test: t -->
 
 | Input           | Stack
 |-----------------|-------------

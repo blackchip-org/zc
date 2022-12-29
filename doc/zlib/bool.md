@@ -1,3 +1,5 @@
+<!-- mod: bool -->
+
 # bool
 
 Boolean operations.
@@ -12,6 +14,8 @@ Comparison operations are parsed as numerics when possible. Therefore the follow
 - `1,234.56`
 - `$1,234.56`
 - `+1,234.56`
+
+<!-- index -->
 
 | Operation         | Alias | Description
 |-------------------|-------|---------------
@@ -36,6 +40,8 @@ The logical conjunction of `a` and `b`.
 
 Example:
 
+<!-- test: and -->
+
 | Input       | Stack
 |-------------|-------------|
 | `t t and`   | `true`
@@ -51,6 +57,8 @@ Example:
     ( a:Val b:Val -- eq:Bool )
 
 Example:
+
+<!-- test: eq -->
 
 | Input                  | Stack
 |------------------------|-------------|
@@ -70,6 +78,8 @@ Places `false` on the stack.
 
 Example:
 
+<!-- test: false -->
+
 | Input    | Stack
 |----------|-------------|
 | `false`  | `false`
@@ -82,6 +92,8 @@ Example:
     ( a:Val b:Val -- gt:Bool )
 
 Example:
+
+<!-- test: gt -->
 
 | Input      | Stack
 |------------|-------------|
@@ -98,6 +110,8 @@ Example:
     ( a:Val b:Val -- gte:Bool )
 
 Example:
+
+<!-- test: false -->
 
 | Input      | Stack
 |------------|-------------|
@@ -116,6 +130,8 @@ Example:
 
 Example:
 
+<!-- test: iif -->
+
 | Input        | Stack
 |--------------|-------------|
 | `true`       | `true`
@@ -130,6 +146,8 @@ Places `true` on the stack.
 
 Example:
 
+<!-- test: true -->
+
 | Input    | Stack
 |----------|-------------|
 | `true`   | `true`
@@ -141,6 +159,8 @@ Example:
     ( a:Val b:Val -- lt:Bool )
 
 Example:
+
+<!-- test: lt -->
 
 | Input      | Stack
 |------------|-------------|
@@ -158,6 +178,8 @@ Example:
 
 Example:
 
+<!-- test: lte -->
+
 | Input      | Stack
 |------------|-------------|
 | `1 0 lte`  | `false`
@@ -174,6 +196,8 @@ Example:
 
 Example:
 
+<!-- test: neq -->
+
 | Input                  | Stack
 |------------------------|-------------|
 | `123 123 neq`          | `false`
@@ -189,6 +213,8 @@ Example:
 
 Example:
 
+<!-- test: not -->
+
 | Input                  | Stack
 |------------------------|-------------|
 | `true not`             | `false`
@@ -202,6 +228,8 @@ The logical disjunction of `a` and `b`.
     ( a:Bool b:Bool -- or:Bool )
 
 Example:
+
+<!-- test: or -->
 
 | Input       | Stack
 |-------------|-------------|

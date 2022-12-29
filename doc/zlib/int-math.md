@@ -1,8 +1,12 @@
+<!-- mod: int-math -->
+
 # int-math
 
 Basic mathematical operations with integers.
 
 - Use: import
+
+<!-- index -->
 
 | Operation               | Description
 |-------------------------|-----------------------
@@ -28,6 +32,8 @@ If `a` is less than zero, the negated value of `a`, otherwise `a`.
 
 Example:
 
+<!-- test: abs -->
+
 | Input          | Stack
 |----------------|-------------
 | `-6`           | `-6`
@@ -41,6 +47,8 @@ Adds the value of `b` to `a`.
     ( a:BigInt b:BigInt -- add:BigInt )
 
 Example:
+
+<!-- test: add -->
 
 | Input          | Stack
 |----------------|-------------
@@ -57,6 +65,8 @@ The identity operation with integers.
 
 Example:
 
+<!-- test: ceil -->
+
 | Input            | Stack
 |------------------|-------------
 | `6`              | `6`
@@ -70,6 +80,8 @@ Divides the value of `a` by `b`.
     ( a:BigInt b:BigInt -- div:BigInt )
 
 Example:
+
+<!-- test: div -->
 
 | Input          | Stack
 |----------------|-------------
@@ -86,6 +98,8 @@ The identity operation with integers.
 
 Example:
 
+<!-- test: floor -->
+
 | Input            | Stack
 |------------------|-------------
 | `6`              | `6`
@@ -99,6 +113,8 @@ The modulus when `a` is divided by `b`.
     ( a:BigInt b:BigInt -- mod:BigInt )
 
 Example:
+
+<!-- test: mod -->
 
 | Input          | Stack
 |----------------|-------------
@@ -115,6 +131,8 @@ Changes the sign of `a`.
 
 Example:
 
+<!-- test: neg -->
+
 | Input          | Stack
 |----------------|-------------
 | `-6`           | `-6`
@@ -129,6 +147,8 @@ Multiplies `a` by `b`.
     ( a:BigInt b:BigInt -- mul:Big )
 
 Example:
+
+<!-- test: mul -->
 
 | Input          | Stack
 |----------------|-------------
@@ -145,6 +165,8 @@ Raises `a` to the power of `b`.
 
 Example:
 
+<!-- test: pow -->
+
 | Input          | Stack
 |----------------|-------------
 | `6`            | `6`
@@ -159,6 +181,8 @@ The remainder when `a` is divided by `b`.
     ( a:BigInt b:BigInt -- rem:BigInt )
 
 Example:
+
+<!-- test: rem -->
 
 | Input          | Stack
 |----------------|-------------
@@ -181,6 +205,8 @@ If:
 
 Example:
 
+<!-- test: sign -->
+
 | Input              | Stack
 |--------------------|-------------
 | `-6 int-math.sign` | `-1`
@@ -195,6 +221,11 @@ Example:
 Subtracts `b` from `a`.
 
     ( a:BigInt b:BigInt -- sub:BigInt )
+
+
+Example:
+
+<!-- test: sub -->
 
 | Input          | Stack
 |----------------|-------------

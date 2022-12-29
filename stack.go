@@ -169,6 +169,18 @@ func (s *Stack) PopFixed2() (decimal.Decimal, decimal.Decimal, error) {
 	return a, b, nil
 }
 
+func (s *Stack) PopFloat() (float64, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return 0, err
+	}
+	f, err := s.calc.ParseFloat(v)
+	if err != nil {
+		return 0, err
+	}
+	return f, err
+}
+
 func (s *Stack) PopInt() (int, error) {
 	v, err := s.Pop()
 	if err != nil {
@@ -219,6 +231,10 @@ func (s *Stack) PushBool(v bool) {
 
 func (s *Stack) PushFixed(v decimal.Decimal) {
 	s.Push(s.calc.FormatFixed(v))
+}
+
+func (s *Stack) PushFloat(v float64) {
+	s.Push(s.calc.FormatFloat(v))
 }
 
 func (s *Stack) PushInt(v int) {

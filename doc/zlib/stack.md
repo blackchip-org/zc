@@ -1,8 +1,12 @@
+<!-- mod: stack -->
+
 # stack
 
 Stack manipulations.
 
 - Use: include
+
+<!-- index -->
 
 | Operation               | Alias    | Description
 |-------------------------|----------|------------
@@ -20,6 +24,8 @@ Remove all items on the stack.
 
 Example:
 
+<!-- test: clear -->
+
 | Input         | Stack
 |---------------|-------------|
 | `1`           | `1`
@@ -34,6 +40,8 @@ Remove the top item from the stack.
     ( a:Val -- )
 
 Example:
+
+<!-- test: drop -->
 
 | Input         | Stack
 |---------------|-------------|
@@ -50,6 +58,8 @@ Duplicate the top item on the stack.
 
 Example:
 
+<!-- test: dup -->
+
 | Input         | Stack
 |---------------|-------------|
 | `1`           | `1`
@@ -63,6 +73,8 @@ Number of items on the stack.
     ( ...:Val -- ...:Val a:Int )
 
 Example:
+
+<!-- test: n -->
 
 | Input         | Stack
 |---------------|-------------|
