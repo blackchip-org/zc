@@ -1,6 +1,10 @@
 package app
 
-import "golang.org/x/sys/windows"
+import (
+	"log"
+
+	"golang.org/x/sys/windows"
+)
 
 func consoleInit() {
 	handle, err := windows.GetStdHandle(uint32(4294967285))
