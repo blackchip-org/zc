@@ -168,10 +168,10 @@ Disable thousands separators with:
 | `'0' conf.int-format`     |
 | `256 2 pow`               | `65536`
 
-or use the (plain)[doc/modes.md#plain] mode.
+or use the [plain](doc/modes.md#plain) mode.
 
 Currency symbols are ignored when parsing but are preserved when formatting
-if found at the beginning or end of number.
+if found at the beginning or end of a number.
 
 <!-- test: currency -->
 
