@@ -32,7 +32,7 @@ Install [go](https://go.dev/dl/).
 
 Install the calculator with:
 
-    go get github.com/blackchip-org/zc
+    go install github.com/blackchip-org/zc/cmd/zc@latest
 
 Run the calculator with:
 
