@@ -1,6 +1,6 @@
-<!-- mod: int-math -->
+<!-- mod: math.bigint -->
 
-# int-math
+# math.bigint
 
 Basic mathematical operations with integers.
 
@@ -34,10 +34,10 @@ Example:
 
 <!-- test: abs -->
 
-| Input          | Stack
-|----------------|-------------
-| `-6`           | `-6`
-| `int-math.abs` | `6`
+| Input             | Stack
+|-------------------|-------------
+| `-6`              | `-6`
+| `math.bigint.abs` | `6`
 
 
 ## add
@@ -50,11 +50,11 @@ Example:
 
 <!-- test: add -->
 
-| Input          | Stack
-|----------------|-------------
-| `6`            | `6`
-| `2`            | `6 \| 2`
-| `int-math.add` | `8`
+| Input             | Stack
+|-------------------|-------------
+| `6`               | `6`
+| `2`               | `6 \| 2`
+| `math.bigint.add` | `8`
 
 
 ## ceil
@@ -67,10 +67,10 @@ Example:
 
 <!-- test: ceil -->
 
-| Input            | Stack
-|------------------|-------------
-| `6`              | `6`
-| `int-math.floor` | `6`
+| Input               | Stack
+|---------------------|-------------
+| `6`                 | `6`
+| `math.bigint.floor` | `6`
 
 
 ## div
@@ -83,11 +83,11 @@ Example:
 
 <!-- test: div -->
 
-| Input          | Stack
-|----------------|-------------
-| `6`            | `6`
-| `2`            | `6 \| 2`
-| `int-math.div` | `3`
+| Input             | Stack
+|-------------------|-------------
+| `6`               | `6`
+| `2`               | `6 \| 2`
+| `math.bigint.div` | `3`
 
 
 ## floor
@@ -100,10 +100,10 @@ Example:
 
 <!-- test: floor -->
 
-| Input            | Stack
-|------------------|-------------
-| `6`              | `6`
-| `int-math.floor` | `6`
+| Input               | Stack
+|---------------------|-------------
+| `6`                 | `6`
+| `math.bigint.floor` | `6`
 
 
 ## mod
@@ -116,11 +116,11 @@ Example:
 
 <!-- test: mod -->
 
-| Input          | Stack
-|----------------|-------------
-| `-7`           | `-7`
-| `2`            | `-7 \| 2`
-| `int-math.mod` | `1`
+| Input             | Stack
+|-------------------|-------------
+| `-7`              | `-7`
+| `2`               | `-7 \| 2`
+| `math.bigint.mod` | `1`
 
 
 ## neg
@@ -133,11 +133,11 @@ Example:
 
 <!-- test: neg -->
 
-| Input          | Stack
-|----------------|-------------
-| `-6`           | `-6`
-| `int-math.neg` | `6`
-| `int-math.neg` | `-6`
+| Input             | Stack
+|-------------------|-------------
+| `-6`              | `-6`
+| `math.bigint.neg` | `6`
+| `math.bigint.neg` | `-6`
 
 
 ## mul
@@ -150,11 +150,11 @@ Example:
 
 <!-- test: mul -->
 
-| Input          | Stack
-|----------------|-------------
-| `6`            | `6`
-| `2`            | `6 \| 2`
-| `int-math.mul` | `12`
+| Input             | Stack
+|-------------------|-------------
+| `6`               | `6`
+| `2`               | `6 \| 2`
+| `math.bigint.mul` | `12`
 
 
 ## pow
@@ -167,11 +167,11 @@ Example:
 
 <!-- test: pow -->
 
-| Input          | Stack
-|----------------|-------------
-| `6`            | `6`
-| `2`            | `6 \| 2`
-| `int-math.pow` | `36`
+| Input             | Stack
+|-------------------|-------------
+| `6`               | `6`
+| `2`               | `6 \| 2`
+| `math.bigint.pow` | `36`
 
 
 ## rem
@@ -184,11 +184,11 @@ Example:
 
 <!-- test: rem -->
 
-| Input          | Stack
-|----------------|-------------
-| `-7`           | `-7`
-| `2`            | `-7 \| 2`
-| `int-math.rem` | `-1`
+| Input             | Stack
+|-------------------|-------------
+| `-7`              | `-7`
+| `2`               | `-7 \| 2`
+| `math.bigint.rem` | `-1`
 
 
 ## sign
@@ -207,13 +207,13 @@ Example:
 
 <!-- test: sign -->
 
-| Input              | Stack
-|--------------------|-------------
-| `-6 int-math.sign` | `-1`
-| `clear`            |
-| `6 int-math.sign`  | `1`
-| `clear`            |
-| `0 int-math.sign`  | `0`
+| Input                 | Stack
+|-----------------------|-------------
+| `-6 math.bigint.sign` | `-1`
+| `clear`               |
+| `6 math.bigint.sign`  | `1`
+| `clear`               |
+| `0 math.bigint.sign`  | `0`
 
 
 ## sub
@@ -227,8 +227,8 @@ Example:
 
 <!-- test: sub -->
 
-| Input          | Stack
-|----------------|-------------
-| `6`            | `6`
-| `2`            | `6 \| 2`
-| `int-math.sub` | `4`
+| Input             | Stack
+|-------------------|-------------
+| `6`               | `6`
+| `2`               | `6 \| 2`
+| `math.bigint.sub` | `4`

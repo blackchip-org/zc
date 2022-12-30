@@ -7,13 +7,14 @@ import (
 var All = []zc.ModuleDef{
 	Assert,
 	Bool,
+	BoolBigInt,
+	BoolFixed,
 	Conf,
 	Dev,
-	FixedBool,
-	FixedMath,
 	Math,
-	IntBool,
-	IntMath,
+	MathBigInt,
+	MathFixed,
+	MathFloat,
 	Io,
 	Prog,
 	Runtime,
@@ -61,6 +62,30 @@ var (
 			"or":  Or,
 		},
 	}
+	BoolBigInt = zc.ModuleDef{
+		Name:       "bool.bigint",
+		ScriptPath: "zc:zlib/bool-bigint.zc",
+		Natives: map[string]zc.CalcFunc{
+			"eq":  EqBigInt,
+			"gt":  GtBigInt,
+			"gte": GteBigInt,
+			"neq": NeqBigInt,
+			"lt":  LtBigInt,
+			"lte": LteBigInt,
+		},
+	}
+	BoolFixed = zc.ModuleDef{
+		Name:       "bool.fixed",
+		ScriptPath: "zc:zlib/bool-fixed.zc",
+		Natives: map[string]zc.CalcFunc{
+			"eq":  EqFixed,
+			"gt":  GtFixed,
+			"gte": GteFixed,
+			"neq": NeqFixed,
+			"lt":  LtFixed,
+			"lte": LteFixed,
+		},
+	}
 	Conf = zc.ModuleDef{
 		Name:       "conf",
 		ScriptPath: "zc:zlib/conf.zc",
@@ -92,43 +117,6 @@ var (
 			"undef":     Undef,
 		},
 	}
-	FixedBool = zc.ModuleDef{
-		Name:       "fixed-bool",
-		ScriptPath: "zc:zlib/fixed-bool.zc",
-		Natives: map[string]zc.CalcFunc{
-			"eq":  EqFixed,
-			"gt":  GtFixed,
-			"gte": GteFixed,
-			"neq": NeqFixed,
-			"lt":  LtFixed,
-			"lte": LteFixed,
-		},
-	}
-	FixedMath = zc.ModuleDef{
-		Name:       "fixed-math",
-		ScriptPath: "zc:zlib/fixed-math.zc",
-		Natives: map[string]zc.CalcFunc{
-			"abs":   AbsFixed,
-			"add":   AddFixed,
-			"ceil":  CeilFixed,
-			"div":   DivFixed,
-			"floor": FloorFixed,
-			"mod":   ModFixed,
-			"mul":   MulFixed,
-			"neg":   NegFixed,
-			"pow":   PowFixed,
-			"rem":   RemFixed,
-			"sign":  SignFixed,
-			"sub":   SubFixed,
-		},
-	}
-	FloatMath = zc.ModuleDef{
-		Name:       "float-math",
-		ScriptPath: "zc:zlib/float-math.zc",
-		Natives: map[string]zc.CalcFunc{
-			"sqrt": SqrtFloat,
-		},
-	}
 	Math = zc.ModuleDef{
 		Name:       "math",
 		Include:    true,
@@ -150,21 +138,9 @@ var (
 			"sub":   Sub,
 		},
 	}
-	IntBool = zc.ModuleDef{
-		Name:       "int-bool",
-		ScriptPath: "zc:zlib/int-bool.zc",
-		Natives: map[string]zc.CalcFunc{
-			"eq":  EqBigInt,
-			"gt":  GtBigInt,
-			"gte": GteBigInt,
-			"neq": NeqBigInt,
-			"lt":  LtBigInt,
-			"lte": LteBigInt,
-		},
-	}
-	IntMath = zc.ModuleDef{
-		Name:       "int-math",
-		ScriptPath: "zc:zlib/int-math.zc",
+	MathBigInt = zc.ModuleDef{
+		Name:       "math.bigint",
+		ScriptPath: "zc:zlib/math-bigint.zc",
 		Natives: map[string]zc.CalcFunc{
 			"abs":   AbsBigInt,
 			"add":   AddBigInt,
@@ -178,6 +154,31 @@ var (
 			"rem":   RemBigInt,
 			"sign":  SignBigInt,
 			"sub":   SubBigInt,
+		},
+	}
+	MathFixed = zc.ModuleDef{
+		Name:       "math.fixed",
+		ScriptPath: "zc:zlib/math-fixed.zc",
+		Natives: map[string]zc.CalcFunc{
+			"abs":   AbsFixed,
+			"add":   AddFixed,
+			"ceil":  CeilFixed,
+			"div":   DivFixed,
+			"floor": FloorFixed,
+			"mod":   ModFixed,
+			"mul":   MulFixed,
+			"neg":   NegFixed,
+			"pow":   PowFixed,
+			"rem":   RemFixed,
+			"sign":  SignFixed,
+			"sub":   SubFixed,
+		},
+	}
+	MathFloat = zc.ModuleDef{
+		Name:       "math.float",
+		ScriptPath: "zc:zlib/math-float.zc",
+		Natives: map[string]zc.CalcFunc{
+			"sqrt": SqrtFloat,
 		},
 	}
 	Io = zc.ModuleDef{

@@ -1,6 +1,6 @@
-<!-- mod: fixed-math -->
+<!-- mod: math.fixed -->
 
-# fixed-math
+# math.fixed
 
 Basic mathematical operations with fixed-point numbers.
 
@@ -36,7 +36,7 @@ Example:
 | Input            | Stack
 |------------------|-------------
 | `-6.6`           | `-6.6`
-| `fixed-math.abs` | `6.6`
+| `math.fixed.abs` | `6.6`
 
 
 ## add
@@ -53,7 +53,7 @@ Example:
 |------------------|-------------
 | `6.6`            | `6.6`
 | `2.2`            | `6.6 \| 2.2`
-| `fixed-math.add` | `8.8`
+| `math.fixed.add` | `8.8`
 
 
 ## ceil
@@ -69,7 +69,7 @@ Example:
 | Input             | Stack
 |-------------------|-------------
 | `6.12`            | `6.12`
-| `fixed-math.ceil` | `7`
+| `math.fixed.ceil` | `7`
 
 
 ## div
@@ -86,7 +86,7 @@ Example:
 |------------------|-------------
 | `6.6`            | `6.6`
 | `2.2`            | `6.6 \| 2.2`
-| `fixed-math.div` | `3`
+| `math.fixed.div` | `3`
 
 
 ## floor
@@ -102,7 +102,7 @@ Example:
 | Input              | Stack
 |--------------------|-------------
 | `6.12`             | `6.12`
-| `fixed-math.floor` | `6`
+| `math.fixed.floor` | `6`
 
 
 ## mod
@@ -119,7 +119,7 @@ Example:
 |------------------|-------------
 | `-7.7`           | `-7.7`
 | `2`              | `-7.7 \| 2`
-| `fixed-math.mod` | `-1.7`
+| `math.fixed.mod` | `-1.7`
 
 
 ## neg
@@ -135,8 +135,8 @@ Example:
 | Input            | Stack
 |------------------|-------------
 | `-6.6`           | `-6.6`
-| `fixed-math.neg` | `6.6`
-| `fixed-math.neg` | `-6.6`
+| `math.fixed.neg` | `6.6`
+| `math.fixed.neg` | `-6.6`
 
 
 ## mul
@@ -153,7 +153,7 @@ Example:
 |------------------|-------------
 | `6.6`            | `6.6`
 | `2.2`            | `6.6 \| 2.2`
-| `fixed-math.mul` | `14.52`
+| `math.fixed.mul` | `14.52`
 
 
 ## pow
@@ -170,7 +170,7 @@ Example:
 |------------------|-------------
 | `6.6`            | `6.6`
 | `2`              | `6.6 \| 2`
-| `fixed-math.pow` | `43.56`
+| `math.fixed.pow` | `43.56`
 
 
 ## sign
@@ -191,11 +191,11 @@ Example:
 
 | Input                  | Stack
 |------------------------|-------------
-| `-6.6 fixed-math.sign` | `-1`
+| `-6.6 math.fixed.sign` | `-1`
 | `clear`                |
-| `6.6 fixed-math.sign`  | `1`
+| `6.6 math.fixed.sign`  | `1`
 | `clear`                |
-| `0.0 fixed-math.sign`  | `0`
+| `0.0 math.fixed.sign`  | `0`
 
 
 ## sub
@@ -210,4 +210,4 @@ Subtracts `b` from `a`.
 |------------------|-------------
 | `6.6`            | `6.6`
 | `2.2`            | `6.6 \| 2.2`
-| `fixed-math.sub` | `4.4`
+| `math.fixed.sub` | `4.4`

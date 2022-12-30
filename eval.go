@@ -289,10 +289,10 @@ func (e *Env) evalUseNode(node *ast.UseNode) error {
 		return e.err(node, fmt.Errorf("no such module: %v", node.Name))
 	}
 	alias := ""
-	msg := "ok, imported"
+	msg := "ok, included"
 	if !def.Include {
 		alias = def.Name
-		msg = "ok, included"
+		msg = "ok, imported"
 	}
 	if _, err := e.Import(def, alias); err != nil {
 		return e.err(node, err)

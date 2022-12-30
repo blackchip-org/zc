@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	modDirective = regexp.MustCompile(`<!-- mod: *([\w-]+) *-->`)
+	modDirective = regexp.MustCompile(`<!-- mod: *([\w-\.]+) *-->`)
 	testBanner   = regexp.MustCompile(`<!-- test: *(\w+) *-->`)
 	tableHeader  = regexp.MustCompile(`.*Input.*Stack`)
 )

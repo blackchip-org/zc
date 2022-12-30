@@ -1,6 +1,6 @@
-<!-- mod: fixed-bool -->
+<!-- mod: bool.fixed -->
 
-# fixed-bool
+# bool.fixed
 
 Boolean operations using fixed-point math.
 
@@ -32,7 +32,7 @@ Example:
 |------------------|------------------
 | `'1234.56'`      | `1234.56`
 | `1,234.56`       | `1234.56 \| 1,234.56`
-| `fixed-bool.eq`  | `true`
+| `bool.fixed.eq`  | `true`
 
 
 ## gt
@@ -47,11 +47,11 @@ Example:
 
 | Input                    | Stack
 |--------------------------|-------------
-| `3.3 2.2 fixed-bool.gt`  | `true`
+| `3.3 2.2 bool.fixed.gt`  | `true`
 | `clear`                  |
-| `2.2 2.2 fixed-bool.gt`  | `false`
+| `2.2 2.2 bool.fixed.gt`  | `false`
 | `clear`                  |
-| `1.1 2.2 fixed-bool.gt`  | `false`
+| `1.1 2.2 bool.fixed.gt`  | `false`
 
 
 ## gte
@@ -66,11 +66,11 @@ Example:
 
 | Input                    | Stack
 |--------------------------|-------------
-| `3.3 2.2 fixed-bool.gte` | `true`
+| `3.3 2.2 bool.fixed.gte` | `true`
 | `clear`                  |
-| `2.2 2.2 fixed-bool.gte` | `true`
+| `2.2 2.2 bool.fixed.gte` | `true`
 | `clear`                  |
-| `1.1 2.2 fixed-bool.gte` | `false`
+| `1.1 2.2 bool.fixed.gte` | `false`
 
 
 ## lt
@@ -85,11 +85,11 @@ Example:
 
 | Input                    | Stack
 |--------------------------|-------------
-| `3.3 2.2 fixed-bool.lt`  | `false`
+| `3.3 2.2 bool.fixed.lt`  | `false`
 | `clear`                  |
-| `2.2 2.2 fixed-bool.lt`  | `false`
+| `2.2 2.2 bool.fixed.lt`  | `false`
 | `clear`                  |
-| `1.1 2.2 fixed-bool.lt`  | `true`
+| `1.1 2.2 bool.fixed.lt`  | `true`
 
 
 ## lte
@@ -104,11 +104,11 @@ Example:
 
 | Input                    | Stack
 |--------------------------|-------------
-| `3.3 2.2 fixed-bool.lte` | `false`
+| `3.3 2.2 bool.fixed.lte` | `false`
 | `clear`                  |
-| `2.2 2.2 fixed-bool.lte` | `true`
+| `2.2 2.2 bool.fixed.lte` | `true`
 | `clear`                  |
-| `1.1 2.2 fixed-bool.lte` | `true`
+| `1.1 2.2 bool.fixed.lte` | `true`
 
 ## neq
 
@@ -120,7 +120,7 @@ Example:
 
 | Input                    | Stack
 |--------------------------|-------------
-| `3.3 2.2 fixed-bool.neq` | `true`
+| `3.3 2.2 bool.fixed.neq` | `true`
 | `clear`                  |
-| `2.2 2.2 fixed-bool.neq` | `false`
+| `2.2 2.2 bool.fixed.neq` | `false`
 

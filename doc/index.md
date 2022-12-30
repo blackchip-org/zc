@@ -10,12 +10,12 @@
 
 - [a](zlib/math.md#add): Addition
 - abs
-  - [fixed-math.abs](zlib/fixed-math.md#abs): Absolute value
-  - [int-math.abs](zlib/int-math.md#abs): Absolute value
+  - [math.bigint.abs](zlib/math-bigint.md#abs): Absolute value
+  - [math.fixed.abs](zlib/math-fixed.md#abs): Absolute value
   - [math.abs](zlib/math.md#abs): Absolute value
 - add
-  - [fixed-math.add](zlib/fixed-math.md#add): Addition
-  - [int-math.add](zlib/int-math.md#add): Addition
+  - [math.bigint.add](zlib/math-bigint.md#add): Addition
+  - [math.fixed.add](zlib/math-fixed.md#add): Addition
   - [math.add](zlib/math.md#add): Addition
 - and
   - [bool.and](zlib/bool.md#and): Logical conjunction
@@ -30,8 +30,8 @@
 
 - [c](zlib/stack.md#clear): Clear
 - ceil
-  - [fixed-math.ceil](zlib/fixed-math.md#ceil): Ceiling
-  - [int-math.ceil](zlib/int-math.md#ceil): Ceiling
+  - [math.bigint.ceil](zlib/math-bigint.md#ceil): Ceiling
+  - [math.fixed.ceil](zlib/math-fixed.md#ceil): Ceiling
   - [math.ceil](zlib/math.md#ceil): Ceiling
 - [clear](zlib/stack.md#clear): Clear
 
@@ -40,8 +40,8 @@
 - [d](zlib/math.md#div): Division
 - [dec](zlib/prog.md#dec): Convert to decimal
 - div
-  - [fixed-math.div](zlib/fixed-math.md#div): Division
-  - [int-math.div](zlib/int-math.md#div): Division
+  - [math.bigint.div](zlib/math-bigint.md#div): Division
+  - [math.fixed.div](zlib/math-fixed.md#div): Division
   - [math.div](zlib/math.md#div): Division
 - [drop](zlib/stack.md#drop): Drop top item
 - [dup](zlib/stack.md#dup): Duplicate top item
@@ -50,9 +50,9 @@
 
 - eq
   - [assert.eq](zlib/assert.md#eq): Assert equals
+  - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
+  - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
   - [bool.eq](zlib/bool.md#eq): Equals
-  - [fixed-bool.eq](zlib/fixed-bool.md#eq): Equals
-  - [int-bool.eq](zlib/int-bool.md#eq): Equals
 
 ## f
 
@@ -61,20 +61,20 @@
   - [bool.f](zlib/bool.md#false): False
 - [false](zlib/bool.md#false): False
 - floor
-  - [fixed-math.floor](zlib/fixed-math.md#floor): Floor
-  - [int-math.floor](zlib/int-math.md#floor): Floor
+  - [math.bigint.floor](zlib/math-bigint.md#floor): Floor
+  - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
   - [math.floor](zlib/math.md#floor): Floor
 
 ## g
 
 - gt
+  - [bool.bigint.gt](zlib/bool-bigint.md#gt): Greater than
+  - [bool.fixed.gt](zlib/bool-fixed.md#gt): Greater than
   - [bool.gt](zlib/bool.md#gt): Greater than
-  - [fixed-bool.gt](zlib/fixed-bool.md#gt): Greater than
-  - [int-bool.gt](zlib/int-bool.md#gt): Greater than
 - gte
+  - [bool.bigint.gte](zlib/bool-bigint.md#gte): Greater than or equals
+  - [bool.fixed.gte](zlib/bool-fixed.md#gte): Greater than or equals
   - [bool.gte](zlib/bool.md#gte): Greater than or equals
-  - [fixed-bool.gte](zlib/fixed-bool.md#gte): Greater than or equals
-  - [int-bool.gte](zlib/int-bool.md#gte): Greater than or equals
 
 ## h
 
@@ -91,37 +91,37 @@
   - [str.len](zlib/str.md#len): Length
 - [lsh](zlib/prog.md#lsh): Left shift
 - lt
+  - [bool.bigint.lt](zlib/bool-bigint.md#lt): Less than
+  - [bool.fixed.lt](zlib/bool-fixed.md#lt): Less than
   - [bool.lt](zlib/bool.md#lt): Less than
-  - [fixed-bool.lt](zlib/fixed-bool.md#lt): Less than
-  - [int-bool.lt](zlib/int-bool.md#lt): Less than
 - lte
+  - [bool.bigint.lte](zlib/bool-bigint.md#lte): Less than or equals
+  - [bool.fixed.lte](zlib/bool-fixed.md#lte): Less than or equals
   - [bool.lte](zlib/bool.md#lte): Less than or equals
-  - [fixed-bool.lte](zlib/fixed-bool.md#lte): Less than or equals
-  - [int-bool.lte](zlib/int-bool.md#lte): Less than or equals
 
 ## m
 
 - [m](zlib/math.md#mul): Multiplication
 - mod
-  - [fixed-math.mod](zlib/fixed-math.md#mod): Modulus
-  - [int-math.mod](zlib/int-math.md#mod): Modulus
+  - [math.bigint.mod](zlib/math-bigint.md#mod): Modulus
+  - [math.fixed.mod](zlib/math-fixed.md#mod): Modulus
   - [math.mod](zlib/math.md#mod): Modulus
 - mul
-  - [fixed-math.mul](zlib/fixed-math.md#mul): Multiplication
-  - [int-math.mul](zlib/int-math.md#mul): Multiplication
+  - [math.bigint.mul](zlib/math-bigint.md#mul): Multiplication
+  - [math.fixed.mul](zlib/math-fixed.md#mul): Multiplication
   - [math.mul](zlib/math.md#mul): Multiplication
 
 ## n
 
 - [n](zlib/stack.md#n): Number of items on the stack
 - neg
-  - [fixed-math.neg](zlib/fixed-math.md#neg): Negation
-  - [int-math.neg](zlib/int-math.md#neg): Negation
+  - [math.bigint.neg](zlib/math-bigint.md#neg): Negation
+  - [math.fixed.neg](zlib/math-fixed.md#neg): Negation
   - [math.neg](zlib/math.md#neg): Negation
 - neq
+  - [bool.bigint.neq](zlib/bool-bigint.md#neq): Not Equals
+  - [bool.fixed.neq](zlib/bool-fixed.md#neq): Not Equals
   - [bool.neq](zlib/bool.md#neq): Not Equals
-  - [fixed-bool.neq](zlib/fixed-bool.md#neq): Not Equals
-  - [int-bool.neq](zlib/int-bool.md#neq): Not Equals
 - not
   - [bool.not](zlib/bool.md#not): Negation
   - [prog.not](zlib/prog.md#not): Bitwise not
@@ -135,18 +135,18 @@
 
 ## p
 
-- [places](zlib/conf.md#places): Sets the number of places after the decimal point
-- [places=](zlib/conf.md#places): Gets the number of places after the decimal point
 - pow
-  - [fixed-math.pow](zlib/fixed-math.md#pow): Exponentiation
-  - [int-math.pow](zlib/int-math.md#pow): Exponentiation
+  - [math.bigint.pow](zlib/math-bigint.md#pow): Exponentiation
+  - [math.fixed.pow](zlib/math-fixed.md#pow): Exponentiation
   - [math.pow](zlib/math.md#pow): Exponentiation
+- [precision](zlib/conf.md#precision): Sets the precision for fixed-point math
+- [precision=](zlib/conf.md#precision=): Gets the prevision for fixed-point math
 - [print](zlib/io.md#print): Displays value to the console
 
 ## r
 
 - rem
-  - [int-math.rem](zlib/int-math.md#rem): Remainder
+  - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
   - [math.rem](zlib/math.md#rem): Remainder
 - [rsh](zlib/prog.md#rsh): Right shift
 
@@ -154,13 +154,13 @@
 
 - [s](zlib/math.md#sub): Subtraction
 - sign
-  - [fixed-math.sign](zlib/fixed-math.md#sign): Sign
-  - [int-math.sign](zlib/int-math.md#sign): Sign
+  - [math.bigint.sign](zlib/math-bigint.md#sign): Sign
+  - [math.fixed.sign](zlib/math-fixed.md#sign): Sign
   - [math.sign](zlib/math.md#sign): Sign
 - [starts-with](zlib/str.md#starts-with): Starts with
 - sub
-  - [fixed-math.sub](zlib/fixed-math.md#sub): Subtraction
-  - [int-math.sub](zlib/int-math.md#sub): Subtraction
+  - [math.bigint.sub](zlib/math-bigint.md#sub): Subtraction
+  - [math.fixed.sub](zlib/math-fixed.md#sub): Subtraction
   - [math.sub](zlib/math.md#sub): Subtraction
 - [sum](zlib/math.md#sum): Sum
 
