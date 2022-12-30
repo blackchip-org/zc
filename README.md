@@ -3,14 +3,14 @@
 A fun RPN calculator.
 
 - [zlib](doc/zlib.md): Standard library
-- [index](doc/index.md): Operation index
+- [index](doc/index.md): Function index
 
 When I'm at a terminal prompt and I need to use a calculator, `bc` has always
 been my tool of choice. I thought it would be fun to write a calculator myself
 but with some items from my wish list built in. Those items are:
 
-- A Stack based calculator. Typing in a value places it on the stack. An
-operation consumes values on the stack and places its results back on the
+- A Stack based calculator. Typing in a value places it on the stack. A
+function consumes values on the stack and places its results back on the
 stack.
 - To minimize the use of the shift key. Instead of using `+` for addition,
 use `add` or `a` which is easier to type.
@@ -18,7 +18,7 @@ use `add` or `a` which is easier to type.
 should be `3.3` and not `3.3000000000000003`.
 - Be more than a simple calculator. Need an external tool to lookup, compute,
 or calculate? Put in the calculator as a module instead.
-- Backed with a scripting language. When an operation is not directly
+- Backed with a scripting language. When a function is not directly
 supported by native libraries, write the implementation in the scripting
 language.
 
@@ -45,11 +45,11 @@ word is separated by whitespace. A word can be either a:
 
 - *value*: Starts with a numeric character, a decimal point,
 or a `+` or `-` sign. Values are placed onto the stack.
-- *operation*: Invokes a function with the given name. Parameters are consumed
+- *function*: Invokes a function with the given name. Parameters are consumed
 from the stack and results are placed on the stack.
 
 If `2 3 a` is entered at the prompt, the values of `2` and `3` are placed on
-the stack, the `a` operation (for addition) is executed, the values are
+the stack, the `a` function (for addition) is executed, the values are
 consumed and the result `5` is placed on the stack.
 
 Examples of calculator use will be presented in a table such as:
@@ -75,23 +75,23 @@ have been placed on a separate line:
 If there a multiple items on the stack, they are notated by using a pipe `|`
 character to separate each item. The item on the right is the top of the stack.
 
-The basic math operations are:
+The basic math functions are:
 
-| Operation       | Description |
+| Function        | Description |
 |-----------------|-------------
 | `add`, `a`, `+` | Addition
 | `sub`, `s`, `-` | Subtraction
 | `mul`, `m`, `*` | Multiplication
 | `div`, `d`, `/` | Division
 
-For each of these operations there are three separate names. For addition there
+For each of these functions there are three separate names. For addition there
 is:
 
 - `a`: Easy to type without having to use the shift key
 - `add`: Easy to read in scripts or documentation
 - `+`: Easy to type if you have a keyboard with a number pad.
 
-Additional basic math operations can be found in the documentation for the
+Additional basic math functions can be found in the documentation for the
 [math](doc/zlib/math.md) module.
 
 ## Example
