@@ -5,21 +5,16 @@ import (
 	"log"
 	"os"
 	"path"
-	"runtime"
 	"strings"
 
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/internal/ansi"
 	"github.com/peterh/liner"
-	"golang.org/x/sys/windows"
 )
 
 func RunConsole(calc *zc.Calc) {
 	log.SetFlags(0)
-
-	if runtime.GOOS == "windows" {
-		winInit()
-	}
+	consoleInit()
 
 	line := liner.NewLiner()
 	defer line.Close()
@@ -143,12 +138,4 @@ func getPrompt(calc *zc.Calc) string {
 }
 
 func winInit() {
-	handle, err := windows.GetStdHandle(uint32(4294967285))
-	if err != nil {
-		log.Printf("unable to get handle: %v", err)
-		return
-	}
-	if err := windows.SetConsoleMode(handle, 7); err != nil {
-		log.Printf("unable to set console mode: %v", err)
-	}
 }
