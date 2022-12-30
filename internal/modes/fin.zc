@@ -1,0 +1,3 @@
+2 conf.precision
+2 conf.min-digits
+'half-even' conf.rounding-mode

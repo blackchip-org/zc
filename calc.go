@@ -34,7 +34,7 @@ type Config struct {
 	Point        rune
 	FracFormat   string
 	MinDigits    uint
-	NoCurrency   bool
+	AutoCurrency bool
 }
 
 type ModuleDef struct {
@@ -72,6 +72,7 @@ type FormatAttrs struct {
 
 type Calc struct {
 	Config
+	Mode       string
 	Out        *strings.Builder
 	Info       string
 	Env        *Env
@@ -206,6 +207,19 @@ func (c *Calc) WordCompleter(line string, pos int) (string, []string, string) {
 	sort.Strings(candidates)
 	//fmt.Printf("\n[%v] (%v)[%v] [%v]\n", prefix, word, candidates, suffix)
 	return prefix, candidates, suffix
+}
+
+func (c *Calc) SetMode(name string) error {
+	fileName := fmt.Sprintf("zc:modes/%v.zc", name)
+	script, err := LoadFile(fileName)
+	if err != nil {
+		return fmt.Errorf("unable to load mode %v: %v", name, err)
+	}
+	if err := c.Eval(fileName, script); err != nil {
+		return err
+	}
+	c.Mode = name
+	return nil
 }
 
 func (c *Calc) parseDigits(sep rune, v string) ([]rune, []rune) {
@@ -648,7 +662,7 @@ func ParseCurrencySymbol(v string) (rune, Fix) {
 }
 
 func (c *Calc) addCurrencySymbol(attrs FormatAttrs, v string) string {
-	if c.NoCurrency {
+	if !c.AutoCurrency {
 		return v
 	}
 	switch attrs.Fix {

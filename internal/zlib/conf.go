@@ -8,6 +8,20 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
+func AutoCurrency(env *zc.Env) error {
+	b, err := env.Stack.PopBool()
+	if err != nil {
+		return err
+	}
+	env.Calc.AutoCurrency = b
+	return nil
+}
+
+func AutoCurrencyGet(env *zc.Env) error {
+	env.Stack.PushBool(env.Calc.AutoCurrency)
+	return nil
+}
+
 func IntFormat(env *zc.Env) error {
 	format, err := env.Stack.Pop()
 	if err != nil {
@@ -85,7 +99,7 @@ func PointGet(env *zc.Env) error {
 	return nil
 }
 
-func RoundMode(env *zc.Env) error {
+func RoundingMode(env *zc.Env) error {
 	a, err := env.Stack.Pop()
 	if err != nil {
 		return err
@@ -99,7 +113,7 @@ func RoundMode(env *zc.Env) error {
 	return err
 }
 
-func RoundModeGet(env *zc.Env) error {
+func RoundingModeGet(env *zc.Env) error {
 	env.Stack.Push(env.Calc.RoundingMode.String())
 	return nil
 }

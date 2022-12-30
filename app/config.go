@@ -14,6 +14,7 @@ func DefaultConfig() zc.Config {
 		RoundingMode: zc.RoundingModeHalfUp,
 		IntFormat:    ",000",
 		Point:        '.',
+		AutoCurrency: true,
 	}
 }
 

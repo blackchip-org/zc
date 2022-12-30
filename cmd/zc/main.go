@@ -45,6 +45,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	for _, arg := range flag.Args() {
+		if err := calc.SetMode(arg); err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	if use != "" {
 		if err := calc.EvalString("<cli>", "use "+use); err != nil {
 			log.Fatal(err)

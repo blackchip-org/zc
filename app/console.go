@@ -28,14 +28,13 @@ func RunConsole(calc *zc.Calc) {
 	ansi.Write(ansi.ClearScreen)
 	ansi.Write(ansi.MoveToBottom)
 
-	prompt := "zc > "
-	text, err := line.Prompt(prompt)
+	text, err := line.Prompt(getPrompt(calc))
 	if err != nil {
 		log.Printf("error: %v", err)
 		return
 	}
 
-	for ; err == nil; text, err = line.Prompt(prompt) {
+	for ; err == nil; text, err = line.Prompt(getPrompt(calc)) {
 		var err error
 		ansi.Write(ansi.ClearScreen)
 		if strings.TrimSpace(text) == "" {
@@ -127,4 +126,12 @@ func saveHistory(line *liner.State) {
 	if err != nil {
 		log.Printf("unable to save history: %v", err)
 	}
+}
+
+func getPrompt(calc *zc.Calc) string {
+	prompt := "zc"
+	if calc.Mode != "" {
+		prompt += ":" + calc.Mode
+	}
+	return prompt + " > "
 }
