@@ -22,6 +22,8 @@ var All = []zc.ModuleDef{
 	Str,
 	StrBool,
 	Test,
+	Time,
+	Tz,
 }
 
 var (
@@ -247,5 +249,20 @@ var (
 	Test = zc.ModuleDef{
 		Name:       "test",
 		ScriptPath: "zc:zlib/test.zc",
+	}
+	Time = zc.ModuleDef{
+		Name:       "time",
+		Include:    true,
+		ScriptPath: "zc:zlib/time.zc",
+		Natives: map[string]zc.CalcFunc{
+			"after":     After,
+			"now":       Now,
+			"offset":    Offset,
+			"time-zone": TimeZone,
+		},
+	}
+	Tz = zc.ModuleDef{
+		Name:       "tz",
+		ScriptPath: "zc:zlib/tz.zc",
 	}
 )
