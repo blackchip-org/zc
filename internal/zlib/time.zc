@@ -1,6 +1,11 @@
 native after
+native date-time
+native in
 native now
-native offset
-native time-zone
+native tz
+native tz=
 
-alias tz time-zone
+macro utc 'UTC' in
+
+alias dt date-time
+

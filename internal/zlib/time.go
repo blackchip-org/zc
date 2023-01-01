@@ -2,12 +2,17 @@ package zlib
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/blackchip-org/zc"
 )
 
-var timeFormatLayout = "Mon Jan 2 2006 3:04PM MST -0700"
+const (
+	zoneLayout       = "MST -0700"
+	timeFormatLayout = "Mon Jan 2 2006 3:04PM " + zoneLayout
+)
 
 var timeParseLayouts = []string{
 	timeFormatLayout,
@@ -16,18 +21,42 @@ var timeParseLayouts = []string{
 	"3pm",
 }
 
+type timeState struct {
+	loc *time.Location
+	tz  string
+}
+
+func getTimeState(env *zc.Env) *timeState {
+	return env.Calc.States["time"].(*timeState)
+}
+
 type timeAttrs struct {
-	layout string
+	layout      string
+	requireZone bool
+}
+
+func InitTime(env *zc.Env) error {
+	loc := time.Now().Location()
+	tz, _ := time.Now().Zone()
+	env.Calc.States["time"] = &timeState{
+		loc: loc,
+		tz:  tz,
+	}
+	return nil
 }
 
 func parseTime(env *zc.Env, v string) (time.Time, timeAttrs, error) {
-	// now := time.Now()
-	// zone, offset := now.Zone()
-	// fmt.Printf("**** ZONE %v OFF %v\n", zone, offset)
+	loc := getTimeState(env).loc
 	for _, layout := range timeParseLayouts {
-		if t, err := time.Parse(layout, v); err == nil {
-			return t, timeAttrs{layout: layout}, nil
+		t, err := time.ParseInLocation(layout, v, loc)
+		if err != nil {
+			continue
 		}
+		if t.Year() == 0 {
+			now := time.Now().In(loc)
+			t = time.Date(now.Year(), now.Month(), now.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), loc)
+		}
+		return t, timeAttrs{layout: layout}, nil
 	}
 	return time.Time{}, timeAttrs{}, fmt.Errorf("expecting Time but got %v", v)
 }
@@ -46,7 +75,17 @@ func popTime(env *zc.Env) (time.Time, timeAttrs, error) {
 }
 
 func formatTime(t time.Time, attrs timeAttrs) string {
-	return t.Format(attrs.layout)
+	layout := attrs.layout
+	name, _ := t.Zone()
+
+	if attrs.requireZone && !strings.Contains(layout, zoneLayout) {
+		layout += " " + zoneLayout
+	}
+	if _, err := strconv.ParseInt(name, 10, 8); err == nil {
+		layout = strings.Replace(layout, " MST", "", 1)
+	}
+
+	return t.Format(layout)
 }
 
 func pushTime(env *zc.Env, t time.Time, attrs timeAttrs) {
@@ -125,22 +164,17 @@ func afterDuration(sa string, sb string, env *zc.Env) error {
 	return nil
 }
 
-func Now(env *zc.Env) error {
-	t := time.Now()
-	pushTime(env, t, timeAttrs{layout: timeFormatLayout})
+func DateTime(env *zc.Env) error {
+	t, attrs, err := popTime(env)
+	if err != nil {
+		return err
+	}
+	attrs.layout = timeFormatLayout
+	pushTime(env, t, attrs)
 	return nil
 }
 
-func Offset(env *zc.Env) error {
-	t := time.Now()
-	_, offset := t.Zone()
-	dur := time.Duration(offset) * time.Second
-	str := fmt.Sprintf("%02d:%02d", int(dur.Hours()), int(dur.Minutes())%60)
-	env.Stack.Push(str)
-	return nil
-}
-
-func TimeZone(env *zc.Env) error {
+func In(env *zc.Env) error {
 	name, err := env.Stack.Pop()
 	if err != nil {
 		return err
@@ -154,6 +188,41 @@ func TimeZone(env *zc.Env) error {
 		return err
 	}
 	zt := t.In(loc)
+	attrs.requireZone = true
 	pushTime(env, zt, attrs)
+	return nil
+}
+
+func Now(env *zc.Env) error {
+	loc := getTimeState(env).loc
+	t := time.Now().In(loc)
+	pushTime(env, t, timeAttrs{layout: timeFormatLayout})
+	return nil
+}
+
+// func Offset(env *zc.Env) error {
+// 	t := time.Now()
+// 	_, offset := t.Zone()
+// 	dur := time.Duration(offset) * time.Second
+// 	str := fmt.Sprintf("%02d:%02d", int(dur.Hours()), int(dur.Minutes())%60)
+// 	env.Stack.Push(str)
+// 	return nil
+// }
+
+func TzSet(env *zc.Env) error {
+	zone, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	loc, err := time.LoadLocation(zone)
+	if err != nil {
+		return fmt.Errorf("unknown time zone: %v", zone)
+	}
+	getTimeState(env).loc = loc
+	return nil
+}
+
+func TzGet(env *zc.Env) error {
+	env.Stack.Push(getTimeState(env).tz)
 	return nil
 }

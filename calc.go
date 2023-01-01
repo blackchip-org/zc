@@ -42,6 +42,7 @@ type ModuleDef struct {
 	Include    bool
 	ScriptPath string
 	Natives    map[string]CalcFunc
+	Init       CalcFunc
 }
 
 type CalcFunc func(*Env) error
@@ -79,6 +80,7 @@ type Calc struct {
 	ModuleDefs map[string]ModuleDef
 	Modules    map[string]*Env
 	Natives    map[string]CalcFunc
+	States     map[string]any
 }
 
 func NewCalc(conf Config) (*Calc, error) {
@@ -87,6 +89,7 @@ func NewCalc(conf Config) (*Calc, error) {
 		Modules:    make(map[string]*Env),
 		Natives:    make(map[string]CalcFunc),
 		ModuleDefs: make(map[string]ModuleDef),
+		States:     make(map[string]any),
 	}
 	for _, def := range conf.ModuleDefs {
 		c.ModuleDefs[def.Name] = def
@@ -169,6 +172,12 @@ func (c *Calc) Load(def ModuleDef) (*Env, error) {
 			return nil, err
 		}
 		if err := env.evalNode(ast); err != nil {
+			return nil, err
+		}
+	}
+
+	if def.Init != nil {
+		if err := def.Init(c.Env); err != nil {
 			return nil, err
 		}
 	}
