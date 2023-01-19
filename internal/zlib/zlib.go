@@ -255,17 +255,21 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/time.zc",
 		Natives: map[string]zc.CalcFunc{
-			"after":     After,
-			"date-time": DateTime,
-			"now":       Now,
-			"in":        In,
-			"tz":        TzSet,
-			"tz=":       TzGet,
+			"after":      After,
+			"date-time":  DateTime,
+			"formats=":   FormatsGet,
+			"local":      Local,
+			"local=":     LocalGet,
+			"now":        Now,
+			"ord":        Ord,
+			"in":         In,
+			"travel":     Travel,
+			"travel-end": TravelEnd,
 		},
+		Init: InitTime,
 	}
 	Tz = zc.ModuleDef{
 		Name:       "tz",
 		ScriptPath: "zc:zlib/tz.zc",
-		Init:       InitTime,
 	}
 )

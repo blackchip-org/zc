@@ -1,0 +1,13 @@
+use assert
+use time
+use io
+
+utc local
+'Mon Jan 2 2006 3:04:05PM UTC +0000' travel
+
+func test-formats
+    formats; formats=
+    for format; //formats
+        /format io.println
+        /format dt
+        'Mon Jan 2 2006 3:04:05PM UTC' assert.eq
