@@ -29,6 +29,36 @@
           "Value": "4321"
         }
       ]
+    },
+    {
+      "Node": "Expr",
+      "Expr": [
+        {
+          "Node": "Ref",
+          "Type": "//",
+          "Name": "a"
+        },
+        {
+          "Node": "Value",
+          "IsString": false,
+          "Value": "1234"
+        }
+      ]
+    },
+    {
+      "Node": "Expr",
+      "Expr": [
+        {
+          "Node": "Ref",
+          "Type": "/-",
+          "Name": "a"
+        },
+        {
+          "Node": "Value",
+          "IsString": false,
+          "Value": "1234"
+        }
+      ]
     }
   ]
 }

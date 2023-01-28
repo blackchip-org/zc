@@ -1,11 +1,18 @@
 package zc
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"strings"
 
 	"github.com/blackchip-org/zc/lang/ast"
+	"github.com/blackchip-org/zc/lang/token"
+)
+
+var (
+	// Not an actual error, used to return from a function
+	errFuncReturn = errors.New("function return")
 )
 
 func (e *Env) evalBlock(nodes []ast.Node) error {
@@ -43,6 +50,8 @@ func (e *Env) evalNode(node ast.Node) error {
 		return e.evalNativeNode(n)
 	case *ast.RefNode:
 		return e.evalRefNode(n)
+	case *ast.ReturnNode:
+		return e.evalReturnNode(n)
 	case *ast.StackNode:
 		return e.evalStackNode(n)
 	case *ast.TryNode:
@@ -72,12 +81,13 @@ func (e *Env) evalAliasNode(node *ast.AliasNode) error {
 }
 
 func (e *Env) evalExprNode(expr *ast.ExprNode) error {
+	//defer func() { e.Stack = e.Main }()
 	for _, node := range expr.Expr {
 		if err := e.evalNode(node); err != nil {
 			return e.err(node, err)
 		}
 	}
-	e.Stack = e.Main
+	//e.Stack = e.Main
 	return nil
 }
 
@@ -131,10 +141,10 @@ func (e *Env) evalForNode(node *ast.ForNode) error {
 		return e.err(node.Expr, err)
 	}
 
-	inner := e.Derive()
-	i := inner.NewStack(node.Stack.Name)
 	for _, item := range expr.Items() {
 		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
+		inner := e.Derive()
+		i := inner.NewStack(node.Stack.Name)
 		i.Clear().Push(item)
 		if err := inner.evalBlock(node.Block); err != nil {
 			return err
@@ -205,7 +215,10 @@ func (e *Env) evalInvokeNode(node *ast.InvokeNode) error {
 		return e.err(node, fmt.Errorf("no such function: %v", node.Name))
 	}
 	if err := fn(e); err != nil {
-		return e.chain(node, err)
+		if errors.Is(err, errFuncReturn) {
+			return err
+		}
+		return e.chain(node.Name, node.Pos(), err)
 	}
 	return nil
 }
@@ -257,8 +270,19 @@ func (e *Env) evalRefNode(ref *ast.RefNode) error {
 			return e.err(ref, err)
 		}
 		e.Stack.Push(top)
+	case ast.PopRef:
+		top, err := stack.Pop()
+		if err != nil {
+			return e.err(ref, err)
+		}
+		e.Stack.Push(top)
 	}
 	return nil
+}
+
+func (e *Env) evalReturnNode(node *ast.ReturnNode) error {
+	e.trace(node, "return")
+	return errFuncReturn
 }
 
 func (e *Env) evalStackNode(node *ast.StackNode) error {
@@ -322,10 +346,12 @@ func (e *Env) evalValueNode(value *ast.ValueNode) error {
 func (e *Env) evalWhileNode(while *ast.WhileNode) error {
 	e.trace(while, "while")
 	for {
-		if err := e.evalExprNode(while.Cond); err != nil {
+		expr := e.Derive()
+		if err := expr.evalExprNode(while.Cond); err != nil {
 			return e.err(while.Cond, err)
 		}
-		result, err := e.Stack.PopBool()
+		fmt.Printf("**** EXPR STACK IS: %v\n", expr.Stack.Name)
+		result, err := expr.Stack.PopBool()
 		if err != nil {
 			return e.err(while.Cond, err)
 		}
@@ -349,17 +375,21 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncNode) error {
 			}
 			e.trace(fn, "func(%v) param %v=%v\n", fn.Name, param.Name, val)
 			callee.NewStack(param.Name).Push(val)
-		} else {
-			e.trace(fn, "func(%v) param %v=%v", fn.Name, param.Name, e.Stack.Items())
+		} else if param.Type == ast.AllRef {
+			e.trace(fn, "func(%v) param %v=(%v)", fn.Name, param.Name, caller.Stack.String())
 			target := callee.NewStack(param.Name)
 			for caller.Stack.Len() > 0 {
 				val := caller.Stack.MustPop()
 				target.Push(val)
 			}
+		} else {
+			return fmt.Errorf("stack reference %v not allowed as parameter", param.Type)
 		}
 	}
 	if err := callee.evalBlock(fn.Block); err != nil {
-		return err
+		if !errors.Is(err, errFuncReturn) {
+			return err
+		}
 	}
 	for callee.Main.Len() > 0 {
 		val := callee.Main.MustPop()
@@ -377,13 +407,13 @@ func (e *Env) invokeMacro(mac *ast.MacroNode) error {
 	return nil
 }
 
-func (e *Env) chain(node *ast.InvokeNode, err error) error {
-	frame := Frame{Pos: node.Pos()}
+func (e *Env) chain(name string, pos token.Pos, err error) error {
+	frame := Frame{Pos: pos}
 
 	errCalc, ok := err.(CalcError)
 	if ok {
 		if len(errCalc.Frames) > 0 {
-			errCalc.Frames[len(errCalc.Frames)-1].Func = node.Name
+			errCalc.Frames[len(errCalc.Frames)-1].Func = name
 		}
 		errCalc.Frames = append(errCalc.Frames, frame)
 		return errCalc
@@ -395,6 +425,9 @@ func (e *Env) chain(node *ast.InvokeNode, err error) error {
 }
 
 func (e *Env) err(node ast.Node, err error) error {
+	if errors.Is(err, errFuncReturn) {
+		return err
+	}
 	errCalc, ok := err.(CalcError)
 	if ok {
 		return errCalc

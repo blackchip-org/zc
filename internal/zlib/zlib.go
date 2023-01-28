@@ -11,6 +11,7 @@ var All = []zc.ModuleDef{
 	BoolFixed,
 	Conf,
 	Dev,
+	Dict,
 	Math,
 	MathBigInt,
 	MathFixed,
@@ -33,6 +34,9 @@ var (
 		"stack",
 		"str", // TODO: This should only be in dev
 	}
+	// Order here needs to be sorted based on dependencies. Do not put in
+	// alphabetical order. Modules to the top of the list do not have access
+	// to functions found at the bottom of the list.
 	PreludeDev = []string{
 		"dev",
 		"stack",
@@ -40,6 +44,7 @@ var (
 		"conf",
 		"math",
 		"str",
+		//"dict",
 	}
 )
 
@@ -118,6 +123,10 @@ var (
 			"trace-off": TraceOff,
 			"undef":     Undef,
 		},
+	}
+	Dict = zc.ModuleDef{
+		Name:       "dict",
+		ScriptPath: "zc:zlib/dict.zc",
 	}
 	Math = zc.ModuleDef{
 		Name:       "math",

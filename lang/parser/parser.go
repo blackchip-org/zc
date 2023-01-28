@@ -86,7 +86,7 @@ func (p *parser) parseExpr() (*ast.ExprNode, error) {
 		var node ast.Node
 		var err error
 		switch p.tok.Type {
-		case token.DoubleSlash, token.Slash:
+		case token.DoubleSlash, token.Slash, token.SlashDash:
 			node, err = p.parseRef()
 		case token.Id:
 			if p.next.Type == token.Semicolon {
@@ -339,6 +339,8 @@ func (p *parser) parseRef() (*ast.RefNode, error) {
 		ref.Type = ast.AllRef
 	case token.Slash:
 		ref.Type = ast.TopRef
+	case token.SlashDash:
+		ref.Type = ast.PopRef
 	default:
 		return ref, p.err("expected %v or %v but got %v", token.DoubleSlash, token.Slash, p.tok)
 	}
@@ -351,6 +353,11 @@ func (p *parser) parseRef() (*ast.RefNode, error) {
 
 	p.scan()
 	return ref, nil
+}
+
+func (p *parser) parseReturn() (*ast.ReturnNode, error) {
+	p.scan()
+	return &ast.ReturnNode{Token: p.tok}, nil
 }
 
 func (p *parser) parseStack() (*ast.StackNode, error) {
@@ -395,7 +402,11 @@ func (p *parser) parseStatementNested() (ast.Node, error) {
 		return p.parseIf()
 	case token.Id:
 		return p.parseExpr()
+	case token.Return:
+		return p.parseReturn()
 	case token.Slash:
+		return p.parseExpr()
+	case token.SlashDash:
 		return p.parseExpr()
 	case token.String:
 		return p.parseExpr()

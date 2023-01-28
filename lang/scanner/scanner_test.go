@@ -48,6 +48,7 @@ func TestToken(t *testing.T) {
 		{"/foo;", token.New(token.Slash, "/", start)},
 		{"//", token.New(token.Id, "//", start)},
 		{"//foo;", token.New(token.DoubleSlash, "//", start)},
+		{"/-foo;", token.New(token.SlashDash, "/-", start)},
 	}
 
 	for i, test := range tests {
@@ -68,6 +69,7 @@ func TestIndent(t *testing.T) {
 		{"foo\n\tbar", []token.Type{token.Id, token.Newline, token.Indent, token.Id}},
 		{"\tfoo\nbar", []token.Type{token.Indent, token.Id, token.Newline, token.Dedent, token.Id}},
 		{"\tfoo\n\tbar", []token.Type{token.Indent, token.Id, token.Newline, token.Id}},
+		{"[foo\nbar]\n", []token.Type{token.Id, token.Id, token.Newline}},
 	}
 
 	for _, test := range tests {

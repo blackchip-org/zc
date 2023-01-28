@@ -164,7 +164,12 @@ func formatTime(t time.Time, attrs timeAttrs) string {
 			layout += " " + zoneFormats[0]
 		}
 	}
+
+	zoneIsOffset := false
 	if _, err := strconv.ParseInt(name, 10, 8); err == nil {
+		zoneIsOffset = true
+	}
+	if name == "" || zoneIsOffset {
 		layout = strings.Replace(layout, " MST", "", 1)
 	}
 	if name == "UTC" {

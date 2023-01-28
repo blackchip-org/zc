@@ -23,6 +23,7 @@ const (
 	InvalidRef RefType = iota
 	TopRef
 	AllRef
+	PopRef
 )
 
 func (r RefType) String() string {
@@ -31,6 +32,8 @@ func (r RefType) String() string {
 		return "/"
 	case AllRef:
 		return "//"
+	case PopRef:
+		return "/-"
 	}
 	return "???"
 }
@@ -156,6 +159,13 @@ type RefNode struct {
 
 func (n RefNode) Pos() token.Pos { return n.Token.Pos }
 func (n RefNode) String() string { return nodeStringJSON(n) }
+
+type ReturnNode struct {
+	Token token.Token `json:"-"`
+}
+
+func (n ReturnNode) Pos() token.Pos { return n.Token.Pos }
+func (n ReturnNode) String() string { return nodeStringJSON(n) }
 
 type StackNode struct {
 	Token token.Token `json:"-"`
@@ -362,6 +372,18 @@ func (n RefNode) MarshalJSON() ([]byte, error) {
 	}{
 		Node:  "Ref",
 		Type:  n.Type.String(),
+		Alias: (Alias)(n),
+	})
+}
+
+func (n ReturnNode) MarshalJSON() ([]byte, error) {
+	type Alias ReturnNode
+	return json.Marshal(&struct {
+		Node string
+		Type string
+		Alias
+	}{
+		Node:  "Return",
 		Alias: (Alias)(n),
 	})
 }

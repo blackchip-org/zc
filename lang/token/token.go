@@ -51,6 +51,7 @@ const (
 	Return
 	Semicolon
 	Slash
+	SlashDash
 	String
 	Try
 	Use
@@ -80,6 +81,7 @@ var tokStr = map[Type]string{
 	Return:      "return",
 	Semicolon:   ";",
 	Slash:       "/",
+	SlashDash:   "/-",
 	String:      "string",
 	Try:         "try",
 	Use:         "use",
@@ -99,6 +101,7 @@ var keywords = map[string]Type{
 	"loop":    Loop,
 	"macro":   Macro,
 	"native":  Native,
+	"return":  Return,
 	"try":     Try,
 	"use":     Use,
 	"while":   While,
@@ -158,6 +161,8 @@ func IsIdRune(ch rune) bool {
 	case unicode.Is(unicode.Sc, ch):
 		return false
 	case ch == ';', ch == ',':
+		return false
+	case ch == '[', ch == ']':
 		return false
 	}
 	return true

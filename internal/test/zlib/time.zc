@@ -2,12 +2,25 @@ use assert
 use time
 use io
 
-utc local
+'America/Denver' local
 'Mon Jan 2 2006 3:04:05PM UTC +0000' travel
 
 func test-formats
     formats; formats=
+    answers; [
+        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM MST
+        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM -0700
+        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM MST -0700
+        'Mon Jan 2 2006 3:04:00PM MST -0700'    # Jan 2 2006 3:04pm
+        'Mon Jan 2 2006 3:04:00PM MST -0700'    # Jan 2 2006 3:04PM
+        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05pm
+        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM
+    ]
     for format; //formats
-        /format io.println
+        expected; /-answers
+        'TESTING `format` and EXPECTING `expected`' io.println
         /format dt
-        'Mon Jan 2 2006 3:04:05PM UTC' assert.eq
+        /expected assert.eq
+
+
+test-formats

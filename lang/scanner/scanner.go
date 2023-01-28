@@ -17,6 +17,7 @@ type Scanner struct {
 	start      token.Pos     // position of the scanner when Next() was called
 	indents    int           // count of current indentation level, one for each tab
 	nextTokens []token.Token // pending dedent tokens to emit
+	inBlock    bool
 }
 
 // When the src stream is exhausted, ch is set to this value
@@ -46,7 +47,7 @@ func (s *Scanner) Next() token.Token {
 	// When at the start of the line, check to see what the current
 	// indentation level is and emit indent and dedent tokens as needed
 	s.start = s.pos
-	if s.pos.Column == 1 {
+	if s.pos.Column == 1 && !s.inBlock {
 		if tok, yes := s.scanIndent(); yes {
 			return tok
 		}
@@ -59,6 +60,27 @@ func (s *Scanner) Next() token.Token {
 
 	if s.ch == '#' {
 		s.skipComment()
+		// If we have consumed a comment and we are in a block, we need to
+		// consume any indentation on the next line.
+		if s.inBlock {
+			s.skipSpace()
+		}
+	}
+	if s.ch == '[' {
+		s.inBlock = true
+		s.scan()
+	}
+	if s.ch == ']' {
+		s.inBlock = false
+		s.scan()
+		s.skipSpace()
+	}
+	if s.inBlock {
+		for s.ch == '\n' {
+			s.scan()
+			s.skipSpace()
+		}
+		s.skipSpace()
 	}
 
 	switch {
@@ -200,6 +222,10 @@ func (s *Scanner) scanSlash() token.Token {
 			return token.New(token.Id, "//", s.start)
 		}
 		return token.New(token.DoubleSlash, "//", s.start)
+	}
+	if s.ch == '-' {
+		s.scan()
+		return token.New(token.SlashDash, "/-", s.start)
 	}
 	if s.ch == end || unicode.IsSpace(s.ch) {
 		return token.New(token.Id, "/", s.start)
