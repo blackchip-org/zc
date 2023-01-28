@@ -1,6 +1,6 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
       "Node": "Include",
       "Module": {

@@ -1,6 +1,6 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
       "Node": "If",
       "Cases": [
@@ -8,7 +8,7 @@
           "Node": "IfCase",
           "Cond": {
             "Node": "Expr",
-            "Expr": [
+            "Atoms": [
               {
                 "Node": "Value",
                 "IsString": false,
@@ -20,29 +20,35 @@
               }
             ]
           },
-          "Block": [
+          "Stmts": [
             {
-              "Node": "Expr",
-              "Expr": [
-                {
-                  "Node": "Value",
-                  "IsString": true,
-                  "Value": "answer"
-                }
-              ]
+              "Node": "ExprStmt",
+              "Expr": {
+                "Node": "Expr",
+                "Atoms": [
+                  {
+                    "Node": "Value",
+                    "IsString": true,
+                    "Value": "answer"
+                  }
+                ]
+              }
             }
           ]
         }
       ]
     },
     {
-      "Node": "Expr",
-      "Expr": [
-        {
-          "Node": "Invoke",
-          "Name": "foo"
-        }
-      ]
+      "Node": "ExprStmt",
+      "Expr": {
+        "Node": "Expr",
+        "Atoms": [
+          {
+            "Node": "Invoke",
+            "Name": "foo"
+          }
+        ]
+      }
     }
   ]
 }

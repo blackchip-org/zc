@@ -1,15 +1,15 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
       "Node": "For",
       "Stack": {
-        "Node": "Stack",
+        "Node": "Select",
         "Name": "item"
       },
       "Expr": {
         "Node": "Expr",
-        "Expr": [
+        "Atoms": [
           {
             "Node": "Value",
             "IsString": false,
@@ -27,25 +27,28 @@
           }
         ]
       },
-      "Block": [
+      "Stmts": [
         {
-          "Node": "Expr",
-          "Expr": [
-            {
-              "Node": "Ref",
-              "Type": "/",
-              "Name": "item"
-            },
-            {
-              "Node": "Value",
-              "IsString": false,
-              "Value": "2"
-            },
-            {
-              "Node": "Invoke",
-              "Name": "mul"
-            }
-          ]
+          "Node": "ExprStmt",
+          "Expr": {
+            "Node": "Expr",
+            "Atoms": [
+              {
+                "Node": "Ref",
+                "Type": "/",
+                "Name": "item"
+              },
+              {
+                "Node": "Value",
+                "IsString": false,
+                "Value": "2"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "mul"
+              }
+            ]
+          }
         }
       ]
     }

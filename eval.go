@@ -15,58 +15,7 @@ var (
 	errFuncReturn = errors.New("function return")
 )
 
-func (e *Env) evalBlock(nodes []ast.Node) error {
-	for _, node := range nodes {
-		if err := e.evalNode(node); err != nil {
-			return e.err(node, err)
-		}
-	}
-	return nil
-}
-
-func (e *Env) evalNode(node ast.Node) error {
-	switch n := node.(type) {
-	case *ast.AliasNode:
-		return e.evalAliasNode(n)
-	case *ast.ExprNode:
-		return e.evalExprNode(n)
-	case *ast.IfNode:
-		return e.evalIfNode(n)
-	case *ast.FileNode:
-		return e.evalFileNode(n)
-	case *ast.ForNode:
-		return e.evalForNode(n)
-	case *ast.FuncNode:
-		return e.evalFuncNode(n)
-	case *ast.ImportNode:
-		return e.evalImportNode(n)
-	case *ast.IncludeNode:
-		return e.evalIncludeNode(n)
-	case *ast.InvokeNode:
-		return e.evalInvokeNode(n)
-	case *ast.MacroNode:
-		return e.evalMacroNode(n)
-	case *ast.NativeNode:
-		return e.evalNativeNode(n)
-	case *ast.RefNode:
-		return e.evalRefNode(n)
-	case *ast.ReturnNode:
-		return e.evalReturnNode(n)
-	case *ast.StackNode:
-		return e.evalStackNode(n)
-	case *ast.TryNode:
-		return e.evalTryNode(n)
-	case *ast.UseNode:
-		return e.evalUseNode(n)
-	case *ast.ValueNode:
-		return e.evalValueNode(n)
-	case *ast.WhileNode:
-		return e.evalWhileNode(n)
-	}
-	panic(fmt.Sprintf("unknown node: %+v", node))
-}
-
-func (e *Env) evalAliasNode(node *ast.AliasNode) error {
+func (e *Env) evalAliasStmt(node *ast.AliasStmt) error {
 	e.trace(node, "alias %v %v", node.To, node.From)
 	fn, ok := e.Func(node.From)
 	if !ok {
@@ -80,26 +29,44 @@ func (e *Env) evalAliasNode(node *ast.AliasNode) error {
 	return nil
 }
 
-func (e *Env) evalExprNode(expr *ast.ExprNode) error {
-	//defer func() { e.Stack = e.Main }()
-	for _, node := range expr.Expr {
-		if err := e.evalNode(node); err != nil {
-			return e.err(node, err)
+func (e *Env) evalAtom(atom ast.Atom) error {
+	switch a := atom.(type) {
+	case *ast.InvokeAtom:
+		return e.evalInvokeAtom(a)
+	case *ast.RefAtom:
+		return e.evalRefAtom(a)
+	case *ast.SelectAtom:
+		return e.evalSelectAtom(a)
+	case *ast.ValueAtom:
+		return e.evalValueAtom(a)
+	}
+	panic(fmt.Sprintf("unknown atom: %+v", atom))
+}
+
+func (e *Env) evalExpr(expr *ast.Expr) error {
+	for _, atom := range expr.Atoms {
+		if err := e.evalAtom(atom); err != nil {
+			return e.err(atom, err)
 		}
 	}
-	//e.Stack = e.Main
 	return nil
 }
 
-func (e *Env) evalIfNode(ifNode *ast.IfNode) error {
+func (e *Env) evalExprStmt(stmt *ast.ExprStmt) error {
+	err := e.evalExpr(stmt.Expr)
+	e.Stack = e.Main
+	return err
+}
+
+func (e *Env) evalIfStmt(ifNode *ast.IfStmt) error {
 	for _, caseNode := range ifNode.Cases {
 		// Final "else" condition will have no case expression
 		if caseNode.Cond == nil {
-			if err := e.evalBlock(caseNode.Block); err != nil {
+			if err := e.evalStmts(caseNode.Stmts); err != nil {
 				return e.err(caseNode, err)
 			}
 		} else {
-			if err := e.evalExprNode(caseNode.Cond); err != nil {
+			if err := e.evalExpr(caseNode.Cond); err != nil {
 				return e.err(caseNode.Cond, err)
 			}
 			v, err := e.Stack.Pop()
@@ -111,7 +78,7 @@ func (e *Env) evalIfNode(ifNode *ast.IfNode) error {
 				return e.err(caseNode.Cond, err)
 			}
 			if vb {
-				if err := e.evalBlock(caseNode.Block); err != nil {
+				if err := e.evalStmts(caseNode.Stmts); err != nil {
 					return err
 				}
 				break
@@ -121,21 +88,21 @@ func (e *Env) evalIfNode(ifNode *ast.IfNode) error {
 	return nil
 }
 
-func (e *Env) evalFileNode(file *ast.FileNode) error {
-	for _, line := range file.Block {
-		if err := e.evalNode(line); err != nil {
+func (e *Env) evalFile(file *ast.File) error {
+	for _, line := range file.Stmts {
+		if err := e.evalStmt(line); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func (e *Env) evalForNode(node *ast.ForNode) error {
+func (e *Env) evalForStmt(node *ast.ForStmt) error {
 	e.trace(node, "for(%v) start", node.Stack.Name)
 
 	expr := NewStack(e.Calc, "")
 	e.Stack = expr
-	err := e.evalExprNode(node.Expr)
+	err := e.evalExpr(node.Expr)
 	e.Stack = e.Main
 	if err != nil {
 		return e.err(node.Expr, err)
@@ -146,7 +113,7 @@ func (e *Env) evalForNode(node *ast.ForNode) error {
 		inner := e.Derive()
 		i := inner.NewStack(node.Stack.Name)
 		i.Clear().Push(item)
-		if err := inner.evalBlock(node.Block); err != nil {
+		if err := inner.evalStmts(node.Stmts); err != nil {
 			return err
 		}
 	}
@@ -154,7 +121,7 @@ func (e *Env) evalForNode(node *ast.ForNode) error {
 	return nil
 }
 
-func (e *Env) evalFuncNode(fn *ast.FuncNode) error {
+func (e *Env) evalFuncStmt(fn *ast.FuncStmt) error {
 	e.trace(fn, "define func: %v", fn.Name)
 	e.Funcs[fn.Name] = func(caller *Env) error {
 		return e.invokeFunction(caller, fn)
@@ -184,7 +151,7 @@ func (e *Env) evalImport(name string, alias string, zlib bool) error {
 
 }
 
-func (e *Env) evalImportNode(node *ast.ImportNode) error {
+func (e *Env) evalImportStmt(node *ast.ImportStmt) error {
 	mod := node.Module
 	alias := mod.Alias
 	if alias != "" {
@@ -199,7 +166,7 @@ func (e *Env) evalImportNode(node *ast.ImportNode) error {
 	return nil
 }
 
-func (e *Env) evalIncludeNode(node *ast.IncludeNode) error {
+func (e *Env) evalIncludeStmt(node *ast.IncludeStmt) error {
 	mod := node.Module
 	e.trace(node, "include %v", mod.Name)
 	if err := e.evalImport(mod.Name, "", mod.Zlib); err != nil {
@@ -208,7 +175,7 @@ func (e *Env) evalIncludeNode(node *ast.IncludeNode) error {
 	return nil
 }
 
-func (e *Env) evalInvokeNode(node *ast.InvokeNode) error {
+func (e *Env) evalInvokeAtom(node *ast.InvokeAtom) error {
 	e.trace(node, "invoke %v", node.Name)
 	fn, ok := e.Func(node.Name)
 	if !ok {
@@ -223,7 +190,7 @@ func (e *Env) evalInvokeNode(node *ast.InvokeNode) error {
 	return nil
 }
 
-func (e *Env) evalMacroNode(mac *ast.MacroNode) error {
+func (e *Env) evalMacroStmt(mac *ast.MacroStmt) error {
 	e.trace(mac, "define macro: %v", mac.Name)
 	e.Funcs[mac.Name] = func(caller *Env) error {
 		return caller.invokeMacro(mac)
@@ -235,7 +202,7 @@ func (e *Env) evalMacroNode(mac *ast.MacroNode) error {
 	return nil
 }
 
-func (e *Env) evalNativeNode(node *ast.NativeNode) error {
+func (e *Env) evalNativeStmt(node *ast.NativeStmt) error {
 	e.trace(node, "native %v", strings.Join([]string{node.Name, node.Export}, " "))
 	export := node.Export
 	if export == "" {
@@ -252,7 +219,7 @@ func (e *Env) evalNativeNode(node *ast.NativeNode) error {
 	return nil
 }
 
-func (e *Env) evalRefNode(ref *ast.RefNode) error {
+func (e *Env) evalRefAtom(ref *ast.RefAtom) error {
 	e.trace(ref, "ref %v%v", ref.Type, ref.Name)
 	stack, ok := e.StackFor(ref.Name)
 	if !ok {
@@ -280,13 +247,13 @@ func (e *Env) evalRefNode(ref *ast.RefNode) error {
 	return nil
 }
 
-func (e *Env) evalReturnNode(node *ast.ReturnNode) error {
+func (e *Env) evalReturnStmt(node *ast.ReturnStmt) error {
 	e.trace(node, "return")
 	return errFuncReturn
 }
 
-func (e *Env) evalStackNode(node *ast.StackNode) error {
-	e.trace(node, "stack %v", node.Name)
+func (e *Env) evalSelectAtom(node *ast.SelectAtom) error {
+	e.trace(node, "select %v", node.Name)
 	stack, ok := e.StackFor(node.Name)
 	if !ok {
 		stack = e.NewStack(node.Name)
@@ -295,9 +262,50 @@ func (e *Env) evalStackNode(node *ast.StackNode) error {
 	return nil
 }
 
-func (e *Env) evalTryNode(node *ast.TryNode) error {
+func (e *Env) evalStmt(stmt ast.Stmt) error {
+	switch s := stmt.(type) {
+	case *ast.AliasStmt:
+		return e.evalAliasStmt(s)
+	case *ast.ExprStmt:
+		return e.evalExprStmt(s)
+	case *ast.IfStmt:
+		return e.evalIfStmt(s)
+	case *ast.ForStmt:
+		return e.evalForStmt(s)
+	case *ast.FuncStmt:
+		return e.evalFuncStmt(s)
+	case *ast.ImportStmt:
+		return e.evalImportStmt(s)
+	case *ast.IncludeStmt:
+		return e.evalIncludeStmt(s)
+	case *ast.MacroStmt:
+		return e.evalMacroStmt(s)
+	case *ast.NativeStmt:
+		return e.evalNativeStmt(s)
+	case *ast.ReturnStmt:
+		return e.evalReturnStmt(s)
+	case *ast.TryStmt:
+		return e.evalTryStmt(s)
+	case *ast.UseStmt:
+		return e.evalUseStmt(s)
+	case *ast.WhileStmt:
+		return e.evalWhileStmt(s)
+	}
+	panic(fmt.Sprintf("unknown stmt: %+v", stmt))
+}
+
+func (e *Env) evalStmts(stmts []ast.Stmt) error {
+	for _, stmt := range stmts {
+		if err := e.evalStmt(stmt); err != nil {
+			return e.err(stmt, err)
+		}
+	}
+	return nil
+}
+
+func (e *Env) evalTryStmt(node *ast.TryStmt) error {
 	e.trace(node, "try")
-	if err := e.evalExprNode(node.Expr); err != nil {
+	if err := e.evalExpr(node.Expr); err != nil {
 		e.Stack.Push(err.Error())
 		e.Stack.PushBool(false)
 	} else {
@@ -306,7 +314,7 @@ func (e *Env) evalTryNode(node *ast.TryNode) error {
 	return nil
 }
 
-func (e *Env) evalUseNode(node *ast.UseNode) error {
+func (e *Env) evalUseStmt(node *ast.UseStmt) error {
 	e.trace(node, "use %v", node.Name)
 	def, ok := e.Calc.ModuleDefs[node.Name]
 	if !ok {
@@ -325,7 +333,7 @@ func (e *Env) evalUseNode(node *ast.UseNode) error {
 	return nil
 }
 
-func (e *Env) evalValueNode(value *ast.ValueNode) error {
+func (e *Env) evalValueAtom(value *ast.ValueAtom) error {
 	e.trace(value, "value %v", value.Value)
 	interp, err := e.Interpolate(value.Value)
 	if err != nil {
@@ -343,29 +351,28 @@ func (e *Env) evalValueNode(value *ast.ValueNode) error {
 	return nil
 }
 
-func (e *Env) evalWhileNode(while *ast.WhileNode) error {
+func (e *Env) evalWhileStmt(while *ast.WhileStmt) error {
 	e.trace(while, "while")
 	for {
-		expr := e.Derive()
-		if err := expr.evalExprNode(while.Cond); err != nil {
+		de := e.ForBlock()
+		if err := de.evalExpr(while.Cond); err != nil {
 			return e.err(while.Cond, err)
 		}
-		fmt.Printf("**** EXPR STACK IS: %v\n", expr.Stack.Name)
-		result, err := expr.Stack.PopBool()
+		result, err := de.Stack.PopBool()
 		if err != nil {
 			return e.err(while.Cond, err)
 		}
 		if !result {
 			break
 		}
-		if err := e.evalBlock(while.Block); err != nil {
+		if err := e.evalStmts(while.Stmts); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func (e *Env) invokeFunction(caller *Env, fn *ast.FuncNode) error {
+func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 	callee := e
 	for _, param := range fn.Params {
 		if param.Type == ast.TopRef {
@@ -386,7 +393,7 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncNode) error {
 			return fmt.Errorf("stack reference %v not allowed as parameter", param.Type)
 		}
 	}
-	if err := callee.evalBlock(fn.Block); err != nil {
+	if err := callee.evalStmts(fn.Stmts); err != nil {
 		if !errors.Is(err, errFuncReturn) {
 			return err
 		}
@@ -400,8 +407,8 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncNode) error {
 	return nil
 }
 
-func (e *Env) invokeMacro(mac *ast.MacroNode) error {
-	if err := e.evalBlock(mac.Expr.Expr); err != nil {
+func (e *Env) invokeMacro(mac *ast.MacroStmt) error {
+	if err := e.evalExpr(mac.Expr); err != nil {
 		return err
 	}
 	return nil

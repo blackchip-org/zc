@@ -131,7 +131,7 @@ func (c *Calc) Eval(name string, src []byte) error {
 	if err != nil {
 		return err
 	}
-	return c.Env.evalNode(root)
+	return c.Env.evalFile(root)
 }
 
 func (c *Calc) EvalString(name string, src string) error {
@@ -171,7 +171,7 @@ func (c *Calc) Load(def ModuleDef) (*Env, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := env.evalNode(ast); err != nil {
+		if err := env.evalFile(ast); err != nil {
 			return nil, err
 		}
 	}

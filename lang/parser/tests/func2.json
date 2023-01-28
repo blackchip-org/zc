@@ -1,6 +1,6 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
       "Node": "Func",
       "Name": "inc",
@@ -11,25 +11,28 @@
           "Name": "a"
         }
       ],
-      "Block": [
+      "Stmts": [
         {
-          "Node": "Expr",
-          "Expr": [
-            {
-              "Node": "Ref",
-              "Type": "/",
-              "Name": "a"
-            },
-            {
-              "Node": "Value",
-              "IsString": false,
-              "Value": "1"
-            },
-            {
-              "Node": "Invoke",
-              "Name": "add"
-            }
-          ]
+          "Node": "ExprStmt",
+          "Expr": {
+            "Node": "Expr",
+            "Atoms": [
+              {
+                "Node": "Ref",
+                "Type": "/",
+                "Name": "a"
+              },
+              {
+                "Node": "Value",
+                "IsString": false,
+                "Value": "1"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "add"
+              }
+            ]
+          }
         }
       ]
     },
@@ -43,25 +46,28 @@
           "Name": "a"
         }
       ],
-      "Block": [
+      "Stmts": [
         {
-          "Node": "Expr",
-          "Expr": [
-            {
-              "Node": "Ref",
-              "Type": "/",
-              "Name": "a"
-            },
-            {
-              "Node": "Value",
-              "IsString": false,
-              "Value": "1"
-            },
-            {
-              "Node": "Invoke",
-              "Name": "sub"
-            }
-          ]
+          "Node": "ExprStmt",
+          "Expr": {
+            "Node": "Expr",
+            "Atoms": [
+              {
+                "Node": "Ref",
+                "Type": "/",
+                "Name": "a"
+              },
+              {
+                "Node": "Value",
+                "IsString": false,
+                "Value": "1"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "sub"
+              }
+            ]
+          }
         }
       ]
     }

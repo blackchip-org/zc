@@ -1,6 +1,6 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
       "Node": "Func",
       "Name": "sum",
@@ -11,22 +11,25 @@
           "Name": "a"
         }
       ],
-      "Block": [
+      "Stmts": [
         {
-          "Node": "Expr",
-          "Expr": [
-            {
-              "Node": "Ref",
-              "Type": "//",
-              "Name": "a"
-            }
-          ]
+          "Node": "ExprStmt",
+          "Expr": {
+            "Node": "Expr",
+            "Atoms": [
+              {
+                "Node": "Ref",
+                "Type": "//",
+                "Name": "a"
+              }
+            ]
+          }
         },
         {
           "Node": "While",
           "Cond": {
             "Node": "Expr",
-            "Expr": [
+            "Atoms": [
               {
                 "Node": "Invoke",
                 "Name": "n"
@@ -42,15 +45,18 @@
               }
             ]
           },
-          "Block": [
+          "Stmts": [
             {
-              "Node": "Expr",
-              "Expr": [
-                {
-                  "Node": "Invoke",
-                  "Name": "add"
-                }
-              ]
+              "Node": "ExprStmt",
+              "Expr": {
+                "Node": "Expr",
+                "Atoms": [
+                  {
+                    "Node": "Invoke",
+                    "Name": "add"
+                  }
+                ]
+              }
             }
           ]
         }

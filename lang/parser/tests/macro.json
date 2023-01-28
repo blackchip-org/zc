@@ -1,12 +1,12 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
       "Node": "Macro",
       "Name": "inc",
       "Expr": {
         "Node": "Expr",
-        "Expr": [
+        "Atoms": [
           {
             "Node": "Value",
             "IsString": false,

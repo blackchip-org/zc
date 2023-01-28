@@ -1,28 +1,31 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
       "Node": "Func",
       "Name": "bad",
       "Params": null,
-      "Block": [
+      "Stmts": [
         {
-          "Node": "Expr",
-          "Expr": [
-            {
-              "Node": "Invoke",
-              "Name": "s1"
-            },
-            {
-              "Node": "Value",
-              "IsString": false,
-              "Value": "0"
-            },
-            {
-              "Node": "Invoke",
-              "Name": "div"
-            }
-          ]
+          "Node": "ExprStmt",
+          "Expr": {
+            "Node": "Expr",
+            "Atoms": [
+              {
+                "Node": "Invoke",
+                "Name": "s1"
+              },
+              {
+                "Node": "Value",
+                "IsString": false,
+                "Value": "0"
+              },
+              {
+                "Node": "Invoke",
+                "Name": "div"
+              }
+            ]
+          }
         }
       ]
     },
@@ -30,7 +33,7 @@
       "Node": "Try",
       "Expr": {
         "Node": "Expr",
-        "Expr": [
+        "Atoms": [
           {
             "Node": "Invoke",
             "Name": "bad"

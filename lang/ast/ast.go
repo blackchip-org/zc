@@ -11,6 +11,16 @@ type Node interface {
 	String() string
 }
 
+type Atom interface {
+	Node
+	atomNode()
+}
+
+type Stmt interface {
+	Node
+	stmtNode()
+}
+
 type ModuleRef struct {
 	Zlib  bool
 	Name  string
@@ -38,176 +48,202 @@ func (r RefType) String() string {
 	return "???"
 }
 
-type AliasNode struct {
+type AliasStmt struct {
 	Token token.Token
 	From  string
 	To    string
 }
 
-func (n AliasNode) Pos() token.Pos { return n.Token.Pos }
-func (n AliasNode) String() string { return nodeStringJSON(n) }
+func (n AliasStmt) Pos() token.Pos { return n.Token.Pos }
+func (n AliasStmt) String() string { return nodeStringJSON(n) }
+func (n AliasStmt) stmtNode()      {}
 
-type BadNode struct {
+type BadStmt struct {
 	Token token.Token
 }
 
-func (n BadNode) Pos() token.Pos { return n.Token.Pos }
-func (n BadNode) String() string { return nodeStringJSON(n) }
+func (n BadStmt) Pos() token.Pos { return n.Token.Pos }
+func (n BadStmt) String() string { return nodeStringJSON(n) }
+func (n BadStmt) stmtNode()      {}
 
-type ExprNode struct {
+type Expr struct {
 	Token  token.Token `json:"-"`
-	Target *RefNode    `json:",omitempty"`
-	Expr   []Node
+	Target *RefAtom    `json:",omitempty"`
+	Atoms  []Atom
 }
 
-func (n ExprNode) Pos() token.Pos { return n.Token.Pos }
-func (n ExprNode) String() string { return nodeStringJSON(n) }
+func (n Expr) Pos() token.Pos { return n.Token.Pos }
+func (n Expr) String() string { return nodeStringJSON(n) }
 
-type FileNode struct {
+type ExprStmt struct {
+	Token token.Token `json:"-"`
+	Expr  *Expr
+}
+
+func (n ExprStmt) Pos() token.Pos { return n.Token.Pos }
+func (n ExprStmt) String() string { return nodeStringJSON(n) }
+func (n ExprStmt) stmtNode()      {}
+
+type File struct {
 	Token token.Token `json:"-"`
 	Name  string      `json:",omitempty"`
-	Block []Node
+	Stmts []Stmt
 }
 
-func (n FileNode) Pos() token.Pos { return n.Token.Pos }
-func (n FileNode) String() string { return nodeStringJSON(n) }
+func (n File) Pos() token.Pos { return n.Token.Pos }
+func (n File) String() string { return nodeStringJSON(n) }
 
-type ForNode struct {
+type ForStmt struct {
 	Token token.Token `json:"-"`
-	Stack *StackNode
-	Expr  *ExprNode
-	Block []Node
+	Stack *SelectAtom
+	Expr  *Expr
+	Stmts []Stmt
 }
 
-func (n ForNode) Pos() token.Pos { return n.Token.Pos }
-func (n ForNode) String() string { return nodeStringJSON(n) }
+func (n ForStmt) Pos() token.Pos { return n.Token.Pos }
+func (n ForStmt) String() string { return nodeStringJSON(n) }
+func (n ForStmt) stmtNode()      {}
 
-type FuncNode struct {
+type FuncStmt struct {
 	Token  token.Token `json:"-"`
 	Name   string
-	Params []*RefNode
-	Block  []Node
+	Params []*RefAtom
+	Stmts  []Stmt
 }
 
-func (n FuncNode) Pos() token.Pos { return n.Token.Pos }
-func (n FuncNode) String() string { return nodeStringJSON(n) }
+func (n FuncStmt) Pos() token.Pos { return n.Token.Pos }
+func (n FuncStmt) String() string { return nodeStringJSON(n) }
+func (n FuncStmt) stmtNode()      {}
 
-type IfNode struct {
+type IfStmt struct {
 	Token token.Token `json:"-"`
 	Cases []*IfCaseNode
 }
 
-func (n IfNode) Pos() token.Pos { return n.Token.Pos }
-func (n IfNode) String() string { return nodeStringJSON(n) }
+func (n IfStmt) Pos() token.Pos { return n.Token.Pos }
+func (n IfStmt) String() string { return nodeStringJSON(n) }
+func (n IfStmt) stmtNode()      {}
 
 type IfCaseNode struct {
 	Token token.Token `json:"-"`
-	Cond  *ExprNode   `json:",omitempty"` // for the final "else", this is nil
-	Block []Node
+	Cond  *Expr       `json:",omitempty"` // for the final "else", this is nil
+	Stmts []Stmt
 }
 
 func (n IfCaseNode) Pos() token.Pos { return n.Token.Pos }
 func (n IfCaseNode) String() string { return nodeStringJSON(n) }
 
-type ImportNode struct {
+type ImportStmt struct {
 	Token  token.Token `json:"-"`
 	Module ModuleRef
 }
 
-func (n ImportNode) Pos() token.Pos { return n.Token.Pos }
-func (n ImportNode) String() string { return nodeStringJSON(n) }
+func (n ImportStmt) Pos() token.Pos { return n.Token.Pos }
+func (n ImportStmt) String() string { return nodeStringJSON(n) }
+func (n ImportStmt) stmtNode()      {}
 
-type IncludeNode struct {
+type IncludeStmt struct {
 	Token  token.Token `json:"-"`
 	Module ModuleRef
 }
 
-func (n IncludeNode) Pos() token.Pos { return n.Token.Pos }
-func (n IncludeNode) String() string { return nodeStringJSON(n) }
+func (n IncludeStmt) Pos() token.Pos { return n.Token.Pos }
+func (n IncludeStmt) String() string { return nodeStringJSON(n) }
+func (n IncludeStmt) stmtNode()      {}
 
-type InvokeNode struct {
+type InvokeAtom struct {
 	Token token.Token `json:"-"`
 	Name  string
 }
 
-func (n InvokeNode) Pos() token.Pos { return n.Token.Pos }
-func (n InvokeNode) String() string { return nodeStringJSON(n) }
+func (n InvokeAtom) Pos() token.Pos { return n.Token.Pos }
+func (n InvokeAtom) String() string { return nodeStringJSON(n) }
+func (n InvokeAtom) atomNode()      {}
 
-type MacroNode struct {
+type MacroStmt struct {
 	Token token.Token `json:"-"`
 	Name  string
-	Expr  *ExprNode
+	Expr  *Expr
 }
 
-func (n MacroNode) Pos() token.Pos { return n.Token.Pos }
-func (n MacroNode) String() string { return nodeStringJSON(n) }
+func (n MacroStmt) Pos() token.Pos { return n.Token.Pos }
+func (n MacroStmt) String() string { return nodeStringJSON(n) }
+func (n MacroStmt) stmtNode()      {}
 
-type NativeNode struct {
+type NativeStmt struct {
 	Token  token.Token `json:"-"`
 	Name   string
 	Export string `json:",omitempty"`
 }
 
-func (n NativeNode) Pos() token.Pos { return n.Token.Pos }
-func (n NativeNode) String() string { return nodeStringJSON(n) }
+func (n NativeStmt) Pos() token.Pos { return n.Token.Pos }
+func (n NativeStmt) String() string { return nodeStringJSON(n) }
+func (n NativeStmt) stmtNode()      {}
 
-type RefNode struct {
+type RefAtom struct {
 	Token token.Token `json:"-"`
 	Name  string
 	Type  RefType
 }
 
-func (n RefNode) Pos() token.Pos { return n.Token.Pos }
-func (n RefNode) String() string { return nodeStringJSON(n) }
+func (n RefAtom) Pos() token.Pos { return n.Token.Pos }
+func (n RefAtom) String() string { return nodeStringJSON(n) }
+func (n RefAtom) atomNode()      {}
 
-type ReturnNode struct {
+type ReturnStmt struct {
 	Token token.Token `json:"-"`
 }
 
-func (n ReturnNode) Pos() token.Pos { return n.Token.Pos }
-func (n ReturnNode) String() string { return nodeStringJSON(n) }
+func (n ReturnStmt) Pos() token.Pos { return n.Token.Pos }
+func (n ReturnStmt) String() string { return nodeStringJSON(n) }
+func (n ReturnStmt) stmtNode()      {}
 
-type StackNode struct {
-	Token token.Token `json:"-"`
-	Name  string
-}
-
-func (n StackNode) Pos() token.Pos { return n.Token.Pos }
-func (n StackNode) String() string { return nodeStringJSON(n) }
-
-type TryNode struct {
-	Token token.Token `json:"-"`
-	Expr  *ExprNode
-}
-
-func (n TryNode) Pos() token.Pos { return n.Token.Pos }
-func (n TryNode) String() string { return nodeStringJSON(n) }
-
-type UseNode struct {
+type SelectAtom struct {
 	Token token.Token `json:"-"`
 	Name  string
 }
 
-func (n UseNode) Pos() token.Pos { return n.Token.Pos }
-func (n UseNode) String() string { return nodeStringJSON(n) }
+func (n SelectAtom) Pos() token.Pos { return n.Token.Pos }
+func (n SelectAtom) String() string { return nodeStringJSON(n) }
+func (n SelectAtom) atomNode()      {}
 
-type ValueNode struct {
+type TryStmt struct {
+	Token token.Token `json:"-"`
+	Expr  *Expr
+}
+
+func (n TryStmt) Pos() token.Pos { return n.Token.Pos }
+func (n TryStmt) String() string { return nodeStringJSON(n) }
+func (n TryStmt) stmtNode()      {}
+
+type UseStmt struct {
+	Token token.Token `json:"-"`
+	Name  string
+}
+
+func (n UseStmt) Pos() token.Pos { return n.Token.Pos }
+func (n UseStmt) String() string { return nodeStringJSON(n) }
+func (n UseStmt) stmtNode()      {}
+
+type ValueAtom struct {
 	Token    token.Token `json:"-"`
 	IsString bool
 	Value    string
 }
 
-func (n ValueNode) Pos() token.Pos { return n.Token.Pos }
-func (n ValueNode) String() string { return nodeStringJSON(n) }
+func (n ValueAtom) Pos() token.Pos { return n.Token.Pos }
+func (n ValueAtom) String() string { return nodeStringJSON(n) }
+func (n ValueAtom) atomNode()      {}
 
-type WhileNode struct {
+type WhileStmt struct {
 	Token token.Token `json:"-"`
-	Cond  *ExprNode
-	Block []Node
+	Cond  *Expr
+	Stmts []Stmt
 }
 
-func (n WhileNode) Pos() token.Pos { return n.Token.Pos }
-func (n WhileNode) String() string { return nodeStringJSON(n) }
+func (n WhileStmt) Pos() token.Pos { return n.Token.Pos }
+func (n WhileStmt) String() string { return nodeStringJSON(n) }
+func (n WhileStmt) stmtNode()      {}
 
 func nodeStringJSON(n Node) string {
 	b, err := json.MarshalIndent(n, "", "  ")
@@ -220,8 +256,8 @@ func nodeStringJSON(n Node) string {
 // Add synthetic field
 // http://choly.ca/post/go-json-marshalling/
 
-func (n AliasNode) MarshalJSON() ([]byte, error) {
-	type Alias AliasNode
+func (n AliasStmt) MarshalJSON() ([]byte, error) {
+	type Alias AliasStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -231,8 +267,8 @@ func (n AliasNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n BadNode) MarshalJSON() ([]byte, error) {
-	type Alias BadNode
+func (n BadStmt) MarshalJSON() ([]byte, error) {
+	type Alias BadStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -242,8 +278,8 @@ func (n BadNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n ExprNode) MarshalJSON() ([]byte, error) {
-	type Alias ExprNode
+func (n Expr) MarshalJSON() ([]byte, error) {
+	type Alias Expr
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -253,8 +289,19 @@ func (n ExprNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n FileNode) MarshalJSON() ([]byte, error) {
-	type Alias FileNode
+func (n ExprStmt) MarshalJSON() ([]byte, error) {
+	type Alias ExprStmt
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "ExprStmt",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n File) MarshalJSON() ([]byte, error) {
+	type Alias File
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -264,8 +311,8 @@ func (n FileNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n ForNode) MarshalJSON() ([]byte, error) {
-	type Alias ForNode
+func (n ForStmt) MarshalJSON() ([]byte, error) {
+	type Alias ForStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -275,8 +322,8 @@ func (n ForNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n FuncNode) MarshalJSON() ([]byte, error) {
-	type Alias FuncNode
+func (n FuncStmt) MarshalJSON() ([]byte, error) {
+	type Alias FuncStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -286,8 +333,8 @@ func (n FuncNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n IfNode) MarshalJSON() ([]byte, error) {
-	type Alias IfNode
+func (n IfStmt) MarshalJSON() ([]byte, error) {
+	type Alias IfStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -308,8 +355,8 @@ func (n IfCaseNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n ImportNode) MarshalJSON() ([]byte, error) {
-	type Alias ImportNode
+func (n ImportStmt) MarshalJSON() ([]byte, error) {
+	type Alias ImportStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -319,8 +366,8 @@ func (n ImportNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n IncludeNode) MarshalJSON() ([]byte, error) {
-	type Alias IncludeNode
+func (n IncludeStmt) MarshalJSON() ([]byte, error) {
+	type Alias IncludeStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -330,8 +377,8 @@ func (n IncludeNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n InvokeNode) MarshalJSON() ([]byte, error) {
-	type Alias InvokeNode
+func (n InvokeAtom) MarshalJSON() ([]byte, error) {
+	type Alias InvokeAtom
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -341,8 +388,8 @@ func (n InvokeNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n MacroNode) MarshalJSON() ([]byte, error) {
-	type Alias MacroNode
+func (n MacroStmt) MarshalJSON() ([]byte, error) {
+	type Alias MacroStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -352,8 +399,8 @@ func (n MacroNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n NativeNode) MarshalJSON() ([]byte, error) {
-	type Alias NativeNode
+func (n NativeStmt) MarshalJSON() ([]byte, error) {
+	type Alias NativeStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -363,8 +410,8 @@ func (n NativeNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n RefNode) MarshalJSON() ([]byte, error) {
-	type Alias RefNode
+func (n RefAtom) MarshalJSON() ([]byte, error) {
+	type Alias RefAtom
 	return json.Marshal(&struct {
 		Node string
 		Type string
@@ -376,8 +423,8 @@ func (n RefNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n ReturnNode) MarshalJSON() ([]byte, error) {
-	type Alias ReturnNode
+func (n ReturnStmt) MarshalJSON() ([]byte, error) {
+	type Alias ReturnStmt
 	return json.Marshal(&struct {
 		Node string
 		Type string
@@ -388,19 +435,19 @@ func (n ReturnNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n StackNode) MarshalJSON() ([]byte, error) {
-	type Alias StackNode
+func (n SelectAtom) MarshalJSON() ([]byte, error) {
+	type Alias SelectAtom
 	return json.Marshal(&struct {
 		Node string
 		Alias
 	}{
-		Node:  "Stack",
+		Node:  "Select",
 		Alias: (Alias)(n),
 	})
 }
 
-func (n TryNode) MarshalJSON() ([]byte, error) {
-	type Alias TryNode
+func (n TryStmt) MarshalJSON() ([]byte, error) {
+	type Alias TryStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -410,8 +457,8 @@ func (n TryNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n UseNode) MarshalJSON() ([]byte, error) {
-	type Alias UseNode
+func (n UseStmt) MarshalJSON() ([]byte, error) {
+	type Alias UseStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -421,8 +468,8 @@ func (n UseNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n ValueNode) MarshalJSON() ([]byte, error) {
-	type Alias ValueNode
+func (n ValueAtom) MarshalJSON() ([]byte, error) {
+	type Alias ValueAtom
 	return json.Marshal(&struct {
 		Node string
 		Alias
@@ -432,8 +479,8 @@ func (n ValueNode) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (n WhileNode) MarshalJSON() ([]byte, error) {
-	type Alias WhileNode
+func (n WhileStmt) MarshalJSON() ([]byte, error) {
+	type Alias WhileStmt
 	return json.Marshal(&struct {
 		Node string
 		Alias

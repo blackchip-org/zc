@@ -1,33 +1,39 @@
 {
   "Node": "File",
-  "Block": [
+  "Stmts": [
     {
-      "Node": "Expr",
-      "Expr": [
-        {
-          "Node": "Value",
-          "IsString": false,
-          "Value": "1234"
-        },
-        {
-          "Node": "Value",
-          "IsString": false,
-          "Value": "0xabcd"
-        }
-      ]
+      "Node": "ExprStmt",
+      "Expr": {
+        "Node": "Expr",
+        "Atoms": [
+          {
+            "Node": "Value",
+            "IsString": false,
+            "Value": "1234"
+          },
+          {
+            "Node": "Value",
+            "IsString": false,
+            "Value": "0xabcd"
+          }
+        ]
+      }
     },
     {
-      "Node": "Expr",
-      "Expr": [
-        {
-          "Node": "Invoke",
-          "Name": "foo"
-        },
-        {
-          "Node": "Invoke",
-          "Name": "bar"
-        }
-      ]
+      "Node": "ExprStmt",
+      "Expr": {
+        "Node": "Expr",
+        "Atoms": [
+          {
+            "Node": "Invoke",
+            "Name": "foo"
+          },
+          {
+            "Node": "Invoke",
+            "Name": "bar"
+          }
+        ]
+      }
     }
   ]
 }

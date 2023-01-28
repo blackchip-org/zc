@@ -16,7 +16,7 @@ type parser struct {
 	next token.Token
 }
 
-func Parse(file string, src []byte) (ast.Node, error) {
+func Parse(file string, src []byte) (*ast.File, error) {
 	p := &parser{
 		s: scanner.New(file, src),
 	}
@@ -27,13 +27,13 @@ func Parse(file string, src []byte) (ast.Node, error) {
 	p.scan()
 
 	// If there is an error, return as much of the AST as possible
-	nodes, err := p.parseFile()
-	root := &ast.FileNode{Name: file, Block: nodes}
+	stmts, err := p.parseFile()
+	root := &ast.File{Name: file, Stmts: stmts}
 	return root, err
 }
 
-func (p *parser) parseAlias() (*ast.AliasNode, error) {
-	node := &ast.AliasNode{Token: p.tok}
+func (p *parser) parseAliasStmt() (*ast.AliasStmt, error) {
+	node := &ast.AliasStmt{Token: p.tok}
 
 	p.scan()
 	if p.tok.Type != token.Id {
@@ -56,53 +56,30 @@ func (p *parser) parseAlias() (*ast.AliasNode, error) {
 	return node, nil
 }
 
-func (p *parser) parseBlock() ([]ast.Node, error) {
-	var body []ast.Node
-	if p.tok.Type != token.Indent {
-		return body, p.err("expecting %v but got %v", token.Indent, p.tok)
-	}
-
-	p.scan()
-	for p.tok.Type != token.End && p.tok.Type != token.Dedent {
-		if p.tok.Type == token.Newline {
-			p.scan()
-			continue
-		}
-		stmt, err := p.parseStatementNested()
-		body = append(body, stmt)
-		if err != nil {
-			return body, err
-		}
-	}
-
-	p.scan()
-	return body, nil
-}
-
-func (p *parser) parseExpr() (*ast.ExprNode, error) {
-	expr := &ast.ExprNode{Token: p.tok}
+func (p *parser) parseExpr() (*ast.Expr, error) {
+	expr := &ast.Expr{Token: p.tok}
 	done := false
 	for !done {
-		var node ast.Node
+		var atom ast.Atom
 		var err error
 		switch p.tok.Type {
 		case token.DoubleSlash, token.Slash, token.SlashDash:
-			node, err = p.parseRef()
+			atom, err = p.parseRefAtom()
 		case token.Id:
 			if p.next.Type == token.Semicolon {
-				node, err = p.parseStack()
+				atom, err = p.parseSelectAtom()
 			} else {
-				node = &ast.InvokeNode{Token: p.tok, Name: p.tok.Literal}
+				atom = &ast.InvokeAtom{Token: p.tok, Name: p.tok.Literal}
 				p.scan()
 			}
 		case token.Newline, token.End:
 			done = true
 			p.scan()
 		case token.String:
-			node = &ast.ValueNode{Token: p.tok, Value: p.tok.Literal, IsString: true}
+			atom = &ast.ValueAtom{Token: p.tok, Value: p.tok.Literal, IsString: true}
 			p.scan()
 		case token.Value:
-			node = &ast.ValueNode{Token: p.tok, Value: p.tok.Literal}
+			atom = &ast.ValueAtom{Token: p.tok, Value: p.tok.Literal}
 			p.scan()
 		default:
 			return expr, p.err("unexpected %v", p.tok)
@@ -110,16 +87,23 @@ func (p *parser) parseExpr() (*ast.ExprNode, error) {
 		if err != nil {
 			return expr, err
 		}
-		if node != nil {
-			expr.Expr = append(expr.Expr, node)
+		if atom != nil {
+			expr.Atoms = append(expr.Atoms, atom)
 		}
 	}
 
 	return expr, nil
 }
 
-func (p *parser) parseFile() ([]ast.Node, error) {
-	var nodes []ast.Node
+func (p *parser) parseExprStmt() (ast.Stmt, error) {
+	stmt := &ast.ExprStmt{Token: p.tok}
+	expr, err := p.parseExpr()
+	stmt.Expr = expr
+	return stmt, err
+}
+
+func (p *parser) parseFile() ([]ast.Stmt, error) {
+	var stmts []ast.Stmt
 
 	done := false
 	for !done {
@@ -129,21 +113,21 @@ func (p *parser) parseFile() ([]ast.Node, error) {
 		case token.Newline:
 			p.scan()
 		default:
-			stmt, err := p.parseStatementTop()
-			nodes = append(nodes, stmt)
+			stmt, err := p.parseStmtTop()
+			stmts = append(stmts, stmt)
 			if err != nil {
-				return nodes, err
+				return stmts, err
 			}
 		}
 	}
-	return nodes, nil
+	return stmts, nil
 }
 
-func (p *parser) parseFor() (*ast.ForNode, error) {
-	node := &ast.ForNode{Token: p.tok}
+func (p *parser) parseForStmt() (*ast.ForStmt, error) {
+	node := &ast.ForStmt{Token: p.tok}
 
 	p.scan()
-	stack, err := p.parseStack()
+	stack, err := p.parseSelectAtom()
 	node.Stack = stack
 	if err != nil {
 		return node, err
@@ -155,16 +139,16 @@ func (p *parser) parseFor() (*ast.ForNode, error) {
 		return node, err
 	}
 
-	block, err := p.parseBlock()
-	node.Block = block
+	stmts, err := p.parseStmts()
+	node.Stmts = stmts
 	if err != nil {
 		return node, err
 	}
 	return node, nil
 }
 
-func (p *parser) parseFunc() (*ast.FuncNode, error) {
-	fn := &ast.FuncNode{Token: p.tok}
+func (p *parser) parseFuncStmt() (*ast.FuncStmt, error) {
+	fn := &ast.FuncStmt{Token: p.tok}
 
 	p.scan()
 	if p.tok.Type != token.Id {
@@ -174,24 +158,24 @@ func (p *parser) parseFunc() (*ast.FuncNode, error) {
 
 	p.scan()
 	for p.tok.Type == token.DoubleSlash || p.tok.Type == token.Slash {
-		ref, err := p.parseRef()
+		ref, err := p.parseRefAtom()
 		if err != nil {
 			return nil, err
 		}
-		fn.Params = append([]*ast.RefNode{ref}, fn.Params...)
+		fn.Params = append([]*ast.RefAtom{ref}, fn.Params...)
 	}
 	if p.tok.Type != token.Newline {
 		return nil, p.err("expecting %v but got %v", token.Newline, p.tok)
 	}
 
 	p.scan()
-	block, err := p.parseBlock()
-	fn.Block = block
+	stmts, err := p.parseStmts()
+	fn.Stmts = stmts
 	return fn, err
 }
 
-func (p *parser) parseIf() (*ast.IfNode, error) {
-	ifNode := &ast.IfNode{Token: p.tok}
+func (p *parser) parseIfStmt() (*ast.IfStmt, error) {
+	ifNode := &ast.IfStmt{Token: p.tok}
 
 	caseToken := p.tok
 	p.scan()
@@ -199,15 +183,15 @@ func (p *parser) parseIf() (*ast.IfNode, error) {
 	if err != nil {
 		return ifNode, err
 	}
-	block, err := p.parseBlock()
-	caseNode := &ast.IfCaseNode{Token: caseToken, Cond: expr, Block: block}
+	stmts, err := p.parseStmts()
+	caseNode := &ast.IfCaseNode{Token: caseToken, Cond: expr, Stmts: stmts}
 	ifNode.Cases = append(ifNode.Cases, caseNode)
 	if err != nil {
 		return ifNode, err
 	}
 
 	for {
-		var expr *ast.ExprNode
+		var expr *ast.Expr
 		caseToken := p.tok
 		if p.tok.Type == token.Elif {
 			p.scan()
@@ -224,9 +208,9 @@ func (p *parser) parseIf() (*ast.IfNode, error) {
 		} else {
 			break
 		}
-		block, err := p.parseBlock()
+		stmts, err := p.parseStmts()
 
-		caseNode := &ast.IfCaseNode{Token: caseToken, Cond: expr, Block: block}
+		caseNode := &ast.IfCaseNode{Token: caseToken, Cond: expr, Stmts: stmts}
 		ifNode.Cases = append(ifNode.Cases, caseNode)
 		if err != nil {
 			return ifNode, err
@@ -235,8 +219,8 @@ func (p *parser) parseIf() (*ast.IfNode, error) {
 	return ifNode, nil
 }
 
-func (p *parser) parseInclude() (*ast.IncludeNode, error) {
-	node := &ast.IncludeNode{Token: p.tok}
+func (p *parser) parseIncludeStmt() (*ast.IncludeStmt, error) {
+	node := &ast.IncludeStmt{Token: p.tok}
 
 	p.scan()
 	switch p.tok.Type {
@@ -258,8 +242,8 @@ func (p *parser) parseInclude() (*ast.IncludeNode, error) {
 	return node, nil
 }
 
-func (p *parser) parseImport() (*ast.ImportNode, error) {
-	node := &ast.ImportNode{Token: p.tok}
+func (p *parser) parseImportStmt() (*ast.ImportStmt, error) {
+	node := &ast.ImportStmt{Token: p.tok}
 
 	p.scan()
 	switch p.tok.Type {
@@ -289,8 +273,8 @@ func (p *parser) parseImport() (*ast.ImportNode, error) {
 	return node, nil
 }
 
-func (p *parser) parseMacro() (*ast.MacroNode, error) {
-	macro := &ast.MacroNode{Token: p.tok}
+func (p *parser) parseMacroStmt() (*ast.MacroStmt, error) {
+	macro := &ast.MacroStmt{Token: p.tok}
 
 	p.scan()
 	if p.tok.Type != token.Id {
@@ -308,8 +292,8 @@ func (p *parser) parseMacro() (*ast.MacroNode, error) {
 	return macro, nil
 }
 
-func (p *parser) parseNative() (*ast.NativeNode, error) {
-	node := &ast.NativeNode{Token: p.tok}
+func (p *parser) parseNativeStmt() (*ast.NativeStmt, error) {
+	node := &ast.NativeStmt{Token: p.tok}
 
 	p.scan()
 	if p.tok.Type != token.Id {
@@ -331,8 +315,8 @@ func (p *parser) parseNative() (*ast.NativeNode, error) {
 	return node, nil
 }
 
-func (p *parser) parseRef() (*ast.RefNode, error) {
-	ref := &ast.RefNode{Token: p.tok}
+func (p *parser) parseRefAtom() (*ast.RefAtom, error) {
+	ref := &ast.RefAtom{Token: p.tok}
 
 	switch p.tok.Type {
 	case token.DoubleSlash:
@@ -355,13 +339,13 @@ func (p *parser) parseRef() (*ast.RefNode, error) {
 	return ref, nil
 }
 
-func (p *parser) parseReturn() (*ast.ReturnNode, error) {
+func (p *parser) parseReturnStmt() (*ast.ReturnStmt, error) {
 	p.scan()
-	return &ast.ReturnNode{Token: p.tok}, nil
+	return &ast.ReturnStmt{Token: p.tok}, nil
 }
 
-func (p *parser) parseStack() (*ast.StackNode, error) {
-	stack := &ast.StackNode{Token: p.tok, Name: p.tok.Literal}
+func (p *parser) parseSelectAtom() (*ast.SelectAtom, error) {
+	stack := &ast.SelectAtom{Token: p.tok, Name: p.tok.Literal}
 
 	p.scan()
 	if p.tok.Type != token.Semicolon {
@@ -372,56 +356,79 @@ func (p *parser) parseStack() (*ast.StackNode, error) {
 	return stack, nil
 }
 
-func (p *parser) parseStatementTop() (ast.Node, error) {
+func (p *parser) parseStmtTop() (ast.Stmt, error) {
 	switch p.tok.Type {
 	case token.Alias:
-		return p.parseAlias()
+		return p.parseAliasStmt()
 	case token.Func:
-		return p.parseFunc()
+		return p.parseFuncStmt()
 	case token.Import:
-		return p.parseImport()
+		return p.parseImportStmt()
 	case token.Include:
-		return p.parseInclude()
+		return p.parseIncludeStmt()
 	case token.Macro:
-		return p.parseMacro()
+		return p.parseMacroStmt()
 	case token.Native:
-		return p.parseNative()
+		return p.parseNativeStmt()
 	case token.Use:
-		return p.parseUse()
+		return p.parseUseStmt()
 	}
-	return p.parseStatementNested()
+	return p.parseStmtNested()
 }
 
-func (p *parser) parseStatementNested() (ast.Node, error) {
+func (p *parser) parseStmtNested() (ast.Stmt, error) {
 	switch p.tok.Type {
 	case token.DoubleSlash:
-		return p.parseExpr()
+		return p.parseExprStmt()
 	case token.For:
-		return p.parseFor()
+		return p.parseForStmt()
 	case token.If:
-		return p.parseIf()
+		return p.parseIfStmt()
 	case token.Id:
-		return p.parseExpr()
+		return p.parseExprStmt()
 	case token.Return:
-		return p.parseReturn()
+		return p.parseReturnStmt()
 	case token.Slash:
-		return p.parseExpr()
+		return p.parseExprStmt()
 	case token.SlashDash:
-		return p.parseExpr()
+		return p.parseExprStmt()
 	case token.String:
-		return p.parseExpr()
+		return p.parseExprStmt()
 	case token.Try:
-		return p.parseTry()
+		return p.parseTryStmt()
 	case token.Value:
-		return p.parseExpr()
+		return p.parseExprStmt()
 	case token.While:
-		return p.parseWhile()
+		return p.parseWhileStmt()
 	}
-	return &ast.BadNode{Token: p.tok}, p.err("unexpected: %v", p.tok)
+	return &ast.BadStmt{Token: p.tok}, p.err("unexpected: %v", p.tok)
 }
 
-func (p *parser) parseTry() (*ast.TryNode, error) {
-	try := &ast.TryNode{Token: p.tok}
+func (p *parser) parseStmts() ([]ast.Stmt, error) {
+	var stmts []ast.Stmt
+	if p.tok.Type != token.Indent {
+		return stmts, p.err("expecting %v but got %v", token.Indent, p.tok)
+	}
+
+	p.scan()
+	for p.tok.Type != token.End && p.tok.Type != token.Dedent {
+		if p.tok.Type == token.Newline {
+			p.scan()
+			continue
+		}
+		stmt, err := p.parseStmtNested()
+		stmts = append(stmts, stmt)
+		if err != nil {
+			return stmts, err
+		}
+	}
+
+	p.scan()
+	return stmts, nil
+}
+
+func (p *parser) parseTryStmt() (*ast.TryStmt, error) {
+	try := &ast.TryStmt{Token: p.tok}
 	p.scan()
 
 	expr, err := p.parseExpr()
@@ -433,8 +440,8 @@ func (p *parser) parseTry() (*ast.TryNode, error) {
 	return try, err
 }
 
-func (p *parser) parseUse() (*ast.UseNode, error) {
-	node := &ast.UseNode{Token: p.tok}
+func (p *parser) parseUseStmt() (*ast.UseStmt, error) {
+	node := &ast.UseStmt{Token: p.tok}
 
 	p.scan()
 	if p.tok.Type != token.Id {
@@ -446,8 +453,8 @@ func (p *parser) parseUse() (*ast.UseNode, error) {
 	return node, nil
 }
 
-func (p *parser) parseWhile() (*ast.WhileNode, error) {
-	while := &ast.WhileNode{Token: p.tok}
+func (p *parser) parseWhileStmt() (*ast.WhileStmt, error) {
+	while := &ast.WhileStmt{Token: p.tok}
 	p.scan()
 
 	expr, err := p.parseExpr()
@@ -456,8 +463,8 @@ func (p *parser) parseWhile() (*ast.WhileNode, error) {
 		return while, err
 	}
 
-	block, err := p.parseBlock()
-	while.Block = block
+	stmts, err := p.parseStmts()
+	while.Stmts = stmts
 	if err != nil {
 		return while, err
 	}

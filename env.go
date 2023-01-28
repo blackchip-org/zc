@@ -34,6 +34,18 @@ func (e *Env) Derive() *Env {
 	return de
 }
 
+func (e *Env) ForBlock() *Env {
+	de := &Env{
+		Calc:   e.Calc,
+		stacks: e.stacks,
+		Funcs:  e.Funcs,
+	}
+	de.Main = e.Main
+	de.Stack = de.Main
+	de.parent = e.parent
+	return de
+}
+
 func (e *Env) StackFor(name string) (*Stack, bool) {
 	s, ok := e.stacks[name]
 	if ok {
