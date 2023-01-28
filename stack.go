@@ -32,6 +32,10 @@ func (s *Stack) Push(v string) {
 	s.data = append(s.data, v)
 }
 
+func (s *Stack) Enqueue(v string) {
+	s.data = append([]string{v}, s.data...)
+}
+
 func (s *Stack) Clear() *Stack {
 	s.data = nil
 	return s

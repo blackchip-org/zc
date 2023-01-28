@@ -401,7 +401,7 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 	for callee.Main.Len() > 0 {
 		val := callee.Main.MustPop()
 		e.trace(fn, "func(%v) return %v", fn.Name, val)
-		caller.Stack.Push(val)
+		caller.Stack.Enqueue(val)
 	}
 	e.trace(fn, "func(%v) end", fn.Name)
 	return nil
