@@ -98,7 +98,7 @@ func (e *Env) evalFile(file *ast.File) error {
 }
 
 func (e *Env) evalForStmt(node *ast.ForStmt) error {
-	e.trace(node, "for(%v) start", node.Stack.Name)
+	e.trace(node, "for-begin(%v)", node.Stack.Name)
 
 	expr := NewStack(e.Calc, "")
 	e.Stack = expr
@@ -116,8 +116,9 @@ func (e *Env) evalForStmt(node *ast.ForStmt) error {
 		if err := inner.evalStmts(node.Stmts); err != nil {
 			return err
 		}
+		e.trace(node, "for-next(%v)", node.Stack.Name)
 	}
-	e.trace(node, "for(%v) end", node.Stack.Name)
+	e.trace(node, "for-end(%v)", node.Stack.Name)
 	return nil
 }
 
@@ -355,7 +356,7 @@ func (e *Env) evalValueAtom(value *ast.ValueAtom) error {
 }
 
 func (e *Env) evalWhileStmt(while *ast.WhileStmt) error {
-	e.trace(while, "while")
+	e.trace(while, "while-begin")
 	for {
 		de := e.ForBlock()
 		if err := de.evalExpr(while.Cond); err != nil {
@@ -368,10 +369,12 @@ func (e *Env) evalWhileStmt(while *ast.WhileStmt) error {
 		if !result {
 			break
 		}
-		if err := e.evalStmts(while.Stmts); err != nil {
+		if err := de.evalStmts(while.Stmts); err != nil {
 			return err
 		}
+		e.trace(while, "while-next")
 	}
+	e.trace(while, "while-end")
 	return nil
 }
 
