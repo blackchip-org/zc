@@ -74,6 +74,15 @@ func (e *Env) Func(name string) (CalcFunc, bool) {
 	return e.parent.Func(name)
 }
 
+func (e *Env) FIXMEPrintFuncs() {
+	for f := range e.Funcs {
+		fmt.Println(f)
+	}
+	if e.parent != nil {
+		e.FIXMEPrintFuncs()
+	}
+}
+
 func (e *Env) Interpolate(v string) (string, error) {
 	var result, name strings.Builder
 

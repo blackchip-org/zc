@@ -110,7 +110,7 @@ func (e *Env) evalForStmt(node *ast.ForStmt) error {
 
 	for _, item := range expr.Items() {
 		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
-		inner := e.Derive()
+		inner := e.ForBlock()
 		i := inner.NewStack(node.Stack.Name)
 		i.Clear().Push(item)
 		if err := inner.evalStmts(node.Stmts); err != nil {
@@ -179,6 +179,9 @@ func (e *Env) evalInvokeAtom(node *ast.InvokeAtom) error {
 	e.trace(node, "invoke %v", node.Name)
 	fn, ok := e.Func(node.Name)
 	if !ok {
+		fmt.Println("*** AVAIL FUNCS")
+		e.FIXMEPrintFuncs()
+		fmt.Println("*** END")
 		return e.err(node, fmt.Errorf("no such function: %v", node.Name))
 	}
 	if err := fn(e); err != nil {

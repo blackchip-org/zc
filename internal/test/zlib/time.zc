@@ -7,20 +7,16 @@ use io
 
 func test-formats
     formats; formats=
-    answers; [
-        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM MST
-        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM -0700
-        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM MST -0700
-        'Mon Jan 2 2006 3:04:00PM MST -0700'    # Jan 2 2006 3:04pm
-        'Mon Jan 2 2006 3:04:00PM MST -0700'    # Jan 2 2006 3:04PM
-        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05pm
-        'Mon Jan 2 2006 3:04:05PM MST -0700'    # Jan 2 2006 3:04:05PM
+    expected; [
+        'Jan 2 2006 3:04PM'      'Mon Jan 2 2006 3:04:00PM MST -0700'
     ]
     for format; //formats
-        expected; /-answers
-        'TESTING `format` and EXPECTING `expected`' io.println
-        /format dt
-        /expected assert.eq
-
+        expect; //expected /format dict.get
+        if /expect not-found eq
+            'Mon Jan 2 2006 3:04:05PM MST -0700'
+        else
+            /expect
+        'checking `format`' io.println
+        /format dt assert.eq
 
 test-formats

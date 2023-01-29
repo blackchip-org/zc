@@ -5,3 +5,6 @@ native nothing
 native trace
 native trace-off
 native undef
+
+macro not-found '#not_found!'
+

@@ -37,6 +37,8 @@ var (
 	// Order here needs to be sorted based on dependencies. Do not put in
 	// alphabetical order. Modules to the top of the list do not have access
 	// to functions found at the bottom of the list.
+	//
+	// Also, update dev mode when this changes
 	PreludeDev = []string{
 		"dev",
 		"stack",
@@ -44,7 +46,7 @@ var (
 		"conf",
 		"math",
 		"str",
-		//"dict",
+		"dict",
 	}
 )
 
@@ -114,6 +116,7 @@ var (
 	Dev = zc.ModuleDef{
 		Name:       "dev",
 		ScriptPath: "zc:zlib/dev.zc",
+		Include:    true,
 		Natives: map[string]zc.CalcFunc{
 			"abort":     Abort,
 			"eval":      Eval,

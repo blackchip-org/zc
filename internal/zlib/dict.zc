@@ -3,7 +3,6 @@ func get //dict /name
         key; /-dict
         val; /-dict
         if /name /key eq
-            /val true
+            /val
             return
-    false
-
+    not-found

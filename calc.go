@@ -143,6 +143,10 @@ func (c *Calc) Load(def ModuleDef) (*Env, error) {
 		return mod, nil
 	}
 
+	if os.Getenv("ZC_DEBUG_LOAD") != "" {
+		log.Printf("load: %v", def.Name)
+	}
+
 	env := NewEnv(c)
 	env.Module = def.Name
 
@@ -151,8 +155,13 @@ func (c *Calc) Load(def ModuleDef) (*Env, error) {
 		if !ok {
 			continue
 		}
+		def := c.ModuleDefs[preName]
 		for _, name := range mod.Exports {
-			env.Funcs[name] = mod.Funcs[name]
+			qName := name
+			if !def.Include {
+				qName = def.Name + "." + name
+			}
+			env.Funcs[qName] = mod.Funcs[name]
 		}
 	}
 

@@ -19,6 +19,7 @@ var (
 	fileEval  string
 	lineEval  string
 	noAnsi    bool
+	mode      string
 	parseFile string
 	scanFile  string
 	trace     bool
@@ -29,6 +30,7 @@ func init() {
 	flag.StringVar(&lineEval, "eval", "", "evaluate argument")
 	flag.StringVar(&fileEval, "file", "", "evaluate file")
 	flag.BoolVar(&noAnsi, "no-ansi", false, "disable ANSI control codes")
+	flag.StringVar(&mode, "m", "", "start calculator with this mode")
 	flag.StringVar(&parseFile, "parse", "", "parse file and print out the AST")
 	flag.StringVar(&scanFile, "scan", "", "scan file and print out the tokens")
 	flag.BoolVar(&trace, "trace", false, "trace execution")
@@ -46,8 +48,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, arg := range flag.Args() {
-		if err := calc.SetMode(arg); err != nil {
+	if mode != "" {
+		if err := calc.SetMode(mode); err != nil {
 			log.Fatal(err)
 		}
 	}

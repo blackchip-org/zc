@@ -18,10 +18,6 @@
             "Node": "Expr",
             "Atoms": [
               {
-                "Node": "Invoke",
-                "Name": ""
-              },
-              {
                 "Node": "Ref",
                 "Type": "/",
                 "Name": "a"

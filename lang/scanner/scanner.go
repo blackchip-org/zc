@@ -36,12 +36,22 @@ func New(file string, src []byte) *Scanner {
 }
 
 func (s *Scanner) Next() token.Token {
+	//fmt.Printf("** ENTER WITH [%v] buf [%v]\n", string(s.ch), s.nextTokens)
 	// If there are dedent tokens buffered up, emit those first
 	// before continuing the scan.
 	if len(s.nextTokens) > 0 {
 		var tok token.Token
 		tok, s.nextTokens = s.nextTokens[0], s.nextTokens[1:]
 		return tok
+	}
+
+	if s.ch == '#' {
+		s.skipComment()
+		// If we have consumed a comment and we are in a block, we need to
+		// consume any indentation on the next line.
+		if s.inBlock {
+			s.skipSpace()
+		}
 	}
 
 	// When at the start of the line, check to see what the current
@@ -58,13 +68,12 @@ func (s *Scanner) Next() token.Token {
 	s.start = s.pos
 	next := s.lookahead()
 
-	if s.ch == '#' {
-		s.skipComment()
-		// If we have consumed a comment and we are in a block, we need to
-		// consume any indentation on the next line.
-		if s.inBlock {
+	if s.inBlock {
+		for s.ch == '\n' {
+			s.scan()
 			s.skipSpace()
 		}
+		s.skipSpace()
 	}
 	if s.ch == '[' {
 		s.inBlock = true
@@ -73,13 +82,6 @@ func (s *Scanner) Next() token.Token {
 	if s.ch == ']' {
 		s.inBlock = false
 		s.scan()
-		s.skipSpace()
-	}
-	if s.inBlock {
-		for s.ch == '\n' {
-			s.scan()
-			s.skipSpace()
-		}
 		s.skipSpace()
 	}
 
@@ -110,6 +112,9 @@ func (s *Scanner) scanId() token.Token {
 		s.scan()
 	}
 	lit := string(s.src[startL:s.idx])
+	if len(lit) == 0 {
+		panic("id literal is zero in length")
+	}
 	// If the identifier is a keyword, use the keyword specific token type,
 	// otherwise use IdentToken
 	return token.New(token.LookupKeyword(lit), lit, s.start)
