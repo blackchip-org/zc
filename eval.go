@@ -55,6 +55,7 @@ func (e *Env) evalExpr(expr *ast.Expr) error {
 func (e *Env) evalExprStmt(stmt *ast.ExprStmt) error {
 	err := e.evalExpr(stmt.Expr)
 	e.Stack = e.Main
+	e.traceStack()
 	return err
 }
 
@@ -69,6 +70,7 @@ func (e *Env) evalIfStmt(ifNode *ast.IfStmt) error {
 			if err := e.evalExpr(caseNode.Cond); err != nil {
 				return e.err(caseNode.Cond, err)
 			}
+			e.traceStack()
 			v, err := e.Stack.Pop()
 			if err != nil {
 				return e.err(caseNode.Cond, err)
@@ -180,9 +182,6 @@ func (e *Env) evalInvokeAtom(node *ast.InvokeAtom) error {
 	e.trace(node, "invoke %v", node.Name)
 	fn, ok := e.Func(node.Name)
 	if !ok {
-		fmt.Println("*** AVAIL FUNCS")
-		e.FIXMEPrintFuncs()
-		fmt.Println("*** END")
 		return e.err(node, fmt.Errorf("no such function: %v", node.Name))
 	}
 	if err := fn(e); err != nil {
@@ -248,6 +247,7 @@ func (e *Env) evalRefAtom(ref *ast.RefAtom) error {
 		}
 		e.Stack.Push(top)
 	}
+	e.traceStack()
 	return nil
 }
 
@@ -263,6 +263,7 @@ func (e *Env) evalSelectAtom(node *ast.SelectAtom) error {
 		stack = e.NewStack(node.Name)
 	}
 	e.Stack = stack
+	e.traceStack()
 	return nil
 }
 
@@ -315,6 +316,7 @@ func (e *Env) evalTryStmt(node *ast.TryStmt) error {
 	} else {
 		e.Stack.PushBool(true)
 	}
+	e.traceStack()
 	return nil
 }
 
@@ -352,6 +354,7 @@ func (e *Env) evalValueAtom(value *ast.ValueAtom) error {
 	} else {
 		e.Stack.PushValue(interp)
 	}
+	e.traceStack()
 	return nil
 }
 
@@ -452,13 +455,18 @@ func (e *Env) err(node ast.Node, err error) error {
 	}
 }
 
+func (e *Env) traceStack() {
+	if e.Calc.Trace {
+		if !e.Stack.Equal(e.lastStack) && e.Stack.Len() > 0 {
+			log.Printf("eval: %v(%v)", e.Stack.Name, e.Stack)
+		}
+		e.lastStack = e.Stack.Copy()
+	}
+}
+
 func (e *Env) trace(node ast.Node, format string, a ...any) {
 	if e.Calc.Trace {
 		msg := fmt.Sprintf(format, a...)
-		if e.Stack.Len() > 0 {
-			log.Printf("eval: %v(%v)", e.Stack.Name, e.Stack)
-		}
 		log.Printf("eval:     %v @ %v", msg, node.Pos())
-		//log.Println()
 	}
 }

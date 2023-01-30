@@ -67,8 +67,8 @@ func main() {
 		parse()
 	case fileEval != "":
 		evalFile(calc)
-	case lineEval != "":
-		evalLine(calc)
+	case flag.NArg() > 0:
+		evalLines(calc)
 	default:
 		if noAnsi {
 			ansi.Enabled = false
@@ -77,8 +77,15 @@ func main() {
 	}
 }
 
-func evalLine(calc *zc.Calc) {
-	evalResults(calc, calc.EvalString("<cli>", lineEval))
+func evalLines(calc *zc.Calc) {
+	var err error
+	for i, line := range flag.Args() {
+		name := fmt.Sprintf("<cli:%v>", i)
+		if err = calc.EvalString(name, line); err != nil {
+			break
+		}
+	}
+	evalResults(calc, err)
 }
 
 func evalFile(calc *zc.Calc) {

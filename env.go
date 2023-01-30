@@ -6,14 +6,15 @@ import (
 )
 
 type Env struct {
-	parent  *Env
-	Calc    *Calc
-	Stack   *Stack
-	Main    *Stack
-	stacks  map[string]*Stack
-	Funcs   map[string]CalcFunc
-	Exports []string
-	Module  string
+	parent    *Env
+	Calc      *Calc
+	Stack     *Stack
+	Main      *Stack
+	stacks    map[string]*Stack
+	Funcs     map[string]CalcFunc
+	Exports   []string
+	Module    string
+	lastStack *Stack // for tracing
 }
 
 func NewEnv(calc *Calc) *Env {
@@ -72,15 +73,6 @@ func (e *Env) Func(name string) (CalcFunc, bool) {
 		return nil, false
 	}
 	return e.parent.Func(name)
-}
-
-func (e *Env) FIXMEPrintFuncs() {
-	for f := range e.Funcs {
-		fmt.Println(f)
-	}
-	if e.parent != nil {
-		e.FIXMEPrintFuncs()
-	}
 }
 
 func (e *Env) Interpolate(v string) (string, error) {

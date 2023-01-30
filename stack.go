@@ -18,6 +18,34 @@ func NewStack(calc *Calc, name string) *Stack {
 	return &Stack{Name: name, calc: calc}
 }
 
+func (s *Stack) Copy() *Stack {
+	ns := &Stack{
+		Name: s.Name,
+		calc: s.calc,
+		data: make([]string, len(s.data)),
+	}
+	copy(ns.data, s.data)
+	return ns
+}
+
+func (s *Stack) Equal(os *Stack) bool {
+	if os == nil {
+		return false
+	}
+	if s.Name != os.Name {
+		return false
+	}
+	if len(s.data) != len(os.data) {
+		return false
+	}
+	for i := 0; i < len(s.data); i++ {
+		if s.data[i] != os.data[i] {
+			return false
+		}
+	}
+	return true
+}
+
 func (s *Stack) Items() []string {
 	items := make([]string, len(s.data))
 	copy(items, s.data)
@@ -53,10 +81,11 @@ func (s *Stack) String() string {
 }
 
 func (s *Stack) Peek() (string, error) {
-	if len(s.data) == 0 {
+	n := len(s.data)
+	if n == 0 {
 		return "", fmt.Errorf("%v: stack empty", s.Name)
 	}
-	return s.data[0], nil
+	return s.data[n-1], nil
 }
 
 func (s *Stack) Peek2() (string, string, error) {

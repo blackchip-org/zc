@@ -5,4 +5,5 @@ import test
 'zc:test/zlib/prog.zc'
 'zc:test/zlib/str.zc'
 # 'zc:test/zlib/time.zc'
+'zc:test/lang/stack.zc'
 test.run
