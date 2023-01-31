@@ -100,7 +100,7 @@ func (s *Scanner) Next() token.Token {
 		return s.scanString('\'')
 	case unicode.IsDigit(s.ch), unicode.Is(unicode.Sc, s.ch):
 		return s.scanValue()
-	case (s.ch == '-' || s.ch == '+') && unicode.IsDigit(next):
+	case (s.ch == '-' || s.ch == '+' || s.ch == '.') && unicode.IsDigit(next):
 		return s.scanValue()
 	}
 	return s.scanId()

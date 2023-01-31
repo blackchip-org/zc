@@ -39,6 +39,7 @@ func TestToken(t *testing.T) {
 		{"123", token.New(token.Value, "123", start)},
 		{"-123", token.New(token.Value, "-123", start)},
 		{"+123", token.New(token.Value, "+123", start)},
+		{".123", token.New(token.Value, ".123", start)},
 		{"\"foo bar\"", token.New(token.String, "foo bar", start)},
 		{"'foo bar'", token.New(token.String, "foo bar", start)},
 		{"'\\'foo bar\\''", token.New(token.String, "'foo bar'", start)},
