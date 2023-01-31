@@ -4,8 +4,6 @@
 
 Basic mathematical operations with fixed-point numbers.
 
-- Use: import
-
 <!-- index -->
 
 | Operation               | Description

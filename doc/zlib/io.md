@@ -4,8 +4,6 @@
 
 Input/output functions
 
-- Use: import
-
 <!-- index -->
 
 | Operation               | Description

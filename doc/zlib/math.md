@@ -4,8 +4,7 @@
 
 Basic mathematical operations.
 
-- Prelude: user, dev
-- Use: include
+- Prelude: user, dev (include)
 
 <!-- index -->
 

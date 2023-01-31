@@ -4,8 +4,7 @@
 
 Configurations and settings
 
-- Prelude: user, dev
-- Use: import
+- Prelude: user, dev (import)
 
 <!-- index -->
 

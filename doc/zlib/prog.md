@@ -4,8 +4,6 @@
 
 Programmer's calculator.
 
-- Use: include
-
 <!-- index -->
 
 | Operation               | Description

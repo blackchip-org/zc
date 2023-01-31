@@ -4,8 +4,6 @@
 
 Stack manipulations.
 
-- Use: include
-
 <!-- index -->
 
 | Operation               | Alias    | Description

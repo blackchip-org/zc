@@ -4,8 +4,6 @@
 
 Basic mathematical operations with integers.
 
-- Use: import
-
 <!-- index -->
 
 | Operation               | Description

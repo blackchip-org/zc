@@ -4,8 +4,7 @@
 
 Boolean operations.
 
-- Prelude: dev
-- Use: include
+- Prelude: dev (use)
 
 Comparison operations are parsed as numerics when possible. Therefore the following values are considered equal:
 
