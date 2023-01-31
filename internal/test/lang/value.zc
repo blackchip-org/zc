@@ -1,0 +1,5 @@
+import assert
+
+func test-bare-decimal-point
+    .25 .25 add
+    .5 assert.eq
