@@ -2,40 +2,74 @@
   "Node": "File",
   "Stmts": [
     {
-      "Node": "Include",
-      "Module": {
-        "Zlib": true,
-        "Name": "foo",
-        "Alias": ""
-      }
-    },
-    {
-      "Node": "Import",
-      "Module": {
-        "Zlib": true,
-        "Name": "foo",
-        "Alias": ""
-      }
-    },
-    {
-      "Node": "Import",
-      "Module": {
-        "Zlib": true,
-        "Name": "foo",
-        "Alias": "bar"
-      }
-    },
-    {
-      "Node": "Import",
-      "Module": {
-        "Zlib": false,
-        "Name": "foo",
-        "Alias": "bar"
-      }
+      "Node": "Use",
+      "Modules": [
+        {
+          "Zlib": true,
+          "Name": "foo",
+          "Alias": ""
+        }
+      ]
     },
     {
       "Node": "Use",
-      "Name": "foo"
+      "Modules": [
+        {
+          "Zlib": false,
+          "Name": "foo.zc",
+          "Alias": ""
+        }
+      ]
+    },
+    {
+      "Node": "Use",
+      "Modules": [
+        {
+          "Zlib": true,
+          "Name": "foo",
+          "Alias": ""
+        },
+        {
+          "Zlib": true,
+          "Name": "bar",
+          "Alias": ""
+        }
+      ]
+    },
+    {
+      "Node": "Import",
+      "Modules": [
+        {
+          "Zlib": true,
+          "Name": "foo",
+          "Alias": ""
+        }
+      ]
+    },
+    {
+      "Node": "Import",
+      "Modules": [
+        {
+          "Zlib": false,
+          "Name": "foo.zc",
+          "Alias": "foo"
+        }
+      ]
+    },
+    {
+      "Node": "Import",
+      "Modules": [
+        {
+          "Zlib": true,
+          "Name": "foo",
+          "Alias": ""
+        },
+        {
+          "Zlib": true,
+          "Name": "bar",
+          "Alias": ""
+        }
+      ]
     }
   ]
 }

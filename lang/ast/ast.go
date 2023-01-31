@@ -134,22 +134,13 @@ func (n IfCaseNode) Pos() token.Pos { return n.Token.Pos }
 func (n IfCaseNode) String() string { return nodeStringJSON(n) }
 
 type ImportStmt struct {
-	Token  token.Token `json:"-"`
-	Module ModuleRef
+	Token   token.Token `json:"-"`
+	Modules []ModuleRef
 }
 
 func (n ImportStmt) Pos() token.Pos { return n.Token.Pos }
 func (n ImportStmt) String() string { return nodeStringJSON(n) }
 func (n ImportStmt) stmtNode()      {}
-
-type IncludeStmt struct {
-	Token  token.Token `json:"-"`
-	Module ModuleRef
-}
-
-func (n IncludeStmt) Pos() token.Pos { return n.Token.Pos }
-func (n IncludeStmt) String() string { return nodeStringJSON(n) }
-func (n IncludeStmt) stmtNode()      {}
 
 type InvokeAtom struct {
 	Token token.Token `json:"-"`
@@ -217,8 +208,8 @@ func (n TryStmt) String() string { return nodeStringJSON(n) }
 func (n TryStmt) stmtNode()      {}
 
 type UseStmt struct {
-	Token token.Token `json:"-"`
-	Name  string
+	Token   token.Token `json:"-"`
+	Modules []ModuleRef
 }
 
 func (n UseStmt) Pos() token.Pos { return n.Token.Pos }
@@ -362,17 +353,6 @@ func (n ImportStmt) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "Import",
-		Alias: (Alias)(n),
-	})
-}
-
-func (n IncludeStmt) MarshalJSON() ([]byte, error) {
-	type Alias IncludeStmt
-	return json.Marshal(&struct {
-		Node string
-		Alias
-	}{
-		Node:  "Include",
 		Alias: (Alias)(n),
 	})
 }

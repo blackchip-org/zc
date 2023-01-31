@@ -1,4 +1,4 @@
-<!-- mod: stack -->
+<!-- use: stack -->
 
 # stack
 

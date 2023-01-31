@@ -1,4 +1,4 @@
-<!-- mod: io -->
+<!-- import: io -->
 
 # io
 

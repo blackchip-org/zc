@@ -1,4 +1,4 @@
-<!-- mod: conf -->
+<!-- import: conf -->
 
 # conf
 

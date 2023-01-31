@@ -1,4 +1,4 @@
-<!-- mod: math.bigint -->
+<!-- import: math.bigint -->
 
 # math.bigint
 

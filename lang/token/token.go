@@ -40,7 +40,6 @@ const (
 	For
 	Func
 	Id
-	Include
 	Import
 	Indent
 	If
@@ -70,7 +69,6 @@ var tokStr = map[Type]string{
 	For:         "for",
 	Func:        "func",
 	Id:          "id",
-	Include:     "include",
 	Import:      "import",
 	Indent:      "indent",
 	If:          "if",
@@ -90,21 +88,20 @@ var tokStr = map[Type]string{
 }
 
 var keywords = map[string]Type{
-	"alias":   Alias,
-	"elif":    Elif,
-	"else":    Else,
-	"for":     For,
-	"func":    Func,
-	"include": Include,
-	"import":  Import,
-	"if":      If,
-	"loop":    Loop,
-	"macro":   Macro,
-	"native":  Native,
-	"return":  Return,
-	"try":     Try,
-	"use":     Use,
-	"while":   While,
+	"alias":  Alias,
+	"elif":   Elif,
+	"else":   Else,
+	"for":    For,
+	"func":   Func,
+	"import": Import,
+	"if":     If,
+	"loop":   Loop,
+	"macro":  Macro,
+	"native": Native,
+	"return": Return,
+	"try":    Try,
+	"use":    Use,
+	"while":  While,
 }
 
 // If id is a keyword, returns the specific keyword token type, otherwise

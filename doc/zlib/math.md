@@ -1,4 +1,4 @@
-<!-- mod: math -->
+<!-- use: math -->
 
 # math
 

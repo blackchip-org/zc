@@ -13,9 +13,10 @@ import (
 )
 
 var (
-	modDirective = regexp.MustCompile(`<!-- mod: *([\w-\.]+) *-->`)
-	testBanner   = regexp.MustCompile(`<!-- test: *(\w+) *-->`)
-	tableHeader  = regexp.MustCompile(`.*Input.*Stack`)
+	importDirective = regexp.MustCompile(`<!-- import: *([\w-\.]+) *-->`)
+	useDirective    = regexp.MustCompile(`<!-- use: *([\w-\.]+) *-->`)
+	testBanner      = regexp.MustCompile(`<!-- test: *(\w+) *-->`)
+	tableHeader     = regexp.MustCompile(`.*Input.*Stack`)
 )
 
 func TestDoc(t *testing.T) {
@@ -50,7 +51,7 @@ func TestDoc(t *testing.T) {
 func testFile(t *testing.T, file fs.File) {
 	scanner := bufio.NewScanner(file)
 	testName := ""
-	mod := ""
+	setup := ""
 
 	for scanner.Scan() {
 		if scanner.Err() != nil {
@@ -58,10 +59,15 @@ func testFile(t *testing.T, file fs.File) {
 		}
 		line := scanner.Text()
 
-		matches := modDirective.FindStringSubmatch(line)
+		matches := useDirective.FindStringSubmatch(line)
 		if matches != nil {
-			mod = matches[1]
+			setup = "use " + matches[1]
 			continue
+		}
+
+		matches = importDirective.FindStringSubmatch(line)
+		if matches != nil {
+			setup = "import " + matches[1]
 		}
 
 		matches = testBanner.FindStringSubmatch(line)
@@ -83,17 +89,17 @@ func testFile(t *testing.T, file fs.File) {
 			}
 			scanner.Scan()
 			scanner.Scan()
-			testTable(t, mod, scanner)
+			testTable(t, setup, scanner)
 		})
 
 	}
 }
 
-func testTable(t *testing.T, mod string, scanner *bufio.Scanner) {
+func testTable(t *testing.T, setup string, scanner *bufio.Scanner) {
 	c := app.NewDefaultCalc()
 
-	if mod != "" {
-		if err := c.EvalString("", "use "+mod); err != nil {
+	if setup != "" {
+		if err := c.EvalString("", setup); err != nil {
 			t.Fatal(err)
 		}
 	}

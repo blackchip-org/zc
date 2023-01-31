@@ -1,11 +1,10 @@
-<!-- mod: str -->
+<!-- use: str -->
 
 # str
 
 String operations
 
-- Prelude: dev
-- Use: include
+- Prelude: dev (include)
 
 <!-- index -->
 

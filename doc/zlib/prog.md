@@ -1,4 +1,4 @@
-<!-- mod: prog -->
+<!-- use: prog -->
 
 # prog
 

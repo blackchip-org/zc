@@ -219,56 +219,30 @@ func (p *parser) parseIfStmt() (*ast.IfStmt, error) {
 	return ifNode, nil
 }
 
-func (p *parser) parseIncludeStmt() (*ast.IncludeStmt, error) {
-	node := &ast.IncludeStmt{Token: p.tok}
-
-	p.scan()
-	switch p.tok.Type {
-	case token.Id:
-		node.Module.Name = p.tok.Literal
-		node.Module.Zlib = true
-	case token.String, token.Value:
-		node.Module.Name = p.tok.Literal
-	default:
-		return node, p.err("expecting %v or %v but got %v", token.Id, token.Value, p.tok)
-	}
-
-	p.scan()
-	if p.tok.Type != token.Newline && p.tok.Type != token.End {
-		return node, p.err("expecting %v but got %v", token.Newline, p.tok)
-	}
-
-	p.scan()
-	return node, nil
-}
-
 func (p *parser) parseImportStmt() (*ast.ImportStmt, error) {
 	node := &ast.ImportStmt{Token: p.tok}
+	var refs []ast.ModuleRef
 
 	p.scan()
-	switch p.tok.Type {
-	case token.Id:
-		node.Module.Name = p.tok.Literal
-		node.Module.Zlib = true
-	case token.String, token.Value:
-		node.Module.Name = p.tok.Literal
-		base := path.Base(node.Module.Name)
-		ext := path.Ext(base)
-		node.Module.Alias = base[:len(base)-len(ext)]
-	default:
-		return node, p.err("expecting %v or %v but got %v", token.Id, token.Value, p.tok)
-	}
-
-	p.scan()
-	if p.tok.Type == token.Id {
-		node.Module.Alias = p.tok.Literal
+	for p.tok.Type != token.Newline && p.tok.Type != token.End {
+		var ref ast.ModuleRef
+		switch p.tok.Type {
+		case token.Id:
+			ref.Name = p.tok.Literal
+			ref.Zlib = true
+		case token.String, token.Value:
+			ref.Name = p.tok.Literal
+			base := path.Base(ref.Name)
+			ext := path.Ext(base)
+			ref.Alias = base[:len(base)-len(ext)]
+		default:
+			return node, p.err("expecting %v or %v but got %v", token.Id, token.Value, p.tok)
+		}
+		refs = append(refs, ref)
 		p.scan()
 	}
 
-	if p.tok.Type != token.Newline && p.tok.Type != token.End {
-		return node, p.err("expecting %v but got %v", token.Newline, p.tok)
-	}
-
+	node.Modules = refs
 	p.scan()
 	return node, nil
 }
@@ -364,8 +338,6 @@ func (p *parser) parseStmtTop() (ast.Stmt, error) {
 		return p.parseFuncStmt()
 	case token.Import:
 		return p.parseImportStmt()
-	case token.Include:
-		return p.parseIncludeStmt()
 	case token.Macro:
 		return p.parseMacroStmt()
 	case token.Native:
@@ -444,12 +416,24 @@ func (p *parser) parseUseStmt() (*ast.UseStmt, error) {
 	node := &ast.UseStmt{Token: p.tok}
 
 	p.scan()
-	if p.tok.Type != token.Id {
-		return node, p.err("expecting %v but got %v", token.Id, p.tok)
-	}
-	node.Name = p.tok.Literal
+	var refs []ast.ModuleRef
 
-	p.scan()
+	for p.tok.Type != token.Newline && p.tok.Type != token.End {
+		var ref ast.ModuleRef
+		switch p.tok.Type {
+		case token.Id:
+			ref.Name = p.tok.Literal
+			ref.Zlib = true
+		case token.String, token.Value:
+			ref.Name = p.tok.Literal
+		default:
+			return node, p.err("expecting %v or %v but got %v", token.Id, token.Value, p.tok)
+		}
+		refs = append(refs, ref)
+		p.scan()
+	}
+	node.Modules = refs
+
 	return node, nil
 }
 

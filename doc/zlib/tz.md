@@ -3,8 +3,6 @@
 
 Time zone database.
 
-- Use: import
-
 | Operation | Description
 |-----------|------------
 | `abidjan.africa` | Africa/Abidjan

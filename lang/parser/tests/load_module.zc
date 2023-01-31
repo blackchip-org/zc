@@ -1,6 +1,9 @@
-include foo
-import foo
-import foo bar
-import 'foo' bar
 use foo
+use 'foo.zc'
+use foo bar
+
+import foo
+import 'foo.zc'
+import foo bar
+
 

@@ -151,29 +151,20 @@ func (e *Env) evalImport(name string, alias string, zlib bool) error {
 	}
 	e.Calc.Info = "ok"
 	return nil
-
 }
 
 func (e *Env) evalImportStmt(node *ast.ImportStmt) error {
-	mod := node.Module
-	alias := mod.Alias
-	if alias != "" {
-		e.trace(node, "import %v %v", mod.Name, alias)
-	} else {
-		e.trace(node, "import %v", mod.Name)
-		alias = mod.Name
-	}
-	if err := e.evalImport(mod.Name, alias, mod.Zlib); err != nil {
-		return e.err(node, err)
-	}
-	return nil
-}
-
-func (e *Env) evalIncludeStmt(node *ast.IncludeStmt) error {
-	mod := node.Module
-	e.trace(node, "include %v", mod.Name)
-	if err := e.evalImport(mod.Name, "", mod.Zlib); err != nil {
-		return e.err(node, err)
+	for _, mod := range node.Modules {
+		alias := mod.Alias
+		if alias != "" {
+			e.trace(node, "import %v %v", mod.Name, alias)
+		} else {
+			e.trace(node, "import %v", mod.Name)
+			alias = mod.Name
+		}
+		if err := e.evalImport(mod.Name, alias, mod.Zlib); err != nil {
+			return e.err(node, err)
+		}
 	}
 	return nil
 }
@@ -281,8 +272,6 @@ func (e *Env) evalStmt(stmt ast.Stmt) error {
 		return e.evalFuncStmt(s)
 	case *ast.ImportStmt:
 		return e.evalImportStmt(s)
-	case *ast.IncludeStmt:
-		return e.evalIncludeStmt(s)
 	case *ast.MacroStmt:
 		return e.evalMacroStmt(s)
 	case *ast.NativeStmt:
@@ -321,21 +310,12 @@ func (e *Env) evalTryStmt(node *ast.TryStmt) error {
 }
 
 func (e *Env) evalUseStmt(node *ast.UseStmt) error {
-	e.trace(node, "use %v", node.Name)
-	def, ok := e.Calc.ModuleDefs[node.Name]
-	if !ok {
-		return e.err(node, fmt.Errorf("no such module: %v", node.Name))
+	for _, mod := range node.Modules {
+		e.trace(node, "use %v", mod.Name)
+		if err := e.evalImport(mod.Name, "", mod.Zlib); err != nil {
+			return e.err(node, err)
+		}
 	}
-	alias := ""
-	msg := "ok, included"
-	if !def.Include {
-		alias = def.Name
-		msg = "ok, imported"
-	}
-	if _, err := e.Import(def, alias); err != nil {
-		return e.err(node, err)
-	}
-	e.Calc.Info = msg
 	return nil
 }
 

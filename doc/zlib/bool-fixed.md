@@ -1,4 +1,4 @@
-<!-- mod: bool.fixed -->
+<!-- import: bool.fixed -->
 
 # bool.fixed
 

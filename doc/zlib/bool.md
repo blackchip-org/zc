@@ -1,4 +1,4 @@
-<!-- mod: bool -->
+<!-- use: bool -->
 
 # bool
 

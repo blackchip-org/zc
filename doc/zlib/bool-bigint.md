@@ -1,4 +1,4 @@
-<!-- mod: bool.bigint -->
+<!-- import: bool.bigint -->
 
 # bool.bigint
 
