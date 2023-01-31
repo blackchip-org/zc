@@ -261,11 +261,19 @@ var (
 	Test = zc.ModuleDef{
 		Name:       "test",
 		ScriptPath: "zc:zlib/test.zc",
+		Init:       InitTest,
+		Natives: map[string]zc.CalcFunc{
+			"begin": TestBegin,
+			"end":   TestEnd,
+			"file":  TestFile,
+			"ok":    TestOk,
+		},
 	}
 	Time = zc.ModuleDef{
 		Name:       "time",
 		Include:    true,
 		ScriptPath: "zc:zlib/time.zc",
+		Init:       InitTime,
 		Natives: map[string]zc.CalcFunc{
 			"after":      After,
 			"date-time":  DateTime,
@@ -278,7 +286,6 @@ var (
 			"travel":     Travel,
 			"travel-end": TravelEnd,
 		},
-		Init: InitTime,
 	}
 	Tz = zc.ModuleDef{
 		Name:       "tz",

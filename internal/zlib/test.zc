@@ -1,25 +1,8 @@
-import io
-import runtime
+native begin
+native end
+native file
+native ok
 
-func run //files
-	pass; 0
-	fail; 0
-
+func files //files
 	for file; //files
-		'\n`file`\n' io.print
-		'import \'`file`\' testing' eval
-		exports; clear '`file`' runtime.exports
-		for export; //exports
-			if /export 'test-' starts-with
-				try 'testing.`export`' eval
-				if not
-					err; clear /main
-					'  FAIL: `export`: `err`\n' io.print
-					fail; 1 add
-				else
-					'  pass: `export`\n' io.print
-					pass; 1 add
-
-	'\n`pass` tests passed, `fail` failed\n' io.print
-	/fail 0 eq
-
+		/file file

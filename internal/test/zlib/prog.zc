@@ -1,5 +1,5 @@
 import assert
-include prog
+use prog
 
 func test-hex
     15 hex

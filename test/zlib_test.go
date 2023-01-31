@@ -8,7 +8,6 @@ import (
 )
 
 func TestZlib(t *testing.T) {
-	t.Skip("needs refactoring")
 	c := app.NewDefaultCalc()
 	//c.Trace = true
 	fileName := "zc:test/suite.zc"
