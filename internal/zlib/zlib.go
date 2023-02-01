@@ -261,12 +261,8 @@ var (
 	Test = zc.ModuleDef{
 		Name:       "test",
 		ScriptPath: "zc:zlib/test.zc",
-		Init:       InitTest,
 		Natives: map[string]zc.CalcFunc{
-			"begin": TestBegin,
-			"end":   TestEnd,
-			"file":  TestFile,
-			"ok":    TestOk,
+			"file": TestFile,
 		},
 	}
 	Time = zc.ModuleDef{

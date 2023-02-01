@@ -29,13 +29,13 @@ func NewEnv(calc *Calc) *Env {
 	return e
 }
 
-func (e *Env) Derive() *Env {
+func (e *Env) DeriveFunc() *Env {
 	de := NewEnv(e.Calc)
 	de.parent = e
 	return de
 }
 
-func (e *Env) ForBlock() *Env {
+func (e *Env) DeriveBlock() *Env {
 	de := &Env{
 		Calc:   e.Calc,
 		stacks: e.stacks,
@@ -128,4 +128,47 @@ func (e *Env) Import(def ModuleDef, prefix string) (*Env, error) {
 		e.Funcs[qName] = mod.Funcs[name]
 	}
 	return mod, nil
+}
+
+func (e *Env) Get(name string) string {
+	s, ok := e.StackFor(name)
+	if !ok {
+		return ""
+	}
+	v, err := s.Peek()
+	if err != nil {
+		return ""
+	}
+	return v
+}
+
+func (e *Env) GetBool(name string) bool {
+	s := e.Get(name)
+	v, err := e.Calc.ParseBool(s)
+	if err != nil {
+		return false
+	}
+	return v
+}
+
+func (e *Env) GetInt(name string) int {
+	s := e.Get(name)
+	v, err := e.Calc.ParseInt(s)
+	if err != nil {
+		return 0
+	}
+	return v
+}
+
+func (e *Env) Set(name string, val string) {
+	s := e.NewStack(name)
+	s.Clear().Push(val)
+}
+
+func (e *Env) SetBool(name string, val bool) {
+	e.Set(name, e.Calc.FormatBool(val))
+}
+
+func (e *Env) SetInt(name string, val int) {
+	e.Set(name, e.Calc.FormatInt(val))
 }

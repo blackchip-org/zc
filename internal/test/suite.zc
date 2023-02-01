@@ -1,6 +1,6 @@
 import test
 
-test.begin
+test.reset
 
 'zc:test/lang/value.zc'
 'zc:test/zlib/bool.zc'
@@ -9,5 +9,5 @@ test.begin
 'zc:test/zlib/str.zc'
 test.files
 
-test.end
+test.report
 test.ok

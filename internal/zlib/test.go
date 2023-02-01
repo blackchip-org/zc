@@ -9,38 +9,7 @@ import (
 	"github.com/blackchip-org/zc/lang/parser"
 )
 
-type testState struct {
-	pass   int
-	fail   int
-	errors int
-}
-
-func getTestState(env *zc.Env) *testState {
-	return env.Calc.States["test"].(*testState)
-}
-
-func InitTest(env *zc.Env) error {
-	env.Calc.States["test"] = &testState{}
-	return nil
-}
-
-func TestBegin(env *zc.Env) error {
-	s := getTestState(env)
-	s.pass = 0
-	s.fail = 0
-	s.errors = 0
-	return nil
-}
-
-func TestEnd(env *zc.Env) error {
-	s := getTestState(env)
-	fmt.Printf("\n%v passed, %v failed, %v error(s)\n", s.pass, s.fail, s.errors)
-	return nil
-}
-
 func TestFile(env *zc.Env) error {
-	s := getTestState(env)
-
 	file, err := env.Stack.Pop()
 	if err != nil {
 		return err
@@ -48,7 +17,7 @@ func TestFile(env *zc.Env) error {
 
 	testError := func(err error) {
 		fmt.Printf("%v: error: %v", file, err)
-		s.errors++
+		env.SetInt("errors", env.GetInt("errors")+1)
 	}
 
 	text, err := zc.LoadFile(file)
@@ -56,7 +25,6 @@ func TestFile(env *zc.Env) error {
 		testError(err)
 		return nil
 	}
-
 	root, err := parser.Parse(file, text)
 	if err != nil {
 		testError(err)
@@ -78,17 +46,13 @@ func TestFile(env *zc.Env) error {
 		cmd := fmt.Sprintf("use '%v'\n%v", file, fn.Name)
 		if err := c.EvalString(file, cmd); err != nil {
 			fmt.Printf("FAIL: %v(%v): %v\n", file, fn.Name, err)
-			s.fail++
+			env.SetInt("failed", env.GetInt("failed")+1)
 		} else {
-			fmt.Printf("PASS: %v(%v)\n", file, fn.Name)
-			s.pass++
+			if env.GetBool("verbose") {
+				fmt.Printf("PASS: %v(%v)\n", file, fn.Name)
+			}
+			env.SetInt("passed", env.GetInt("passed")+1)
 		}
 	}
-	return nil
-}
-
-func TestOk(env *zc.Env) error {
-	s := getTestState(env)
-	env.Stack.PushBool(s.fail == 0 && s.errors == 0)
 	return nil
 }

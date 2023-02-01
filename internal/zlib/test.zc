@@ -1,8 +1,40 @@
-native begin
-native end
+import io
+
+errors; 0
+failed; 0
+passed; 0
+verbose; false
+
 native file
-native ok
+
+func errors
+	/errors
+
+func failed
+	/failed
 
 func files //files
 	for file; //files
 		/file file
+
+func passed
+	/passed
+
+func reset
+	errors; clear 0
+	failed; clear 0
+	passed; clear 0
+
+func ok
+	/errors 0 eq
+	/failed 0 eq
+	and
+
+func report
+	'\n`passed` passed, `failed` failed, `errors` error(s)' io.println
+
+func verbose /v
+	verbose; clear /v
+
+func verbose=
+	/verbose

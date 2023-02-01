@@ -112,7 +112,7 @@ func (e *Env) evalForStmt(node *ast.ForStmt) error {
 
 	for _, item := range expr.Items() {
 		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
-		inner := e.ForBlock()
+		inner := e.DeriveBlock()
 		i := inner.NewStack(node.Stack.Name)
 		i.Clear().Push(item)
 		if err := inner.evalStmts(node.Stmts); err != nil {
@@ -341,7 +341,7 @@ func (e *Env) evalValueAtom(value *ast.ValueAtom) error {
 func (e *Env) evalWhileStmt(while *ast.WhileStmt) error {
 	e.trace(while, "while-begin")
 	for {
-		de := e.ForBlock()
+		de := e.DeriveBlock()
 		if err := de.evalExpr(while.Cond); err != nil {
 			return e.err(while.Cond, err)
 		}
