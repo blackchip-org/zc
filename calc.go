@@ -138,6 +138,11 @@ func (c *Calc) EvalString(name string, src string) error {
 	return c.Eval(name, []byte(src))
 }
 
+func (c *Calc) EvalLines(name string, lines []string) error {
+	src := strings.Join(lines, "\n")
+	return c.EvalString(name, src)
+}
+
 func (c *Calc) Load(def ModuleDef) (*Env, error) {
 	if mod, ok := c.Modules[def.Name]; ok {
 		return mod, nil

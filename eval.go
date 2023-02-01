@@ -206,7 +206,9 @@ func (e *Env) evalNativeStmt(node *ast.NativeStmt) error {
 	if !ok {
 		return e.err(node, fmt.Errorf("no such native: %v", node.Name))
 	}
-	e.Funcs[export] = fn
+	e.Funcs[export] = func(caller *Env) error {
+		return e.invokeNative(caller, fn, node)
+	}
 	if e.Module != "" {
 		e.Exports = append(e.Exports, node.Name)
 	}
@@ -393,6 +395,18 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 		caller.Stack.Enqueue(val)
 	}
 	e.trace(fn, "func(%v) end", fn.Name)
+	return nil
+}
+
+func (e *Env) invokeNative(caller *Env, fn CalcFunc, stmt *ast.NativeStmt) error {
+	callee := e
+	callee.Stack = caller.Stack
+	if err := fn(callee); err != nil {
+		if !errors.Is(err, errFuncReturn) {
+			return err
+		}
+	}
+	e.trace(stmt, "func(%v) end", stmt.Name)
 	return nil
 }
 

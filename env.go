@@ -161,7 +161,10 @@ func (e *Env) GetInt(name string) int {
 }
 
 func (e *Env) Set(name string, val string) {
-	s := e.NewStack(name)
+	s, ok := e.StackFor(name)
+	if !ok {
+		s = e.NewStack(name)
+	}
 	s.Clear().Push(val)
 }
 

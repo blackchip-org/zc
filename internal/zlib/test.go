@@ -39,6 +39,7 @@ func TestFile(env *zc.Env) error {
 		if !strings.HasPrefix(fn.Name, "test-") {
 			continue
 		}
+
 		c, err := zc.NewCalc(env.Calc.Config)
 		if err != nil {
 			panic(fmt.Sprintf("unable to create calc: %v", err))

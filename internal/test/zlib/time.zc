@@ -18,5 +18,3 @@ func test-formats
             /expect
         'checking `format`' io.println
         /format dt assert.eq
-
-test-formats

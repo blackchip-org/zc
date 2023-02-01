@@ -26,12 +26,14 @@ func reset
 	passed; clear 0
 
 func ok
+	/passed 0 gt
 	/errors 0 eq
 	/failed 0 eq
 	and
+	and
 
 func report
-	'\n`passed` passed, `failed` failed, `errors` error(s)' io.println
+	'`passed` passed, `failed` failed, `errors` error(s)' io.println
 
 func verbose /v
 	verbose; clear /v

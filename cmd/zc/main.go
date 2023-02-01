@@ -22,8 +22,10 @@ var (
 	mode      string
 	parseFile string
 	scanFile  string
+	fileTest  string
 	trace     bool
 	use       string
+	verbose   bool
 )
 
 func init() {
@@ -33,8 +35,10 @@ func init() {
 	flag.StringVar(&mode, "m", "", "start calculator with this mode")
 	flag.StringVar(&parseFile, "parse", "", "parse file and print out the AST")
 	flag.StringVar(&scanFile, "scan", "", "scan file and print out the tokens")
+	flag.StringVar(&fileTest, "test", "", "run the tests in the provided file")
 	flag.BoolVar(&trace, "trace", false, "trace execution")
 	flag.StringVar(&use, "use", "", "include or import this module")
+	flag.BoolVar(&verbose, "v", false, "print additional information to the console")
 }
 
 func main() {
@@ -67,6 +71,8 @@ func main() {
 		parse()
 	case fileEval != "":
 		evalFile(calc)
+	case fileTest != "":
+		testFile(calc)
 	case flag.NArg() > 0:
 		evalLines(calc)
 	default:
@@ -137,5 +143,29 @@ func scan() {
 	fmt.Println("line col  token")
 	for tok := scanner.Next(); tok.Type != token.End; tok = scanner.Next() {
 		fmt.Printf("%4d %3d  %v\n", tok.Pos.Line, tok.Pos.Column, tok)
+	}
+}
+
+func testFile(calc *zc.Calc) {
+	if err := calc.SetMode("dev"); err != nil {
+		log.Fatalf("unexpected error: %v", err)
+	}
+	cmd := []string{
+		"import test",
+		fmt.Sprintf("%v test.verbose", verbose),
+		fmt.Sprintf("'%v' test.file", fileTest),
+	}
+	if err := calc.EvalLines(fileTest, cmd); err != nil {
+		log.Fatalf("error testing file: %v", err)
+	}
+	if err := calc.EvalString(fileTest, "test.report test.ok"); err != nil {
+		log.Fatalf("unexpected error: %v", err)
+	}
+	ok, err := calc.Env.Stack.PopBool()
+	if err != nil {
+		log.Fatalf("unexpected error: %v", err)
+	}
+	if !ok {
+		os.Exit(1)
 	}
 }
