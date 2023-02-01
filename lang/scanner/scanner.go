@@ -36,7 +36,6 @@ func New(file string, src []byte) *Scanner {
 }
 
 func (s *Scanner) Next() token.Token {
-	//fmt.Printf("** ENTER WITH [%v] buf [%v]\n", string(s.ch), s.nextTokens)
 	// If there are dedent tokens buffered up, emit those first
 	// before continuing the scan.
 	if len(s.nextTokens) > 0 {
@@ -45,7 +44,7 @@ func (s *Scanner) Next() token.Token {
 		return tok
 	}
 
-	if s.ch == '#' {
+	if s.ch == '-' && s.lookahead() == '-' {
 		s.skipComment()
 		// If we have consumed a comment and we are in a block, we need to
 		// consume any indentation on the next line.
@@ -269,14 +268,18 @@ func (s *Scanner) skipSpace() {
 
 func (s *Scanner) skipComment() {
 	s.scan()
-	if s.ch == '=' {
+	s.scan()
+	if s.ch == '-' {
+		// Block comment
 		s.scan()
-		for s.ch != end && !(s.ch == '=' && s.lookahead() == '#') {
+		for s.ch != end && !(s.ch == '-' && s.lookahead() == '-') {
 			s.scan()
 		}
 		s.scan()
 		s.scan()
+		s.scan()
 	} else {
+		// Line comment
 		s.scan()
 		for s.ch != end && s.ch != '\n' {
 			s.scan()
