@@ -184,10 +184,11 @@ if found at the beginning or end of a number.
 
 ## To Be Continued...
 
-## Libraries Used
+## Credits
 
 - Fixed point math provided by https://github.com/shopspring/decimal
 - CLI auto completion and history provided by https://github.com/peterh/liner
+- Terminal demo created with https://github.com/faressoft/terminalizer
 
 ## License
 
