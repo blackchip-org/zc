@@ -4,10 +4,10 @@ func eq /a /b
 	if /a /b bool.neq
 		'assertion failed: `a` == `b`'  abort
 
-func t /a
+func true /a
 	if /a true bool.neq
 		'assertion failed: not true' abort
 
-func f /a
+func false /a
 	if /a false bool.neq
 		'assertion failed: not false' abort

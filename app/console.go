@@ -36,6 +36,9 @@ func RunConsole(calc *zc.Calc) {
 	}
 
 	for ; err == nil; text, err = line.Prompt(getPrompt(calc)) {
+		if strings.TrimSpace(text) == "quit" {
+			return
+		}
 		var err error
 		ansi.Write(ansi.ClearScreen)
 		if strings.TrimSpace(text) == "" {

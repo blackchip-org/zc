@@ -5,6 +5,8 @@ A fun RPN calculator.
 - [zlib](doc/zlib.md): Standard library
 - [index](doc/index.md): Function index
 
+![ZC Demo](demo.gif)
+
 When I'm at a terminal prompt and I need to use a calculator, `bc` has always
 been my tool of choice. I thought it would be fun to write a calculator myself
 but with some items from my wish list built in. Those items are:

@@ -60,9 +60,11 @@ func (e *Env) evalExprStmt(stmt *ast.ExprStmt) error {
 }
 
 func (e *Env) evalIfStmt(ifNode *ast.IfStmt) error {
+	e.trace(ifNode, "if")
 	for _, caseNode := range ifNode.Cases {
 		// Final "else" condition will have no case expression
 		if caseNode.Cond == nil {
+			e.trace(caseNode, "else")
 			if err := e.evalStmts(caseNode.Stmts); err != nil {
 				return e.err(caseNode, err)
 			}
@@ -71,15 +73,12 @@ func (e *Env) evalIfStmt(ifNode *ast.IfStmt) error {
 				return e.err(caseNode.Cond, err)
 			}
 			e.traceStack()
-			v, err := e.Stack.Pop()
+			v, err := e.Stack.PopBool()
+			e.trace(caseNode, "case == %v", v)
 			if err != nil {
 				return e.err(caseNode.Cond, err)
 			}
-			vb, err := e.Calc.ParseBool(v)
-			if err != nil {
-				return e.err(caseNode.Cond, err)
-			}
-			if vb {
+			if v {
 				if err := e.evalStmts(caseNode.Stmts); err != nil {
 					return err
 				}
