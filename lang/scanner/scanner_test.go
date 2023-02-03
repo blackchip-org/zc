@@ -71,6 +71,7 @@ func TestIndent(t *testing.T) {
 		{"\tfoo\nbar", []token.Type{token.Indent, token.Id, token.Newline, token.Dedent, token.Id}},
 		{"\tfoo\n\tbar", []token.Type{token.Indent, token.Id, token.Newline, token.Id}},
 		{"[foo\nbar]\n", []token.Type{token.Id, token.Id, token.Newline}},
+		{"a; [\n1\n2\n]\n", []token.Type{token.Id, token.Semicolon, token.Value, token.Value, token.Newline}},
 	}
 
 	for _, test := range tests {

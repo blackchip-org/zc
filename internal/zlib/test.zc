@@ -8,35 +8,35 @@ verbose; false
 native file
 
 func errors
-	/errors
+    /errors
 
 func failed
-	/failed
+    /failed
 
 func files //files
-	for file; //files
-		/file file
+    for file; //files
+        /file file
 
 func passed
-	/passed
+    /passed
 
 func reset
-	errors; clear 0
-	failed; clear 0
-	passed; clear 0
+    errors; clear 0
+    failed; clear 0
+    passed; clear 0
 
 func ok
-	/passed 0 gt
-	/errors 0 eq
-	/failed 0 eq
-	and
-	and
+    /passed 0 gt
+    /errors 0 eq
+    /failed 0 eq
+    and
+    and
 
 func report
-	'`passed` passed, `failed` failed, `errors` error(s)' io.println
+    '`passed` passed, `failed` failed, `errors` error(s)' io.println
 
 func verbose /v
-	verbose; clear /v
+    verbose; clear /v
 
 func verbose=
-	/verbose
+    /verbose

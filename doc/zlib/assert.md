@@ -11,8 +11,8 @@ For each assertion function, if the checked condition is not true, the current e
 | Operation             | Description
 |-----------------------|-----------------------
 | [eq](#eq)             | Assert equals
-| [f](#f)               | Assert false
-| [t](#t)               | Assert true
+| [false](#false)       | Assert false
+| [true](#true)         | Assert true
 
 
 ## eq
@@ -31,7 +31,7 @@ Example:
 | `try assert.eq` | `assertion failed: 1 == 2 \| false`
 
 
-## f
+## false
 
 Checks that `a` is false and aborts execution if not.
 
@@ -39,15 +39,15 @@ Checks that `a` is false and aborts execution if not.
 
 Example:
 
-<!-- test: f -->
+<!-- test: false -->
 
-| Input           | Stack
-|-----------------|-------------
-| `'true'`        | `true`
-| `try assert.f`  | `assertion failed: not false \| false`
+| Input               | Stack
+|---------------------|-------------
+| `'true'`            | `true`
+| `try assert.false`  | `assertion failed: not false \| false`
 
 
-## t
+## true
 
 Checks that `a` is true and aborts execution if not.
 
@@ -55,12 +55,12 @@ Checks that `a` is true and aborts execution if not.
 
 Example:
 
-<!-- test: t -->
+<!-- test: true -->
 
-| Input           | Stack
-|-----------------|-------------
-| `'false'`       | `false`
-| `try assert.t`  | `assertion failed: not true \| false`
+| Input              | Stack
+|--------------------|-------------
+| `'false'`          | `false`
+| `try assert.true`  | `assertion failed: not true \| false`
 
 
 

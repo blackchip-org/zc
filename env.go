@@ -29,7 +29,7 @@ func NewEnv(calc *Calc) *Env {
 	return e
 }
 
-func (e *Env) DeriveFunc() *Env {
+func (e *Env) Derive() *Env {
 	de := NewEnv(e.Calc)
 	de.parent = e
 	return de

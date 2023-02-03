@@ -86,6 +86,13 @@ func (t timeState) timeFormat() string {
 	return hour12Formats[0]
 }
 
+func (t timeState) now() time.Time {
+	if t.travel.IsZero() {
+		return time.Now()
+	}
+	return t.travel
+}
+
 func (t timeState) dateTimeFormat() string {
 	return weekdayFormats[0] + " " + t.dateFormat() + " " + t.timeFormat() + " " + t.zoneFormat()
 }
@@ -126,8 +133,10 @@ func parseTime(env *zc.Env, v string) (time.Time, timeAttrs, error) {
 		if err != nil {
 			continue
 		}
+		z, off := t.Zone()
+		fmt.Printf("*** PARSED '%v' and got %v zone %v off %v\n", v, t, z, off)
 		if t.Year() == 0 {
-			now := time.Now().In(loc)
+			now := s.now().In(loc)
 			t = time.Date(now.Year(), now.Month(), now.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), loc)
 		}
 		return t, timeAttrs{layout: layout}, nil

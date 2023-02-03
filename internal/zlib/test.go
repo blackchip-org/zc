@@ -16,7 +16,7 @@ func TestFile(env *zc.Env) error {
 	}
 
 	testError := func(err error) {
-		fmt.Printf("%v: error: %v", file, err)
+		fmt.Printf("%v: error: %v\n", file, err)
 		env.SetInt("errors", env.GetInt("errors")+1)
 	}
 

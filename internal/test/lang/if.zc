@@ -1,4 +1,4 @@
-use assert
+import assert
 
 func test-if-true
     if 1 1 eq
@@ -7,3 +7,28 @@ func test-if-true
         false
     assert.true
 
+func test-if-false
+    if 1 2 eq
+        true
+    else
+        false
+    assert.false
+
+func test-elif
+    if 1 2 eq
+        'one'
+    elif 2 2 eq
+        'two'
+    else
+        'three'
+    'two' assert.eq
+
+func test-nested
+    if 1 1 eq
+        if 2 2 eq
+            true
+        else
+            false
+    else
+        false
+    assert.true

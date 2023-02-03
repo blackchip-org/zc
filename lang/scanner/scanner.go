@@ -68,15 +68,12 @@ func (s *Scanner) Next() token.Token {
 	next := s.lookahead()
 
 	if s.inBlock {
-		for s.ch == '\n' {
-			s.scan()
-			s.skipSpace()
-		}
-		s.skipSpace()
+		s.skipSpaceAndNewlines()
 	}
 	if s.ch == '[' {
 		s.inBlock = true
 		s.scan()
+		s.skipSpaceAndNewlines()
 	}
 	if s.ch == ']' {
 		s.inBlock = false
@@ -262,6 +259,12 @@ func (s *Scanner) scan() {
 func (s *Scanner) skipSpace() {
 	// Newlines have their own tokens so do not include here
 	for s.ch != end && s.ch != '\n' && unicode.IsSpace(s.ch) {
+		s.scan()
+	}
+}
+
+func (s *Scanner) skipSpaceAndNewlines() {
+	for s.ch != end && unicode.IsSpace(s.ch) {
 		s.scan()
 	}
 }

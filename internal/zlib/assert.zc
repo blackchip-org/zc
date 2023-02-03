@@ -5,9 +5,9 @@ func eq /a /b
 		'assertion failed: `a` == `b`'  abort
 
 func true /a
-	if /a true bool.neq
+	if /a bool.true bool.neq
 		'assertion failed: not true' abort
 
 func false /a
-	if /a false bool.neq
+	if /a bool.false bool.neq
 		'assertion failed: not false' abort

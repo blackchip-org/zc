@@ -59,6 +59,51 @@ func (e *Env) evalExprStmt(stmt *ast.ExprStmt) error {
 	return err
 }
 
+func (e *Env) evalFile(file *ast.File) error {
+	for _, line := range file.Stmts {
+		if err := e.evalStmt(line); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (e *Env) evalForStmt(node *ast.ForStmt) error {
+	e.trace(node, "for-begin(%v)", node.Stack.Name)
+
+	expr := NewStack(e.Calc, "")
+	e.Stack = expr
+	err := e.evalExpr(node.Expr)
+	e.Stack = e.Main
+	if err != nil {
+		return e.err(node.Expr, err)
+	}
+
+	for _, item := range expr.Items() {
+		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
+		inner := e.Derive()
+		i := inner.NewStack(node.Stack.Name)
+		i.Clear().Push(item)
+		if err := inner.evalStmts(node.Stmts); err != nil {
+			return err
+		}
+		e.trace(node, "for-next(%v)", node.Stack.Name)
+	}
+	e.trace(node, "for-end(%v)", node.Stack.Name)
+	return nil
+}
+
+func (e *Env) evalFuncStmt(fn *ast.FuncStmt) error {
+	e.trace(fn, "define func: %v", fn.Name)
+	e.Funcs[fn.Name] = func(caller *Env) error {
+		return e.invokeFunction(caller, fn)
+	}
+	if e.Module != "" {
+		e.Exports = append(e.Exports, fn.Name)
+	}
+	return nil
+}
+
 func (e *Env) evalIfStmt(ifNode *ast.IfStmt) error {
 	e.trace(ifNode, "if")
 	for _, caseNode := range ifNode.Cases {
@@ -85,51 +130,6 @@ func (e *Env) evalIfStmt(ifNode *ast.IfStmt) error {
 				break
 			}
 		}
-	}
-	return nil
-}
-
-func (e *Env) evalFile(file *ast.File) error {
-	for _, line := range file.Stmts {
-		if err := e.evalStmt(line); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (e *Env) evalForStmt(node *ast.ForStmt) error {
-	e.trace(node, "for-begin(%v)", node.Stack.Name)
-
-	expr := NewStack(e.Calc, "")
-	e.Stack = expr
-	err := e.evalExpr(node.Expr)
-	e.Stack = e.Main
-	if err != nil {
-		return e.err(node.Expr, err)
-	}
-
-	for _, item := range expr.Items() {
-		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
-		inner := e.DeriveBlock()
-		i := inner.NewStack(node.Stack.Name)
-		i.Clear().Push(item)
-		if err := inner.evalStmts(node.Stmts); err != nil {
-			return err
-		}
-		e.trace(node, "for-next(%v)", node.Stack.Name)
-	}
-	e.trace(node, "for-end(%v)", node.Stack.Name)
-	return nil
-}
-
-func (e *Env) evalFuncStmt(fn *ast.FuncStmt) error {
-	e.trace(fn, "define func: %v", fn.Name)
-	e.Funcs[fn.Name] = func(caller *Env) error {
-		return e.invokeFunction(caller, fn)
-	}
-	if e.Module != "" {
-		e.Exports = append(e.Exports, fn.Name)
 	}
 	return nil
 }
@@ -363,12 +363,13 @@ func (e *Env) evalWhileStmt(while *ast.WhileStmt) error {
 }
 
 func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
-	callee := e
+	// callee := e
+	callee := e.Derive()
 	for _, param := range fn.Params {
 		if param.Type == ast.TopRef {
 			val, err := caller.Stack.Pop()
 			if err != nil {
-				return fmt.Errorf("not enough arguments, missing '%v'", param.Name)
+				return fmt.Errorf("not enough arguments for '%v', missing '%v'", fn.Name, param.Name)
 			}
 			e.trace(fn, "func(%v) param %v=%v\n", fn.Name, param.Name, val)
 			callee.NewStack(param.Name).Push(val)

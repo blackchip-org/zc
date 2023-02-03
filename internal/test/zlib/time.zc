@@ -1,14 +1,24 @@
-use assert
+import assert
+import io
+
 use time
-use io
 
 'America/Denver' local
-'Mon Jan 2 2006 3:04:05PM UTC +0000' travel
+'Mon Jan 2 2006 3:04:05PM -0700' travel
 
 func test-formats
     formats; formats=
     expected; [
-        'Jan 2 2006 3:04PM'      'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04PM'             'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04pm'             'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04PM MST -0700'   'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04PM -0700'       'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04PM MST'         'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04pm MST -0700'   'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04pm -0700'       'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 2006 3:04pm MST'         'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 3:04PM'                  'Mon Jan 2 2006 3:04:00PM MST -0700'
+        'Jan 2 3:04pm'                  'Mon Jan 2 2006 3:04:00PM MST -0700'
     ]
     for format; //formats
         expect; //expected /format dict.get
