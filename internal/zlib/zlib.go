@@ -12,6 +12,7 @@ var All = []zc.ModuleDef{
 	Conf,
 	Dev,
 	Dict,
+	Geom,
 	Math,
 	MathBigInt,
 	MathFixed,
@@ -132,6 +133,10 @@ var (
 	Dict = zc.ModuleDef{
 		Name:       "dict",
 		ScriptPath: "zc:zlib/dict.zc",
+	}
+	Geom = zc.ModuleDef{
+		Name:       "geom",
+		ScriptPath: "zc:zlib/geom.zc",
 	}
 	Math = zc.ModuleDef{
 		Name:       "math",

@@ -451,7 +451,7 @@ func (c *Calc) cleanNumString(v string) string {
 	for _, ch := range v {
 		if ch == c.Point {
 			seenPoint = true
-			buf.WriteRune(ch)
+			buf.WriteRune('.')
 			continue
 		}
 		if ch == '0' && seenPoint {
@@ -734,4 +734,8 @@ func ParseFormatAttrs(xs ...string) FormatAttrs {
 		}
 	}
 	return attrs
+}
+
+func (c *Calc) LocalizeNumber(v string) string {
+	return strings.ReplaceAll(v, ".", string(c.Point))
 }
