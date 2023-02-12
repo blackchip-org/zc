@@ -9,6 +9,7 @@ var All = []zc.ModuleDef{
 	Bool,
 	BoolBigInt,
 	BoolFixed,
+	Chrono,
 	Conf,
 	Dev,
 	Dict,
@@ -24,7 +25,6 @@ var All = []zc.ModuleDef{
 	Str,
 	StrBool,
 	Test,
-	Time,
 	Tz,
 }
 
@@ -94,6 +94,26 @@ var (
 			"neq": NeqFixed,
 			"lt":  LtFixed,
 			"lte": LteFixed,
+		},
+	}
+	Chrono = zc.ModuleDef{
+		Name:       "chrono",
+		Include:    true,
+		ScriptPath: "zc:zlib/chrono.zc",
+		Init:       InitChrono,
+		Natives: map[string]zc.CalcFunc{
+			"after":     After,
+			"date":      Date,
+			"date-time": DateTime,
+			//"formats=":   FormatsGet,
+			"local":      Local,
+			"local=":     LocalGet,
+			"now":        Now,
+			"ord":        Ord,
+			"in":         In,
+			"time":       Time,
+			"travel":     Travel,
+			"travel-end": TravelEnd,
 		},
 	}
 	Conf = zc.ModuleDef{
@@ -270,24 +290,6 @@ var (
 		ScriptPath: "zc:zlib/test.zc",
 		Natives: map[string]zc.CalcFunc{
 			"file": TestFile,
-		},
-	}
-	Time = zc.ModuleDef{
-		Name:       "time",
-		Include:    true,
-		ScriptPath: "zc:zlib/time.zc",
-		Init:       InitTime,
-		Natives: map[string]zc.CalcFunc{
-			"after":      After,
-			"date-time":  DateTime,
-			"formats=":   FormatsGet,
-			"local":      Local,
-			"local=":     LocalGet,
-			"now":        Now,
-			"ord":        Ord,
-			"in":         In,
-			"travel":     Travel,
-			"travel-end": TravelEnd,
 		},
 	}
 	Tz = zc.ModuleDef{

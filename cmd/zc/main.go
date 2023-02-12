@@ -72,7 +72,7 @@ func commonFlags(fs *flag.FlagSet) {
 	fs.StringVar(&locale, "l", "en-US", "set the locale")
 	fs.StringVar(&mode, "m", "", "start calculator with this mode")
 	fs.BoolVar(&trace, "trace", false, "trace execution")
-	fs.StringVar(&use, "use", "", "use this module")
+	fs.StringVar(&use, "u", "", "use this module")
 	fs.BoolVar(&verbose, "v", false, "print additional information to the console")
 }
 

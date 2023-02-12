@@ -1,0 +1,35 @@
+import assert
+use chrono
+
+'America/Denver' local
+'Mon Jan 2 2006 3:04:05PM -0700' travel
+
+func test-dates
+    'Mon Jan 2 2006' 'Mon Jan 2 2006'
+    'Mon Jan 2 2006' 'Jan 2 2006'
+    'Mon Jan 2 2006' 'Jan 2'
+    'Mon Jan 2 2006' '01/02'
+    'Mon Jan 2 2006' '2 Jan 2006'
+    'Mon Jan 2 2006' '2006-01-02'
+    'Mon Jan 2 2006' '2006-002'
+
+    while not-empty
+        date assert.eq
+
+func test-times
+    '3:04:05pm MST -0700' '3:04:05pm'
+    '3:04:05pm MST -0700' '3:04:05PM'
+    '3:04:00pm MST -0700' '3:04pm'
+    '3:04:00pm MST -0700' '3:04PM'
+    '3:04:05pm MST -0700' '15:04:05'
+    '3:04:00pm MST -0700' '15:04'
+    '3:04:05pm MST -0700' '3:04:05pm -0700'
+    '3:04:05pm MST -0700' '3:04:05PM -0700'
+    '3:04:00pm MST -0700' '3:04pm -0700'
+    '3:04:00pm MST -0700' '3:04PM -0700'
+    '3:04:05pm MST -0700' '15:04:05 -0700'
+    '3:04:00pm MST -0700' '15:04 -0700'
+
+    while not-empty
+        time assert.eq
+
