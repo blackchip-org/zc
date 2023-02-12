@@ -13,7 +13,7 @@ func test-dates
     'Mon Jan 2 2006' '2006-01-02'
     'Mon Jan 2 2006' '2006-002'
 
-    while not-empty
+    while empty not
         date assert.eq
 
 func test-times
@@ -30,6 +30,6 @@ func test-times
     '3:04:05pm MST -0700' '15:04:05 -0700'
     '3:04:00pm MST -0700' '15:04 -0700'
 
-    while not-empty
+    while empty not
         time assert.eq
 

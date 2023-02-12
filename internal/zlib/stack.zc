@@ -10,6 +10,5 @@ func dup /a
     /a /a
 
 macro empty n 0 eq
-macro not-empty n 0 neq
 
 alias c clear
