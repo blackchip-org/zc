@@ -35,6 +35,7 @@ type Config struct {
 	FracFormat   string
 	MinDigits    uint
 	AutoCurrency bool
+	Locale       string
 }
 
 type ModuleDef struct {
@@ -120,6 +121,10 @@ func NewCalc(conf Config) (*Calc, error) {
 		if err != nil {
 			return nil, err
 		}
+	}
+
+	if c.Locale != "" {
+		c.SetLocale(c.Locale)
 	}
 
 	return c, nil
@@ -242,6 +247,19 @@ func (c *Calc) SetMode(name string) error {
 		return err
 	}
 	c.Mode = name
+	return nil
+}
+
+func (c *Calc) SetLocale(name string) error {
+	fileName := fmt.Sprintf("zc:locales/%v.zc", name)
+	script, err := LoadFile(fileName)
+	if err != nil {
+		return fmt.Errorf("unable to load locale %v: %v", name, err)
+	}
+	if err := c.Eval(fileName, script); err != nil {
+		return err
+	}
+	c.Locale = name
 	return nil
 }
 

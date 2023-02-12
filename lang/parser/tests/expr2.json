@@ -7,13 +7,11 @@
         "Node": "Expr",
         "Atoms": [
           {
-            "Node": "Value",
-            "IsString": false,
+            "Node": "Number",
             "Value": "1234"
           },
           {
-            "Node": "Value",
-            "IsString": false,
+            "Node": "Number",
             "Value": "0xabcd"
           }
         ]

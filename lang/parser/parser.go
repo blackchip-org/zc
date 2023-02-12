@@ -17,8 +17,16 @@ type parser struct {
 }
 
 func Parse(file string, src []byte) (*ast.File, error) {
+	return parse(file, src, scanner.Compiler)
+}
+
+func ParseRuntime(file string, src []byte) (*ast.File, error) {
+	return parse(file, src, scanner.Runtime)
+}
+
+func parse(file string, src []byte, scanType scanner.ScanType) (*ast.File, error) {
 	p := &parser{
-		s: scanner.New(file, src),
+		s: scanner.New(file, src, scanType),
 	}
 
 	// Current and next tokens are tracked for lookahead. First scan puts the
@@ -74,6 +82,9 @@ func (p *parser) parseExpr() (*ast.Expr, error) {
 			}
 		case token.Newline, token.End:
 			done = true
+			p.scan()
+		case token.Number:
+			atom = &ast.NumberAtom{Token: p.tok, Value: p.tok.Literal}
 			p.scan()
 		case token.String:
 			atom = &ast.ValueAtom{Token: p.tok, Value: p.tok.Literal, IsString: true}
@@ -357,6 +368,8 @@ func (p *parser) parseStmtNested() (ast.Stmt, error) {
 	case token.If:
 		return p.parseIfStmt()
 	case token.Id:
+		return p.parseExprStmt()
+	case token.Number:
 		return p.parseExprStmt()
 	case token.Return:
 		return p.parseReturnStmt()

@@ -35,8 +35,7 @@
                 "Name": "n"
               },
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "1"
               },
               {

@@ -10,8 +10,7 @@
             "Node": "Expr",
             "Atoms": [
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "2"
               },
               {
@@ -19,8 +18,7 @@
                 "Name": "mod"
               },
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "0"
               },
               {

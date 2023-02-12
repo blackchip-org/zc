@@ -1,0 +1,6 @@
+import assert
+
+test-locale
+    'fr' conf.locale
+    1.23,45 4.32,10 a
+    5.55,55 assert.eq

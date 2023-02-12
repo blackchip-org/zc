@@ -103,6 +103,8 @@ var (
 			"auto-currency=": AutoCurrencyGet,
 			"int-format":     IntFormat,
 			"int-format=":    IntFormatGet,
+			"locale":         Locale,
+			"locale=":        LocaleGet,
 			"min-digits":     MinDigits,
 			"min-digits=":    MinDigitsGet,
 			"precision":      Precision,

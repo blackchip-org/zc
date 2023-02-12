@@ -23,8 +23,7 @@
                 "Name": "a"
               },
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "1"
               },
               {
@@ -58,8 +57,7 @@
                 "Name": "a"
               },
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "-1"
               },
               {

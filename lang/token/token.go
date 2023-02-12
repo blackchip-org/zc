@@ -47,6 +47,7 @@ const (
 	Macro
 	Native
 	Newline
+	Number
 	Return
 	Semicolon
 	Slash
@@ -74,6 +75,7 @@ var tokStr = map[Type]string{
 	If:          "if",
 	Loop:        "loop",
 	Native:      "native",
+	Number:      "number",
 	Macro:       "macro",
 	Newline:     "newline",
 	Return:      "return",

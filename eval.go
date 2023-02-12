@@ -33,6 +33,8 @@ func (e *Env) evalAtom(atom ast.Atom) error {
 	switch a := atom.(type) {
 	case *ast.InvokeAtom:
 		return e.evalInvokeAtom(a)
+	case *ast.NumberAtom:
+		return e.evalNumberAtom(a)
 	case *ast.RefAtom:
 		return e.evalRefAtom(a)
 	case *ast.SelectAtom:
@@ -211,6 +213,13 @@ func (e *Env) evalNativeStmt(node *ast.NativeStmt) error {
 	if e.Module != "" {
 		e.Exports = append(e.Exports, node.Name)
 	}
+	return nil
+}
+
+func (e *Env) evalNumberAtom(number *ast.NumberAtom) error {
+	e.trace(number, "number %v", number.Value)
+	e.Stack.PushValue(number.Value)
+	e.traceStack()
 	return nil
 }
 

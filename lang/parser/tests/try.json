@@ -16,8 +16,7 @@
                 "Name": "s1"
               },
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "0"
               },
               {

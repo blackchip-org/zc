@@ -10,8 +10,7 @@
             "Node": "Expr",
             "Atoms": [
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "0"
               },
               {
@@ -42,8 +41,7 @@
             "Node": "Expr",
             "Atoms": [
               {
-                "Node": "Value",
-                "IsString": false,
+                "Node": "Number",
                 "Value": "0"
               },
               {

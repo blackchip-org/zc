@@ -171,6 +171,15 @@ func (n NativeStmt) Pos() token.Pos { return n.Token.Pos }
 func (n NativeStmt) String() string { return nodeStringJSON(n) }
 func (n NativeStmt) stmtNode()      {}
 
+type NumberAtom struct {
+	Token token.Token `json:"-"`
+	Value string
+}
+
+func (n NumberAtom) Pos() token.Pos { return n.Token.Pos }
+func (n NumberAtom) String() string { return nodeStringJSON(n) }
+func (n NumberAtom) atomNode()      {}
+
 type RefAtom struct {
 	Token token.Token `json:"-"`
 	Name  string
@@ -386,6 +395,17 @@ func (n NativeStmt) MarshalJSON() ([]byte, error) {
 		Alias
 	}{
 		Node:  "Native",
+		Alias: (Alias)(n),
+	})
+}
+
+func (n NumberAtom) MarshalJSON() ([]byte, error) {
+	type Alias NumberAtom
+	return json.Marshal(&struct {
+		Node string
+		Alias
+	}{
+		Node:  "Number",
 		Alias: (Alias)(n),
 	})
 }

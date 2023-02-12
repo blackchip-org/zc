@@ -1,6 +1,8 @@
 package scanner
 
 import (
+	"math/big"
+	"strconv"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -18,18 +20,27 @@ type Scanner struct {
 	indents    int           // count of current indentation level, one for each tab
 	nextTokens []token.Token // pending dedent tokens to emit
 	inBlock    bool
+	scanType   ScanType
 }
+
+type ScanType int
+
+const (
+	Compiler ScanType = iota
+	Runtime
+)
 
 // When the src stream is exhausted, ch is set to this value
 const end rune = -1
 
-func New(file string, src []byte) *Scanner {
+func New(file string, src []byte, scanType ScanType) *Scanner {
 	s := &Scanner{
 		src: src,
 		pos: token.Pos{
 			File: file,
 			Line: 1,
 		},
+		scanType: scanType,
 	}
 	s.scan()
 	return s
@@ -212,7 +223,11 @@ func (s *Scanner) scanValue() token.Token {
 		s.scan()
 	}
 	lit := string(s.src[startL:s.idx])
-	return token.New(token.Value, lit, s.start)
+	t := token.Value
+	if s.scanType == Compiler && isNumber(lit) {
+		t = token.Number
+	}
+	return token.New(t, lit, s.start)
 }
 
 func (s *Scanner) scanSlash() token.Token {
@@ -298,4 +313,15 @@ func (s *Scanner) lookahead() rune {
 	}
 	ch, _ := utf8.DecodeRune(s.src[next:])
 	return ch
+}
+
+func isNumber(lit string) bool {
+	var bi big.Int
+	if _, ok := bi.SetString(lit, 0); ok {
+		return true
+	}
+	if _, err := strconv.ParseFloat(lit, 64); err == nil {
+		return true
+	}
+	return false
 }
