@@ -2,7 +2,7 @@
 
 # assert
 
-Assertions.
+Assertions
 
 For each assertion function, if the checked condition is not true, the current execution is aborted.
 

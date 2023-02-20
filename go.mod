@@ -9,6 +9,7 @@ require (
 )
 
 require (
+	github.com/blackchip-org/ptime v0.0.0-20230217014306-6ab05702fec0 // indirect
 	github.com/mattn/go-runewidth v0.0.10 // indirect
 	github.com/rivo/uniseg v0.1.0 // indirect
 )

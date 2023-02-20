@@ -398,12 +398,18 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 			return err
 		}
 	}
+	returns := NewStack(e.Calc, "<return>")
 	for callee.Main.Len() > 0 {
 		val := callee.Main.MustPop()
 		e.trace(fn, "func(%v) return %v", fn.Name, val)
-		caller.Stack.Enqueue(val)
+		returns.Push(val)
+	}
+	for returns.Len() != 0 {
+		v := returns.MustPop()
+		caller.Stack.Push(v)
 	}
 	e.trace(fn, "func(%v) end", fn.Name)
+	e.traceStack()
 	return nil
 }
 

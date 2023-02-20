@@ -4,11 +4,11 @@ test.reset
 
 'zc:test/lang/value.zc'
 'zc:test/zlib/bool.zc'
-'zc:test/zlib/chrono.zc'
 'zc:test/zlib/conf.zc'
 'zc:test/zlib/math.zc'
 'zc:test/zlib/prog.zc'
 'zc:test/zlib/str.zc'
+'zc:test/zlib/time.zc'
 test.files
 
 test.report
