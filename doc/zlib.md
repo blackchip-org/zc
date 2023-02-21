@@ -14,4 +14,5 @@ The zc standard library.
 | Use |      |     | [prog](zlib/prog.md)           | Programmer's calculator
 | Use | User | Dev | [stack](zlib/stack.md)         | Stack manipulations
 | Use |      | Dev | [str](zlib/str.md)             | String operations
+| Use |      |     | [time](zlib/time.md)           | Date, time, and duration operations
 |     |      |     | [tz](zlib/tz.md)               | Time zone database
