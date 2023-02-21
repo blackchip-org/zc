@@ -150,11 +150,11 @@ func (e *Env) evalImport(name string, alias string, zlib bool) error {
 	if _, err := e.Import(def, alias); err != nil {
 		return err
 	}
-	e.Calc.Info = "ok"
 	return nil
 }
 
 func (e *Env) evalImportStmt(node *ast.ImportStmt) error {
+	var names []string
 	for _, mod := range node.Modules {
 		alias := mod.Alias
 		if alias != "" {
@@ -166,7 +166,9 @@ func (e *Env) evalImportStmt(node *ast.ImportStmt) error {
 		if err := e.evalImport(mod.Name, alias, mod.Zlib); err != nil {
 			return e.err(node, err)
 		}
+		names = append(names, mod.Name)
 	}
+	e.Calc.Info = "imported " + strings.Join(names, ", ")
 	return nil
 }
 
@@ -320,12 +322,15 @@ func (e *Env) evalTryStmt(node *ast.TryStmt) error {
 }
 
 func (e *Env) evalUseStmt(node *ast.UseStmt) error {
+	var names []string
 	for _, mod := range node.Modules {
 		e.trace(node, "use %v", mod.Name)
 		if err := e.evalImport(mod.Name, "", mod.Zlib); err != nil {
 			return e.err(node, err)
 		}
+		names = append(names, mod.Name)
 	}
+	e.Calc.Info = "using " + strings.Join(names, ", ")
 	return nil
 }
 

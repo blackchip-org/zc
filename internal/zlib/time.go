@@ -2,6 +2,7 @@ package zlib
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/blackchip-org/ptime"
@@ -17,12 +18,12 @@ const (
 
 type timeState struct {
 	locale         *locale.Locale
-	parser         *ptime.Parser
+	p              *ptime.P
 	dateLayout     string
 	timeLayout     string
 	dateTimeLayout string
 	local          *time.Location
-	localZoneName  string
+	localZone      string
 	travel         time.Time
 }
 
@@ -40,9 +41,9 @@ func (s timeState) formatDateTime(t time.Time) string {
 
 func (t timeState) now() time.Time {
 	if t.travel.IsZero() {
-		return time.Now()
+		return time.Now().In(t.local)
 	}
-	return t.travel
+	return t.travel.In(t.local)
 }
 
 func getTimeState(env *zc.Env) *timeState {
@@ -54,9 +55,9 @@ func InitTime(env *zc.Env) error {
 	tz, _ := time.Now().Zone()
 	env.Calc.States["time"] = &timeState{
 		locale:         locale.EnUS,
-		parser:         ptime.NewParser(locale.EnUS),
+		p:              ptime.ForLocale(locale.EnUS),
 		local:          loc,
-		localZoneName:  tz,
+		localZone:      tz,
 		dateLayout:     defaultDateLayout,
 		timeLayout:     defaultTimeLayout,
 		dateTimeLayout: defaultDateTimeLayout,
@@ -67,11 +68,11 @@ func InitTime(env *zc.Env) error {
 func parseDateTime(env *zc.Env, v string) (time.Time, error) {
 	s := getTimeState(env)
 
-	parsed, err := s.parser.Parse(v)
+	parsed, err := s.p.Parse(v)
 	if err != nil {
 		return time.Time{}, fmt.Errorf("expected DateTime, Time, or Date but got: %v", v)
 	}
-	t, err := ptime.Time(parsed, s.now())
+	t, err := s.p.Time(parsed, s.now())
 	if err != nil {
 		return time.Time{}, fmt.Errorf("unable to parse: %v", v)
 	}
@@ -81,11 +82,11 @@ func parseDateTime(env *zc.Env, v string) (time.Time, error) {
 func parseDate(env *zc.Env, v string) (time.Time, error) {
 	s := getTimeState(env)
 
-	parsed, err := s.parser.ParseDate(v)
+	parsed, err := s.p.ParseDate(v)
 	if err != nil {
 		return time.Time{}, fmt.Errorf("expected DateTime, Time, or Date but got: %v", v)
 	}
-	t, err := ptime.Time(parsed, s.now())
+	t, err := s.p.Time(parsed, s.now())
 	if err != nil {
 		return time.Time{}, fmt.Errorf("unable to parse: %v", v)
 	}
@@ -95,11 +96,11 @@ func parseDate(env *zc.Env, v string) (time.Time, error) {
 func parseTime(env *zc.Env, v string) (time.Time, error) {
 	s := getTimeState(env)
 
-	parsed, err := s.parser.Parse(v)
+	parsed, err := s.p.Parse(v)
 	if err != nil {
 		return time.Time{}, fmt.Errorf("expected DateTime, Time, or Date but got: %v", v)
 	}
-	t, err := ptime.Time(parsed, s.now())
+	t, err := s.p.Time(parsed, s.now())
 	if err != nil {
 		return time.Time{}, fmt.Errorf("unable to parse: %v", v)
 	}
@@ -296,6 +297,16 @@ func DateTimeLayoutGet(env *zc.Env) error {
 	return nil
 }
 
+func DayYear(env *zc.Env) error {
+	t, err := popTime(env)
+	if err != nil {
+		return err
+	}
+	r := strconv.Itoa(t.YearDay())
+	env.Stack.Push(r)
+	return nil
+}
+
 func Now(env *zc.Env) error {
 	s := getTimeState(env)
 	t := s.now()
@@ -303,31 +314,33 @@ func Now(env *zc.Env) error {
 	return nil
 }
 
-func Ord(env *zc.Env) error {
-	t, err := popTime(env)
-	if err != nil {
-		return err
-	}
-	r := fmt.Sprintf("%04d-%03d", t.Year(), t.YearDay())
-	env.Stack.Push(r)
-	return nil
-}
-
 func Local(env *zc.Env) error {
+	s := getTimeState(env)
+
 	zone, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
-	loc, err := time.LoadLocation(zone)
-	if err != nil {
-		return fmt.Errorf("unknown time zone: %v", zone)
+
+	var loc *time.Location
+	offset, ok := s.locale.Offsets[s.locale.Key(zone)]
+	if ok {
+		zone = s.locale.DisplayNames[s.locale.Key(zone)]
+		loc = time.FixedZone(zone, offset)
+	} else {
+		loc, err = time.LoadLocation(zone)
+		if err != nil {
+			return fmt.Errorf("unknown time zone: %v", zone)
+		}
 	}
-	getTimeState(env).local = loc
+	s.local = loc
+	s.localZone = zone
+	env.Calc.Info = "local time zone is now " + s.localZone
 	return nil
 }
 
 func LocalGet(env *zc.Env) error {
-	env.Stack.Push(getTimeState(env).localZoneName)
+	env.Stack.Push(getTimeState(env).localZone)
 	return nil
 }
 
@@ -386,7 +399,7 @@ func TimeZone(env *zc.Env) error {
 	}
 
 	var loc *time.Location
-	offset, ok := s.locale.Offsets[name]
+	offset, ok := s.locale.Offsets[s.locale.Key(name)]
 	if ok {
 		loc = time.FixedZone(name, offset)
 	} else {
@@ -408,6 +421,7 @@ func Travel(env *zc.Env) error {
 		return err
 	}
 	s.travel = t
+	env.Calc.Info = "now set to " + s.formatDateTime(t)
 	return nil
 }
 

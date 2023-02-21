@@ -5,10 +5,10 @@ native date-layout=
 native date-time
 native date-time-layout
 native date-time-layout=
+native day-year
 native local
 native local=
 native now
-native ord
 native subtract-time
 native time
 native time-layout

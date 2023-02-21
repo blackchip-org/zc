@@ -16,7 +16,7 @@ var (
 	importDirective = regexp.MustCompile(`<!-- import: *([\w-\.]+) *-->`)
 	useDirective    = regexp.MustCompile(`<!-- use: *([\w-\.]+) *-->`)
 	evalDirective   = regexp.MustCompile(`<!-- eval: (.*) -->`)
-	testBanner      = regexp.MustCompile(`<!-- test: *([\w-\.]+) *-->`)
+	testBanner      = regexp.MustCompile(`<!-- test: (.*) *-->`)
 	tableHeader     = regexp.MustCompile(`.*Input.*Stack`)
 )
 
