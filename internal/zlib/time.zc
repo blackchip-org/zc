@@ -17,8 +17,6 @@ native time-zone
 native travel
 native travel-end
 
-macro utc 'UTC'
-
 alias dt date-time
 alias add-d add-duration
 alias sub-t subtract-time

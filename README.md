@@ -26,7 +26,10 @@ language.
 
 This is the third iteration of this calculator and something fun to work on
 when time is available. It is a bit rough at this stage but should be useful
-nonetheless.
+nonetheless. Also, it will always be a bit rough--full of bugs and
+inconsistencies. Features get added as I need or think of them. Bugs get fixed
+or ignored as I see them. There is no grand plan beyond tinkering around
+for entertainment.
 
 ## Installation
 
@@ -181,6 +184,18 @@ if found at the beginning or end of a number.
 |----------------|-------------------
 | `$1234`        | `$1,234`
 | `2 mul`        | `$2,468`
+
+
+## Modes
+
+The calculator can be started at the command line with a pre-defined mode
+using the `-m` option. For example, to start configured as a programmer's calculator:
+
+```
+zc -m prog
+```
+
+See the full list of [modes](doc/modes.md) that are available.
 
 ## To Be Continued...
 
