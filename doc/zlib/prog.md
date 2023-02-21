@@ -1,6 +1,6 @@
-<!-- use: prog -->
-
 # prog
+
+<!-- eval: use prog -->
 
 Programmer's calculator.
 

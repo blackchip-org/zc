@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	modDirective   = regexp.MustCompile(`<!-- mod: *([\w-\.]+) *-->`)
+	modDirective   = regexp.MustCompile(`^# *(.+) *$`)
 	indexDirective = regexp.MustCompile(`<!-- *index *-->`)
 	tableHeader    = regexp.MustCompile(`.*Operation.*Description`)
 	operationName  = regexp.MustCompile(`\[(.*)\]\((.*)\)`)

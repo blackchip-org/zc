@@ -1,6 +1,6 @@
-<!-- use: str -->
-
 # str
+
+<!-- eval: use str -->
 
 String operations
 

@@ -1,6 +1,6 @@
-<!-- import: conf -->
-
 # conf
+
+<!-- eval: import conf -->
 
 Configurations and settings
 

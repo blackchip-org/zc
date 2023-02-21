@@ -10,18 +10,18 @@
 
 - [a](zlib/math.md#add): Addition
 - abs
-  - [.abs](zlib/math-bigint.md#abs): Absolute value
-  - [.abs](zlib/math-fixed.md#abs): Absolute value
-  - [.abs](zlib/math.md#abs): Absolute value
+  - [math.bigint.abs](zlib/math-bigint.md#abs): Absolute value
+  - [math.fixed.abs](zlib/math-fixed.md#abs): Absolute value
+  - [math.abs](zlib/math.md#abs): Absolute value
 - add
-  - [.add](zlib/math-bigint.md#add): Addition
-  - [.add](zlib/math-fixed.md#add): Addition
-  - [.add](zlib/math.md#add): Addition
-  - [.add](zlib/time.md#add-duration): Time after a duration
+  - [math.bigint.add](zlib/math-bigint.md#add): Addition
+  - [math.fixed.add](zlib/math-fixed.md#add): Addition
+  - [math.add](zlib/math.md#add): Addition
+  - [time.add](zlib/time.md#add-duration): Time after a duration
 - [add-d](zlib/time.md#add-duration): Time after a duration
 - and
-  - [.and](zlib/bool.md#and): Logical conjunction
-  - [.and](zlib/prog.md#and): Bitwise and
+  - [bool.and](zlib/bool.md#and): Logical conjunction
+  - [prog.and](zlib/prog.md#and): Bitwise and
 
 ## b
 
@@ -32,9 +32,9 @@
 
 - [c](zlib/stack.md#clear): Clear
 - ceil
-  - [.ceil](zlib/math-bigint.md#ceil): Ceiling
-  - [.ceil](zlib/math-fixed.md#ceil): Ceiling
-  - [.ceil](zlib/math.md#ceil): Ceiling
+  - [math.bigint.ceil](zlib/math-bigint.md#ceil): Ceiling
+  - [math.fixed.ceil](zlib/math-fixed.md#ceil): Ceiling
+  - [math.ceil](zlib/math.md#ceil): Ceiling
 - [clear](zlib/stack.md#clear): Clear
 
 ## d
@@ -49,9 +49,9 @@
 - [day-year](zlib/time.md#date-year): Day of year for a given date
 - [dec](zlib/prog.md#dec): Convert to decimal
 - div
-  - [.div](zlib/math-bigint.md#div): Division
-  - [.div](zlib/math-fixed.md#div): Division
-  - [.div](zlib/math.md#div): Division
+  - [math.bigint.div](zlib/math-bigint.md#div): Division
+  - [math.fixed.div](zlib/math-fixed.md#div): Division
+  - [math.div](zlib/math.md#div): Division
 - [drop](zlib/stack.md#drop): Drop top item
 - [dt](zlib/time.md#date-time): Formats a datetime with the default layout
 - [dup](zlib/stack.md#dup): Duplicate top item
@@ -59,32 +59,32 @@
 ## e
 
 - eq
-  - [.eq](zlib/assert.md#eq): Assert equals
-  - [.eq](zlib/bool-bigint.md#eq): Equals
-  - [.eq](zlib/bool-fixed.md#eq): Equals
-  - [.eq](zlib/bool.md#eq): Equals
+  - [assert.eq](zlib/assert.md#eq): Assert equals
+  - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
+  - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
+  - [bool.eq](zlib/bool.md#eq): Equals
 
 ## f
 
 - [f](zlib/bool.md#false): False
 - false
-  - [.false](zlib/assert.md#false): Assert false
-  - [.false](zlib/bool.md#false): False
+  - [assert.false](zlib/assert.md#false): Assert false
+  - [bool.false](zlib/bool.md#false): False
 - floor
-  - [.floor](zlib/math-bigint.md#floor): Floor
-  - [.floor](zlib/math-fixed.md#floor): Floor
-  - [.floor](zlib/math.md#floor): Floor
+  - [math.bigint.floor](zlib/math-bigint.md#floor): Floor
+  - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
+  - [math.floor](zlib/math.md#floor): Floor
 
 ## g
 
 - gt
-  - [.gt](zlib/bool-bigint.md#gt): Greater than
-  - [.gt](zlib/bool-fixed.md#gt): Greater than
-  - [.gt](zlib/bool.md#gt): Greater than
+  - [bool.bigint.gt](zlib/bool-bigint.md#gt): Greater than
+  - [bool.fixed.gt](zlib/bool-fixed.md#gt): Greater than
+  - [bool.gt](zlib/bool.md#gt): Greater than
 - gte
-  - [.gte](zlib/bool-bigint.md#gte): Greater than or equals
-  - [.gte](zlib/bool-fixed.md#gte): Greater than or equals
-  - [.gte](zlib/bool.md#gte): Greater than or equals
+  - [bool.bigint.gte](zlib/bool-bigint.md#gte): Greater than or equals
+  - [bool.fixed.gte](zlib/bool-fixed.md#gte): Greater than or equals
+  - [bool.gte](zlib/bool.md#gte): Greater than or equals
 
 ## h
 
@@ -97,61 +97,61 @@
 ## l
 
 - len
-  - [.len](zlib/prog.md#len): Length in bits
-  - [.len](zlib/str.md#len): Length
+  - [prog.len](zlib/prog.md#len): Length in bits
+  - [str.len](zlib/str.md#len): Length
 - [local](zlib/time.md#local): Local time zone, set
 - [local=](zlib/time.md#local=): Local time zone, get
 - [lsh](zlib/prog.md#lsh): Left shift
 - lt
-  - [.lt](zlib/bool-bigint.md#lt): Less than
-  - [.lt](zlib/bool-fixed.md#lt): Less than
-  - [.lt](zlib/bool.md#lt): Less than
+  - [bool.bigint.lt](zlib/bool-bigint.md#lt): Less than
+  - [bool.fixed.lt](zlib/bool-fixed.md#lt): Less than
+  - [bool.lt](zlib/bool.md#lt): Less than
 - lte
-  - [.lte](zlib/bool-bigint.md#lte): Less than or equals
-  - [.lte](zlib/bool-fixed.md#lte): Less than or equals
-  - [.lte](zlib/bool.md#lte): Less than or equals
+  - [bool.bigint.lte](zlib/bool-bigint.md#lte): Less than or equals
+  - [bool.fixed.lte](zlib/bool-fixed.md#lte): Less than or equals
+  - [bool.lte](zlib/bool.md#lte): Less than or equals
 
 ## m
 
 - [m](zlib/math.md#mul): Multiplication
 - mod
-  - [.mod](zlib/math-bigint.md#mod): Modulus
-  - [.mod](zlib/math-fixed.md#mod): Modulus
-  - [.mod](zlib/math.md#mod): Modulus
+  - [math.bigint.mod](zlib/math-bigint.md#mod): Modulus
+  - [math.fixed.mod](zlib/math-fixed.md#mod): Modulus
+  - [math.mod](zlib/math.md#mod): Modulus
 - mul
-  - [.mul](zlib/math-bigint.md#mul): Multiplication
-  - [.mul](zlib/math-fixed.md#mul): Multiplication
-  - [.mul](zlib/math.md#mul): Multiplication
+  - [math.bigint.mul](zlib/math-bigint.md#mul): Multiplication
+  - [math.fixed.mul](zlib/math-fixed.md#mul): Multiplication
+  - [math.mul](zlib/math.md#mul): Multiplication
 
 ## n
 
 - [n](zlib/stack.md#n): Number of items on the stack
 - neg
-  - [.neg](zlib/math-bigint.md#neg): Negation
-  - [.neg](zlib/math-fixed.md#neg): Negation
-  - [.neg](zlib/math.md#neg): Negation
+  - [math.bigint.neg](zlib/math-bigint.md#neg): Negation
+  - [math.fixed.neg](zlib/math-fixed.md#neg): Negation
+  - [math.neg](zlib/math.md#neg): Negation
 - neq
-  - [.neq](zlib/bool-bigint.md#neq): Not Equals
-  - [.neq](zlib/bool-fixed.md#neq): Not Equals
-  - [.neq](zlib/bool.md#neq): Not Equals
+  - [bool.bigint.neq](zlib/bool-bigint.md#neq): Not Equals
+  - [bool.fixed.neq](zlib/bool-fixed.md#neq): Not Equals
+  - [bool.neq](zlib/bool.md#neq): Not Equals
 - not
-  - [.not](zlib/bool.md#not): Negation
-  - [.not](zlib/prog.md#not): Bitwise not
+  - [bool.not](zlib/bool.md#not): Negation
+  - [prog.not](zlib/prog.md#not): Bitwise not
 - [now](zlib/time.md#now): Current date and time
 
 ## o
 
 - [oct](zlib/prog.md#oct): Convert to octal
 - or
-  - [.or](zlib/bool.md#or): Logical disjunction
-  - [.or](zlib/prog.md#or): Bitwise or
+  - [bool.or](zlib/bool.md#or): Logical disjunction
+  - [prog.or](zlib/prog.md#or): Bitwise or
 
 ## p
 
 - pow
-  - [.pow](zlib/math-bigint.md#pow): Exponentiation
-  - [.pow](zlib/math-fixed.md#pow): Exponentiation
-  - [.pow](zlib/math.md#pow): Exponentiation
+  - [math.bigint.pow](zlib/math-bigint.md#pow): Exponentiation
+  - [math.fixed.pow](zlib/math-fixed.md#pow): Exponentiation
+  - [math.pow](zlib/math.md#pow): Exponentiation
 - [precision](zlib/conf.md#precision): Sets the precision for fixed-point math
 - [precision=](zlib/conf.md#precision=): Gets the prevision for fixed-point math
 - [print](zlib/io.md#print): Displays value to the console
@@ -159,22 +159,22 @@
 ## r
 
 - rem
-  - [.rem](zlib/math-bigint.md#rem): Remainder
-  - [.rem](zlib/math.md#rem): Remainder
+  - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
+  - [math.rem](zlib/math.md#rem): Remainder
 - [rsh](zlib/prog.md#rsh): Right shift
 
 ## s
 
 - [s](zlib/math.md#sub): Subtraction
 - sign
-  - [.sign](zlib/math-bigint.md#sign): Sign
-  - [.sign](zlib/math-fixed.md#sign): Sign
-  - [.sign](zlib/math.md#sign): Sign
+  - [math.bigint.sign](zlib/math-bigint.md#sign): Sign
+  - [math.fixed.sign](zlib/math-fixed.md#sign): Sign
+  - [math.sign](zlib/math.md#sign): Sign
 - [starts-with](zlib/str.md#starts-with): Starts with
 - sub
-  - [.sub](zlib/math-bigint.md#sub): Subtraction
-  - [.sub](zlib/math-fixed.md#sub): Subtraction
-  - [.sub](zlib/math.md#sub): Subtraction
+  - [math.bigint.sub](zlib/math-bigint.md#sub): Subtraction
+  - [math.fixed.sub](zlib/math-fixed.md#sub): Subtraction
+  - [math.sub](zlib/math.md#sub): Subtraction
 - [sub-t](zlib/time.md#subtact-time): Duration between two times
 - [subtract-time](zlib/time.md#subtact-time): Duration between two times
 - [sum](zlib/math.md#sum): Sum
@@ -184,14 +184,14 @@
 - [t](zlib/bool.md#true): True
 - [time](zlib/time.md#time): Formats a time with the default layout
 - time-layout
-  - [.time-layout](zlib/time.md#time-layout): Default time layout, set
-  - [.time-layout](zlib/time.md#time-layout=): Default time layout, get
+  - [time.time-layout](zlib/time.md#time-layout): Default time layout, set
+  - [time.time-layout](zlib/time.md#time-layout=): Default time layout, get
 - [time-zone](zlib/time.md#time-zone): Convert time to a given time zone
 - [travel](zlib/time.md#travel): Override the value returned by `now`
 - [travel-end](zlib/time.md#travel-end): Cancel override of the value returned by now
 - true
-  - [.true](zlib/assert.md#true): Assert true
-  - [.true](zlib/bool.md#true): True
+  - [assert.true](zlib/assert.md#true): Assert true
+  - [bool.true](zlib/bool.md#true): True
 - [tz](zlib/time.md#time-zone): Convert time to a given time zone
 
 ## x

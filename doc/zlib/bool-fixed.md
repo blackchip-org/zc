@@ -1,6 +1,6 @@
-<!-- import: bool.fixed -->
-
 # bool.fixed
+
+<!-- eval: import bool.fixed -->
 
 Boolean operations using fixed-point math.
 

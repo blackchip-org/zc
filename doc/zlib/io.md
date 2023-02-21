@@ -1,6 +1,6 @@
-<!-- import: io -->
-
 # io
+
+<!-- eval: import io -->
 
 Input/output functions
 

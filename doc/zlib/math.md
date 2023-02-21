@@ -1,6 +1,6 @@
-<!-- use: math -->
-
 # math
+
+<!-- eval: use math -->
 
 Basic mathematical operations.
 

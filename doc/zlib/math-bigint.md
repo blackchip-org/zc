@@ -1,6 +1,6 @@
-<!-- import: math.bigint -->
-
 # math.bigint
+
+<!-- eval: import math.bigint -->
 
 Basic mathematical operations with integers.
 

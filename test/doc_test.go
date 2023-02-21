@@ -13,11 +13,9 @@ import (
 )
 
 var (
-	importDirective = regexp.MustCompile(`<!-- import: *([\w-\.]+) *-->`)
-	useDirective    = regexp.MustCompile(`<!-- use: *([\w-\.]+) *-->`)
-	evalDirective   = regexp.MustCompile(`<!-- eval: (.*) -->`)
-	testBanner      = regexp.MustCompile(`<!-- test: (.*) *-->`)
-	tableHeader     = regexp.MustCompile(`.*Input.*Stack`)
+	evalDirective = regexp.MustCompile(`<!-- eval: (.*) -->`)
+	testBanner    = regexp.MustCompile(`<!-- test: (.*) *-->`)
+	tableHeader   = regexp.MustCompile(`.*Input.*Stack`)
 )
 
 func TestDoc(t *testing.T) {
@@ -60,19 +58,7 @@ func testFile(t *testing.T, file fs.File) {
 		}
 		line := scanner.Text()
 
-		matches := useDirective.FindStringSubmatch(line)
-		if matches != nil {
-			setup = append(setup, "use "+matches[1])
-			continue
-		}
-
-		matches = importDirective.FindStringSubmatch(line)
-		if matches != nil {
-			setup = append(setup, "import "+matches[1])
-			continue
-		}
-
-		matches = evalDirective.FindStringSubmatch(line)
+		matches := evalDirective.FindStringSubmatch(line)
 		if matches != nil {
 			setup = append(setup, matches[1])
 			continue

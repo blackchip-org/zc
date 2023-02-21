@@ -1,6 +1,6 @@
-<!-- import: bool.bigint -->
-
 # bool.bigint
+
+<!-- eval: import bool.bigint -->
 
 Boolean operations using integer math.
 

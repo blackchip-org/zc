@@ -1,6 +1,6 @@
-<!-- use: stack -->
-
 # stack
+
+<!-- eval: use stack -->
 
 Stack manipulations.
 

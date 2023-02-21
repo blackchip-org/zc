@@ -1,6 +1,6 @@
-<!-- import: math.fixed -->
-
 # math.fixed
+
+<!-- eval: import math.fixed -->
 
 Basic mathematical operations with fixed-point numbers.
 

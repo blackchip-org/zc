@@ -1,6 +1,6 @@
-<!-- use: bool -->
-
 # bool
+
+<!-- eval: use bool -->
 
 Boolean operations.
 

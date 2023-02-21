@@ -1,6 +1,6 @@
-<!-- import: assert -->
-
 # assert
+
+<!-- eval: import assert -->
 
 Assertions
 
