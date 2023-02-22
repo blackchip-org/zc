@@ -2,7 +2,7 @@
 
 A fun RPN calculator.
 
-- [mode](doc/modes.md): Calculator modes
+- [modes](doc/modes.md): Calculator modes
 - [zlib](doc/zlib.md): Standard library
 - [index](doc/index.md): Function index
 

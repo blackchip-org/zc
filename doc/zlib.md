@@ -34,10 +34,3 @@ These modules are useful when developing calculator scripts:
 | [bool](zlib/bool.md)           | Boolean operations
 | [io](zlib/io.md)               | Input/output functions
 
-# Submodules
-
-
-* [submodules](zlib-sub.md)
-
-| Use | User | Dev | Name                           | Description
-|-----|------|-----|--------------------------------|------------------
