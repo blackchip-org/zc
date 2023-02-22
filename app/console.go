@@ -36,19 +36,17 @@ func RunConsole(calc *zc.Calc) {
 	}
 
 	for ; err == nil; text, err = line.Prompt(getPrompt(calc)) {
-		if strings.TrimSpace(text) == "quit" {
-			return
-		}
-		var err error
-		ansi.Write(ansi.ClearScreen)
-		if strings.TrimSpace(text) == "" {
-			if calc.Env.Stack.Len() > 0 {
-				_, err = calc.Env.Stack.Pop()
-			}
-		} else {
-			err = calc.EvalString("<cli>", text)
+		cmd := strings.TrimRight(text, " ")
+		fn, ok := commands[cmd]
+		if !ok {
+			fn = eval
 		}
 
+		ansi.Write(ansi.ClearScreen)
+		err := fn(calc, cmd)
+		if err == errQuit {
+			return
+		}
 		fmt.Println()
 
 		for i, val := range calc.Env.Stack.Items() {

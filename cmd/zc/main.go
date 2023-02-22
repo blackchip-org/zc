@@ -137,6 +137,10 @@ func main() {
 			ansi.Enabled = false
 		}
 		app.RunConsole(calc)
+		for _, item := range calc.Env.Stack.Items() {
+			fmt.Println(item)
+		}
+		fmt.Println()
 	}
 }
 

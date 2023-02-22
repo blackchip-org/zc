@@ -23,9 +23,7 @@ func NewEnv(calc *Calc) *Env {
 		stacks: make(map[string]*Stack),
 		Funcs:  make(map[string]CalcFunc),
 	}
-	e.Main = NewStack(calc, "main")
-	e.stacks["main"] = e.Main
-	e.Stack = e.Main
+	e.SetMain(NewStack(calc, "main"))
 	return e
 }
 
@@ -45,6 +43,12 @@ func (e *Env) DeriveBlock() *Env {
 	de.Stack = de.Main
 	de.parent = e.parent
 	return de
+}
+
+func (e *Env) SetMain(s *Stack) {
+	e.Main = s
+	e.Stack = s
+	e.stacks["main"] = s
 }
 
 func (e *Env) StackFor(name string) (*Stack, bool) {

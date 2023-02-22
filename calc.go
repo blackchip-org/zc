@@ -23,6 +23,10 @@ const (
 	ValidPoints     = ",."
 )
 
+const (
+	DefaultMaxHistory = 10
+)
+
 type Config struct {
 	ModuleDefs   []ModuleDef
 	PreludeCLI   []string
@@ -36,6 +40,7 @@ type Config struct {
 	MinDigits    uint
 	AutoCurrency bool
 	Locale       string
+	MaxHistory   int
 }
 
 type ModuleDef struct {
@@ -82,6 +87,8 @@ type Calc struct {
 	Modules    map[string]*Env
 	Natives    map[string]CalcFunc
 	States     map[string]any
+	History    []*Stack
+	redo       []*Stack
 }
 
 func NewCalc(conf Config) (*Calc, error) {
@@ -92,6 +99,10 @@ func NewCalc(conf Config) (*Calc, error) {
 		ModuleDefs: make(map[string]ModuleDef),
 		States:     make(map[string]any),
 	}
+	if c.MaxHistory == 0 {
+		c.MaxHistory = DefaultMaxHistory
+	}
+
 	for _, def := range conf.ModuleDefs {
 		c.ModuleDefs[def.Name] = def
 	}
@@ -132,11 +143,21 @@ func NewCalc(conf Config) (*Calc, error) {
 
 func (c *Calc) Eval(name string, src []byte) error {
 	c.Info = ""
+	rollback := c.Env.Main.Copy()
 	root, err := parser.Parse(name, src)
 	if err != nil {
+		c.Env.SetMain(rollback)
 		return err
 	}
-	return c.Env.evalFile(root)
+	err = c.Env.evalFile(root)
+	if err != nil {
+		c.Env.SetMain(rollback)
+		return err
+
+	}
+	c.History = append([]*Stack{rollback}, c.History...)
+	c.redo = nil
+	return nil
 }
 
 func (c *Calc) EvalString(name string, src string) error {
@@ -144,8 +165,12 @@ func (c *Calc) EvalString(name string, src string) error {
 }
 
 func (c *Calc) EvalLines(name string, lines []string) error {
-	src := strings.Join(lines, "\n")
-	return c.EvalString(name, src)
+	for _, line := range lines {
+		if err := c.EvalString(name, line); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (c *Calc) Load(def ModuleDef) (*Env, error) {
@@ -260,6 +285,26 @@ func (c *Calc) SetLocale(name string) error {
 		return err
 	}
 	c.Locale = name
+	return nil
+}
+
+func (c *Calc) Undo() error {
+	if len(c.History) == 0 {
+		return fmt.Errorf("undo stack is empty")
+	}
+	c.redo = append([]*Stack{c.Env.Main.Copy()}, c.redo...)
+	c.Env.SetMain(c.History[0])
+	c.History = c.History[1:]
+	return nil
+}
+
+func (c *Calc) Redo() error {
+	if len(c.redo) == 0 {
+		return fmt.Errorf("redo stack is empty")
+	}
+	c.History = append([]*Stack{c.Env.Main}, c.History...)
+	c.Env.SetMain(c.redo[0])
+	c.redo = c.redo[1:]
 	return nil
 }
 
