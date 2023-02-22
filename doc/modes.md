@@ -9,8 +9,6 @@ For example:
 zc -m fin
 ```
 
-* [submodules](zlib-sub.md)
-
 | Name            | Description
 |-----------------|------------------
 | [dev](#dev)     | Developer's mode
