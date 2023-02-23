@@ -36,7 +36,6 @@ func RunConsole(calc *zc.Calc) {
 	}
 
 	for ; err == nil; text, err = line.Prompt(getPrompt(calc)) {
-		//padding := strings.Repeat(" ", len(getPrompt(calc)))
 		prev := calc.Env.Main.Items()
 		cmd := strings.TrimRight(text, " ")
 		fn, ok := commands[cmd]
