@@ -129,6 +129,17 @@ The entry into the calculator looks like the following:
 | `add`     | `25`
 | `sqrt`    | `5`
 
+## Modes
+
+The calculator can be started at the command line with a pre-defined mode
+using the `-m` option. For example, to start configured as a programmer's calculator:
+
+```
+zc -m prog
+```
+
+See the full list of [modes](doc/modes.md) that are available.
+
 ## Text
 
 To use text as a value, surround it with single quotes. If the text value is
@@ -185,18 +196,6 @@ if found at the beginning or end of a number.
 |----------------|-------------------
 | `$1234`        | `$1,234`
 | `2 mul`        | `$2,468`
-
-
-## Modes
-
-The calculator can be started at the command line with a pre-defined mode
-using the `-m` option. For example, to start configured as a programmer's calculator:
-
-```
-zc -m prog
-```
-
-See the full list of [modes](doc/modes.md) that are available.
 
 ## Commands
 
