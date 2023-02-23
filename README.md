@@ -209,6 +209,31 @@ These commands are available when running the calculator interactively:
 | `quit`       | Print the final stack and return to shell
 | `undo`, `u`  | Undo the last line entered
 
+## Macros
+
+Let's say that you commonly have to compute a sales tax that is 5%. To
+compute the sales tax on something that costs $123:
+
+<!-- test: tax -->
+
+| Input          | Stack
+|----------------|-------------------
+| `$123`         | `$123`
+| `dup`          | `$123 | $123`
+| `0.05`         | `$123 | $123 | 0.05`
+| `mul`          | `$123 | $6.15`
+| `add`          | `$129.15`
+
+Repeated use of this pattern can be used with a macro:
+
+<!-- test: tax-macro -->
+
+| Input                    | Stack
+|--------------------------|-------------------
+| `macro tax dup 0.05 mul` |
+| `$123`                   | `$123`
+| `tax add`                | `$129.15`
+
 ## To Be Continued...
 
 ## Credits
