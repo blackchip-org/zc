@@ -219,9 +219,9 @@ compute the sales tax on something that costs $123:
 | Input          | Stack
 |----------------|-------------------
 | `$123`         | `$123`
-| `dup`          | `$123 | $123`
-| `0.05`         | `$123 | $123 | 0.05`
-| `mul`          | `$123 | $6.15`
+| `dup`          | `$123 \| $123`
+| `0.05`         | `$123 \| $123 \| 0.05`
+| `mul`          | `$123 \| $6.15`
 | `add`          | `$129.15`
 
 Repeated use of this pattern can be used with a macro:
