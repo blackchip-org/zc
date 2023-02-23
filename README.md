@@ -198,6 +198,17 @@ zc -m prog
 
 See the full list of [modes](doc/modes.md) that are available.
 
+## Commands
+
+These commands are available when running the calculator interactively:
+
+| Command      | Description
+|--------------|------------------------------------
+| *blank line* | Clear stack diff or pop first item from stack
+| `redo`, `r`  | Redo the last undo
+| `quit`       | Print the final stack and return to shell
+| `undo`, `u`  | Undo the last line entered
+
 ## To Be Continued...
 
 ## Credits
