@@ -129,6 +129,17 @@ The entry into the calculator looks like the following:
 | `add`     | `25`
 | `sqrt`    | `5`
 
+## Commands
+
+These commands are available when running the calculator interactively:
+
+| Command      | Description
+|--------------|------------------------------------
+| *blank line* | Clear stack diff or pop first item from stack
+| `redo`, `r`  | Redo the last undo
+| `quit`       | Print the final stack and return to shell
+| `undo`, `u`  | Undo the last line entered
+
 ## Modes
 
 The calculator can be started at the command line with a pre-defined mode
@@ -196,17 +207,6 @@ if found at the beginning or end of a number.
 |----------------|-------------------
 | `$1234`        | `$1,234`
 | `2 mul`        | `$2,468`
-
-## Commands
-
-These commands are available when running the calculator interactively:
-
-| Command      | Description
-|--------------|------------------------------------
-| *blank line* | Clear stack diff or pop first item from stack
-| `redo`, `r`  | Redo the last undo
-| `quit`       | Print the final stack and return to shell
-| `undo`, `u`  | Undo the last line entered
 
 ## Macros
 
