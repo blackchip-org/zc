@@ -35,21 +35,33 @@ func RunConsole(calc *zc.Calc) {
 		return
 	}
 
+	displayedStackDiff := false
 	for ; err == nil; text, err = line.Prompt(getPrompt(calc)) {
+		var execError error
 		prev := calc.Env.Main.Items()
+		ansi.Write(ansi.ClearScreen)
+
 		cmd := strings.TrimRight(text, " ")
-		fn, ok := commands[cmd]
-		if !ok {
-			fn = eval
+		if cmd != "" {
+			fn, ok := commands[cmd]
+			if !ok {
+				fn = eval
+			}
+			execError = fn(calc, cmd)
+			if execError == errQuit {
+				return
+			}
+		} else {
+			if !displayedStackDiff {
+				if calc.Env.Stack.Len() > 0 {
+					calc.Env.Stack.Pop()
+				}
+			}
 		}
 
-		ansi.Write(ansi.ClearScreen)
-		err := fn(calc, cmd)
-		if err == errQuit {
-			return
-		}
 		fmt.Println()
 
+		displayedStackDiff = false
 		for i, val := range calc.Env.Main.Items() {
 			if i < len(prev) && prev[i] != val {
 				ansi.Write(ansi.DarkGray)
@@ -57,6 +69,7 @@ func RunConsole(calc *zc.Calc) {
 					fmt.Println(" " + prev[j])
 				}
 				ansi.Write(ansi.Reset)
+				displayedStackDiff = true
 			}
 			color := ansi.LightBlue
 			if i == calc.Env.Stack.Len()-1 {
@@ -67,8 +80,8 @@ func RunConsole(calc *zc.Calc) {
 			ansi.Write(ansi.Reset)
 			fmt.Println()
 		}
-		if err != nil {
-			calcError, ok := err.(zc.CalcError)
+		if execError != nil {
+			calcError, ok := execError.(zc.CalcError)
 			if ok {
 				for _, f := range calcError.Frames {
 					fmt.Printf("%v @ %v:%v\n", f.Pos.File, f.Pos.Line, f.Pos.Column)
@@ -78,7 +91,7 @@ func RunConsole(calc *zc.Calc) {
 				}
 			}
 			ansi.Write(ansi.BrightYellow)
-			fmt.Printf("(!) %v\n", err)
+			fmt.Printf("(!) %v\n", execError)
 			ansi.Write(ansi.Reset)
 		} else if calc.Info != "" {
 			ansi.Write(ansi.LightGreen)
