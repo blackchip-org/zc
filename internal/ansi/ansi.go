@@ -15,6 +15,7 @@ const (
 	BrightRed     = "\033[1;31m"
 	BrightYellow  = "\033[1;93m"
 	BrightMagenta = "\033[1;95m"
+	DarkGray      = "\033[90m"
 )
 
 func FgColor8(v uint8) string {

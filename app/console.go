@@ -36,6 +36,8 @@ func RunConsole(calc *zc.Calc) {
 	}
 
 	for ; err == nil; text, err = line.Prompt(getPrompt(calc)) {
+		//padding := strings.Repeat(" ", len(getPrompt(calc)))
+		prev := calc.Env.Main.Items()
 		cmd := strings.TrimRight(text, " ")
 		fn, ok := commands[cmd]
 		if !ok {
@@ -49,7 +51,14 @@ func RunConsole(calc *zc.Calc) {
 		}
 		fmt.Println()
 
-		for i, val := range calc.Env.Stack.Items() {
+		for i, val := range calc.Env.Main.Items() {
+			if i < len(prev) && prev[i] != val {
+				ansi.Write(ansi.DarkGray)
+				for j := i; j < len(prev); j++ {
+					fmt.Println(" " + prev[j])
+				}
+				ansi.Write(ansi.Reset)
+			}
 			color := ansi.LightBlue
 			if i == calc.Env.Stack.Len()-1 {
 				color = ansi.Bold

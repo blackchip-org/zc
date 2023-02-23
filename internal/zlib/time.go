@@ -55,7 +55,7 @@ func InitTime(env *zc.Env) error {
 	tz, _ := time.Now().Zone()
 	env.Calc.States["time"] = &timeState{
 		locale:         locale.EnUS,
-		p:              ptime.ForLocale(locale.EnUS),
+		p:              ptime.For(locale.EnUS),
 		local:          loc,
 		localZone:      tz,
 		dateLayout:     defaultDateLayout,
