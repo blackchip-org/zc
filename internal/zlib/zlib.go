@@ -12,7 +12,6 @@ var All = []zc.ModuleDef{
 	Conf,
 	Dev,
 	Dict,
-	Geom,
 	Math,
 	MathBigInt,
 	MathFixed,
@@ -20,12 +19,15 @@ var All = []zc.ModuleDef{
 	Io,
 	Prog,
 	Runtime,
+	Sci,
+	SI,
 	Stack,
 	Str,
 	StrBool,
 	Test,
 	Time,
 	Tz,
+	Unit,
 }
 
 var (
@@ -236,6 +238,19 @@ var (
 			"funcs":   Funcs,
 		},
 	}
+	Sci = zc.ModuleDef{
+		Name:       "sci",
+		Include:    true,
+		ScriptPath: "zc:zlib/sci.zc",
+		Natives: map[string]zc.CalcFunc{
+			"scientific-notation": ScientificNotation,
+		},
+	}
+	SI = zc.ModuleDef{
+		Name:       "si",
+		Include:    true,
+		ScriptPath: "zc:zlib/si.zc",
+	}
 	Stack = zc.ModuleDef{
 		Name:       "stack",
 		Include:    true,
@@ -301,5 +316,9 @@ var (
 	Tz = zc.ModuleDef{
 		Name:       "tz",
 		ScriptPath: "zc:zlib/tz.zc",
+	}
+	Unit = zc.ModuleDef{
+		Name:       "unit",
+		ScriptPath: "zc:zlib/unit.zc",
 	}
 )
