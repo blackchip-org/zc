@@ -135,7 +135,7 @@ These commands are available when running the calculator interactively:
 
 | Command      | Description
 |--------------|------------------------------------
-| *blank line* | Clear stack diff or pop first item from stack
+| *blank line* | Pop first item from stack
 | `redo`, `r`  | Redo the last undo
 | `quit`       | Print the final stack and return to shell
 | `undo`, `u`  | Undo the last line entered
