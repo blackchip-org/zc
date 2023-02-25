@@ -1,6 +1,9 @@
+
 # tz
 
 Time zone database.
+
+- Use: import
 
 | Operation | Description
 |-----------|------------
@@ -115,6 +118,7 @@ Time zone database.
 | `christmas.indian` | Indian/Christmas
 | `chungking.asia` | Asia/Chungking
 | `chuuk.pacific` | Pacific/Chuuk
+| `ciudad-juarez.america` | America/Ciudad_Juarez
 | `cocos.indian` | Indian/Cocos
 | `colombo.asia` | Asia/Colombo
 | `comodrivadavia.argentina.america` | America/Argentina/ComodRivadavia

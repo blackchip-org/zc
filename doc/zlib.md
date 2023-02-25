@@ -11,6 +11,7 @@ The following modules are loaded by default:
 | [conf](zlib/conf.md)           | Configuration and settings
 | [math](zlib/math.md)           | Basic mathematical operations
 | [stack](zlib/stack.md)         | Stack manipulations
+| [zc](zlib/zc.md)               | Information about the calculator
 
 ## User Modules
 

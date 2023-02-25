@@ -29,6 +29,7 @@ var All = []zc.ModuleDef{
 	Time,
 	Tz,
 	Unit,
+	Zc,
 }
 
 var (
@@ -37,6 +38,7 @@ var (
 		"math",
 		"stack",
 		"str", // TODO: This should only be in dev
+		"zc",
 	}
 	// Order here needs to be sorted based on dependencies. Do not put in
 	// alphabetical order. Modules to the top of the list do not have access
@@ -334,5 +336,13 @@ var (
 	Unit = zc.ModuleDef{
 		Name:       "unit",
 		ScriptPath: "zc:zlib/unit.zc",
+	}
+	Zc = zc.ModuleDef{
+		Name:       "zc",
+		Include:    true,
+		ScriptPath: "zc:zlib/zc.zc",
+		Natives: map[string]zc.CalcFunc{
+			"version": Version,
+		},
 	}
 )
