@@ -2,33 +2,6 @@
 macro km-mi 0.62137119 mul
 macro mi-km 1.609344 mul
 
--- SI prefixes
-macro quetta    1e30
-macro ronna     1e27
-macro yotta     1e24
-macro zetta     1e21
-macro exa       1e18
-macro peta      1e15
-macro tera      1e12
-macro giga      1e09
-macro mega      1e06
-macro kilo      1e03
-macro hecto     1e02
-macro deca      1e01
-
-macro deci      1e-01
-macro centi     1e-02
-macro milli     1e-03
-macro micro     1e-06
-macro nano      1e-09
-macro pico      1e-12
-macro femto     1e-15
-macro atto      1e-18
-macro zepto     1e-21
-macro yocto     1e-24
-macro ronto     1e-27
-macro quecto    1e-30
-
 -- temperature
 macro c-f 9 5 div mul 32 add
 macro f-c 32 sub 5 9 div mul

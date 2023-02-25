@@ -136,16 +136,6 @@ func TestParseCurrencySymbol(t *testing.T) {
 
 func TestUndo(t *testing.T) {
 	calc, _ := NewCalc(Config{})
-	// ph := func() {
-	// 	fmt.Printf("st: %v\n", calc.Env.Main)
-	// 	for i, item := range calc.History {
-	// 		fmt.Printf("u%v: %v\n", i, item)
-	// 	}
-	// 	for i, item := range calc.redo {
-	// 		fmt.Printf("== r%v: %v\n", i, item)
-	// 	}
-	// 	fmt.Println()
-	// }
 	calc.EvalLines("", []string{"1", "2", "3"})
 	// 1 2 3
 	calc.Undo()

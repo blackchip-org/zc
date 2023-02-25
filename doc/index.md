@@ -22,6 +22,7 @@
 - and
   - [bool.and](zlib/bool.md#and): Logical conjunction
   - [prog.and](zlib/prog.md#and): Bitwise and
+- [atto](zlib/si.md#atto): a, 1e-18
 
 ## b
 
@@ -35,6 +36,7 @@
   - [math.bigint.ceil](zlib/math-bigint.md#ceil): Ceiling
   - [math.fixed.ceil](zlib/math-fixed.md#ceil): Ceiling
   - [math.ceil](zlib/math.md#ceil): Ceiling
+- [centi](zlib/si.md#centi): c, 1e-02
 - [clear](zlib/stack.md#clear): Clear
 
 ## d
@@ -48,6 +50,8 @@
 - [date-time-layout=](zlib/time.md#date-time-layout=): Default datetime layout, get
 - [day-year](zlib/time.md#date-year): Day of year for a given date
 - [dec](zlib/prog.md#dec): Convert to decimal
+- [deca](zlib/si.md#deca): da, 1e01
+- [deci](zlib/si.md#deci): d, 1e-01
 - div
   - [math.bigint.div](zlib/math-bigint.md#div): Division
   - [math.fixed.div](zlib/math-fixed.md#div): Division
@@ -63,6 +67,7 @@
   - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
   - [bool.eq](zlib/bool.md#eq): Equals
+- [exa](zlib/si.md#exa): E, 1e18
 
 ## f
 
@@ -70,6 +75,7 @@
 - false
   - [assert.false](zlib/assert.md#false): Assert false
   - [bool.false](zlib/bool.md#false): False
+- [femto](zlib/si.md#femto): f, 1e-15
 - floor
   - [math.bigint.floor](zlib/math-bigint.md#floor): Floor
   - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
@@ -77,6 +83,7 @@
 
 ## g
 
+- [giga](zlib/si.md#giga): G, 1e09
 - gt
   - [bool.bigint.gt](zlib/bool-bigint.md#gt): Greater than
   - [bool.fixed.gt](zlib/bool-fixed.md#gt): Greater than
@@ -88,11 +95,16 @@
 
 ## h
 
+- [hecto](zlib/si.md#hecto): h, 1e02
 - [hex](zlib/prog.md#hex): Convert to hexadecimal
 
 ## i
 
 - [iif](zlib/bool.md#iif): Immediate if
+
+## k
+
+- [kilo](zlib/si.md#kilo): k, 1e03
 
 ## l
 
@@ -114,6 +126,9 @@
 ## m
 
 - [m](zlib/math.md#mul): Multiplication
+- [mega](zlib/si.md#mega): M, 1e06
+- [micro](zlib/si.md#micro): μ, 1e-06
+- [milli](zlib/si.md#milli): m, 1e-03
 - mod
   - [math.bigint.mod](zlib/math-bigint.md#mod): Modulus
   - [math.fixed.mod](zlib/math-fixed.md#mod): Modulus
@@ -126,6 +141,7 @@
 ## n
 
 - [n](zlib/stack.md#n): Number of items on the stack
+- [nano](zlib/si.md#nano): n, 1e-09
 - neg
   - [math.bigint.neg](zlib/math-bigint.md#neg): Negation
   - [math.fixed.neg](zlib/math-fixed.md#neg): Negation
@@ -148,19 +164,28 @@
 
 ## p
 
+- [peta](zlib/si.md#peta): P, 1e15
+- [pico](zlib/si.md#pico): p, 1e-12
 - pow
   - [math.bigint.pow](zlib/math-bigint.md#pow): Exponentiation
   - [math.fixed.pow](zlib/math-fixed.md#pow): Exponentiation
   - [math.pow](zlib/math.md#pow): Exponentiation
-- [precision](zlib/conf.md#precision): Sets the precision for fixed-point math
-- [precision=](zlib/conf.md#precision=): Gets the prevision for fixed-point math
+- [precision](zlib/conf.md#precision): Precision for fixed-point math, set
+- [precision=](zlib/conf.md#precision=): Prevision for fixed-point math, get
 - [print](zlib/io.md#print): Displays value to the console
+
+## q
+
+- [quecto](zlib/si.md#quecto): q, 1e-30
+- [quetta](zlib/si.md#quetta): Q, 1e30
 
 ## r
 
 - rem
   - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
   - [math.rem](zlib/math.md#rem): Remainder
+- [ronna](zlib/si.md#ronna): R, 1e27
+- [ronto](zlib/si.md#ronto): r, 1e-27
 - [rsh](zlib/prog.md#rsh): Right shift
 
 ## s
@@ -182,6 +207,7 @@
 ## t
 
 - [t](zlib/bool.md#true): True
+- [tera](zlib/si.md#tera): T, 1e12
 - [time](zlib/time.md#time): Formats a time with the default layout
 - time-layout
   - [time.time-layout](zlib/time.md#time-layout): Default time layout, set
@@ -197,3 +223,13 @@
 ## x
 
 - [xor](zlib/prog.md#xor): Bitwise exclusive or
+
+## y
+
+- [yocto](zlib/si.md#yocto): y, 1e-24
+- [yotta](zlib/si.md#yotta): Y, 1e24
+
+## z
+
+- [zepto](zlib/si.md#zepto): z, 1e-21
+- [zetta](zlib/si.md#zetta): Z, 1e21

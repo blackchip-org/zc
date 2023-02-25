@@ -432,12 +432,16 @@ func (c *Calc) FormatBool(v bool) string {
 }
 
 func (c *Calc) FormatFixed(v decimal.Decimal) string {
-	fn, ok := RoundingFuncsFix[c.RoundingMode]
-	if !ok {
-		log.Panicf("invalid rounding mode: %v", c.RoundingMode)
+	var s string
+	if c.Precision != 0 {
+		fn, ok := RoundingFuncsFix[c.RoundingMode]
+		if !ok {
+			log.Panicf("invalid rounding mode: %v", c.RoundingMode)
+		}
+		s = fn(v, c.Precision).String()
+	} else {
+		s = v.String()
 	}
-
-	s := fn(v, c.Precision).String()
 	return c.FormatNumberString(s)
 }
 
@@ -447,7 +451,7 @@ func (c *Calc) FormatFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) string
 }
 
 func (c *Calc) FormatFloat(f float64) string {
-	return fmt.Sprintf("%v", f)
+	return fmt.Sprintf("%g", f)
 }
 
 func (c *Calc) FormatInt64(i int64) string {

@@ -10,14 +10,14 @@ Configurations and settings
 
 | Operation                   | Description
 |-----------------------------|----------------
-| [precision](#precision)     | Sets the precision for fixed-point math
-| [precision=](#precision=)   | Gets the prevision for fixed-point math
+| [precision](#precision)     | Precision for fixed-point math, set
+| [precision=](#precision=)   | Prevision for fixed-point math, get
 
 ## precision
 
 Sets the precision to `a` for fixed-point math which is the number of digits
 used after the decimal point. Extra digits are rounded using the current
-rounding mode.
+rounding mode. If set to zero, no rounding is performed.
 
     ( a:Int32 -- )
 
@@ -45,5 +45,5 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------------|
-| `conf.precision=`   | `16`
+| `conf.precision=`   | `0`
 
