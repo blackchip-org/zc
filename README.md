@@ -34,9 +34,11 @@ for entertainment.
 
 ## Installation
 
-Install [go](https://go.dev/dl/).
+Use a published binary here:
 
-Install the calculator with:
+https://github.com/blackchip-org/zc/releases
+
+or, install [go](https://go.dev/dl/) and then install the calculator with:
 
     go install github.com/blackchip-org/zc/cmd/zc@latest
 
