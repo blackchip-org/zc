@@ -234,6 +234,10 @@
   - [bool.true](zlib/bool.md#true): True
 - [tz](zlib/time.md#time-zone): Convert time to a given time zone
 
+## v
+
+- [version](zlib/zc.md#version): Version of the calculator
+
 ## x
 
 - [xor](zlib/prog.md#xor): Bitwise exclusive or
