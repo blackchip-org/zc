@@ -88,6 +88,9 @@ Imports advanced math functions and units of measure conversions.
 Definition: [sci.zc](../internal/modes/sci.zc)
 
 ```
+'0' conf.int-format
+'false' conf.auto-currency
+
 use sci
 use si
 use unit
