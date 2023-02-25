@@ -52,12 +52,26 @@ func (s *Stack) Items() []string {
 	return items
 }
 
+func (s *Stack) ItemsReversed() []string {
+	items := make([]string, len(s.data))
+	for i := 0; i < len(s.data); i++ {
+		items[i] = s.data[len(s.data)-i-1]
+	}
+	return items
+}
+
 func (s *Stack) Len() int {
 	return len(s.data)
 }
 
 func (s *Stack) Push(v string) {
 	s.data = append(s.data, v)
+}
+
+func (s *Stack) PushAll(xs []string) {
+	for _, x := range xs {
+		s.data = append(s.data, x)
+	}
 }
 
 func (s *Stack) Enqueue(v string) {
@@ -232,6 +246,18 @@ func (s *Stack) PopInt32() (int32, error) {
 		return 0, err
 	}
 	i, err := s.calc.ParseInt32(v)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
+}
+
+func (s *Stack) PopInt64() (int64, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return 0, err
+	}
+	i, err := s.calc.ParseInt64(v)
 	if err != nil {
 		return 0, err
 	}

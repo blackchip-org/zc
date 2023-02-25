@@ -22,6 +22,7 @@
 - and
   - [bool.and](zlib/bool.md#and): Logical conjunction
   - [prog.and](zlib/prog.md#and): Bitwise and
+- [at](zlib/stack.md@at): Stack element at
 - [atto](zlib/si.md#atto): a, 1e-18
 
 ## b
@@ -39,6 +40,7 @@
   - [math.fixed.ceil](zlib/math-fixed.md#ceil): Ceiling
   - [math.ceil](zlib/math.md#ceil): Ceiling
 - [centi](zlib/si.md#centi): c, 1e-02
+- [choice](zlib/rand.md#choice): Randomly select an item on the stack
 - [clear](zlib/stack.md#clear): Clear
 
 ## d
@@ -79,6 +81,7 @@
   - [assert.false](zlib/assert.md#false): Assert false
   - [bool.false](zlib/bool.md#false): False
 - [femto](zlib/si.md#femto): f, 1e-15
+- [float](zlib/rand.md#float): Random float between 0 and 1
 - floor
   - [math.bigint.floor](zlib/math-bigint.md#floor): Floor
   - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
@@ -104,6 +107,7 @@
 ## i
 
 - [iif](zlib/bool.md#iif): Immediate if
+- [int](zlib/rand.md#int): Random integer between 1 and n
 
 ## k
 
@@ -197,6 +201,9 @@
 ## s
 
 - [s](zlib/math.md#sub): Subtraction
+- [seed](zlib/rand.md#seed): Random number seed, set
+- [seed=](zlib/rand.md#seed=): Random number seed, get
+- [shuffle](zlib/rand.md#shuffle): Shuffle the stack
 - sign
   - [math.bigint.sign](zlib/math-bigint.md#sign): Sign
   - [math.fixed.sign](zlib/math-fixed.md#sign): Sign
@@ -219,6 +226,7 @@
   - [time.time-layout](zlib/time.md#time-layout): Default time layout, set
   - [time.time-layout](zlib/time.md#time-layout=): Default time layout, get
 - [time-zone](zlib/time.md#time-zone): Convert time to a given time zone
+- [top](zlib/stack.md#top): Keep the top of the stack and discard the rest
 - [travel](zlib/time.md#travel): Override the value returned by `now`
 - [travel-end](zlib/time.md#travel-end): Cancel override of the value returned by now
 - true

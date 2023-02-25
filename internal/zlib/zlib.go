@@ -18,6 +18,7 @@ var All = []zc.ModuleDef{
 	MathFloat,
 	Io,
 	Prog,
+	Rand,
 	Runtime,
 	Sci,
 	SI,
@@ -230,6 +231,18 @@ var (
 			"xor": Xor,
 		},
 	}
+	Rand = zc.ModuleDef{
+		Name:       "rand",
+		ScriptPath: "zc:zlib/rand.zc",
+		Init:       InitRand,
+		Natives: map[string]zc.CalcFunc{
+			"float":   FloatRand,
+			"int":     IntRand,
+			"seed":    Seed,
+			"seed=":   SeedGet,
+			"shuffle": Shuffle,
+		},
+	}
 	Runtime = zc.ModuleDef{
 		Name:       "runtime",
 		ScriptPath: "zc:zlib/runtime.zc",
@@ -256,7 +269,8 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/stack.zc",
 		Natives: map[string]zc.CalcFunc{
-			"n": N,
+			"at": At,
+			"n":  N,
 		},
 	}
 	StrBool = zc.ModuleDef{

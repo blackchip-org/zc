@@ -7,6 +7,7 @@ import (
 )
 
 var commands = map[string]func(*zc.Calc, string) error{
+	"":     pop,
 	"quit": quit,
 	"r":    redo,
 	"redo": redo,
@@ -17,6 +18,11 @@ var errQuit = errors.New("quit")
 
 func eval(c *zc.Calc, line string) error {
 	return c.EvalString("<cli>", line)
+}
+
+func pop(c *zc.Calc, line string) error {
+	c.Env.Stack.Pop()
+	return nil
 }
 
 func redo(c *zc.Calc, line string) error {

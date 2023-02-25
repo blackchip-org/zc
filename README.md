@@ -233,6 +233,30 @@ Repeated use of this pattern can be used with a macro:
 | `$123`                   | `$123`
 | `tax add`                | `$129.15`
 
+The name of `=` is reserved for your macro use in bulk operations:
+
+<!-- test: bulk -->
+
+| Input                     | Stack
+|---------------------------|-------------------
+| `use unit`                |
+| `macro = top f-c 2 round` |
+| `32 =`                    | `0`
+| `68 =`                    | `20`
+| `100 =`                   | `37.78`
+
+Play a game of rock, paper, scissors:
+
+<!-- test: rps -->
+
+| Input                                           | Stack
+|-------------------------------------------------|-------------------
+| `import rand`                                   |
+| `0 rand.seed`                                   |
+| `macro = 'rock' 'paper' 'scissors' rand.choice` |
+| `=`                                             | `rock`
+| `=`                                             | `paper`
+
 ## To Be Continued...
 
 ## Credits

@@ -639,6 +639,14 @@ func (c *Calc) ParseInt32(v string) (int32, error) {
 	return int32(i), nil
 }
 
+func (c *Calc) ParseInt64(v string) (int64, error) {
+	i, err := strconv.ParseInt(c.cleanNumString(v), 0, 64)
+	if err != nil {
+		return 0, fmt.Errorf("expecting Int64 but got %v", v)
+	}
+	return i, nil
+}
+
 func (c *Calc) ParseUint(v string) (uint, error) {
 	i, err := strconv.ParseUint(c.cleanNumString(v), 0, bits.UintSize)
 	if err != nil {

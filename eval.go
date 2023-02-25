@@ -234,7 +234,7 @@ func (e *Env) evalRefAtom(ref *ast.RefAtom) error {
 
 	switch ref.Type {
 	case ast.AllRef:
-		for _, item := range stack.Items() {
+		for _, item := range stack.ItemsReversed() {
 			e.Stack.Push(item)
 		}
 	case ast.TopRef:
@@ -392,7 +392,8 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 			target := callee.NewStack(param.Name)
 			for caller.Stack.Len() > 0 {
 				val := caller.Stack.MustPop()
-				target.Push(val)
+				//target.Push(val)
+				target.Enqueue(val)
 			}
 		} else {
 			return fmt.Errorf("stack reference %v not allowed as parameter", param.Type)

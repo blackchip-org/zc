@@ -20,6 +20,7 @@ calculator:
 | Name                           | Description
 |--------------------------------|----------------------------------------
 | [prog](zlib/prog.md)           | Programmer's calculator
+| [rand](zlib/rand.md)           | Random numbers
 | [si](zlib/si.md)               | Prefixes for the International System of Units
 | [str](zlib/str.md)             | String operations
 | [time](zlib/time.md)           | Date, time, and duration operations

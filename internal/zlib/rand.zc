@@ -1,0 +1,13 @@
+native float
+native int
+native seed
+native seed=
+native shuffle
+
+func choice //items
+    //items
+    n
+    int 1 sub
+    at
+    top
+
