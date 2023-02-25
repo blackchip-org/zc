@@ -24,6 +24,7 @@ calculator:
 | [str](zlib/str.md)             | String operations
 | [time](zlib/time.md)           | Date, time, and duration operations
 | [tz](zlib/tz.md)               | Time zone database
+| [unit](zlib/unit.md)           | Units of measure
 
 ## Developer's Modules
 
