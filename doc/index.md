@@ -32,6 +32,8 @@
 ## c
 
 - [c](zlib/stack.md#clear): Clear
+- [c-f](zlib/unit.md#c-f): Celsius to Fahrenheit
+- [c-k](zlib/unit.md#c-k): Celsius to Kelvin
 - ceil
   - [math.bigint.ceil](zlib/math-bigint.md#ceil): Ceiling
   - [math.fixed.ceil](zlib/math-fixed.md#ceil): Ceiling
@@ -72,6 +74,7 @@
 ## f
 
 - [f](zlib/bool.md#false): False
+- [f-c](zlib/unit.md#f-c): Fahrenheit to Celsius
 - false
   - [assert.false](zlib/assert.md#false): Assert false
   - [bool.false](zlib/bool.md#false): False
@@ -104,7 +107,9 @@
 
 ## k
 
+- [k-c](zlib/unit.md#k-c): Kelvin to Celsius
 - [kilo](zlib/si.md#kilo): k, 1e03
+- [km-mi](zlib/unit.md#km-mi): Kilometers to miles
 
 ## l
 
@@ -127,6 +132,7 @@
 
 - [m](zlib/math.md#mul): Multiplication
 - [mega](zlib/si.md#mega): M, 1e06
+- [mi-km](zlib/unit.md#mi-km): Miles to kilometers
 - [micro](zlib/si.md#micro): μ, 1e-06
 - [milli](zlib/si.md#milli): m, 1e-03
 - mod

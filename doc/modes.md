@@ -15,6 +15,7 @@ zc -m fin
 | [fin](#fin)     | Financial calculator
 | [plain](#plain) | Plain numbers
 | [prog](#prog)   | Programmer's calculator
+| [sci](#sci)     | Scientific calculator
 | [time](#time)   | Time calculations
 
 ## dev
@@ -76,6 +77,20 @@ Definition: [prog.zc](../internal/modes/prog.zc)
 'false' conf.auto-currency
 
 use prog
+```
+
+## sci
+
+Scientific calculator.
+
+Imports advanced math functions and units of measure conversions.
+
+Definition: [sci.zc](../internal/modes/sci.zc)
+
+```
+use sci
+use si
+use unit
 ```
 
 ## time
