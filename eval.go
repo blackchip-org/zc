@@ -81,7 +81,7 @@ func (e *Env) evalForStmt(node *ast.ForStmt) error {
 		return e.err(node.Expr, err)
 	}
 
-	for _, item := range expr.Items() {
+	for _, item := range expr.ItemsReversed() {
 		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
 		inner := e.DeriveBlock("for")
 		i := inner.NewStack(node.Stack.Name)

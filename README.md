@@ -137,34 +137,41 @@ These commands are available when running the calculator interactively:
 
 | Command      | Description
 |--------------|------------------------------------
-| *blank line* | Pop first item from stack
+| *blank line* | Remove the first item from stack
 | `redo`, `r`  | Redo the last undo
 | `quit`       | Print the final stack and return to shell
 | `undo`, `u`  | Undo the last line entered
 
-## Modes
+## Modules and Modes
 
-The calculator can be started at the command line with a pre-defined mode
-using the `-m` option. For example, to start configured as a programmer's calculator:
+The functions of the calculator are grouped by modes. The complete list
+of modules can be found in the [standard library](doc/zlib.md) reference.
+Some modules are included by default when the starting the calculator
+interactively and this list of these modules is known as the user's prelude.
+
+Other modules can be loaded by either the `import` or `use` statement. The
+`import` statement prefixes each function with the name of the function while
+the `use` statement does not. For example:
+
+<!-- test: modules -->
+
+| Input          | Stack
+|----------------|-------------------
+| `import prog`  |
+| `255 prog.hex` | `0xff`
+| `use prog`     | `0xff`
+| `oct`          | `0o377`
+
+A mode can load some set of predefined modules and execute statements to
+configure the calculator for a specific use. Start the calculator with one
+of these modes using the `-m` option. For example, to start configured as a
+programmer's calculator:
 
 ```
 zc -m prog
 ```
 
 See the full list of [modes](doc/modes.md) that are available.
-
-## Text
-
-To use text as a value, surround it with single quotes. If the text value is
-the only item on the line, an ending quote is not required. The following
-computes the length, in characters, of the given text:
-
-<!-- test: text -->
-
-| Input           | Stack
-|-----------------|---------------
-| `'one thousand` | `one thousand`
-| `len`           | `12`
 
 ## Numbers
 
@@ -209,6 +216,19 @@ if found at the beginning or end of a number.
 |----------------|-------------------
 | `$1234`        | `$1,234`
 | `2 mul`        | `$2,468`
+
+## Text
+
+To use text as a value, surround it with single quotes. If the text value is
+the only item on the line, an ending quote is not required. The following
+computes the length, in characters, of the given text:
+
+<!-- test: text -->
+
+| Input           | Stack
+|-----------------|---------------
+| `'one thousand` | `one thousand`
+| `len`           | `12`
 
 ## Macros
 
@@ -258,6 +278,31 @@ Play a game of rock, paper, scissors:
 | `macro = 'rock' 'paper' 'scissors' rand.choice` |
 | `=`                                             | `rock`
 | `=`                                             | `paper`
+
+
+## Higher order functions
+
+The `map` function can be used to apply a function to each item on the stack.
+To use this function, the top element of the stack should be the lambda
+function to evaluate. Place this lambda on the stack using quotes to prevent
+immediate evaluation. For example, to double all numbers on the stack:
+
+| Input               | Stack
+|---------------------|---------------------|
+| `1 2 3 4 5`         | `1 \| 2 \| 3 \| 4 \| 5`
+| `'2 mul`            | `1 \| 2 \| 3 \| 4 \| 5 \| 2 mul`
+| `map`               | `2 \| 4 \| 6 \| 8 \| 10`
+
+The `fold` function can be used to reduce all items in the stack to a single
+value. For example, to sum all the numbers on the stack:
+
+| Input               | Stack
+|---------------------|---------------------|
+| `1 2 3 4 5`         | `1 \| 2 \| 3 \| 4 \| 5`
+| `'add`              | `1 \| 2 \| 3 \| 4 \| 5 \| add`
+| `fold`              | `15`
+
+See the [fn](doc/zlib/fn.md) module for more information.
 
 ## To Be Continued...
 

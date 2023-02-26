@@ -12,7 +12,6 @@ var All = []zc.ModuleDef{
 	Conf,
 	Dev,
 	Dict,
-	Eval,
 	Fn,
 	Math,
 	MathBigInt,
@@ -44,14 +43,16 @@ var (
 		"math",
 		"str",
 		"dict",
-		"eval",
+		"fn",
 	}
 
 	PreludeUser = []string{
+		"bool",
 		"conf",
 		"math",
 		"stack",
 		"str", // TODO: This should only be in dev
+		"fn",
 		"zc",
 	}
 	// Order here needs to be sorted based on dependencies. Do not put in
@@ -60,9 +61,9 @@ var (
 	//
 	// Also, update dev mode when this changes
 	PreludeDev = []string{
+		"bool",
 		"dev",
 		"stack",
-		"bool",
 		"conf",
 		"math",
 		"str",
@@ -153,17 +154,12 @@ var (
 		Name:       "dict",
 		ScriptPath: "zc:zlib/dict.zc",
 	}
-	Eval = zc.ModuleDef{
-		Name:       "eval",
-		Include:    true,
-		ScriptPath: "zc:zlib/eval.zc",
-		Natives: map[string]zc.CalcFunc{
-			"eval": EvalFn,
-		},
-	}
 	Fn = zc.ModuleDef{
 		Name:       "fn",
 		ScriptPath: "zc:zlib/fn.zc",
+		Natives: map[string]zc.CalcFunc{
+			"eval": Eval,
+		},
 	}
 	Geom = zc.ModuleDef{
 		Name:       "geom",

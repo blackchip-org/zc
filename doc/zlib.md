@@ -4,11 +4,13 @@ The zc standard library.
 
 ## Default Modules
 
-The following modules are loaded by default:
+The following modules are loaded by default by the user's prelude:
 
 | Name                           | Description
 |--------------------------------|--------------------------------------
+| [bool](zlib/bool.md)           | Boolean operations
 | [conf](zlib/conf.md)           | Configuration and settings
+| [fn](zlib/fn.md)               | Higher order functions
 | [math](zlib/math.md)           | Basic mathematical operations
 | [stack](zlib/stack.md)         | Stack manipulations
 | [zc](zlib/zc.md)               | Information about the calculator
@@ -35,7 +37,6 @@ These modules are useful when developing calculator scripts:
 | Name                           | Description
 |--------------------------------|----------------------------------------
 | [assert](zlib/assert.md)       | Assertions
-| [bool](zlib/bool.md)           | Boolean operations
 | dev                            | Development functions commonly used
 | [io](zlib/io.md)               | Input/output functions
 | runtime                        |

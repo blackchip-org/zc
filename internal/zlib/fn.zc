@@ -1,3 +1,18 @@
+native eval
+
+func filter //xs /fn
+    for x; //xs
+        /x /fn eval
+        if true eq
+            /x
+
+
+func fold //xs /fn
+    //xs
+    while n 1 gt
+        /fn eval
+
+
 func map //xs /fn
     for x; //xs
         /x /fn eval

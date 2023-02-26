@@ -71,6 +71,7 @@
   - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
   - [bool.eq](zlib/bool.md#eq): Equals
+- [eval](zlib/fn.md#eval): Evaluate top of stack
 - [exa](zlib/si.md#exa): E, 1e18
 
 ## f
@@ -81,11 +82,13 @@
   - [assert.false](zlib/assert.md#false): Assert false
   - [bool.false](zlib/bool.md#false): False
 - [femto](zlib/si.md#femto): f, 1e-15
+- [filter](zlib/fn.md#filter): Filter items in the stack
 - [float](zlib/rand.md#float): Random float between 0 and 1
 - floor
   - [math.bigint.floor](zlib/math-bigint.md#floor): Floor
   - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
   - [math.floor](zlib/math.md#floor): Floor
+- [fold](zlib/fn.md#fold): Reduce items to a single value
 
 ## g
 
@@ -135,6 +138,7 @@
 ## m
 
 - [m](zlib/math.md#mul): Multiplication
+- [map](zlib/fn.md#map): Apply a function to each item on the stack
 - [mega](zlib/si.md#mega): M, 1e06
 - [mi-km](zlib/unit.md#mi-km): Miles to kilometers
 - [micro](zlib/si.md#micro): μ, 1e-06
