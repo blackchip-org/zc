@@ -14,6 +14,7 @@ Higher order functions
 | [filter](#filter)           | Filter items in the stack
 | [fold](#fold)               | Reduce items to a single value
 | [map](#map)                 | Apply a function to each item on the stack
+| [repeat](#repeat)           | Repeat the execution of a function
 
 
 ## eval
@@ -81,3 +82,20 @@ Example which doubles all numbers on thes tack:
 | `1 2 3 4 5`         | `1 \| 2 \| 3 \| 4 \| 5`
 | `'2 mul`            | `1 \| 2 \| 3 \| 4 \| 5 \| 2 mul`
 | `map`               | `2 \| 4 \| 6 \| 8 \| 10`
+
+
+## repeat
+
+Repeat execution of function `f` for `n` times.
+
+    ( items...:Val f:Lambda n:Int -- items...:Val )
+
+Example:
+
+<!-- test: repeat -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `1`                 | `1`
+| `'2 mul`            | `1 \| 2 mul`
+| `8 repeat`          | `256`

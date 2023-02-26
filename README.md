@@ -144,10 +144,10 @@ These commands are available when running the calculator interactively:
 
 ## Modules and Modes
 
-The functions of the calculator are grouped by modes. The complete list
+The functions of the calculator are grouped by modules. The complete list
 of modules can be found in the [standard library](doc/zlib.md) reference.
 Some modules are included by default when the starting the calculator
-interactively and this list of these modules is known as the user's prelude.
+interactively and this list of modules is known as the user's prelude.
 
 Other modules can be loaded by either the `import` or `use` statement. The
 `import` statement prefixes each function with the name of the function while

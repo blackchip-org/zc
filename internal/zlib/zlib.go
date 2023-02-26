@@ -68,7 +68,7 @@ var (
 		"math",
 		"str",
 		"dict",
-		"eval",
+		"fn",
 	}
 )
 
@@ -157,6 +157,7 @@ var (
 	Fn = zc.ModuleDef{
 		Name:       "fn",
 		ScriptPath: "zc:zlib/fn.zc",
+		Include:    true,
 		Natives: map[string]zc.CalcFunc{
 			"eval": Eval,
 		},
