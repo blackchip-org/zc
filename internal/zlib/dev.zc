@@ -1,5 +1,4 @@
 native abort
-native eval
 native exit
 native nothing
 native trace

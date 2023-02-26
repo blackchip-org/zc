@@ -83,7 +83,7 @@ func (e *Env) evalForStmt(node *ast.ForStmt) error {
 
 	for _, item := range expr.Items() {
 		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
-		inner := e.Derive()
+		inner := e.DeriveBlock("for")
 		i := inner.NewStack(node.Stack.Name)
 		i.Clear().Push(item)
 		if err := inner.evalStmts(node.Stmts); err != nil {
@@ -356,7 +356,8 @@ func (e *Env) evalValueAtom(value *ast.ValueAtom) error {
 func (e *Env) evalWhileStmt(while *ast.WhileStmt) error {
 	e.trace(while, "while-begin")
 	for {
-		de := e.DeriveBlock()
+
+		de := e.DeriveBlock("while")
 		if err := de.evalExpr(while.Cond); err != nil {
 			return e.err(while.Cond, err)
 		}
@@ -378,7 +379,7 @@ func (e *Env) evalWhileStmt(while *ast.WhileStmt) error {
 
 func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 	// callee := e
-	callee := e.Derive()
+	callee := e.Derive(fn.Name)
 	for _, param := range fn.Params {
 		if param.Type == ast.TopRef {
 			val, err := caller.Stack.Pop()
@@ -473,7 +474,7 @@ func (e *Env) err(node ast.Node, err error) error {
 func (e *Env) traceStack() {
 	if e.Calc.Trace {
 		if !e.Stack.Equal(e.lastStack) && e.Stack.Len() > 0 {
-			log.Printf("eval: %v(%v)", e.Stack.Name, e.Stack)
+			log.Printf("eval: %v(%v)  %v", e.Stack.Name, e.Stack, e.Name)
 		}
 		e.lastStack = e.Stack.Copy()
 	}

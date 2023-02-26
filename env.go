@@ -8,6 +8,7 @@ import (
 type Env struct {
 	parent    *Env
 	Calc      *Calc
+	Name      string
 	Stack     *Stack
 	Main      *Stack
 	stacks    map[string]*Stack
@@ -17,9 +18,10 @@ type Env struct {
 	lastStack *Stack // for tracing
 }
 
-func NewEnv(calc *Calc) *Env {
+func NewEnv(calc *Calc, name string) *Env {
 	e := &Env{
 		Calc:   calc,
+		Name:   name,
 		stacks: make(map[string]*Stack),
 		Funcs:  make(map[string]CalcFunc),
 	}
@@ -27,15 +29,16 @@ func NewEnv(calc *Calc) *Env {
 	return e
 }
 
-func (e *Env) Derive() *Env {
-	de := NewEnv(e.Calc)
+func (e *Env) Derive(name string) *Env {
+	de := NewEnv(e.Calc, e.Name+"."+name)
 	de.parent = e
 	return de
 }
 
-func (e *Env) DeriveBlock() *Env {
+func (e *Env) DeriveBlock(name string) *Env {
 	de := &Env{
 		Calc:   e.Calc,
+		Name:   e.Name + "." + name,
 		stacks: e.stacks,
 		Funcs:  e.Funcs,
 	}
@@ -77,6 +80,22 @@ func (e *Env) Func(name string) (CalcFunc, bool) {
 		return nil, false
 	}
 	return e.parent.Func(name)
+}
+
+func (e *Env) AllFuncs() map[string]CalcFunc {
+	r := make(map[string]CalcFunc)
+	var do func(e *Env)
+	do = func(e *Env) {
+		for name, fn := range e.Funcs {
+			r[name] = fn
+		}
+		if e.parent == nil {
+			return
+		}
+		do(e.parent)
+	}
+	do(e)
+	return r
 }
 
 func (e *Env) Interpolate(v string) (string, error) {

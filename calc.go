@@ -29,6 +29,7 @@ const (
 
 type Config struct {
 	ModuleDefs   []ModuleDef
+	Preload      []string
 	PreludeCLI   []string
 	PreludeDev   []string
 	Trace        bool
@@ -87,8 +88,6 @@ type Calc struct {
 	Modules    map[string]*Env
 	Natives    map[string]CalcFunc
 	States     map[string]any
-	History    []*Stack
-	redo       []*Stack
 }
 
 func NewCalc(conf Config) (*Calc, error) {
@@ -107,12 +106,12 @@ func NewCalc(conf Config) (*Calc, error) {
 		c.ModuleDefs[def.Name] = def
 	}
 
-	c.Env = NewEnv(c)
+	c.Env = NewEnv(c, "zc")
 
-	for _, preName := range c.PreludeDev {
-		def, ok := c.ModuleDefs[preName]
+	for _, name := range c.Preload {
+		def, ok := c.ModuleDefs[name]
 		if !ok {
-			return nil, fmt.Errorf("no such prelude module: %v", preName)
+			return nil, fmt.Errorf("no such preload module: %v", name)
 		}
 		if _, err := c.Load(def); err != nil {
 			return nil, err
@@ -180,7 +179,7 @@ func (c *Calc) Load(def ModuleDef) (*Env, error) {
 		log.Printf("load: %v", def.Name)
 	}
 
-	env := NewEnv(c)
+	env := NewEnv(c, fmt.Sprintf("mod(%v)", def.Name))
 	env.Module = def.Name
 
 	for _, preName := range c.PreludeDev {

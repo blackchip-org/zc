@@ -12,6 +12,7 @@ var All = []zc.ModuleDef{
 	Conf,
 	Dev,
 	Dict,
+	Eval,
 	Fn,
 	Math,
 	MathBigInt,
@@ -34,9 +35,20 @@ var All = []zc.ModuleDef{
 }
 
 var (
+	Preload = []string{
+		"zc",
+		"dev",
+		"stack",
+		"bool",
+		"conf",
+		"math",
+		"str",
+		"dict",
+		"eval",
+	}
+
 	PreludeUser = []string{
 		"conf",
-		"fn",
 		"math",
 		"stack",
 		"str", // TODO: This should only be in dev
@@ -55,6 +67,7 @@ var (
 		"math",
 		"str",
 		"dict",
+		"eval",
 	}
 )
 
@@ -129,7 +142,6 @@ var (
 		Include:    true,
 		Natives: map[string]zc.CalcFunc{
 			"abort":     Abort,
-			"eval":      Eval,
 			"exit":      Exit,
 			"nothing":   Nothing,
 			"trace":     Trace,
@@ -140,6 +152,14 @@ var (
 	Dict = zc.ModuleDef{
 		Name:       "dict",
 		ScriptPath: "zc:zlib/dict.zc",
+	}
+	Eval = zc.ModuleDef{
+		Name:       "eval",
+		Include:    true,
+		ScriptPath: "zc:zlib/eval.zc",
+		Natives: map[string]zc.CalcFunc{
+			"eval": EvalFn,
+		},
 	}
 	Fn = zc.ModuleDef{
 		Name:       "fn",
