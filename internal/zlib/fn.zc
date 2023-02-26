@@ -1,0 +1,3 @@
+func map //xs /fn
+    for x; //xs
+        /x /fn eval

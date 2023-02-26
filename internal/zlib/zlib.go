@@ -12,6 +12,7 @@ var All = []zc.ModuleDef{
 	Conf,
 	Dev,
 	Dict,
+	Fn,
 	Math,
 	MathBigInt,
 	MathFixed,
@@ -35,6 +36,7 @@ var All = []zc.ModuleDef{
 var (
 	PreludeUser = []string{
 		"conf",
+		"fn",
 		"math",
 		"stack",
 		"str", // TODO: This should only be in dev
@@ -138,6 +140,10 @@ var (
 	Dict = zc.ModuleDef{
 		Name:       "dict",
 		ScriptPath: "zc:zlib/dict.zc",
+	}
+	Fn = zc.ModuleDef{
+		Name:       "fn",
+		ScriptPath: "zc:zlib/fn.zc",
 	}
 	Geom = zc.ModuleDef{
 		Name:       "geom",

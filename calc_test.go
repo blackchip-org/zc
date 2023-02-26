@@ -133,39 +133,3 @@ func TestParseCurrencySymbol(t *testing.T) {
 		})
 	}
 }
-
-func TestUndo(t *testing.T) {
-	calc, _ := NewCalc(Config{})
-	calc.EvalLines("", []string{"1", "2", "3"})
-	// 1 2 3
-	calc.Undo()
-	// 1 2
-	calc.Undo()
-	// 1
-	top, _ := calc.Env.Stack.Peek()
-	if top != "1" {
-		t.Fatalf("\n have: %v want: 1", top)
-	}
-	calc.Undo()
-	// empty
-	if err := calc.Undo(); err == nil {
-		t.Fatalf("expected error")
-	}
-	calc.Redo()
-	// 1
-	top, _ = calc.Env.Stack.Peek()
-	if top != "1" {
-		t.Fatalf("\n have: %v want: 1", top)
-	}
-	calc.Redo()
-	// 1 2
-	calc.Redo()
-	// 1 2 3
-	top, _ = calc.Env.Stack.Peek()
-	if top != "3" {
-		t.Fatalf("\n have: %v want: 3", top)
-	}
-	if err := calc.Redo(); err == nil {
-		t.Fatalf("expected error")
-	}
-}

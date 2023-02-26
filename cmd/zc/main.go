@@ -136,7 +136,18 @@ func main() {
 		if noAnsi {
 			ansi.Enabled = false
 		}
-		app.RunConsole(calc)
+		c := app.NewConsole(calc)
+		c.Init()
+		for {
+			line, err := c.ReadLine()
+			if err != nil {
+				log.Fatal(err)
+			}
+			if ok := c.Eval(line); !ok {
+				break
+			}
+		}
+		c.Close()
 		for _, item := range calc.Env.Stack.Items() {
 			fmt.Println(item)
 		}

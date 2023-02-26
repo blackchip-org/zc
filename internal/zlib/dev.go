@@ -2,6 +2,7 @@ package zlib
 
 import (
 	"errors"
+	"fmt"
 	"os"
 
 	"github.com/blackchip-org/zc"
@@ -16,11 +17,12 @@ func Abort(env *zc.Env) error {
 }
 
 func Eval(env *zc.Env) error {
+	fmt.Println(env.Funcs)
 	node, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
-	return env.Calc.EvalString("<eval>", node)
+	return zc.Eval(env, "<eval>", []byte(node))
 }
 
 func Exit(env *zc.Env) error {

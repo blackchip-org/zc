@@ -143,20 +143,18 @@ func NewCalc(conf Config) (*Calc, error) {
 
 func (c *Calc) Eval(name string, src []byte) error {
 	c.Info = ""
-	rollback := c.Env.Main.Copy()
+	return Eval(c.Env, name, src)
+}
+
+func Eval(env *Env, name string, src []byte) error {
 	root, err := parser.Parse(name, src)
 	if err != nil {
-		c.Env.SetMain(rollback)
 		return err
 	}
-	err = c.Env.evalFile(root)
+	err = env.evalFile(root)
 	if err != nil {
-		c.Env.SetMain(rollback)
 		return err
-
 	}
-	c.History = append([]*Stack{rollback}, c.History...)
-	c.redo = nil
 	return nil
 }
 
@@ -285,26 +283,6 @@ func (c *Calc) SetLocale(name string) error {
 		return err
 	}
 	c.Locale = name
-	return nil
-}
-
-func (c *Calc) Undo() error {
-	if len(c.History) == 0 {
-		return fmt.Errorf("undo stack is empty")
-	}
-	c.redo = append([]*Stack{c.Env.Main.Copy()}, c.redo...)
-	c.Env.SetMain(c.History[0])
-	c.History = c.History[1:]
-	return nil
-}
-
-func (c *Calc) Redo() error {
-	if len(c.redo) == 0 {
-		return fmt.Errorf("redo stack is empty")
-	}
-	c.History = append([]*Stack{c.Env.Main}, c.History...)
-	c.Env.SetMain(c.redo[0])
-	c.redo = c.redo[1:]
 	return nil
 }
 
