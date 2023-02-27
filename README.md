@@ -162,7 +162,7 @@ the `use` statement does not. For example:
 | `use prog`     | `0xff`
 | `oct`          | `0o377`
 
-A mode can load some set of predefined modules and execute statements to
+A mode can load a set of predefined modules and execute statements to
 configure the calculator for a specific use. Start the calculator with one
 of these modes using the `-m` option. For example, to start configured as a
 programmer's calculator:
