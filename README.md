@@ -150,7 +150,7 @@ Some modules are included by default when the starting the calculator
 interactively and this list of modules is known as the user's prelude.
 
 Other modules can be loaded by either the `import` or `use` statement. The
-`import` statement prefixes each function with the name of the function while
+`import` statement prefixes each function with the name of the module while
 the `use` statement does not. For example:
 
 <!-- test: modules -->
