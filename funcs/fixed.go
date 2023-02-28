@@ -58,6 +58,7 @@ func EvalBinaryFixed(env *zc.Env, fn BinaryFixed) (err error) {
 	}
 
 	attrs := zc.ParseFormatAttrs(sa, sb)
+	attrs.ApplyLayout = env.Calc.AutoFormat
 	env.Stack.PushFixedWithAttrs(r, attrs)
 	return nil
 }

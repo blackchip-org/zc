@@ -1,3 +1,6 @@
-2 conf.precision
-2 conf.min-digits
-'half-even' conf.rounding-mode
+2 precision
+2 min-digits
+'half-even' rounding-mode
+',000' int-layout
+true auto-currency
+true auto-format

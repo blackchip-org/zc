@@ -175,47 +175,63 @@ See the full list of [modes](doc/modes.md) that are available.
 
 ## Numbers
 
-Thousands separators are ignored when parsing numbers and added by default
-when formatting numbers:
+Thousand separators are ignored when parsing numbers:
 
-<!-- test: thousands_separator -->
+<!-- test: thousands_ignored -->
 
 | Input         | Stack
 |---------------|-------------------
 | `65,536 sqrt` | `256`
-| `2 pow`       | `65,536`
 
-Use `conf.int-format` and `conf.point` to change the thousands separator
+Use `format` or `f` to print out numbers with thousand separators:
+
+<!-- test: format -->
+
+| Input         | Stack
+|---------------|-------------------
+| `256 2 pow`   | `65536`
+| `format`      | `65,536`
+
+Set `auto-format` to `true` to apply this automatically when numbers are
+placed on the stack:
+
+<!-- test: auto-format -->
+
+| Input              | Stack
+|--------------------|-------------------
+| `true auto-format` |
+| `256 2 pow`        | `65,536`
+
+Use `int-format` and `point` to change the thousands separator
 and decimal point:
 
 <!-- test: european_numbers -->
 
 | Input                     | Stack
 |---------------------------|-------------------
-| `'.000' conf.int-format`  |
-| `','    conf.point`       |
-| `12345 10 div`            | `1.234,5`
+| `'.000' int-layout`       |
+| `','    point`            |
+| `12345 10 div f`          | `1.234,5`
 
-Disable thousands separators with:
-
-<!-- test: disable_thousands_separator -->
-
-| Input                     | Stack
-|---------------------------|-------------------
-| `'0' conf.int-format`     |
-| `256 2 pow`               | `65536`
-
-or use the [plain](doc/modes.md#plain) mode.
-
-Currency symbols are ignored when parsing but are preserved when formatting
-if found at the beginning or end of a number.
+Currency symbols are ignored when parsing:
 
 <!-- test: currency -->
 
 | Input          | Stack
 |----------------|-------------------
-| `$1234`        | `$1,234`
-| `2 mul`        | `$2,468`
+| `$1234`        | `1234`
+
+Set `auto-currency` to true to preserve currency symbols that are a prefix
+or a suffix to a number:
+
+<!-- test: auto-currency -->
+
+| Input                | Stack
+|----------------------|-------------------
+| `true auto-currency` |
+| `$1234`              | `$1234`
+| `2 mul`              | `$2468`
+
 
 ## Text
 
@@ -237,13 +253,14 @@ compute the sales tax on something that costs $123:
 
 <!-- test: tax -->
 
-| Input          | Stack
-|----------------|-------------------
-| `$123`         | `$123`
-| `dup`          | `$123 \| $123`
-| `0.05`         | `$123 \| $123 \| 0.05`
-| `mul`          | `$123 \| $6.15`
-| `add`          | `$129.15`
+| Input               | Stack
+|---------------------|-------------------
+| `true auto-currency`|
+| `$123`              | `$123`
+| `dup`               | `$123 \| $123`
+| `0.05`              | `$123 \| $123 \| 0.05`
+| `mul`               | `$123 \| $6.15`
+| `add`               | `$129.15`
 
 Repeated use of this pattern can be used with a macro:
 
@@ -251,6 +268,7 @@ Repeated use of this pattern can be used with a macro:
 
 | Input                    | Stack
 |--------------------------|-------------------
+| `true auto-currency`     |
 | `macro tax dup 0.05 mul` |
 | `$123`                   | `$123`
 | `tax add`                | `$129.15`

@@ -68,7 +68,7 @@ func testFile(t *testing.T, file fs.File) {
 		if matches == nil {
 			continue
 		}
-		testName = matches[1]
+		testName = strings.TrimSpace(matches[1])
 
 		t.Run(testName, func(t *testing.T) {
 			for scanner.Scan() {

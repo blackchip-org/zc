@@ -69,15 +69,15 @@ func TestParseRadix(t *testing.T) {
 
 func TestFormatNumberString(t *testing.T) {
 	confDefault := Config{
-		IntFormat: ",000",
+		IntLayout: ",000",
 		Point:     '.',
 	}
 	confFR := Config{
-		IntFormat: ".000",
+		IntLayout: ".000",
 		Point:     ',',
 	}
 	confBin := Config{
-		IntFormat: "__0000_0000",
+		IntLayout: "__0000_0000",
 	}
 	confEmpty := Config{}
 
@@ -104,7 +104,7 @@ func TestFormatNumberString(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
 			calc, _ := NewCalc(test.conf)
-			have := calc.FormatNumberString(test.in)
+			have := calc.FormatNumberString(test.in, true)
 			if have != test.want {
 				t.Errorf("\n have: %v \n want: %v", have, test.want)
 			}

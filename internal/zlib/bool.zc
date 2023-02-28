@@ -17,6 +17,3 @@ func iif /expr /tval /fval
     else
         /fval
 
-alias f false
-alias t true
-

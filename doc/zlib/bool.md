@@ -16,20 +16,20 @@ Comparison operations are parsed as numerics when possible. Therefore the follow
 
 <!-- index -->
 
-| Operation         | Alias | Description
-|-------------------|-------|---------------
-| [and](#and)       |       | Logical conjunction
-| [eq](#eq)         |       | Equals
-| [false](#false)   | `f`   | False
-| [gt](#gt)         |       | Greater than
-| [gte](#gte)       |       | Greater than or equals
-| [iif](#iif)       |       | Immediate if
-| [true](#true)     | `t`   | True
-| [lt](#lt)         |       | Less than
-| [lte](#lte)       |       | Less than or equals
-| [neq](#neq)       |       | Not Equals
-| [not](#not)       |       | Negation
-| [or](#or)         |       | Logical disjunction
+| Operation         | Description
+|-------------------|---------------
+| [and](#and)       | Logical conjunction
+| [eq](#eq)         | Equals
+| [false](#false)   | False
+| [gt](#gt)         | Greater than
+| [gte](#gte)       | Greater than or equals
+| [iif](#iif)       | Immediate if
+| [true](#true)     | True
+| [lt](#lt)         | Less than
+| [lte](#lte)       | Less than or equals
+| [neq](#neq)       | Not Equals
+| [not](#not)       | Negation
+| [or](#or)         | Logical disjunction
 
 ## and
 
@@ -41,13 +41,13 @@ Example:
 
 <!-- test: and -->
 
-| Input       | Stack
-|-------------|-------------|
-| `t t and`   | `true`
-| `clear`     |
-| `t f and`   | `false`
-| `clear`     |
-| `f f and`   | `false`
+| Input             | Stack
+|-------------------|-------------|
+| `true true and`   | `true`
+| `clear`           |
+| `true false and`  | `false`
+| `clear`           |
+| `false false and` | `false`
 
 ## eq
 
@@ -230,11 +230,11 @@ Example:
 
 <!-- test: or -->
 
-| Input       | Stack
-|-------------|-------------|
-| `t t or`    | `true`
-| `clear`     |
-| `t f or`    | `true`
-| `clear`     |
-| `f f or`    | `false`
+| Input            | Stack
+|------------------|-------------|
+| `true true or`   | `true`
+| `clear`          |
+| `true false or`  | `true`
+| `clear`          |
+| `false false or` | `false`
 

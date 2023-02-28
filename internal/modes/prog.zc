@@ -1,4 +1,5 @@
-'0' conf.int-format
-'false' conf.auto-currency
+'0' int-layout
+'false' auto-format
+'false' auto-currency
 
 use prog

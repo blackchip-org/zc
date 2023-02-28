@@ -1,6 +1,8 @@
 package funcs
 
-import "github.com/blackchip-org/zc"
+import (
+	"github.com/blackchip-org/zc"
+)
 
 type UnaryOps struct {
 	BigInt UnaryBigInt
@@ -24,7 +26,7 @@ func EvalUnaryNum(env *zc.Env, ops UnaryOps) error {
 		return EvalUnaryBigInt(env, ops.BigInt)
 	case ops.Fixed != nil:
 		return EvalUnaryFixed(env, ops.Fixed)
-	case ops.Float != nil :
+	case ops.Float != nil:
 		return EvalUnaryFloat(env, ops.Float)
 	}
 	panic("unsupported operation")

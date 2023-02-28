@@ -102,22 +102,22 @@ func main() {
 	config.Trace = trace
 	calc, err := zc.NewCalc(config)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(zc.ErrorWithStack(err))
 	}
 
 	if locale != "" {
 		if err := calc.SetLocale(locale); err != nil {
-			log.Fatal(err)
+			log.Fatal(zc.ErrorWithStack(err))
 		}
 	}
 	if mode != "" {
 		if err := calc.SetMode(mode); err != nil {
-			log.Fatal(err)
+			log.Fatal(zc.ErrorWithStack(err))
 		}
 	}
 	if use != "" {
 		if err := calc.EvalString("<cli>", "use "+use); err != nil {
-			log.Fatal(err)
+			log.Fatal(zc.ErrorWithStack(err))
 		}
 	}
 

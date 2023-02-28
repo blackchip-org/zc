@@ -9,7 +9,7 @@ The following modules are loaded by default by the user's prelude:
 | Name                           | Description
 |--------------------------------|--------------------------------------
 | [bool](zlib/bool.md)           | Boolean operations
-| [conf](zlib/conf.md)           | Configuration and settings
+| [format](zlib/format.md)       | Numeric formatting
 | [fn](zlib/fn.md)               | Higher order functions
 | [math](zlib/math.md)           | Basic mathematical operations
 | [stack](zlib/stack.md)         | Stack manipulations

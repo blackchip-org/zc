@@ -277,7 +277,7 @@ func (s *Stack) PopUint() (uint, error) {
 }
 
 func (s *Stack) PushBigInt(v *big.Int) {
-	s.Push(s.calc.FormatBigInt(v))
+	s.Push(s.calc.FormatBigInt(v, s.calc.AutoFormat))
 }
 
 func (s *Stack) PushBigIntWithAttrs(v *big.Int, attrs FormatAttrs) {
@@ -289,7 +289,7 @@ func (s *Stack) PushBool(v bool) {
 }
 
 func (s *Stack) PushFixed(v decimal.Decimal) {
-	s.Push(s.calc.FormatFixed(v))
+	s.Push(s.calc.FormatFixed(v, s.calc.AutoFormat))
 }
 
 func (s *Stack) PushFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) {

@@ -1,8 +1,6 @@
 package zlib
 
 import (
-	"fmt"
-
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/funcs"
 )
@@ -66,21 +64,3 @@ func Rem(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opRem) }
 func Sign(env *zc.Env) error  { return funcs.EvalUnaryNum(env, opSign) }
 func Sqrt(env *zc.Env) error  { return funcs.EvalUnaryFloat(env, opSqrtFloat) }
 func Sub(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opSub) }
-
-func Round(env *zc.Env) error {
-	places, err := env.Stack.PopInt32()
-	if err != nil {
-		return err
-	}
-	value, err := env.Stack.PopFixed()
-	if err != nil {
-		return err
-	}
-	fn, ok := zc.RoundingFuncsFix[env.Calc.RoundingMode]
-	if !ok {
-		return fmt.Errorf("invalid rounding mode: %v", env.Calc.RoundingMode)
-	}
-	r := fn(value, places)
-	env.Stack.PushFixed(r)
-	return nil
-}

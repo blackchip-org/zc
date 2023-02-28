@@ -35,11 +35,12 @@ type Config struct {
 	Trace        bool
 	Precision    int32
 	RoundingMode RoundingMode
-	IntFormat    string
+	IntLayout    string
 	Point        rune
 	FracFormat   string
 	MinDigits    uint
 	AutoCurrency bool
+	AutoFormat   bool
 	Locale       string
 	MaxHistory   int
 }
@@ -73,9 +74,10 @@ func (c CalcError) Error() string {
 }
 
 type FormatAttrs struct {
-	Radix    int
-	Currency rune
-	Fix      Fix
+	Radix       int
+	Currency    rune
+	Fix         Fix
+	ApplyLayout bool
 }
 
 type Calc struct {
@@ -303,17 +305,16 @@ func (c *Calc) parseDigits(sep rune, v string) ([]rune, []rune) {
 	return intDigits, fracDigits
 }
 
-func (c *Calc) FormatNumberString(v string) string {
+func (c *Calc) FormatNumberString(v string, applyLayout bool) string {
 	var digits strings.Builder
 	intDigits, fracDigits := c.parseDigits('.', v)
-
-	if c.IntFormat == "" {
+	if c.IntLayout == "" || !applyLayout {
 		digits.WriteString(string(intDigits))
 	} else {
 		var intResult []rune
-		intPat := []rune(c.IntFormat)
+		intPat := []rune(c.IntLayout)
 
-		idxPat := len(c.IntFormat) - 1
+		idxPat := len(c.IntLayout) - 1
 		idxDig := len(intDigits) - 1
 		for idxDig >= 0 {
 			if intDigits[idxDig] == '-' {
@@ -351,7 +352,7 @@ func (c *Calc) FormatNumberString(v string) string {
 	}
 	digits.WriteRune(point)
 
-	if c.FracFormat == "" {
+	if c.FracFormat == "" || !applyLayout {
 		digits.WriteString(string(fracDigits))
 	} else {
 		var fracResult []rune
@@ -377,8 +378,8 @@ func (c *Calc) FormatNumberString(v string) string {
 	return digits.String()
 }
 
-func (c *Calc) FormatBigInt(v *big.Int) string {
-	return c.FormatNumberString(v.String())
+func (c *Calc) FormatBigInt(v *big.Int, applyLayout bool) string {
+	return c.FormatNumberString(v.String(), applyLayout)
 }
 
 func (c *Calc) FormatBigIntWithAttrs(v *big.Int, attrs FormatAttrs) string {
@@ -397,7 +398,8 @@ func (c *Calc) FormatBigIntWithAttrs(v *big.Int, attrs FormatAttrs) string {
 	case 2:
 		return fmt.Sprintf("%v0b%b", sign, &absV)
 	}
-	s := c.FormatBigInt(v)
+
+	s := c.FormatBigInt(v, attrs.ApplyLayout)
 	return c.addCurrencySymbol(attrs, s)
 }
 
@@ -408,7 +410,7 @@ func (c *Calc) FormatBool(v bool) string {
 	return "false"
 }
 
-func (c *Calc) FormatFixed(v decimal.Decimal) string {
+func (c *Calc) FormatFixed(v decimal.Decimal, applyLayout bool) string {
 	var s string
 	if c.Precision != 0 {
 		fn, ok := RoundingFuncsFix[c.RoundingMode]
@@ -419,11 +421,11 @@ func (c *Calc) FormatFixed(v decimal.Decimal) string {
 	} else {
 		s = v.String()
 	}
-	return c.FormatNumberString(s)
+	return c.FormatNumberString(s, applyLayout)
 }
 
 func (c *Calc) FormatFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) string {
-	s := c.FormatFixed(v)
+	s := c.FormatFixed(v, attrs.ApplyLayout)
 	return c.addCurrencySymbol(attrs, s)
 }
 
@@ -455,8 +457,7 @@ func (c *Calc) FormatUint(i uint) string {
 	return c.FormatUint64(uint64(i))
 }
 
-func (c *Calc) FormatValue(v string) string {
-	attrs := ParseFormatAttrs(v)
+func (c *Calc) formatValueWithAttrs(v string, attrs FormatAttrs) string {
 	switch {
 	case attrs.Radix != 10:
 		return v
@@ -466,6 +467,18 @@ func (c *Calc) FormatValue(v string) string {
 		return c.FormatFixedWithAttrs(c.MustParseFixed(v), attrs)
 	}
 	return v
+}
+
+func (c *Calc) FormatValue(v string) string {
+	attrs := ParseFormatAttrs(v)
+	attrs.ApplyLayout = c.AutoFormat
+	return c.formatValueWithAttrs(v, attrs)
+}
+
+func (c *Calc) ApplyLayout(v string) string {
+	attrs := ParseFormatAttrs(v)
+	attrs.ApplyLayout = true
+	return c.formatValueWithAttrs(v, attrs)
 }
 
 func (c *Calc) cleanNumString(v string) string {
@@ -772,4 +785,18 @@ func ParseFormatAttrs(xs ...string) FormatAttrs {
 
 func (c *Calc) LocalizeNumber(v string) string {
 	return strings.ReplaceAll(v, ".", string(c.Point))
+}
+
+func ErrorWithStack(err error) string {
+	if calcErr, ok := err.(CalcError); ok {
+		var buf strings.Builder
+		for _, frame := range calcErr.Frames {
+			buf.WriteString(frame.String())
+			buf.WriteRune('\n')
+		}
+		buf.WriteString(calcErr.Error())
+		buf.WriteRune('\n')
+		return buf.String()
+	}
+	return err.Error()
 }

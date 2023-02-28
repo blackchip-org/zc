@@ -45,6 +45,7 @@ func EvalBinaryBigInt(env *zc.Env, fn BinaryBigInt) error {
 	}
 
 	attrs := zc.ParseFormatAttrs(x, y)
+	attrs.ApplyLayout = env.Calc.AutoFormat
 	env.Stack.PushBigIntWithAttrs(&c, attrs)
 	return nil
 }

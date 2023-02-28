@@ -1,11 +1,11 @@
 import test
 
 func test-and
-    t t and
+    true true and
     true test.eq
-    f t and
+    false true and
     false test.eq
-    f f and
+    false false and
     false test.eq
 
 func test-eq
@@ -57,9 +57,9 @@ func test-neq
     true test.eq
 
 func test-or
-    t t or
+    true true or
     true test.eq
-    t f or
+    true false or
     true test.eq
-    f f or
+    false false or
     false test.eq

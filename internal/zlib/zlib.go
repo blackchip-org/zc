@@ -12,6 +12,7 @@ var All = []zc.ModuleDef{
 	Dev,
 	Dict,
 	Fn,
+	Format,
 	Math,
 	MathBigInt,
 	MathFixed,
@@ -36,6 +37,7 @@ var (
 	Preload = []string{
 		"zc",
 		"dev",
+		"format",
 		"stack",
 		"bool",
 		"conf",
@@ -48,6 +50,7 @@ var (
 	PreludeUser = []string{
 		"bool",
 		"conf",
+		"format",
 		"math",
 		"stack",
 		"str", // TODO: This should only be in dev
@@ -61,6 +64,7 @@ var (
 	// Also, update dev mode when this changes
 	PreludeDev = []string{
 		"bool",
+		"format",
 		"dev",
 		"stack",
 		"conf",
@@ -116,20 +120,8 @@ var (
 		Name:       "conf",
 		ScriptPath: "zc:zlib/conf.zc",
 		Natives: map[string]zc.CalcFunc{
-			"auto-currency":  AutoCurrency,
-			"auto-currency=": AutoCurrencyGet,
-			"int-format":     IntFormat,
-			"int-format=":    IntFormatGet,
-			"locale":         Locale,
-			"locale=":        LocaleGet,
-			"min-digits":     MinDigits,
-			"min-digits=":    MinDigitsGet,
-			"precision":      Precision,
-			"precision=":     PrecisionGet,
-			"point":          Point,
-			"point=":         PointGet,
-			"rounding-mode":  RoundingMode,
-			"rounding-mode=": RoundingModeGet,
+			"locale":  Locale,
+			"locale=": LocaleGet,
 		},
 	}
 	Dev = zc.ModuleDef{
@@ -155,6 +147,29 @@ var (
 		Include:    true,
 		Natives: map[string]zc.CalcFunc{
 			"eval": Eval,
+		},
+	}
+	Format = zc.ModuleDef{
+		Name:       "format",
+		Include:    true,
+		ScriptPath: "zc:zlib/format.zc",
+		Natives: map[string]zc.CalcFunc{
+			"auto-currency":  AutoCurrency,
+			"auto-currency=": AutoCurrencyGet,
+			"auto-format":    AutoFormat,
+			"auto-format=":   AutoFormatGet,
+			"format":         Format_,
+			"int-layout":     IntLayout,
+			"int-layout=":    IntLayoutGet,
+			"min-digits":     MinDigits,
+			"min-digits=":    MinDigitsGet,
+			"precision":      Precision,
+			"precision=":     PrecisionGet,
+			"point":          Point,
+			"point=":         PointGet,
+			"round":          Round,
+			"rounding-mode":  RoundingMode,
+			"rounding-mode=": RoundingModeGet,
 		},
 	}
 	Geom = zc.ModuleDef{
