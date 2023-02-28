@@ -1,18 +1,18 @@
-import assert
+import test
 
 func test-if-true
     if 1 1 eq
         true
     else
         false
-    assert.true
+    true test.eq
 
 func test-if-false
     if 1 2 eq
         true
     else
         false
-    assert.false
+    false test.eq
 
 func test-elif
     if 1 2 eq
@@ -31,4 +31,4 @@ func test-nested
             false
     else
         false
-    assert.true
+    true test.eq

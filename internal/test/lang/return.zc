@@ -1,4 +1,4 @@
-import assert
+import test
 
 func return-2
     2
@@ -6,4 +6,4 @@ func return-2
     3
 
 func test-return-value
-    return-2 2 assert.eq
+    return-2 2 test.eq

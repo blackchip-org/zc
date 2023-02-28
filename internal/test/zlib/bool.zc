@@ -1,65 +1,65 @@
-import assert
+import test
 
 func test-and
     t t and
-    assert.true
+    true test.eq
     f t and
-    assert.false
+    false test.eq
     f f and
-    assert.false
+    false test.eq
 
 func test-eq
     1 1 eq
-    assert.true
+    true test.eq
     1 2 eq
-    assert.false
+    false test.eq
 
 func test-eq-int
     1234 '1,234' eq
-    assert.true
+    true test.eq
 
 func test-gt
     1 0 gt
-    assert.true
+    true test.eq
     0 0 gt
-    assert.false
+    false test.eq
     -1 0 gt
-    assert.false
+    false test.eq
 
 func test-gte
     1 0 gte
-    assert.true
+    true test.eq
     0 0 gte
-    assert.true
+    true test.eq
     -1 0 gte
-    assert.false
+    false test.eq
 
 func test-lt
     1 0 lt
-    assert.false
+    false test.eq
     0 0 lt
-    assert.false
+    false test.eq
     -1 0 lt
-    assert.true
+    true test.eq
 
 func test-lte
     1 0 lte
-    assert.false
+    false test.eq
     0 0 lte
-    assert.true
+    true test.eq
     -1 0 lte
-    assert.true
+    true test.eq
 
 func test-neq
     1 1 neq
-    assert.false
+    false test.eq
     1 2 neq
-    assert.true
+    true test.eq
 
 func test-or
     t t or
-    assert.true
+    true test.eq
     t f or
-    assert.true
+    true test.eq
     f f or
-    assert.false
+    false test.eq

@@ -1,14 +1,14 @@
-import assert
+import test
 use prog
 
 func test-hex
     15 hex
-    '0xf' assert.eq
+    '0xf' test.eq
 
 func test-oct
     15 oct
-    '0o17' assert.eq
+    '0o17' test.eq
 
 func test-bin
     15 bin
-    '0b1111' assert.eq
+    '0b1111' test.eq

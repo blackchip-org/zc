@@ -5,7 +5,6 @@ import (
 )
 
 var All = []zc.ModuleDef{
-	Assert,
 	Bool,
 	BoolBigInt,
 	BoolFixed,
@@ -73,10 +72,6 @@ var (
 )
 
 var (
-	Assert = zc.ModuleDef{
-		Name:       "assert",
-		ScriptPath: "zc:zlib/assert.zc",
-	}
 	Bool = zc.ModuleDef{
 		Name:       "bool",
 		Include:    true,

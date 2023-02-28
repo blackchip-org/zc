@@ -1,7 +1,4 @@
-import [
-    assert
-    io
-]
+import test
 use time
 
 'America/Denver' local
@@ -17,9 +14,8 @@ func test-dates
     'Mon Jan 2 2006' '2006-002'
 
     while empty not
-        'test dates: ' io.print
-        dup io.println
-        date assert.eq
+        dup test.sub
+        date test.eq
 
 
 func test-times
@@ -31,9 +27,8 @@ func test-times
     '3:04:00pm -0700 MST' '15:04'
 
     while empty not
-        'test-times: ' io.print
-        dup io.println
-        time assert.eq
+        dup test.sub
+        time test.eq
 
 
 func test-zone-times
@@ -45,7 +40,6 @@ func test-zone-times
     '3:04:00pm -0700'     '15:04 -0700'
 
     while empty not
-        'test-zone-times: ' io.print
-        dup io.println
-        time assert.eq
+        dup test.sub
+        time test.eq
 

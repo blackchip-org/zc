@@ -1,13 +1,13 @@
-import assert
+import test
 
 func test-len
 	'abcd' len
-	4 assert.eq
+	4 test.eq
 	'' len
-	0 assert.eq
+	0 test.eq
 
 func test-starts-with
 	'foobar' 'foo' starts-with
-	'true' assert.eq
+	'true' test.eq
 	'foobar' 'bar' starts-with
-	'false' assert.eq
+	'false' test.eq

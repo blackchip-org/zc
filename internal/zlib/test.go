@@ -1,6 +1,7 @@
 package zlib
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -9,25 +10,31 @@ import (
 	"github.com/blackchip-org/zc/lang/parser"
 )
 
+func testError(env *zc.Env, err error) {
+	fmt.Printf("ERROR %v: %v\n", env.Get("name"), err)
+	if calcErr, ok := err.(zc.CalcError); ok {
+		for _, frame := range calcErr.Frames {
+			fmt.Println(frame)
+		}
+	}
+	env.SetInt("errors", env.GetInt("errors")+1)
+}
+
 func TestFile(env *zc.Env) error {
 	file, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
-
-	testError := func(err error) {
-		fmt.Printf("%v: error: %v\n", file, err)
-		env.SetInt("errors", env.GetInt("errors")+1)
-	}
+	env.Set("name", file)
 
 	text, err := zc.LoadFile(file)
 	if err != nil {
-		testError(err)
+		testError(env, err)
 		return nil
 	}
 	root, err := parser.Parse(file, text)
 	if err != nil {
-		testError(err)
+		testError(env, err)
 		return nil
 	}
 
@@ -44,15 +51,30 @@ func TestFile(env *zc.Env) error {
 		if err != nil {
 			panic(fmt.Sprintf("unable to create calc: %v", err))
 		}
-		cmd := fmt.Sprintf("use '%v'\n%v", file, fn.Name)
-		if err := c.EvalString(file, cmd); err != nil {
-			fmt.Printf("FAIL: %v(%v): %v\n", file, fn.Name, err)
-			env.SetInt("failed", env.GetInt("failed")+1)
+
+		cmd := []string{
+			"import test",
+			fmt.Sprintf("%v test.verbose", env.GetBool("verbose")),
+			fmt.Sprintf("'%v/%v' test.name", file, fn.Name),
+			fmt.Sprintf("use '%v'", file),
+			fn.Name,
+			"test.passed",
+			"test.failed",
+		}
+		if err := c.EvalLines(file, cmd); err != nil {
+			testError(env, err)
+			return nil
 		} else {
-			if env.GetBool("verbose") {
-				fmt.Printf("PASS: %v(%v)\n", file, fn.Name)
+			failed, _ := c.Env.Stack.PopInt()
+			passed, _ := c.Env.Stack.PopInt()
+			if passed == 0 && failed == 0 {
+				testError(c.Env, errors.New("no assertions"))
 			}
-			env.SetInt("passed", env.GetInt("passed")+1)
+			if env.GetBool("verbose") {
+				fmt.Printf("PASS %v/%v\n", file, fn.Name)
+			}
+			env.SetInt("passed", env.GetInt("passed")+passed)
+			env.SetInt("failed", env.GetInt("failed")+failed)
 		}
 	}
 	return nil

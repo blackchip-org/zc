@@ -1,6 +1,6 @@
-import assert
+import test
 
 func test-locale
     'fr' conf.locale
     1.234,56 2.345,67 a
-    '3.580,23' assert.eq
+    '3.580,23' test.eq

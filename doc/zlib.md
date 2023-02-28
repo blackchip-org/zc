@@ -36,7 +36,6 @@ These modules are useful when developing calculator scripts:
 
 | Name                           | Description
 |--------------------------------|----------------------------------------
-| [assert](zlib/assert.md)       | Assertions
 | dev                            | Development functions commonly used
 | [io](zlib/io.md)               | Input/output functions
 | runtime                        |

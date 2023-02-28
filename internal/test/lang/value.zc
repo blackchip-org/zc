@@ -1,5 +1,5 @@
-import assert
+import test
 
 func test-bare-decimal-point
     .25 .25 add
-    .5 assert.eq
+    .5 test.eq

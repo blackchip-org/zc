@@ -1,11 +1,36 @@
+import bool
 import io
 
 errors; 0
 failed; 0
 passed; 0
+
+name; ''
+sub; ''
+
 verbose; false
 
 native file
+
+func eq /a /b
+	if /a /b bool.neq
+        failed; 1 add
+        'FAIL `name` `sub`'  io.println
+        ' expected: eq'      io.println
+        '     have: `a`'     io.println
+        '     want: `b`'     io.println
+    else
+        /verbose true bool.eq
+        /sub '' bool.neq
+        if bool.and
+            'PASS `name` `sub`' io.println
+        passed; 1 add
+
+func name /n
+    name; clear /n
+
+func sub /n
+    sub; clear /n
 
 func errors
     /errors
@@ -22,15 +47,15 @@ func passed
 
 func reset
     errors; clear 0
-    failed; clear 0
     passed; clear 0
+    failed; clear 0
 
 func ok
-    /passed 0 gt
-    /errors 0 eq
-    /failed 0 eq
-    and
-    and
+    /errors 0 bool.eq
+    /passed 0 bool.gt
+    /failed 0 bool.eq
+    bool.and
+    bool.and
 
 func report
     '`passed` passed, `failed` failed, `errors` error(s)' io.println
