@@ -1,0 +1,19 @@
+native auto-currency
+native auto-currency=
+native auto-format
+native auto-format=
+native format
+native int-layout
+native int-layout=
+native min-digits
+native min-digits=
+native precision
+native precision=
+native point
+native point=
+native round
+native rounding-mode
+native rounding-mode=
+
+alias f format
+alias r round
