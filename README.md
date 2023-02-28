@@ -202,7 +202,7 @@ placed on the stack:
 | `true auto-format` |
 | `256 2 pow`        | `65,536`
 
-Use `int-format` and `point` to change the thousands separator
+Use `int-layout` and `point` to change the thousands separator
 and decimal point:
 
 <!-- test: european_numbers -->
