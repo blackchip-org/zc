@@ -150,7 +150,7 @@ Some modules are included by default when the starting the calculator
 interactively and this list of modules is known as the user's prelude.
 
 Other modules can be loaded by either the `import` or `use` statement. The
-`import` statement prefixes each function with the name of the function while
+`import` statement prefixes each function with the name of the module while
 the `use` statement does not. For example:
 
 <!-- test: modules -->
@@ -162,7 +162,7 @@ the `use` statement does not. For example:
 | `use prog`     | `0xff`
 | `oct`          | `0o377`
 
-A mode can load some set of predefined modules and execute statements to
+A mode can load a set of predefined modules and execute statements to
 configure the calculator for a specific use. Start the calculator with one
 of these modes using the `-m` option. For example, to start configured as a
 programmer's calculator:
