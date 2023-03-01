@@ -1,0 +1,13 @@
+import test
+
+func return-stack //a
+    b; //a
+    //a
+
+func test-stack-param
+    1 2 3
+    return-stack
+    3 test.eq
+    drop
+    1 test.eq
+

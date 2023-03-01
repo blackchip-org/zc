@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc/lang/ast"
+	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
@@ -81,7 +82,7 @@ func (e *Env) evalForStmt(node *ast.ForStmt) error {
 		return e.err(node.Expr, err)
 	}
 
-	for _, item := range expr.ItemsReversed() {
+	for _, item := range expr.Items() {
 		e.trace(node, "for(%v) iter: %v", node.Stack.Name, item)
 		inner := e.DeriveBlock("for")
 		i := inner.NewStack(node.Stack.Name)
@@ -234,7 +235,7 @@ func (e *Env) evalRefAtom(ref *ast.RefAtom) error {
 
 	switch ref.Type {
 	case ast.AllRef:
-		for _, item := range stack.ItemsReversed() {
+		for _, item := range stack.Items() {
 			e.Stack.Push(item)
 		}
 	case ast.TopRef:
@@ -405,16 +406,22 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 			return err
 		}
 	}
-	returns := NewStack(e.Calc, "<return>")
-	for callee.Main.Len() > 0 {
-		val := callee.Main.MustPop()
-		e.trace(fn, "func(%v) return %v", fn.Name, val)
-		returns.Push(val)
+	for _, ret := range callee.Main.Items() {
+		e.trace(fn, "%v: return push %v", fn.Name, scanner.Quote(ret))
+		caller.Stack.Push(ret)
 	}
-	for returns.Len() != 0 {
-		v := returns.MustPop()
-		caller.Stack.Push(v)
-	}
+	/*
+		returns := NewStack(e.Calc, "<return>")
+		for callee.Main.Len() > 0 {
+			val := callee.Main.MustPop()
+			e.trace(fn, "func(%v) return %v", fn.Name, val)
+			returns.Push(val)
+		}
+		for returns.Len() != 0 {
+			v := returns.MustPop()
+			caller.Stack.Push(v)
+		}
+	*/
 	e.trace(fn, "func(%v) end", fn.Name)
 	e.traceStack()
 	return nil

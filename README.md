@@ -294,8 +294,8 @@ Play a game of rock, paper, scissors:
 | `import rand`                                   |
 | `0 rand.seed`                                   |
 | `macro = 'rock' 'paper' 'scissors' rand.choice` |
+| `=`                                             | `scissors`
 | `=`                                             | `rock`
-| `=`                                             | `paper`
 
 
 ## Higher order functions

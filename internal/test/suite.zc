@@ -2,6 +2,7 @@ import test
 
 test.reset
 
+'zc:test/lang/func.zc'
 'zc:test/lang/value.zc'
 'zc:test/zlib/bool.zc'
 'zc:test/zlib/conf.zc'
