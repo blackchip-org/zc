@@ -1,9 +1,10 @@
 native and
 native bin
 native bit
+native bits
+native bytes
 native dec
 native hex
-native len
 native lsh
 native not
 native oct

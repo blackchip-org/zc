@@ -29,6 +29,8 @@
 
 - [bin](zlib/prog.md#bin): Convert to binary
 - [bit](zlib/prog.md#bit): Bit value
+- [bits](zlib/prog.md#bits): Length in bits
+- [bytes](zlib/prog.md#bytes): Length in bytes
 
 ## c
 
@@ -67,7 +69,6 @@
 ## e
 
 - eq
-  - [assert.eq](zlib/assert.md#eq): Assert equals
   - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
   - [bool.eq](zlib/bool.md#eq): Equals
@@ -76,11 +77,8 @@
 
 ## f
 
-- [f](zlib/bool.md#false): False
 - [f-c](zlib/unit.md#f-c): Fahrenheit to Celsius
-- false
-  - [assert.false](zlib/assert.md#false): Assert false
-  - [bool.false](zlib/bool.md#false): False
+- [false](zlib/bool.md#false): False
 - [femto](zlib/si.md#femto): f, 1e-15
 - [filter](zlib/fn.md#filter): Filter items in the stack
 - [float](zlib/rand.md#float): Random float between 0 and 1
@@ -120,9 +118,7 @@
 
 ## l
 
-- len
-  - [prog.len](zlib/prog.md#len): Length in bits
-  - [str.len](zlib/str.md#len): Length
+- [len](zlib/str.md#len): Length
 - [local](zlib/time.md#local): Local time zone, set
 - [local=](zlib/time.md#local=): Local time zone, get
 - [lsh](zlib/prog.md#lsh): Left shift
@@ -184,8 +180,8 @@
   - [math.bigint.pow](zlib/math-bigint.md#pow): Exponentiation
   - [math.fixed.pow](zlib/math-fixed.md#pow): Exponentiation
   - [math.pow](zlib/math.md#pow): Exponentiation
-- [precision](zlib/conf.md#precision): Precision for fixed-point math, set
-- [precision=](zlib/conf.md#precision=): Prevision for fixed-point math, get
+- [precision](zlib/format.md#precision): Precision for fixed-point math, set
+- [precision=](zlib/format.md#precision=): Prevision for fixed-point math, get
 - [print](zlib/io.md#print): Displays value to the console
 
 ## q
@@ -198,6 +194,7 @@
 - rem
   - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
   - [math.rem](zlib/math.md#rem): Remainder
+- [repeat](zlib/fn.md#repeat): Repeat the execution of a function
 - [ronna](zlib/si.md#ronna): R, 1e27
 - [ronto](zlib/si.md#ronto): r, 1e-27
 - [rsh](zlib/prog.md#rsh): Right shift
@@ -223,7 +220,6 @@
 
 ## t
 
-- [t](zlib/bool.md#true): True
 - [tera](zlib/si.md#tera): T, 1e12
 - [time](zlib/time.md#time): Formats a time with the default layout
 - time-layout
@@ -233,9 +229,7 @@
 - [top](zlib/stack.md#top): Keep the top of the stack and discard the rest
 - [travel](zlib/time.md#travel): Override the value returned by `now`
 - [travel-end](zlib/time.md#travel-end): Cancel override of the value returned by now
-- true
-  - [assert.true](zlib/assert.md#true): Assert true
-  - [bool.true](zlib/bool.md#true): True
+- [true](zlib/bool.md#true): True
 - [tz](zlib/time.md#time-zone): Convert time to a given time zone
 
 ## v

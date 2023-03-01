@@ -1,6 +1,7 @@
 package zlib
 
 import (
+	"math"
 	"math/big"
 
 	"github.com/blackchip-org/zc"
@@ -40,6 +41,27 @@ func Bit(env *zc.Env) error {
 	return nil
 }
 
+func Bits(env *zc.Env) error {
+	a, err := env.Stack.PopBigInt()
+	if err != nil {
+		return err
+	}
+	bitLen := a.BitLen()
+	env.Stack.PushInt(bitLen)
+	return nil
+}
+
+func Bytes(env *zc.Env) error {
+	a, err := env.Stack.PopBigInt()
+	if err != nil {
+		return err
+	}
+	bitLen := a.BitLen()
+	z := int(math.Ceil(float64(bitLen) / 8.0))
+	env.Stack.PushInt(z)
+	return nil
+}
+
 func Dec(env *zc.Env) error {
 	v, err := env.Stack.PopBigInt()
 	if err != nil {
@@ -55,16 +77,6 @@ func Hex(env *zc.Env) error {
 		return err
 	}
 	env.Stack.PushBigIntWithAttrs(v, zc.FormatAttrs{Radix: 16})
-	return nil
-}
-
-func LenBitwise(env *zc.Env) error {
-	a, err := env.Stack.PopBigInt()
-	if err != nil {
-		return err
-	}
-	bitLen := a.BitLen()
-	env.Stack.PushInt(bitLen)
 	return nil
 }
 

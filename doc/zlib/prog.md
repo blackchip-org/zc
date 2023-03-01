@@ -11,9 +11,10 @@ Programmer's calculator.
 | [and](#and)             | Bitwise and
 | [bin](#bin)             | Convert to binary
 | [bit](#bit)             | Bit value
+| [bits](#bits)           | Length in bits
+| [bytes](#bytes)         | Length in bytes
 | [dec](#dec)             | Convert to decimal
 | [hex](#hex)             | Convert to hexadecimal
-| [len](#len)             | Length in bits
 | [lsh](#lsh)             | Left shift
 | [not](#not)             | Bitwise not
 | [oct](#oct)             | Convert to octal
@@ -70,6 +71,38 @@ Example:
 | `2 bit`     | `1`
 
 
+## bits
+
+The length of `a` in bits.
+
+    ( a:BigInt -- len:Int )
+
+Example:
+
+<!-- test: bits -->
+
+| Input       | Stack
+|-------------|-------------|
+| `0b11111`   | `0b11111`
+| `bits`      | `5`
+
+
+## bytes
+
+The length of `a` in bytes.
+
+    ( a:BigInt -- len:Int )
+
+Example:
+
+<!-- test: bytes -->
+
+| Input       | Stack
+|-------------|-------------|
+| `0x1ff  `   | `0x1ff`
+| `bytes`     | `2`
+
+
 ## dec
 
 Convert the value of `a` to a decimal number.
@@ -100,22 +133,6 @@ Example:
 |-------------|-------------|
 | `0b1111`    | `0b1111`
 | `hex`       | `0xf`
-
-
-## len
-
-The length of `a` in bits.
-
-    ( a:BigInt -- len:Int )
-
-Example:
-
-<!-- test: len -->
-
-| Input       | Stack
-|-------------|-------------|
-| `0b1111`    | `0b1111`
-| `len`       | `4`
 
 ## lsh
 
