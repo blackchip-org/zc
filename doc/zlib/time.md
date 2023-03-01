@@ -10,7 +10,7 @@ Date, time, and duration operations
 
 | Operation                               | Alias   | Description
 |-----------------------------------------|---------|------------
-| [add](#add-duration)                    | `add-d` | Time after a duration
+| [add-duration](#add-duration)           | `add-d` | Time after a duration
 | [date](#date)                           |         | Formats a date with the default layout
 | [date-layout](#date-layout)             |         | Default date layout, set
 | [date-layout=](#date-layout=)           |         | Default date layout, get
@@ -24,7 +24,7 @@ Date, time, and duration operations
 | [subtract-time](#subtact-time)          | `sub-t` | Duration between two times
 | [time](#time)                           |         | Formats a time with the default layout
 | [time-layout](#time-layout)             |         | Default time layout, set
-| [time-layout](#time-layout=)            |         | Default time layout, get
+| [time-layout=](#time-layout=)            |         | Default time layout, get
 | [time-zone](#time-zone)                 | `tz`    | Convert time to a given time zone
 | [travel](#travel)                       |         | Override the value returned by `now`
 | [travel-end](#travel-end)               |         | Cancel override of the value returned by now

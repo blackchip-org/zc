@@ -17,8 +17,8 @@
   - [math.bigint.add](zlib/math-bigint.md#add): Addition
   - [math.fixed.add](zlib/math-fixed.md#add): Addition
   - [math.add](zlib/math.md#add): Addition
-  - [time.add](zlib/time.md#add-duration): Time after a duration
 - [add-d](zlib/time.md#add-duration): Time after a duration
+- [add-duration](zlib/time.md#add-duration): Time after a duration
 - and
   - [bool.and](zlib/bool.md#and): Logical conjunction
   - [prog.and](zlib/prog.md#and): Bitwise and
@@ -222,9 +222,8 @@
 
 - [tera](zlib/si.md#tera): T, 1e12
 - [time](zlib/time.md#time): Formats a time with the default layout
-- time-layout
-  - [time.time-layout](zlib/time.md#time-layout): Default time layout, set
-  - [time.time-layout](zlib/time.md#time-layout=): Default time layout, get
+- [time-layout](zlib/time.md#time-layout): Default time layout, set
+- [time-layout=](zlib/time.md#time-layout=): Default time layout, get
 - [time-zone](zlib/time.md#time-zone): Convert time to a given time zone
 - [top](zlib/stack.md#top): Keep the top of the stack and discard the rest
 - [travel](zlib/time.md#travel): Override the value returned by `now`
