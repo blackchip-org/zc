@@ -1,10 +1,34 @@
 package zlib
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/blackchip-org/zc"
 )
+
+func Left(env *zc.Env) error {
+	i, err := env.Stack.PopInt()
+	if err != nil {
+		return err
+	}
+	s, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	if i > len(s) || i < -len(s) {
+		return fmt.Errorf("invalid length: %v", i)
+	}
+	switch {
+	case i > 0:
+		env.Stack.Push(s[:i])
+	case i == 0:
+		env.Stack.Push(s)
+	case i < 0:
+		env.Stack.Push(s[:len(s)+i])
+	}
+	return nil
+}
 
 func Len(env *zc.Env) error {
 	a, err := env.Stack.Pop()
@@ -14,6 +38,45 @@ func Len(env *zc.Env) error {
 
 	r := len(a)
 	env.Stack.Push(env.Calc.FormatInt(r))
+	return nil
+}
+
+func Right(env *zc.Env) error {
+	i, err := env.Stack.PopInt()
+	if err != nil {
+		return err
+	}
+	s, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	if i > len(s) || i < -len(s) {
+		return fmt.Errorf("invalid length: %v", i)
+	}
+	switch {
+	case i > 0:
+		env.Stack.Push(s[len(s)-i:])
+	case i == 0:
+		env.Stack.Push(s)
+	case i < 0:
+		env.Stack.Push(s[-i:])
+	}
+	return nil
+}
+
+func Split(env *zc.Env) error {
+	sep, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	s, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	xs := strings.Split(s, sep)
+	for _, x := range xs {
+		env.Stack.Push(x)
+	}
 	return nil
 }
 

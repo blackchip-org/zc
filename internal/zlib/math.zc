@@ -11,12 +11,7 @@ native rem
 native sign
 native sqrt
 native sub
-
-func sum //a
-	0
-	//a
-	while n 1 gt
-		add
+native sum
 
 alias a add
 alias + add

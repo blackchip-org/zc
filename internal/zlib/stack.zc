@@ -1,4 +1,5 @@
 native at
+native reverse
 native n
 
 func clear //a
@@ -7,12 +8,32 @@ func clear //a
 func drop /a
     nothing
 
+func down //a
+    head; /-a
+    tail; //a
+    /head //tail
+
 func dup /a
     /a /a
+
+func take //a /n
+    len; //a n
+    if /n /len gt
+        'stack does not contain `n` elements to take' abort
+    while /n 0 gt
+        /-a
+        n; 1 sub
 
 func top //a
     /a
 
+func up //a
+    n; //a n
+    tail; //a n 1 sub take
+    head; //a 0 at
+    //tail /head
+
 macro empty n 0 eq
 
 alias c clear
+alias rev reverse

@@ -1,10 +1,55 @@
 import test
 
+func test-left
+	0 test.sub
+	'abcd' 0 left
+	'abcd' test.eq
+
+	4 test.sub
+	'abcd' 4 left
+	'abcd' test.eq
+
+	-4 test.sub
+	'abcd' -4 left
+	'' test.eq
+
+	5 test.sub
+	try 'abcd' 5 left
+	test.false clear
+
+	-5 test.sub
+	try 'abcd' 5 left
+	test.false clear
+
+
 func test-len
 	'abcd' len
 	4 test.eq
 	'' len
 	0 test.eq
+
+
+func test-right
+	0 test.sub
+	'abcd' 0 right
+	'abcd' test.eq
+
+	4 test.sub
+	'abcd' 4 right
+	'abcd' test.eq
+
+	-4 test.sub
+	'abcd' -4 right
+	'' test.eq
+
+	5 test.sub
+	try 'abcd' 5 right
+	test.false clear
+
+	-5 test.sub
+	try 'abcd' 5 right
+	test.false clear
+
 
 func test-starts-with
 	'foobar' 'foo' starts-with

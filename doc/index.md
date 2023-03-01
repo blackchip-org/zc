@@ -27,9 +27,11 @@
 
 ## b
 
+- [bigint](zlib/assert.md#bigint): Assert value is a big integer
 - [bin](zlib/prog.md#bin): Convert to binary
 - [bit](zlib/prog.md#bit): Bit value
 - [bits](zlib/prog.md#bits): Length in bits
+- [bool](zlib/assert.md#bool): Assert value is a boolean
 - [bytes](zlib/prog.md#bytes): Length in bytes
 
 ## c
@@ -81,7 +83,10 @@
 - [false](zlib/bool.md#false): False
 - [femto](zlib/si.md#femto): f, 1e-15
 - [filter](zlib/fn.md#filter): Filter items in the stack
-- [float](zlib/rand.md#float): Random float between 0 and 1
+- [fixed](zlib/assert.md#fixed): Assert value is a fixed-point number
+- float
+  - [assert.float](zlib/assert.md#float): Assert value is a floating-point number
+  - [rand.float](zlib/rand.md#float): Random float between 0 and 1
 - floor
   - [math.bigint.floor](zlib/math-bigint.md#floor): Floor
   - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
@@ -108,7 +113,11 @@
 ## i
 
 - [iif](zlib/bool.md#iif): Immediate if
-- [int](zlib/rand.md#int): Random integer between 1 and n
+- int
+  - [assert.int](zlib/assert.md#int): Assert value is an integer
+  - [rand.int](zlib/rand.md#int): Random integer between 1 and n
+- [int32](zlib/assert.md#int32): Assert value is a 32-bit signed integer
+- [int64](zlib/assert.md#int64): Assert value is a 64-bit signed integer
 
 ## k
 
@@ -118,6 +127,7 @@
 
 ## l
 
+- [left](zlib/str.md#left): Substring from the left
 - [len](zlib/str.md#len): Length
 - [local](zlib/time.md#local): Local time zone, set
 - [local=](zlib/time.md#local=): Local time zone, get
@@ -195,6 +205,8 @@
   - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
   - [math.rem](zlib/math.md#rem): Remainder
 - [repeat](zlib/fn.md#repeat): Repeat the execution of a function
+- [right](zlib/str.md#right): Substring from the right
+- [roll](zlib/rand.md#roll): Dice roller
 - [ronna](zlib/si.md#ronna): R, 1e27
 - [ronto](zlib/si.md#ronto): r, 1e-27
 - [rsh](zlib/prog.md#rsh): Right shift
@@ -209,6 +221,7 @@
   - [math.bigint.sign](zlib/math-bigint.md#sign): Sign
   - [math.fixed.sign](zlib/math-fixed.md#sign): Sign
   - [math.sign](zlib/math.md#sign): Sign
+- [split](zlib/str.md#split): Splits a string by a separator
 - [starts-with](zlib/str.md#starts-with): Starts with
 - sub
   - [math.bigint.sub](zlib/math-bigint.md#sub): Subtraction

@@ -18,6 +18,15 @@ func At(env *zc.Env) error {
 	return nil
 }
 
+func Reverse(env *zc.Env) error {
+	items := env.Stack.ItemsReversed()
+	env.Stack.Clear()
+	for _, item := range items {
+		env.Stack.Push(item)
+	}
+	return nil
+}
+
 func N(env *zc.Env) error {
 	n := env.Stack.Len()
 	env.Stack.PushInt(n)

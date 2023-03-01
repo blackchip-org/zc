@@ -5,6 +5,7 @@ import (
 )
 
 var All = []zc.ModuleDef{
+	Assert,
 	Bool,
 	BoolBigInt,
 	BoolFixed,
@@ -36,12 +37,13 @@ var All = []zc.ModuleDef{
 var (
 	Preload = []string{
 		"zc",
+		"conf",
+		"math",
+		"bool",
+		"assert",
 		"dev",
 		"format",
 		"stack",
-		"bool",
-		"conf",
-		"math",
 		"str",
 		"dict",
 		"fn",
@@ -63,6 +65,7 @@ var (
 	//
 	// Also, update dev mode when this changes
 	PreludeDev = []string{
+		"assert",
 		"bool",
 		"format",
 		"dev",
@@ -76,6 +79,19 @@ var (
 )
 
 var (
+	Assert = zc.ModuleDef{
+		Name:       "assert",
+		ScriptPath: "zc:zlib/assert.zc",
+		Natives: map[string]zc.CalcFunc{
+			"bigint": BigInt,
+			"bool":   BoolAssert,
+			"fixed":  Fixed,
+			"float":  Float,
+			"int":    Int,
+			"int64":  Int64,
+			"int32":  Int32,
+		},
+	}
 	Bool = zc.ModuleDef{
 		Name:       "bool",
 		Include:    true,
@@ -195,6 +211,7 @@ var (
 			"sign":  Sign,
 			"sqrt":  Sqrt,
 			"sub":   Sub,
+			"sum":   Sum,
 		},
 	}
 	MathBigInt = zc.ModuleDef{
@@ -305,8 +322,9 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/stack.zc",
 		Natives: map[string]zc.CalcFunc{
-			"at": At,
-			"n":  N,
+			"at":      At,
+			"reverse": Reverse,
+			"n":       N,
 		},
 	}
 	StrBool = zc.ModuleDef{
@@ -326,7 +344,10 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/str.zc",
 		Natives: map[string]zc.CalcFunc{
+			"left":        Left,
 			"len":         Len,
+			"right":       Right,
+			"split":       Split,
 			"starts-with": StartsWith,
 		},
 	}

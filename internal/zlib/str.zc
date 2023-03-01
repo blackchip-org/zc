@@ -1,2 +1,5 @@
+native left
 native len
+native right
+native split
 native starts-with

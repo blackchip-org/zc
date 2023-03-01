@@ -1,8 +1,12 @@
+import assert
+use str
+
 native float
 native int
 native seed
 native seed=
 native shuffle
+
 
 func choice //items
     //items
@@ -10,4 +14,25 @@ func choice //items
     int 1 sub
     at
     top
+
+
+func roll /dice
+    count; 1
+    faces;
+    if /dice 'd' starts-with
+        faces; -1 right dup assert.int
+    else
+        /dice 'd' split
+        faces; /-main dup assert.int
+        count; /-main dup assert.int
+    if /count 0 lt
+        'invalid dice count: `count`' abort
+    if /faces 0 lte
+        'invalid die faces: `faces`' abort
+    while /count 0 gt
+        /faces int
+        count; 1 sub
+
+
+
 

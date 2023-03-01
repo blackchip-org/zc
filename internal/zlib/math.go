@@ -64,3 +64,12 @@ func Rem(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opRem) }
 func Sign(env *zc.Env) error  { return funcs.EvalUnaryNum(env, opSign) }
 func Sqrt(env *zc.Env) error  { return funcs.EvalUnaryFloat(env, opSqrtFloat) }
 func Sub(env *zc.Env) error   { return funcs.EvalBinaryNum(env, opSub) }
+
+func Sum(env *zc.Env) error {
+	for env.Stack.Len() > 1 {
+		if err := Add(env); err != nil {
+			return err
+		}
+	}
+	return nil
+}

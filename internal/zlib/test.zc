@@ -8,7 +8,7 @@ passed; 0
 name; ''
 sub; ''
 
-verbose; false
+verbose; 'false'
 
 native file
 
@@ -20,11 +20,18 @@ func eq /a /b
         '     have: `a`'     io.println
         '     want: `b`'     io.println
     else
-        /verbose true bool.eq
+        /verbose 'true' bool.eq
         /sub '' bool.neq
         if bool.and
             'PASS `name` `sub`' io.println
         passed; 1 add
+
+
+func true /a
+    /a 'true' eq
+
+func false /a
+    /a 'false' eq
 
 func name /n
     name; clear /n

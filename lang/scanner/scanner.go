@@ -105,9 +105,7 @@ func (s *Scanner) Next() token.Token {
 		return s.scanString('"')
 	case s.ch == '\'':
 		return s.scanString('\'')
-	case unicode.IsDigit(s.ch), unicode.Is(unicode.Sc, s.ch):
-		return s.scanValue()
-	case (s.ch == '-' || s.ch == '+' || s.ch == '.') && unicode.IsDigit(next):
+	case isValue(s.ch, next):
 		return s.scanValue()
 	}
 	return s.scanId()
@@ -324,4 +322,43 @@ func isNumber(lit string) bool {
 		return true
 	}
 	return false
+}
+
+func isValue(ch rune, next rune) bool {
+	switch {
+	case unicode.IsDigit(ch), unicode.Is(unicode.Sc, ch):
+		return true
+	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
+		return true
+	}
+	return false
+}
+
+func Quote(v string) string {
+	required := false
+	runes := []rune(v)
+	for i, ch := range runes {
+		if i == 0 && len(runes) > 1 && !isValue(ch, runes[i+1]) {
+			required = true
+			break
+		}
+		if unicode.IsSpace(ch) {
+			required = true
+			break
+		}
+	}
+	if !required {
+		return v
+	}
+	var ret strings.Builder
+	ret.WriteRune('\'')
+	for _, ch := range runes {
+		if ch == '\'' {
+			ret.WriteString("\\'")
+		} else {
+			ret.WriteRune(ch)
+		}
+	}
+	ret.WriteRune('\'')
+	return ret.String()
 }

@@ -10,8 +10,35 @@ String operations
 
 | Operation                   | Description
 |-----------------------------|----------------
+| [left](#left)               | Substring from the left
 | [len](#len)                 | Length
+| [right](#right)             | Substring from the right
+| [split](#split)             | Splits a string by a separator
 | [starts-with](#starts-with) | Starts with
+
+
+## left
+
+Substring of `s` from the left.
+
+If `i` is positive, `i` characters are taken from the left. If `i` is negative,
+characters are taken from the left until there are `i` characters remaining. If
+`i` is zero, `s` is returned without change.
+
+If the absolute value of `i` is greater then then length of `s`, an error
+is raised.
+
+    ( s:String i:Int -- left:String )
+
+Example:
+
+<!-- test: left -->
+
+| Input        | Stack
+|--------------|------------------|
+| `'abcdef`    | `abcdef`
+| `4 left`     | `abcd`
+| `-1 left`    | `abc`
 
 
 ## len
@@ -28,6 +55,46 @@ Example:
 |--------------|------------------|
 | `'abcd`      | `abcd`
 | `len`        | `4`
+
+
+## right
+
+Substring of `s` from the right.
+
+If `i` is positive, `i` characters are taken from the right. If `i` is
+negative, characters are taken from the right until there are `i` characters
+remaining. If `i` is zero, `s` is returned without change.
+
+If the absolute value of `i` is greater then then length of `s`, an error
+is raised.
+
+    ( s:String i:Int -- right:String )
+
+Example:
+
+<!-- test: right -->
+
+| Input        | Stack
+|--------------|------------------|
+| `'abcdef`    | `abcdef`
+| `4 right`    | `cdef`
+| `-1 right`   | `def`
+
+
+## split
+
+Split `s` into multiple strings that are separated by `sep`.
+
+    ( s:Str sep:Str -- split...:Str )
+
+Example:
+
+<!-- test: split -->
+
+| Input        | Stack
+|--------------|------------------|
+| `128.8.74.2` | `128.8.74.2`
+| `'.' split`  | `128 \| 8 \| 74 \| 2`
 
 
 ## starts-with
