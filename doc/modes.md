@@ -13,7 +13,6 @@ zc -m fin
 |-----------------|------------------
 | [dev](#dev)     | Developer's mode
 | [fin](#fin)     | Financial calculator
-| [plain](#plain) | Plain numbers
 | [prog](#prog)   | Programmer's calculator
 | [sci](#sci)     | Scientific calculator
 | [time](#time)   | Time calculations
@@ -42,26 +41,17 @@ use dict
 Financial calculator.
 
 Formats numbers to two decimal places and sets the rounding mode to half-even.
+Enables auto formatting and auto currency.
 
 Definition: [fin.zc](../internal/modes/fin.zc)
 
 ```
-2 conf.precision
-2 conf.min-digits
-'half-even' conf.rounding-mode
-```
-
-## plain
-
-Plain numbers.
-
-Disables default formatting.
-
-Definition: [plain.zc](../internal/modes/plain.zc)
-
-```
-'0' conf.int-format
-'false' conf.auto-currency
+2 precision
+2 min-digits
+'half-even' rounding-mode
+',000' int-layout
+true auto-currency
+true auto-format
 ```
 
 ## prog
@@ -73,8 +63,9 @@ Imports modules for bitwise and byte level math.
 Definition: [prog.zc](../internal/modes/prog.zc)
 
 ```
-'0' conf.int-format
-'false' conf.auto-currency
+'0' int-layout
+'false' auto-format
+'false' auto-currency
 
 use prog
 ```
@@ -88,8 +79,9 @@ Imports advanced math functions and units of measure conversions.
 Definition: [sci.zc](../internal/modes/sci.zc)
 
 ```
-'0' conf.int-format
-'false' conf.auto-currency
+'0' int-layout
+'false' auto-currency
+'false' auto-format
 
 use sci
 use si
