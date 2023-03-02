@@ -22,7 +22,7 @@
 - and
   - [bool.and](zlib/bool.md#and): Logical conjunction
   - [prog.and](zlib/prog.md#and): Bitwise and
-- [at](zlib/stack.md@at): Stack element at
+- [at](zlib/stack.md@at): Take stack element at index
 - [atto](zlib/si.md#atto): a, 1e-18
 
 ## b
@@ -64,12 +64,15 @@
   - [math.bigint.div](zlib/math-bigint.md#div): Division
   - [math.fixed.div](zlib/math-fixed.md#div): Division
   - [math.div](zlib/math.md#div): Division
+- [dn](zlib/stack.md#down): Rotate stack by moving items downward
+- [down](zlib/stack.md#down): Rotate stack by moving items downward
 - [drop](zlib/stack.md#drop): Drop top item
 - [dt](zlib/time.md#date-time): Formats a datetime with the default layout
 - [dup](zlib/stack.md#dup): Duplicate top item
 
 ## e
 
+- [empty](zlib/stack.md#empty): True if the stack is empty
 - eq
   - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
@@ -205,6 +208,8 @@
   - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
   - [math.rem](zlib/math.md#rem): Remainder
 - [repeat](zlib/fn.md#repeat): Repeat the execution of a function
+- [rev](zlib/stack.md#reverse): Reverse items on the stack
+- [reverse](zlib/stack.md#reverse): Reverse items on the stack
 - [right](zlib/str.md#right): Substring from the right
 - [roll](zlib/rand.md#roll): Dice roller
 - [ronna](zlib/si.md#ronna): R, 1e27
@@ -230,9 +235,12 @@
 - [sub-t](zlib/time.md#subtact-time): Duration between two times
 - [subtract-time](zlib/time.md#subtact-time): Duration between two times
 - [sum](zlib/math.md#sum): Sum
+- [sw](zlib/stack.md#swap): Swap the top two items on the stack
+- [swap](zlib/stack.md#swap): Swap the top two items on the stack
 
 ## t
 
+- [take](zlib/stack.md#take): Take top items from the stack
 - [tera](zlib/si.md#tera): T, 1e12
 - [time](zlib/time.md#time): Formats a time with the default layout
 - [time-layout](zlib/time.md#time-layout): Default time layout, set

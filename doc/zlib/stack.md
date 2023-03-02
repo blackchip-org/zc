@@ -8,19 +8,25 @@ Stack manipulations.
 
 | Operation               | Alias    | Description
 |-------------------------|----------|------------
-| [at](@at)               |          | Stack element at
+| [at](@at)               |          | Take stack element at index
 | [clear](#clear)         | `c`      | Clear
 | [drop](#drop)           |          | Drop top item
+| [down](#down)           | `dn`     | Rotate stack by moving items downward
 | [dup](#dup)             |          | Duplicate top item
+| [empty](#empty)         |          | True if the stack is empty
 | [n](#n)                 |          | Number of items on the stack
+| [reverse](#reverse)     | `rev`    | Reverse items on the stack
+| [swap](#swap)           | `sw`     | Swap the top two items on the stack
+| [take](#take)           |          | Take top items from the stack
 | [top](#top)             |          | Keep the top of the stack and discard the rest
 
 
 ## at
 
-The nth stack element starting at the top of the stack.
+Take the `n`th stack element, where 0 is the bottom of the stack,
+and discard the rest.
 
-    ( ...:any n:any ...:any -- ...:any n:any ...:any n:any )
+    ( ...:Val n:Int -- at:Val )
 
 Example:
 
@@ -29,8 +35,7 @@ Example:
 | Input         | Stack
 |---------------|-------------|
 | `1 2 3 4 5`   | `1 \| 2 \| 3 \| 4 \| 5`
-| `0 at`        | `1 \| 2 \| 3 \| 4 \| 5 \| 5`
-| `drop 1 at`   | `1 \| 2 \| 3 \| 4 \| 5 \| 4`
+| `1 at`        | `2`
 
 
 ## clear
@@ -48,6 +53,28 @@ Example:
 | `1`           | `1`
 | `2`           | `1 \| 2`
 | `clear`       |
+
+
+## down
+
+Rotate items on the stack by moving downward.
+
+In the interactive calculator, the top of the stack is towards the bottom of the terminal so downward means seeing all items moves toward the bottom.
+The top of the stack wraps around to be the bottom of the stack.
+
+    ( ...:Val -- ...:Val )
+
+Alias: `dn`
+
+Example:
+
+<!-- test: down -->
+
+| Input         | Stack
+|---------------|-------------|
+| `1 2 3`       | `1 \| 2 \| 3`
+| `down`        | `3 \| 1 \| 2`
+| `down`        | `2 \| 3 \| 1`
 
 
 ## drop
@@ -83,6 +110,25 @@ Example:
 | `dup`         | `1 \| 1`
 
 
+## empty
+
+True if the stack is empty
+
+    ( ...:Any -- ...:Any empty:Bool )
+
+
+Example:
+
+<!-- test: empty -->
+
+| Input         | Stack
+|---------------|-------------|
+| `1`           | `1`
+| `empty`       | `1 \| false`
+| `clear`       |
+| `empty`       | `true`
+
+
 ## n
 
 Number of items on the stack.
@@ -99,7 +145,58 @@ Example:
 | `n`               | `a \| b \| c \| d \| 4`
 
 
-# top
+## reverse
+
+Reverses the elements on the stack.
+
+    ( ...:Val -- ...:Val )
+
+Alias: `rev`
+
+Example:
+
+<!-- test: reverse -->
+
+| Input             | Stack
+|-------------------|-------------|
+| `1 2 3 4 5`       | `1 \| 2 \| 3 \| 4 \| 5`
+| `reverse`         | `5 \| 4 \| 3 \| 2 \| 1`
+
+
+## swap
+
+Swap the first two items on the stack
+
+    ( a:Val b:Val -- b:Val a:Val )
+
+Alias: `sw`
+
+<!-- test: swap -->
+
+| Input             | Stack
+|-------------------|-------------|
+| `1 2`             | `1 \| 2`
+| `swap`            | `2 \| 1`
+| `swap`            | `1 \| 2`
+
+
+## take
+
+Take the top `n` elements from the stack and discard the rest.
+
+    ( ...:Val n:Int -- take...:Val )
+
+Example:
+
+<!-- test: take -->
+
+| Input             | Stack
+|-------------------|-------------|
+| `1 2 3 4 5`       | `1 \| 2 \| 3 \| 4 \| 5`
+| `2 take`          | `4 \| 5`
+
+
+## top
 
 Keep the top of the stack and discard the rest
 
@@ -113,5 +210,26 @@ Example:
 |-------------------|-------------|
 | `'a' 'b' 'c' 'd'` | `a \| b \| c \| d`
 | `top`             | `d`
+
+
+## up
+
+Rotate items on the stack by moving upward.
+
+In the interactive calculator, the top of the stack is towards the bottom of
+the terminal so upwards means seeing all items move toward the top. The
+bottom of the stack wraps around to be the top of the stack.
+
+    ( ...:Val -- ...:Val )
+
+Example:
+
+<!-- test: up -->
+
+| Input         | Stack
+|---------------|-------------|
+| `1 2 3`       | `1 \| 2 \| 3`
+| `up`          | `2 \| 3 \| 1`
+| `up`          | `3 \| 1 \| 2`
 
 

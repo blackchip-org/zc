@@ -16,6 +16,9 @@ func down //a
 func dup /a
     /a /a
 
+func swap /a /b
+    /b /a
+
 func take //a /n
     len; //a n
     if /n /len gt
@@ -23,6 +26,7 @@ func take //a /n
     while /n 0 gt
         /-a
         n; 1 sub
+    reverse
 
 func top //a
     /a
@@ -36,4 +40,6 @@ func up //a
 macro empty n 0 eq
 
 alias c clear
+alias dn down
 alias rev reverse
+alias sw swap

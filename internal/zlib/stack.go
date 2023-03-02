@@ -14,7 +14,9 @@ func At(env *zc.Env) error {
 	if index < 0 || index >= env.Stack.Len() {
 		return fmt.Errorf("invalid stack index '%v'", index)
 	}
-	env.Stack.Push(env.Stack.Items()[env.Stack.Len()-index-1])
+	z := env.Stack.Items()[index]
+	env.Stack.Clear()
+	env.Stack.Push(z)
 	return nil
 }
 
