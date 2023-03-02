@@ -45,7 +45,6 @@ var (
 		"dev",
 		"format",
 		"stack",
-		"str",
 		"dict",
 		"fn",
 	}
@@ -56,7 +55,7 @@ var (
 		"format",
 		"math",
 		"stack",
-		"str", // TODO: This should only be in dev
+		"str",
 		"fn",
 		"zc",
 	}
