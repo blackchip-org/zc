@@ -64,6 +64,7 @@ func IntLayout(env *zc.Env) error {
 		return fmt.Errorf("invalid character in format: %v", string(ch))
 	}
 	env.Calc.IntLayout = format
+	env.Calc.Info = fmt.Sprintf("int-layout set to '%v'", format)
 	return nil
 }
 
@@ -117,6 +118,7 @@ func Point(env *zc.Env) error {
 		return fmt.Errorf("invalid decimal point: %v", point)
 	}
 	env.Calc.Point = ch
+	env.Calc.Info = fmt.Sprintf("point set to '%v'", string(ch))
 	return nil
 }
 
