@@ -811,3 +811,7 @@ func ErrorWithStack(err error) string {
 	}
 	return err.Error()
 }
+
+func Quote(v string) string {
+	return scanner.Quote(v)
+}

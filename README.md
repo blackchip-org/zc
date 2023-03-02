@@ -83,6 +83,17 @@ have been placed on a separate line:
 If there a multiple items on the stack, they are notated by using a pipe `|`
 character to separate each item. The item on the right is the top of the stack.
 
+If a function does not change the stack an informational line may be printed
+right above the prompt. This is notated in the table by showing the
+information line in italics.
+
+<!-- test: info -->
+
+| Input         | Stack
+|---------------|-------------
+| `import rand` | *imported rand*
+| `0 rand.seed` | *seed set to 0*
+
 The basic math functions are:
 
 | Function        | Description |
@@ -157,9 +168,9 @@ the `use` statement does not. For example:
 
 | Input          | Stack
 |----------------|-------------------
-| `import prog`  |
+| `import prog`  | *imported prog*
 | `255 prog.hex` | `0xff`
-| `use prog`     | `0xff`
+| `use prog`     | *using prog*
 | `oct`          | `0o377`
 
 A mode can load a set of predefined modules and execute statements to
@@ -199,7 +210,7 @@ placed on the stack:
 
 | Input              | Stack
 |--------------------|-------------------
-| `true auto-format` |
+| `true auto-format` | *auto-format set to true*
 | `256 2 pow`        | `65,536`
 
 Use `int-layout` and `point` to change the thousands separator
@@ -209,8 +220,8 @@ and decimal point:
 
 | Input                     | Stack
 |---------------------------|-------------------
-| `'.000' int-layout`       |
-| `','    point`            |
+| `'.000' int-layout`       | *int-layout set to '.000'*
+| `','    point`            | *point set to ','*
 | `12345 10 div f`          | `1.234,5`
 
 Currency symbols are ignored when parsing:
@@ -228,7 +239,7 @@ or a suffix to a number:
 
 | Input                | Stack
 |----------------------|-------------------
-| `true auto-currency` |
+| `true auto-currency` | *auto-currency set to true*
 | `$1234`              | `$1234`
 | `2 mul`              | `$2468`
 
@@ -255,7 +266,7 @@ compute the sales tax on something that costs $123:
 
 | Input               | Stack
 |---------------------|-------------------
-| `true auto-currency`|
+| `true auto-currency`| *auto-currency set to true*
 | `$123`              | `$123`
 | `dup`               | `$123 \| $123`
 | `0.05`              | `$123 \| $123 \| 0.05`
@@ -268,8 +279,8 @@ Repeated use of this pattern can be used with a macro:
 
 | Input                    | Stack
 |--------------------------|-------------------
-| `true auto-currency`     |
-| `macro tax dup 0.05 mul` |
+| `true auto-currency`     | *auto-currency set to true*
+| `macro tax dup 0.05 mul` | *macro 'tax' defined*
 | `$123`                   | `$123`
 | `tax add`                | `$129.15`
 
@@ -279,8 +290,8 @@ The name of `=` is reserved for your macro use in bulk operations:
 
 | Input                     | Stack
 |---------------------------|-------------------
-| `use unit`                |
-| `macro = top f-c 2 round` |
+| `use unit`                | *using unit*
+| `macro = top f-c 2 round` | *macro '=' defined*
 | `32 =`                    | `0`
 | `68 =`                    | `20`
 | `100 =`                   | `37.78`
@@ -291,9 +302,9 @@ Play a game of rock, paper, scissors:
 
 | Input                                           | Stack
 |-------------------------------------------------|-------------------
-| `import rand`                                   |
-| `0 rand.seed`                                   |
-| `macro = 'rock' 'paper' 'scissors' rand.choice` |
+| `import rand`                                   | *imported rand*
+| `0 rand.seed`                                   | *seed set to 0*
+| `macro = 'rock' 'paper' 'scissors' rand.choice` | *macro '=' defined*
 | `=`                                             | `rock`
 | `=`                                             | `paper`
 

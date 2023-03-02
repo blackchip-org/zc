@@ -196,7 +196,7 @@ func (e *Env) evalMacroStmt(mac *ast.MacroStmt) error {
 	if e.Module != "" {
 		e.Exports = append(e.Exports, mac.Name)
 	}
-	e.Calc.Info = "ok"
+	e.Calc.Info = fmt.Sprintf("macro '%v' defined", mac.Name)
 	return nil
 }
 

@@ -174,9 +174,11 @@ Example:
 |---------------------------------|------------------
 | `now time`                      | `3:04:05pm -0700 MST`
 | `clear`                         |
-| `'est' local now time`          | `5:04:05pm -0500 EST`
+| `'est' local`                   | *local time zone is now 'EST'*
+| `now time`                      | `5:04:05pm -0500 EST`
 | `clear`                         |
-| `'Asia/Jakarta' local now time` | `5:04:05am +0700`
+| `'Asia/Jakarta' local`          | *local time zone is now 'Asia/Jakarta'*
+| `now time`                      | `5:04:05am +0700`
 
 
 ## local=
@@ -304,7 +306,7 @@ Example:
 
 | Input                       | Stack
 |-----------------------------|------------------
-| `'Nov 5 1955 01:22' travel` |
+| `'Nov 5 1955 01:22' travel` | *now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'*
 | `now`                       | `Sat Nov 5 1955 1:22:00am -0700 MST`
 
 ## travel-end

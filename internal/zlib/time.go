@@ -335,7 +335,7 @@ func Local(env *zc.Env) error {
 	}
 	s.local = loc
 	s.localZone = zone
-	env.Calc.Info = "local time zone is now " + s.localZone
+	env.Calc.Info = "local time zone is now " + zc.Quote(s.localZone)
 	return nil
 }
 
@@ -421,7 +421,7 @@ func Travel(env *zc.Env) error {
 		return err
 	}
 	s.travel = t
-	env.Calc.Info = "now set to " + s.formatDateTime(t)
+	env.Calc.Info = "now set to " + zc.Quote(s.formatDateTime(t))
 	return nil
 }
 

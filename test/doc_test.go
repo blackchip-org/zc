@@ -108,17 +108,32 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 		in := strings.ReplaceAll(fields[1], "`", "")
 		in = strings.TrimSpace(in)
 
-		out := strings.ReplaceAll(fields[2], "`", "")
-		out = strings.ReplaceAll(out, "\\|", "|")
-		out = strings.TrimSpace(out)
+		out := ""
+		info := ""
+
+		f2 := strings.TrimSpace(fields[2])
+		if strings.HasPrefix(f2, "*") {
+			info = f2
+		} else {
+			out = strings.ReplaceAll(f2, "`", "")
+			out = strings.ReplaceAll(out, "\\|", "|")
+			out = strings.TrimSpace(out)
+		}
 
 		t.Log(in)
 
 		if err := c.EvalString("", in); err != nil {
 			t.Fatal(err)
 		}
-		if c.Env.Stack.String() != out {
-			t.Fatalf("\n have: %v \n want: %v", c.Env.Stack.String(), out)
+		if c.Info != "" {
+			have := "*" + c.Info + "*"
+			if have != info {
+				t.Fatalf("\n have: %v \n want: %v", have, info)
+			}
+		} else {
+			if c.Env.Stack.String() != out {
+				t.Fatalf("\n have: %v \n want: %v", c.Env.Stack.String(), out)
+			}
 		}
 		scanner.Scan()
 		if scanner.Err() != nil {

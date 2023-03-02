@@ -29,7 +29,7 @@ Example:
 
 | Input          | Stack
 |----------------|-------------|
-| `2 rand.seed`  |
+| `2 rand.seed`  | *seed set to 2*
 | `1 2 3 4 5 6`  | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
 | `rand.choice`  | `5`
 
@@ -46,7 +46,7 @@ Example:
 
 | Input         | Stack
 |---------------|-------------|
-| `0 rand.seed` |
+| `0 rand.seed` | *seed set to 0*
 | `rand.float`  | `0.9451961492941164`
 
 
@@ -62,7 +62,7 @@ Example:
 
 | Input         | Stack
 |---------------|-------------|
-| `0 rand.seed` |
+| `0 rand.seed` | *seed set to 0*
 | `10 rand.int` | `5`
 
 
@@ -80,7 +80,7 @@ use `3d6` to roll three six sided dice.
 
 | Input           | Stack
 |-----------------|-------------|
-| `99 rand.seed`  |
+| `99 rand.seed`  | *seed set to 99*
 | `3d6 rand.roll` | `6 \| 2 \| 1`
 | `sum`           | `9`
 
@@ -95,7 +95,7 @@ Sets the random number seed
 
 | Input         | Stack
 |---------------|-------------|
-| `1 rand.seed` |
+| `1 rand.seed` | *seed set to 1*
 | `10 rand.int` | `2`
 
 
@@ -109,7 +109,7 @@ Gets the random number seed
 
 | Input         | Stack
 |---------------|-------------|
-| `3 rand.seed` |
+| `3 rand.seed` | *seed set to 3*
 | `rand.seed=`  | `3`
 
 
@@ -123,7 +123,7 @@ Shuffle the stack
 
 | Input          | Stack
 |----------------|-------------|
-| `0 rand.seed`  |
+| `0 rand.seed`  | *seed set to 0*
 | `1 2 3 4 5 6`  | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
 | `rand.shuffle` | `5 \| 4 \| 1 \| 3 \| 2 \| 6`
 
