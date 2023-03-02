@@ -7,6 +7,17 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
+func Join(env *zc.Env) error {
+	sep, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	items := env.Stack.Items()
+	env.Stack.Clear()
+	env.Stack.Push(strings.Join(items, sep))
+	return nil
+}
+
 func Left(env *zc.Env) error {
 	i, err := env.Stack.PopInt()
 	if err != nil {

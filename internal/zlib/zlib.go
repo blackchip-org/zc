@@ -348,6 +348,7 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/str.zc",
 		Natives: map[string]zc.CalcFunc{
+			"join":        Join,
 			"left":        Left,
 			"len":         Len,
 			"right":       Right,

@@ -1,3 +1,4 @@
+native join
 native left
 native len
 native right

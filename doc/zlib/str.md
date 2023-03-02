@@ -4,17 +4,37 @@
 
 String operations
 
-- Prelude: dev (include)
+    use str -- dev prelude
 
 <!-- index -->
 
 | Operation                   | Description
 |-----------------------------|----------------
+| [join](#join)               | Join stack elements into a single string
 | [left](#left)               | Substring from the left
 | [len](#len)                 | Length
 | [right](#right)             | Substring from the right
 | [split](#split)             | Splits a string by a separator
 | [starts-with](#starts-with) | Starts with
+
+
+## join
+
+Join all stack elements into a single string separated by `sep`.
+
+    ( items...:Str sep:Str -- join:Str )
+
+Example:
+
+<!-- test: join -->
+
+| Input        | Stack
+|--------------|------------------|
+| `128 8 74 2` | `128 \| 8 \| 74 \| 2`
+| `'.' join`   | `128.8.74.2`
+| `clear`      |
+| `1 2 3 4`    |  `1 \| 2 \| 3 \| 4`
+| `'' join`    | `1234`
 
 
 ## left
@@ -95,6 +115,9 @@ Example:
 |--------------|------------------|
 | `128.8.74.2` | `128.8.74.2`
 | `'.' split`  | `128 \| 8 \| 74 \| 2`
+| `clear`
+| `1234`       | `1234`
+| `'' split`   | `1 \| 2 \| 3 \| 4`
 
 
 ## starts-with
