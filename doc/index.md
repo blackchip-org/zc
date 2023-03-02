@@ -122,6 +122,10 @@
 - [int32](zlib/assert.md#int32): Assert value is a 32-bit signed integer
 - [int64](zlib/assert.md#int64): Assert value is a 64-bit signed integer
 
+## j
+
+- [join](zlib/str.md#join): Join stack elements into a single string
+
 ## k
 
 - [k-c](zlib/unit.md#k-c): Kelvin to Celsius
