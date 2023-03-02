@@ -211,7 +211,7 @@
 - [rev](zlib/stack.md#reverse): Reverse items on the stack
 - [reverse](zlib/stack.md#reverse): Reverse items on the stack
 - [right](zlib/str.md#right): Substring from the right
-- [roll](zlib/rand.md#roll): Dice roller
+- [roll](zlib/dice.md#roll): Dice roller
 - [ronna](zlib/si.md#ronna): R, 1e27
 - [ronto](zlib/si.md#ronto): r, 1e-27
 - [rsh](zlib/prog.md#rsh): Right shift

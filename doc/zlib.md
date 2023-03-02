@@ -22,6 +22,7 @@ calculator:
 
 | Name                           | Description
 |--------------------------------|----------------------------------------
+| [dice](zlib/dice.md)           | Dice roller
 | [prog](zlib/prog.md)           | Programmer's calculator
 | [rand](zlib/rand.md)           | Random numbers
 | [si](zlib/si.md)               | Prefixes for the International System of Units

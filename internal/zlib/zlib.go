@@ -11,6 +11,7 @@ var All = []zc.ModuleDef{
 	BoolFixed,
 	Conf,
 	Dev,
+	Dice,
 	Dict,
 	Fn,
 	Format,
@@ -152,6 +153,10 @@ var (
 			"trace-off": TraceOff,
 			"undef":     Undef,
 		},
+	}
+	Dice = zc.ModuleDef{
+		Name:       "dice",
+		ScriptPath: "zc:zlib/dice.zc",
 	}
 	Dict = zc.ModuleDef{
 		Name:       "dict",
