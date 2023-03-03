@@ -66,8 +66,8 @@ Example:
 
 | Input             | Stack
 |-------------------|------------------
-| `0xc2b0`          | `0xc2b0`
-| `utf-8-decode`    | `°`
+| `0x3534c2b0`      | `0x3534c2b0`
+| `utf-8-decode`    | `54°`
 
 
 ## utf-8-encode
@@ -82,10 +82,10 @@ Example:
 
 <!-- test: encode -->
 
-| Input             | Stack
-|-------------------|------------------
+| Input              | Stack
+|--------------------|------------------
 | `use prog`         | *using prog*
-| `'°`               | `°`
-| `utf-8-encode hex` | `0xc2b0`
+| `54°`              | `54°`
+| `utf-8-encode hex` | `0x3534c2b0`
 
 
