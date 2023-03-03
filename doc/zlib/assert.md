@@ -15,8 +15,8 @@ Type assertions
 | [fixed](#fixed)   | Assert value is a fixed-point number
 | [float](#float)   | Assert value is a floating-point number
 | [int](#int)       | Assert value is an integer
-| [int64](#int64)   | Assert value is a 64-bit signed integer
 | [int32](#int32)   | Assert value is a 32-bit signed integer
+| [int64](#int64)   | Assert value is a 64-bit signed integer
 
 
 ## bigint
@@ -114,25 +114,6 @@ Example:
 | `try assert.int`    | `expecting Int but got 123.45 \| false`
 
 
-## int64
-
-Assert that `a` is an 64-bit signed integer. If not, an error is raised.
-
-    ( a:Int64 -- )
-
-Example:
-
-<!-- test: int -->
-
-| Input                  | Stack
-|------------------------|------------------
-| `2 64 pow 2 div 1 sub` | `9223372036854775807`
-| `try assert.int64`     | `true`
-| `clear`                |
-| `2 64 pow 2 div`       | `9223372036854775808`
-| `try assert.int64`     | `expecting Int64 but got 9223372036854775808 \| false`
-
-
 ## int32
 
 Assert that `a` is an 32-bit signed integer. If not, an error is raised.
@@ -150,3 +131,22 @@ Example:
 | `clear`                |
 | `2 32 pow 2 div`       | `2147483648`
 | `try assert.int32`     | `expecting Int32 but got 2147483648 \| false`
+
+
+## int64
+
+Assert that `a` is an 64-bit signed integer. If not, an error is raised.
+
+    ( a:Int64 -- )
+
+Example:
+
+<!-- test: int -->
+
+| Input                  | Stack
+|------------------------|------------------
+| `2 64 pow 2 div 1 sub` | `9223372036854775807`
+| `try assert.int64`     | `true`
+| `clear`                |
+| `2 64 pow 2 div`       | `9223372036854775808`
+| `try assert.int64`     | `expecting Int64 but got 9223372036854775808 \| false`

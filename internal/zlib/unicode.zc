@@ -1,0 +1,3 @@
+native code-point
+native utf8-encode
+native utf8-decode

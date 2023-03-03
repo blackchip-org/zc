@@ -67,7 +67,10 @@ Definition: [prog.zc](../internal/modes/prog.zc)
 'false' auto-format
 'false' auto-currency
 
-use prog
+use [
+    prog
+    unicode
+]
 ```
 
 ## sci

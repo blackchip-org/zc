@@ -30,6 +30,7 @@ calculator:
 | [time](zlib/time.md)           | Date, time, and duration operations
 | [tz](zlib/tz.md)               | Time zone database
 | [unit](zlib/unit.md)           | Units of measure
+| [unicode](zlib/unicode.md)     | Unicode encoding and decoding
 
 ## Developer's Modules
 

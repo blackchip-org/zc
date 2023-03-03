@@ -2,4 +2,8 @@
 'false' auto-format
 'false' auto-currency
 
-use prog
+use [
+    prog
+    unicode
+]
+

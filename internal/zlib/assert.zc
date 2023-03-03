@@ -3,5 +3,5 @@ native bool
 native fixed
 native float
 native int
-native int64
 native int32
+native int64

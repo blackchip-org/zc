@@ -32,6 +32,7 @@ var All = []zc.ModuleDef{
 	Time,
 	Tz,
 	Unit,
+	Unicode,
 	Zc,
 }
 
@@ -167,6 +168,7 @@ var (
 		Include:    true,
 		Natives: map[string]zc.CalcFunc{
 			"eval": Eval,
+			//"map":  Map,
 		},
 	}
 	Format = zc.ModuleDef{
@@ -396,6 +398,15 @@ var (
 	Unit = zc.ModuleDef{
 		Name:       "unit",
 		ScriptPath: "zc:zlib/unit.zc",
+	}
+	Unicode = zc.ModuleDef{
+		Name:       "unicode",
+		ScriptPath: "zc:zlib/unicode.zc",
+		Natives: map[string]zc.CalcFunc{
+			"code-point":  CodePoint,
+			"utf8-encode": UTF8Encode,
+			"utf8-decode": UTF8Decode,
+		},
 	}
 	Zc = zc.ModuleDef{
 		Name:       "zc",
