@@ -11,7 +11,7 @@ Unicode encoding and decoding
 | [decode](#decode)             | `de`  | Decodes Unicode code points to a string
 | [encode](#encode)             | `en`  | Encodes a string into Unicode code points
 | [utf-8-decode](#utf-8-decode) | `de8` | Decode UTF-8 bytes into a string
-| [utf-8-encode](#utf-8-encode) | `em8` | Encode a string into UTF-8 bytes
+| [utf-8-encode](#utf-8-encode) | `en8` | Encode a string into UTF-8 bytes
 
 
 ## decode
