@@ -263,7 +263,7 @@
 - [u8d](zlib/unicode.md#utf8-decode): Decode bytes into a UTF-8 string
 - [u8e](zlib/unicode.md#utf8-encode): Encode a UTF-8 string into bytes
 - [utf8-decode](zlib/unicode.md#utf8-decode): Decode bytes into a UTF-8 string
-- [utf8-encode]](zlib/unicode.md#utf8-encode): Encode a UTF-8 string into bytes
+- [utf8-encode](zlib/unicode.md#utf8-encode): Encode a UTF-8 string into bytes
 
 ## v
 

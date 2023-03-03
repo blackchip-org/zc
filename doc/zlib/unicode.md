@@ -9,7 +9,7 @@ Unicode encoding and decoding
 | Operation                    | Alias | Description
 |------------------------------|-------|--------------
 | [code-point](#code-point)    | `cp`  | Converts a string into Unicode code points
-| [utf8-encode]](#utf8-encode) | `u8e` | Encode a UTF-8 string into bytes
+| [utf8-encode](#utf8-encode)  | `u8e` | Encode a UTF-8 string into bytes
 | [utf8-decode](#utf8-decode)  | `u8d` | Decode bytes into a UTF-8 string
 
 
