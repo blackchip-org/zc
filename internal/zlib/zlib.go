@@ -406,9 +406,10 @@ var (
 		Name:       "unicode",
 		ScriptPath: "zc:zlib/unicode.zc",
 		Natives: map[string]zc.CalcFunc{
-			"code-points":  CodePoints,
-			"utf-8-encode": UTF8Encode,
+			"decode":       Decode,
+			"encode":       Encode,
 			"utf-8-decode": UTF8Decode,
+			"utf-8-encode": UTF8Encode,
 		},
 	}
 	Zc = zc.ModuleDef{

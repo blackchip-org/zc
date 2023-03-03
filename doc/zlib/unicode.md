@@ -6,31 +6,69 @@ Unicode encoding and decoding
 
 <!-- index -->
 
-| Operation                    | Alias | Description
-|------------------------------|-------|--------------
-| [code-point](#code-point)    | `cp`  | Converts a string into Unicode code points
-| [utf8-encode](#utf8-encode)  | `u8e` | Encode a UTF-8 string into bytes
-| [utf8-decode](#utf8-decode)  | `u8d` | Decode bytes into a UTF-8 string
+| Operation                     | Alias | Description
+|-------------------------------|-------|--------------
+| [decode](#decode)             | `de`  | Decodes Unicode code points to a string
+| [encode](#encode)             | `en`  | Encodes a string into Unicode code points
+| [utf-8-decode](#utf-8-decode) | `de8` | Decode UTF-8 bytes into a string
+| [utf-8-encode](#utf-8-encode) | `em8` | Encode a string into UTF-8 bytes
 
 
-## code-points
+## decode
 
-Converts the string `s` into Unicode code points
+Decodes the Unicode code points on the stack into string `s`
 
-    ( s:Str -- points...:Int )
+    ( points...:Int -- s:Str )
 
-Alias: `cp`
+Alias: `de`
 
 Example:
 
-<!-- test: code-point -->
+<!-- test: decode -->
+
+| Input             | Stack
+|-------------------|------------------
+| `0x35 0x34 0xb0`  | `0x35 \| 0x34 \| 0xb0`
+| `decode`          | `54°`
+
+
+## encode
+
+Encodes the string `s` into Unicode code points
+
+    ( s:Str -- points...:Int )
+
+Alias: `en`
+
+Example:
+
+<!-- test: encode -->
 
 | Input             | Stack
 |-------------------|------------------
 | `use prog`        | *using prog*
 | `54°`             | `54°`
-| `code-points`     | `53 \| 52 \| 176`
+| `encode`          | `53 \| 52 \| 176`
 | `'hex' map`       | `0x35 \| 0x34 \| 0xb0`
+
+
+## utf-8-decode
+
+Decode the UTF-8 bytes in `b` to a string.
+
+    ( b:BigInt -- s:Str )
+
+Alias: `de8`
+
+Example:
+
+<!-- test: decode -->
+
+| Input             | Stack
+|-------------------|------------------
+| `0xc2b0`          | `0xc2b0`
+| `utf-8-decode`    | `°`
+
 
 ## utf-8-encode
 
@@ -38,7 +76,7 @@ Encode the string `s` into UTF-8 bytes.
 
     ( s:Str -- encode:BigInt )
 
-Alias: `u8e`
+Alias: `en8`
 
 Example:
 
@@ -50,21 +88,4 @@ Example:
 | `'°`               | `°`
 | `utf-8-encode hex` | `0xc2b0`
 
-
-## utf-8-decode
-
-Decode the UTF-8 bytes in `b` to a string.
-
-    ( b:BigInt -- s:Str )
-
-Alias: `u8d`
-
-Example:
-
-<!-- test: decode -->
-
-| Input             | Stack
-|-------------------|------------------
-| `0xc2b0`          | `0xc2b0`
-| `utf-8-decode`    | `°`
 

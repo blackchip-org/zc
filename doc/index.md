@@ -46,8 +46,6 @@
 - [centi](zlib/si.md#centi): c, 1e-02
 - [choice](zlib/rand.md#choice): Randomly select an item on the stack
 - [clear](zlib/stack.md#clear): Clear
-- [code-point](zlib/unicode.md#code-point): Converts a string into Unicode code points
-- [cp](zlib/unicode.md#code-point): Converts a string into Unicode code points
 
 ## d
 
@@ -59,9 +57,12 @@
 - [date-time-layout](zlib/time.md#date-time-layout): Default datetime layout, set
 - [date-time-layout=](zlib/time.md#date-time-layout=): Default datetime layout, get
 - [day-year](zlib/time.md#date-year): Day of year for a given date
+- [de](zlib/unicode.md#decode): Decodes Unicode code points to a string
+- [de8](zlib/unicode.md#utf-8-decode): Decode UTF-8 bytes into a string
 - [dec](zlib/prog.md#dec): Convert to decimal
 - [deca](zlib/si.md#deca): da, 1e01
 - [deci](zlib/si.md#deci): d, 1e-01
+- [decode](zlib/unicode.md#decode): Decodes Unicode code points to a string
 - div
   - [math.bigint.div](zlib/math-bigint.md#div): Division
   - [math.fixed.div](zlib/math-fixed.md#div): Division
@@ -74,7 +75,10 @@
 
 ## e
 
+- [em8](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
 - [empty](zlib/stack.md#empty): True if the stack is empty
+- [en](zlib/unicode.md#encode): Encodes a string into Unicode code points
+- [encode](zlib/unicode.md#encode): Encodes a string into Unicode code points
 - eq
   - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
@@ -260,10 +264,8 @@
 
 ## u
 
-- [u8d](zlib/unicode.md#utf8-decode): Decode bytes into a UTF-8 string
-- [u8e](zlib/unicode.md#utf8-encode): Encode a UTF-8 string into bytes
-- [utf8-decode](zlib/unicode.md#utf8-decode): Decode bytes into a UTF-8 string
-- [utf8-encode](zlib/unicode.md#utf8-encode): Encode a UTF-8 string into bytes
+- [utf-8-decode](zlib/unicode.md#utf-8-decode): Decode UTF-8 bytes into a string
+- [utf-8-encode](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
 
 ## v
 

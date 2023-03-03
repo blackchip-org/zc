@@ -9,7 +9,21 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
-func CodePoints(env *zc.Env) error {
+func Decode(env *zc.Env) error {
+	var z strings.Builder
+	for _, item := range env.Stack.Items() {
+		i, err := env.Calc.ParseInt32(item)
+		if err != nil {
+			return err
+		}
+		z.WriteRune(rune(i))
+	}
+	env.Stack.Clear()
+	env.Stack.Push(z.String())
+	return nil
+}
+
+func Encode(env *zc.Env) error {
 	s, err := env.Stack.Pop()
 	if err != nil {
 		return err
