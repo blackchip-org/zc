@@ -9,7 +9,7 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
-func CodePoint(env *zc.Env) error {
+func CodePoints(env *zc.Env) error {
 	s, err := env.Stack.Pop()
 	if err != nil {
 		return err

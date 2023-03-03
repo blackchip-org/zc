@@ -1,3 +1,7 @@
-native code-point
-native utf8-encode
-native utf8-decode
+native code-points
+native utf-8-encode
+native utf-8-decode
+
+alias cp code-points
+alias u8e utf-8-encode
+alias u8d utf-8-decode

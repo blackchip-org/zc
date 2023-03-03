@@ -46,6 +46,8 @@
 - [centi](zlib/si.md#centi): c, 1e-02
 - [choice](zlib/rand.md#choice): Randomly select an item on the stack
 - [clear](zlib/stack.md#clear): Clear
+- [code-point](zlib/unicode.md#code-point): Converts a string into Unicode code points
+- [cp](zlib/unicode.md#code-point): Converts a string into Unicode code points
 
 ## d
 
@@ -255,6 +257,13 @@
 - [travel-end](zlib/time.md#travel-end): Cancel override of the value returned by now
 - [true](zlib/bool.md#true): True
 - [tz](zlib/time.md#time-zone): Convert time to a given time zone
+
+## u
+
+- [u8d](zlib/unicode.md#utf8-decode): Decode bytes into a UTF-8 string
+- [u8e](zlib/unicode.md#utf8-encode): Encode a UTF-8 string into bytes
+- [utf8-decode](zlib/unicode.md#utf8-decode): Decode bytes into a UTF-8 string
+- [utf8-encode]](zlib/unicode.md#utf8-encode): Encode a UTF-8 string into bytes
 
 ## v
 
