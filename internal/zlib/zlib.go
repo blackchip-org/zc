@@ -167,8 +167,11 @@ var (
 		ScriptPath: "zc:zlib/fn.zc",
 		Include:    true,
 		Natives: map[string]zc.CalcFunc{
-			"eval": Eval,
-			//"map":  Map,
+			"eval":   Eval,
+			"filter": Filter,
+			"fold":   Fold,
+			"map":    Map,
+			"repeat": Repeat,
 		},
 	}
 	Format = zc.ModuleDef{

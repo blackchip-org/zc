@@ -59,6 +59,7 @@ type CalcFunc func(*Env) error
 type Frame struct {
 	Pos  token.Pos
 	Func string
+	Env  *Env
 }
 
 func (f Frame) String() string {
@@ -91,6 +92,7 @@ type Calc struct {
 	Modules    map[string]*Env
 	Natives    map[string]CalcFunc
 	States     map[string]any
+	Frames     []Frame
 }
 
 func NewCalc(conf Config) (*Calc, error) {
@@ -153,7 +155,13 @@ func Eval(env *Env, name string, src []byte) error {
 	if err != nil {
 		return err
 	}
+	env.Calc.Frames = append(env.Calc.Frames, Frame{
+		Pos:  root.Pos(),
+		Func: "",
+		Env:  env,
+	})
 	err = env.evalFile(root)
+	env.Calc.Frames = env.Calc.Frames[:len(env.Calc.Frames)-1]
 	if err != nil {
 		return err
 	}

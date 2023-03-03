@@ -1,28 +1,5 @@
 native eval
-
-func filter //xs /fn
-    for x; //xs
-        /x /fn eval
-        if true eq
-            /x
-
-
-func fold //xs /fn
-    //xs
-    while n 1 gt
-        n prev; /-main
-        /fn eval
-        if n /prev gte
-            'stack did not reduce' abort
-
-
-func map //xs /fn
-    for x; //xs
-        /x /fn eval
-
-
-func repeat //xs /fn /times
-    //xs
-    while /times 0 gt
-        /fn eval
-        times; /-times 1 sub
+native filter
+native fold
+native map
+native repeat

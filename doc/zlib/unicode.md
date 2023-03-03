@@ -28,6 +28,7 @@ Example:
 | `use prog`        | *using prog*
 | `54°`             | `54°`
 | `code-point`      | `53 \| 52 \| 176`
+| `'hex' map`       | `0x35 \| 0x34 \| 0xb0`
 
 ## utf-encode
 

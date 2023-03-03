@@ -401,6 +401,15 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 			return fmt.Errorf("stack reference %v not allowed as parameter", param.Type)
 		}
 	}
+	e.Calc.Frames = append(e.Calc.Frames, Frame{
+		Pos:  fn.Pos(),
+		Func: fn.Name,
+		Env:  callee,
+	})
+	defer func() {
+		e.Calc.Frames = e.Calc.Frames[:len(e.Calc.Frames)-1]
+
+	}()
 	if err := callee.evalStmts(fn.Stmts); err != nil {
 		if !errors.Is(err, errFuncReturn) {
 			return err
@@ -428,8 +437,17 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 }
 
 func (e *Env) invokeNative(caller *Env, fn CalcFunc, stmt *ast.NativeStmt) error {
-	callee := e
+	callee := e.Derive(stmt.Name)
 	callee.Stack = caller.Stack
+	e.Calc.Frames = append(e.Calc.Frames, Frame{
+		Pos:  stmt.Pos(),
+		Func: stmt.Name,
+		Env:  callee,
+	})
+	defer func() {
+		e.Calc.Frames = e.Calc.Frames[:len(e.Calc.Frames)-1]
+	}()
+
 	if err := fn(callee); err != nil {
 		if !errors.Is(err, errFuncReturn) {
 			return err
