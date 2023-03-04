@@ -1,5 +1,11 @@
 native decode
 native encode
+native lower
+native lower=
+native title
+native title=
+native upper
+native upper=
 native utf-8-decode
 native utf-8-encode
 

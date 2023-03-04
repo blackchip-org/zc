@@ -1,0 +1,29 @@
+use [
+    str
+    unicode
+]
+
+func rotate-13 /s
+    for ch; /s '' split
+        upper; /ch upper=
+        r; /ch lower encode
+        /r 'a' encode gte
+        /r 'z' encode lte
+        if and
+            /r 13 add dup
+            'z' encode
+            sub dup
+            if 0 gte
+                'a' encode add 1 sub
+                swap drop
+            else
+                drop
+        else
+            /r
+        decode
+        if /upper
+            upper
+    '' join
+
+
+alias rot13 rotate-13

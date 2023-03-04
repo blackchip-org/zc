@@ -57,12 +57,12 @@
 - [date-time-layout](zlib/time.md#date-time-layout): Default datetime layout, set
 - [date-time-layout=](zlib/time.md#date-time-layout=): Default datetime layout, get
 - [day-year](zlib/time.md#date-year): Day of year for a given date
-- [de](zlib/unicode.md#decode): Decodes Unicode code points to a string
+- [de](zlib/unicode.md#decode): Decodes a Unicode code point to a character
 - [de8](zlib/unicode.md#utf-8-decode): Decode UTF-8 bytes into a string
 - [dec](zlib/prog.md#dec): Convert to decimal
 - [deca](zlib/si.md#deca): da, 1e01
 - [deci](zlib/si.md#deci): d, 1e-01
-- [decode](zlib/unicode.md#decode): Decodes Unicode code points to a string
+- [decode](zlib/unicode.md#decode): Decodes a Unicode code point to a character
 - div
   - [math.bigint.div](zlib/math-bigint.md#div): Division
   - [math.fixed.div](zlib/math-fixed.md#div): Division
@@ -75,10 +75,10 @@
 
 ## e
 
-- [em8](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
 - [empty](zlib/stack.md#empty): True if the stack is empty
-- [en](zlib/unicode.md#encode): Encodes a string into Unicode code points
-- [encode](zlib/unicode.md#encode): Encodes a string into Unicode code points
+- [en](zlib/unicode.md#encode): Encodes a character into Unicode code point
+- [en8](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
+- [encode](zlib/unicode.md#encode): Encodes a character into Unicode code point
 - eq
   - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
@@ -144,6 +144,8 @@
 - [len](zlib/str.md#len): Length
 - [local](zlib/time.md#local): Local time zone, set
 - [local=](zlib/time.md#local=): Local time zone, get
+- [lower](zlib/unicode.md#lower): Convert string to lower case
+- [lower=](zlib/unicode.md#lower=): Is character lower case
 - [lsh](zlib/prog.md#lsh): Left shift
 - lt
   - [bool.bigint.lt](zlib/bool-bigint.md#lt): Less than
@@ -224,6 +226,8 @@
 - [roll](zlib/dice.md#roll): Dice roller
 - [ronna](zlib/si.md#ronna): R, 1e27
 - [ronto](zlib/si.md#ronto): r, 1e-27
+- [rot-13](zlib/rot.md#rotat-13): Rotate characters by 13
+- [rotate-13](zlib/rot.md#rotat-13): Rotate characters by 13
 - [rsh](zlib/prog.md#rsh): Right shift
 
 ## s
@@ -256,6 +260,8 @@
 - [time-layout](zlib/time.md#time-layout): Default time layout, set
 - [time-layout=](zlib/time.md#time-layout=): Default time layout, get
 - [time-zone](zlib/time.md#time-zone): Convert time to a given time zone
+- [title](zlib/unicode.md#title): Convert string to title case
+- [title=](zlib/unicode.md#title=): Is character title case
 - [top](zlib/stack.md#top): Keep the top of the stack and discard the rest
 - [travel](zlib/time.md#travel): Override the value returned by `now`
 - [travel-end](zlib/time.md#travel-end): Cancel override of the value returned by now
@@ -264,6 +270,8 @@
 
 ## u
 
+- [upper](zlib/unicode.md#upper): Convert string to upper case
+- [upper=](zlib/unicode.md#upper=): Is character upper case
 - [utf-8-decode](zlib/unicode.md#utf-8-decode): Decode UTF-8 bytes into a string
 - [utf-8-encode](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
 

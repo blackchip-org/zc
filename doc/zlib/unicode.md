@@ -2,23 +2,29 @@
 
 <!-- eval: use unicode -->
 
-Unicode encoding and decoding
+Unicode encoding, decoding, and character operations
 
 <!-- index -->
 
 | Operation                     | Alias | Description
 |-------------------------------|-------|--------------
-| [decode](#decode)             | `de`  | Decodes Unicode code points to a string
-| [encode](#encode)             | `en`  | Encodes a string into Unicode code points
+| [decode](#decode)             | `de`  | Decodes a Unicode code point to a character
+| [encode](#encode)             | `en`  | Encodes a character into Unicode code point
+| [lower](#lower)               |       | Convert string to lower case
+| [lower=](#lower=)             |       | Is character lower case
+| [title](#title)               |       | Convert string to title case
+| [title=](#title=)             |       | Is character title case
+| [upper](#upper)               |       | Convert string to upper case
+| [upper=](#upper=)             |       | Is character upper case
 | [utf-8-decode](#utf-8-decode) | `de8` | Decode UTF-8 bytes into a string
 | [utf-8-encode](#utf-8-encode) | `en8` | Encode a string into UTF-8 bytes
 
 
 ## decode
 
-Decodes the Unicode code points on the stack into string `s`
+Decodes the Unicode code point `p` to a character
 
-    ( points...:Int -- s:Str )
+    ( p:Int -- s:Char )
 
 Alias: `de`
 
@@ -28,15 +34,15 @@ Example:
 
 | Input             | Stack
 |-------------------|------------------
-| `0x35 0x34 0xb0`  | `0x35 \| 0x34 \| 0xb0`
-| `decode`          | `54°`
+| `0xb0`            | `0xb0`
+| `decode`          | `°`
 
 
 ## encode
 
-Encodes the string `s` into Unicode code points
+Encodes the character `c` into Unicode code point
 
-    ( s:Str -- points...:Int )
+    ( s:Char -- point:Int )
 
 Alias: `en`
 
@@ -47,9 +53,110 @@ Example:
 | Input             | Stack
 |-------------------|------------------
 | `use prog`        | *using prog*
-| `54°`             | `54°`
-| `encode`          | `53 \| 52 \| 176`
-| `'hex' map`       | `0x35 \| 0x34 \| 0xb0`
+| `'°`              | `°`
+| `encode`          | `176`
+| `'hex' map`       | `0xb0`
+
+
+## lower
+
+Convert string `s` to lower case
+
+    ( s:Str -- lower:Str )
+
+Example:
+
+<!-- test: lower -->
+
+| Input             | Stack
+|-------------------|------------------
+| `'Hello World`    | `Hello World`
+| `lower`           | `hello world`
+
+
+## lower=
+
+Is character `c` in lower case?
+
+    ( c:Char -- lower:Bool )
+
+Example:
+
+<!-- test: lower -->
+
+| Input             | Stack
+|-------------------|------------------
+| `'H' lower=`      | `false`
+| `clear`           |
+| `'h' lower=`      | `true`
+
+
+## title
+
+Convert string `s` to title case
+
+    ( s:Str -- lower:Str )
+
+Example:
+
+<!-- test: lower -->
+
+| Input             | Stack
+|-------------------|------------------
+| `'`ǄUS            | ǄUS
+| `title`           | ǅUS
+
+
+## title=
+
+Is character `c` in title case?
+
+    ( c:Char -- title:Bool )
+
+Example:
+
+<!-- test: lower -->
+
+| Input             | Stack
+|-------------------|------------------
+| `'`Ǆ`'` `title=`  | `false`
+| `clear`           |
+| `'`ǅ`'` `title=`  | `true`
+| `clear`           |
+| `'`ǆ`'` `title=`  | `false`
+
+
+## upper
+
+Convert string `s` to upper case
+
+    ( s:Str -- lower:Str )
+
+Example:
+
+<!-- test: upper -->
+
+| Input             | Stack
+|-------------------|------------------
+| `'Hello World`    | `Hello World`
+| `upper`           | `HELLO WORLD`
+
+
+## upper=
+
+Is character `c` in upper case?
+
+    ( c:Char -- lower:Bool )
+
+Example:
+
+<!-- test: lower -->
+
+| Input             | Stack
+|-------------------|------------------
+| `'H' upper=`      | `true`
+| `clear`           |
+| `'h' upper=`      | `false`
 
 
 ## utf-8-decode

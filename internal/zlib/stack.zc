@@ -42,4 +42,5 @@ macro empty n 0 eq
 alias c clear
 alias dn down
 alias rev reverse
+alias set clear
 alias sw swap

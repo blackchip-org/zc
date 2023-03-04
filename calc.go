@@ -680,6 +680,19 @@ func ParseRadix(v string) int {
 	return 10
 }
 
+func (c *Calc) ParseRune(v string) (rune, error) {
+	if utf8.RuneCountInString(v) != 1 {
+		return 0, fmt.Errorf("expected Rune but got %v", Quote(v))
+	}
+	r, _ := utf8.DecodeRuneInString(v)
+	return r, nil
+}
+
+func (c *Calc) IsRune(v string) bool {
+	_, err := c.ParseRune(v)
+	return err == nil
+}
+
 type RoundingMode int
 
 const (

@@ -4,34 +4,81 @@ import (
 	"bytes"
 	"math/big"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 
 	"github.com/blackchip-org/zc"
 )
 
 func Decode(env *zc.Env) error {
-	var z strings.Builder
-	for _, item := range env.Stack.Items() {
-		i, err := env.Calc.ParseInt32(item)
-		if err != nil {
-			return err
-		}
-		z.WriteRune(rune(i))
+	i, err := env.Stack.PopInt32()
+	if err != nil {
+		return err
 	}
-	env.Stack.Clear()
-	env.Stack.Push(z.String())
+	env.Stack.PushRune(rune(i))
 	return nil
 }
 
 func Encode(env *zc.Env) error {
+	r, err := env.Stack.PopRune()
+	if err != nil {
+		return err
+	}
+	env.Stack.PushInt(int(r))
+	return nil
+}
+
+func Lower(env *zc.Env) error {
 	s, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
+	env.Stack.Push(strings.ToLower(s))
+	return nil
+}
 
-	for _, r := range s {
-		env.Stack.PushInt(int(r))
+func LowerIs(env *zc.Env) error {
+	r, err := env.Stack.PopRune()
+	if err != nil {
+		return err
 	}
+	env.Stack.PushBool(unicode.IsLower(r))
+	return nil
+}
+
+func Title(env *zc.Env) error {
+	s, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	env.Stack.Push(strings.ToTitle(s))
+	return nil
+}
+
+func TitleIs(env *zc.Env) error {
+	r, err := env.Stack.PopRune()
+	if err != nil {
+		return err
+	}
+	env.Stack.PushBool(unicode.IsTitle(r))
+	return nil
+}
+
+func Upper(env *zc.Env) error {
+	s, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	env.Stack.Push(strings.ToUpper(s))
+	return nil
+}
+
+func UpperIs(env *zc.Env) error {
+	r, err := env.Stack.PopRune()
+	if err != nil {
+		return err
+	}
+	env.Stack.PushBool(unicode.IsUpper(r))
 	return nil
 }
 

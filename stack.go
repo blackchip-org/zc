@@ -264,6 +264,14 @@ func (s *Stack) PopInt64() (int64, error) {
 	return i, nil
 }
 
+func (s *Stack) PopRune() (rune, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return 0, err
+	}
+	return s.calc.ParseRune(v)
+}
+
 func (s *Stack) PopUint() (uint, error) {
 	v, err := s.Pop()
 	if err != nil {
@@ -310,6 +318,10 @@ func (s *Stack) PushInt32(v int32) {
 
 func (s *Stack) PushInt64(v int64) {
 	s.Push(s.calc.FormatInt64(v))
+}
+
+func (s *Stack) PushRune(r rune) {
+	s.Push(string(r))
 }
 
 func (s *Stack) PushUint(v uint) {
