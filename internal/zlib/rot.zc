@@ -26,4 +26,4 @@ func rotate-13 /s
     '' join
 
 
-alias rot13 rotate-13
+alias rot-13 rotate-13
