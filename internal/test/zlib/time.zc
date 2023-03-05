@@ -43,3 +43,7 @@ func test-zone-times
         dup test.sub
         time test.eq
 
+
+func test-negative-duration
+    5:00 6:30 sub-t
+    -1h30m test.eq

@@ -2,6 +2,7 @@ package zlib
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"time"
 
@@ -192,8 +193,8 @@ func popDuration(env *zc.Env) (time.Duration, error) {
 
 func formatDuration(d time.Duration) string {
 	dsec := int(d.Truncate(time.Second).Seconds())
-	sec := dsec % 60
-	min := dsec / 60 % 60
+	sec := math.Abs(float64(dsec % 60))
+	min := math.Abs(float64(dsec / 60 % 60))
 	hrs := dsec / 3600
 
 	if min == 0 && sec == 0 {
