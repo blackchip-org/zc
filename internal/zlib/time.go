@@ -307,10 +307,13 @@ func DayYear(env *zc.Env) error {
 	return nil
 }
 
-func Now(env *zc.Env) error {
-	s := getTimeState(env)
-	t := s.now()
-	pushDateTime(env, t)
+func Hours(env *zc.Env) error {
+	d, err := popDuration(env)
+	if err != nil {
+		return err
+	}
+	z := d.Hours()
+	env.Stack.PushFloat(z)
 	return nil
 }
 
@@ -341,6 +344,33 @@ func Local(env *zc.Env) error {
 
 func LocalGet(env *zc.Env) error {
 	env.Stack.Push(getTimeState(env).localZone)
+	return nil
+}
+
+func Minutes(env *zc.Env) error {
+	d, err := popDuration(env)
+	if err != nil {
+		return err
+	}
+	z := d.Minutes()
+	env.Stack.PushFloat(z)
+	return nil
+}
+
+func Now(env *zc.Env) error {
+	s := getTimeState(env)
+	t := s.now()
+	pushDateTime(env, t)
+	return nil
+}
+
+func Seconds(env *zc.Env) error {
+	d, err := popDuration(env)
+	if err != nil {
+		return err
+	}
+	z := d.Seconds()
+	env.Stack.PushFloat(z)
 	return nil
 }
 

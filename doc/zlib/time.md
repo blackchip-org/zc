@@ -18,13 +18,16 @@ Date, time, and duration operations
 | [date-time](#date-time)                 | `dt`    | Formats a datetime with the default layout
 | [date-time-layout](#date-time-layout)   |         | Default datetime layout, set
 | [date-time-layout=](#date-time-layout=) |         | Default datetime layout, get
+| [hours](#hours)                         |         | Hours in a duration
 | [local](#local)                         |         | Local time zone, set
 | [local=](#local=)                       |         | Local time zone, get
+| [minutes](#minutes)                     |         | Minutes in a duration
 | [now](#now)                             |         | Current date and time
+| [seconds](#seconds)                     |         | Seconds in a duration
 | [subtract-time](#subtact-time)          | `sub-t` | Duration between two times
 | [time](#time)                           |         | Formats a time with the default layout
 | [time-layout](#time-layout)             |         | Default time layout, set
-| [time-layout=](#time-layout=)            |         | Default time layout, get
+| [time-layout=](#time-layout=)            |        | Default time layout, get
 | [time-zone](#time-zone)                 | `tz`    | Convert time to a given time zone
 | [travel](#travel)                       |         | Override the value returned by `now`
 | [travel-end](#travel-end)               |         | Cancel override of the value returned by now
@@ -160,6 +163,23 @@ Example:
 | `date-time-layout=`        | `[weekday/abbr] [month/abbr] [day] [year] [hour/12]:[minute]:[second][period/alt] [offset-zone]`
 
 
+## hours
+
+Hours in duration.
+
+    ( d:Duration -- hours:Float )
+
+
+Example:
+
+<!-- test: hours -->
+
+| Input           | Stack
+|-----------------|------------------
+| `10h20m30s`     | `10h20m30s`
+| `hours 2 round` | `10.34`
+
+
 ## local
 
 Sets the local time zone.
@@ -196,6 +216,23 @@ Example:
 | `local=`               | `MST`
 
 
+## minutes
+
+Minutes in duration.
+
+    ( d:Duration -- hours:Float )
+
+
+Example:
+
+<!-- test: minutes -->
+
+| Input             | Stack
+|-------------------|------------------
+| `10h20m30s`       | `10h20m30s`
+| `minutes 2 round` | `620.5`
+
+
 ## now
 
 The current date and time. If `travel` has been called, that date and
@@ -208,6 +245,23 @@ time will be returned instead.
 | Input                  | Stack
 |------------------------|------------------
 | `now`                  | `Mon Jan 2 2006 3:04:05pm -0700 MST`
+
+
+## seconds
+
+Seconds in duration.
+
+    ( d:Duration -- hours:Float )
+
+
+Example:
+
+<!-- test: minutes -->
+
+| Input             | Stack
+|-------------------|------------------
+| `10h20m30s`       | `10h20m30s`
+| `seconds`         | `37230`
 
 
 ## subtract-time

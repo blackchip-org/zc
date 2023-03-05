@@ -6,9 +6,12 @@ native date-time
 native date-time-layout
 native date-time-layout=
 native day-year
+native hours
 native local
 native local=
+native minutes
 native now
+native seconds
 native subtract-time
 native time
 native time-layout
