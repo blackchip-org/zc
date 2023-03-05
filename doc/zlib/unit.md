@@ -4,6 +4,6 @@
 
 Units of measure
 
-* [unit/len.md](Length)
-* [unit/temp.md](Temperature)
+* [Length](unit/len.md)
+* [Temperature](unit/temp.md)
 
