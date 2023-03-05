@@ -79,6 +79,7 @@ func MinDigits(env *zc.Env) error {
 		return err
 	}
 	env.Calc.MinDigits = digits
+	env.Calc.Info = fmt.Sprintf("min-digits set to %v", digits)
 	return nil
 }
 
@@ -155,7 +156,7 @@ func RoundingMode(env *zc.Env) error {
 		return fmt.Errorf("invalid rounding mode: %v", a)
 	}
 	env.Calc.RoundingMode = mode
-	env.Calc.Info = "ok"
+	env.Calc.Info = fmt.Sprintf("rounding-mode set to %v", zc.Quote(a))
 	return err
 }
 

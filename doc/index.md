@@ -24,6 +24,10 @@
   - [prog.and](zlib/prog.md#and): Bitwise and
 - [at](zlib/stack.md@at): Take stack element at index
 - [atto](zlib/si.md#atto): a, 1e-18
+- [auto-currency](zlib/format.md#auto-currency): Retain currency symbols when true, set
+- [auto-currency=](zlib/format.md#auto-currency=): Retain currency symbols when true, get
+- [auto-format](zlib/format.md#auto-format): Format numbers by default when true, set
+- [auto-format=](zlib/format.md#auto-format=): Format numbers by default when true, get
 
 ## b
 
@@ -101,6 +105,7 @@
   - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
   - [math.floor](zlib/math.md#floor): Floor
 - [fold](zlib/fn.md#fold): Reduce items to a single value
+- [format](zlib/format.md#format): Apply a numeric layout
 
 ## g
 
@@ -118,6 +123,7 @@
 
 - [hecto](zlib/si.md#hecto): h, 1e02
 - [hex](zlib/prog.md#hex): Convert to hexadecimal
+- [hours](zlib/time.md#hours): Hours in a duration
 
 ## i
 
@@ -125,6 +131,8 @@
 - int
   - [assert.int](zlib/assert.md#int): Assert value is an integer
   - [rand.int](zlib/rand.md#int): Random integer between 1 and n
+- [int-layout](zlib/format.md#int-layout): Layout for integers, get
+- [int-layout=](zlib/format.md#int-layout=): Layout for integers, set
 - [int32](zlib/assert.md#int32): Assert value is a 32-bit signed integer
 - [int64](zlib/assert.md#int64): Assert value is a 64-bit signed integer
 
@@ -164,6 +172,10 @@
 - [mi-km](zlib/unit.md#mi-km): Miles to kilometers
 - [micro](zlib/si.md#micro): μ, 1e-06
 - [milli](zlib/si.md#milli): m, 1e-03
+- min-digits
+  - [format.min-digits](zlib/format.md#min-digits): Minimum number of digits after the decimal point to display, set
+  - [format.min-digits](zlib/format.md#min-digits): Minimum number of digits after the decimal point to display, get
+- [minutes](zlib/time.md#minutes): Minutes in a duration
 - mod
   - [math.bigint.mod](zlib/math-bigint.md#mod): Modulus
   - [math.fixed.mod](zlib/math-fixed.md#mod): Modulus
@@ -201,6 +213,8 @@
 
 - [peta](zlib/si.md#peta): P, 1e15
 - [pico](zlib/si.md#pico): p, 1e-12
+- [point](zlib/format.md#point): Character to use as the decimal point, set
+- [point=](zlib/format.md#point=): Character to use as the decimal point, get
 - pow
   - [math.bigint.pow](zlib/math-bigint.md#pow): Exponentiation
   - [math.fixed.pow](zlib/math-fixed.md#pow): Exponentiation
@@ -228,11 +242,15 @@
 - [ronto](zlib/si.md#ronto): r, 1e-27
 - [rot-13](zlib/rot.md#rotat-13): Rotate characters by 13
 - [rotate-13](zlib/rot.md#rotat-13): Rotate characters by 13
+- [round](zlib/format.md#round): Round to a given precision
+- [rounding-mode](zlib/format.md#rounding-mode): Method to use in rounding, set
+- [rounding-mode=](zlib/format.md#rounding-mode=): Method to use in rounding, get
 - [rsh](zlib/prog.md#rsh): Right shift
 
 ## s
 
 - [s](zlib/math.md#sub): Subtraction
+- [seconds](zlib/time.md#seconds): Seconds in a duration
 - [seed](zlib/rand.md#seed): Random number seed, set
 - [seed=](zlib/rand.md#seed=): Random number seed, get
 - [shuffle](zlib/rand.md#shuffle): Shuffle the stack
