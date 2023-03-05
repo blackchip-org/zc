@@ -41,8 +41,8 @@
 ## c
 
 - [c](zlib/stack.md#clear): Clear
-- [c-f](zlib/unit.md#c-f): Celsius to Fahrenheit
-- [c-k](zlib/unit.md#c-k): Celsius to Kelvin
+- [c-f](zlib/unit/temp.md#c-f): Celsius to Fahrenheit
+- [c-k](zlib/unit/temp.md#c-k): Celsius to Kelvin
 - ceil
   - [math.bigint.ceil](zlib/math-bigint.md#ceil): Ceiling
   - [math.fixed.ceil](zlib/math-fixed.md#ceil): Ceiling
@@ -92,7 +92,7 @@
 
 ## f
 
-- [f-c](zlib/unit.md#f-c): Fahrenheit to Celsius
+- [f-c](zlib/unit/temp.md#f-c): Fahrenheit to Celsius
 - [false](zlib/bool.md#false): False
 - [femto](zlib/si.md#femto): f, 1e-15
 - [filter](zlib/fn.md#filter): Filter items in the stack
@@ -142,9 +142,10 @@
 
 ## k
 
-- [k-c](zlib/unit.md#k-c): Kelvin to Celsius
+- [k-c](zlib/unit/temp.md#k-c): Kelvin to Celsius
 - [kilo](zlib/si.md#kilo): k, 1e03
-- [km-mi](zlib/unit.md#km-mi): Kilometers to miles
+- [km-mi](zlib/unit/len.md#km-mi): Kilometers to miles
+- [km-nm](zlib/unit/len.md#km-nm): Kilometers to nautical miles
 
 ## l
 
@@ -167,9 +168,11 @@
 ## m
 
 - [m](zlib/math.md#mul): Multiplication
+- [m-nm](zlib/unit/len.md#m-nm): Meters to nautical miles
 - [map](zlib/fn.md#map): Apply a function to each item on the stack
 - [mega](zlib/si.md#mega): M, 1e06
-- [mi-km](zlib/unit.md#mi-km): Miles to kilometers
+- [mi-km](zlib/unit/len.md#mi-km): Miles to kilometers
+- [mi-nm](zlib/unit/len.md#mi-nm): Miles to nautical miles
 - [micro](zlib/si.md#micro): μ, 1e-06
 - [milli](zlib/si.md#milli): m, 1e-03
 - min-digits
@@ -197,6 +200,9 @@
   - [bool.bigint.neq](zlib/bool-bigint.md#neq): Not Equals
   - [bool.fixed.neq](zlib/bool-fixed.md#neq): Not Equals
   - [bool.neq](zlib/bool.md#neq): Not Equals
+- [nm-km](zlib/unit/len.md#nm-km): Nautical miles to kilometers
+- [nm-m](zlib/unit/len.md#nm-m): Nautical miles to meters
+- [nm-mi](zlib/unit/len.md#nm-mi): Nautical miles to miles
 - not
   - [bool.not](zlib/bool.md#not): Negation
   - [prog.not](zlib/prog.md#not): Bitwise not

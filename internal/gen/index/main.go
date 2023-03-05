@@ -46,6 +46,7 @@ func main() {
 	var files []string
 	dirs := []string{
 		"doc/zlib",
+		"doc/zlib/unit",
 	}
 
 	for _, dir := range dirs {

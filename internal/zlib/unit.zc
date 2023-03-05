@@ -1,6 +1,12 @@
 -- distance
-macro km-mi 0.62137119 mul
-macro mi-km 1.609344 mul
+macro km-mi 0.62137119  mul
+macro km-nm 0.539957    mul
+macro m-nm  0.000539957 mul
+macro mi-km 1.609344    mul
+macro mi-nm 0.868976    mul
+macro nm-km 1.852       mul
+macro nm-m  1852        mul
+macro nm-mi 1.15078     mul
 
 -- temperature
 macro c-f 9 5 div mul 32 add
