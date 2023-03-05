@@ -24,6 +24,7 @@ func TestDoc(t *testing.T) {
 	}
 	dirs := []string{
 		"doc/zlib",
+		"doc/zlib/unit",
 	}
 
 	for _, dir := range dirs {
