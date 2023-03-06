@@ -246,7 +246,7 @@ func (c *Calc) WordCompleter(line string, pos int) (string, []string, string) {
 		}
 	}
 	startPos := pos
-	if startPos >= len(line) {
+	if startPos >= len(line) && len(line) > 0 {
 		startPos = len(line) - 1
 	}
 	for ; startPos > 0; startPos-- {
