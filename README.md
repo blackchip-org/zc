@@ -24,6 +24,7 @@ or calculate? Put in the calculator as a module instead.
 - Backed with a scripting language. When a function is not directly
 supported by native libraries, write the implementation in the scripting
 language.
+- Auto-complete!
 
 This is the third iteration of this calculator and something fun to work on
 when time is available. It is a bit rough at this stage but should be useful
