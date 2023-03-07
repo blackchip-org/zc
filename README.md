@@ -20,7 +20,8 @@ use `add` or `a` which is easier to type.
 - Use arbitrary sized integers and fixed point math by default. `1.1 2.2 add`
 should be `3.3` and not `3.3000000000000003`.
 - Be more than a simple calculator. Need an external tool to lookup, compute,
-or calculate? Put in the calculator as a module instead.
+or calculate? Put it in the calculator as a module instead. Make this
+calculator like a Swiss army knife.
 - Backed with a scripting language. When a function is not directly
 supported by native libraries, write the implementation in the scripting
 language.
@@ -31,7 +32,9 @@ when time is available. It is a bit rough at this stage but should be useful
 nonetheless. Also, it will always be a bit rough--full of bugs and
 inconsistencies. Features get added as I need or think of them. Bugs get fixed
 or ignored as I see them. There is no grand plan beyond tinkering around
-for entertainment.
+for entertainment. Things may change in backwards incompatible ways with no
+notice. Versioning uses a simple single integer value. There is only one way
+forward.
 
 ## Installation
 
