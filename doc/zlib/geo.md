@@ -4,7 +4,7 @@
 
 Geo-spatial calculations
 
-    use gep
+    use geo
 
 <!-- index -->
 
