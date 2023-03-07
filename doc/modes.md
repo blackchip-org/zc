@@ -13,6 +13,7 @@ zc -m fin
 |-----------------|------------------
 | [dev](#dev)     | Developer's mode
 | [fin](#fin)     | Financial calculator
+| [geo](#geo)     | Geographer's calculator
 | [prog](#prog)   | Programmer's calculator
 | [sci](#sci)     | Scientific calculator
 | [time](#time)   | Time calculations
@@ -53,6 +54,20 @@ Definition: [fin.zc](../internal/modes/fin.zc)
 true auto-currency
 true auto-format
 ```
+
+## geo
+
+Geographer's calculator.
+
+Imports and uses modules for geo-spatial calculations.
+
+Definition: [geo.zc](../internal/modes/geo.zc)
+
+```
+use geo
+import epsg
+```
+
 
 ## prog
 
