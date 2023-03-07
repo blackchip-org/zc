@@ -50,6 +50,7 @@
 - [centi](zlib/si.md#centi): c, 1e-02
 - [choice](zlib/rand.md#choice): Randomly select an item on the stack
 - [clear](zlib/stack.md#clear): Clear
+- [cmyk-rgb](zlib/color.md#cmyk-rgb): Convert from CMYK to RGB color space
 
 ## d
 
@@ -237,6 +238,7 @@
 
 ## r
 
+- [rbg-cmyk](zlib/color.md#rgb-cmyk): Convert from RGB to CMYK color space
 - rem
   - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
   - [math.rem](zlib/math.md#rem): Remainder
@@ -257,6 +259,7 @@
 ## s
 
 - [s](zlib/math.md#sub): Subtraction
+- [sample](zlib/color.md#sample): Render a sample of a color
 - [seconds](zlib/time.md#seconds): Seconds in a duration
 - [seed](zlib/rand.md#seed): Random number seed, set
 - [seed=](zlib/rand.md#seed=): Random number seed, get

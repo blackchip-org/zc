@@ -667,6 +667,14 @@ func (c *Calc) ParseUint(v string) (uint, error) {
 	return uint(i), nil
 }
 
+func (c *Calc) ParseUint8(v string) (uint8, error) {
+	i, err := strconv.ParseUint(c.cleanNumString(v), 0, 8)
+	if err != nil {
+		return 0, fmt.Errorf("expecting Uint8 but got %v", scanner.Quote(v))
+	}
+	return uint8(i), nil
+}
+
 func ParseRadix(v string) int {
 	if len(v) < 2 {
 		return 10

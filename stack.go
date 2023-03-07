@@ -284,6 +284,18 @@ func (s *Stack) PopUint() (uint, error) {
 	return i, nil
 }
 
+func (s *Stack) PopUint8() (uint8, error) {
+	v, err := s.Pop()
+	if err != nil {
+		return 0, err
+	}
+	i, err := s.calc.ParseUint8(v)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
+}
+
 func (s *Stack) PushBigInt(v *big.Int) {
 	s.Push(s.calc.FormatBigInt(v, s.calc.AutoFormat))
 }
@@ -326,6 +338,10 @@ func (s *Stack) PushRune(r rune) {
 
 func (s *Stack) PushUint(v uint) {
 	s.Push(s.calc.FormatUint(v))
+}
+
+func (s *Stack) PushUint8(v uint8) {
+	s.Push(s.calc.FormatUint(uint(v)))
 }
 
 func (s *Stack) PushUint32(v uint32) {

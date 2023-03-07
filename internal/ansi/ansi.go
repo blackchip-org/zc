@@ -22,6 +22,10 @@ func FgColor8(v uint8) string {
 	return fmt.Sprintf("\033[38;5;%vm", v)
 }
 
+func BgColor24(r uint8, g uint8, b uint8) string {
+	return fmt.Sprintf("\033[48;2;%v;%v;%vm", r, g, b)
+}
+
 func Write(v string) {
 	if !Enabled {
 		return

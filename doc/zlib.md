@@ -22,6 +22,7 @@ calculator:
 
 | Name                           | Description
 |--------------------------------|----------------------------------------
+| [color](zlib/color.md)         | Color calculations
 | [dice](zlib/dice.md)           | Dice roller
 | [epsg](zlib/epsg.md)           | EPSG Geodetic Parameter Dataset
 | [geo](zlib/geo.md)             | Geo-spatial calculations

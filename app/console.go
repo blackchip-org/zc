@@ -96,11 +96,10 @@ func (c *Console) Eval(text string) bool {
 
 	// Print out previous stack in dark gray
 	if execError == nil {
-		ansi.Write(ansi.DarkGray)
 		for _, val := range prev.Items() {
-			fmt.Println(val)
+			fmt.Print(ansi.DarkGray)
+			fmt.Println(raw(val))
 		}
-		ansi.Write(ansi.Reset)
 		fmt.Println()
 		c.undoStack = append([]*zc.Stack{prev}, c.undoStack...)
 		c.redoStack = nil
@@ -113,9 +112,7 @@ func (c *Console) Eval(text string) bool {
 		if i == c.calc.Env.Stack.Len()-1 {
 			color = ansi.Bold
 		}
-		ansi.Write(color)
-		fmt.Print(val)
-		ansi.Write(ansi.Reset)
+		fmt.Print(colorize(color, val))
 		fmt.Println()
 	}
 	if execError != nil {
@@ -213,4 +210,23 @@ func (c *Console) getPrompt() string {
 		prompt += ":" + c.calc.Mode
 	}
 	return prompt + " > "
+}
+
+func colorize(color string, text string) string {
+	if strings.HasPrefix(text, "#raw:") {
+		return text[5:] + ansi.Reset
+	}
+	return color + text + ansi.Reset
+}
+
+func raw(text string) string {
+	var s strings.Builder
+	for _, ch := range text {
+		if ch == '\033' {
+			s.WriteString("\\033")
+		} else {
+			s.WriteRune(ch)
+		}
+	}
+	return s.String()
 }

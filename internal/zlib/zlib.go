@@ -9,6 +9,7 @@ var All = []zc.ModuleDef{
 	Bool,
 	BoolBigInt,
 	BoolFixed,
+	Color,
 	Conf,
 	Dev,
 	Dice,
@@ -134,6 +135,15 @@ var (
 			"neq": NeqFixed,
 			"lt":  LtFixed,
 			"lte": LteFixed,
+		},
+	}
+	Color = zc.ModuleDef{
+		Name:       "color",
+		ScriptPath: "zc:zlib/color.zc",
+		Natives: map[string]zc.CalcFunc{
+			"cmyk-rgb": CMYKToRGB,
+			"rgb-cmyk": RBGToCMYK,
+			"sample":   Sample,
 		},
 	}
 	Conf = zc.ModuleDef{
