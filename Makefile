@@ -1,9 +1,14 @@
-.PHONY: doc test
+.PHONY: all doc test
 
-BUILD_FLAGS = -tags=proj
+GOFLAGS = -tags=proj
+
+all: doc install
+
+install:
+	go install $(GOFLAGS) ./...
 
 doc:
 	go generate internal/gen/index/main.go
 
 test:
-	go test $(BUILD_FLAGS) ./...
+	go test $(GOFLAGS) ./...
