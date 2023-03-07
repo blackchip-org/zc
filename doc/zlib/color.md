@@ -11,7 +11,7 @@ Color calculations
 | Operation               | Description
 |-------------------------|-----------------------
 | [cmyk-rgb](#cmyk-rgb)   | Convert from CMYK to RGB color space
-| [rbg-cmyk](#rgb-cmyk)   | Convert from RGB to CMYK color space
+| [rgb-cmyk](#rgb-cmyk)   | Convert from RGB to CMYK color space
 | [sample](#sample)       | Render a sample of a color
 
 
