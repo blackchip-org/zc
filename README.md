@@ -24,7 +24,10 @@ or calculate? Put it in the calculator as a module instead. Make this
 calculator like a Swiss army knife.
 - Backed with a scripting language. When a function is not directly
 supported by native libraries, write the implementation in the scripting
-language.
+language. Make the scripting language unique. It is a hybrid between
+[Python](https://en.wikipedia.org/wiki/Python_(programming_language)) and
+[FORTH](https://en.wikipedia.org/wiki/Forth_(programming_language)) that
+also minimizes use of the shift key.
 - Auto-complete!
 
 This is the third iteration of this calculator and something fun to work on
