@@ -21,4 +21,4 @@ Example:
 
 | Input       | Stack
 |-------------|------------------
-| `version`   | `v1 -- 24 Feb 2023`
+| `version`   | `v2 -- 5 Mar 2023`

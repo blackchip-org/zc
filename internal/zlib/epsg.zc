@@ -1,0 +1,4 @@
+macro utm-18n           'EPSG:32618'
+macro web-mercator      'EPSG:3857'
+macro web-merc          'EPSG:3857'
+macro wgs-84            'EPSG:4326'

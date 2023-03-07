@@ -13,8 +13,10 @@ var All = []zc.ModuleDef{
 	Dev,
 	Dice,
 	Dict,
+	Epsg,
 	Fn,
 	Format,
+	Geo,
 	Math,
 	MathBigInt,
 	MathFixed,
@@ -163,6 +165,10 @@ var (
 		Name:       "dict",
 		ScriptPath: "zc:zlib/dict.zc",
 	}
+	Epsg = zc.ModuleDef{
+		Name:       "epsg",
+		ScriptPath: "zc:zlib/epsg.zc",
+	}
 	Fn = zc.ModuleDef{
 		Name:       "fn",
 		ScriptPath: "zc:zlib/fn.zc",
@@ -198,9 +204,12 @@ var (
 			"rounding-mode=": RoundingModeGet,
 		},
 	}
-	Geom = zc.ModuleDef{
-		Name:       "geom",
-		ScriptPath: "zc:zlib/geom.zc",
+	Geo = zc.ModuleDef{
+		Name:       "geo",
+		ScriptPath: "zc:zlib/geo.zc",
+		Natives: map[string]zc.CalcFunc{
+			"proj": Proj,
+		},
 	}
 	Math = zc.ModuleDef{
 		Name:       "math",

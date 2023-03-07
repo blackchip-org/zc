@@ -23,6 +23,8 @@ calculator:
 | Name                           | Description
 |--------------------------------|----------------------------------------
 | [dice](zlib/dice.md)           | Dice roller
+| [epsg](zlib/epsg.md)           | EPSG Geodetic Parameter Dataset
+| [geo](zlib/geo.md)             | Geo-spatial calculations
 | [prog](zlib/prog.md)           | Programmer's calculator
 | [rand](zlib/rand.md)           | Random numbers
 | [rot](zlib/rot.md)             | Rotation ciphers

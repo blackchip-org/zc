@@ -12,4 +12,5 @@ require (
 require (
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
+	github.com/twpayne/go-proj/v10 v10.0.1 // indirect
 )

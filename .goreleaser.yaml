@@ -10,6 +10,8 @@ builds:
       - linux
       - windows
       - darwin
+    flags:
+      - -tags=proj
 
 archives:
   - format: tar.gz

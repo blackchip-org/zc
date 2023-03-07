@@ -228,6 +228,7 @@
 - [precision](zlib/format.md#precision): Precision for fixed-point math, set
 - [precision=](zlib/format.md#precision=): Prevision for fixed-point math, get
 - [print](zlib/io.md#print): Displays value to the console
+- [proj](zlib/geo.md#proj): Transform coordinates
 
 ## q
 

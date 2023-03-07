@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"math/big"
@@ -27,6 +28,8 @@ const (
 const (
 	DefaultMaxHistory = 10
 )
+
+var ErrFunctionNotAvailable = errors.New("feature not available")
 
 type Config struct {
 	ModuleDefs   []ModuleDef
@@ -439,7 +442,7 @@ func (c *Calc) FormatFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) string
 }
 
 func (c *Calc) FormatFloat(f float64) string {
-	return fmt.Sprintf("%g", f)
+	return strconv.FormatFloat(f, 'g', 16, 64)
 }
 
 func (c *Calc) FormatInt64(i int64) string {
