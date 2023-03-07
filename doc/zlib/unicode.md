@@ -10,11 +10,11 @@ Unicode encoding, decoding, and character operations
 |-------------------------------|-------|--------------
 | [decode](#decode)             | `de`  | Decodes a Unicode code point to a character
 | [encode](#encode)             | `en`  | Encodes a character into Unicode code point
-| [lower](#lower)               |       | Convert string to lower case
+| [lower](#lower)               |       | Convert character to lower case
 | [lower=](#lower=)             |       | Is character lower case
-| [title](#title)               |       | Convert string to title case
+| [title](#title)               |       | Convert character to title case
 | [title=](#title=)             |       | Is character title case
-| [upper](#upper)               |       | Convert string to upper case
+| [upper](#upper)               |       | Convert character to upper case
 | [upper=](#upper=)             |       | Is character upper case
 | [utf-8-decode](#utf-8-decode) | `de8` | Decode UTF-8 bytes into a string
 | [utf-8-encode](#utf-8-encode) | `en8` | Encode a string into UTF-8 bytes
@@ -60,9 +60,9 @@ Example:
 
 ## lower
 
-Convert string `s` to lower case
+Convert character `c` to lower case
 
-    ( s:Str -- lower:Str )
+    ( s:Char -- lower:Char )
 
 Example:
 
@@ -70,8 +70,8 @@ Example:
 
 | Input             | Stack
 |-------------------|------------------
-| `'Hello World`    | `Hello World`
-| `lower`           | `hello world`
+| `'H`              | `H`
+| `lower`           | `h`
 
 
 ## lower=
@@ -93,18 +93,18 @@ Example:
 
 ## title
 
-Convert string `s` to title case
+Convert character `c` to title case
 
-    ( s:Str -- lower:Str )
+    ( c:Char -- lower:Char )
 
 Example:
 
-<!-- test: lower -->
+<!-- test: title -->
 
 | Input             | Stack
 |-------------------|------------------
-| `'`ǄUS            | ǄUS
-| `title`           | ǅUS
+| `'`Ǆ              | Ǆ
+| `title`           | ǅ
 
 
 ## title=
@@ -128,9 +128,9 @@ Example:
 
 ## upper
 
-Convert string `s` to upper case
+Convert character `c` to upper case
 
-    ( s:Str -- lower:Str )
+    ( c:Char -- lower:Str )
 
 Example:
 
@@ -138,8 +138,8 @@ Example:
 
 | Input             | Stack
 |-------------------|------------------
-| `'Hello World`    | `Hello World`
-| `upper`           | `HELLO WORLD`
+| `'h`              | `h`
+| `upper`           | `H`
 
 
 ## upper=

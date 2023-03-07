@@ -1,4 +1,21 @@
-macro utm-18n           'EPSG:32618'
 macro web-mercator      'EPSG:3857'
-macro web-merc          'EPSG:3857'
+macro wmerc             'EPSG:3857'
 macro wgs-84            'EPSG:4326'
+
+func utm /zone
+    hemi; /zone 1 str.right str.lower
+    if /hemi 'n' eq
+        base; 32600
+    elif /hemi 's' eq
+        base; 32700
+    else
+        'invalid hemisphere: `hemi`' abort
+    num; /zone -1 str.left
+    /num 0 gt
+    /num 60 lte
+    if and
+        'EPSG:'
+        /base /num add
+        '' str.join
+    else
+        'invalid zone: `num`' abort

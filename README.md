@@ -264,7 +264,7 @@ computes the length, in characters, of the given text:
 | Input           | Stack
 |-----------------|---------------
 | `'one thousand` | `one thousand`
-| `len`           | `12`
+| `str.len`       | `12`
 
 ## Macros
 

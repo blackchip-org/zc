@@ -29,11 +29,11 @@ func Encode(env *zc.Env) error {
 }
 
 func Lower(env *zc.Env) error {
-	s, err := env.Stack.Pop()
+	r, err := env.Stack.PopRune()
 	if err != nil {
 		return err
 	}
-	env.Stack.Push(strings.ToLower(s))
+	env.Stack.Push(string(unicode.ToLower(r)))
 	return nil
 }
 
@@ -47,11 +47,11 @@ func LowerIs(env *zc.Env) error {
 }
 
 func Title(env *zc.Env) error {
-	s, err := env.Stack.Pop()
+	r, err := env.Stack.PopRune()
 	if err != nil {
 		return err
 	}
-	env.Stack.Push(strings.ToTitle(s))
+	env.Stack.Push(string(unicode.ToTitle(r)))
 	return nil
 }
 
@@ -65,11 +65,11 @@ func TitleIs(env *zc.Env) error {
 }
 
 func Upper(env *zc.Env) error {
-	s, err := env.Stack.Pop()
+	r, err := env.Stack.PopRune()
 	if err != nil {
 		return err
 	}
-	env.Stack.Push(strings.ToUpper(s))
+	env.Stack.Push(string(unicode.ToUpper(r)))
 	return nil
 }
 

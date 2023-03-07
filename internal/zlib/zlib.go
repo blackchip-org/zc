@@ -218,7 +218,7 @@ var (
 		Name:       "geo",
 		ScriptPath: "zc:zlib/geo.zc",
 		Natives: map[string]zc.CalcFunc{
-			"proj": Proj,
+			"transform": Transform,
 		},
 	}
 	Math = zc.ModuleDef{
@@ -374,15 +374,16 @@ var (
 	}
 	Str = zc.ModuleDef{
 		Name:       "str",
-		Include:    true,
 		ScriptPath: "zc:zlib/str.zc",
 		Natives: map[string]zc.CalcFunc{
 			"join":        Join,
 			"left":        Left,
 			"len":         Len,
+			"lower":       LowerStr,
 			"right":       Right,
 			"split":       Split,
 			"starts-with": StartsWith,
+			"upper":       UpperStr,
 		},
 	}
 	Test = zc.ModuleDef{

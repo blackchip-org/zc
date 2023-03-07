@@ -1,6 +1,8 @@
 native join
 native left
 native len
+native lower
 native right
 native split
 native starts-with
+native upper

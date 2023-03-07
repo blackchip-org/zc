@@ -52,6 +52,16 @@ func Len(env *zc.Env) error {
 	return nil
 }
 
+func LowerStr(env *zc.Env) error {
+	a, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	z := strings.ToLower(a)
+	env.Stack.Push(z)
+	return nil
+}
+
 func Right(env *zc.Env) error {
 	i, err := env.Stack.PopInt()
 	if err != nil {
@@ -104,5 +114,15 @@ func StartsWith(env *zc.Env) error {
 
 	r := strings.HasPrefix(str, prefix)
 	env.Stack.PushBool(r)
+	return nil
+}
+
+func UpperStr(env *zc.Env) error {
+	a, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	z := strings.ToUpper(a)
+	env.Stack.Push(z)
 	return nil
 }

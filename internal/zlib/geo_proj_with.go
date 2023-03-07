@@ -9,7 +9,7 @@ import (
 	"github.com/twpayne/go-proj/v10"
 )
 
-func Proj(env *zc.Env) error {
+func Transform(env *zc.Env) error {
 	target, err := env.Stack.Pop()
 	if err != nil {
 		return err

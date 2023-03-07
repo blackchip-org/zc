@@ -229,7 +229,6 @@
 - [precision](zlib/format.md#precision): Precision for fixed-point math, set
 - [precision=](zlib/format.md#precision=): Prevision for fixed-point math, get
 - [print](zlib/io.md#print): Displays value to the console
-- [proj](zlib/geo.md#proj): Transform coordinates
 
 ## q
 
@@ -238,13 +237,13 @@
 
 ## r
 
-- [rbg-cmyk](zlib/color.md#rgb-cmyk): Convert from RGB to CMYK color space
 - rem
   - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
   - [math.rem](zlib/math.md#rem): Remainder
 - [repeat](zlib/fn.md#repeat): Repeat the execution of a function
 - [rev](zlib/stack.md#reverse): Reverse items on the stack
 - [reverse](zlib/stack.md#reverse): Reverse items on the stack
+- [rgb-cmyk](zlib/color.md#rgb-cmyk): Convert from RGB to CMYK color space
 - [right](zlib/str.md#right): Substring from the right
 - [roll](zlib/dice.md#roll): Dice roller
 - [ronna](zlib/si.md#ronna): R, 1e27
@@ -284,6 +283,7 @@
 
 - [take](zlib/stack.md#take): Take top items from the stack
 - [tera](zlib/si.md#tera): T, 1e12
+- [tf](zlib/geo.md#transform): Transform coordinates
 - [time](zlib/time.md#time): Formats a time with the default layout
 - [time-layout](zlib/time.md#time-layout): Default time layout, set
 - [time-layout=](zlib/time.md#time-layout=): Default time layout, get
@@ -291,6 +291,7 @@
 - [title](zlib/unicode.md#title): Convert string to title case
 - [title=](zlib/unicode.md#title=): Is character title case
 - [top](zlib/stack.md#top): Keep the top of the stack and discard the rest
+- [transform](zlib/geo.md#transform): Transform coordinates
 - [travel](zlib/time.md#travel): Override the value returned by `now`
 - [travel-end](zlib/time.md#travel-end): Cancel override of the value returned by now
 - [true](zlib/bool.md#true): True
@@ -302,10 +303,16 @@
 - [upper=](zlib/unicode.md#upper=): Is character upper case
 - [utf-8-decode](zlib/unicode.md#utf-8-decode): Decode UTF-8 bytes into a string
 - [utf-8-encode](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
+- [utm](zlib/epsg.md#utm): EPSG codes for Universal Transverse Mercator (WGS-84)
 
 ## v
 
 - [version](zlib/zc.md#version): Version of the calculator
+
+## w
+
+- [web-mercator](zlib/epsg.md#web-mercator): Web Mercator, EPSG:3857
+- [wgs-84](zlib/epsg.md#wgs-84): World Geodetic System of 1984, EPSG:4326
 
 ## x
 

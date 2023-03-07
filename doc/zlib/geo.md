@@ -8,12 +8,12 @@ Geo-spatial calculations
 
 <!-- index -->
 
-| Operation                     | Description
-|-------------------------------|----------------
-| [proj](#proj)                 | Transform coordinates
+| Operation                     | Alias | Description
+|-------------------------------|-------|----------------
+| [transform](#transform)       | `tf`  | Transform coordinates
 
 
-## proj
+## transform
 
 Transform coordinate `(a, b)` in coordinate system `source` to coordinate
 system `target`. The order of the coordinates is defined by the coordinate
@@ -22,15 +22,19 @@ system and it may be `(lat, lon)` or `(x, y)`.
     ( a:Float b:Float source:Str target:Str -- ta:Float tb:Float )
 
 
+Alias: `tf`
+
 Example:
 
-<!-- test: proj -->
+<!-- test: transform -->
 
 | Input                           | Stack
 |---------------------------------|---------------------
 | `import epsg`                   | *imported epsg*
 | `39.203611 -76.856944`          | `39.203611 \| -76.856944`
-| `epsg.wgs-84 epsg.utm-18n proj` | `339660.125593429 \| 4341014.551927999`
+| `epsg.wgs-84`                   | `39.203611 \| -76.856944 \| EPSG:4326`
+| `18n epsg.utm`                  | `39.203611 \| -76.856944 \| EPSG:4326 \| EPSG:32618`
+| `transform`                     | `339660.125593429 \| 4341014.551927999`
 
 
 
