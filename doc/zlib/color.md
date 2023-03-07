@@ -4,6 +4,8 @@
 
 Color calculations
 
+    use color
+
 <!-- index -->
 
 | Operation               | Description
