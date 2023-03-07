@@ -154,7 +154,7 @@
 - [len](zlib/str.md#len): Length
 - [local](zlib/time.md#local): Local time zone, set
 - [local=](zlib/time.md#local=): Local time zone, get
-- [lower](zlib/unicode.md#lower): Convert string to lower case
+- [lower](zlib/unicode.md#lower): Convert character to lower case
 - [lower=](zlib/unicode.md#lower=): Is character lower case
 - [lsh](zlib/prog.md#lsh): Left shift
 - lt
@@ -288,7 +288,7 @@
 - [time-layout](zlib/time.md#time-layout): Default time layout, set
 - [time-layout=](zlib/time.md#time-layout=): Default time layout, get
 - [time-zone](zlib/time.md#time-zone): Convert time to a given time zone
-- [title](zlib/unicode.md#title): Convert string to title case
+- [title](zlib/unicode.md#title): Convert character to title case
 - [title=](zlib/unicode.md#title=): Is character title case
 - [top](zlib/stack.md#top): Keep the top of the stack and discard the rest
 - [transform](zlib/geo.md#transform): Transform coordinates
@@ -299,7 +299,7 @@
 
 ## u
 
-- [upper](zlib/unicode.md#upper): Convert string to upper case
+- [upper](zlib/unicode.md#upper): Convert character to upper case
 - [upper=](zlib/unicode.md#upper=): Is character upper case
 - [utf-8-decode](zlib/unicode.md#utf-8-decode): Decode UTF-8 bytes into a string
 - [utf-8-encode](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
