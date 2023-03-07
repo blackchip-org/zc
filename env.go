@@ -105,20 +105,27 @@ func (e *Env) Interpolate(v string) (string, error) {
 	inEscape := false
 
 	for _, ch := range v {
-		if ch == '`' && !inQuote && !inEscape {
+		if ch == '[' && !inQuote && !inEscape {
 			inQuote = true
-		} else if ch == '`' && !inEscape {
+		} else if ch == ']' && !inEscape {
 			inQuote = false
-			stack, ok := e.StackFor(name.String())
-			if !ok {
-				return "", fmt.Errorf("no such stack: %v", name.String())
+			de := e.Derive("<interp>")
+			if err := Eval(de, "<interp>", []byte(name.String())); err != nil {
+				return "", err
 			}
-			for i, item := range stack.Items() {
-				if i != 0 {
-					result.WriteString("  ")
+			result.WriteString(de.Stack.String())
+			/*
+				stack, ok := e.StackFor(name.String())
+				if !ok {
+					return "", fmt.Errorf("no such stack: %v", name.String())
 				}
-				result.WriteString(item)
-			}
+				for i, item := range stack.Items() {
+					if i != 0 {
+						result.WriteString("  ")
+					}
+					result.WriteString(item)
+				}
+			*/
 			name.Reset()
 		} else if ch == '\\' {
 			inEscape = true

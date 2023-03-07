@@ -212,7 +212,11 @@ func (s *Scanner) scanString(term rune) token.Token {
 		s.scan()
 	}
 	s.scan()
-	return token.New(token.String, lit.String(), s.start)
+	t := token.String
+	if term == '"' {
+		t = token.StringPlain
+	}
+	return token.New(t, lit.String(), s.start)
 }
 
 func (s *Scanner) scanValue() token.Token {
@@ -338,9 +342,15 @@ func Quote(v string) string {
 	required := false
 	runes := []rune(v)
 	for i, ch := range runes {
-		if i == 0 && len(runes) > 1 && !isValue(ch, runes[i+1]) {
-			required = true
-			break
+		if i == 0 {
+			var next rune
+			if len(runes) > 1 {
+				next = runes[i+1]
+			}
+			if !isValue(ch, next) {
+				required = true
+				break
+			}
 		}
 		if unicode.IsSpace(ch) {
 			required = true

@@ -78,7 +78,7 @@ Example:
 
 | Input                      | Stack
 |----------------------------|------------------
-| `'[year]-[day/year]`       | `[year]-[day/year]`
+| `"[year]-[day/year]`       | `[year]-[day/year]`
 | `date-layout`              |
 | `'Mar 15 2006' date`       | `2006-074`
 
@@ -143,7 +143,7 @@ Example:
 
 | Input                               | Stack
 |-------------------------------------|------------------
-| `'[year]-[day/year] [hour]:[minute]`| `[year]-[day/year] [hour]:[minute]`
+| `"[year]-[day/year] [hour]:[minute]`| `[year]-[day/year] [hour]:[minute]`
 | `date-time-layout`                  |
 | `'Mar 15 2006 3:04pm' date-time`    | `2006-074 15:04`
 
@@ -308,7 +308,7 @@ Example:
 
 | Input                      | Stack
 |----------------------------|------------------
-| `'[hour/24]:[minute]`      | `[hour/24]:[minute]`
+| `"[hour/24]:[minute]`      | `[hour/24]:[minute]`
 | `time-layout`              |
 | `'3:15:45pm' time`         | `15:15`
 

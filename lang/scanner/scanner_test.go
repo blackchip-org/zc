@@ -40,7 +40,7 @@ func TestToken(t *testing.T) {
 		{"-123", token.New(token.Value, "-123", start)},
 		{"+123", token.New(token.Value, "+123", start)},
 		{".123", token.New(token.Value, ".123", start)},
-		{"\"foo bar\"", token.New(token.String, "foo bar", start)},
+		{"\"foo bar\"", token.New(token.StringPlain, "foo bar", start)},
 		{"'foo bar'", token.New(token.String, "foo bar", start)},
 		{"'\\'foo bar\\''", token.New(token.String, "'foo bar'", start)},
 		{"", token.New(token.End, "", start)},
@@ -96,6 +96,7 @@ func TestQuote(t *testing.T) {
 		{"1234", "1234"},
 		{"abcd", "'abcd'"},
 		{"12 34", "'12 34'"},
+		{"a", "'a'"},
 	}
 
 	for _, test := range tests {

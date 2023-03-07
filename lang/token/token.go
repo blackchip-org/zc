@@ -53,6 +53,7 @@ const (
 	Slash
 	SlashDash
 	String
+	StringPlain
 	Try
 	Use
 	Value
@@ -83,6 +84,7 @@ var tokStr = map[Type]string{
 	Slash:       "/",
 	SlashDash:   "/-",
 	String:      "string",
+	StringPlain: "plain",
 	Try:         "try",
 	Use:         "use",
 	Value:       "value",

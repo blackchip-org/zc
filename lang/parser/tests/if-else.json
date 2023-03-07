@@ -36,6 +36,7 @@
                   {
                     "Node": "Value",
                     "IsString": true,
+                    "IsPlain": false,
                     "Value": "even"
                   }
                 ]
@@ -54,6 +55,7 @@
                   {
                     "Node": "Value",
                     "IsString": true,
+                    "IsPlain": false,
                     "Value": "odd"
                   }
                 ]

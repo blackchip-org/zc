@@ -28,6 +28,7 @@
                   {
                     "Node": "Value",
                     "IsString": true,
+                    "IsPlain": false,
                     "Value": "positive"
                   }
                 ]
@@ -59,6 +60,7 @@
                   {
                     "Node": "Value",
                     "IsString": true,
+                    "IsPlain": false,
                     "Value": "negative"
                   }
                 ]
@@ -77,6 +79,7 @@
                   {
                     "Node": "Value",
                     "IsString": true,
+                    "IsPlain": false,
                     "Value": "zero"
                   }
                 ]

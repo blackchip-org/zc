@@ -9,7 +9,7 @@ func utm /zone
     elif /hemi 's' eq
         base; 32700
     else
-        'invalid hemisphere: `hemi`' abort
+        'invalid hemisphere [/hemi quote]' abort
     num; /zone -1 str.left
     /num 0 gt
     /num 60 lte
@@ -18,4 +18,4 @@ func utm /zone
         /base /num add
         '' str.join
     else
-        'invalid zone: `num`' abort
+        'invalid zone [/num quote]' abort

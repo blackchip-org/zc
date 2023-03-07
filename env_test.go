@@ -10,8 +10,8 @@ func TestInterpolate(t *testing.T) {
 		src  string
 		want string
 	}{
-		{"`answer`", "42"},
-		{"`list`", "one  two"},
+		{"[/answer]", "42"},
+		{"[//list]", "one | two"},
 	}
 
 	for _, test := range tests {

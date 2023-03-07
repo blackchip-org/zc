@@ -335,20 +335,24 @@ func (e *Env) evalUseStmt(node *ast.UseStmt) error {
 	return nil
 }
 
-func (e *Env) evalValueAtom(value *ast.ValueAtom) error {
-	e.trace(value, "value %v", value.Value)
-	interp, err := e.Interpolate(value.Value)
-	if err != nil {
-		return e.err(value, err)
-	}
-	if interp != value.Value {
-		e.trace(value, "interpolate %v", interp)
+func (e *Env) evalValueAtom(node *ast.ValueAtom) error {
+	e.trace(node, "value %v", node.Value)
+	val := node.Value
+	if !node.IsPlain {
+		interp, err := e.Interpolate(val)
+		if err != nil {
+			return e.err(node, err)
+		}
+		if interp != val {
+			e.trace(node, "interpolate %v", interp)
+		}
+		val = interp
 	}
 
-	if value.IsString {
-		e.Stack.Push(interp)
+	if node.IsString {
+		e.Stack.Push(val)
 	} else {
-		e.Stack.PushValue(interp)
+		e.Stack.PushValue(val)
 	}
 	e.traceStack()
 	return nil

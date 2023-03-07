@@ -1,4 +1,4 @@
 native print
 
 func println /a
-    '`a`\n' print
+    '[/a]\n' print

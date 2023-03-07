@@ -3,6 +3,7 @@ native exit
 native nothing
 native trace
 native trace-off
+native quote
 native undef
 
 macro not-found '#not_found!'

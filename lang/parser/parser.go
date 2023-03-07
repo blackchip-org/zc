@@ -89,6 +89,9 @@ func (p *parser) parseExpr() (*ast.Expr, error) {
 		case token.String:
 			atom = &ast.ValueAtom{Token: p.tok, Value: p.tok.Literal, IsString: true}
 			p.scan()
+		case token.StringPlain:
+			atom = &ast.ValueAtom{Token: p.tok, Value: p.tok.Literal, IsString: true, IsPlain: true}
+			p.scan()
 		case token.Value:
 			atom = &ast.ValueAtom{Token: p.tok, Value: p.tok.Literal}
 			p.scan()
@@ -378,6 +381,8 @@ func (p *parser) parseStmtNested() (ast.Stmt, error) {
 	case token.SlashDash:
 		return p.parseExprStmt()
 	case token.String:
+		return p.parseExprStmt()
+	case token.StringPlain:
 		return p.parseExprStmt()
 	case token.Try:
 		return p.parseTryStmt()

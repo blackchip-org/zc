@@ -164,6 +164,7 @@ var (
 			"nothing":   Nothing,
 			"trace":     Trace,
 			"trace-off": TraceOff,
+			"quote":     Quote,
 			"undef":     Undef,
 		},
 	}

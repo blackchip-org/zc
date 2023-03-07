@@ -28,6 +28,7 @@
                   {
                     "Node": "Value",
                     "IsString": true,
+                    "IsPlain": false,
                     "Value": "answer"
                   }
                 ]

@@ -42,6 +42,16 @@ func TraceOff(env *zc.Env) error {
 	return nil
 }
 
+func Quote(env *zc.Env) error {
+	a, err := env.Stack.Pop()
+	if err != nil {
+		return err
+	}
+	z := zc.Quote(a)
+	env.Stack.Push(z)
+	return nil
+}
+
 // FIXME: This should be handled better. Maybe a statement?
 func Undef(env *zc.Env) error {
 	return errors.New("not implemented")

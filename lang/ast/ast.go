@@ -228,6 +228,7 @@ func (n UseStmt) stmtNode()      {}
 type ValueAtom struct {
 	Token    token.Token `json:"-"`
 	IsString bool
+	IsPlain  bool
 	Value    string
 }
 

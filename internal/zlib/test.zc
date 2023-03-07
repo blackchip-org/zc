@@ -12,20 +12,35 @@ verbose; 'false'
 
 native file
 
+func record-fail /expected /have /want
+    failed; 1 add
+    'FAIL [/name] [/sub]'    io.println
+    ' expected: [/expected]' io.println
+    '     have: [/have]'     io.println
+    '     want: [/want]'     io.println
+
+func record-pass
+    /verbose 'true' bool.eq
+    /sub '' bool.neq
+    if bool.and
+        'PASS [/name] [/sub]' io.println
+    passed; 1 add
+
 func eq /a /b
 	if /a /b bool.neq
-        failed; 1 add
-        'FAIL `name` `sub`'  io.println
-        ' expected: eq'      io.println
-        '     have: `a`'     io.println
-        '     want: `b`'     io.println
+        'eq' /a /b record-fail
     else
-        /verbose 'true' bool.eq
-        /sub '' bool.neq
-        if bool.and
-            'PASS `name` `sub`' io.println
-        passed; 1 add
+        record-pass
 
+func abort //xs
+    want-msg; /-xs
+    /-xs 'false'
+    if bool.neq
+        'abort' 'true' 'false' record-fail
+    elif /xs /want-msg str.starts-with not
+        'abort' /-xs /want-msg record-fail
+    else
+        record-pass
 
 func true /a
     /a 'true' eq
@@ -65,7 +80,7 @@ func ok
     bool.and
 
 func report
-    '`passed` passed, `failed` failed, `errors` error(s)' io.println
+    '[/passed] passed, [/failed] failed, [/errors] error(s)' io.println
 
 func verbose /v
     verbose; clear /v
