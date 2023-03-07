@@ -95,9 +95,9 @@ func (c *Console) Eval(text string) bool {
 	fmt.Println()
 
 	// Print out previous stack in dark gray
+	fmt.Print(ansi.DarkGray)
 	if execError == nil {
 		for _, val := range prev.Items() {
-			fmt.Print(ansi.DarkGray)
 			fmt.Println(raw(val))
 		}
 		fmt.Println()
@@ -106,6 +106,7 @@ func (c *Console) Eval(text string) bool {
 	} else {
 		c.calc.Env.SetMain(prev)
 	}
+	fmt.Print(ansi.Reset)
 
 	for i, val := range c.calc.Env.Main.Items() {
 		color := ansi.LightBlue
