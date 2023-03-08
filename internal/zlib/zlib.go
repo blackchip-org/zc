@@ -142,7 +142,9 @@ var (
 		ScriptPath: "zc:zlib/color.zc",
 		Natives: map[string]zc.CalcFunc{
 			"cmyk-rgb": CMYKToRGB,
+			"hsl-rgb":  HSLtoRGB,
 			"rgb-cmyk": RBGToCMYK,
+			"rgb-hsl":  RGBToHSL,
 			"sample":   Sample,
 		},
 	}

@@ -125,6 +125,7 @@
 - [hecto](zlib/si.md#hecto): h, 1e02
 - [hex](zlib/prog.md#hex): Convert to hexadecimal
 - [hours](zlib/time.md#hours): Hours in a duration
+- [hsl-rgb](zlib/color.md#hsl-rgb): Convert form HSL to RGB color space
 
 ## i
 
@@ -244,6 +245,7 @@
 - [rev](zlib/stack.md#reverse): Reverse items on the stack
 - [reverse](zlib/stack.md#reverse): Reverse items on the stack
 - [rgb-cmyk](zlib/color.md#rgb-cmyk): Convert from RGB to CMYK color space
+- [rgb-hsl](zlib/color.md#rgb-hsl): Convert from RGB to HSL color space
 - [right](zlib/str.md#right): Substring from the right
 - [roll](zlib/dice.md#roll): Dice roller
 - [ronna](zlib/si.md#ronna): R, 1e27

@@ -11,14 +11,15 @@ Color calculations
 | Operation               | Description
 |-------------------------|-----------------------
 | [cmyk-rgb](#cmyk-rgb)   | Convert from CMYK to RGB color space
+| [hsl-rgb](#hsl-rgb)     | Convert form HSL to RGB color space
 | [rgb-cmyk](#rgb-cmyk)   | Convert from RGB to CMYK color space
+| [rgb-hsl](#rgb-hsl)     | Convert from RGB to HSL color space
 | [sample](#sample)       | Render a sample of a color
 
 
 ## cmyk-rgb
 
-Convert color CMYK color `c`, `m`, `y`, `k`, to a RGB color space as `r`, `b`,
-`g`
+Convert the CMYK color `c`, `m`, `y`, `k`, to the RGB color space as `r`, `b`, `g`
 
     ( c:Uint8 m:Uint8 y:Uint8 k:Uint8 -- r:Uint8 g:Uint8 b:Uint8 )
 
@@ -32,9 +33,25 @@ Example:
 | `cmyk-rgb`      | `128 \| 64 \| 32`
 
 
+## hsl-rgb
+
+Convert the HSL color `h`, `s`', `l` to the RGB color space as `r`, `g`, `b`.
+
+    ( h:Float s:Float l:Float -- r:Uint8 g:Uint8 b:Uint8 )
+
+Example:
+
+<!-- test: hsl-rgb -->
+
+| Input                       | Stack
+|-----------------------------|-------------
+| `20 0.6 0.3137254901960784` | `20 \| 0.6 \| 0.3137254901960784`
+| `hsl-rgb`                   | `128 \| 64 \| 32`
+
+
 ## rgb-cmyk
 
-Convert color RGB color `r`, `b`', `g` to a CMYK color space as `c`, `m`,
+Convert the RGB color `r`, `b`', `g` to the CMYK color space as `c`, `m`,
 `y`, `k`.
 
     ( r:Uint8 g:Uint8 b:Uint8 -- c:Uint8 m:Uint8 y:Uint8 k:Uint8 )
@@ -47,6 +64,23 @@ Example:
 |-----------------|-------------
 | `128 64 32`     | `128 \| 64 \| 32`
 | `rgb-cmyk`      | `0 \| 127 \| 191 \| 127`
+
+
+## rbg-hsl
+
+Convert the RGB color `r`, `g`', `b` to the HSL color space as `h`, `s`, `l`.
+
+    ( r:Uint8 g:Uint8 b:Uint8 -- h:Float s:Float l:Float )
+
+Example:
+
+<!-- test: rgb-hsl -->
+
+| Input                       | Stack
+|-----------------------------|-------------
+| `128 64 32`                 | `128 \| 64 \| 32`
+| `rgb-hsl`                   | `20 \| 0.6 \| 0.3137254901960784`
+
 
 ## sample
 
