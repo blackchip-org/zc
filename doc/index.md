@@ -9,14 +9,12 @@
 ## a
 
 - [a](zlib/math.md#add): Addition
-- abs
+- [abs](zlib/math.md#abs): Absolute value
   - [math.bigint.abs](zlib/math-bigint.md#abs): Absolute value
   - [math.fixed.abs](zlib/math-fixed.md#abs): Absolute value
-  - [math.abs](zlib/math.md#abs): Absolute value
-- add
+- [add](zlib/math.md#add): Addition
   - [math.bigint.add](zlib/math-bigint.md#add): Addition
   - [math.fixed.add](zlib/math-fixed.md#add): Addition
-  - [math.add](zlib/math.md#add): Addition
 - [add-d](zlib/time.md#add-duration): Time after a duration
 - [add-duration](zlib/time.md#add-duration): Time after a duration
 - and
@@ -43,10 +41,9 @@
 - [c](zlib/stack.md#clear): Clear
 - [c-f](zlib/unit/temp.md#c-f): Celsius to Fahrenheit
 - [c-k](zlib/unit/temp.md#c-k): Celsius to Kelvin
-- ceil
+- [ceil](zlib/math.md#ceil): Ceiling
   - [math.bigint.ceil](zlib/math-bigint.md#ceil): Ceiling
   - [math.fixed.ceil](zlib/math-fixed.md#ceil): Ceiling
-  - [math.ceil](zlib/math.md#ceil): Ceiling
 - [centi](zlib/si.md#centi): c, 1e-02
 - [choice](zlib/rand.md#choice): Randomly select an item on the stack
 - [clear](zlib/stack.md#clear): Clear
@@ -68,10 +65,9 @@
 - [deca](zlib/si.md#deca): da, 1e01
 - [deci](zlib/si.md#deci): d, 1e-01
 - [decode](zlib/unicode.md#decode): Decodes a Unicode code point to a character
-- div
+- [div](zlib/math.md#div): Division
   - [math.bigint.div](zlib/math-bigint.md#div): Division
   - [math.fixed.div](zlib/math-fixed.md#div): Division
-  - [math.div](zlib/math.md#div): Division
 - [dn](zlib/stack.md#down): Rotate stack by moving items downward
 - [down](zlib/stack.md#down): Rotate stack by moving items downward
 - [drop](zlib/stack.md#drop): Drop top item
@@ -84,10 +80,9 @@
 - [en](zlib/unicode.md#encode): Encodes a character into Unicode code point
 - [en8](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
 - [encode](zlib/unicode.md#encode): Encodes a character into Unicode code point
-- eq
+- [eq](zlib/bool.md#eq): Equals
   - [bool.bigint.eq](zlib/bool-bigint.md#eq): Equals
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
-  - [bool.eq](zlib/bool.md#eq): Equals
 - [eval](zlib/fn.md#eval): Evaluate top of stack
 - [exa](zlib/si.md#exa): E, 1e18
 
@@ -101,24 +96,21 @@
 - float
   - [assert.float](zlib/assert.md#float): Assert value is a floating-point number
   - [rand.float](zlib/rand.md#float): Random float between 0 and 1
-- floor
+- [floor](zlib/math.md#floor): Floor
   - [math.bigint.floor](zlib/math-bigint.md#floor): Floor
   - [math.fixed.floor](zlib/math-fixed.md#floor): Floor
-  - [math.floor](zlib/math.md#floor): Floor
 - [fold](zlib/fn.md#fold): Reduce items to a single value
 - [format](zlib/format.md#format): Apply a numeric layout
 
 ## g
 
 - [giga](zlib/si.md#giga): G, 1e09
-- gt
+- [gt](zlib/bool.md#gt): Greater than
   - [bool.bigint.gt](zlib/bool-bigint.md#gt): Greater than
   - [bool.fixed.gt](zlib/bool-fixed.md#gt): Greater than
-  - [bool.gt](zlib/bool.md#gt): Greater than
-- gte
+- [gte](zlib/bool.md#gte): Greater than or equals
   - [bool.bigint.gte](zlib/bool-bigint.md#gte): Greater than or equals
   - [bool.fixed.gte](zlib/bool-fixed.md#gte): Greater than or equals
-  - [bool.gte](zlib/bool.md#gte): Greater than or equals
 
 ## h
 
@@ -158,14 +150,12 @@
 - [lower](zlib/unicode.md#lower): Convert character to lower case
 - [lower=](zlib/unicode.md#lower=): Is character lower case
 - [lsh](zlib/prog.md#lsh): Left shift
-- lt
+- [lt](zlib/bool.md#lt): Less than
   - [bool.bigint.lt](zlib/bool-bigint.md#lt): Less than
   - [bool.fixed.lt](zlib/bool-fixed.md#lt): Less than
-  - [bool.lt](zlib/bool.md#lt): Less than
-- lte
+- [lte](zlib/bool.md#lte): Less than or equals
   - [bool.bigint.lte](zlib/bool-bigint.md#lte): Less than or equals
   - [bool.fixed.lte](zlib/bool-fixed.md#lte): Less than or equals
-  - [bool.lte](zlib/bool.md#lte): Less than or equals
 
 ## m
 
@@ -177,31 +167,26 @@
 - [mi-nm](zlib/unit/len.md#mi-nm): Miles to nautical miles
 - [micro](zlib/si.md#micro): μ, 1e-06
 - [milli](zlib/si.md#milli): m, 1e-03
-- min-digits
-  - [format.min-digits](zlib/format.md#min-digits): Minimum number of digits after the decimal point to display, set
-  - [format.min-digits](zlib/format.md#min-digits): Minimum number of digits after the decimal point to display, get
+- [min-digits](zlib/format.md#min-digits): Minimum number of digits after the decimal point to display, set
+- [min-digits=](zlib/format.md#min-digits=): Minimum number of digits after the decimal point to display, get
 - [minutes](zlib/time.md#minutes): Minutes in a duration
-- mod
+- [mod](zlib/math.md#mod): Modulus
   - [math.bigint.mod](zlib/math-bigint.md#mod): Modulus
   - [math.fixed.mod](zlib/math-fixed.md#mod): Modulus
-  - [math.mod](zlib/math.md#mod): Modulus
-- mul
+- [mul](zlib/math.md#mul): Multiplication
   - [math.bigint.mul](zlib/math-bigint.md#mul): Multiplication
   - [math.fixed.mul](zlib/math-fixed.md#mul): Multiplication
-  - [math.mul](zlib/math.md#mul): Multiplication
 
 ## n
 
 - [n](zlib/stack.md#n): Number of items on the stack
 - [nano](zlib/si.md#nano): n, 1e-09
-- neg
+- [neg](zlib/math.md#neg): Negation
   - [math.bigint.neg](zlib/math-bigint.md#neg): Negation
   - [math.fixed.neg](zlib/math-fixed.md#neg): Negation
-  - [math.neg](zlib/math.md#neg): Negation
-- neq
+- [neq](zlib/bool.md#neq): Not Equals
   - [bool.bigint.neq](zlib/bool-bigint.md#neq): Not Equals
   - [bool.fixed.neq](zlib/bool-fixed.md#neq): Not Equals
-  - [bool.neq](zlib/bool.md#neq): Not Equals
 - [nm-km](zlib/unit/len.md#nm-km): Nautical miles to kilometers
 - [nm-m](zlib/unit/len.md#nm-m): Nautical miles to meters
 - [nm-mi](zlib/unit/len.md#nm-mi): Nautical miles to miles
@@ -223,10 +208,9 @@
 - [pico](zlib/si.md#pico): p, 1e-12
 - [point](zlib/format.md#point): Character to use as the decimal point, set
 - [point=](zlib/format.md#point=): Character to use as the decimal point, get
-- pow
+- [pow](zlib/math.md#pow): Exponentiation
   - [math.bigint.pow](zlib/math-bigint.md#pow): Exponentiation
   - [math.fixed.pow](zlib/math-fixed.md#pow): Exponentiation
-  - [math.pow](zlib/math.md#pow): Exponentiation
 - [precision](zlib/format.md#precision): Precision for fixed-point math, set
 - [precision=](zlib/format.md#precision=): Prevision for fixed-point math, get
 - [print](zlib/io.md#print): Displays value to the console
@@ -238,9 +222,8 @@
 
 ## r
 
-- rem
+- [rem](zlib/math.md#rem): Remainder
   - [math.bigint.rem](zlib/math-bigint.md#rem): Remainder
-  - [math.rem](zlib/math.md#rem): Remainder
 - [repeat](zlib/fn.md#repeat): Repeat the execution of a function
 - [rev](zlib/stack.md#reverse): Reverse items on the stack
 - [reverse](zlib/stack.md#reverse): Reverse items on the stack
@@ -265,16 +248,14 @@
 - [seed](zlib/rand.md#seed): Random number seed, set
 - [seed=](zlib/rand.md#seed=): Random number seed, get
 - [shuffle](zlib/rand.md#shuffle): Shuffle the stack
-- sign
+- [sign](zlib/math.md#sign): Sign
   - [math.bigint.sign](zlib/math-bigint.md#sign): Sign
   - [math.fixed.sign](zlib/math-fixed.md#sign): Sign
-  - [math.sign](zlib/math.md#sign): Sign
 - [split](zlib/str.md#split): Splits a string by a separator
 - [starts-with](zlib/str.md#starts-with): Starts with
-- sub
+- [sub](zlib/math.md#sub): Subtraction
   - [math.bigint.sub](zlib/math-bigint.md#sub): Subtraction
   - [math.fixed.sub](zlib/math-fixed.md#sub): Subtraction
-  - [math.sub](zlib/math.md#sub): Subtraction
 - [sub-t](zlib/time.md#subtact-time): Duration between two times
 - [subtract-time](zlib/time.md#subtact-time): Duration between two times
 - [sum](zlib/math.md#sum): Sum

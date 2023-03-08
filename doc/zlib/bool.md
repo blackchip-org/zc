@@ -14,6 +14,13 @@ Comparison operations are parsed as numerics when possible. Therefore the follow
 - `$1,234.56`
 - `+1,234.56`
 
+<!-- main: eq -->
+<!-- main: gt -->
+<!-- main: gte -->
+<!-- main: lt -->
+<!-- main: lte -->
+<!-- main: neq -->
+
 <!-- index -->
 
 | Operation         | Description

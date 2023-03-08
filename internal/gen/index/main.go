@@ -21,6 +21,7 @@ import (
 var (
 	modDirective   = regexp.MustCompile(`^# *(.+) *$`)
 	indexDirective = regexp.MustCompile(`<!-- *index *-->`)
+	mainDirective  = regexp.MustCompile(`<!-- *main: ([^ ]+) -->`)
 	tableHeader    = regexp.MustCompile(`.*Operation.*Description`)
 	operationName  = regexp.MustCompile(`\[(.*)\]\((.*)\)`)
 	aliasFormat    = regexp.MustCompile("\\`[^\\`]+\\`")
@@ -35,9 +36,11 @@ type Entry struct {
 }
 
 var EntryMap map[string][]Entry
+var IndexMainMap map[string]string
 
 func init() {
 	EntryMap = make(map[string][]Entry)
+	IndexMainMap = make(map[string]string)
 }
 
 func main() {
@@ -93,9 +96,20 @@ func main() {
 			entry := entries[0]
 			fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[4:], entry.Anchor, entry.Description)
 		} else {
-			fmt.Fprintf(out, "- %v\n", key)
+			mainMod, ok := IndexMainMap[key]
+			if ok {
+				for _, entry := range entries {
+					if entry.Module == mainMod {
+						fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+					}
+				}
+			} else {
+				fmt.Fprintf(out, "- %v\n", key)
+			}
 			for _, entry := range entries {
-				fmt.Fprintf(out, "  - [%v.%v](%v%v): %v\n", entry.Module, entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+				if entry.Module != mainMod {
+					fmt.Fprintf(out, "  - [%v.%v](%v%v): %v\n", entry.Module, entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+				}
 			}
 		}
 	}
@@ -114,6 +128,12 @@ func indexFile(name string, file fs.File) {
 		matches := modDirective.FindStringSubmatch(line)
 		if matches != nil {
 			mod = matches[1]
+			continue
+		}
+
+		matches = mainDirective.FindStringSubmatch(line)
+		if matches != nil {
+			IndexMainMap[matches[1]] = mod
 			continue
 		}
 

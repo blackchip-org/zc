@@ -18,7 +18,7 @@ Numeric formatting
 | [int-layout](#int-layout)         | Layout for integers, get
 | [int-layout=](#int-layout=)       | Layout for integers, set
 | [min-digits](#min-digits)         | Minimum number of digits after the decimal point to display, set
-| [min-digits](#min-digits)         | Minimum number of digits after the decimal point to display, get
+| [min-digits=](#min-digits=)       | Minimum number of digits after the decimal point to display, get
 | [precision](#precision)           | Precision for fixed-point math, set
 | [precision=](#precision=)         | Prevision for fixed-point math, get
 | [point](#point)                   | Character to use as the decimal point, set

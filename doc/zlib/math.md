@@ -4,7 +4,20 @@
 
 Basic mathematical operations.
 
-- Prelude: user, dev (include)
+    use math -- user prelude
+
+<!-- main: abs -->
+<!-- main: add -->
+<!-- main: ceil -->
+<!-- main: div -->
+<!-- main: floor -->
+<!-- main: mod -->
+<!-- main: mul -->
+<!-- main: neg -->
+<!-- main: pow -->
+<!-- main: rem -->
+<!-- main: sign -->
+<!-- main: sub -->
 
 <!-- index -->
 
