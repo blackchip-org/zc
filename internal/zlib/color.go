@@ -33,28 +33,6 @@ func CMYKToRGB(env *zc.Env) error {
 	return nil
 }
 
-// Written by ChatGPT
-// Helper function to convert hue to RGB
-func hueToRGB(p, q, t float64) float64 {
-	if t < 0.0 {
-		t += 1.0
-	}
-	if t > 1.0 {
-		t -= 1.0
-	}
-	if t < 1.0/6.0 {
-		return p + (q-p)*6.0*t
-	}
-	if t < 1.0/2.0 {
-		return q
-	}
-	if t < 2.0/3.0 {
-		return p + (q-p)*6.0*(2.0/3.0-t)
-	}
-	return p
-}
-
-// Written by ChatGPT
 func HSLtoRGB(env *zc.Env) error {
 	l, err := env.Stack.PopFloat()
 	if err != nil {
@@ -69,6 +47,7 @@ func HSLtoRGB(env *zc.Env) error {
 		return err
 	}
 
+	// Written by ChatGPT
 	c := (1 - math.Abs(2*l-1)) * s
 	x := c * (1 - math.Abs(math.Mod(h/60, 2)-1))
 	m := l - c/2
@@ -91,6 +70,7 @@ func HSLtoRGB(env *zc.Env) error {
 	r := uint8((rp + m) * 255)
 	g := uint8((gp + m) * 255)
 	b := uint8((bp + m) * 255)
+	// End ChatGPT
 
 	env.Stack.PushUint8(r)
 	env.Stack.PushUint8(g)
@@ -120,7 +100,6 @@ func RBGToCMYK(env *zc.Env) error {
 	return nil
 }
 
-// Written by ChatGPT
 func RGBToHSL(env *zc.Env) error {
 	b, err := env.Stack.PopUint8()
 	if err != nil {
@@ -134,6 +113,7 @@ func RGBToHSL(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
+	// Written by ChatGPT
 	// Convert RGB values from 0-255 range to 0-1 range
 	rf := float64(r) / 255.0
 	gf := float64(g) / 255.0
@@ -176,6 +156,7 @@ func RGBToHSL(env *zc.Env) error {
 	if h < 0 {
 		h += 360.0
 	}
+	// End ChatGPT
 
 	env.Stack.PushFloat(h)
 	env.Stack.PushFloat(s)
