@@ -73,7 +73,6 @@ func (c *Console) Eval(text string) bool {
 	var execError error
 
 	prev := c.calc.Env.Main.Copy()
-	ansi.Write(ansi.ClearScreen)
 
 	cmd := strings.TrimRight(text, " ")
 	switch cmd {
@@ -91,8 +90,6 @@ func (c *Console) Eval(text string) bool {
 	if execError == errQuit {
 		return false
 	}
-
-	fmt.Println()
 
 	// Print out previous stack in dark gray
 	fmt.Print(ansi.DarkGray)

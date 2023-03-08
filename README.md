@@ -266,6 +266,28 @@ computes the length, in characters, of the given text:
 | `'one thousand` | `one thousand`
 | `str.len`       | `12`
 
+
+String interpolation occurs by evaluating expressions found in square
+brackets:
+
+<!-- test: interpolate -->
+
+| Input                     | Stack
+|---------------------------|---------------
+| `use unit`                | *using unit*
+| `'[32 f-c]°C is freezing` | `0°C is freezing`
+
+
+String interpolation does not occur when strings are defined with double
+quotes:
+
+<!-- test: no-interpolate -->
+
+| Input                     | Stack
+|---------------------------|---------------
+| `"[32 f-c]°C is freezing` | `[32 f-c]°C is freezing`
+
+
 ## Macros
 
 Let's say that you commonly have to compute a sales tax that is 5%. To

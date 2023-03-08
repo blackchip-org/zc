@@ -143,6 +143,7 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
+			ansi.Write(ansi.ClearScreen)
 			if ok := c.Eval(line); !ok {
 				break
 			}
