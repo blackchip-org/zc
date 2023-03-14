@@ -221,7 +221,10 @@ var (
 		Name:       "geo",
 		ScriptPath: "zc:zlib/geo.zc",
 		Natives: map[string]zc.CalcFunc{
-			"transform": Transform,
+			"decimal-degrees":  DecimalDegrees,
+			"degrees-minutes":  DegreesMinutes,
+			"round-coordinate": RoundCoordinate,
+			"transform":        Transform,
 		},
 	}
 	Math = zc.ModuleDef{

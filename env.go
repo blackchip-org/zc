@@ -114,18 +114,6 @@ func (e *Env) Interpolate(v string) (string, error) {
 				return "", err
 			}
 			result.WriteString(de.Stack.String())
-			/*
-				stack, ok := e.StackFor(name.String())
-				if !ok {
-					return "", fmt.Errorf("no such stack: %v", name.String())
-				}
-				for i, item := range stack.Items() {
-					if i != 0 {
-						result.WriteString("  ")
-					}
-					result.WriteString(item)
-				}
-			*/
 			name.Reset()
 		} else if ch == '\\' {
 			inEscape = true

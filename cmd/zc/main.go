@@ -133,6 +133,9 @@ func main() {
 	case "eval":
 		evalLines(flags, calc)
 	default:
+		if flags.NArg() > 0 {
+			log.Fatal("extra command line arguments, did you intend to use 'eval'?")
+		}
 		if noAnsi {
 			ansi.Enabled = false
 		}
