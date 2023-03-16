@@ -34,16 +34,20 @@ func Or(classes ...RuneClass) RuneClass {
 var (
 	Always     = func(r rune) bool { return r != End }
 	Comma      = Rune(',')
+	CharAF     = Or(UCharAF, LCharAF)
+	CharAZ     = Or(UCharAZ, LCharAZ)
 	Digit01    = Rune2('0', '1')
 	Digit07    = RuneRange('0', '7')
 	Digit09    = RuneRange('0', '9')
 	Digit0F    = Or(Digit09, LCharAF, UCharAF)
 	ExponentE  = Rune2('E', 'e')
 	LCharAF    = RuneRange('a', 'f')
+	LCharAZ    = RuneRange('a', 'z')
 	Never      = func(r rune) bool { return false }
 	Period     = Rune('.')
 	PlusMinus  = Rune2('+', '-')
 	Space      = Rune(' ')
 	UCharAF    = RuneRange('A', 'F')
+	UCharAZ    = RuneRange('A', 'Z')
 	Underscore = Rune('_')
 )

@@ -348,7 +348,23 @@ var (
 		Include:    true,
 		ScriptPath: "zc:zlib/sci.zc",
 		Natives: map[string]zc.CalcFunc{
+			"acos":                Acos,
+			"acosh":               Acosh,
+			"asin":                Asin,
+			"asinh":               Asinh,
+			"atan":                Atan,
+			"atanh":               Atanh,
+			"cos":                 Cos,
+			"cosh":                Cosh,
+			"exp":                 Exp,
+			"log":                 Log,
+			"log10":               Log10,
+			"log2":                Log2,
 			"scientific-notation": ScientificNotation,
+			"sin":                 Sin,
+			"sinh":                Sinh,
+			"tan":                 Tan,
+			"tanh":                Tanh,
 		},
 	}
 	SI = zc.ModuleDef{

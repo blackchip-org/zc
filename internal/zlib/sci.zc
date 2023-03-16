@@ -1,5 +1,23 @@
+native acos
+native acosh
+native asin
+native asinh
+native atan
+native atanh
+native cos
+native cosh
+native exp
+native log
+native log10
+native log2
 native scientific-notation
+native sin
+native sinh
+native tan
+native tanh
 
+macro e  2.718281828459045
 macro pi 3.141592653589793
 
 alias sn scientific-notation
+alias π pi

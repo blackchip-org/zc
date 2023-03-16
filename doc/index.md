@@ -12,6 +12,8 @@
 - [abs](zlib/math.md#abs): Absolute value
   - [math.bigint.abs](zlib/math-bigint.md#abs): Absolute value
   - [math.fixed.abs](zlib/math-fixed.md#abs): Absolute value
+- [acos](zlib/sci.md#acos): Inverse cosine
+- [acosh](zlib/sci.md#acosh): Inverse hyperbolic cosine
 - [add](zlib/math.md#add): Addition
   - [math.bigint.add](zlib/math-bigint.md#add): Addition
   - [math.fixed.add](zlib/math-fixed.md#add): Addition
@@ -20,7 +22,11 @@
 - and
   - [bool.and](zlib/bool.md#and): Logical conjunction
   - [prog.and](zlib/prog.md#and): Bitwise and
+- [asin](zlib/sci.md#asin): Inverse sine
+- [asinh](zlib/sci.md#asinh): Inverse hyperbolic sine
 - [at](zlib/stack.md@at): Take stack element at index
+- [atan](zlib/sci.md#atan): Inverse tangent
+- [atanh](zlib/sci.md#atanh): Inverse hyperbolic tangent
 - [atto](zlib/si.md#atto): a, 1e-18
 - [auto-currency](zlib/format.md#auto-currency): Retain currency symbols when true, set
 - [auto-currency=](zlib/format.md#auto-currency=): Retain currency symbols when true, get
@@ -48,6 +54,8 @@
 - [choice](zlib/rand.md#choice): Randomly select an item on the stack
 - [clear](zlib/stack.md#clear): Clear
 - [cmyk-rgb](zlib/color.md#cmyk-rgb): Convert from CMYK to RGB color space
+- [cos](zlib/sci.md#cos): Cosine
+- [cosh](zlib/sci.md#cosh): Hyperbolic cosine
 
 ## d
 
@@ -76,6 +84,7 @@
 
 ## e
 
+- [e](zlib/sci.md#e): Natural logarithm base
 - [empty](zlib/stack.md#empty): True if the stack is empty
 - [en](zlib/unicode.md#encode): Encodes a character into Unicode code point
 - [en8](zlib/unicode.md#utf-8-encode): Encode a string into UTF-8 bytes
@@ -85,6 +94,7 @@
   - [bool.fixed.eq](zlib/bool-fixed.md#eq): Equals
 - [eval](zlib/fn.md#eval): Evaluate top of stack
 - [exa](zlib/si.md#exa): E, 1e18
+- [exp](zlib/sci.md#exp): Natural exponential
 
 ## f
 
@@ -147,6 +157,9 @@
 - [len](zlib/str.md#len): Length
 - [local](zlib/time.md#local): Local time zone, set
 - [local=](zlib/time.md#local=): Local time zone, get
+- [log](zlib/sci.md#log): Natural logarithm
+- [log10](zlib/sci.md#log10): Decimal logarithm
+- [log2](zlib/sci.md#log2): Binary logarithm
 - [lower](zlib/unicode.md#lower): Convert character to lower case
 - [lower=](zlib/unicode.md#lower=): Is character lower case
 - [lsh](zlib/prog.md#lsh): Left shift
@@ -205,6 +218,7 @@
 ## p
 
 - [peta](zlib/si.md#peta): P, 1e15
+- [pi](zlib/sci.md#pi): Circumference to diameter ratio
 - [pico](zlib/si.md#pico): p, 1e-12
 - [point](zlib/format.md#point): Character to use as the decimal point, set
 - [point=](zlib/format.md#point=): Character to use as the decimal point, get
@@ -244,6 +258,7 @@
 
 - [s](zlib/math.md#sub): Subtraction
 - [sample](zlib/color.md#sample): Render a sample of a color
+- [scientific-notation](zlib/sci.md#scientific-notation): Scientific notation
 - [seconds](zlib/time.md#seconds): Seconds in a duration
 - [seed](zlib/rand.md#seed): Random number seed, set
 - [seed=](zlib/rand.md#seed=): Random number seed, get
@@ -251,6 +266,9 @@
 - [sign](zlib/math.md#sign): Sign
   - [math.bigint.sign](zlib/math-bigint.md#sign): Sign
   - [math.fixed.sign](zlib/math-fixed.md#sign): Sign
+- [sin](zlib/sci.md#sin): Sine
+- [sinh](zlib/sci.md#sinh): Hyperbolic sine
+- [sn](zlib/sci.md#scientific-notation): Scientific notation
 - [split](zlib/str.md#split): Splits a string by a separator
 - [starts-with](zlib/str.md#starts-with): Starts with
 - [sub](zlib/math.md#sub): Subtraction
@@ -265,6 +283,8 @@
 ## t
 
 - [take](zlib/stack.md#take): Take top items from the stack
+- [tan](zlib/sci.md#tan): Tangent
+- [tanh](zlib/sci.md#tanh): Hyperbolic tangent
 - [tera](zlib/si.md#tera): T, 1e12
 - [tf](zlib/geo.md#transform): Transform coordinates
 - [time](zlib/time.md#time): Formats a time with the default layout
@@ -310,3 +330,7 @@
 
 - [zepto](zlib/si.md#zepto): z, 1e-21
 - [zetta](zlib/si.md#zetta): Z, 1e21
+
+## π
+
+- [π](zlib/sci.md#pi): Circumference to diameter ratio
