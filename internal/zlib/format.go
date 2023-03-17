@@ -88,24 +88,6 @@ func MinDigitsGet(env *zc.Env) error {
 	return nil
 }
 
-func Precision(env *zc.Env) error {
-	prec, err := env.Stack.PopInt32()
-	if err != nil {
-		return err
-	}
-	if prec < 0 {
-		return fmt.Errorf("invalid precision: %v", prec)
-	}
-	env.Calc.Precision = prec
-	env.Calc.Info = fmt.Sprintf("precision set to %v", prec)
-	return nil
-}
-
-func PrecisionGet(env *zc.Env) error {
-	env.Stack.PushInt32(env.Calc.Precision)
-	return nil
-}
-
 func Point(env *zc.Env) error {
 	point, err := env.Stack.Pop()
 	if err != nil {

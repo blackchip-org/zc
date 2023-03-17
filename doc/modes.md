@@ -47,7 +47,6 @@ Enables auto formatting and auto currency.
 Definition: [fin.zc](../internal/modes/fin.zc)
 
 ```
-2 precision
 2 min-digits
 'half-even' rounding-mode
 ',000' int-layout

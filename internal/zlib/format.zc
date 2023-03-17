@@ -7,8 +7,6 @@ native int-layout
 native int-layout=
 native min-digits
 native min-digits=
-native precision
-native precision=
 native point
 native point=
 native round

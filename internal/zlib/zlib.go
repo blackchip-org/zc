@@ -208,8 +208,6 @@ var (
 			"int-layout=":    IntLayoutGet,
 			"min-digits":     MinDigits,
 			"min-digits=":    MinDigitsGet,
-			"precision":      Precision,
-			"precision=":     PrecisionGet,
 			"point":          Point,
 			"point=":         PointGet,
 			"round":          Round,

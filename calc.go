@@ -37,7 +37,6 @@ type Config struct {
 	PreludeCLI   []string
 	PreludeDev   []string
 	Trace        bool
-	Precision    int32
 	RoundingMode RoundingMode
 	IntLayout    string
 	Point        rune
@@ -423,17 +422,7 @@ func (c *Calc) FormatBool(v bool) string {
 }
 
 func (c *Calc) FormatDecimal(v decimal.Decimal, applyLayout bool) string {
-	var s string
-	if c.Precision != 0 {
-		fn, ok := RoundingFuncsFix[c.RoundingMode]
-		if !ok {
-			log.Panicf("invalid rounding mode: %v", c.RoundingMode)
-		}
-		s = fn(v, c.Precision).String()
-	} else {
-		s = v.String()
-	}
-	return c.FormatNumberString(s, applyLayout)
+	return c.FormatNumberString(v.String(), applyLayout)
 }
 
 func (c *Calc) FormatDecimalWithAttrs(v decimal.Decimal, attrs FormatAttrs) string {

@@ -1,4 +1,3 @@
-2 precision
 2 min-digits
 'half-even' rounding-mode
 ',000' int-layout

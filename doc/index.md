@@ -225,8 +225,6 @@
 - [pow](zlib/math.md#pow): Exponentiation
   - [math.bigint.pow](zlib/math-bigint.md#pow): Exponentiation
   - [math.decimal.pow](zlib/math-decimal.md#pow): Exponentiation
-- [precision](zlib/format.md#precision): Precision for fixed-point math, set
-- [precision=](zlib/format.md#precision=): Prevision for fixed-point math, get
 - [print](zlib/io.md#print): Displays value to the console
 
 ## q
