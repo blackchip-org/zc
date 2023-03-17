@@ -69,9 +69,7 @@ func (s *Stack) Push(v string) {
 }
 
 func (s *Stack) PushAll(xs []string) {
-	for _, x := range xs {
-		s.data = append(s.data, x)
-	}
+	s.data = append(s.data, xs...)
 }
 
 func (s *Stack) Enqueue(v string) {

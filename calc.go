@@ -14,7 +14,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/blackchip-org/zc/internal"
-	"github.com/blackchip-org/zc/internal/fscan"
 	"github.com/blackchip-org/zc/lang/parser"
 	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
@@ -97,7 +96,6 @@ type Calc struct {
 	Natives    map[string]CalcFunc
 	States     map[string]any
 	Frames     []Frame
-	scanner    *fscan.Scanner
 }
 
 func NewCalc(conf Config) (*Calc, error) {
