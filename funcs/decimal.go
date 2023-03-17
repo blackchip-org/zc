@@ -7,12 +7,12 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type UnaryFixed func(decimal.Decimal) (decimal.Decimal, error)
-type BinaryFixed func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, error)
-type CompareFixed func(decimal.Decimal, decimal.Decimal) (bool, error)
+type UnaryDecimal func(decimal.Decimal) (decimal.Decimal, error)
+type BinaryDecimal func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, error)
+type CompareDecimal func(decimal.Decimal, decimal.Decimal) (bool, error)
 
-func EvalUnaryFixed(env *zc.Env, fn UnaryFixed) error {
-	a, err := env.Stack.PopFixed()
+func EvalUnaryDecimal(env *zc.Env, fn UnaryDecimal) error {
+	a, err := env.Stack.PopDecimal()
 	if err != nil {
 		return err
 	}
@@ -20,11 +20,11 @@ func EvalUnaryFixed(env *zc.Env, fn UnaryFixed) error {
 	if err != nil {
 		return err
 	}
-	env.Stack.PushFixed(b)
+	env.Stack.PushDecimal(b)
 	return nil
 }
 
-func EvalBinaryFixed(env *zc.Env, fn BinaryFixed) (err error) {
+func EvalBinaryDecimal(env *zc.Env, fn BinaryDecimal) (err error) {
 	defer func() {
 		if p := recover(); p != nil {
 			msg, ok := p.(string)
@@ -43,11 +43,11 @@ func EvalBinaryFixed(env *zc.Env, fn BinaryFixed) (err error) {
 	if err != nil {
 		return
 	}
-	a, err := env.Calc.ParseFixed(sa)
+	a, err := env.Calc.ParseDecimal(sa)
 	if err != nil {
 		return
 	}
-	b, err := env.Calc.ParseFixed(sb)
+	b, err := env.Calc.ParseDecimal(sb)
 	if err != nil {
 		return
 	}
@@ -59,12 +59,12 @@ func EvalBinaryFixed(env *zc.Env, fn BinaryFixed) (err error) {
 
 	attrs := zc.ParseFormatAttrs(sa, sb)
 	attrs.ApplyLayout = env.Calc.AutoFormat
-	env.Stack.PushFixedWithAttrs(r, attrs)
+	env.Stack.PushDecimalWithAttrs(r, attrs)
 	return nil
 }
 
-func EvalCompareFixed(env *zc.Env, fn CompareFixed) (err error) {
-	a, b, err := env.Stack.PopFixed2()
+func EvalCompareDecimal(env *zc.Env, fn CompareDecimal) (err error) {
+	a, b, err := env.Stack.PopDecimal2()
 	if err != nil {
 		return
 	}

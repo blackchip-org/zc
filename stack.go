@@ -192,24 +192,24 @@ func (s *Stack) PopBool2() (bool, bool, error) {
 	return a, b, nil
 }
 
-func (s *Stack) PopFixed() (decimal.Decimal, error) {
+func (s *Stack) PopDecimal() (decimal.Decimal, error) {
 	v, err := s.Pop()
 	if err != nil {
 		return decimal.Zero, err
 	}
-	d, err := s.calc.ParseFixed(v)
+	d, err := s.calc.ParseDecimal(v)
 	if err != nil {
 		return decimal.Zero, err
 	}
 	return d, err
 }
 
-func (s *Stack) PopFixed2() (decimal.Decimal, decimal.Decimal, error) {
-	b, err := s.PopFixed()
+func (s *Stack) PopDecimal2() (decimal.Decimal, decimal.Decimal, error) {
+	b, err := s.PopDecimal()
 	if err != nil {
 		return decimal.Zero, decimal.Zero, err
 	}
-	a, err := s.PopFixed()
+	a, err := s.PopDecimal()
 	if err != nil {
 		return decimal.Zero, decimal.Zero, err
 	}
@@ -308,12 +308,12 @@ func (s *Stack) PushBool(v bool) {
 	s.Push(s.calc.FormatBool(v))
 }
 
-func (s *Stack) PushFixed(v decimal.Decimal) {
-	s.Push(s.calc.FormatFixed(v, s.calc.AutoFormat))
+func (s *Stack) PushDecimal(v decimal.Decimal) {
+	s.Push(s.calc.FormatDecimal(v, s.calc.AutoFormat))
 }
 
-func (s *Stack) PushFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) {
-	s.Push(s.calc.FormatFixedWithAttrs(v, attrs))
+func (s *Stack) PushDecimalWithAttrs(v decimal.Decimal, attrs FormatAttrs) {
+	s.Push(s.calc.FormatDecimalWithAttrs(v, attrs))
 }
 
 func (s *Stack) PushFloat(v float64) {

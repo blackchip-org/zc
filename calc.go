@@ -424,7 +424,7 @@ func (c *Calc) FormatBool(v bool) string {
 	return "false"
 }
 
-func (c *Calc) FormatFixed(v decimal.Decimal, applyLayout bool) string {
+func (c *Calc) FormatDecimal(v decimal.Decimal, applyLayout bool) string {
 	var s string
 	if c.Precision != 0 {
 		fn, ok := RoundingFuncsFix[c.RoundingMode]
@@ -438,8 +438,8 @@ func (c *Calc) FormatFixed(v decimal.Decimal, applyLayout bool) string {
 	return c.FormatNumberString(s, applyLayout)
 }
 
-func (c *Calc) FormatFixedWithAttrs(v decimal.Decimal, attrs FormatAttrs) string {
-	s := c.FormatFixed(v, attrs.ApplyLayout)
+func (c *Calc) FormatDecimalWithAttrs(v decimal.Decimal, attrs FormatAttrs) string {
+	s := c.FormatDecimal(v, attrs.ApplyLayout)
 	return c.addCurrencySymbol(attrs, s)
 }
 
@@ -477,8 +477,8 @@ func (c *Calc) formatValueWithAttrs(v string, attrs FormatAttrs) string {
 		return v
 	case c.IsBigInt(v):
 		return c.FormatBigIntWithAttrs(c.MustParseBigInt(v), attrs)
-	case c.IsFixed(v):
-		return c.FormatFixedWithAttrs(c.MustParseFixed(v), attrs)
+	case c.IsDecimal(v):
+		return c.FormatDecimalWithAttrs(c.MustParseDecimal(v), attrs)
 	}
 	return v
 }
@@ -572,21 +572,21 @@ func (c *Calc) MustParseBool(v string) bool {
 	return b
 }
 
-func (c *Calc) ParseFixed(v string) (decimal.Decimal, error) {
+func (c *Calc) ParseDecimal(v string) (decimal.Decimal, error) {
 	d, err := decimal.NewFromString(c.cleanNumString(v))
 	if err != nil {
-		return decimal.Zero, fmt.Errorf("expecting Fixed but got %v", scanner.Quote(v))
+		return decimal.Zero, fmt.Errorf("expecting Decimal but got %v", scanner.Quote(v))
 	}
 	return d, nil
 }
 
-func (c *Calc) IsFixed(v string) bool {
-	_, err := c.ParseFixed(v)
+func (c *Calc) IsDecimal(v string) bool {
+	_, err := c.ParseDecimal(v)
 	return err == nil
 }
 
-func (c *Calc) MustParseFixed(v string) decimal.Decimal {
-	d, err := c.ParseFixed(v)
+func (c *Calc) MustParseDecimal(v string) decimal.Decimal {
+	d, err := c.ParseDecimal(v)
 	if err != nil {
 		panic(err)
 	}

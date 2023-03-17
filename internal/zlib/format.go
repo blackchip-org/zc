@@ -133,7 +133,7 @@ func Round(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	value, err := env.Stack.PopFixed()
+	value, err := env.Stack.PopDecimal()
 	if err != nil {
 		return err
 	}
@@ -142,7 +142,7 @@ func Round(env *zc.Env) error {
 		return fmt.Errorf("invalid rounding mode: %v", env.Calc.RoundingMode)
 	}
 	r := fn(value, places)
-	env.Stack.PushFixed(r)
+	env.Stack.PushDecimal(r)
 	return nil
 }
 

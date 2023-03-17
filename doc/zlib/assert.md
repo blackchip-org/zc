@@ -8,15 +8,15 @@ Type assertions
 
 <!-- index -->
 
-| Operation         | Description
-|-------------------|----------------
-| [bigint](#bigint) | Assert value is a big integer
-| [bool](#bool)     | Assert value is a boolean
-| [fixed](#fixed)   | Assert value is a fixed-point number
-| [float](#float)   | Assert value is a floating-point number
-| [int](#int)       | Assert value is an integer
-| [int32](#int32)   | Assert value is a 32-bit signed integer
-| [int64](#int64)   | Assert value is a 64-bit signed integer
+| Operation            | Description
+|---------------------|----------------
+| [bigint](#bigint)   | Assert value is a big integer
+| [bool](#bool)       | Assert value is a boolean
+| [decimal](#decimal) | Assert value is a fixed-point number
+| [float](#float)     | Assert value is a floating-point number
+| [int](#int)         | Assert value is an integer
+| [int32](#int32)     | Assert value is a 32-bit signed integer
+| [int64](#int64)     | Assert value is a 64-bit signed integer
 
 
 ## bigint
@@ -57,23 +57,23 @@ Example:
 | `try assert.bool`   | `expecting Bool but got 'no' \| false`
 
 
-## fixed
+## decimal
 
 Assert that `a` is a fixed-point number. If not, an error is raised.
 
-    ( a:Fixed -- )
+    ( a:Decimal -- )
 
 Example:
 
-<!-- test: fixed -->
+<!-- test: decimal -->
 
-| Input               | Stack
-|---------------------|------------------
-| `123.45`            | `123.45`
-| `try assert.fixed`  | `true`
-| `clear`             |
-| `12.34.56`          | `12.34.56`
-| `try assert.fixed`  | `expecting Fixed but got 12.34.56 \| false`
+| Input                | Stack
+|----------------------|------------------
+| `123.45`             | `123.45`
+| `try assert.decimal` | `true`
+| `clear`              |
+| `12.34.56`           | `12.34.56`
+| `try assert.decimal` | `expecting Decimal but got 12.34.56 \| false`
 
 
 ## float

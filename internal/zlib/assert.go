@@ -20,8 +20,8 @@ func BoolAssert(env *zc.Env) error {
 	return nil
 }
 
-func Fixed(env *zc.Env) error {
-	_, err := env.Stack.PopFixed()
+func Decimal(env *zc.Env) error {
+	_, err := env.Stack.PopDecimal()
 	if err != nil {
 		return err
 	}

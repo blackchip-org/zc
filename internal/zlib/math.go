@@ -7,48 +7,48 @@ import (
 
 var (
 	opAbs = funcs.UnaryOps{
-		BigInt: opAbsBigInt,
-		Fixed:  opAbsFixed,
+		BigInt:  opAbsBigInt,
+		Decimal: opAbsDecimal,
 	}
 	opAdd = funcs.BinaryOps{
-		BigInt: opAddBigInt,
-		Fixed:  opAddFixed,
+		BigInt:  opAddBigInt,
+		Decimal: opAddDecimal,
 	}
 	opCeil = funcs.UnaryOps{
-		BigInt: opCeilBigInt,
-		Fixed:  opCeilFixed,
+		BigInt:  opCeilBigInt,
+		Decimal: opCeilDecimal,
 	}
 	opFloor = funcs.UnaryOps{
-		BigInt: opFloorBigInt,
-		Fixed:  opFloorFixed,
+		BigInt:  opFloorBigInt,
+		Decimal: opFloorDecimal,
 	}
 	opMul = funcs.BinaryOps{
-		BigInt: opMulBigInt,
-		Fixed:  opMulFixed,
+		BigInt:  opMulBigInt,
+		Decimal: opMulDecimal,
 	}
 	opMod = funcs.BinaryOps{
-		BigInt: opModBigInt,
-		Fixed:  opModFixed,
+		BigInt:  opModBigInt,
+		Decimal: opModDecimal,
 	}
 	opNeg = funcs.UnaryOps{
-		BigInt: opNegBigInt,
-		Fixed:  opNegFixed,
+		BigInt:  opNegBigInt,
+		Decimal: opNegDecimal,
 	}
 	opPow = funcs.BinaryOps{
-		BigInt: opPowBigInt,
-		Fixed:  opPowFixed,
+		BigInt:  opPowBigInt,
+		Decimal: opPowDecimal,
 	}
 	opRem = funcs.BinaryOps{
-		BigInt: opRemBigInt,
-		Fixed:  opRemFixed,
+		BigInt:  opRemBigInt,
+		Decimal: opRemDecimal,
 	}
 	opSign = funcs.UnaryOps{
-		BigInt: opSignBigInt,
-		Fixed:  opSignFixed,
+		BigInt:  opSignBigInt,
+		Decimal: opSignDecimal,
 	}
 	opSub = funcs.BinaryOps{
-		BigInt: opSubBigInt,
-		Fixed:  opSubFixed,
+		BigInt:  opSubBigInt,
+		Decimal: opSubDecimal,
 	}
 )
 

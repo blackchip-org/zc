@@ -54,11 +54,11 @@ These modules are useful when developing calculator scripts:
 These modules are automatically in use through overloaded functions. These
 never need to be imported but can be for testing purposes.
 
-| Name                               | Description
-|------------------------------------|----------------------------------------
-| [bool.bigint](zlib/bool-bigint.md) | Boolean operations using integer math
-| [bool.fixed](zlib/bool-fixed.md)   | Boolean operations using fixed-point math
-| [math.bigint](zlib/math-bigint.md) | Basic mathematical operations with integers
-| [math.fixed](zlib/math-fixed.md)   | Basic mathematical operations with fixed-point numbers
-| math.float                         |
-| str.bool                           |
+| Name                                 | Description
+|--------------------------------------|----------------------------------------
+| [bool.bigint](zlib/bool-bigint.md)   | Boolean operations using integer math
+| [bool.decimal](zlib/bool-decimal.md) | Boolean operations using fixed-point math
+| [math.bigint](zlib/math-bigint.md)   | Basic mathematical operations with integers
+| [math.decimal](zlib/math-decimal.md) | Basic mathematical operations with fixed-point numbers
+| math.float                           |
+| str.bool                             |

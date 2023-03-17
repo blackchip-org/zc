@@ -11,34 +11,34 @@ func opOr(a bool, b bool) (bool, error)  { return a || b, nil }
 
 var (
 	opEq = funcs.CompareOps{
-		BigInt: opEqBigInt,
-		Fixed:  opEqFixed,
-		String: opEqString,
+		BigInt:  opEqBigInt,
+		Decimal: opEqDecimal,
+		String:  opEqString,
 	}
 	opNeq = funcs.CompareOps{
-		BigInt: opNeqBigInt,
-		Fixed:  opNeqFixed,
-		String: opNeqString,
+		BigInt:  opNeqBigInt,
+		Decimal: opNeqDecimal,
+		String:  opNeqString,
 	}
 	opGt = funcs.CompareOps{
-		BigInt: opGtBigInt,
-		Fixed:  opGtFixed,
-		String: opGtString,
+		BigInt:  opGtBigInt,
+		Decimal: opGtDecimal,
+		String:  opGtString,
 	}
 	opGte = funcs.CompareOps{
-		BigInt: opGteBigInt,
-		Fixed:  opGteFixed,
-		String: opGteString,
+		BigInt:  opGteBigInt,
+		Decimal: opGteDecimal,
+		String:  opGteString,
 	}
 	opLt = funcs.CompareOps{
-		BigInt: opLtBigInt,
-		Fixed:  opLtFixed,
-		String: opLtString,
+		BigInt:  opLtBigInt,
+		Decimal: opLtDecimal,
+		String:  opLtString,
 	}
 	opLte = funcs.CompareOps{
-		BigInt: opLteBigInt,
-		Fixed:  opLteFixed,
-		String: opLteString,
+		BigInt:  opLteBigInt,
+		Decimal: opLteDecimal,
+		String:  opLteString,
 	}
 )
 

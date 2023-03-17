@@ -5,14 +5,14 @@ import (
 )
 
 type UnaryOps struct {
-	BigInt UnaryBigInt
-	Fixed  UnaryFixed
-	Float  UnaryFloat
+	BigInt  UnaryBigInt
+	Decimal UnaryDecimal
+	Float   UnaryFloat
 }
 
 type BinaryOps struct {
-	BigInt BinaryBigInt
-	Fixed  BinaryFixed
+	BigInt  BinaryBigInt
+	Decimal BinaryDecimal
 }
 
 func EvalUnaryNum(env *zc.Env, ops UnaryOps) error {
@@ -24,8 +24,8 @@ func EvalUnaryNum(env *zc.Env, ops UnaryOps) error {
 	switch {
 	case env.Calc.IsBigInt(a):
 		return EvalUnaryBigInt(env, ops.BigInt)
-	case ops.Fixed != nil:
-		return EvalUnaryFixed(env, ops.Fixed)
+	case ops.Decimal != nil:
+		return EvalUnaryDecimal(env, ops.Decimal)
 	case ops.Float != nil:
 		return EvalUnaryFloat(env, ops.Float)
 	}
@@ -42,6 +42,6 @@ func EvalBinaryNum(env *zc.Env, ops BinaryOps) error {
 	case env.Calc.IsBigInt(a) && env.Calc.IsBigInt(b):
 		return EvalBinaryBigInt(env, ops.BigInt)
 	default:
-		return EvalBinaryFixed(env, ops.Fixed)
+		return EvalBinaryDecimal(env, ops.Decimal)
 	}
 }
