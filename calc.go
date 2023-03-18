@@ -13,7 +13,6 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/blackchip-org/zc/internal"
 	"github.com/blackchip-org/zc/lang/parser"
 	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
@@ -756,7 +755,7 @@ var (
 func LoadFile(p string) ([]byte, error) {
 	if strings.HasPrefix(p, "zc:") {
 		p = p[3:]
-		return internal.Files.ReadFile(p)
+		return Files.ReadFile(p)
 	}
 	return os.ReadFile(p)
 }

@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/internal/zlib"
+	"github.com/blackchip-org/zc/zlib"
 )
 
 func DefaultConfig() zc.Config {
