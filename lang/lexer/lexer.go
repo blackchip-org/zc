@@ -64,7 +64,7 @@ func (l *Lexer) Next() token.Token {
 	}
 
 	switch {
-	case l.s.IsEnd():
+	case l.s.End():
 		return token.New(token.End, "", l.s.ChPos)
 	case l.s.Ch == '\n':
 		return l.scanOp(token.Newline)
@@ -99,7 +99,7 @@ func (l *Lexer) scanIndent() (token.Token, bool) {
 	text := l.s.Token()
 
 	// If the entire line is blank, ignore it
-	if (l.s.IsEnd() || l.s.Ch == '\n') && strings.TrimSpace(text) == "" {
+	if (l.s.End() || l.s.Ch == '\n') && strings.TrimSpace(text) == "" {
 		return token.Token{}, false
 	}
 
@@ -153,8 +153,8 @@ func (l *Lexer) scanValue() token.Token {
 }
 
 var quoteFunc = scanner.QuotedFunc(scanner.QuotedDef{
-	Escape: scanner.Backslash,
-	AltEnd: scanner.Or(scanner.Newline, scanner.End),
+	Escape: scanner.Rune('\\'),
+	AltEnd: scanner.Rune2('\n', scanner.EndCh),
 	EscapeMap: map[rune]rune{
 		'n': '\n',
 	},
@@ -173,7 +173,7 @@ func (l *Lexer) scanSlash() token.Token {
 	l.s.Next()
 	if l.s.Ch == '/' {
 		l.s.Next()
-		if l.s.IsEnd() || unicode.IsSpace(l.s.Ch) {
+		if l.s.End() || unicode.IsSpace(l.s.Ch) {
 			return token.New(token.Id, "//", l.s.TokenPos)
 		}
 		return token.New(token.DoubleSlash, "//", l.s.TokenPos)
@@ -182,7 +182,7 @@ func (l *Lexer) scanSlash() token.Token {
 		l.s.Next()
 		return token.New(token.SlashDash, "/-", l.s.TokenPos)
 	}
-	if l.s.IsEnd() || unicode.IsSpace(l.s.Ch) {
+	if l.s.End() || unicode.IsSpace(l.s.Ch) {
 		return token.New(token.Id, "/", l.s.TokenPos)
 	}
 	return token.New(token.Slash, "/", l.s.TokenPos)
@@ -197,6 +197,6 @@ func (l *Lexer) skipComment() {
 		l.s.Scan(scanner.RepeatsFunc(scanner.Rune('-'), 3))
 	} else {
 		// Line comment
-		l.s.ScanUntil(scanner.Newline)
+		l.s.ScanUntil(scanner.Rune('\n'))
 	}
 }

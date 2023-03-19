@@ -3,6 +3,7 @@ package scanner
 import (
 	"fmt"
 	"testing"
+	"unicode"
 )
 
 func TestScanners(t *testing.T) {
@@ -36,7 +37,7 @@ func TestScanners(t *testing.T) {
 		{Word, "foo bar", "foo", " bar"},
 
 		{QuotedFunc(QuotedDef{
-			Escape: Backslash,
+			Escape: Rune('\\'),
 			AltEnd: Rune('!'),
 		}), "'foo! bar", "foo", " bar"},
 
@@ -72,7 +73,7 @@ func TestThisPos(t *testing.T) {
 	s := NewString("", data)
 	for _, want := range wants {
 		s.Scan(Word)
-		s.ScanWhitespace()
+		s.ScanWhile(unicode.IsSpace)
 		if want != s.ChPos {
 			t.Fatalf("\n want: %v \n have: %v", want, s.ChPos)
 		}
@@ -94,7 +95,7 @@ func TestTokenPos(t *testing.T) {
 		if want != s.TokenPos {
 			t.Fatalf("\n want: %v \n have: %v", want, s.TokenPos)
 		}
-		s.ScanWhitespace()
+		s.ScanWhile(unicode.IsSpace)
 	}
 }
 
@@ -124,7 +125,7 @@ func TestEscapeMap(t *testing.T) {
 		'a': '!',
 	}
 	quoteDef := QuotedDef{
-		Escape:    Backslash,
+		Escape:    Rune('\\'),
 		EscapeMap: escapeMap,
 	}
 	s := NewString("", "'ab\\a'")

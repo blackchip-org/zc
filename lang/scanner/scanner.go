@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const end = rune(-1)
+const EndCh = rune(-1)
 
 type Scanner struct {
 	Error     error
@@ -75,7 +75,7 @@ func (s *Scanner) ScanWhile(c RuneClass) string {
 }
 
 func (s *Scanner) Next() {
-	if s.Ch == end || s.src == nil {
+	if s.Ch == EndCh || s.src == nil {
 		return
 	}
 
@@ -83,7 +83,7 @@ func (s *Scanner) Next() {
 
 	r, _, err := s.src.ReadRune()
 	if err != nil {
-		s.Lookahead = end
+		s.Lookahead = EndCh
 		if err != io.EOF {
 			s.Error = err
 		}
@@ -114,18 +114,10 @@ func (s *Scanner) Keep() {
 	s.Next()
 }
 
-func (s *Scanner) IsEnd() bool {
-	return s.Ch == end
+func (s *Scanner) End() bool {
+	return s.Ch == EndCh
 }
 
 func (s *Scanner) Ok() bool {
-	return s.Ch != end && s.Error == nil
-}
-
-func (s *Scanner) ScanWhitespace() string {
-	return s.Scan(Whitespace)
-}
-
-func (s *Scanner) ScanUDec() string {
-	return s.Scan(UDec)
+	return s.Ch != EndCh && s.Error == nil
 }

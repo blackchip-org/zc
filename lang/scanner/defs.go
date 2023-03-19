@@ -24,56 +24,38 @@ type QuotedDef struct {
 
 var (
 	BinDef = NumberDef{
-		Digit:    Digit01,
-		DecSep:   Never,
-		Sign:     Never,
-		Exponent: Never,
+		Digit: IsDigit01,
 	}
 	DecDef = NumberDef{
-		Digit:    Digit09,
-		DecSep:   Period,
-		Sign:     PlusMinus,
-		Exponent: Never,
+		Digit:  IsDigit09,
+		DecSep: Rune('.'),
+		Sign:   Rune2('+', '-'),
 	}
 	FloatDef = NumberDef{
-		Digit:    Digit09,
-		DecSep:   Period,
-		Sign:     PlusMinus,
-		Exponent: ExponentE,
+		Digit:    IsDigit09,
+		DecSep:   Rune('.'),
+		Sign:     Rune2('+', '-'),
+		Exponent: Rune2('e', 'E'),
 	}
 	HexDef = NumberDef{
-		Digit:    Digit0F,
-		DecSep:   Never,
-		Sign:     Never,
-		Exponent: Never,
+		Digit: IsDigit0F,
 	}
 	IntDef = NumberDef{
-		Digit:    Digit09,
-		DecSep:   Never,
-		Sign:     PlusMinus,
-		Exponent: Never,
+		Digit: IsDigit09,
+		Sign:  Rune2('+', '-'),
 	}
 	OctDef = NumberDef{
-		Digit:    Digit07,
-		DecSep:   Never,
-		Sign:     Never,
-		Exponent: Never,
+		Digit: IsDigit07,
 	}
 	StringDef = QuotedDef{
-		Escape: Backslash,
-		AltEnd: Never,
+		Escape: Rune('\\'),
 	}
 	UIntDef = NumberDef{
-		Digit:    Digit09,
-		DecSep:   Never,
-		Sign:     Never,
-		Exponent: Never,
+		Digit: IsDigit09,
 	}
 	UDecRef = NumberDef{
-		Digit:    Digit09,
-		DecSep:   Period,
-		Sign:     Never,
-		Exponent: Never,
+		Digit:  IsDigit09,
+		DecSep: Rune('.'),
 	}
 )
 

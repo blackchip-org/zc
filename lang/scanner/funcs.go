@@ -6,7 +6,7 @@ type Func func(*Scanner)
 
 func WhileFunc(while RuneClass) Func {
 	return func(s *Scanner) {
-		for while(s.Ch) && s.Ch != end {
+		for while(s.Ch) && s.Ch != EndCh {
 			s.Keep()
 		}
 	}
@@ -14,13 +14,17 @@ func WhileFunc(while RuneClass) Func {
 
 func UntilFunc(until RuneClass) Func {
 	return func(s *Scanner) {
-		for !until(s.Ch) && s.Ch != end {
+		for !until(s.Ch) && s.Ch != EndCh {
 			s.Keep()
 		}
 	}
 }
 
 func NumberFunc(def NumberDef) Func {
+	def.DecSep = OptionalClass(def.DecSep)
+	def.Sign = OptionalClass(def.Sign)
+	def.Exponent = OptionalClass(def.Exponent)
+
 	return func(s *Scanner) {
 		if def.Sign(s.Ch) {
 			s.Keep()
@@ -63,7 +67,7 @@ func QuotedFunc(def QuotedDef) Func {
 	return func(s *Scanner) {
 		endQuote := s.Ch
 		s.Next()
-		for s.Ch != endQuote && !def.AltEnd(s.Ch) && !s.IsEnd() {
+		for s.Ch != endQuote && !def.AltEnd(s.Ch) && !s.End() {
 			if !def.Escape(s.Ch) {
 				s.Keep()
 				continue

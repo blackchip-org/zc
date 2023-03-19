@@ -32,25 +32,17 @@ func Or(classes ...RuneClass) RuneClass {
 }
 
 var (
-	Always     = func(r rune) bool { return r != end }
-	Backslash  = Rune('\\')
-	Comma      = Rune(',')
-	CharAF     = Or(UCharAF, LCharAF)
-	CharAZ     = Or(UCharAZ, LCharAZ)
-	Digit01    = Rune2('0', '1')
-	Digit07    = RuneRange('0', '7')
-	Digit09    = RuneRange('0', '9')
-	Digit0F    = Or(Digit09, LCharAF, UCharAF)
-	End        = Rune(end)
-	ExponentE  = Rune2('E', 'e')
-	LCharAF    = RuneRange('a', 'f')
-	LCharAZ    = RuneRange('a', 'z')
-	Never      = func(r rune) bool { return false }
-	Newline    = Rune('\n')
-	Period     = Rune('.')
-	PlusMinus  = Rune2('+', '-')
-	Space      = Rune(' ')
-	UCharAF    = RuneRange('A', 'F')
-	UCharAZ    = RuneRange('A', 'Z')
-	Underscore = Rune('_')
+	Always        = func(r rune) bool { return r != EndCh }
+	IsCharAF      = Or(IsUpperCharAF, IsLowerCharAF)
+	IsCharAZ      = Or(IsUpperCharAZ, IsLowerCharAZ)
+	IsDigit01     = Rune2('0', '1')
+	IsDigit07     = RuneRange('0', '7')
+	IsDigit09     = RuneRange('0', '9')
+	IsDigit0F     = Or(IsDigit09, IsLowerCharAF, IsUpperCharAF)
+	IsEnd         = Rune(EndCh)
+	IsLowerCharAF = RuneRange('a', 'f')
+	IsLowerCharAZ = RuneRange('a', 'z')
+	Never         = func(r rune) bool { return false }
+	IsUpperCharAF = RuneRange('A', 'F')
+	IsUpperCharAZ = RuneRange('A', 'Z')
 )
