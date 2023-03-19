@@ -92,7 +92,7 @@ func QuotedFunc(def QuotedDef) Func {
 	}
 }
 
-func RepeatsFunc(is RuneClass, n int) Func {
+func UntilRepeatsFunc(is RuneClass, n int) Func {
 	return func(s *Scanner) {
 		count := 0
 		for s.Ok() && count < n {

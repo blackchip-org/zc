@@ -194,7 +194,7 @@ func (l *Lexer) skipComment() {
 	if l.s.Ch == '-' {
 		// Block comment
 		l.s.Next()
-		l.s.Scan(scanner.RepeatsFunc(scanner.Rune('-'), 3))
+		l.s.Scan(scanner.UntilRepeatsFunc(scanner.Rune('-'), 3))
 	} else {
 		// Line comment
 		l.s.ScanUntil(scanner.Rune('\n'))

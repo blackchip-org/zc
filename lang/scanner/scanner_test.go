@@ -41,7 +41,7 @@ func TestScanners(t *testing.T) {
 			AltEnd: Rune('!'),
 		}), "'foo! bar", "foo", " bar"},
 
-		{RepeatsFunc(Rune('-'), 3),
+		{UntilRepeatsFunc(Rune('-'), 3),
 			"a-b--cd---ef", "a-b--cd", "ef"},
 	}
 
