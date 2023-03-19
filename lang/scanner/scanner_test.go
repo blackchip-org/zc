@@ -37,12 +37,12 @@ func TestScanners(t *testing.T) {
 	var s Scanner
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("[%v] %v", i, test.data), func(t *testing.T) {
-			s.SetString(test.data)
-			tok := s.NextToken(test.fn)
+			s.SetString("", test.data)
+			tok := s.Scan(test.fn)
 			if tok != test.tok {
 				t.Errorf("\n tok have: %v \n tok want: %v", tok, test.tok)
 			}
-			rest := s.NextToken(Remaining)
+			rest := s.Scan(Remaining)
 			if rest != test.rest {
 				t.Errorf("\n rest have: %v \n rest want: %v", rest, test.rest)
 			}
@@ -50,21 +50,61 @@ func TestScanners(t *testing.T) {
 	}
 }
 
-func TestPos(t *testing.T) {
+func TestThisPos(t *testing.T) {
 	data := "123 567 9\n12 456"
-	want := []int{
-		1, 5,
-		1, 9,
-		2, 1,
-		2, 4,
-		2, 7,
+	wants := []Pos{
+		NewPos("", 1, 5),
+		NewPos("", 1, 9),
+		NewPos("", 2, 1),
+		NewPos("", 2, 4),
+		NewPos("", 2, 7),
 	}
-	s := NewForString(data)
-	for i := 0; i < len(want); i += 2 {
-		s.NextToken(Word)
+	s := NewString("", data)
+	for _, want := range wants {
+		s.Scan(Word)
 		s.ScanWhitespace()
-		if want[i] != s.Line || want[i+1] != s.Column {
-			t.Fatalf("\n want: %v.%v \n have: %v.%v", want[i], want[i+1], s.Line, s.Column)
+		if want != s.ThisPos {
+			t.Fatalf("\n want: %v \n have: %v", want, s.ThisPos)
 		}
+	}
+}
+
+func TestOutPos(t *testing.T) {
+	data := "123 567 9\n12 456"
+	wants := []Pos{
+		NewPos("", 1, 1),
+		NewPos("", 1, 5),
+		NewPos("", 1, 9),
+		NewPos("", 2, 1),
+		NewPos("", 2, 4),
+	}
+	s := NewString("", data)
+	for _, want := range wants {
+		s.Scan(Word)
+		if want != s.OutPos {
+			t.Fatalf("\n want: %v \n have: %v", want, s.OutPos)
+		}
+		s.ScanWhitespace()
+	}
+}
+
+func TestManual(t *testing.T) {
+	s := NewString("", "1234")
+	s.Start()
+	s.Keep()
+	s.Keep()
+	want := "12"
+	have := s.Emit()
+	if have != want {
+		t.Errorf("\n have: %v \n want: %v", have, want)
+	}
+
+	s.Start()
+	s.Keep()
+	s.Keep()
+	want = "34"
+	have = s.Emit()
+	if have != want {
+		t.Errorf("\n have: %v \n want: %v", have, want)
 	}
 }

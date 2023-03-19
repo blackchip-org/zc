@@ -117,7 +117,7 @@ func (c *Console) Eval(text string) bool {
 		calcError, ok := execError.(zc.CalcError)
 		if ok {
 			for _, f := range calcError.Frames {
-				fmt.Printf("%v @ %v:%v\n", f.Pos.File, f.Pos.Line, f.Pos.Column)
+				fmt.Printf("%v @ %v:%v\n", f.Pos.Name, f.Pos.Line, f.Pos.Column)
 				if f.Func != "" {
 					fmt.Printf("\t%v\n", f.Func)
 				}

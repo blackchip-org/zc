@@ -31,7 +31,7 @@ func TestPosition(t *testing.T) {
 }
 
 func TestToken(t *testing.T) {
-	start := scanner.Pos{File: "", Line: 1, Column: 1}
+	start := scanner.Pos{Name: "", Line: 1, Column: 1}
 	tests := []struct {
 		src  string
 		want token.Token

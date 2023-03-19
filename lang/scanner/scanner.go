@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"bufio"
+	"bytes"
 	"io"
 	"strings"
 )
@@ -9,35 +10,46 @@ import (
 const End = rune(-1)
 
 type Scanner struct {
-	Error  error
-	Behind rune
-	This   rune
-	Ahead  rune
-	Out    strings.Builder
-	Line   int
-	Column int
-	src    *bufio.Reader
+	Error   error
+	Behind  rune
+	This    rune
+	Ahead   rune
+	Out     strings.Builder
+	OutPos  Pos
+	ThisPos Pos
+	src     *bufio.Reader
 }
 
-func NewForReader(src io.Reader) *Scanner {
+func New(name string, src io.Reader) *Scanner {
 	s := &Scanner{}
-	s.SetReader(src)
+	s.SetReader(name, src)
 	return s
 }
 
-func NewForString(src string) *Scanner {
+func NewString(name string, src string) *Scanner {
 	s := &Scanner{}
-	s.SetString(src)
+	s.SetString(name, src)
 	return s
 }
 
-func (s *Scanner) SetReader(src io.Reader) {
+func NewBytes(name string, src []byte) *Scanner {
+	s := &Scanner{}
+	s.SetBytes(name, src)
+	return s
+}
+
+func (s *Scanner) SetReader(name string, src io.Reader) {
 	s.src = bufio.NewReader(src)
+	s.ThisPos.Name = name
 	s.init()
 }
 
-func (s *Scanner) SetString(src string) {
-	s.SetReader(strings.NewReader(src))
+func (s *Scanner) SetString(name string, src string) {
+	s.SetReader(name, strings.NewReader(src))
+}
+
+func (s *Scanner) SetBytes(name string, src []byte) {
+	s.SetReader(name, bytes.NewReader(src))
 }
 
 func (s *Scanner) init() {
@@ -46,12 +58,13 @@ func (s *Scanner) init() {
 	s.Next()
 	s.Next()
 	s.Behind = End
-	s.Line = 1
-	s.Column = 1
+	s.ThisPos.Line = 1
+	s.ThisPos.Column = 1
 }
 
-func (s *Scanner) NextToken(fn Func) string {
+func (s *Scanner) Scan(fn Func) string {
 	s.Out.Reset()
+	s.OutPos = s.ThisPos
 	fn(s)
 	token := s.Out.String()
 	s.Out.Reset()
@@ -77,11 +90,20 @@ func (s *Scanner) Next() {
 	}
 
 	if s.This == '\n' {
-		s.Line++
-		s.Column = 0
+		s.ThisPos.Line++
+		s.ThisPos.Column = 0
 	} else {
-		s.Column++
+		s.ThisPos.Column++
 	}
+}
+
+func (s *Scanner) Start() {
+	s.OutPos = s.ThisPos
+	s.Out.Reset()
+}
+
+func (s *Scanner) Emit() string {
+	return s.Out.String()
 }
 
 func (s *Scanner) Keep() {
@@ -94,9 +116,9 @@ func (s *Scanner) IsEnd() bool {
 }
 
 func (s *Scanner) ScanWhitespace() string {
-	return s.NextToken(Whitespace)
+	return s.Scan(Whitespace)
 }
 
 func (s *Scanner) ScanUDec() string {
-	return s.NextToken(UDec)
+	return s.Scan(UDec)
 }

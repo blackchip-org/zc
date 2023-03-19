@@ -28,7 +28,7 @@ func New(file string, src []byte) *Lexer {
 	s := &Lexer{
 		src: src,
 		pos: scanner.Pos{
-			File: file,
+			Name: file,
 			Line: 1,
 		},
 	}

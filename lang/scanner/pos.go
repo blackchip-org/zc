@@ -3,7 +3,7 @@ package scanner
 import "fmt"
 
 type Pos struct {
-	File   string
+	Name   string
 	Line   int
 	Column int
 }
@@ -17,8 +17,8 @@ func (p Pos) IsValid() bool {
 }
 
 func (p Pos) String() string {
-	if p.File != "" {
-		return fmt.Sprintf("%v:%v:%v", p.File, p.Line, p.Column)
+	if p.Name != "" {
+		return fmt.Sprintf("%v:%v:%v", p.Name, p.Line, p.Column)
 	}
 	return fmt.Sprintf("%v:%v", p.Line, p.Column)
 }
