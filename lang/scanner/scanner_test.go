@@ -26,12 +26,22 @@ func TestScanners(t *testing.T) {
 		{Int, "0x1234 567", "0", "x1234 567"},
 		{Oct, "56789", "567", "89"},
 		{Remaining, "123 456", "123 456", ""},
+		{String, "'abcd'ef", "abcd", "ef"},
+		{String, "'ab\\'cd'ef", "ab'cd", "ef"},
 		{UDec, "12.345 678", "12.345", " 678"},
 		{UDec, "-12.345 678", "", "-12.345 678"},
 		{UInt, "1234 567", "1234", " 567"},
 		{UInt, "-1234 567", "", "-1234 567"},
 		{Whitespace, "     1234", "     ", "1234"},
 		{Word, "foo bar", "foo", " bar"},
+
+		{QuotedFunc(QuotedDef{
+			Escape: Backslash,
+			AltEnd: Rune('!'),
+		}), "'foo! bar", "foo", " bar"},
+
+		{RepeatsFunc(Rune('-'), 3),
+			"a-b--cd---ef", "a-b--cd", "ef"},
 	}
 
 	var s Scanner
@@ -63,13 +73,13 @@ func TestThisPos(t *testing.T) {
 	for _, want := range wants {
 		s.Scan(Word)
 		s.ScanWhitespace()
-		if want != s.ThisPos {
-			t.Fatalf("\n want: %v \n have: %v", want, s.ThisPos)
+		if want != s.ChPos {
+			t.Fatalf("\n want: %v \n have: %v", want, s.ChPos)
 		}
 	}
 }
 
-func TestOutPos(t *testing.T) {
+func TestTokenPos(t *testing.T) {
 	data := "123 567 9\n12 456"
 	wants := []Pos{
 		NewPos("", 1, 1),
@@ -81,8 +91,8 @@ func TestOutPos(t *testing.T) {
 	s := NewString("", data)
 	for _, want := range wants {
 		s.Scan(Word)
-		if want != s.OutPos {
-			t.Fatalf("\n want: %v \n have: %v", want, s.OutPos)
+		if want != s.TokenPos {
+			t.Fatalf("\n want: %v \n have: %v", want, s.TokenPos)
 		}
 		s.ScanWhitespace()
 	}
@@ -94,7 +104,7 @@ func TestManual(t *testing.T) {
 	s.Keep()
 	s.Keep()
 	want := "12"
-	have := s.Emit()
+	have := s.Token()
 	if have != want {
 		t.Errorf("\n have: %v \n want: %v", have, want)
 	}
@@ -103,8 +113,32 @@ func TestManual(t *testing.T) {
 	s.Keep()
 	s.Keep()
 	want = "34"
-	have = s.Emit()
+	have = s.Token()
 	if have != want {
 		t.Errorf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestEscapeMap(t *testing.T) {
+	escapeMap := map[rune]rune{
+		'a': '!',
+	}
+	quoteDef := QuotedDef{
+		Escape:    Backslash,
+		EscapeMap: escapeMap,
+	}
+	s := NewString("", "'ab\\a'")
+	have := s.Scan(QuotedFunc(quoteDef))
+	want := "ab!"
+	if have != want {
+		t.Errorf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestNotTerminated(t *testing.T) {
+	s := NewString("", "'abcd")
+	s.Scan(String)
+	if s.Error != ErrNotTerminated {
+		t.Errorf("expected error")
 	}
 }

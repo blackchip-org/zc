@@ -2,11 +2,24 @@ package scanner
 
 import "unicode"
 
+func OptionalClass(r RuneClass) RuneClass {
+	if r == nil {
+		return Never
+	}
+	return r
+}
+
 type NumberDef struct {
 	Digit    RuneClass
 	DecSep   RuneClass
 	Sign     RuneClass
 	Exponent RuneClass
+}
+
+type QuotedDef struct {
+	Escape    RuneClass
+	EscapeMap map[rune]rune
+	AltEnd    RuneClass
 }
 
 var (
@@ -46,6 +59,10 @@ var (
 		Sign:     Never,
 		Exponent: Never,
 	}
+	StringDef = QuotedDef{
+		Escape: Backslash,
+		AltEnd: Never,
+	}
 	UIntDef = NumberDef{
 		Digit:    Digit09,
 		DecSep:   Never,
@@ -68,6 +85,7 @@ var (
 	Int        = NumberFunc(IntDef)
 	Oct        = NumberFunc(OctDef)
 	Remaining  = WhileFunc(Always)
+	String     = QuotedFunc(StringDef)
 	Whitespace = WhileFunc(unicode.IsSpace)
 	UInt       = NumberFunc(UIntDef)
 	UDec       = NumberFunc(UDecRef)

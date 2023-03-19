@@ -1,34 +1,13 @@
 package lexer
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
 	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 )
-
-func TestPosition(t *testing.T) {
-	src := []byte("one two\nthree four\n\n")
-	pos := []scanner.Pos{
-		scanner.NewPos("", 1, 1),
-		scanner.NewPos("", 1, 5),
-		scanner.NewPos("", 1, 8),
-		scanner.NewPos("", 2, 1),
-		scanner.NewPos("", 2, 7),
-		scanner.NewPos("", 2, 11),
-		scanner.NewPos("", 3, 1),
-		scanner.NewPos("", 4, 1),
-	}
-
-	s := New("", src)
-	for i, want := range pos {
-		have := s.Next()
-		if have.Pos != want {
-			t.Fatalf("\n %v \n have %v \n want %v", i, have.Pos, want)
-		}
-	}
-}
 
 func TestToken(t *testing.T) {
 	start := scanner.Pos{Name: "", Line: 1, Column: 1}
@@ -43,6 +22,7 @@ func TestToken(t *testing.T) {
 		{".123", token.New(token.Value, ".123", start)},
 		{"\"foo bar\"", token.New(token.StringPlain, "foo bar", start)},
 		{"'foo bar'", token.New(token.String, "foo bar", start)},
+		{"'foo bar\nbaz", token.New(token.String, "foo bar", start)},
 		{"'\\'foo bar\\''", token.New(token.String, "'foo bar'", start)},
 		{"", token.New(token.End, "", start)},
 		{"\n", token.New(token.Newline, "\n", start)},
@@ -75,8 +55,8 @@ func TestIndent(t *testing.T) {
 		{"a; [\n1\n2\n]\n", []token.Type{token.Id, token.Semicolon, token.Value, token.Value, token.Newline}},
 	}
 
-	for _, test := range tests {
-		t.Run(test.src, func(t *testing.T) {
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("%d_%s", i, test.src), func(t *testing.T) {
 			s := New("", []byte(test.src))
 			var have []token.Type
 			for tok := s.Next(); tok.Type != token.End; tok = s.Next() {
@@ -86,24 +66,5 @@ func TestIndent(t *testing.T) {
 				t.Errorf("\n have %v \n want %v", have, test.want)
 			}
 		})
-	}
-}
-
-func TestQuote(t *testing.T) {
-	tests := []struct {
-		src  string
-		want string
-	}{
-		{"1234", "1234"},
-		{"abcd", "'abcd'"},
-		{"12 34", "'12 34'"},
-		{"a", "'a'"},
-	}
-
-	for _, test := range tests {
-		have := Quote(test.src)
-		if have != test.want {
-			t.Errorf("\n have: %v \n want: %v", have, test.want)
-		}
 	}
 }

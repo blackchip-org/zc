@@ -32,7 +32,8 @@ func Or(classes ...RuneClass) RuneClass {
 }
 
 var (
-	Always     = func(r rune) bool { return r != End }
+	Always     = func(r rune) bool { return r != end }
+	Backslash  = Rune('\\')
 	Comma      = Rune(',')
 	CharAF     = Or(UCharAF, LCharAF)
 	CharAZ     = Or(UCharAZ, LCharAZ)
@@ -40,10 +41,12 @@ var (
 	Digit07    = RuneRange('0', '7')
 	Digit09    = RuneRange('0', '9')
 	Digit0F    = Or(Digit09, LCharAF, UCharAF)
+	End        = Rune(end)
 	ExponentE  = Rune2('E', 'e')
 	LCharAF    = RuneRange('a', 'f')
 	LCharAZ    = RuneRange('a', 'z')
 	Never      = func(r rune) bool { return false }
+	Newline    = Rune('\n')
 	Period     = Rune('.')
 	PlusMinus  = Rune2('+', '-')
 	Space      = Rune(' ')

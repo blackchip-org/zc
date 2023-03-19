@@ -3,37 +3,23 @@ package lexer
 import (
 	"strings"
 	"unicode"
-	"unicode/utf8"
 
 	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
+var isSpaceOrTab = scanner.Rune2(' ', '\t')
+
 type Lexer struct {
-	src        []byte
-	ch         rune          // current rune being scanned
-	w          int           // width, in bytes, of the current rune
-	idx        int           // index into src of where ch is located
-	pos        scanner.Pos   // file, line, and column where ch is located
-	start      scanner.Pos   // position of the scanner when Next() was called
+	s          *scanner.Scanner
 	indents    int           // count of current indentation level, one for each tab
 	nextTokens []token.Token // pending dedent tokens to emit
 	inBlock    bool
 }
 
-// When the src stream is exhausted, ch is set to this value
-const end rune = -1
-
 func New(file string, src []byte) *Lexer {
-	s := &Lexer{
-		src: src,
-		pos: scanner.Pos{
-			Name: file,
-			Line: 1,
-		},
-	}
-	s.scan()
-	return s
+	l := &Lexer{s: scanner.NewBytes(file, src)}
+	return l
 }
 
 func (l *Lexer) Next() token.Token {
@@ -45,106 +31,82 @@ func (l *Lexer) Next() token.Token {
 		return tok
 	}
 
-	if l.ch == '-' && l.lookahead() == '-' {
+	if l.s.Ch == '-' && l.s.Lookahead == '-' {
 		l.skipComment()
 		// If we have consumed a comment and we are in a block, we need to
 		// consume any indentation on the next line.
 		if l.inBlock {
-			l.skipSpace()
+			l.s.ScanWhile(isSpaceOrTab)
 		}
 	}
 
-	// When at the start of the line, check to see what the current
-	// indentation level is and emit indent and dedent tokens as needed
-	l.start = l.pos
-	if l.pos.Column == 1 && !l.inBlock {
+	l.s.Start()
+	if l.s.ChPos.Column == 1 && !l.inBlock {
 		if tok, yes := l.scanIndent(); yes {
 			return tok
 		}
 	}
+	l.s.ScanWhile(isSpaceOrTab)
 
-	l.skipSpace()
-
-	l.start = l.pos
-	next := l.lookahead()
-
+	l.s.Start()
 	if l.inBlock {
-		l.skipSpaceAndNewlines()
+		l.s.ScanWhile(unicode.IsSpace)
 	}
-	if l.ch == '[' {
+	if l.s.Ch == '[' {
 		l.inBlock = true
-		l.scan()
-		l.skipSpaceAndNewlines()
+		l.s.Next()
+		l.s.ScanWhile(unicode.IsSpace)
 	}
-	if l.ch == ']' {
+	if l.s.Ch == ']' {
 		l.inBlock = false
-		l.scan()
-		l.skipSpace()
+		l.s.Next()
+		l.s.ScanWhile(isSpaceOrTab)
 	}
 
 	switch {
-	case l.ch == end:
-		return token.New(token.End, "", l.pos)
-	case l.ch == '\n':
+	case l.s.IsEnd():
+		return token.New(token.End, "", l.s.ChPos)
+	case l.s.Ch == '\n':
 		return l.scanOp(token.Newline)
-	case l.ch == ';':
+	case l.s.Ch == ';':
 		return l.scanOp(token.Semicolon)
-	case l.ch == '/':
+	case l.s.Ch == '/':
 		return l.scanSlash()
-	case l.ch == '"':
-		return l.scanString('"')
-	case l.ch == '\'':
-		return l.scanString('\'')
-	case isValue(l.ch, next):
+	case l.s.Ch == '"', l.s.Ch == '\'':
+		return l.scanString()
+	case isValue(l.s.Ch, l.s.Lookahead):
 		return l.scanValue()
 	}
 	return l.scanId()
 }
 
-func (l *Lexer) scanId() token.Token {
-	startL := l.idx
-	for l.ch != end && token.IsIdRune(l.ch) {
-		l.scan()
-	}
-	lit := string(l.src[startL:l.idx])
-	if len(lit) == 0 {
-		panic("id literal is zero in length")
-	}
-	// If the identifier is a keyword, use the keyword specific token type,
-	// otherwise use IdentToken
-	return token.New(token.LookupKeyword(lit), lit, l.start)
-}
-
-// Returns true if there is an indent/dedent token to emit
 func (l *Lexer) scanIndent() (token.Token, bool) {
-	var indent strings.Builder
-
 	spaces := 0
-	for l.ch != end && (l.ch == '\t' || l.ch == ' ') {
-		if l.ch == ' ' {
+	for l.s.Ok() && isSpaceOrTab(l.s.Ch) {
+		if l.s.Ch == ' ' {
 			spaces++
 			if spaces == 4 {
 				spaces = 0
-				indent.WriteRune('\t')
+				l.s.Text.WriteRune('\t')
 			}
-		} else if l.ch == '\t' {
+		} else if l.s.Ch == '\t' {
 			spaces = 0
-			indent.WriteRune('\t')
+			l.s.Text.WriteRune('\t')
 		}
-		l.scan()
+		l.s.Next()
 	}
 
-	lit := indent.String()
+	text := l.s.Token()
 
 	// If the entire line is blank, ignore it
-	if (l.ch == end || l.ch == '\n') && strings.TrimSpace(lit) == "" {
+	if (l.s.IsEnd() || l.s.Ch == '\n') && strings.TrimSpace(text) == "" {
 		return token.Token{}, false
 	}
 
 	// Count the number of tabs to determine the indentation level. If this
 	// is the same indentation level of the previous line, do not emit
 	// an indent/dedent token
-	n := len(lit)
+	n := len(text)
 	diff := n - l.indents
 	var tok token.Token
 	if diff == 0 {
@@ -152,9 +114,9 @@ func (l *Lexer) scanIndent() (token.Token, bool) {
 	}
 
 	if diff > 0 {
-		tok = token.New(token.Indent, lit, l.start)
+		tok = token.New(token.Indent, text, l.s.TokenPos)
 	} else {
-		tok = token.New(token.Dedent, lit, l.start)
+		tok = token.New(token.Dedent, text, l.s.TokenPos)
 	}
 	if diff < 0 {
 		diff = -diff
@@ -170,181 +132,71 @@ func (l *Lexer) scanIndent() (token.Token, bool) {
 	return tok, true
 }
 
-func (l *Lexer) scanOp(name token.Type) token.Token {
-	lit := string(l.ch)
-	l.scan()
-	return token.New(name, lit, l.start)
+func (l *Lexer) scanOp(t token.Type) token.Token {
+	l.s.Keep()
+	return token.New(t, l.s.Token(), l.s.TokenPos)
 }
 
-func (l *Lexer) scanString(term rune) token.Token {
-	l.scan()
-	var lit strings.Builder
-	escaping := false
-	for l.ch != end && l.ch != '\n' {
-		if !escaping && l.ch == term {
-			break
-		}
-		if l.ch == '\\' {
-			escaping = true
-		} else {
-			if escaping {
-				switch l.ch {
-				case 'n':
-					lit.WriteRune('\n')
-				default:
-					lit.WriteRune(l.ch)
-				}
-			} else {
-				lit.WriteRune(l.ch)
-			}
-			escaping = false
-		}
-		l.scan()
+func (l *Lexer) scanId() token.Token {
+	text := l.s.Scan(scanner.WhileFunc(token.IsIdRune))
+	if len(text) == 0 {
+		panic("id literal is zero in length")
 	}
-	l.scan()
-	t := token.String
-	if term == '"' {
-		t = token.StringPlain
-	}
-	return token.New(t, lit.String(), l.start)
+	// If the identifier is a keyword, use the keyword specific token type,
+	// otherwise use IdentToken
+	return token.New(token.LookupKeyword(text), text, l.s.TokenPos)
 }
 
 func (l *Lexer) scanValue() token.Token {
-	startL := l.idx
-	for l.ch != end && !unicode.IsSpace(l.ch) {
-		l.scan()
+	text := l.s.Scan(scanner.UntilFunc(unicode.IsSpace))
+	return token.New(token.Value, text, l.s.TokenPos)
+}
+
+var quoteFunc = scanner.QuotedFunc(scanner.QuotedDef{
+	Escape: scanner.Backslash,
+	AltEnd: scanner.Or(scanner.Newline, scanner.End),
+	EscapeMap: map[rune]rune{
+		'n': '\n',
+	},
+})
+
+func (l *Lexer) scanString() token.Token {
+	t := token.String
+	if l.s.Ch == '"' {
+		t = token.StringPlain
 	}
-	lit := string(l.src[startL:l.idx])
-	t := token.Value
-	return token.New(t, lit, l.start)
+	text := l.s.Scan(quoteFunc)
+	return token.New(t, text, l.s.TokenPos)
 }
 
 func (l *Lexer) scanSlash() token.Token {
-	l.scan()
-	if l.ch == '/' {
-		l.scan()
-		if l.ch == end || unicode.IsSpace(l.ch) {
-			return token.New(token.Id, "//", l.start)
+	l.s.Next()
+	if l.s.Ch == '/' {
+		l.s.Next()
+		if l.s.IsEnd() || unicode.IsSpace(l.s.Ch) {
+			return token.New(token.Id, "//", l.s.TokenPos)
 		}
-		return token.New(token.DoubleSlash, "//", l.start)
+		return token.New(token.DoubleSlash, "//", l.s.TokenPos)
 	}
-	if l.ch == '-' {
-		l.scan()
-		return token.New(token.SlashDash, "/-", l.start)
+	if l.s.Ch == '-' {
+		l.s.Next()
+		return token.New(token.SlashDash, "/-", l.s.TokenPos)
 	}
-	if l.ch == end || unicode.IsSpace(l.ch) {
-		return token.New(token.Id, "/", l.start)
+	if l.s.IsEnd() || unicode.IsSpace(l.s.Ch) {
+		return token.New(token.Id, "/", l.s.TokenPos)
 	}
-	return token.New(token.Slash, "/", l.start)
-}
-
-func (l *Lexer) scan() {
-	if l.ch == end {
-		return
-	}
-
-	if l.ch == '\n' {
-		l.pos.Line++
-		l.pos.Column = 1
-	} else if l.ch == '\t' {
-		l.pos.Column += 4
-	} else {
-		l.pos.Column++
-	}
-	l.idx += l.w
-	if l.idx >= len(l.src) {
-		l.ch = end
-		l.idx = len(l.src)
-		return
-	}
-	l.ch, l.w = utf8.DecodeRune(l.src[l.idx:])
-}
-
-func (l *Lexer) skipSpace() {
-	// Newlines have their own tokens so do not include here
-	for l.ch != end && l.ch != '\n' && unicode.IsSpace(l.ch) {
-		l.scan()
-	}
-}
-
-func (l *Lexer) skipSpaceAndNewlines() {
-	for l.ch != end && unicode.IsSpace(l.ch) {
-		l.scan()
-	}
+	return token.New(token.Slash, "/", l.s.TokenPos)
 }
 
 func (l *Lexer) skipComment() {
-	l.scan()
-	l.scan()
-	if l.ch == '-' {
+	l.s.Next()
+	l.s.Next()
+	if l.s.Ch == '-' {
 		// Block comment
-		l.scan()
-		for l.ch != end && !(l.ch == '-' && l.lookahead() == '-') {
-			l.scan()
-		}
-		l.scan()
-		l.scan()
-		l.scan()
+		l.s.Next()
+		l.s.Scan(scanner.RepeatsFunc(scanner.Rune('-'), 3))
 	} else {
 		// Line comment
-		l.scan()
-		for l.ch != end && l.ch != '\n' {
-			l.scan()
-		}
-		l.scan()
+		l.s.ScanUntil(scanner.Newline)
 	}
-}
-
-func (l *Lexer) lookahead() rune {
-	next := l.idx + l.w
-	if next >= len(l.src) {
-		return end
-	}
-	ch, _ := utf8.DecodeRune(l.src[next:])
-	return ch
-}
-
-func isValue(ch rune, next rune) bool {
-	switch {
-	case unicode.IsDigit(ch), unicode.Is(unicode.Sc, ch):
-		return true
-	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
-		return true
-	}
-	return false
-}
-
-func Quote(v string) string {
-	required := false
-	runes := []rune(v)
-	for i, ch := range runes {
-		if i == 0 {
-			var next rune
-			if len(runes) > 1 {
-				next = runes[i+1]
-			}
-			if !isValue(ch, next) {
-				required = true
-				break
-			}
-		}
-		if unicode.IsSpace(ch) {
-			required = true
-			break
-		}
-	}
-	if !required {
-		return v
-	}
-	var ret strings.Builder
-	ret.WriteRune('\'')
-	for _, ch := range runes {
-		if ch == '\'' {
-			ret.WriteString("\\'")
-		} else {
-			ret.WriteRune(ch)
-		}
-	}
-	ret.WriteRune('\'')
-	return ret.String()
 }

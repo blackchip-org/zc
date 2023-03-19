@@ -7,17 +7,16 @@ import (
 	"strings"
 )
 
-const End = rune(-1)
+const end = rune(-1)
 
 type Scanner struct {
-	Error   error
-	Behind  rune
-	This    rune
-	Ahead   rune
-	Out     strings.Builder
-	OutPos  Pos
-	ThisPos Pos
-	src     *bufio.Reader
+	Error     error
+	Ch        rune
+	Lookahead rune
+	Text      strings.Builder
+	TokenPos  Pos
+	ChPos     Pos
+	src       *bufio.Reader
 }
 
 func New(name string, src io.Reader) *Scanner {
@@ -40,7 +39,7 @@ func NewBytes(name string, src []byte) *Scanner {
 
 func (s *Scanner) SetReader(name string, src io.Reader) {
 	s.src = bufio.NewReader(src)
-	s.ThisPos.Name = name
+	s.ChPos.Name = name
 	s.init()
 }
 
@@ -54,65 +53,73 @@ func (s *Scanner) SetBytes(name string, src []byte) {
 
 func (s *Scanner) init() {
 	s.Error = nil
-	s.Behind, s.This, s.Ahead = 0, 0, 0
+	s.Ch, s.Lookahead = 0, 0
 	s.Next()
 	s.Next()
-	s.Behind = End
-	s.ThisPos.Line = 1
-	s.ThisPos.Column = 1
+	s.ChPos.Line = 1
+	s.ChPos.Column = 1
 }
 
 func (s *Scanner) Scan(fn Func) string {
-	s.Out.Reset()
-	s.OutPos = s.ThisPos
+	s.Start()
 	fn(s)
-	token := s.Out.String()
-	s.Out.Reset()
-	return token
+	return s.Text.String()
+}
+
+func (s *Scanner) ScanUntil(c RuneClass) string {
+	return s.Scan(UntilFunc(c))
+}
+
+func (s *Scanner) ScanWhile(c RuneClass) string {
+	return s.Scan(WhileFunc(c))
 }
 
 func (s *Scanner) Next() {
-	if s.This == End || s.src == nil {
+	if s.Ch == end || s.src == nil {
 		return
 	}
 
-	s.Behind = s.This
-	s.This = s.Ahead
+	s.Ch = s.Lookahead
 
 	r, _, err := s.src.ReadRune()
 	if err != nil {
-		s.Ahead = End
+		s.Lookahead = end
 		if err != io.EOF {
 			s.Error = err
 		}
 	} else {
-		s.Ahead = r
+		s.Lookahead = r
 	}
 
-	if s.This == '\n' {
-		s.ThisPos.Line++
-		s.ThisPos.Column = 0
+	if s.Ch == '\n' {
+		s.ChPos.Line++
+		s.ChPos.Column = 0
 	} else {
-		s.ThisPos.Column++
+		s.ChPos.Column++
 	}
 }
 
 func (s *Scanner) Start() {
-	s.OutPos = s.ThisPos
-	s.Out.Reset()
+	s.Error = nil
+	s.TokenPos = s.ChPos
+	s.Text.Reset()
 }
 
-func (s *Scanner) Emit() string {
-	return s.Out.String()
+func (s *Scanner) Token() string {
+	return s.Text.String()
 }
 
 func (s *Scanner) Keep() {
-	s.Out.WriteRune(s.This)
+	s.Text.WriteRune(s.Ch)
 	s.Next()
 }
 
 func (s *Scanner) IsEnd() bool {
-	return s.This == End
+	return s.Ch == end
+}
+
+func (s *Scanner) Ok() bool {
+	return s.Ch != end && s.Error == nil
 }
 
 func (s *Scanner) ScanWhitespace() string {
