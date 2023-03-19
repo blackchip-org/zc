@@ -3,11 +3,12 @@ package ast
 import (
 	"encoding/json"
 
+	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
 type Node interface {
-	Pos() token.Pos
+	Pos() scanner.Pos
 	String() string
 }
 
@@ -54,17 +55,17 @@ type AliasStmt struct {
 	To    string
 }
 
-func (n AliasStmt) Pos() token.Pos { return n.Token.Pos }
-func (n AliasStmt) String() string { return nodeStringJSON(n) }
-func (n AliasStmt) stmtNode()      {}
+func (n AliasStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n AliasStmt) String() string   { return nodeStringJSON(n) }
+func (n AliasStmt) stmtNode()        {}
 
 type BadStmt struct {
 	Token token.Token
 }
 
-func (n BadStmt) Pos() token.Pos { return n.Token.Pos }
-func (n BadStmt) String() string { return nodeStringJSON(n) }
-func (n BadStmt) stmtNode()      {}
+func (n BadStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n BadStmt) String() string   { return nodeStringJSON(n) }
+func (n BadStmt) stmtNode()        {}
 
 type Expr struct {
 	Token  token.Token `json:"-"`
@@ -72,17 +73,17 @@ type Expr struct {
 	Atoms  []Atom
 }
 
-func (n Expr) Pos() token.Pos { return n.Token.Pos }
-func (n Expr) String() string { return nodeStringJSON(n) }
+func (n Expr) Pos() scanner.Pos { return n.Token.Pos }
+func (n Expr) String() string   { return nodeStringJSON(n) }
 
 type ExprStmt struct {
 	Token token.Token `json:"-"`
 	Expr  *Expr
 }
 
-func (n ExprStmt) Pos() token.Pos { return n.Token.Pos }
-func (n ExprStmt) String() string { return nodeStringJSON(n) }
-func (n ExprStmt) stmtNode()      {}
+func (n ExprStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n ExprStmt) String() string   { return nodeStringJSON(n) }
+func (n ExprStmt) stmtNode()        {}
 
 type File struct {
 	Token token.Token `json:"-"`
@@ -90,8 +91,8 @@ type File struct {
 	Stmts []Stmt
 }
 
-func (n File) Pos() token.Pos { return n.Token.Pos }
-func (n File) String() string { return nodeStringJSON(n) }
+func (n File) Pos() scanner.Pos { return n.Token.Pos }
+func (n File) String() string   { return nodeStringJSON(n) }
 
 type ForStmt struct {
 	Token token.Token `json:"-"`
@@ -100,9 +101,9 @@ type ForStmt struct {
 	Stmts []Stmt
 }
 
-func (n ForStmt) Pos() token.Pos { return n.Token.Pos }
-func (n ForStmt) String() string { return nodeStringJSON(n) }
-func (n ForStmt) stmtNode()      {}
+func (n ForStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n ForStmt) String() string   { return nodeStringJSON(n) }
+func (n ForStmt) stmtNode()        {}
 
 type FuncStmt struct {
 	Token  token.Token `json:"-"`
@@ -111,18 +112,18 @@ type FuncStmt struct {
 	Stmts  []Stmt
 }
 
-func (n FuncStmt) Pos() token.Pos { return n.Token.Pos }
-func (n FuncStmt) String() string { return nodeStringJSON(n) }
-func (n FuncStmt) stmtNode()      {}
+func (n FuncStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n FuncStmt) String() string   { return nodeStringJSON(n) }
+func (n FuncStmt) stmtNode()        {}
 
 type IfStmt struct {
 	Token token.Token `json:"-"`
 	Cases []*IfCaseNode
 }
 
-func (n IfStmt) Pos() token.Pos { return n.Token.Pos }
-func (n IfStmt) String() string { return nodeStringJSON(n) }
-func (n IfStmt) stmtNode()      {}
+func (n IfStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n IfStmt) String() string   { return nodeStringJSON(n) }
+func (n IfStmt) stmtNode()        {}
 
 type IfCaseNode struct {
 	Token token.Token `json:"-"`
@@ -130,26 +131,26 @@ type IfCaseNode struct {
 	Stmts []Stmt
 }
 
-func (n IfCaseNode) Pos() token.Pos { return n.Token.Pos }
-func (n IfCaseNode) String() string { return nodeStringJSON(n) }
+func (n IfCaseNode) Pos() scanner.Pos { return n.Token.Pos }
+func (n IfCaseNode) String() string   { return nodeStringJSON(n) }
 
 type ImportStmt struct {
 	Token   token.Token `json:"-"`
 	Modules []ModuleRef
 }
 
-func (n ImportStmt) Pos() token.Pos { return n.Token.Pos }
-func (n ImportStmt) String() string { return nodeStringJSON(n) }
-func (n ImportStmt) stmtNode()      {}
+func (n ImportStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n ImportStmt) String() string   { return nodeStringJSON(n) }
+func (n ImportStmt) stmtNode()        {}
 
 type InvokeAtom struct {
 	Token token.Token `json:"-"`
 	Name  string
 }
 
-func (n InvokeAtom) Pos() token.Pos { return n.Token.Pos }
-func (n InvokeAtom) String() string { return nodeStringJSON(n) }
-func (n InvokeAtom) atomNode()      {}
+func (n InvokeAtom) Pos() scanner.Pos { return n.Token.Pos }
+func (n InvokeAtom) String() string   { return nodeStringJSON(n) }
+func (n InvokeAtom) atomNode()        {}
 
 type MacroStmt struct {
 	Token token.Token `json:"-"`
@@ -157,9 +158,9 @@ type MacroStmt struct {
 	Expr  *Expr
 }
 
-func (n MacroStmt) Pos() token.Pos { return n.Token.Pos }
-func (n MacroStmt) String() string { return nodeStringJSON(n) }
-func (n MacroStmt) stmtNode()      {}
+func (n MacroStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n MacroStmt) String() string   { return nodeStringJSON(n) }
+func (n MacroStmt) stmtNode()        {}
 
 type NativeStmt struct {
 	Token  token.Token `json:"-"`
@@ -167,18 +168,18 @@ type NativeStmt struct {
 	Export string `json:",omitempty"`
 }
 
-func (n NativeStmt) Pos() token.Pos { return n.Token.Pos }
-func (n NativeStmt) String() string { return nodeStringJSON(n) }
-func (n NativeStmt) stmtNode()      {}
+func (n NativeStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n NativeStmt) String() string   { return nodeStringJSON(n) }
+func (n NativeStmt) stmtNode()        {}
 
 type NumberAtom struct {
 	Token token.Token `json:"-"`
 	Value string
 }
 
-func (n NumberAtom) Pos() token.Pos { return n.Token.Pos }
-func (n NumberAtom) String() string { return nodeStringJSON(n) }
-func (n NumberAtom) atomNode()      {}
+func (n NumberAtom) Pos() scanner.Pos { return n.Token.Pos }
+func (n NumberAtom) String() string   { return nodeStringJSON(n) }
+func (n NumberAtom) atomNode()        {}
 
 type RefAtom struct {
 	Token token.Token `json:"-"`
@@ -186,44 +187,44 @@ type RefAtom struct {
 	Type  RefType
 }
 
-func (n RefAtom) Pos() token.Pos { return n.Token.Pos }
-func (n RefAtom) String() string { return nodeStringJSON(n) }
-func (n RefAtom) atomNode()      {}
+func (n RefAtom) Pos() scanner.Pos { return n.Token.Pos }
+func (n RefAtom) String() string   { return nodeStringJSON(n) }
+func (n RefAtom) atomNode()        {}
 
 type ReturnStmt struct {
 	Token token.Token `json:"-"`
 }
 
-func (n ReturnStmt) Pos() token.Pos { return n.Token.Pos }
-func (n ReturnStmt) String() string { return nodeStringJSON(n) }
-func (n ReturnStmt) stmtNode()      {}
+func (n ReturnStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n ReturnStmt) String() string   { return nodeStringJSON(n) }
+func (n ReturnStmt) stmtNode()        {}
 
 type SelectAtom struct {
 	Token token.Token `json:"-"`
 	Name  string
 }
 
-func (n SelectAtom) Pos() token.Pos { return n.Token.Pos }
-func (n SelectAtom) String() string { return nodeStringJSON(n) }
-func (n SelectAtom) atomNode()      {}
+func (n SelectAtom) Pos() scanner.Pos { return n.Token.Pos }
+func (n SelectAtom) String() string   { return nodeStringJSON(n) }
+func (n SelectAtom) atomNode()        {}
 
 type TryStmt struct {
 	Token token.Token `json:"-"`
 	Expr  *Expr
 }
 
-func (n TryStmt) Pos() token.Pos { return n.Token.Pos }
-func (n TryStmt) String() string { return nodeStringJSON(n) }
-func (n TryStmt) stmtNode()      {}
+func (n TryStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n TryStmt) String() string   { return nodeStringJSON(n) }
+func (n TryStmt) stmtNode()        {}
 
 type UseStmt struct {
 	Token   token.Token `json:"-"`
 	Modules []ModuleRef
 }
 
-func (n UseStmt) Pos() token.Pos { return n.Token.Pos }
-func (n UseStmt) String() string { return nodeStringJSON(n) }
-func (n UseStmt) stmtNode()      {}
+func (n UseStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n UseStmt) String() string   { return nodeStringJSON(n) }
+func (n UseStmt) stmtNode()        {}
 
 type ValueAtom struct {
 	Token    token.Token `json:"-"`
@@ -232,9 +233,9 @@ type ValueAtom struct {
 	Value    string
 }
 
-func (n ValueAtom) Pos() token.Pos { return n.Token.Pos }
-func (n ValueAtom) String() string { return nodeStringJSON(n) }
-func (n ValueAtom) atomNode()      {}
+func (n ValueAtom) Pos() scanner.Pos { return n.Token.Pos }
+func (n ValueAtom) String() string   { return nodeStringJSON(n) }
+func (n ValueAtom) atomNode()        {}
 
 type WhileStmt struct {
 	Token token.Token `json:"-"`
@@ -242,9 +243,9 @@ type WhileStmt struct {
 	Stmts []Stmt
 }
 
-func (n WhileStmt) Pos() token.Pos { return n.Token.Pos }
-func (n WhileStmt) String() string { return nodeStringJSON(n) }
-func (n WhileStmt) stmtNode()      {}
+func (n WhileStmt) Pos() scanner.Pos { return n.Token.Pos }
+func (n WhileStmt) String() string   { return nodeStringJSON(n) }
+func (n WhileStmt) stmtNode()        {}
 
 func nodeStringJSON(n Node) string {
 	b, err := json.MarshalIndent(n, "", "  ")

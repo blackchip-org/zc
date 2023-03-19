@@ -5,6 +5,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
@@ -13,8 +14,8 @@ type Lexer struct {
 	ch         rune          // current rune being scanned
 	w          int           // width, in bytes, of the current rune
 	idx        int           // index into src of where ch is located
-	pos        token.Pos     // file, line, and column where ch is located
-	start      token.Pos     // position of the scanner when Next() was called
+	pos        scanner.Pos   // file, line, and column where ch is located
+	start      scanner.Pos   // position of the scanner when Next() was called
 	indents    int           // count of current indentation level, one for each tab
 	nextTokens []token.Token // pending dedent tokens to emit
 	inBlock    bool
@@ -26,7 +27,7 @@ const end rune = -1
 func New(file string, src []byte) *Lexer {
 	s := &Lexer{
 		src: src,
-		pos: token.Pos{
+		pos: scanner.Pos{
 			File: file,
 			Line: 1,
 		},

@@ -8,7 +8,7 @@ import (
 
 	"github.com/blackchip-org/zc/lang/ast"
 	"github.com/blackchip-org/zc/lang/lexer"
-	"github.com/blackchip-org/zc/lang/token"
+	"github.com/blackchip-org/zc/lang/scanner"
 )
 
 var (
@@ -468,7 +468,7 @@ func (e *Env) invokeMacro(mac *ast.MacroStmt) error {
 	return nil
 }
 
-func (e *Env) chain(name string, pos token.Pos, err error) error {
+func (e *Env) chain(name string, pos scanner.Pos, err error) error {
 	frame := Frame{Pos: pos}
 
 	errCalc, ok := err.(CalcError)

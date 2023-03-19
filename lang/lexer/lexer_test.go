@@ -4,20 +4,21 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
 func TestPosition(t *testing.T) {
 	src := []byte("one two\nthree four\n\n")
-	pos := []token.Pos{
-		token.NewPos("", 1, 1),
-		token.NewPos("", 1, 5),
-		token.NewPos("", 1, 8),
-		token.NewPos("", 2, 1),
-		token.NewPos("", 2, 7),
-		token.NewPos("", 2, 11),
-		token.NewPos("", 3, 1),
-		token.NewPos("", 4, 1),
+	pos := []scanner.Pos{
+		scanner.NewPos("", 1, 1),
+		scanner.NewPos("", 1, 5),
+		scanner.NewPos("", 1, 8),
+		scanner.NewPos("", 2, 1),
+		scanner.NewPos("", 2, 7),
+		scanner.NewPos("", 2, 11),
+		scanner.NewPos("", 3, 1),
+		scanner.NewPos("", 4, 1),
 	}
 
 	s := New("", src)
@@ -30,7 +31,7 @@ func TestPosition(t *testing.T) {
 }
 
 func TestToken(t *testing.T) {
-	start := token.Pos{File: "", Line: 1, Column: 1}
+	start := scanner.Pos{File: "", Line: 1, Column: 1}
 	tests := []struct {
 		src  string
 		want token.Token

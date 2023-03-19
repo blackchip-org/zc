@@ -15,7 +15,7 @@ import (
 
 	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/lang/parser"
-	"github.com/blackchip-org/zc/lang/token"
+	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/shopspring/decimal"
 )
 
@@ -58,7 +58,7 @@ type ModuleDef struct {
 type CalcFunc func(*Env) error
 
 type Frame struct {
-	Pos  token.Pos
+	Pos  scanner.Pos
 	Func string
 	Env  *Env
 }
