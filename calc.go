@@ -13,8 +13,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/lang/parser"
-	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 	"github.com/shopspring/decimal"
 )
@@ -516,7 +516,7 @@ func (c *Calc) ParseBigInt(v string) (*big.Int, error) {
 	i := new(big.Int)
 	_, ok := i.SetString(c.cleanNumString(v), 0)
 	if !ok {
-		return i, fmt.Errorf("expecting BigInt but got %v", scanner.Quote(v))
+		return i, fmt.Errorf("expecting BigInt but got %v", lexer.Quote(v))
 	}
 	return i, nil
 }
@@ -542,7 +542,7 @@ func (c *Calc) ParseBool(v string) (bool, error) {
 	case "false":
 		return false, nil
 	}
-	return false, fmt.Errorf("expecting Bool but got %v", scanner.Quote(v))
+	return false, fmt.Errorf("expecting Bool but got %v", lexer.Quote(v))
 }
 
 func (c *Calc) IsBool(v string) bool {
@@ -561,7 +561,7 @@ func (c *Calc) MustParseBool(v string) bool {
 func (c *Calc) ParseDecimal(v string) (decimal.Decimal, error) {
 	d, err := decimal.NewFromString(c.cleanNumString(v))
 	if err != nil {
-		return decimal.Zero, fmt.Errorf("expecting Decimal but got %v", scanner.Quote(v))
+		return decimal.Zero, fmt.Errorf("expecting Decimal but got %v", lexer.Quote(v))
 	}
 	return d, nil
 }
@@ -582,7 +582,7 @@ func (c *Calc) MustParseDecimal(v string) decimal.Decimal {
 func (c *Calc) ParseFloat(v string) (float64, error) {
 	f, err := strconv.ParseFloat(c.cleanNumString(v), 64)
 	if err != nil {
-		return 0, fmt.Errorf("expecting Float but got %v", scanner.Quote(v))
+		return 0, fmt.Errorf("expecting Float but got %v", lexer.Quote(v))
 	}
 	return f, nil
 }
@@ -603,7 +603,7 @@ func (c *Calc) MustParseFloat(v string) float64 {
 func (c *Calc) ParseInt(v string) (int, error) {
 	i, err := strconv.ParseInt(c.cleanNumString(v), 0, 64)
 	if err != nil {
-		return 0, fmt.Errorf("expecting Int but got %v", scanner.Quote(v))
+		return 0, fmt.Errorf("expecting Int but got %v", lexer.Quote(v))
 	}
 	return int(i), nil
 }
@@ -634,7 +634,7 @@ func (c *Calc) MustParseInt(v string) int {
 func (c *Calc) ParseInt32(v string) (int32, error) {
 	i, err := strconv.ParseInt(c.cleanNumString(v), 0, 32)
 	if err != nil {
-		return 0, fmt.Errorf("expecting Int32 but got %v", scanner.Quote(v))
+		return 0, fmt.Errorf("expecting Int32 but got %v", lexer.Quote(v))
 	}
 	return int32(i), nil
 }
@@ -650,7 +650,7 @@ func (c *Calc) ParseInt64(v string) (int64, error) {
 func (c *Calc) ParseUint(v string) (uint, error) {
 	i, err := strconv.ParseUint(c.cleanNumString(v), 0, bits.UintSize)
 	if err != nil {
-		return 0, fmt.Errorf("expecting Uint but got %v", scanner.Quote(v))
+		return 0, fmt.Errorf("expecting Uint but got %v", lexer.Quote(v))
 	}
 	return uint(i), nil
 }
@@ -658,7 +658,7 @@ func (c *Calc) ParseUint(v string) (uint, error) {
 func (c *Calc) ParseUint8(v string) (uint8, error) {
 	i, err := strconv.ParseUint(c.cleanNumString(v), 0, 8)
 	if err != nil {
-		return 0, fmt.Errorf("expecting Uint8 but got %v", scanner.Quote(v))
+		return 0, fmt.Errorf("expecting Uint8 but got %v", lexer.Quote(v))
 	}
 	return uint8(i), nil
 }
@@ -833,5 +833,5 @@ func ErrorWithStack(err error) string {
 }
 
 func Quote(v string) string {
-	return scanner.Quote(v)
+	return lexer.Quote(v)
 }

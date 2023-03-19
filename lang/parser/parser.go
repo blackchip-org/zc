@@ -6,27 +6,27 @@ import (
 	"path"
 
 	"github.com/blackchip-org/zc/lang/ast"
-	"github.com/blackchip-org/zc/lang/scanner"
+	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
 type parser struct {
-	s    *scanner.Scanner
+	l    *lexer.Lexer
 	tok  token.Token
 	next token.Token
 }
 
 func Parse(file string, src []byte) (*ast.File, error) {
-	return parse(file, src, scanner.Compiler)
+	return parse(file, src)
 }
 
 func ParseRuntime(file string, src []byte) (*ast.File, error) {
-	return parse(file, src, scanner.Runtime)
+	return parse(file, src)
 }
 
-func parse(file string, src []byte, scanType scanner.ScanType) (*ast.File, error) {
+func parse(file string, src []byte) (*ast.File, error) {
 	p := &parser{
-		s: scanner.New(file, src, scanType),
+		l: lexer.New(file, src),
 	}
 
 	// Current and next tokens are tracked for lookahead. First scan puts the
@@ -82,9 +82,6 @@ func (p *parser) parseExpr() (*ast.Expr, error) {
 			}
 		case token.Newline, token.End:
 			done = true
-			p.scan()
-		case token.Number:
-			atom = &ast.NumberAtom{Token: p.tok, Value: p.tok.Literal}
 			p.scan()
 		case token.String:
 			atom = &ast.ValueAtom{Token: p.tok, Value: p.tok.Literal, IsString: true}
@@ -372,8 +369,6 @@ func (p *parser) parseStmtNested() (ast.Stmt, error) {
 		return p.parseIfStmt()
 	case token.Id:
 		return p.parseExprStmt()
-	case token.Number:
-		return p.parseExprStmt()
 	case token.Return:
 		return p.parseReturnStmt()
 	case token.Slash:
@@ -476,7 +471,7 @@ func (p *parser) parseWhileStmt() (*ast.WhileStmt, error) {
 
 func (p *parser) scan() {
 	p.tok = p.next
-	p.next = p.s.Next()
+	p.next = p.l.Next()
 }
 
 func (p *parser) err(format string, a ...any) error {

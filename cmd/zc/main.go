@@ -10,20 +10,19 @@ import (
 	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/app"
 	"github.com/blackchip-org/zc/internal/ansi"
+	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/lang/parser"
-	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
 var (
-	locale      string
-	noAnsi      bool
-	noFileName  bool
-	mode        string
-	runtimeScan bool
-	trace       bool
-	use         string
-	verbose     bool
+	locale     string
+	noAnsi     bool
+	noFileName bool
+	mode       string
+	trace      bool
+	use        string
+	verbose    bool
 )
 
 var cmdHelp = `
@@ -60,7 +59,6 @@ func init() {
 
 	scan := flag.NewFlagSet("scan", flag.ExitOnError)
 	commonFlags(scan)
-	scan.BoolVar(&runtimeScan, "runtime", false, "runtime scan")
 	cmds["scan"] = scan
 
 	test := flag.NewFlagSet("test", flag.ExitOnError)
@@ -219,18 +217,14 @@ func parse(flags *flag.FlagSet) {
 }
 
 func scan(flags *flag.FlagSet) {
-	scanType := scanner.Compiler
-	if runtimeScan {
-		scanType = scanner.Runtime
-	}
 	for _, fileName := range flags.Args() {
 		src, err := ioutil.ReadFile(fileName)
 		if err != nil {
 			log.Fatalf("unable to read file: %v", err)
 		}
-		scanner := scanner.New(fileName, src, scanType)
+		l := lexer.New(fileName, src)
 		fmt.Println("line col  token")
-		for tok := scanner.Next(); tok.Type != token.End; tok = scanner.Next() {
+		for tok := l.Next(); tok.Type != token.End; tok = l.Next() {
 			fmt.Printf("%4d %3d  %v\n", tok.Pos.Line, tok.Pos.Column, tok)
 		}
 	}

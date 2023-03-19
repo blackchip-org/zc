@@ -8,7 +8,9 @@
         "Node": "Expr",
         "Atoms": [
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "1"
           },
           {

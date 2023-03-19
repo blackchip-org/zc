@@ -23,7 +23,9 @@
                 "Name": "a"
               },
               {
-                "Node": "Number",
+                "Node": "Value",
+                "IsString": false,
+                "IsPlain": false,
                 "Value": "1"
               },
               {
@@ -57,7 +59,9 @@
                 "Name": "a"
               },
               {
-                "Node": "Number",
+                "Node": "Value",
+                "IsString": false,
+                "IsPlain": false,
                 "Value": "1"
               },
               {

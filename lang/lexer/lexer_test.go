@@ -1,4 +1,4 @@
-package scanner
+package lexer
 
 import (
 	"reflect"
@@ -20,7 +20,7 @@ func TestPosition(t *testing.T) {
 		token.NewPos("", 4, 1),
 	}
 
-	s := New("", src, Runtime)
+	s := New("", src)
 	for i, want := range pos {
 		have := s.Next()
 		if have.Pos != want {
@@ -53,7 +53,7 @@ func TestToken(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		s := New("", []byte(test.src), Runtime)
+		s := New("", []byte(test.src))
 		have := s.Next()
 		if have != test.want {
 			t.Errorf("\n %v \n have %+v\n want %+v", i, have, test.want)
@@ -76,7 +76,7 @@ func TestIndent(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.src, func(t *testing.T) {
-			s := New("", []byte(test.src), Runtime)
+			s := New("", []byte(test.src))
 			var have []token.Type
 			for tok := s.Next(); tok.Type != token.End; tok = s.Next() {
 				have = append(have, tok.Type)

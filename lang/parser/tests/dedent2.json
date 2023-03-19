@@ -35,7 +35,9 @@
                 "Name": "n"
               },
               {
-                "Node": "Number",
+                "Node": "Value",
+                "IsString": false,
+                "IsPlain": false,
                 "Value": "1"
               },
               {
@@ -67,15 +69,21 @@
         "Node": "Expr",
         "Atoms": [
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "1"
           },
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "2"
           },
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "3"
           },
           {

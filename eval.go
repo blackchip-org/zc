@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc/lang/ast"
-	"github.com/blackchip-org/zc/lang/scanner"
+	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/lang/token"
 )
 
@@ -420,7 +420,7 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 		}
 	}
 	for _, ret := range callee.Main.Items() {
-		e.trace(fn, "%v: return push %v", fn.Name, scanner.Quote(ret))
+		e.trace(fn, "%v: return push %v", fn.Name, lexer.Quote(ret))
 		caller.Stack.Push(ret)
 	}
 	/*

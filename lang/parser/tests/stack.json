@@ -12,7 +12,9 @@
             "Name": "a"
           },
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "1234"
           }
         ]
@@ -28,7 +30,9 @@
             "Name": "a"
           },
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "4321"
           }
         ]
@@ -45,7 +49,9 @@
             "Name": "a"
           },
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "1234"
           }
         ]
@@ -62,7 +68,9 @@
             "Name": "a"
           },
           {
-            "Node": "Number",
+            "Node": "Value",
+            "IsString": false,
+            "IsPlain": false,
             "Value": "1234"
           }
         ]
