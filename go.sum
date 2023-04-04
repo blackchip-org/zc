@@ -1,5 +1,3 @@
-github.com/blackchip-org/ptime v0.0.0-20230223003906-3d641829541e h1:EEi6F24JgkGEZaAvWtoxGmyNzB8Myr0U6W3Cs1R54NE=
-github.com/blackchip-org/ptime v0.0.0-20230223003906-3d641829541e/go.mod h1:QiG8xjf9h1zu1VTNVvKr8QylzQ4G2MBxPDID5nl9CKU=
 github.com/mattn/go-runewidth v0.0.3/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
 github.com/mattn/go-runewidth v0.0.14 h1:+xnbZSEeDbOIg5/mE6JF0w6n9duR1l3/WmbinWVwUuU=
 github.com/mattn/go-runewidth v0.0.14/go.mod h1:Jdepj2loyihRzMpdS35Xk/zdY8IAYHsh153qUoGf23w=

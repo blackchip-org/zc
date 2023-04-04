@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/blackchip-org/ptime"
-	"github.com/blackchip-org/ptime/locale"
 	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/ptime"
+	"github.com/blackchip-org/zc/ptime/locale"
 )
 
 const (
