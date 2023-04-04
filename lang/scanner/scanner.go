@@ -115,9 +115,9 @@ func (s *Scanner) Keep() {
 }
 
 func (s *Scanner) End() bool {
-	return s.Ch == EndCh
+	return s.src == nil || s.Ch == EndCh
 }
 
 func (s *Scanner) Ok() bool {
-	return s.Ch != EndCh && s.Error == nil
+	return !s.End() && s.Error == nil
 }
