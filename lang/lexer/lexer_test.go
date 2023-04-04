@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
+	"github.com/blackchip-org/zc/scanner"
 )
 
 func TestToken(t *testing.T) {

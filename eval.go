@@ -8,7 +8,7 @@ import (
 
 	"github.com/blackchip-org/zc/lang/ast"
 	"github.com/blackchip-org/zc/lang/lexer"
-	"github.com/blackchip-org/zc/lang/scanner"
+	"github.com/blackchip-org/zc/scanner"
 )
 
 var (

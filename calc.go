@@ -15,7 +15,7 @@ import (
 
 	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/lang/parser"
-	"github.com/blackchip-org/zc/lang/scanner"
+	"github.com/blackchip-org/zc/scanner"
 	"github.com/shopspring/decimal"
 )
 

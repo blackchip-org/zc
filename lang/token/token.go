@@ -5,7 +5,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/lang/scanner"
+	"github.com/blackchip-org/zc/scanner"
 )
 
 type Type int

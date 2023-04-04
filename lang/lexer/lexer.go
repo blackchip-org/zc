@@ -4,8 +4,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
+	"github.com/blackchip-org/zc/scanner"
 )
 
 var isSpaceOrTab = scanner.Rune2(' ', '\t')

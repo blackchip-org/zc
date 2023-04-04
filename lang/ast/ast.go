@@ -3,8 +3,8 @@ package ast
 import (
 	"encoding/json"
 
-	"github.com/blackchip-org/zc/lang/scanner"
 	"github.com/blackchip-org/zc/lang/token"
+	"github.com/blackchip-org/zc/scanner"
 )
 
 type Node interface {
