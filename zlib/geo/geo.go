@@ -1,15 +1,5 @@
 package geo
 
-import (
-	"fmt"
-	"math"
-	"strconv"
-	"strings"
-
-	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/internal/fscan"
-)
-
 type dms struct {
 	deg  string
 	min  string
@@ -17,6 +7,7 @@ type dms struct {
 	hemi rune
 }
 
+/*
 func parseDMS(calc *zc.Calc, v string) (dms, bool) {
 	var c dms
 	_, err := calc.ParseFloat(v)
@@ -205,3 +196,4 @@ func RoundCoordinate(env *zc.Env) error {
 	env.Stack.Push(formatDMS(dms))
 	return nil
 }
+*/

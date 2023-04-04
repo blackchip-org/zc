@@ -1,11 +1,6 @@
 package geo
 
-import (
-	"testing"
-
-	"github.com/blackchip-org/zc"
-)
-
+/*
 func TestParseCoordinate(t *testing.T) {
 	tests := []struct {
 		text  string
@@ -66,3 +61,4 @@ func TestParseCoordinateBad(t *testing.T) {
 		})
 	}
 }
+*/

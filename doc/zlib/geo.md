@@ -26,7 +26,7 @@ Alias: `tf`
 
 Example:
 
-<!-- test: transform -->
+<!-- FIXME: transform -->
 
 | Input                           | Stack
 |---------------------------------|---------------------

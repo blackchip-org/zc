@@ -6,11 +6,13 @@ var (
 	Mod = zc.ModuleDef{
 		Name:       "geo",
 		ScriptPath: "zc:zlib/geo/geo.zc",
-		Natives: map[string]zc.CalcFunc{
-			"decimal-degrees":  DecimalDegrees,
-			"degrees-minutes":  DegreesMinutes,
-			"round-coordinate": RoundCoordinate,
-			"transform":        Transform,
-		},
+		/*
+			Natives: map[string]zc.CalcFunc{
+				"decimal-degrees":  DecimalDegrees,
+				"degrees-minutes":  DegreesMinutes,
+				"round-coordinate": RoundCoordinate,
+				"transform":        Transform,
+			},
+		*/
 	}
 )
