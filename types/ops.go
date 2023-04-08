@@ -13,45 +13,96 @@ var (
 type OpFn func([]Generic) ([]Generic, error)
 
 type Op struct {
-	Params []Type
+	Params []GenericType
 	Fn     OpFn
 }
 
+const (
+	OpAbs   = "abs"
+	OpAdd   = "add"
+	OpCeil  = "ceil"
+	OpDiv   = "div"
+	OpFloor = "floor"
+	OpMod   = "mod"
+	OpMul   = "mul"
+	OpNeg   = "neg"
+	OpPow   = "pow"
+	OpRem   = "rem"
+	OpSign  = "sign"
+	OpSub   = "sub"
+)
+
 var OpTable map[string][]Op = map[string][]Op{
-	"abs": {
-		{Params: []Type{BigInt}, Fn: absBigInt},
-		{Params: []Type{Decimal}, Fn: absDecimal},
-		{Params: []Type{Float}, Fn: absFloat},
-		{Params: []Type{Rational}, Fn: absRational},
-		{Params: []Type{Complex}, Fn: absComplex},
+	OpAbs: {
+		{Params: []GenericType{BigInt}, Fn: absBigInt},
+		{Params: []GenericType{Decimal}, Fn: absDecimal},
+		{Params: []GenericType{Float}, Fn: absFloat},
+		{Params: []GenericType{Rational}, Fn: absRational},
+		{Params: []GenericType{Complex}, Fn: absComplex},
 	},
-	"add": {
-		{Params: []Type{BigInt, BigInt}, Fn: addBigInt},
-		{Params: []Type{Decimal, Decimal}, Fn: addDecimal},
-		{Params: []Type{Float, Float}, Fn: addFloat},
-		{Params: []Type{Rational, Rational}, Fn: addRational},
-		{Params: []Type{Complex, Complex}, Fn: addComplex},
+	OpAdd: {
+		{Params: []GenericType{BigInt, BigInt}, Fn: addBigInt},
+		{Params: []GenericType{Decimal, Decimal}, Fn: addDecimal},
+		{Params: []GenericType{Float, Float}, Fn: addFloat},
+		{Params: []GenericType{Rational, Rational}, Fn: addRational},
+		{Params: []GenericType{Complex, Complex}, Fn: addComplex},
 	},
-	"div": {
-		{Params: []Type{BigInt, BigInt}, Fn: divBigInt},
-		{Params: []Type{Decimal, Decimal}, Fn: divDecimal},
-		{Params: []Type{Float, Float}, Fn: divFloat},
-		{Params: []Type{Rational, Rational}, Fn: divRational},
-		{Params: []Type{Complex, Complex}, Fn: divComplex},
+	OpCeil: {
+		{Params: []GenericType{BigInt}, Fn: ceilBigInt},
+		{Params: []GenericType{Decimal}, Fn: ceilDecimal},
+		{Params: []GenericType{Float}, Fn: ceilFloat},
 	},
-	"mul": {
-		{Params: []Type{BigInt, BigInt}, Fn: mulBigInt},
-		{Params: []Type{Decimal, Decimal}, Fn: mulDecimal},
-		{Params: []Type{Float, Float}, Fn: mulFloat},
-		{Params: []Type{Rational, Rational}, Fn: mulRational},
-		{Params: []Type{Complex, Complex}, Fn: mulComplex},
+	OpDiv: {
+		{Params: []GenericType{BigInt, BigInt}, Fn: divBigInt},
+		{Params: []GenericType{Decimal, Decimal}, Fn: divDecimal},
+		{Params: []GenericType{Float, Float}, Fn: divFloat},
+		{Params: []GenericType{Rational, Rational}, Fn: divRational},
+		{Params: []GenericType{Complex, Complex}, Fn: divComplex},
 	},
-	"sub": {
-		{Params: []Type{BigInt, BigInt}, Fn: subBigInt},
-		{Params: []Type{Decimal, Decimal}, Fn: subDecimal},
-		{Params: []Type{Float, Float}, Fn: subFloat},
-		{Params: []Type{Rational, Rational}, Fn: subRational},
-		{Params: []Type{Complex, Complex}, Fn: subComplex},
+	OpFloor: {
+		{Params: []GenericType{BigInt}, Fn: floorBigInt},
+		{Params: []GenericType{Decimal}, Fn: floorDecimal},
+		{Params: []GenericType{Float}, Fn: floorFloat},
+	},
+	OpMod: {
+		{Params: []GenericType{BigInt, BigInt}, Fn: modBigInt},
+		{Params: []GenericType{Decimal, Decimal}, Fn: modDecimal},
+		{Params: []GenericType{Float, Float}, Fn: modFloat},
+	},
+	OpMul: {
+		{Params: []GenericType{BigInt, BigInt}, Fn: mulBigInt},
+		{Params: []GenericType{Decimal, Decimal}, Fn: mulDecimal},
+		{Params: []GenericType{Float, Float}, Fn: mulFloat},
+		{Params: []GenericType{Rational, Rational}, Fn: mulRational},
+		{Params: []GenericType{Complex, Complex}, Fn: mulComplex},
+	},
+	OpNeg: {
+		{Params: []GenericType{BigInt}, Fn: negBigInt},
+		{Params: []GenericType{Decimal}, Fn: negDecimal},
+		{Params: []GenericType{Float}, Fn: negFloat},
+		{Params: []GenericType{Rational}, Fn: negRational},
+	},
+	OpPow: {
+		{Params: []GenericType{BigInt, BigInt}, Fn: powBigInt},
+		{Params: []GenericType{Float, Float}, Fn: powFloat},
+		{Params: []GenericType{Complex, Complex}, Fn: powComplex},
+	},
+	OpRem: {
+		{Params: []GenericType{BigInt, BigInt}, Fn: remBigInt},
+		{Params: []GenericType{Float, Float}, Fn: remFloat},
+	},
+	OpSign: {
+		{Params: []GenericType{BigInt}, Fn: signBigInt},
+		{Params: []GenericType{Decimal}, Fn: signDecimal},
+		{Params: []GenericType{Float}, Fn: signFloat},
+		{Params: []GenericType{Rational}, Fn: signRational},
+	},
+	OpSub: {
+		{Params: []GenericType{BigInt, BigInt}, Fn: subBigInt},
+		{Params: []GenericType{Decimal, Decimal}, Fn: subDecimal},
+		{Params: []GenericType{Float, Float}, Fn: subFloat},
+		{Params: []GenericType{Rational, Rational}, Fn: subRational},
+		{Params: []GenericType{Complex, Complex}, Fn: subComplex},
 	},
 }
 

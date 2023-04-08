@@ -4,6 +4,10 @@ import "fmt"
 
 type Type interface {
 	String() string
+}
+
+type GenericType interface {
+	Type
 	ParseGeneric(string) (Generic, bool)
 }
 
@@ -26,19 +30,19 @@ var (
 
 var Nil Generic = gNone{}
 
-func Is(v string, t Type) bool {
+func Is(v string, t GenericType) bool {
 	_, ok := t.ParseGeneric(v)
 	return ok
 }
 
-func To(v Generic, t Type) (Generic, bool) {
+func To(v Generic, t GenericType) (Generic, bool) {
 	if v.Type() == t {
 		return v, true
 	}
 	return t.ParseGeneric(v.Format())
 }
 
-func MustParseGeneric(s string, t Type) Generic {
+func MustParseGeneric(s string, t GenericType) Generic {
 	v, ok := t.ParseGeneric(s)
 	if !ok {
 		panic("unable to parse " + t.String())
@@ -46,7 +50,7 @@ func MustParseGeneric(s string, t Type) Generic {
 	return v
 }
 
-var NumberTypes = []Type{
+var NumberTypes = []GenericType{
 	BigInt,
 	Decimal,
 	Float,

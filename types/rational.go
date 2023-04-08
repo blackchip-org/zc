@@ -81,7 +81,6 @@ func (t RationalType) Parse(str string) (*big.Rat, bool) {
 		d = i2
 	}
 
-	fmt.Printf("--- w %v n %v d %v\n", w, n, d)
 	if w != 0 {
 		n = n + (d * w)
 	}
@@ -133,9 +132,11 @@ func divRationalFn(z *big.Rat, x *big.Rat, y *big.Rat) error {
 }
 
 var (
-	absRational = op1Rational(func(z *big.Rat, x *big.Rat) error { z.Abs(x); return nil })
-	addRational = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Add(x, y); return nil })
-	divRational = op2Rational(divRationalFn)
-	mulRational = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Mul(x, y); return nil })
-	subRational = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Sub(x, y); return nil })
+	absRational  = op1Rational(func(z *big.Rat, x *big.Rat) error { z.Abs(x); return nil })
+	addRational  = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Add(x, y); return nil })
+	divRational  = op2Rational(divRationalFn)
+	mulRational  = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Mul(x, y); return nil })
+	negRational  = op1Rational(func(z *big.Rat, x *big.Rat) error { z.Neg(x); return nil })
+	signRational = op1Rational(func(z *big.Rat, x *big.Rat) error { z.SetInt64(int64(x.Sign())); return nil })
+	subRational  = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Sub(x, y); return nil })
 )

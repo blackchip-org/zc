@@ -83,10 +83,18 @@ func absComplexFn(args []Generic) ([]Generic, error) {
 	return []Generic{Float.Generic(z)}, nil
 }
 
+func divComplexFn(x complex128, y complex128) (complex128, error) {
+	if real(y) == 0 && imag(y) == 0 {
+		return 0, ErrDivisionByZero
+	}
+	return x / y, nil
+}
+
 var (
 	absComplex = absComplexFn
 	addComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return x + y, nil })
-	divComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return x / y, nil })
+	divComplex = op2Complex(divComplexFn)
 	mulComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return x * y, nil })
+	powComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return cmplx.Pow(x, y), nil })
 	subComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return x - y, nil })
 )

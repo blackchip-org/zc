@@ -78,10 +78,22 @@ func divDecimalFn(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error)
 	return x.Div(y), nil
 }
 
+func modDecimalFn(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error) {
+	if y.IsZero() {
+		return decimal.Zero, ErrDivisionByZero
+	}
+	return x.Mod(y), nil
+}
+
 var (
-	absDecimal = op1Decimal(func(x decimal.Decimal) (decimal.Decimal, error) { return x.Abs(), nil })
-	addDecimal = op2Decimal(func(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error) { return x.Add(y), nil })
-	divDecimal = op2Decimal(divDecimalFn)
-	mulDecimal = op2Decimal(func(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error) { return x.Mul(y), nil })
-	subDecimal = op2Decimal(func(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error) { return x.Sub(y), nil })
+	absDecimal   = op1Decimal(func(x decimal.Decimal) (decimal.Decimal, error) { return x.Abs(), nil })
+	addDecimal   = op2Decimal(func(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error) { return x.Add(y), nil })
+	ceilDecimal  = op1Decimal(func(x decimal.Decimal) (decimal.Decimal, error) { return x.Ceil(), nil })
+	divDecimal   = op2Decimal(divDecimalFn)
+	floorDecimal = op1Decimal(func(x decimal.Decimal) (decimal.Decimal, error) { return x.Floor(), nil })
+	modDecimal   = op2Decimal(modDecimalFn)
+	mulDecimal   = op2Decimal(func(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error) { return x.Mul(y), nil })
+	negDecimal   = op1Decimal(func(x decimal.Decimal) (decimal.Decimal, error) { return x.Neg(), nil })
+	signDecimal  = op1Decimal(func(x decimal.Decimal) (decimal.Decimal, error) { return decimal.NewFromInt(int64(x.Sign())), nil })
+	subDecimal   = op2Decimal(func(x decimal.Decimal, y decimal.Decimal) (decimal.Decimal, error) { return x.Sub(y), nil })
 )
