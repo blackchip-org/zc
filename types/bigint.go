@@ -9,13 +9,14 @@ var (
 	zeroBigInt big.Int
 )
 
-type bigIntVal struct {
+type gBigInt struct {
 	val *big.Int
 }
 
-func (v bigIntVal) Type() Type     { return BigInt }
-func (v bigIntVal) Format() string { return v.val.String() }
-func (v bigIntVal) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (g gBigInt) Type() Type     { return BigInt }
+func (g gBigInt) Format() string { return g.val.String() }
+func (g gBigInt) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
+func (g gBigInt) Value() any     { return g.val }
 
 type BigIntType struct{}
 
@@ -26,31 +27,38 @@ func (t BigIntType) Parse(s string) (*big.Int, bool) {
 	return r.SetString(s, 0)
 }
 
-func (t BigIntType) ParseValue(s string) (Value, bool) {
+func (t BigIntType) ParseGeneric(s string) (Generic, bool) {
 	v, ok := t.Parse(s)
 	if !ok {
 		return Nil, false
 	}
-	return t.Value(v), true
+	return t.Generic(v), true
 }
 
-func (t BigIntType) Value(i *big.Int) Value {
-	return bigIntVal{val: i}
+func (t BigIntType) Generic(i *big.Int) Generic {
+	return gBigInt{val: i}
 }
 
-func (t BigIntType) Unwrap(v Value) *big.Int {
-	return v.(bigIntVal).val
+func (t BigIntType) Value(v Generic) *big.Int {
+	return v.Value().(*big.Int)
 }
 
-type op2BigIntFn func(*big.Int, *big.Int, *big.Int) error
+func op1BigInt(fn func(*big.Int, *big.Int) error) OpFn {
+	return func(args []Generic) ([]Generic, error) {
+		x := BigInt.Value(args[0])
+		z := new(big.Int)
+		err := fn(z, x)
+		return []Generic{BigInt.Generic(z)}, err
+	}
+}
 
-func op2BigInt(fn op2BigIntFn) OpFn {
-	return func(args []Value) ([]Value, error) {
-		x := BigInt.Unwrap(args[0])
-		y := BigInt.Unwrap(args[1])
+func op2BigInt(fn func(*big.Int, *big.Int, *big.Int) error) OpFn {
+	return func(args []Generic) ([]Generic, error) {
+		x := BigInt.Value(args[0])
+		y := BigInt.Value(args[1])
 		z := new(big.Int)
 		err := fn(z, x, y)
-		return []Value{BigInt.Value(z)}, err
+		return []Generic{BigInt.Generic(z)}, err
 	}
 }
 
@@ -63,6 +71,7 @@ func divBigIntFn(z *big.Int, x *big.Int, y *big.Int) error {
 }
 
 var (
+	absBigInt = op1BigInt(func(z *big.Int, x *big.Int) error { z.Abs(x); return nil })
 	addBigInt = op2BigInt(func(z *big.Int, x *big.Int, y *big.Int) error { z.Add(x, y); return nil })
 	divBigInt = op2BigInt(divBigIntFn)
 	mulBigInt = op2BigInt(func(z *big.Int, x *big.Int, y *big.Int) error { z.Mul(x, y); return nil })

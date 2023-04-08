@@ -5,18 +5,21 @@ import (
 	"strings"
 )
 
-type boolVal struct {
+type gBool struct {
 	val bool
 }
 
-func (v boolVal) Type() Type { return Bool }
-func (v boolVal) Format() string {
-	if v.val {
+func formatBool(b bool) string {
+	if b {
 		return "true"
 	}
 	return "false"
 }
-func (v boolVal) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+
+func (g gBool) Type() Type     { return Bool }
+func (g gBool) Format() string { return formatBool(g.val) }
+func (g gBool) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
+func (g gBool) Value() any     { return g.val }
 
 type BoolType struct{}
 
@@ -33,18 +36,18 @@ func (t BoolType) Parse(s string) (bool, bool) {
 	return false, false
 }
 
-func (t BoolType) ParseValue(s string) (Value, bool) {
+func (t BoolType) ParseGeneric(s string) (Generic, bool) {
 	b, ok := t.Parse(s)
 	if !ok {
 		return Nil, false
 	}
-	return t.Value(b), true
+	return t.Generic(b), true
 }
 
-func (t BoolType) Value(b bool) Value {
-	return boolVal{val: b}
+func (t BoolType) Generic(b bool) Generic {
+	return gBool{val: b}
 }
 
-func (t BoolType) Unwrap(v Value) bool {
-	return v.(boolVal).val
+func (t BoolType) Value(v Generic) bool {
+	return v.Value().(bool)
 }

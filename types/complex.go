@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-type complexVal struct {
+type gComplex struct {
 	val complex128
 }
 
@@ -18,9 +18,10 @@ func formatComplex(c complex128) string {
 	return s[1 : len(s)-1]
 }
 
-func (v complexVal) Type() Type     { return Complex }
-func (v complexVal) Format() string { return formatComplex(v.val) }
-func (v complexVal) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (g gComplex) Type() Type     { return Complex }
+func (g gComplex) Format() string { return formatComplex(g.val) }
+func (g gComplex) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
+func (g gComplex) Value() any     { return g.val }
 
 type ComplexType struct{}
 
@@ -31,40 +32,59 @@ func (t ComplexType) Parse(s string) (complex128, bool) {
 	return c, err == nil
 }
 
-func (t ComplexType) ParseValue(s string) (Value, bool) {
+func (t ComplexType) ParseGeneric(s string) (Generic, bool) {
 	v, ok := t.Parse(s)
 	if !ok {
 		return Nil, false
 	}
-	return t.Value(v), true
+	return t.Generic(v), true
 }
 
-func (t ComplexType) Value(c complex128) Value {
-	return complexVal{val: c}
+func (t ComplexType) Generic(c complex128) Generic {
+	return gComplex{val: c}
 }
 
-func (t ComplexType) Unwrap(v Value) complex128 {
-	return v.(complexVal).val
+func (t ComplexType) Value(v Generic) complex128 {
+	return v.Value().(complex128)
 }
 
-type op2ComplexFn func(complex128, complex128) (complex128, error)
-
-func op2Complex(fn op2ComplexFn) OpFn {
-	return func(args []Value) ([]Value, error) {
-		x := Complex.Unwrap(args[0])
-		y := Complex.Unwrap(args[1])
-		z, err := fn(x, y)
+func op1Complex(fn func(complex128) (complex128, error)) OpFn {
+	return func(args []Generic) ([]Generic, error) {
+		x := Complex.Value(args[0])
+		z, err := fn(x)
 		if err != nil {
-			return []Value{}, err
+			return []Generic{}, err
 		}
 		if cmplx.IsInf(z) || cmplx.IsNaN(z) {
-			return []Value{}, errors.New(formatComplex(z))
+			return []Generic{}, errors.New(formatComplex(z))
 		}
-		return []Value{Complex.Value(z)}, nil
+		return []Generic{Complex.Generic(z)}, nil
 	}
 }
 
+func op2Complex(fn func(complex128, complex128) (complex128, error)) OpFn {
+	return func(args []Generic) ([]Generic, error) {
+		x := Complex.Value(args[0])
+		y := Complex.Value(args[1])
+		z, err := fn(x, y)
+		if err != nil {
+			return []Generic{}, err
+		}
+		if cmplx.IsInf(z) || cmplx.IsNaN(z) {
+			return []Generic{}, errors.New(formatComplex(z))
+		}
+		return []Generic{Complex.Generic(z)}, nil
+	}
+}
+
+func absComplexFn(args []Generic) ([]Generic, error) {
+	x := Complex.Value(args[0])
+	z := cmplx.Abs(x)
+	return []Generic{Float.Generic(z)}, nil
+}
+
 var (
+	absComplex = absComplexFn
 	addComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return x + y, nil })
 	divComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return x / y, nil })
 	mulComplex = op2Complex(func(x complex128, y complex128) (complex128, error) { return x * y, nil })

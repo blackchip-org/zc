@@ -11,7 +11,10 @@ func TestNumbers(t *testing.T) {
 		{"0x1234", BigInt},
 		{"12.34", Decimal},
 		{"12.34e5", Float},
+		{"12.34e5d", Decimal},
+		{"1.234f", Float},
 		{"12+34i", Complex},
+		{"1/2", Rational},
 	}
 
 	for _, test := range tests {

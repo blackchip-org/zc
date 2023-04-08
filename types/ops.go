@@ -8,10 +8,9 @@ import (
 
 var (
 	ErrDivisionByZero = errors.New("division by zero")
-	ErrNaN            = errors.New("not a number")
 )
 
-type OpFn func([]Value) ([]Value, error)
+type OpFn func([]Generic) ([]Generic, error)
 
 type Op struct {
 	Params []Type
@@ -19,36 +18,51 @@ type Op struct {
 }
 
 var OpTable map[string][]Op = map[string][]Op{
+	"abs": {
+		{Params: []Type{BigInt}, Fn: absBigInt},
+		{Params: []Type{Decimal}, Fn: absDecimal},
+		{Params: []Type{Float}, Fn: absFloat},
+		{Params: []Type{Rational}, Fn: absRational},
+		{Params: []Type{Complex}, Fn: absComplex},
+	},
 	"add": {
 		{Params: []Type{BigInt, BigInt}, Fn: addBigInt},
 		{Params: []Type{Decimal, Decimal}, Fn: addDecimal},
+		{Params: []Type{Float, Float}, Fn: addFloat},
+		{Params: []Type{Rational, Rational}, Fn: addRational},
 		{Params: []Type{Complex, Complex}, Fn: addComplex},
 	},
 	"div": {
 		{Params: []Type{BigInt, BigInt}, Fn: divBigInt},
 		{Params: []Type{Decimal, Decimal}, Fn: divDecimal},
+		{Params: []Type{Float, Float}, Fn: divFloat},
+		{Params: []Type{Rational, Rational}, Fn: divRational},
 		{Params: []Type{Complex, Complex}, Fn: divComplex},
 	},
 	"mul": {
 		{Params: []Type{BigInt, BigInt}, Fn: mulBigInt},
 		{Params: []Type{Decimal, Decimal}, Fn: mulDecimal},
+		{Params: []Type{Float, Float}, Fn: mulFloat},
+		{Params: []Type{Rational, Rational}, Fn: mulRational},
 		{Params: []Type{Complex, Complex}, Fn: mulComplex},
 	},
 	"sub": {
 		{Params: []Type{BigInt, BigInt}, Fn: subBigInt},
 		{Params: []Type{Decimal, Decimal}, Fn: subDecimal},
+		{Params: []Type{Float, Float}, Fn: subFloat},
+		{Params: []Type{Rational, Rational}, Fn: subRational},
 		{Params: []Type{Complex, Complex}, Fn: subComplex},
 	},
 }
 
-func Eval(opName string, args []Value) ([]Value, error) {
+func Eval(opName string, args []Generic) ([]Generic, error) {
 	return eval(opName, args, false)
 }
 
-func eval(name string, args []Value, exact bool) ([]Value, error) {
+func eval(name string, args []Generic, exact bool) ([]Generic, error) {
 	ops, ok := OpTable[name]
 	if !ok {
-		return []Value{}, fmt.Errorf("no such operation: %v", name)
+		return []Generic{}, fmt.Errorf("no such operation: %v", name)
 	}
 	for _, op := range ops {
 		if len(op.Params) != len(args) {
@@ -73,7 +87,7 @@ func eval(name string, args []Value, exact bool) ([]Value, error) {
 				continue
 			}
 			valid := true
-			var callArgs []Value
+			var callArgs []Generic
 			for i, arg := range args {
 				callArg, ok := To(arg, op.Params[i])
 				if !ok {
@@ -93,5 +107,5 @@ func eval(name string, args []Value, exact bool) ([]Value, error) {
 	for _, arg := range args {
 		types = append(types, arg.Type().String())
 	}
-	return []Value{}, fmt.Errorf("no %v operation for %v", name, strings.Join(types, ", "))
+	return []Generic{}, fmt.Errorf("no %v operation for %v", name, strings.Join(types, ", "))
 }
