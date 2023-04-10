@@ -9,39 +9,39 @@ import (
 var zeroBigInt big.Int
 
 func op1BigInt(fn func(*big.Int, *big.Int) error) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.BigInt.Value(args[0])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.BigInt.Native(args[0])
 		z := new(big.Int)
 		err := fn(z, x)
-		return []t.Generic{t.BigInt.Generic(z)}, err
+		return []t.Value{t.BigInt.Value(z)}, err
 	}
 }
 
 func op2BigInt(fn func(*big.Int, *big.Int, *big.Int) error) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.BigInt.Value(args[0])
-		y := t.BigInt.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.BigInt.Native(args[0])
+		y := t.BigInt.Native(args[1])
 		z := new(big.Int)
 		err := fn(z, x, y)
-		return []t.Generic{t.BigInt.Generic(z)}, err
+		return []t.Value{t.BigInt.Value(z)}, err
 	}
 }
 
 func opCmpBigInt(fn func(*big.Int, *big.Int) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.BigInt.Value(args[0])
-		y := t.BigInt.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.BigInt.Native(args[0])
+		y := t.BigInt.Native(args[1])
 		z := fn(x, y)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 
 // FIXME: this is awkward
-func divBigInt(args []t.Generic) ([]t.Generic, error) {
-	x := t.BigInt.Value(args[0])
-	y := t.BigInt.Value(args[1])
+func divBigInt(args []t.Value) ([]t.Value, error) {
+	x := t.BigInt.Native(args[0])
+	y := t.BigInt.Native(args[1])
 	if y.Cmp(&zeroBigInt) == 0 {
-		return []t.Generic{}, ErrDivisionByZero
+		return []t.Value{}, ErrDivisionByZero
 	}
 	z := new(big.Int)
 	m := new(big.Int)
@@ -49,28 +49,28 @@ func divBigInt(args []t.Generic) ([]t.Generic, error) {
 	if m.Cmp(&zeroBigInt) != 0 {
 		xf, err := t.To(args[0], t.Float)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
 		yf, err := t.To(args[1], t.Float)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
-		zf := t.Float.Value(xf) / t.Float.Value(yf)
-		return []t.Generic{t.Float.Generic(zf)}, nil
+		zf := t.Float.Native(xf) / t.Float.Native(yf)
+		return []t.Value{t.Float.Value(zf)}, nil
 	}
-	return []t.Generic{t.BigInt.Generic(z)}, nil
+	return []t.Value{t.BigInt.Value(z)}, nil
 }
 
 func opDivBigInt(fn func(*big.Int, *big.Int, *big.Int) error) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.BigInt.Value(args[0])
-		y := t.BigInt.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.BigInt.Native(args[0])
+		y := t.BigInt.Native(args[1])
 		if y.Cmp(&zeroBigInt) == 0 {
-			return []t.Generic{}, ErrDivisionByZero
+			return []t.Value{}, ErrDivisionByZero
 		}
 		z := new(big.Int)
 		err := fn(z, x, y)
-		return []t.Generic{t.BigInt.Generic(z)}, err
+		return []t.Value{t.BigInt.Value(z)}, err
 	}
 }
 

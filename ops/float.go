@@ -16,69 +16,69 @@ func checkFloat(f float64) error {
 }
 
 func op1Float(fn func(float64) (float64, error)) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Float.Value(args[0])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Float.Native(args[0])
 		z, err := fn(x)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
 		if err := checkFloat(z); err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
-		return []t.Generic{t.Float.Generic(z)}, nil
+		return []t.Value{t.Float.Value(z)}, nil
 	}
 }
 
 func op2Float(fn func(float64, float64) (float64, error)) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Float.Value(args[0])
-		y := t.Float.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Float.Native(args[0])
+		y := t.Float.Native(args[1])
 		z, err := fn(x, y)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
 		if err := checkFloat(z); err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
-		return []t.Generic{t.Float.Generic(z)}, nil
+		return []t.Value{t.Float.Value(z)}, nil
 	}
 }
 
 func opCmpFloat(fn func(float64, float64) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Float.Value(args[0])
-		y := t.Float.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Float.Native(args[0])
+		y := t.Float.Native(args[1])
 		z := fn(x, y)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 
 func opDivFloat(fn func(float64, float64) (float64, error)) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Float.Value(args[0])
-		y := t.Float.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Float.Native(args[0])
+		y := t.Float.Native(args[1])
 		if y == 0 {
-			return []t.Generic{}, ErrDivisionByZero
+			return []t.Value{}, ErrDivisionByZero
 		}
 		z, err := fn(x, y)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
 		if err := checkFloat(z); err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
-		return []t.Generic{t.Float.Generic(z)}, nil
+		return []t.Value{t.Float.Value(z)}, nil
 	}
 }
 
-func sqrtFloat(args []t.Generic) ([]t.Generic, error) {
-	x := t.Float.Value(args[0])
+func sqrtFloat(args []t.Value) ([]t.Value, error) {
+	x := t.Float.Native(args[0])
 	if x < 0 {
 		z := cmplx.Sqrt(complex(x, 0))
-		return []t.Generic{t.Complex.Generic(z)}, nil
+		return []t.Value{t.Complex.Value(z)}, nil
 	}
 	z := math.Sqrt(x)
-	return []t.Generic{t.Float.Generic(z)}, nil
+	return []t.Value{t.Float.Value(z)}, nil
 }
 
 func signFloatFn(x float64) (float64, error) {

@@ -14,7 +14,7 @@ type gDecimal struct {
 func (g gDecimal) Type() Type     { return Decimal }
 func (g gDecimal) Format() string { return Decimal.Format(g.val) }
 func (g gDecimal) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gDecimal) Value() any     { return g.val }
+func (g gDecimal) Native() any    { return g.val }
 
 type DecimalType struct{}
 
@@ -29,7 +29,7 @@ func (t DecimalType) Parse(s string) (decimal.Decimal, error) {
 	return d, nil
 }
 
-func (t DecimalType) ParseGeneric(s string) (Generic, error) {
+func (t DecimalType) ParseValue(s string) (Value, error) {
 	sl := strings.ToLower(s)
 	if !strings.HasSuffix(s, "d") {
 		if strings.Contains(sl, "e") {
@@ -41,17 +41,17 @@ func (t DecimalType) ParseGeneric(s string) (Generic, error) {
 	if err != nil {
 		return Nil, parseErr(t, s)
 	}
-	return t.Generic(v), nil
+	return t.Value(v), nil
 }
 
 func (t DecimalType) Format(d decimal.Decimal) string {
 	return d.String()
 }
 
-func (t DecimalType) Generic(d decimal.Decimal) Generic {
+func (t DecimalType) Value(d decimal.Decimal) Value {
 	return gDecimal{val: d}
 }
 
-func (t DecimalType) Value(v Generic) decimal.Decimal {
-	return v.Value().(decimal.Decimal)
+func (t DecimalType) Native(v Value) decimal.Decimal {
+	return v.Native().(decimal.Decimal)
 }

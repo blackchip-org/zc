@@ -8,40 +8,40 @@ import (
 )
 
 func op1Complex(fn func(complex128) (complex128, error)) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Complex.Value(args[0])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Complex.Native(args[0])
 		z, err := fn(x)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
 		if cmplx.IsInf(z) || cmplx.IsNaN(z) {
-			return []t.Generic{}, errors.New(t.Complex.Format(z))
+			return []t.Value{}, errors.New(t.Complex.Format(z))
 		}
-		return []t.Generic{t.Complex.Generic(z)}, nil
+		return []t.Value{t.Complex.Value(z)}, nil
 	}
 }
 
 func op2Complex(fn func(complex128, complex128) (complex128, error)) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Complex.Value(args[0])
-		y := t.Complex.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Complex.Native(args[0])
+		y := t.Complex.Native(args[1])
 		z, err := fn(x, y)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
 		if cmplx.IsInf(z) || cmplx.IsNaN(z) {
-			return []t.Generic{}, errors.New(t.Complex.Format(z))
+			return []t.Value{}, errors.New(t.Complex.Format(z))
 		}
-		return []t.Generic{t.Complex.Generic(z)}, nil
+		return []t.Value{t.Complex.Value(z)}, nil
 	}
 }
 
 func opCmpComplex(fn func(complex128, complex128) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Complex.Value(args[0])
-		y := t.Complex.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Complex.Native(args[0])
+		y := t.Complex.Native(args[1])
 		z := fn(x, y)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 
@@ -52,10 +52,10 @@ func divComplexFn(x complex128, y complex128) (complex128, error) {
 	return x / y, nil
 }
 
-func absComplex(args []t.Generic) ([]t.Generic, error) {
-	x := t.Complex.Value(args[0])
+func absComplex(args []t.Value) ([]t.Value, error) {
+	x := t.Complex.Native(args[0])
 	z := cmplx.Abs(x)
-	return []t.Generic{t.Float.Generic(z)}, nil
+	return []t.Value{t.Float.Value(z)}, nil
 }
 
 var (

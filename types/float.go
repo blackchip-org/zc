@@ -13,7 +13,7 @@ type gFloat struct {
 func (g gFloat) Type() Type     { return Float }
 func (g gFloat) Format() string { return Float.Format(g.val) }
 func (g gFloat) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gFloat) Value() any     { return g.val }
+func (g gFloat) Native() any    { return g.val }
 
 type FloatType struct{}
 
@@ -29,22 +29,22 @@ func (t FloatType) Parse(s string) (float64, error) {
 	return f, nil
 }
 
-func (t FloatType) ParseGeneric(s string) (Generic, error) {
+func (t FloatType) ParseValue(s string) (Value, error) {
 	v, err := t.Parse(s)
 	if err != nil {
 		return Nil, err
 	}
-	return t.Generic(v), nil
+	return t.Value(v), nil
 }
 
 func (t FloatType) Format(f float64) string {
 	return strconv.FormatFloat(f, 'g', 16, 64)
 }
 
-func (t FloatType) Generic(f float64) Generic {
+func (t FloatType) Value(f float64) Value {
 	return gFloat{val: f}
 }
 
-func (t FloatType) Value(v Generic) float64 {
-	return v.Value().(float64)
+func (t FloatType) Native(v Value) float64 {
+	return v.Native().(float64)
 }

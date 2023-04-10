@@ -12,7 +12,7 @@ type gBigInt struct {
 func (g gBigInt) Type() Type     { return BigInt }
 func (g gBigInt) Format() string { return BigInt.Format(g.val) }
 func (g gBigInt) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gBigInt) Value() any     { return g.val }
+func (g gBigInt) Native() any    { return g.val }
 
 type BigIntType struct{}
 
@@ -28,22 +28,22 @@ func (t BigIntType) Parse(s string) (*big.Int, error) {
 	return r, nil
 }
 
-func (t BigIntType) ParseGeneric(s string) (Generic, error) {
+func (t BigIntType) ParseValue(s string) (Value, error) {
 	v, err := t.Parse(s)
 	if err != nil {
 		return Nil, err
 	}
-	return t.Generic(v), nil
+	return t.Value(v), nil
 }
 
 func (t BigIntType) Format(v *big.Int) string {
 	return v.String()
 }
 
-func (t BigIntType) Generic(i *big.Int) Generic {
+func (t BigIntType) Value(i *big.Int) Value {
 	return gBigInt{val: i}
 }
 
-func (t BigIntType) Value(v Generic) *big.Int {
-	return v.Value().(*big.Int)
+func (t BigIntType) Native(v Value) *big.Int {
+	return v.Native().(*big.Int)
 }

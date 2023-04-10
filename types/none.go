@@ -1,16 +1,16 @@
 package types
 
-type gNone struct{}
+type vNone struct{}
 
-func (g gNone) Type() Type     { return None }
-func (g gNone) Format() string { return "" }
-func (g gNone) String() string { return "None" }
-func (g gNone) Value() any     { return nil }
+func (v vNone) Type() Type     { return None }
+func (v vNone) Format() string { return "" }
+func (v vNone) String() string { return "None" }
+func (v vNone) Native() any    { return nil }
 
 type noneType struct{}
 
 func (t noneType) String() string { return "None" }
 
-func (t noneType) ParseGeneric(s string) (Generic, bool) {
-	return gNone{}, false
+func (t noneType) ParseValue(s string) (Value, error) {
+	return vNone{}, nil
 }

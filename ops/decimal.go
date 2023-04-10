@@ -6,34 +6,34 @@ import (
 )
 
 func op1Decimal(fn func(decimal.Decimal) (decimal.Decimal, error)) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Decimal.Value(args[0])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Decimal.Native(args[0])
 		z, err := fn(x)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
-		return []t.Generic{t.Decimal.Generic(z)}, nil
+		return []t.Value{t.Decimal.Value(z)}, nil
 	}
 }
 
 func op2Decimal(fn func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, error)) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Decimal.Value(args[0])
-		y := t.Decimal.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Decimal.Native(args[0])
+		y := t.Decimal.Native(args[1])
 		z, err := fn(x, y)
 		if err != nil {
-			return []t.Generic{}, err
+			return []t.Value{}, err
 		}
-		return []t.Generic{t.Decimal.Generic(z)}, nil
+		return []t.Value{t.Decimal.Value(z)}, nil
 	}
 }
 
 func cmpDecimalFn(fn func(x decimal.Decimal, y decimal.Decimal) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Decimal.Value(args[0])
-		y := t.Decimal.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Decimal.Native(args[0])
+		y := t.Decimal.Native(args[1])
 		z := fn(x, y)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 

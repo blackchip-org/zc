@@ -8,18 +8,14 @@ import (
 
 type Type interface {
 	String() string
+	ParseValue(string) (Value, error)
 }
 
-type GenericType interface {
-	Type
-	ParseGeneric(string) (Generic, error)
-}
-
-type Generic interface {
+type Value interface {
 	String() string
 	Format() string
 	Type() Type
-	Value() any
+	Native() any
 }
 
 var (
@@ -44,33 +40,33 @@ var (
 	Uint64   = Uint64Type{}
 )
 
-var Nil Generic = gNone{}
+var Nil Value = vNone{}
 
-func Is(v string, t GenericType) bool {
-	_, err := t.ParseGeneric(v)
+func Is(v string, t Type) bool {
+	_, err := t.ParseValue(v)
 	return err == nil
 }
 
-func To(v Generic, t GenericType) (Generic, error) {
+func To(v Value, t Type) (Value, error) {
 	if v.Type() == t {
 		return v, nil
 	}
-	r, err := t.ParseGeneric(v.Format())
+	r, err := t.ParseValue(v.Format())
 	if err != nil {
 		return Nil, fmt.Errorf("expecting %v but got %v", t, QuoteFunc(v.Format()))
 	}
 	return r, nil
 }
 
-func MustParse(s string, t GenericType) Generic {
-	v, err := t.ParseGeneric(s)
+func MustParse(s string, t Type) Value {
+	v, err := t.ParseValue(s)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-var GenericTypes = []GenericType{
+var GenericTypes = []Type{
 	BigInt,
 	Decimal,
 	Float,
@@ -80,9 +76,9 @@ var GenericTypes = []GenericType{
 	String,
 }
 
-func Parse(s string) Generic {
+func Parse(s string) Value {
 	for _, t := range GenericTypes {
-		v, err := t.ParseGeneric(s)
+		v, err := t.ParseValue(s)
 		if err == nil {
 			return v
 		}
@@ -90,15 +86,15 @@ func Parse(s string) Generic {
 	panic("unreachable code")
 }
 
-func ParseN(ss []string) []Generic {
-	var r []Generic
+func ParseN(ss []string) []Value {
+	var r []Value
 	for _, s := range ss {
 		r = append(r, Parse(s))
 	}
 	return r
 }
 
-func FormatN(gs []Generic) []string {
+func FormatN(gs []Value) []string {
 	var r []string
 	for _, g := range gs {
 		r = append(r, g.Format())

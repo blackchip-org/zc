@@ -8,6 +8,27 @@ import (
 	"github.com/blackchip-org/zc/internal/ansi"
 )
 
+/*
+var CMYKToRGB = zc.FuncNN([]types.Type{
+}
+
+
+	func(args []types.Value) []types.Value {
+	c := types.Uint8.Native(args[0])
+	m := types.Uint8.Native(args[1])
+	y := types.Uint8.Native(args[2])
+	k := types.Uint8.Native(args[3])
+
+	r, g, b := color.CMYKToRGB(c, m, y, k)
+
+	return []types.Value{
+		types.Unit8.Value(r),
+		types.Unit8.Value(g),
+		types.Unit8.Value(b),
+	}
+}, types.Uint8, types.Uint8, types.Uint8)
+*/
+
 func CMYKToRGB(env *zc.Env) error {
 	k, err := env.Stack.PopUint8()
 	if err != nil {

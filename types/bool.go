@@ -12,7 +12,7 @@ type gBool struct {
 func (g gBool) Type() Type     { return Bool }
 func (g gBool) Format() string { return Bool.Format(g.val) }
 func (g gBool) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gBool) Value() any     { return g.val }
+func (g gBool) Native() any    { return g.val }
 
 type BoolType struct{}
 
@@ -29,12 +29,12 @@ func (t BoolType) Parse(s string) (bool, error) {
 	return false, parseErr(t, s)
 }
 
-func (t BoolType) ParseGeneric(s string) (Generic, error) {
+func (t BoolType) ParseValue(s string) (Value, error) {
 	v, err := t.Parse(s)
 	if err != nil {
 		return Nil, err
 	}
-	return t.Generic(v), nil
+	return t.Value(v), nil
 }
 
 func (t BoolType) Format(b bool) string {
@@ -44,10 +44,10 @@ func (t BoolType) Format(b bool) string {
 	return "false"
 }
 
-func (t BoolType) Generic(b bool) Generic {
+func (t BoolType) Value(b bool) Value {
 	return gBool{val: b}
 }
 
-func (t BoolType) Value(v Generic) bool {
-	return v.Value().(bool)
+func (t BoolType) Native(v Value) bool {
+	return v.Native().(bool)
 }

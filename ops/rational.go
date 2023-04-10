@@ -9,30 +9,30 @@ import (
 var ratZero big.Rat
 
 func op1Rational(fn func(*big.Rat, *big.Rat) error) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Rational.Value(args[0])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Rational.Native(args[0])
 		z := new(big.Rat)
 		err := fn(z, x)
-		return []t.Generic{t.Rational.Generic(z)}, err
+		return []t.Value{t.Rational.Value(z)}, err
 	}
 }
 
 func op2Rational(fn func(*big.Rat, *big.Rat, *big.Rat) error) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Rational.Value(args[0])
-		y := t.Rational.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Rational.Native(args[0])
+		y := t.Rational.Native(args[1])
 		z := new(big.Rat)
 		err := fn(z, x, y)
-		return []t.Generic{t.Rational.Generic(z)}, err
+		return []t.Value{t.Rational.Value(z)}, err
 	}
 }
 
 func opCmpRational(fn func(*big.Rat, *big.Rat) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Rational.Value(args[0])
-		y := t.Rational.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Rational.Native(args[0])
+		y := t.Rational.Native(args[1])
 		z := fn(x, y)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 

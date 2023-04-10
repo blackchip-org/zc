@@ -3,11 +3,11 @@ package ops
 import t "github.com/blackchip-org/zc/types"
 
 func opCmpString(fn func(string, string) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.String.Value(args[0])
-		y := t.String.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.String.Native(args[0])
+		y := t.String.Native(args[1])
 		z := fn(x, y)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 

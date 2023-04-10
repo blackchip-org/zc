@@ -12,7 +12,7 @@ type gComplex struct {
 func (g gComplex) Type() Type     { return Complex }
 func (g gComplex) Format() string { return Complex.Format(g.val) }
 func (g gComplex) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gComplex) Value() any     { return g.val }
+func (g gComplex) Native() any    { return g.val }
 
 type ComplexType struct{}
 
@@ -26,12 +26,12 @@ func (t ComplexType) Parse(s string) (complex128, error) {
 	return c, nil
 }
 
-func (t ComplexType) ParseGeneric(s string) (Generic, error) {
+func (t ComplexType) ParseValue(s string) (Value, error) {
 	v, err := t.Parse(s)
 	if err != nil {
 		return Nil, err
 	}
-	return t.Generic(v), nil
+	return t.Value(v), nil
 }
 
 func (t ComplexType) Format(c complex128) string {
@@ -41,10 +41,10 @@ func (t ComplexType) Format(c complex128) string {
 	return s[1 : len(s)-1]
 }
 
-func (t ComplexType) Generic(c complex128) Generic {
+func (t ComplexType) Value(c complex128) Value {
 	return gComplex{val: c}
 }
 
-func (t ComplexType) Value(v Generic) complex128 {
-	return v.Value().(complex128)
+func (t ComplexType) Native(v Value) complex128 {
+	return v.Native().(complex128)
 }

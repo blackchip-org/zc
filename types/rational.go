@@ -27,7 +27,7 @@ func formatRational(r *big.Rat) string {
 func (g gRational) Type() Type     { return Rational }
 func (g gRational) Format() string { return formatRational(g.val) }
 func (g gRational) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gRational) Value() any     { return g.val }
+func (g gRational) Native() any    { return g.val }
 
 type RationalType struct{}
 
@@ -90,18 +90,18 @@ func (t RationalType) Parse(str string) (*big.Rat, error) {
 	return big.NewRat(n, d), nil
 }
 
-func (t RationalType) ParseGeneric(s string) (Generic, error) {
+func (t RationalType) ParseValue(s string) (Value, error) {
 	v, err := t.Parse(s)
 	if err != nil {
 		return Nil, err
 	}
-	return t.Generic(v), nil
+	return t.Value(v), nil
 }
 
-func (t RationalType) Generic(i *big.Rat) Generic {
+func (t RationalType) Value(i *big.Rat) Value {
 	return gRational{val: i}
 }
 
-func (t RationalType) Value(v Generic) *big.Rat {
-	return v.Value().(*big.Rat)
+func (t RationalType) Native(v Value) *big.Rat {
+	return v.Native().(*big.Rat)
 }

@@ -3,19 +3,19 @@ package ops
 import t "github.com/blackchip-org/zc/types"
 
 func op1Bool(fn func(bool) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Bool.Value(args[0])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Bool.Native(args[0])
 		z := fn(x)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 
 func op2Bool(fn func(bool, bool) bool) Func {
-	return func(args []t.Generic) ([]t.Generic, error) {
-		x := t.Bool.Value(args[0])
-		y := t.Bool.Value(args[1])
+	return func(args []t.Value) ([]t.Value, error) {
+		x := t.Bool.Native(args[0])
+		y := t.Bool.Native(args[1])
 		z := fn(x, y)
-		return []t.Generic{t.Bool.Generic(z)}, nil
+		return []t.Value{t.Bool.Value(z)}, nil
 	}
 }
 
