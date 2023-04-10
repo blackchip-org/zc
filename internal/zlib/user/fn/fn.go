@@ -5,7 +5,7 @@ import (
 )
 
 func Eval(env *zc.Env) error {
-	context := env.Calc.Frames[len(env.Calc.Frames)-2].Env
+	context := env.Calc.Frames().At(-2).Env
 	node, err := env.Stack.Pop()
 	if err != nil {
 		return err
@@ -14,7 +14,7 @@ func Eval(env *zc.Env) error {
 }
 
 func Filter(env *zc.Env) error {
-	context := env.Calc.Frames[len(env.Calc.Frames)-2].Env
+	context := env.Calc.Frames().At(-2).Env
 	fn, err := env.Stack.Pop()
 	if err != nil {
 		return err
@@ -38,7 +38,7 @@ func Filter(env *zc.Env) error {
 }
 
 func Map(env *zc.Env) error {
-	context := env.Calc.Frames[len(env.Calc.Frames)-2].Env
+	context := env.Calc.Frames().At(-2).Env
 	fn, err := env.Stack.Pop()
 	if err != nil {
 		return err
@@ -55,7 +55,7 @@ func Map(env *zc.Env) error {
 }
 
 func Fold(env *zc.Env) error {
-	context := env.Calc.Frames[len(env.Calc.Frames)-2].Env
+	context := env.Calc.Frames().At(-2).Env
 	fn, err := env.Stack.Pop()
 	if err != nil {
 		return err
@@ -76,7 +76,7 @@ func Fold(env *zc.Env) error {
 }
 
 func Repeat(env *zc.Env) error {
-	context := env.Calc.Frames[len(env.Calc.Frames)-2].Env
+	context := env.Calc.Frames().At(-2).Env
 	n, err := env.Stack.PopInt()
 	if err != nil {
 		return err

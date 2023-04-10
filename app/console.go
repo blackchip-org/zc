@@ -17,7 +17,7 @@ var errQuit = errors.New("quit")
 
 type Console struct {
 	MaxUndo     int
-	calc        *zc.Calc
+	calc        *zc.CalcImpl
 	cli         *liner.State
 	homeDir     string
 	localDir    string
@@ -26,7 +26,7 @@ type Console struct {
 	redoStack   []*zc.Stack
 }
 
-func NewConsole(calc *zc.Calc) *Console {
+func NewConsole(calc *zc.CalcImpl) *Console {
 	return &Console{
 		calc: calc,
 	}
@@ -126,9 +126,9 @@ func (c *Console) Eval(text string) bool {
 		ansi.Write(ansi.BrightYellow)
 		fmt.Printf("(!) %v\n", execError)
 		ansi.Write(ansi.Reset)
-	} else if c.calc.Info != "" {
+	} else if c.calc.Info() != "" {
 		ansi.Write(ansi.LightGreen)
-		fmt.Println(c.calc.Info)
+		fmt.Println(c.calc.Info())
 		ansi.Write(ansi.Reset)
 	} else {
 		fmt.Println()

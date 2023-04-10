@@ -150,7 +150,7 @@ func main() {
 	}
 }
 
-func evalLines(flags *flag.FlagSet, calc *zc.Calc) {
+func evalLines(flags *flag.FlagSet, calc *zc.CalcImpl) {
 	var err error
 	for i, line := range flags.Args() {
 		name := fmt.Sprintf("<cli:%v>", i)
@@ -161,7 +161,7 @@ func evalLines(flags *flag.FlagSet, calc *zc.Calc) {
 	evalResults(calc, err)
 }
 
-func evalFile(flags *flag.FlagSet, calc *zc.Calc) {
+func evalFile(flags *flag.FlagSet, calc *zc.CalcImpl) {
 	var calcErr error
 	for _, fileName := range flags.Args() {
 		src, err := os.ReadFile(fileName)
@@ -175,7 +175,7 @@ func evalFile(flags *flag.FlagSet, calc *zc.Calc) {
 	evalResults(calc, calcErr)
 }
 
-func evalResults(calc *zc.Calc, err error) {
+func evalResults(calc *zc.CalcImpl, err error) {
 	if err != nil {
 		log.Print(err)
 		if cErr, ok := err.(zc.CalcError); ok {
@@ -223,7 +223,7 @@ func scan(flags *flag.FlagSet) {
 	}
 }
 
-func testFile(flags *flag.FlagSet, calc *zc.Calc) {
+func testFile(flags *flag.FlagSet, calc *zc.CalcImpl) {
 	if err := calc.SetMode("dev"); err != nil {
 		log.Fatalf("unexpected error: %v", err)
 	}

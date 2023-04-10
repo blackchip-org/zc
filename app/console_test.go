@@ -9,7 +9,7 @@ import (
 
 func TestUndo(t *testing.T) {
 	ansi.Enabled = false
-	calc, _ := zc.NewCalc(zc.Config{})
+	calc, _ := zc.NewCalc(&zc.Config{})
 	c := NewConsole(calc)
 
 	c.Eval("1")

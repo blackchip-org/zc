@@ -5,8 +5,8 @@ import (
 	"github.com/blackchip-org/zc/internal/zlib"
 )
 
-func DefaultConfig() zc.Config {
-	return zc.Config{
+func DefaultConfig() *zc.Config {
+	return &zc.Config{
 		ModuleDefs:   zlib.All,
 		Preload:      zlib.Preload,
 		PreludeCLI:   zlib.PreludeUser,
@@ -15,7 +15,7 @@ func DefaultConfig() zc.Config {
 	}
 }
 
-func NewDefaultCalc() *zc.Calc {
+func NewDefaultCalc() *zc.CalcImpl {
 	calc, err := zc.NewCalc(DefaultConfig())
 	if err != nil {
 		panic(err)

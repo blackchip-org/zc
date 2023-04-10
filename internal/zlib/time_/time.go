@@ -48,13 +48,13 @@ func (t timeState) now() time.Time {
 }
 
 func getTimeState(env *zc.Env) *timeState {
-	return env.Calc.States["time"].(*timeState)
+	return env.Calc.StateFor("time").(*timeState)
 }
 
 func InitTime(env *zc.Env) error {
 	loc := time.Now().Location()
 	tz, _ := time.Now().Zone()
-	env.Calc.States["time"] = &timeState{
+	env.Calc.NewState("time", &timeState{
 		locale:         locale.EnUS,
 		p:              ptime.For(locale.EnUS),
 		local:          loc,
@@ -62,7 +62,7 @@ func InitTime(env *zc.Env) error {
 		dateLayout:     defaultDateLayout,
 		timeLayout:     defaultTimeLayout,
 		dateTimeLayout: defaultDateTimeLayout,
-	}
+	})
 	return nil
 }
 
@@ -339,7 +339,7 @@ func Local(env *zc.Env) error {
 	}
 	s.local = loc
 	s.localZone = zone
-	env.Calc.Info = "local time zone is now " + zc.Quote(s.localZone)
+	env.Calc.SetInfo("local time zone is now %v", zc.Quote(s.localZone))
 	return nil
 }
 
@@ -452,7 +452,7 @@ func Travel(env *zc.Env) error {
 		return err
 	}
 	s.travel = t
-	env.Calc.Info = "now set to " + zc.Quote(s.formatDateTime(t))
+	env.Calc.SetInfo("now set to %v", zc.Quote(s.formatDateTime(t)))
 	return nil
 }
 

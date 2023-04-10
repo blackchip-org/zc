@@ -9,7 +9,7 @@ import (
 
 type Env struct {
 	parent    *Env
-	Calc      *Calc
+	Calc      Calc
 	Name      string
 	Stack     *Stack
 	Main      *Stack
@@ -20,7 +20,7 @@ type Env struct {
 	lastStack *Stack // for tracing
 }
 
-func NewEnv(calc *Calc, name string) *Env {
+func NewEnv(calc Calc, name string) *Env {
 	e := &Env{
 		Calc:   calc,
 		Name:   name,

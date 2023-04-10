@@ -29,12 +29,12 @@ func Nothing(env *zc.Env) error {
 }
 
 func Trace(env *zc.Env) error {
-	env.Calc.Trace = true
+	env.Calc.SetTrace(true)
 	return nil
 }
 
 func TraceOff(env *zc.Env) error {
-	env.Calc.Trace = false
+	env.Calc.SetTrace(false)
 	return nil
 }
 

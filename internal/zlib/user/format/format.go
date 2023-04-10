@@ -15,9 +15,9 @@ func Round(env *zc.Env) error {
 	if err != nil {
 		return err
 	}
-	fn, ok := zc.RoundingFuncsFix[env.Calc.RoundingMode]
+	fn, ok := zc.RoundingFuncsFix[env.Calc.Config().RoundingMode]
 	if !ok {
-		return fmt.Errorf("invalid rounding mode: %v", env.Calc.RoundingMode)
+		return fmt.Errorf("invalid rounding mode: %v", env.Calc.Config().RoundingMode)
 	}
 	r := fn(value, places)
 	env.Stack.PushDecimal(r)
@@ -33,12 +33,12 @@ func RoundingMode(env *zc.Env) error {
 	if !ok {
 		return fmt.Errorf("invalid rounding mode: %v", a)
 	}
-	env.Calc.RoundingMode = mode
-	env.Calc.Info = fmt.Sprintf("rounding-mode set to %v", zc.Quote(a))
+	env.Calc.Config().RoundingMode = mode
+	env.Calc.SetInfo("rounding-mode set to %v", zc.Quote(a))
 	return err
 }
 
 func RoundingModeGet(env *zc.Env) error {
-	env.Stack.Push(env.Calc.RoundingMode.String())
+	env.Stack.Push(env.Calc.Config().RoundingMode.String())
 	return nil
 }

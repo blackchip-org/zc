@@ -16,7 +16,7 @@ func Exports(env *zc.Env) error {
 		return fmt.Errorf("expecting module name")
 	}
 
-	mod, ok = env.Calc.Modules[name]
+	mod, ok = env.Calc.Module(name)
 	if !ok {
 		return fmt.Errorf("no such module: %v", name)
 	}

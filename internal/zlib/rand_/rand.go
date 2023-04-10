@@ -15,15 +15,15 @@ type randState struct {
 
 func InitRand(env *zc.Env) error {
 	seed := time.Now().UnixMilli()
-	env.Calc.States["rand"] = &randState{
+	env.Calc.NewState("rand", &randState{
 		seed: seed,
 		rand: rand.New(rand.NewSource(seed)),
-	}
+	})
 	return nil
 }
 
 func getRandState(env *zc.Env) *randState {
-	return env.Calc.States["rand"].(*randState)
+	return env.Calc.StateFor("rand").(*randState)
 }
 
 func FloatRand(env *zc.Env) error {
@@ -55,7 +55,7 @@ func Seed(env *zc.Env) error {
 	}
 	s.seed = seed
 	s.rand = rand.New(rand.NewSource(seed))
-	env.Calc.Info = fmt.Sprintf("seed set to %v", seed)
+	env.Calc.SetInfo("seed set to %v", seed)
 	return nil
 }
 

@@ -127,8 +127,8 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 		if err := c.EvalString("", in); err != nil {
 			t.Fatal(err)
 		}
-		if c.Info != "" || info != "" {
-			have := "*" + c.Info + "*"
+		if c.Info() != "" || info != "" {
+			have := "*" + c.Info() + "*"
 			if have != info {
 				t.Fatalf("\n have: %v \n want: %v", have, info)
 			}

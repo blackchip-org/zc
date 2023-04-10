@@ -47,7 +47,7 @@ func TestFile(env *zc.Env) error {
 			continue
 		}
 
-		c, err := zc.NewCalc(env.Calc.Config)
+		c, err := zc.NewCalc(env.Calc.Config())
 		if err != nil {
 			panic(fmt.Sprintf("unable to create calc: %v", err))
 		}

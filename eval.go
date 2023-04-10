@@ -26,7 +26,7 @@ func (e *Env) evalAliasStmt(node *ast.AliasStmt) error {
 	if e.Module != "" {
 		e.Exports = append(e.Exports, node.To)
 	}
-	e.Calc.Info = "ok"
+	e.Calc.SetInfo("ok")
 	return nil
 }
 
@@ -141,7 +141,7 @@ func (e *Env) evalImport(name string, alias string, zlib bool) error {
 	var def ModuleDef
 	var ok bool
 	if zlib {
-		def, ok = e.Calc.ModuleDefs[name]
+		def, ok = e.Calc.ModuleDef(name)
 		if !ok {
 			return fmt.Errorf("no such module: %v", name)
 		}
@@ -169,7 +169,7 @@ func (e *Env) evalImportStmt(node *ast.ImportStmt) error {
 		}
 		names = append(names, mod.Name)
 	}
-	e.Calc.Info = "imported " + strings.Join(names, ", ")
+	e.Calc.SetInfo("imported %s", strings.Join(names, ", "))
 	return nil
 }
 
@@ -196,7 +196,7 @@ func (e *Env) evalMacroStmt(mac *ast.MacroStmt) error {
 	if e.Module != "" {
 		e.Exports = append(e.Exports, mac.Name)
 	}
-	e.Calc.Info = fmt.Sprintf("macro '%v' defined", mac.Name)
+	e.Calc.SetInfo("macro '%v' defined", mac.Name)
 	return nil
 }
 
@@ -206,7 +206,7 @@ func (e *Env) evalNativeStmt(node *ast.NativeStmt) error {
 	if export == "" {
 		export = node.Name
 	}
-	fn, ok := e.Calc.Natives[node.Name]
+	fn, ok := e.Calc.Native(node.Name)
 	if !ok {
 		return e.err(node, fmt.Errorf("no such native: %v", node.Name))
 	}
@@ -331,7 +331,7 @@ func (e *Env) evalUseStmt(node *ast.UseStmt) error {
 		}
 		names = append(names, mod.Name)
 	}
-	e.Calc.Info = "using " + strings.Join(names, ", ")
+	e.Calc.SetInfo("using %s", strings.Join(names, ", "))
 	return nil
 }
 
@@ -405,14 +405,13 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 			return fmt.Errorf("stack reference %v not allowed as parameter", param.Type)
 		}
 	}
-	e.Calc.Frames = append(e.Calc.Frames, Frame{
+	e.Calc.Frames().Push(Frame{
 		Pos:  fn.Pos(),
 		Func: fn.Name,
 		Env:  callee,
 	})
 	defer func() {
-		e.Calc.Frames = e.Calc.Frames[:len(e.Calc.Frames)-1]
-
+		e.Calc.Frames().Pop()
 	}()
 	if err := callee.evalStmts(fn.Stmts); err != nil {
 		if !errors.Is(err, errFuncReturn) {
@@ -443,13 +442,13 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 func (e *Env) invokeNative(caller *Env, fn CalcFunc, stmt *ast.NativeStmt) error {
 	callee := e.Derive(stmt.Name)
 	callee.Stack = caller.Stack
-	e.Calc.Frames = append(e.Calc.Frames, Frame{
+	e.Calc.Frames().Push(Frame{
 		Pos:  stmt.Pos(),
 		Func: stmt.Name,
 		Env:  callee,
 	})
 	defer func() {
-		e.Calc.Frames = e.Calc.Frames[:len(e.Calc.Frames)-1]
+		e.Calc.Frames().Pop()
 	}()
 
 	if err := fn(callee); err != nil {
@@ -501,7 +500,7 @@ func (e *Env) err(node ast.Node, err error) error {
 }
 
 func (e *Env) traceStack() {
-	if e.Calc.Trace {
+	if e.Calc.Trace() {
 		if !e.Stack.Equal(e.lastStack) && e.Stack.Len() > 0 {
 			log.Printf("eval: %v(%v)  %v", e.Stack.Name, e.Stack, e.Name)
 		}
@@ -510,7 +509,7 @@ func (e *Env) traceStack() {
 }
 
 func (e *Env) trace(node ast.Node, format string, a ...any) {
-	if e.Calc.Trace {
+	if e.Calc.Trace() {
 		msg := fmt.Sprintf(format, a...)
 		log.Printf("eval:     %v @ %v", msg, node.Pos())
 	}

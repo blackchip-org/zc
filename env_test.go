@@ -16,7 +16,7 @@ func TestInterpolate(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.src, func(t *testing.T) {
-			calc, err := NewCalc(Config{})
+			calc, err := NewCalc(&Config{})
 			if err != nil {
 				log.Panicf("unexpected error: %v", err)
 			}
