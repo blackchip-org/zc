@@ -14,7 +14,7 @@ type Stack struct {
 	data []string
 }
 
-func NewStack(calc *Calc, name string) *Stack {
+func NewStack(name string) *Stack {
 	return &Stack{Name: name}
 }
 

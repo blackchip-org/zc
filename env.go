@@ -27,7 +27,7 @@ func NewEnv(calc *Calc, name string) *Env {
 		stacks: make(map[string]*Stack),
 		Funcs:  make(map[string]CalcFunc),
 	}
-	e.SetMain(NewStack(calc, "main"))
+	e.SetMain(NewStack("main"))
 	return e
 }
 
@@ -68,7 +68,7 @@ func (e *Env) StackFor(name string) (*Stack, bool) {
 }
 
 func (e *Env) NewStack(name string) *Stack {
-	s := NewStack(e.Calc, name)
+	s := NewStack(name)
 	e.stacks[name] = s
 	return s
 }

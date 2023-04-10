@@ -3,11 +3,7 @@ package zc
 import "testing"
 
 func testStack() *Stack {
-	c, err := NewCalc(Config{})
-	if err != nil {
-		panic(err)
-	}
-	s := NewStack(c, "test")
+	s := NewStack("test")
 	return s
 }
 

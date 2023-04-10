@@ -74,7 +74,7 @@ func (e *Env) evalFile(file *ast.File) error {
 func (e *Env) evalForStmt(node *ast.ForStmt) error {
 	e.trace(node, "for-begin(%v)", node.Stack.Name)
 
-	expr := NewStack(e.Calc, "")
+	expr := NewStack("")
 	e.Stack = expr
 	err := e.evalExpr(node.Expr)
 	e.Stack = e.Main
