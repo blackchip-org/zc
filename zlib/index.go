@@ -41,7 +41,7 @@ var All = []zc.ModuleDef{
 	fn.Mod,
 	format.Mod,
 	geo.Mod,
-	math_.Mod,
+	math_.Module,
 	io_.Mod,
 	prog.Mod,
 	rand_.Mod,

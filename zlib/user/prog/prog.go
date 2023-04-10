@@ -11,9 +11,9 @@ import (
 )
 
 var (
-	And = zc.FuncGeneric(ops.And, 2)
-	Not = zc.FuncGeneric(ops.Not, 1)
-	Or  = zc.FuncGeneric(ops.Or, 2)
+	And = zc.FuncGeneric(ops.And)
+	Not = zc.FuncGeneric(ops.Not)
+	Or  = zc.FuncGeneric(ops.Or)
 )
 
 func Bin(env *zc.Env) error {

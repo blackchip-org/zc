@@ -17,10 +17,10 @@ func FuncFloat1(fn func(float64) float64) func(*Env) error {
 	}
 }
 
-func FuncGeneric(op ops.Def, nArgs int) func(*Env) error {
+func FuncGeneric(op ops.Def) func(*Env) error {
 	return func(e *Env) error {
 		var args []types.Generic
-		for i := 0; i < nArgs; i++ {
+		for i := 0; i < op.NArg; i++ {
 			s, err := e.Stack.Pop()
 			if err != nil {
 				return err
