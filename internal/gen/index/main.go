@@ -14,8 +14,10 @@ import (
 	"strings"
 	"unicode"
 	"unicode/utf8"
+)
 
-	"github.com/blackchip-org/zc"
+const (
+	Root = "../../.."
 )
 
 var (
@@ -53,17 +55,17 @@ func main() {
 	}
 
 	for _, dir := range dirs {
-		entries, err := zc.Files.ReadDir(dir)
+		entries, err := os.ReadDir(path.Join(Root, dir))
 		if err != nil {
 			log.Fatal(err)
 		}
 		for _, entry := range entries {
-			files = append(files, path.Join(dir, entry.Name()))
+			files = append(files, path.Join(Root, dir, entry.Name()))
 		}
 	}
 
 	for _, name := range files {
-		file, err := zc.Files.Open(name)
+		file, err := os.Open(name)
 		if err != nil {
 			log.Fatal(err)
 		}

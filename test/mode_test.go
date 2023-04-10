@@ -4,12 +4,12 @@ import (
 	"path"
 	"testing"
 
-	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/app"
+	"github.com/blackchip-org/zc/internal"
 )
 
 func TestModes(t *testing.T) {
-	files, err := zc.Files.ReadDir("modes")
+	files, err := internal.Files.ReadDir("modes")
 	if err != nil {
 		t.Fatal(err)
 	}
