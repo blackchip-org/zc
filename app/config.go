@@ -12,8 +12,6 @@ func DefaultConfig() zc.Config {
 		PreludeCLI:   zlib.PreludeUser,
 		PreludeDev:   zlib.PreludeDev,
 		RoundingMode: zc.RoundingModeHalfUp,
-		IntLayout:    ",000",
-		Point:        '.',
 	}
 }
 

@@ -7,8 +7,6 @@ import (
 	"os"
 	"sort"
 	"strings"
-	"unicode"
-	"unicode/utf8"
 
 	"github.com/blackchip-org/zc/internal"
 	"github.com/blackchip-org/zc/lang/lexer"
@@ -35,12 +33,6 @@ type Config struct {
 	PreludeDev   []string
 	Trace        bool
 	RoundingMode RoundingMode
-	IntLayout    string
-	Point        rune
-	FracFormat   string
-	MinDigits    uint
-	AutoCurrency bool
-	AutoFormat   bool
 	MaxHistory   int
 }
 
@@ -336,30 +328,6 @@ func LoadFile(p string) ([]byte, error) {
 		return internal.Files.ReadFile(p)
 	}
 	return os.ReadFile(p)
-}
-
-type Fix int
-
-const (
-	NoFix Fix = iota
-	Prefix
-	Suffix
-)
-
-func ParseCurrencySymbol(v string) (rune, Fix) {
-	prefix, _ := utf8.DecodeRuneInString(v)
-	if unicode.Is(unicode.Sc, prefix) {
-		return prefix, Prefix
-	}
-	suffix, _ := utf8.DecodeLastRuneInString(v)
-	if unicode.Is(unicode.Sc, suffix) {
-		return suffix, Suffix
-	}
-	return rune(0), NoFix
-}
-
-func (c *Calc) LocalizeNumber(v string) string {
-	return strings.ReplaceAll(v, ".", string(c.Point))
 }
 
 func ErrorWithStack(err error) string {

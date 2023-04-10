@@ -221,7 +221,7 @@ func (e *Env) evalNativeStmt(node *ast.NativeStmt) error {
 
 func (e *Env) evalNumberAtom(number *ast.NumberAtom) error {
 	e.trace(number, "number %v", number.Value)
-	e.Stack.PushValue(e.Calc.LocalizeNumber(number.Value))
+	e.Stack.PushValue(number.Value)
 	e.traceStack()
 	return nil
 }
