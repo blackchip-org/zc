@@ -1,20 +1,19 @@
 package types
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/shopspring/decimal"
 )
 
-type gDecimal struct {
+type vDecimal struct {
 	val decimal.Decimal
 }
 
-func (g gDecimal) Type() Type     { return Decimal }
-func (g gDecimal) Format() string { return Decimal.Format(g.val) }
-func (g gDecimal) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gDecimal) Native() any    { return g.val }
+func (v vDecimal) Type() Type     { return Decimal }
+func (v vDecimal) Format() string { return Decimal.Format(v.val) }
+func (v vDecimal) String() string { return stringV(v) }
+func (v vDecimal) Native() any    { return v.val }
 
 type DecimalType struct{}
 
@@ -49,7 +48,7 @@ func (t DecimalType) Format(d decimal.Decimal) string {
 }
 
 func (t DecimalType) Value(d decimal.Decimal) Value {
-	return gDecimal{val: d}
+	return vDecimal{val: d}
 }
 
 func (t DecimalType) Native(v Value) decimal.Decimal {

@@ -8,7 +8,7 @@ import (
 	"github.com/blackchip-org/zc/scanner"
 )
 
-type gRational struct {
+type vRational struct {
 	val *big.Rat
 }
 
@@ -24,10 +24,10 @@ func formatRational(r *big.Rat) string {
 	return r.RatString()
 }
 
-func (g gRational) Type() Type     { return Rational }
-func (g gRational) Format() string { return formatRational(g.val) }
-func (g gRational) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gRational) Native() any    { return g.val }
+func (v vRational) Type() Type     { return Rational }
+func (v vRational) Format() string { return formatRational(v.val) }
+func (v vRational) String() string { return stringV(v) }
+func (v vRational) Native() any    { return v.val }
 
 type RationalType struct{}
 
@@ -99,7 +99,7 @@ func (t RationalType) ParseValue(s string) (Value, error) {
 }
 
 func (t RationalType) Value(i *big.Rat) Value {
-	return gRational{val: i}
+	return vRational{val: i}
 }
 
 func (t RationalType) Native(v Value) *big.Rat {

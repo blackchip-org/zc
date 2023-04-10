@@ -128,3 +128,7 @@ func cleanNumber(str string) string {
 	}
 	return s.Token()
 }
+
+func stringV(v Value) string {
+	return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format())
+}

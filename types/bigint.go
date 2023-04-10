@@ -1,18 +1,17 @@
 package types
 
 import (
-	"fmt"
 	"math/big"
 )
 
-type gBigInt struct {
+type vBigInt struct {
 	val *big.Int
 }
 
-func (g gBigInt) Type() Type     { return BigInt }
-func (g gBigInt) Format() string { return BigInt.Format(g.val) }
-func (g gBigInt) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gBigInt) Native() any    { return g.val }
+func (v vBigInt) Type() Type     { return BigInt }
+func (v vBigInt) Format() string { return BigInt.Format(v.val) }
+func (v vBigInt) String() string { return stringV(v) }
+func (v vBigInt) Native() any    { return v.val }
 
 type BigIntType struct{}
 
@@ -41,7 +40,7 @@ func (t BigIntType) Format(v *big.Int) string {
 }
 
 func (t BigIntType) Value(i *big.Int) Value {
-	return gBigInt{val: i}
+	return vBigInt{val: i}
 }
 
 func (t BigIntType) Native(v Value) *big.Int {

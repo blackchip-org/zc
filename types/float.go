@@ -1,19 +1,18 @@
 package types
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
-type gFloat struct {
+type vFloat struct {
 	val float64
 }
 
-func (g gFloat) Type() Type     { return Float }
-func (g gFloat) Format() string { return Float.Format(g.val) }
-func (g gFloat) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gFloat) Native() any    { return g.val }
+func (v vFloat) Type() Type     { return Float }
+func (v vFloat) Format() string { return Float.Format(v.val) }
+func (v vFloat) String() string { return stringV(v) }
+func (v vFloat) Native() any    { return v.val }
 
 type FloatType struct{}
 
@@ -42,7 +41,7 @@ func (t FloatType) Format(f float64) string {
 }
 
 func (t FloatType) Value(f float64) Value {
-	return gFloat{val: f}
+	return vFloat{val: f}
 }
 
 func (t FloatType) Native(v Value) float64 {

@@ -5,14 +5,14 @@ import (
 	"strings"
 )
 
-type gBool struct {
+type vBool struct {
 	val bool
 }
 
-func (g gBool) Type() Type     { return Bool }
-func (g gBool) Format() string { return Bool.Format(g.val) }
-func (g gBool) String() string { return fmt.Sprintf("%v(%v)", g.Type().String(), g.Format()) }
-func (g gBool) Native() any    { return g.val }
+func (v vBool) Type() Type     { return Bool }
+func (v vBool) Format() string { return Bool.Format(v.val) }
+func (v vBool) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vBool) Native() any    { return v.val }
 
 type BoolType struct{}
 
@@ -45,7 +45,7 @@ func (t BoolType) Format(b bool) string {
 }
 
 func (t BoolType) Value(b bool) Value {
-	return gBool{val: b}
+	return vBool{val: b}
 }
 
 func (t BoolType) Native(v Value) bool {
