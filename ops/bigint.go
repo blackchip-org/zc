@@ -8,7 +8,7 @@ import (
 
 var zeroBigInt big.Int
 
-func op1BigInt(fn func(*big.Int, *big.Int) error) OpFn {
+func op1BigInt(fn func(*big.Int, *big.Int) error) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.BigInt.Value(args[0])
 		z := new(big.Int)
@@ -17,7 +17,7 @@ func op1BigInt(fn func(*big.Int, *big.Int) error) OpFn {
 	}
 }
 
-func op2BigInt(fn func(*big.Int, *big.Int, *big.Int) error) OpFn {
+func op2BigInt(fn func(*big.Int, *big.Int, *big.Int) error) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.BigInt.Value(args[0])
 		y := t.BigInt.Value(args[1])
@@ -27,7 +27,7 @@ func op2BigInt(fn func(*big.Int, *big.Int, *big.Int) error) OpFn {
 	}
 }
 
-func opCmpBigInt(fn func(*big.Int, *big.Int) bool) OpFn {
+func opCmpBigInt(fn func(*big.Int, *big.Int) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.BigInt.Value(args[0])
 		y := t.BigInt.Value(args[1])
@@ -61,7 +61,7 @@ func divBigInt(args []t.Generic) ([]t.Generic, error) {
 	return []t.Generic{t.BigInt.Generic(z)}, nil
 }
 
-func opDivBigInt(fn func(*big.Int, *big.Int, *big.Int) error) OpFn {
+func opDivBigInt(fn func(*big.Int, *big.Int, *big.Int) error) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.BigInt.Value(args[0])
 		y := t.BigInt.Value(args[1])

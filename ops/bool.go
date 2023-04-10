@@ -2,7 +2,7 @@ package ops
 
 import t "github.com/blackchip-org/zc/types"
 
-func op1Bool(fn func(bool) bool) OpFn {
+func op1Bool(fn func(bool) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Bool.Value(args[0])
 		z := fn(x)
@@ -10,7 +10,7 @@ func op1Bool(fn func(bool) bool) OpFn {
 	}
 }
 
-func op2Bool(fn func(bool, bool) bool) OpFn {
+func op2Bool(fn func(bool, bool) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Bool.Value(args[0])
 		y := t.Bool.Value(args[1])

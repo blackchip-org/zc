@@ -15,7 +15,7 @@ func checkFloat(f float64) error {
 	return nil
 }
 
-func op1Float(fn func(float64) (float64, error)) OpFn {
+func op1Float(fn func(float64) (float64, error)) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Float.Value(args[0])
 		z, err := fn(x)
@@ -29,7 +29,7 @@ func op1Float(fn func(float64) (float64, error)) OpFn {
 	}
 }
 
-func op2Float(fn func(float64, float64) (float64, error)) OpFn {
+func op2Float(fn func(float64, float64) (float64, error)) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Float.Value(args[0])
 		y := t.Float.Value(args[1])
@@ -44,7 +44,7 @@ func op2Float(fn func(float64, float64) (float64, error)) OpFn {
 	}
 }
 
-func opCmpFloat(fn func(float64, float64) bool) OpFn {
+func opCmpFloat(fn func(float64, float64) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Float.Value(args[0])
 		y := t.Float.Value(args[1])
@@ -53,7 +53,7 @@ func opCmpFloat(fn func(float64, float64) bool) OpFn {
 	}
 }
 
-func opDivFloat(fn func(float64, float64) (float64, error)) OpFn {
+func opDivFloat(fn func(float64, float64) (float64, error)) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Float.Value(args[0])
 		y := t.Float.Value(args[1])

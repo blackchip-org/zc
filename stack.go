@@ -315,16 +315,16 @@ func (s *Stack) MustPop() string {
 }
 
 // FIXME this is a hack for now
-func (s *Stack) Eval(opName string, nArgs int) error {
+func (s *Stack) Eval(op ops.Def) error {
 	var args []types.Generic
-	for i := 0; i < nArgs; i++ {
+	for i := 0; i < op.NArg; i++ {
 		s, err := s.Pop()
 		if err != nil {
 			return err
 		}
 		args = append([]types.Generic{types.Parse(s)}, args...)
 	}
-	result, err := ops.Eval(opName, args)
+	result, err := ops.Eval(op, args)
 	if err != nil {
 		return err
 	}

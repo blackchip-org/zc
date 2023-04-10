@@ -2,7 +2,7 @@ package ops
 
 import t "github.com/blackchip-org/zc/types"
 
-func opCmpString(fn func(string, string) bool) OpFn {
+func opCmpString(fn func(string, string) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.String.Value(args[0])
 		y := t.String.Value(args[1])

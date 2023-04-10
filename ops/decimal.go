@@ -5,7 +5,7 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-func op1Decimal(fn func(decimal.Decimal) (decimal.Decimal, error)) OpFn {
+func op1Decimal(fn func(decimal.Decimal) (decimal.Decimal, error)) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Decimal.Value(args[0])
 		z, err := fn(x)
@@ -16,7 +16,7 @@ func op1Decimal(fn func(decimal.Decimal) (decimal.Decimal, error)) OpFn {
 	}
 }
 
-func op2Decimal(fn func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, error)) OpFn {
+func op2Decimal(fn func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, error)) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Decimal.Value(args[0])
 		y := t.Decimal.Value(args[1])
@@ -28,7 +28,7 @@ func op2Decimal(fn func(decimal.Decimal, decimal.Decimal) (decimal.Decimal, erro
 	}
 }
 
-func cmpDecimalFn(fn func(x decimal.Decimal, y decimal.Decimal) bool) OpFn {
+func cmpDecimalFn(fn func(x decimal.Decimal, y decimal.Decimal) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Decimal.Value(args[0])
 		y := t.Decimal.Value(args[1])

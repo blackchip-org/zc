@@ -9,7 +9,7 @@ import (
 )
 
 type opTest struct {
-	name   string
+	op     Def
 	args   []string
 	result []string
 	err    string
@@ -140,7 +140,7 @@ var opTests = []opTest{
 }
 
 func doEval(t *testing.T, test opTest, exact bool) {
-	rs, err := eval(test.name, types.ParseN(test.args), exact)
+	rs, err := eval(test.op, types.ParseN(test.args), exact)
 	errMsg := ""
 	if err != nil {
 		errMsg = err.Error()
@@ -159,7 +159,7 @@ func doEval(t *testing.T, test opTest, exact bool) {
 
 func TestOps(t *testing.T) {
 	for _, test := range opTests {
-		name := fmt.Sprintf("%v_%v", test.name, test.args)
+		name := fmt.Sprintf("%v_%v", test.op.Name, test.args)
 		t.Run(name+"/exact", func(t *testing.T) {
 			if test.exact {
 				doEval(t, test, test.exact)

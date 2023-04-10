@@ -7,7 +7,7 @@ import (
 	t "github.com/blackchip-org/zc/types"
 )
 
-func op1Complex(fn func(complex128) (complex128, error)) OpFn {
+func op1Complex(fn func(complex128) (complex128, error)) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Complex.Value(args[0])
 		z, err := fn(x)
@@ -21,7 +21,7 @@ func op1Complex(fn func(complex128) (complex128, error)) OpFn {
 	}
 }
 
-func op2Complex(fn func(complex128, complex128) (complex128, error)) OpFn {
+func op2Complex(fn func(complex128, complex128) (complex128, error)) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Complex.Value(args[0])
 		y := t.Complex.Value(args[1])
@@ -36,7 +36,7 @@ func op2Complex(fn func(complex128, complex128) (complex128, error)) OpFn {
 	}
 }
 
-func opCmpComplex(fn func(complex128, complex128) bool) OpFn {
+func opCmpComplex(fn func(complex128, complex128) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Complex.Value(args[0])
 		y := t.Complex.Value(args[1])

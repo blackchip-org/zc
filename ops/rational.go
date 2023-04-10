@@ -8,7 +8,7 @@ import (
 
 var ratZero big.Rat
 
-func op1Rational(fn func(*big.Rat, *big.Rat) error) OpFn {
+func op1Rational(fn func(*big.Rat, *big.Rat) error) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Rational.Value(args[0])
 		z := new(big.Rat)
@@ -17,7 +17,7 @@ func op1Rational(fn func(*big.Rat, *big.Rat) error) OpFn {
 	}
 }
 
-func op2Rational(fn func(*big.Rat, *big.Rat, *big.Rat) error) OpFn {
+func op2Rational(fn func(*big.Rat, *big.Rat, *big.Rat) error) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Rational.Value(args[0])
 		y := t.Rational.Value(args[1])
@@ -27,7 +27,7 @@ func op2Rational(fn func(*big.Rat, *big.Rat, *big.Rat) error) OpFn {
 	}
 }
 
-func opCmpRational(fn func(*big.Rat, *big.Rat) bool) OpFn {
+func opCmpRational(fn func(*big.Rat, *big.Rat) bool) Func {
 	return func(args []t.Generic) ([]t.Generic, error) {
 		x := t.Rational.Value(args[0])
 		y := t.Rational.Value(args[1])

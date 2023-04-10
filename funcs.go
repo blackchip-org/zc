@@ -17,7 +17,7 @@ func FuncFloat1(fn func(float64) float64) func(*Env) error {
 	}
 }
 
-func FuncGeneric(opName string, nArgs int) func(*Env) error {
+func FuncGeneric(op ops.Def, nArgs int) func(*Env) error {
 	return func(e *Env) error {
 		var args []types.Generic
 		for i := 0; i < nArgs; i++ {
@@ -27,7 +27,7 @@ func FuncGeneric(opName string, nArgs int) func(*Env) error {
 			}
 			args = append([]types.Generic{types.Parse(s)}, args...)
 		}
-		result, err := ops.Eval(opName, args)
+		result, err := ops.Eval(op, args)
 		if err != nil {
 			return err
 		}

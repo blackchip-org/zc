@@ -12,39 +12,48 @@ var (
 	ErrDivisionByZero = errors.New("division by zero")
 )
 
-type OpFn func([]t.Generic) ([]t.Generic, error)
+type Func func([]t.Generic) ([]t.Generic, error)
 
-type Op struct {
+type FuncDecl struct {
 	Params []t.GenericType
-	Fn     OpFn
+	Fn     Func
 }
 
-const (
-	Abs   = "abs"
-	Add   = "add"
-	And   = "and"
-	Ceil  = "ceil"
-	Div   = "div"
-	Eq    = "eq"
-	Floor = "floor"
-	Gt    = "gt"
-	Gte   = "gte"
-	Lt    = "lt"
-	Lte   = "lte"
-	Mod   = "mod"
-	Mul   = "mul"
-	Neg   = "neg"
-	Neq   = "neq"
-	Not   = "not"
-	Or    = "or"
-	Pow   = "pow"
-	Rem   = "rem"
-	Sign  = "sign"
-	Sqrt  = "sqrt"
-	Sub   = "sub"
+type Def struct {
+	Name string
+	NArg int
+}
+
+func (o Def) String() string {
+	return fmt.Sprintf("%v/%v", o.Name, o.NArg)
+}
+
+var (
+	Abs   = Def{Name: "abs", NArg: 1}
+	Add   = Def{Name: "add", NArg: 2}
+	And   = Def{Name: "and", NArg: 2}
+	Ceil  = Def{Name: "ceil", NArg: 1}
+	Div   = Def{Name: "div", NArg: 2}
+	Eq    = Def{Name: "eq", NArg: 2}
+	Floor = Def{Name: "floor", NArg: 1}
+	Gt    = Def{Name: "gt", NArg: 2}
+	Gte   = Def{Name: "gte", NArg: 2}
+	Lt    = Def{Name: "lt", NArg: 2}
+	Lte   = Def{Name: "lte", NArg: 2}
+	Mod   = Def{Name: "mod", NArg: 2}
+	Mul   = Def{Name: "mul", NArg: 2}
+	Neg   = Def{Name: "neg", NArg: 1}
+	Neq   = Def{Name: "neq", NArg: 2}
+	Not   = Def{Name: "not", NArg: 1}
+	Or    = Def{Name: "or", NArg: 2}
+	Pow   = Def{Name: "pow", NArg: 2}
+	Rem   = Def{Name: "rem", NArg: 2}
+	Sign  = Def{Name: "sign", NArg: 1}
+	Sqrt  = Def{Name: "sqrt", NArg: 1}
+	Sub   = Def{Name: "sub", NArg: 2}
 )
 
-var OpTable map[string][]Op = map[string][]Op{
+var OpTable = map[Def][]FuncDecl{
 	Abs: {
 		{Params: []t.GenericType{t.BigInt}, Fn: absBigInt},
 		{Params: []t.GenericType{t.Decimal}, Fn: absDecimal},
@@ -178,14 +187,14 @@ var OpTable map[string][]Op = map[string][]Op{
 	},
 }
 
-func Eval(opName string, args []t.Generic) ([]t.Generic, error) {
-	return eval(opName, args, false)
+func Eval(op Def, args []t.Generic) ([]t.Generic, error) {
+	return eval(op, args, false)
 }
 
-func eval(name string, args []t.Generic, exact bool) ([]t.Generic, error) {
-	ops, ok := OpTable[name]
+func eval(op Def, args []t.Generic, exact bool) ([]t.Generic, error) {
+	ops, ok := OpTable[op]
 	if !ok {
-		return []t.Generic{}, fmt.Errorf("no such operation: %v", name)
+		return []t.Generic{}, fmt.Errorf("no such operation: %v", op.Name)
 	}
 	for _, op := range ops {
 		if len(op.Params) != len(args) {
@@ -230,5 +239,5 @@ func eval(name string, args []t.Generic, exact bool) ([]t.Generic, error) {
 	for _, arg := range args {
 		types = append(types, arg.Type().String())
 	}
-	return []t.Generic{}, fmt.Errorf("no %v operation for %v", name, strings.Join(types, ", "))
+	return []t.Generic{}, fmt.Errorf("no %v operation for %v", op.Name, strings.Join(types, ", "))
 }
