@@ -3,12 +3,12 @@ package test
 import (
 	"bufio"
 	"io/fs"
+	"os"
 	"path"
 	"regexp"
 	"strings"
 	"testing"
 
-	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/app"
 )
 
@@ -20,15 +20,15 @@ var (
 
 func TestDoc(t *testing.T) {
 	files := []string{
-		"README.md",
+		"../README.md",
 	}
 	dirs := []string{
-		"doc/zlib",
-		"doc/zlib/unit",
+		"../doc/zlib",
+		"../doc/zlib/unit",
 	}
 
 	for _, dir := range dirs {
-		entries, err := zc.Files.ReadDir(dir)
+		entries, err := os.ReadDir(dir)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -39,10 +39,11 @@ func TestDoc(t *testing.T) {
 
 	for _, name := range files {
 		t.Run(name, func(t *testing.T) {
-			file, err := zc.Files.Open(name)
+			file, err := os.Open(name)
 			if err != nil {
 				t.Fatal(err)
 			}
+			defer file.Close()
 			testFile(t, file)
 		})
 	}
