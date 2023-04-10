@@ -203,55 +203,13 @@ Thousand separators are ignored when parsing numbers:
 |---------------|-------------------
 | `65,536 sqrt` | `256`
 
-Use `format` or `f` to print out numbers with thousand separators:
-
-<!-- test: format -->
-
-| Input         | Stack
-|---------------|-------------------
-| `256 2 pow`   | `65536`
-| `format`      | `65,536`
-
-Set `auto-format` to `true` to apply this automatically when numbers are
-placed on the stack:
-
-<!-- test: auto-format -->
-
-| Input              | Stack
-|--------------------|-------------------
-| `true auto-format` | *auto-format set to true*
-| `256 2 pow`        | `65,536`
-
-Use `int-layout` and `point` to change the thousands separator
-and decimal point:
-
-<!-- test: european_numbers -->
-
-| Input                     | Stack
-|---------------------------|-------------------
-| `'.000' int-layout`       | *int-layout set to '.000'*
-| `','    point`            | *point set to ','*
-| `12345 10 div f`          | `1.234,5`
-
 Currency symbols are ignored when parsing:
 
 <!-- test: currency -->
 
 | Input          | Stack
 |----------------|-------------------
-| `$1234`        | `1234`
-
-Set `auto-currency` to true to preserve currency symbols that are a prefix
-or a suffix to a number:
-
-<!-- test: auto-currency -->
-
-| Input                | Stack
-|----------------------|-------------------
-| `true auto-currency` | *auto-currency set to true*
-| `$1234`              | `$1234`
-| `2 mul`              | `$2468`
-
+| `$1234 2 mul`  | `2468`
 
 ## Text
 
@@ -297,12 +255,11 @@ compute the sales tax on something that costs $123:
 
 | Input               | Stack
 |---------------------|-------------------
-| `true auto-currency`| *auto-currency set to true*
 | `$123`              | `$123`
 | `dup`               | `$123 \| $123`
 | `0.05`              | `$123 \| $123 \| 0.05`
-| `mul`               | `$123 \| $6.15`
-| `add`               | `$129.15`
+| `mul`               | `$123 \| 6.15`
+| `add`               | `129.15`
 
 Repeated use of this pattern can be used with a macro:
 
@@ -310,10 +267,9 @@ Repeated use of this pattern can be used with a macro:
 
 | Input                    | Stack
 |--------------------------|-------------------
-| `true auto-currency`     | *auto-currency set to true*
 | `macro tax dup 0.05 mul` | *macro 'tax' defined*
 | `$123`                   | `$123`
-| `tax add`                | `$129.15`
+| `tax add`                | `129.15`
 
 The name of `=` is reserved for your macro use in bulk operations:
 

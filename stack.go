@@ -5,23 +5,23 @@ import (
 	"math/big"
 	"strings"
 
+	"github.com/blackchip-org/zc/ops"
+	"github.com/blackchip-org/zc/types"
 	"github.com/shopspring/decimal"
 )
 
 type Stack struct {
 	Name string // FIXME: should remove this
-	calc *Calc
 	data []string
 }
 
 func NewStack(calc *Calc, name string) *Stack {
-	return &Stack{Name: name, calc: calc}
+	return &Stack{Name: name}
 }
 
 func (s *Stack) Copy() *Stack {
 	ns := &Stack{
 		Name: s.Name,
-		calc: s.calc,
 		data: make([]string, len(s.data)),
 	}
 	copy(ns.data, s.data)
@@ -135,23 +135,7 @@ func (s *Stack) PopBigInt() (*big.Int, error) {
 	if err != nil {
 		return nil, err
 	}
-	r, err := s.calc.ParseBigInt(v)
-	if err != nil {
-		return nil, err
-	}
-	return r, nil
-}
-
-func (s *Stack) PopBigIntWithAttrs() (*big.Int, FormatAttrs, error) {
-	v, err := s.Pop()
-	if err != nil {
-		return nil, FormatAttrs{}, err
-	}
-	r, err := s.calc.ParseBigInt(v)
-	if err != nil {
-		return nil, FormatAttrs{}, err
-	}
-	return r, ParseFormatAttrs(v), nil
+	return types.BigInt.Parse(v)
 }
 
 func (s *Stack) PopBigInt2() (*big.Int, *big.Int, error) {
@@ -171,11 +155,7 @@ func (s *Stack) PopBool() (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	b, err := s.calc.ParseBool(v)
-	if err != nil {
-		return false, err
-	}
-	return b, nil
+	return types.Bool.Parse(v)
 }
 
 func (s *Stack) PopBool2() (bool, bool, error) {
@@ -195,11 +175,7 @@ func (s *Stack) PopDecimal() (decimal.Decimal, error) {
 	if err != nil {
 		return decimal.Zero, err
 	}
-	d, err := s.calc.ParseDecimal(v)
-	if err != nil {
-		return decimal.Zero, err
-	}
-	return d, err
+	return types.Decimal.Parse(v)
 }
 
 func (s *Stack) PopDecimal2() (decimal.Decimal, decimal.Decimal, error) {
@@ -219,11 +195,7 @@ func (s *Stack) PopFloat() (float64, error) {
 	if err != nil {
 		return 0, err
 	}
-	f, err := s.calc.ParseFloat(v)
-	if err != nil {
-		return 0, err
-	}
-	return f, err
+	return types.Float.Parse(v)
 }
 
 func (s *Stack) PopInt() (int, error) {
@@ -231,11 +203,7 @@ func (s *Stack) PopInt() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.calc.ParseInt(v)
-	if err != nil {
-		return 0, err
-	}
-	return i, nil
+	return types.Int.Parse(v)
 }
 
 func (s *Stack) PopInt32() (int32, error) {
@@ -243,11 +211,7 @@ func (s *Stack) PopInt32() (int32, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.calc.ParseInt32(v)
-	if err != nil {
-		return 0, err
-	}
-	return i, nil
+	return types.Int32.Parse(v)
 }
 
 func (s *Stack) PopInt64() (int64, error) {
@@ -255,11 +219,7 @@ func (s *Stack) PopInt64() (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.calc.ParseInt64(v)
-	if err != nil {
-		return 0, err
-	}
-	return i, nil
+	return types.Int64.Parse(v)
 }
 
 func (s *Stack) PopRune() (rune, error) {
@@ -267,7 +227,7 @@ func (s *Stack) PopRune() (rune, error) {
 	if err != nil {
 		return 0, err
 	}
-	return s.calc.ParseRune(v)
+	return types.Rune.Parse(v)
 }
 
 func (s *Stack) PopUint() (uint, error) {
@@ -275,7 +235,7 @@ func (s *Stack) PopUint() (uint, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.calc.ParseUint(v)
+	i, err := types.Uint.Parse(v)
 	if err != nil {
 		return 0, err
 	}
@@ -287,7 +247,7 @@ func (s *Stack) PopUint8() (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
-	i, err := s.calc.ParseUint8(v)
+	i, err := types.Uint8.Parse(v)
 	if err != nil {
 		return 0, err
 	}
@@ -295,39 +255,31 @@ func (s *Stack) PopUint8() (uint8, error) {
 }
 
 func (s *Stack) PushBigInt(v *big.Int) {
-	s.Push(s.calc.FormatBigInt(v, s.calc.AutoFormat))
-}
-
-func (s *Stack) PushBigIntWithAttrs(v *big.Int, attrs FormatAttrs) {
-	s.Push(s.calc.FormatBigIntWithAttrs(v, attrs))
+	s.Push(types.BigInt.Format(v))
 }
 
 func (s *Stack) PushBool(v bool) {
-	s.Push(s.calc.FormatBool(v))
+	s.Push(types.Bool.Format(v))
 }
 
 func (s *Stack) PushDecimal(v decimal.Decimal) {
-	s.Push(s.calc.FormatDecimal(v, s.calc.AutoFormat))
-}
-
-func (s *Stack) PushDecimalWithAttrs(v decimal.Decimal, attrs FormatAttrs) {
-	s.Push(s.calc.FormatDecimalWithAttrs(v, attrs))
+	s.Push(types.Decimal.Format(v))
 }
 
 func (s *Stack) PushFloat(v float64) {
-	s.Push(s.calc.FormatFloat(v))
+	s.Push(types.Float.Format(v))
 }
 
 func (s *Stack) PushInt(v int) {
-	s.Push(s.calc.FormatInt(v))
+	s.Push(types.Int.Format(v))
 }
 
 func (s *Stack) PushInt32(v int32) {
-	s.Push(s.calc.FormatInt32(v))
+	s.Push(types.Int32.Format(v))
 }
 
 func (s *Stack) PushInt64(v int64) {
-	s.Push(s.calc.FormatInt64(v))
+	s.Push(types.Int64.Format(v))
 }
 
 func (s *Stack) PushRune(r rune) {
@@ -335,23 +287,23 @@ func (s *Stack) PushRune(r rune) {
 }
 
 func (s *Stack) PushUint(v uint) {
-	s.Push(s.calc.FormatUint(v))
+	s.Push(types.Uint.Format(v))
 }
 
 func (s *Stack) PushUint8(v uint8) {
-	s.Push(s.calc.FormatUint(uint(v)))
+	s.Push(types.Uint8.Format(v))
 }
 
 func (s *Stack) PushUint32(v uint32) {
-	s.Push(s.calc.FormatUint32(v))
+	s.Push(types.Uint32.Format(v))
 }
 
 func (s *Stack) PushUint64(v uint64) {
-	s.Push(s.calc.FormatUint64(v))
+	s.Push(types.Uint64.Format(v))
 }
 
 func (s *Stack) PushValue(v string) {
-	s.Push(s.calc.FormatValue(v))
+	s.Push(v)
 }
 
 func (s *Stack) MustPop() string {
@@ -360,4 +312,24 @@ func (s *Stack) MustPop() string {
 		panic(err)
 	}
 	return val
+}
+
+// FIXME this is a hack for now
+func (s *Stack) Eval(opName string, nArgs int) error {
+	var args []types.Generic
+	for i := 0; i < nArgs; i++ {
+		s, err := s.Pop()
+		if err != nil {
+			return err
+		}
+		args = append([]types.Generic{types.Parse(s)}, args...)
+	}
+	result, err := ops.Eval(opName, args)
+	if err != nil {
+		return err
+	}
+	for _, r := range result {
+		s.Push(r.Format())
+	}
+	return nil
 }

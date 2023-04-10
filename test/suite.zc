@@ -7,7 +7,6 @@ test.reset
 'zc:zlib/dev/bool_/bool_test.zc'
 'zc:zlib/geo/epsg/epsg_test.zc'
 'zc:zlib/time_/time_test.zc'
-'zc:zlib/user/conf/conf_test.zc'
 'zc:zlib/user/math_/math_test.zc'
 'zc:zlib/user/prog/prog_test.zc'
 'zc:zlib/user/str/str_test.zc'

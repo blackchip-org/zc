@@ -20,7 +20,6 @@ import (
 	"github.com/blackchip-org/zc/zlib/time_/tz"
 	"github.com/blackchip-org/zc/zlib/unit"
 	"github.com/blackchip-org/zc/zlib/unit/si"
-	"github.com/blackchip-org/zc/zlib/user/conf"
 	"github.com/blackchip-org/zc/zlib/user/fn"
 	"github.com/blackchip-org/zc/zlib/user/format"
 	"github.com/blackchip-org/zc/zlib/user/math_"
@@ -34,11 +33,7 @@ import (
 var All = []zc.ModuleDef{
 	assert.Mod,
 	bool_.Mod,
-	bool_.ModBigInt,
-	bool_.ModDecimal,
-	bool_.ModStr,
 	color_.Mod,
-	conf.Mod,
 	dev.Mod,
 	dice.Mod,
 	dict.Mod,
@@ -47,9 +42,6 @@ var All = []zc.ModuleDef{
 	format.Mod,
 	geo.Mod,
 	math_.Mod,
-	math_.ModBigInt,
-	math_.ModDecimal,
-	math_.ModFloat,
 	io_.Mod,
 	prog.Mod,
 	rand_.Mod,
@@ -70,7 +62,6 @@ var All = []zc.ModuleDef{
 var (
 	Preload = []string{
 		"zc",
-		"conf",
 		"math",
 		"bool",
 		"assert",
@@ -83,7 +74,6 @@ var (
 
 	PreludeUser = []string{
 		"bool",
-		"conf",
 		"format",
 		"math",
 		"stack",

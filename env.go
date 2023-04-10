@@ -3,6 +3,8 @@ package zc
 import (
 	"fmt"
 	"strings"
+
+	"github.com/blackchip-org/zc/types"
 )
 
 type Env struct {
@@ -162,7 +164,7 @@ func (e *Env) Get(name string) string {
 
 func (e *Env) GetBool(name string) bool {
 	s := e.Get(name)
-	v, err := e.Calc.ParseBool(s)
+	v, err := types.Bool.Parse(s)
 	if err != nil {
 		return false
 	}
@@ -171,7 +173,7 @@ func (e *Env) GetBool(name string) bool {
 
 func (e *Env) GetInt(name string) int {
 	s := e.Get(name)
-	v, err := e.Calc.ParseInt(s)
+	v, err := types.Int.Parse(s)
 	if err != nil {
 		return 0
 	}
@@ -187,9 +189,9 @@ func (e *Env) Set(name string, val string) {
 }
 
 func (e *Env) SetBool(name string, val bool) {
-	e.Set(name, e.Calc.FormatBool(val))
+	e.Set(name, types.Bool.Format(val))
 }
 
 func (e *Env) SetInt(name string, val int) {
-	e.Set(name, e.Calc.FormatInt(val))
+	e.Set(name, types.Int.Format(val))
 }

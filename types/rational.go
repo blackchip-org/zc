@@ -8,8 +8,6 @@ import (
 	"github.com/blackchip-org/zc/scanner"
 )
 
-var ratZero big.Rat
-
 type gRational struct {
 	val *big.Rat
 }
@@ -35,10 +33,14 @@ type RationalType struct{}
 
 func (t RationalType) String() string { return "Rational" }
 
-func (t RationalType) Parse(str string) (*big.Rat, bool) {
+func (t RationalType) Parse(str string) (*big.Rat, error) {
 	i, err := strconv.ParseInt(str, 10, 64)
 	if err == nil {
-		return big.NewRat(i, 1), true
+		return big.NewRat(i, 1), nil
+	}
+	f, err := strconv.ParseFloat(str, 64)
+	if err == nil {
+		return new(big.Rat).SetFloat64(f), nil
 	}
 
 	s := scanner.NewString("", str)
@@ -48,7 +50,7 @@ func (t RationalType) Parse(str string) (*big.Rat, bool) {
 	s1 := s.Scan(scanner.Int)
 	i1, err := strconv.ParseInt(s1, 10, 64)
 	if err != nil {
-		return &big.Rat{}, false
+		return &big.Rat{}, parseErr(t, str)
 	}
 	switch s.Ch {
 	case '_', '-', ' ':
@@ -56,25 +58,25 @@ func (t RationalType) Parse(str string) (*big.Rat, bool) {
 	case '/':
 		n = i1
 	default:
-		return &big.Rat{}, false
+		return &big.Rat{}, parseErr(t, str)
 	}
 	s.Next()
 
 	s2 := s.Scan(scanner.UInt)
 	i2, err := strconv.ParseInt(s2, 10, 64)
 	if err != nil {
-		return &big.Rat{}, false
+		return &big.Rat{}, parseErr(t, str)
 	}
 	if w != 0 {
 		n = i2
 		if s.Ch != '/' {
-			return &big.Rat{}, false
+			return &big.Rat{}, parseErr(t, str)
 		}
 		s.Next()
 		s3 := s.Scan(scanner.UInt)
 		i3, err := strconv.ParseInt(s3, 10, 64)
 		if err != nil {
-			return &big.Rat{}, false
+			return &big.Rat{}, parseErr(t, str)
 		}
 		d = i3
 	} else {
@@ -85,15 +87,15 @@ func (t RationalType) Parse(str string) (*big.Rat, bool) {
 		n = n + (d * w)
 	}
 
-	return big.NewRat(n, d), true
+	return big.NewRat(n, d), nil
 }
 
-func (t RationalType) ParseGeneric(s string) (Generic, bool) {
-	v, ok := t.Parse(s)
-	if !ok {
-		return Nil, false
+func (t RationalType) ParseGeneric(s string) (Generic, error) {
+	v, err := t.Parse(s)
+	if err != nil {
+		return Nil, err
 	}
-	return t.Generic(v), true
+	return t.Generic(v), nil
 }
 
 func (t RationalType) Generic(i *big.Rat) Generic {
@@ -103,40 +105,3 @@ func (t RationalType) Generic(i *big.Rat) Generic {
 func (t RationalType) Value(v Generic) *big.Rat {
 	return v.Value().(*big.Rat)
 }
-
-func op1Rational(fn func(*big.Rat, *big.Rat) error) OpFn {
-	return func(args []Generic) ([]Generic, error) {
-		x := Rational.Value(args[0])
-		z := new(big.Rat)
-		err := fn(z, x)
-		return []Generic{Rational.Generic(z)}, err
-	}
-}
-
-func op2Rational(fn func(*big.Rat, *big.Rat, *big.Rat) error) OpFn {
-	return func(args []Generic) ([]Generic, error) {
-		x := Rational.Value(args[0])
-		y := Rational.Value(args[1])
-		z := new(big.Rat)
-		err := fn(z, x, y)
-		return []Generic{Rational.Generic(z)}, err
-	}
-}
-
-func divRationalFn(z *big.Rat, x *big.Rat, y *big.Rat) error {
-	if y.Cmp(&ratZero) == 0 {
-		return ErrDivisionByZero
-	}
-	z.Quo(x, y)
-	return nil
-}
-
-var (
-	absRational  = op1Rational(func(z *big.Rat, x *big.Rat) error { z.Abs(x); return nil })
-	addRational  = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Add(x, y); return nil })
-	divRational  = op2Rational(divRationalFn)
-	mulRational  = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Mul(x, y); return nil })
-	negRational  = op1Rational(func(z *big.Rat, x *big.Rat) error { z.Neg(x); return nil })
-	signRational = op1Rational(func(z *big.Rat, x *big.Rat) error { z.SetInt64(int64(x.Sign())); return nil })
-	subRational  = op2Rational(func(z *big.Rat, x *big.Rat, y *big.Rat) error { z.Sub(x, y); return nil })
-)

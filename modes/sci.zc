@@ -1,7 +1,3 @@
-'0' int-layout
-'false' auto-currency
-'false' auto-format
-
 use sci
 use si
 use unit

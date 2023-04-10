@@ -16,7 +16,6 @@ import (
 )
 
 var (
-	locale     string
 	noAnsi     bool
 	noFileName bool
 	mode       string
@@ -67,7 +66,6 @@ func init() {
 }
 
 func commonFlags(fs *flag.FlagSet) {
-	fs.StringVar(&locale, "l", "en-US", "set the locale")
 	fs.StringVar(&mode, "m", "", "start calculator with this mode")
 	fs.BoolVar(&trace, "trace", false, "trace execution")
 	fs.StringVar(&use, "u", "", "use this module")
@@ -103,11 +101,6 @@ func main() {
 		log.Fatal(zc.ErrorWithStack(err))
 	}
 
-	if locale != "" {
-		if err := calc.SetLocale(locale); err != nil {
-			log.Fatal(zc.ErrorWithStack(err))
-		}
-	}
 	if mode != "" {
 		if err := calc.SetMode(mode); err != nil {
 			log.Fatal(zc.ErrorWithStack(err))

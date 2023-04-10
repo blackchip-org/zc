@@ -16,11 +16,7 @@ func Abort(env *zc.Env) error {
 }
 
 func Exit(env *zc.Env) error {
-	a, err := env.Stack.Pop()
-	if err != nil {
-		return err
-	}
-	code, err := env.Calc.ParseInt(a)
+	code, err := env.Stack.PopInt()
 	if err != nil {
 		return err
 	}

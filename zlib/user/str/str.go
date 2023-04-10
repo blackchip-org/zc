@@ -48,7 +48,7 @@ func Len(env *zc.Env) error {
 	}
 
 	r := len(a)
-	env.Stack.Push(env.Calc.FormatInt(r))
+	env.Stack.PushInt(r)
 	return nil
 }
 

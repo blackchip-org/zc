@@ -1,5 +1,7 @@
 package scanner
 
+import "unicode"
+
 type RuneClass func(rune) bool
 
 func Rune(r1 rune) RuneClass {
@@ -35,6 +37,7 @@ var (
 	Always        = func(r rune) bool { return r != EndCh }
 	IsCharAF      = Or(IsUpperCharAF, IsLowerCharAF)
 	IsCharAZ      = Or(IsUpperCharAZ, IsLowerCharAZ)
+	IsCurrency    = func(r rune) bool { return unicode.Is(unicode.Sc, r) }
 	IsDigit01     = Rune2('0', '1')
 	IsDigit07     = RuneRange('0', '7')
 	IsDigit09     = RuneRange('0', '9')

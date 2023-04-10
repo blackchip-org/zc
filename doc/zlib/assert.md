@@ -31,11 +31,11 @@ Example:
 
 | Input               | Stack
 |---------------------|------------------
-| `1e20`              | `100000000000000000000`
+| `120`               | `120`
 | `try assert.bigint` | `true`
 | `clear`             |
-| `'e120`             | `e120`
-| `try assert.bigint` | `expecting BigInt but got 'e120' \| false`
+| `'foo`              | `foo`
+| `try assert.bigint` | `expecting BigInt but got 'foo' \| false`
 
 
 ## bool

@@ -1,13 +1,6 @@
 package math_
 
-import (
-	"errors"
-
-	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/funcs"
-	"github.com/shopspring/decimal"
-)
-
+/*
 func DecimalSign(a decimal.Decimal) decimal.Decimal {
 	return decimal.NewFromInt(int64(a.Sign()))
 }
@@ -52,3 +45,4 @@ func PowDecimal(env *zc.Env) error     { return funcs.EvalBinaryDecimal(env, opP
 func RemDecimal(env *zc.Env) error     { return funcs.EvalBinaryDecimal(env, opRemDecimal) }
 func SignDecimal(env *zc.Env) error    { return funcs.EvalUnaryDecimal(env, opSignDecimal) }
 func SubDecimal(env *zc.Env) error     { return funcs.EvalBinaryDecimal(env, opSubDecimal) }
+*/

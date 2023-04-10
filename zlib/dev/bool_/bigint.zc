@@ -1,7 +1,0 @@
-native eq
-native gt
-native gte
-native lt
-native lte
-native neq
-

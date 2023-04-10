@@ -1,6 +1,10 @@
 package types
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/blackchip-org/zc/scanner"
+)
 
 type Type interface {
 	String() string
@@ -8,7 +12,7 @@ type Type interface {
 
 type GenericType interface {
 	Type
-	ParseGeneric(string) (Generic, bool)
+	ParseGeneric(string) (Generic, error)
 }
 
 type Generic interface {
@@ -24,74 +28,107 @@ var (
 	Complex  = ComplexType{}
 	Decimal  = DecimalType{}
 	Float    = FloatType{}
+	Int      = IntType{}
+	Int8     = Int8Type{}
+	Int16    = Int16Type{}
+	Int32    = Int32Type{}
+	Int64    = Int64Type{}
 	None     = noneType{}
 	Rational = RationalType{}
+	Rune     = RuneType{}
+	String   = StringType{}
+	Uint     = UintType{}
+	Uint8    = Uint8Type{}
+	Uint16   = Uint16Type{}
+	Uint32   = Uint32Type{}
+	Uint64   = Uint64Type{}
 )
 
 var Nil Generic = gNone{}
 
 func Is(v string, t GenericType) bool {
-	_, ok := t.ParseGeneric(v)
-	return ok
+	_, err := t.ParseGeneric(v)
+	return err == nil
 }
 
-func To(v Generic, t GenericType) (Generic, bool) {
+func To(v Generic, t GenericType) (Generic, error) {
 	if v.Type() == t {
-		return v, true
+		return v, nil
 	}
-	return t.ParseGeneric(v.Format())
+	r, err := t.ParseGeneric(v.Format())
+	if err != nil {
+		return Nil, fmt.Errorf("expecting %v but got %v", t, QuoteFunc(v.Format()))
+	}
+	return r, nil
 }
 
-func MustParseGeneric(s string, t GenericType) Generic {
-	v, ok := t.ParseGeneric(s)
-	if !ok {
-		panic("unable to parse " + t.String())
+func MustParse(s string, t GenericType) Generic {
+	v, err := t.ParseGeneric(s)
+	if err != nil {
+		panic(err)
 	}
 	return v
 }
 
-var NumberTypes = []GenericType{
+var GenericTypes = []GenericType{
 	BigInt,
 	Decimal,
 	Float,
 	Rational,
 	Complex,
+	Bool,
+	String,
 }
 
-func ParseNumber(s string) (Generic, bool) {
-	for _, t := range NumberTypes {
-		v, ok := t.ParseGeneric(s)
-		if ok {
-			return v, true
+func Parse(s string) Generic {
+	for _, t := range GenericTypes {
+		v, err := t.ParseGeneric(s)
+		if err == nil {
+			return v
 		}
 	}
-	return Nil, false
+	panic("unreachable code")
 }
 
-func ParseNumbers(ss []string) ([]Generic, error) {
+func ParseN(ss []string) []Generic {
 	var r []Generic
 	for _, s := range ss {
-		n, ok := ParseNumber(s)
-		if !ok {
-			return []Generic{}, fmt.Errorf("not a number: %v", s)
-		}
-		r = append(r, n)
-	}
-	return r, nil
-}
-
-func MustParseNumbers(ss []string) []Generic {
-	r, err := ParseNumbers(ss)
-	if err != nil {
-		panic(err.Error())
+		r = append(r, Parse(s))
 	}
 	return r
 }
 
-func FormatGenerics(vs []Generic) []string {
+func FormatN(gs []Generic) []string {
 	var r []string
-	for _, v := range vs {
-		r = append(r, v.Format())
+	for _, g := range gs {
+		r = append(r, g.Format())
 	}
 	return r
+}
+
+var QuoteFunc = func(s string) string {
+	return s
+}
+
+func parseErr(t Type, s string) error {
+	return fmt.Errorf("expecting %v but got %v", t, QuoteFunc(s))
+}
+
+func isFormatting(ch rune) bool {
+	if ch == ',' || ch == '_' || ch == ' ' {
+		return true
+	}
+	if scanner.IsCurrency(ch) {
+		return true
+	}
+	return false
+}
+
+func cleanNumber(str string) string {
+	var s scanner.Scanner
+	s.SetString("", str)
+	for s.Ok() {
+		s.SkipIf(isFormatting)
+	}
+	return s.Token()
 }

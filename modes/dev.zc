@@ -1,7 +1,6 @@
 use dev
 use stack
 use bool
-use conf
 use math
 use str
 use dict

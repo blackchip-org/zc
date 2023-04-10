@@ -2,14 +2,17 @@ package assert
 
 import (
 	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/types"
 )
 
 func BigInt(env *zc.Env) error {
-	_, err := env.Stack.PopBigInt()
+	s, err := env.Stack.Pop()
 	if err != nil {
 		return err
 	}
-	return nil
+	g := types.Parse(s)
+	_, err = types.To(g, types.BigInt)
+	return err
 }
 
 func BoolAssert(env *zc.Env) error {

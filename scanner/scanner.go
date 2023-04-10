@@ -114,6 +114,22 @@ func (s *Scanner) Keep() {
 	s.Next()
 }
 
+func (s *Scanner) SkipIf(c RuneClass) {
+	if c(s.Ch) {
+		s.Next()
+	} else {
+		s.Keep()
+	}
+}
+
+func (s *Scanner) KeepIf(c RuneClass) {
+	if c(s.Ch) {
+		s.Keep()
+	} else {
+		s.Next()
+	}
+}
+
 func (s *Scanner) End() bool {
 	return s.src == nil || s.Ch == EndCh
 }

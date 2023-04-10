@@ -1,12 +1,6 @@
 package math_
 
-import (
-	"math/big"
-
-	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/funcs"
-)
-
+/*
 func bigIntMod(z *big.Int, a *big.Int, b *big.Int) {
 	var q big.Int
 	q.DivMod(a, b, z)
@@ -41,3 +35,4 @@ func PowBigInt(env *zc.Env) error     { return funcs.EvalBinaryBigInt(env, opPow
 func RemBigInt(env *zc.Env) error     { return funcs.EvalBinaryBigInt(env, opRemBigInt) }
 func SignBigInt(env *zc.Env) error    { return funcs.EvalUnaryBigInt(env, opSignBigInt) }
 func SubBigInt(env *zc.Env) error     { return funcs.EvalBinaryBigInt(env, opSubBigInt) }
+*/

@@ -19,12 +19,9 @@ func TestNumbers(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.text, func(t *testing.T) {
-			v, ok := ParseNumber(test.text)
-			if !ok {
-				t.Fatalf("unable to parse: %v", test.text)
-			}
-			if v.Type() != test.type_ {
-				t.Errorf("\n have: %v \n want: %v", v.Type(), test.type_)
+			g := Parse(test.text)
+			if g.Type() != test.type_ {
+				t.Errorf("\n have: %v \n want: %v", g.Type(), test.type_)
 			}
 		})
 	}

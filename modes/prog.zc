@@ -1,7 +1,3 @@
-'0' int-layout
-'false' auto-format
-'false' auto-currency
-
 use [
     prog
     unicode
