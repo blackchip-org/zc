@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/blackchip-org/zc/collections"
+	"github.com/blackchip-org/zc/coll"
 	"github.com/blackchip-org/zc/internal"
 	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/lang/parser"
@@ -69,7 +69,7 @@ type Calc interface {
 	ModuleDef(string) (ModuleDef, bool)
 	Module(string) (*Env, bool)
 	Native(string) (CalcFunc, bool)
-	Frames() *collections.Deque[Frame]
+	Frames() coll.Deque[Frame]
 	Trace() bool
 	SetTrace(bool)
 	NewState(string, any)
@@ -86,7 +86,7 @@ type CalcImpl struct {
 	modules    map[string]*Env
 	natives    map[string]CalcFunc
 	states     map[string]any
-	frames     *collections.Deque[Frame]
+	frames     coll.Deque[Frame]
 	trace      bool
 }
 
@@ -97,7 +97,7 @@ func NewCalc(conf *Config) (*CalcImpl, error) {
 		natives:    make(map[string]CalcFunc),
 		moduleDefs: make(map[string]ModuleDef),
 		states:     make(map[string]any),
-		frames:     collections.NewDeque[Frame](),
+		frames:     coll.NewDequeSlice[Frame](),
 	}
 	if c.config.MaxHistory == 0 {
 		c.config.MaxHistory = DefaultMaxHistory
@@ -151,13 +151,13 @@ func Eval(env *Env, name string, src []byte) error {
 	if err != nil {
 		return err
 	}
-	env.Calc.Frames().Push(Frame{
+	coll.Push(env.Calc.Frames(), Frame{
 		Pos:  root.Pos(),
 		Func: "",
 		Env:  env,
 	})
 	err = env.evalFile(root)
-	env.Calc.Frames().Pop()
+	coll.Pop(env.Calc.Frames())
 	if err != nil {
 		return err
 	}
@@ -365,7 +365,7 @@ func Quote(v string) string {
 	return lexer.Quote(v)
 }
 
-func (c *CalcImpl) Frames() *collections.Deque[Frame] {
+func (c *CalcImpl) Frames() coll.Deque[Frame] {
 	return c.frames
 }
 

@@ -6,6 +6,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/blackchip-org/zc/coll"
 	"github.com/blackchip-org/zc/lang/ast"
 	"github.com/blackchip-org/zc/lang/lexer"
 	"github.com/blackchip-org/zc/scanner"
@@ -405,13 +406,13 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 			return fmt.Errorf("stack reference %v not allowed as parameter", param.Type)
 		}
 	}
-	e.Calc.Frames().Push(Frame{
+	coll.Push(e.Calc.Frames(), Frame{
 		Pos:  fn.Pos(),
 		Func: fn.Name,
 		Env:  callee,
 	})
 	defer func() {
-		e.Calc.Frames().Pop()
+		coll.Pop(e.Calc.Frames())
 	}()
 	if err := callee.evalStmts(fn.Stmts); err != nil {
 		if !errors.Is(err, errFuncReturn) {
@@ -442,13 +443,13 @@ func (e *Env) invokeFunction(caller *Env, fn *ast.FuncStmt) error {
 func (e *Env) invokeNative(caller *Env, fn CalcFunc, stmt *ast.NativeStmt) error {
 	callee := e.Derive(stmt.Name)
 	callee.Stack = caller.Stack
-	e.Calc.Frames().Push(Frame{
+	coll.Push(e.Calc.Frames(), Frame{
 		Pos:  stmt.Pos(),
 		Func: stmt.Name,
 		Env:  callee,
 	})
 	defer func() {
-		e.Calc.Frames().Pop()
+		coll.Pop(e.Calc.Frames())
 	}()
 
 	if err := fn(callee); err != nil {

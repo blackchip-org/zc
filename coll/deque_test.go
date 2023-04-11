@@ -1,21 +1,21 @@
-package collections
+package coll
 
 import "testing"
 
 func TestPushPop(t *testing.T) {
-	d := NewDeque[int]()
+	d := NewDequeSlice[int]()
 
 	in := []int{0, 1, 2, 3}
 	for i, v := range in {
 		if i != d.Len() {
 			t.Fatalf("\n have len: %v \n want len: %v", d.Len(), i)
 		}
-		d.Push(v)
+		Push(d, v)
 	}
 
 	out := Reverse(in)
 	for _, want := range out {
-		have, ok := d.Pop()
+		have, ok := Pop(d)
 		if !ok {
 			t.Fatalf("unexpected !ok")
 		}
@@ -27,17 +27,17 @@ func TestPushPop(t *testing.T) {
 		}
 	}
 
-	_, ok := d.Pop()
+	_, ok := Pop(d)
 	if ok {
 		t.Fatalf("unexpected !ok")
 	}
 }
 
 func TestAt(t *testing.T) {
-	d := NewDeque[int]()
+	d := NewDequeSlice[int]()
 
 	in := []int{0, 1, 2, 3}
-	d.PushAll(in)
+	PushAll(d, in...)
 
 	for i := 0; i < d.Len(); i++ {
 		v := d.At(i)
