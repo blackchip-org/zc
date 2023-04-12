@@ -9,8 +9,8 @@ type vFloat struct {
 	val float64
 }
 
-func (v vFloat) Type() Type     { return FloatType{} }
-func (v vFloat) String() string { return FloatType{}.Format(v.val) }
+func (v vFloat) Type() Type     { return Float }
+func (v vFloat) String() string { return Float.Format(v.val) }
 func (v vFloat) Native() any    { return v.val }
 
 type FloatType struct{}

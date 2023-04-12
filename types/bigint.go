@@ -1,46 +1,21 @@
 package types
 
-type BigInt interface {
-	Value
-	Add(BigInt) BigInt
+import "github.com/blackchip-org/zc/number"
+
+type vBigInt struct {
+	val number.BigInt
 }
 
-type BigIntImpl struct {
-	Parse func(string) (BigInt, error)
-	New   func(int) BigInt
-}
-
-var implBigInt = BigIntImpl{
-	Parse: func(string) (BigInt, error) { return nil, ErrNotSupported },
-	New:   func(int) BigInt { return nil },
-}
-
-func UseBigInt(impl BigIntImpl) {
-	implBigInt = impl
-}
-
-func ParseBigInt(s string) (BigInt, error) {
-	return implBigInt.Parse(s)
-}
-
-func MustParseBigInt(s string) BigInt {
-	d, err := implBigInt.Parse(s)
-	if err != nil {
-		panic(err)
-	}
-	return d
-}
-
-func NewBigInt(i int) BigInt {
-	return implBigInt.New(i)
-}
+func (v vBigInt) Type() Type     { return BigInt }
+func (v vBigInt) String() string { return BigInt.Format(v.val) }
+func (v vBigInt) Native() any    { return v.val }
 
 type BigIntType struct{}
 
 func (t BigIntType) String() string { return "BigInt" }
 
-func (t BigIntType) Parse(s string) (BigInt, error) {
-	return implBigInt.Parse(cleanNumber(s))
+func (t BigIntType) Parse(s string) (number.BigInt, error) {
+	return number.ParseBigInt(cleanNumber(s))
 }
 
 func (t BigIntType) ParseValue(s string) (Value, error) {
@@ -51,14 +26,14 @@ func (t BigIntType) ParseValue(s string) (Value, error) {
 	return t.Value(v), nil
 }
 
-func (t BigIntType) Format(i BigInt) string {
+func (t BigIntType) Format(i number.BigInt) string {
 	return i.String()
 }
 
-func (t BigIntType) Value(i BigInt) Value {
-	return i
+func (t BigIntType) Value(i number.BigInt) Value {
+	return vBigInt{val: i}
 }
 
-func (t BigIntType) Native(v Value) BigInt {
-	return v.Native().(BigInt)
+func (t BigIntType) Native(v Value) number.BigInt {
+	return v.Native().(number.BigInt)
 }

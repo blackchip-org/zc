@@ -1,16 +1,17 @@
 package stdlib
 
 import (
+	"errors"
 	"strconv"
 
-	"github.com/blackchip-org/zc/types"
+	"github.com/blackchip-org/zc/number"
 )
 
 type slComplex struct {
 	val complex128
 }
 
-func unwrapC(c types.Complex) complex128 {
+func unwrapC(c number.Complex) complex128 {
 	return c.(slComplex).val
 }
 
@@ -18,20 +19,8 @@ func wrapC(c complex128) slComplex {
 	return slComplex{val: c}
 }
 
-func (c slComplex) Add(c2 types.Complex) types.Complex {
+func (c slComplex) Add(c2 number.Complex) number.Complex {
 	return wrapC(c.val + unwrapC(c2))
-}
-
-func (c slComplex) Type() types.Type {
-	return types.ComplexType{}
-}
-
-func (c slComplex) Value() types.Value {
-	return c
-}
-
-func (c slComplex) Native() any {
-	return c
 }
 
 func (c slComplex) String() string {
@@ -41,20 +30,20 @@ func (c slComplex) String() string {
 	return s[1 : len(s)-1]
 }
 
-func ParseComplex(s string) (types.Complex, error) {
+func ParseComplex(s string) (number.Complex, error) {
 	c, err := strconv.ParseComplex(s, 128)
 	if err != nil {
-		return nil, types.ErrParse
+		return nil, errors.New("unable to parse")
 	}
 	return wrapC(c), nil
 }
 
-func NewComplex(r float64, i float64) types.Complex {
+func NewComplex(r float64, i float64) number.Complex {
 	return wrapC(complex(r, i))
 }
 
 func UseComplex() {
-	types.UseComplex(types.ComplexImpl{
+	number.UseComplex(number.ComplexImpl{
 		Parse: ParseComplex,
 		New:   NewComplex,
 	})

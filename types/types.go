@@ -9,7 +9,6 @@ import (
 
 var (
 	ErrNotSupported = errors.New("not supported")
-	ErrParse        = errors.New("unable to parse")
 )
 
 type Type interface {
@@ -22,6 +21,27 @@ type Value interface {
 	Type() Type
 	Native() any
 }
+
+var (
+	BigInt   = BigIntType{}
+	Bool     = BoolType{}
+	Complex  = ComplexType{}
+	Decimal  = DecimalType{}
+	Float    = FloatType{}
+	Int      = IntType{}
+	Int8     = Int8Type{}
+	Int16    = Int16Type{}
+	Int32    = Int32Type{}
+	Int64    = Int64Type{}
+	Rational = RationalType{}
+	Rune     = RuneType{}
+	String   = StringType{}
+	Uint     = UintType{}
+	Uint8    = Uint8Type{}
+	Uint16   = Uint16Type{}
+	Uint32   = Uint32Type{}
+	Uint64   = Uint64Type{}
+)
 
 func isFormatting(ch rune) bool {
 	if ch == ',' || ch == '_' || ch == ' ' {

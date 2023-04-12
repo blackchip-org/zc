@@ -1,46 +1,21 @@
 package types
 
-type Decimal interface {
-	Value
-	Add(Decimal) Decimal
+import "github.com/blackchip-org/zc/number"
+
+type vDecimal struct {
+	val number.Decimal
 }
 
-type DecimalImpl struct {
-	Parse func(string) (Decimal, error)
-	New   func(float64) Decimal
-}
-
-var implDecimal = DecimalImpl{
-	Parse: func(string) (Decimal, error) { return nil, ErrNotSupported },
-	New:   func(float64) Decimal { return nil },
-}
-
-func UseDecimal(impl DecimalImpl) {
-	implDecimal = impl
-}
-
-func ParseDecimal(s string) (Decimal, error) {
-	return implDecimal.Parse(s)
-}
-
-func MustParseDecimal(s string) Decimal {
-	d, err := implDecimal.Parse(s)
-	if err != nil {
-		panic(err)
-	}
-	return d
-}
-
-func NewDecimal(f float64) Decimal {
-	return implDecimal.New(f)
-}
+func (v vDecimal) Type() Type     { return Decimal }
+func (v vDecimal) String() string { return Decimal.Format(v.val) }
+func (v vDecimal) Native() any    { return v.val }
 
 type DecimalType struct{}
 
 func (t DecimalType) String() string { return "Decimal" }
 
-func (t DecimalType) Parse(s string) (Decimal, error) {
-	return implDecimal.Parse(cleanNumber(s))
+func (t DecimalType) Parse(s string) (number.Decimal, error) {
+	return number.ParseDecimal(cleanNumber(s))
 }
 
 func (t DecimalType) ParseValue(s string) (Value, error) {
@@ -51,14 +26,14 @@ func (t DecimalType) ParseValue(s string) (Value, error) {
 	return t.Value(v), nil
 }
 
-func (t DecimalType) Format(d Decimal) string {
+func (t DecimalType) Format(d number.Decimal) string {
 	return d.String()
 }
 
-func (t DecimalType) Value(d Decimal) Value {
-	return d
+func (t DecimalType) Value(d number.Decimal) Value {
+	return vDecimal{val: d}
 }
 
-func (t DecimalType) Native(v Value) Decimal {
-	return v.Native().(Decimal)
+func (t DecimalType) Native(v Value) number.Decimal {
+	return v.Native().(number.Decimal)
 }

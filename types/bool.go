@@ -8,8 +8,8 @@ type vBool struct {
 	val bool
 }
 
-func (v vBool) Type() Type     { return BoolType{} }
-func (v vBool) String() string { return BoolType{}.Format(v.val) }
+func (v vBool) Type() Type     { return Bool }
+func (v vBool) String() string { return Bool.Format(v.val) }
 func (v vBool) Native() any    { return v.val }
 
 type BoolType struct{}

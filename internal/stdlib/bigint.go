@@ -1,18 +1,18 @@
 package stdlib
 
 import (
-	"fmt"
+	"errors"
 	"math/big"
 	sl "math/big"
 
-	"github.com/blackchip-org/zc/types"
+	"github.com/blackchip-org/zc/number"
 )
 
 type slBigInt struct {
 	val *sl.Int
 }
 
-func unwrapI(bi types.BigInt) *sl.Int {
+func unwrapI(bi number.BigInt) *sl.Int {
 	return bi.(slBigInt).val
 }
 
@@ -20,43 +20,31 @@ func wrapI(bi *sl.Int) slBigInt {
 	return slBigInt{val: bi}
 }
 
-func (i slBigInt) Add(i2 types.BigInt) types.BigInt {
+func (i slBigInt) Add(i2 number.BigInt) number.BigInt {
 	var z big.Int
 	return wrapI(z.Add(i.val, unwrapI(i2)))
-}
-
-func (i slBigInt) Type() types.Type {
-	return types.BigIntType{}
-}
-
-func (i slBigInt) Value() types.Value {
-	return i
-}
-
-func (i slBigInt) Native() any {
-	return i
 }
 
 func (i slBigInt) String() string {
 	return i.val.String()
 }
 
-func ParseBigInt(s string) (types.BigInt, error) {
+func ParseBigInt(s string) (number.BigInt, error) {
 	var bi big.Int
 	z, ok := bi.SetString(s, 0)
 	if !ok {
-		return wrapI(z), fmt.Errorf("unable to parse: %v", s)
+		return wrapI(z), errors.New("unable to parse")
 	}
 	return wrapI(z), nil
 }
 
-func NewBigInt(i int) types.BigInt {
+func NewBigInt(i int) number.BigInt {
 	bi := big.NewInt(int64(i))
 	return wrapI(bi)
 }
 
 func UseBigInt() {
-	types.UseBigInt(types.BigIntImpl{
+	number.UseBigInt(number.BigIntImpl{
 		Parse: ParseBigInt,
 		New:   NewBigInt,
 	})

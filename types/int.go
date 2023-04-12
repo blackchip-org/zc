@@ -9,8 +9,8 @@ type vInt struct {
 	val int
 }
 
-func (v vInt) Type() Type     { return IntType{} }
-func (v vInt) String() string { return IntType{}.Format(v.val) }
+func (v vInt) Type() Type     { return Int }
+func (v vInt) String() string { return Int.Format(v.val) }
 func (v vInt) Native() any    { return v.val }
 
 type IntType struct{}
@@ -50,8 +50,8 @@ type vInt8 struct {
 	val int8
 }
 
-func (v vInt8) Type() Type     { return Int8Type{} }
-func (v vInt8) String() string { return Int8Type{}.Format(v.val) }
+func (v vInt8) Type() Type     { return Int8 }
+func (v vInt8) String() string { return Int8.Format(v.val) }
 func (v vInt8) Native() any    { return v.val }
 
 type Int8Type struct{}
@@ -87,9 +87,8 @@ type vInt16 struct {
 	val int16
 }
 
-func (v vInt16) Type() Type     { return Int16Type{} }
-func (v vInt16) Format() string { return Int16Type{}.Format(v.val) }
-func (v vInt16) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vInt16) Type() Type     { return Int16 }
+func (v vInt16) String() string { return Int16.Format(v.val) }
 func (v vInt16) Native() any    { return v.val }
 
 type Int16Type struct{}
@@ -125,9 +124,8 @@ type vInt32 struct {
 	val int32
 }
 
-func (v vInt32) Type() Type     { return Int32Type{} }
-func (v vInt32) Format() string { return Int32Type{}.Format(v.val) }
-func (v vInt32) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vInt32) Type() Type     { return Int32 }
+func (v vInt32) String() string { return Int32.Format(v.val) }
 func (v vInt32) Native() any    { return v.val }
 
 type Int32Type struct{}
@@ -163,9 +161,8 @@ type vInt64 struct {
 	val int64
 }
 
-func (v vInt64) Type() Type     { return Int64Type{} }
-func (v vInt64) Format() string { return Int64Type{}.Format(v.val) }
-func (v vInt64) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vInt64) Type() Type     { return Int64 }
+func (v vInt64) String() string { return Int64.Format(v.val) }
 func (v vInt64) Native() any    { return v.val }
 
 type Int64Type struct{}
@@ -201,8 +198,8 @@ type vUint struct {
 	val uint
 }
 
-func (v vUint) Type() Type     { return UintType{} }
-func (v vUint) Format() string { return UintType{}.Format(v.val) }
+func (v vUint) Type() Type     { return Uint }
+func (v vUint) Format() string { return Uint.Format(v.val) }
 func (v vUint) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
 func (v vUint) Native() any    { return v.val }
 
@@ -239,9 +236,8 @@ type vUint8 struct {
 	val uint8
 }
 
-func (v vUint8) Type() Type     { return Uint8Type{} }
-func (v vUint8) Format() string { return Uint8Type{}.Format(v.val) }
-func (v vUint8) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vUint8) Type() Type     { return Uint8 }
+func (v vUint8) String() string { return Uint8.Format(v.val) }
 func (v vUint8) Native() any    { return v.val }
 
 type Uint8Type struct{}
@@ -277,9 +273,8 @@ type vUint16 struct {
 	val uint16
 }
 
-func (v vUint16) Type() Type     { return Uint16Type{} }
-func (v vUint16) Format() string { return Uint16Type{}.Format(v.val) }
-func (v vUint16) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vUint16) Type() Type     { return Uint16 }
+func (v vUint16) String() string { return Uint16.Format(v.val) }
 func (v vUint16) Native() any    { return v.val }
 
 type Uint16Type struct{}
@@ -315,9 +310,8 @@ type vUint32 struct {
 	val uint32
 }
 
-func (v vUint32) Type() Type     { return Uint32Type{} }
-func (v vUint32) Format() string { return Uint32Type{}.Format(v.val) }
-func (v vUint32) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vUint32) Type() Type     { return Uint32 }
+func (v vUint32) String() string { return Uint32.Format(v.val) }
 func (v vUint32) Native() any    { return v.val }
 
 type Uint32Type struct{}
@@ -353,9 +347,8 @@ type vUint64 struct {
 	val uint64
 }
 
-func (v vUint64) Type() Type     { return Uint64Type{} }
-func (v vUint64) Format() string { return Uint64Type{}.Format(v.val) }
-func (v vUint64) String() string { return fmt.Sprintf("%v(%v)", v.Type().String(), v.Format()) }
+func (v vUint64) Type() Type     { return Uint64 }
+func (v vUint64) String() string { return Uint64.Format(v.val) }
 func (v vUint64) Native() any    { return v.val }
 
 type Uint64Type struct{}
