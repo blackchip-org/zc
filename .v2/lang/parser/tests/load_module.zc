@@ -1,9 +1,0 @@
-use foo
-use 'foo.zc'
-use foo bar
-
-import foo
-import 'foo.zc'
-import foo bar
-
-

@@ -18,3 +18,7 @@ func TestMap(t *testing.T) {
 	vals := Map(xs, func(x nv) int { return x.Val })
 	assert.Equal(t, []int{1, 2, 3}, vals)
 }
+
+func TestReverse(t *testing.T) {
+	assert.Equal(t, []int{4, 3, 2, 1}, Reverse([]int{1, 2, 3, 4}))
+}
