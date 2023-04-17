@@ -93,7 +93,6 @@ func evalIncludeStmt(e *env, node *ast.IncludeStmt) error {
 			return err
 		}
 		for _, decl := range mod.exports {
-
 		}
 	}
 	e.calc.SetInfo("included %s", strings.Join(names, ", "))
