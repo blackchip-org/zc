@@ -1,7 +1,11 @@
 # zc
 
-Version 3 is a work in progress.
+A fun RPN calculator.
+
+A work in progress
+
 
 ## License
 
 MIT
+

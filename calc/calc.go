@@ -1,100 +1,111 @@
 package calc
 
 import (
-	"fmt"
+	"strings"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/coll"
-	"github.com/blackchip-org/zc/scanner"
-	"github.com/blackchip-org/zc/types"
 )
 
-type frame struct {
-	pos      scanner.Pos
-	funcName string
-	env      zc.Env
-}
-
-func (f frame) Pos() scanner.Pos {
-	return f.pos
-}
-
-func (f frame) FuncName() string {
-	return f.funcName
-}
-
-func funcDecl(name string, params []types.Type) string {
-	paramTypes := coll.Map(params, func(t types.Type) string { return t.String() })
-	return fmt.Sprintf("%v(%v)", name, paramTypes)
-}
-
 type calc struct {
-	lib     zc.Library
-	env     *env
-	modules map[string]*env
-	genOps  map[string]zc.CalcFunc
-	frames  coll.Deque[frame]
-	trace   bool
-	info    string
+	stack []string
+	err   error
 }
 
-func New() (zc.Calc, error) {
-	c := &calc{
-		lib:    zlib,
-		genOps: make(map[string]zc.CalcFunc),
-		frames: coll.NewDequeSlice[frame](),
+func New() zc.Calc {
+	return &calc{}
+}
+
+func (c *calc) Stack() []string {
+	s := make([]string, len(c.stack))
+	copy(s, c.stack)
+	return s
+}
+
+func (c *calc) Eval(s string) error {
+	c.err = nil
+	words := c.parseWords(s)
+	for _, word := range words {
+		ch, _ := utf8.DecodeRuneInString(word)
+		if isValue(ch) {
+			c.stack = append(c.stack, strings.TrimPrefix(word, "\""))
+		} else {
+			c.evalOp(word)
+		}
+		if c.err != nil {
+			return c.err
+		}
 	}
-	c.env = newEnv(c, zc.ProgName)
-	return c, nil
+	return nil
 }
 
-func MustNew() zc.Calc {
-	c, err := New()
-	if err != nil {
-		panic(err)
+func (c *calc) parseWords(str string) []string {
+	var words []string
+	var word strings.Builder
+
+	var inWord, inQuote bool
+	var endQuote rune
+
+	for _, ch := range str {
+		if !inWord {
+			if unicode.IsSpace(ch) {
+				continue
+			}
+			word.Reset()
+			inWord = true
+			switch ch {
+			case '"':
+				inQuote = true
+				endQuote = '"'
+				word.WriteRune('"')
+			case '\'':
+				inQuote = true
+				endQuote = '\''
+				word.WriteRune('"')
+			case '[':
+				inQuote = true
+				endQuote = ']'
+				word.WriteRune('"')
+			default:
+				word.WriteRune(ch)
+			}
+		} else {
+			if (unicode.IsSpace(ch) && !inQuote) || ch == endQuote {
+				inWord = false
+				words = append(words, word.String())
+			} else {
+				word.WriteRune(ch)
+			}
+		}
 	}
-	return c
+	if inWord {
+		words = append(words, word.String())
+	}
+	return words
 }
 
-func (c *calc) RegisterGenOp(name string, fn zc.CalcFunc, params ...types.Type) {
-	c.genOps[funcDecl(name, params)] = fn
-}
-
-func (c *calc) GenOp(name string, args []types.Value) (zc.CalcFunc, error) {
-	argTypes := coll.Map(args, func(v types.Value) types.Type { return v.Type() })
-	decl := funcDecl(name, argTypes)
-	fn, ok := c.genOps[decl]
+func (c *calc) evalOp(name string) {
+	op, ok := opsTable[name]
 	if !ok {
-		return nil, fmt.Errorf("no operation for %v", decl)
+		c.err = zc.ErrUnknownOp(name)
+		return
 	}
-	return fn, nil
+	op(&env{calc: c})
 }
 
-func (c *calc) Eval(name string, src []byte) error {
-	return c.env.Eval(name, src)
-}
-
-func (c *calc) Trace() bool {
-	return c.trace
-}
-
-func (c *calc) SetTrace(t bool) {
-	c.trace = t
-}
-
-func (c *calc) Info() string {
-	return c.info
-}
-
-func (c *calc) SetInfo(format string, args ...string) {
-	c.info = fmt.Sprintf(format, args)
-}
-
-func (c *calc) Stack() coll.Deque[string] {
-	return c.env.stack
-}
-
-func (c *calc) SetStack(items []string) {
-	c.env.stack.Clear()
-	coll.Push(c.env.stack, items...)
+func isValue(ch rune) bool {
+	switch {
+	case unicode.IsNumber(ch):
+		return true
+	case unicode.Is(unicode.Sc, ch):
+		return true
+	case ch == '+' || ch == '-':
+		return true
+	case ch == '.':
+		return true
+	case ch == '"':
+		return true
+	}
+	return false
 }
