@@ -10,7 +10,11 @@ Statistical operations.
 
 The sum of all items on the stack.
 
-    ( ...:Num -- sum:Num )
+    ( a:BigInt*   -- add:BigInt );   or
+    ( a:Decimal*  -- add:Decimal );  or
+    ( a:Float*    -- add:Float );    or
+    ( a:Rational* -- add:Rational ); or
+    ( a:Complex*  -- add:Complex )
 
 Example:
 

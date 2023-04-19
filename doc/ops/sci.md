@@ -46,7 +46,9 @@ Example:
 
 The nearest integer value greater than or equal to `a`.
 
-    ( a:Num -- ceil:Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );    or
 
 Example:
 
@@ -61,7 +63,9 @@ Example:
 
 The nearest integer value less than or equal to `a`.
 
-    ( a:Num -- floor:Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );    or
 
 Example:
 

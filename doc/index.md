@@ -5,6 +5,7 @@
 - [+](./../doc/ops/basic.md#add): Addition
 - [-](./../doc/ops/basic.md#sub): Subtraction
 - [/](./../doc/ops/basic.md#div): Division
+- [^](./../doc/ops/basic.md#pow): Exponentiation
 
 ## a
 

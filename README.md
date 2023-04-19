@@ -2,10 +2,13 @@
 
 A fun RPN calculator.
 
-A work in progress
+Documentation:
 
+- [operations](doc/ops.md): Operation reference by category
+- [index](doc/index.md): Operation names listed alphabetically
+
+A work in progress
 
 ## License
 
 MIT
-

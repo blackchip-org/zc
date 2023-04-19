@@ -4,24 +4,28 @@ Basic mathematical operations.
 
 <!-- index -->
 
-| Operation               | Alias    | Description
-|-------------------------|----------|------------
-| [add](#add)             | `a`, `+` | Addition
-| [div](#div)             | `d`, `/` | Division
-| [mod](#mod)             |          | Modulus
-| [mul](#mul)             | `m`, `*` | Multiplication
-| [neg](#neg)             |          | Negation
-| [pow](#pow)             | `**`     | Exponentiation
-| [rem](#rem)             |          | Remainder
-| [sign](#sign)           |          | Sign
-| [sub](#sub)             | `s`, `-` | Subtraction
+| Operation               | Alias     | Description
+|-------------------------|-----------|------------
+| [add](#add)             | `a`, `+`  | Addition
+| [div](#div)             | `d`, `/`  | Division
+| [mod](#mod)             |           | Modulus
+| [mul](#mul)             | `m`, `*`  | Multiplication
+| [neg](#neg)             |           | Negation
+| [pow](#pow)             | `**`, `^` | Exponentiation
+| [rem](#rem)             |           | Remainder
+| [sign](#sign)           |           | Sign
+| [sub](#sub)             | `s`, `-`  | Subtraction
 
 
 ## add
 
 Adds the value of `b` to `a`.
 
-    ( a:Num b:Num -- add:Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );    or
+    ( a:Rational b:Rational -- add:Rational ); or
+    ( a:Complex  b:Complex  -- add:Complex )
 
 Aliases: `a`, `+`
 
@@ -37,9 +41,13 @@ Example:
 
 ## div
 
-Divides the value of `a` by `b`.
+Divides the value of `a` by `b`. If `b` is zero, a 'division by zero' error is
+set.
 
-    ( a:Num b:Num -- div:Num )
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );    or
+    ( a:Rational b:Rational -- add:Rational ); or
+    ( a:Complex  b:Complex  -- add:Complex )
 
 Aliases: `d`, `/`
 
@@ -55,9 +63,12 @@ Example:
 
 ## mod
 
-The modulus when `a` is divided by `b`.
+The modulus when `a` is divided by `b`. If `b` is zero, a 'division by zero'
+error is set.
 
-    ( a:Num b:Num -- mod:Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );
 
 Example:
 
@@ -73,7 +84,10 @@ Example:
 
 Changes the sign of `a`.
 
-    ( a:Num -- neg:Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );    or
+    ( a:Rational b:Rational -- add:Rational )
 
 Example:
 
@@ -89,7 +103,11 @@ Example:
 
 Multiplies `a` by `b`.
 
-    ( a:Num b:Num -- Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );    or
+    ( a:Rational b:Rational -- add:Rational ); or
+    ( a:Complex  b:Complex  -- add:Complex )
 
 Aliases: `m`, `*`
 
@@ -107,9 +125,11 @@ Example:
 
 Raises `a` to the power of `b`.
 
-    ( a:Num b:Num -- Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Float    b:Float    -- add:Float );    or
+    ( a:Complex  b:Complex  -- add:Complex )
 
-Alias: `**`
+Alias: `**`, `^`
 
 Example:
 
@@ -123,9 +143,10 @@ Example:
 
 ## rem
 
-The remainder when `a` is divided by `b`.
+The remainder when `a` is divided by `b`. If `b` is zero, a 'division by zero' error is set.
 
-    ( a:Num b:Num -- rem:Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Float    b:Float    -- add:Float );
 
 Example:
 
@@ -146,7 +167,10 @@ If:
 * `a` is zero: `0`
 
 ```
-( a:Num -- sign:Int )
+( a:BigInt   b:BigInt   -- add:BigInt );   or
+( a:Decimal  b:Decimal  -- add:Decimal );  or
+( a:Float    b:Float    -- add:Float );    or
+( a:Rational b:Rational -- add:Rational ); or
 ```
 
 Example:
@@ -165,7 +189,11 @@ Example:
 
 Subtracts `b` from `a`.
 
-    ( a:Num b:Num -- sub:Num )
+    ( a:BigInt   b:BigInt   -- add:BigInt );   or
+    ( a:Decimal  b:Decimal  -- add:Decimal );  or
+    ( a:Float    b:Float    -- add:Float );    or
+    ( a:Rational b:Rational -- add:Rational ); or
+    ( a:Complex  b:Complex  -- add:Complex )
 
 Aliases: `s`, `-`
 
