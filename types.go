@@ -25,6 +25,7 @@ var (
 	Int      = IntType{}
 	Rational = RationalType{}
 	String   = StringType{}
+	Uint     = UintType{}
 )
 
 type BigIntType struct{}
@@ -342,6 +343,37 @@ func (t StringType) Is(s string) bool {
 
 func (t StringType) Format(v string) string {
 	return v
+}
+
+// ---
+
+type UintType struct{}
+
+func (t UintType) String() string { return "Uint" }
+
+func (t UintType) Parse(s string) (uint, error) {
+	r, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return 0, ErrUnexpectedType(t, s)
+	}
+	return uint(r), nil
+}
+
+func (t UintType) MustParse(s string) uint {
+	r, err := t.Parse(s)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
+func (t UintType) Is(s string) bool {
+	_, err := t.Parse(s)
+	return err == nil
+}
+
+func (t UintType) Format(v uint) string {
+	return fmt.Sprintf("%v", v)
 }
 
 // ===

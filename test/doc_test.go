@@ -22,7 +22,7 @@ func TestDoc(t *testing.T) {
 		//"../README.md",
 	}
 	dirs := []string{
-		"../doc",
+		"../doc/ops",
 	}
 
 	for _, dir := range dirs {
