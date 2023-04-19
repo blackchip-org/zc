@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -15,9 +14,8 @@ import (
 func main() {
 	log.SetFlags(0)
 	c := calc.New()
-	flag.Parse()
 
-	if flag.NArg() == 0 {
+	if len(os.Args) == 1 {
 		if os.Getenv("ZC_NO_ANSI") != "" {
 			ansi.Enabled = false
 		}
@@ -25,7 +23,7 @@ func main() {
 		return
 	}
 
-	line := strings.Join(flag.Args(), " ")
+	line := strings.Join(os.Args[1:], " ")
 	err := c.Eval(line)
 	if err != nil {
 		log.Fatalf("(!) %v", err)

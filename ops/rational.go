@@ -1,4 +1,4 @@
-package zlib
+package ops
 
 import (
 	"math/big"

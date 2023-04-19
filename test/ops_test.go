@@ -1,4 +1,4 @@
-package tests
+package test
 
 import (
 	"bufio"
@@ -11,7 +11,7 @@ import (
 	"github.com/blackchip-org/zc/calc"
 )
 
-func TestZc(t *testing.T) {
+func TestOps(t *testing.T) {
 	testDir(t, ".")
 }
 

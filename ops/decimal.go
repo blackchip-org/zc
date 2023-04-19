@@ -1,4 +1,4 @@
-package zlib
+package ops
 
 import "github.com/blackchip-org/zc"
 

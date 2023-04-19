@@ -24,6 +24,10 @@ func (c *calc) Stack() []string {
 	return s
 }
 
+func (c *calc) StackLen() int {
+	return len(c.stack)
+}
+
 func (c *calc) SetStack(s []string) {
 	c.stack = c.stack[:len(s)]
 	copy(c.stack, s)
@@ -95,6 +99,10 @@ func (c *calc) SetError(err error) {
 
 func (c *calc) Error() error {
 	return c.err
+}
+
+func (c *calc) Derive() zc.Calc {
+	return &calc{}
 }
 
 func (c *calc) parseWords(str string) []string {

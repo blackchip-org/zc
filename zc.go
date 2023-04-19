@@ -5,6 +5,7 @@ const ProgName = "zc"
 type Calc interface {
 	Eval(string) error
 	Stack() []string
+	StackLen() int
 	SetStack([]string)
 	Peek(int) (string, bool)
 	Pop() (string, bool)
@@ -14,12 +15,14 @@ type Calc interface {
 	SetInfo(string)
 	Error() error
 	SetError(error)
+	Derive() Calc
 }
 
 type CalcFunc func(Calc)
 
 type OpDecl struct {
 	Name  string
+	Macro string
 	Funcs []FuncDecl
 }
 
@@ -41,12 +44,20 @@ func GenOp(name string, funcs ...FuncDecl) OpDecl {
 	return OpDecl{Name: name, Funcs: funcs}
 }
 
+func Macro(name string, expr string) OpDecl {
+	return OpDecl{Name: name, Macro: expr}
+}
+
 func Func(fn CalcFunc, params ...Type) FuncDecl {
 	return FuncDecl{Func: fn, Params: params}
 }
 
 func EvalOp(op OpDecl) CalcFunc {
 	return func(c Calc) {
+		if op.Macro != "" {
+			c.Eval(op.Macro)
+			return
+		}
 		for _, decl := range op.Funcs {
 			if isOpMatch(c, decl) {
 				decl.Func(c)
