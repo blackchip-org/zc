@@ -5,6 +5,7 @@ import (
 	"math/big"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/shopspring/decimal"
 )
@@ -18,6 +19,7 @@ var (
 	BigInt  = BigIntType{}
 	Bool    = BoolType{}
 	Decimal = DecimalType{}
+	Float   = FloatType{}
 	Int     = IntType{}
 )
 
@@ -26,6 +28,7 @@ type BigIntType struct{}
 func (t BigIntType) String() string { return "BigInt" }
 
 func (t BigIntType) Parse(s string) (*big.Int, bool) {
+	s = cleanNumber(s)
 	var r big.Int
 	_, ok := r.SetString(s, 0)
 	return &r, ok
@@ -88,6 +91,7 @@ type DecimalType struct{}
 func (t DecimalType) String() string { return "Decimal" }
 
 func (t DecimalType) Parse(s string) (decimal.Decimal, bool) {
+	s = cleanNumber(s)
 	d, err := decimal.NewFromString(s)
 	return d, err == nil
 }
@@ -107,6 +111,38 @@ func (t DecimalType) Is(s string) bool {
 
 func (t DecimalType) Format(v decimal.Decimal) string {
 	return v.String()
+}
+
+type FloatType struct{}
+
+func (t FloatType) String() string { return "Float" }
+
+func (t FloatType) Parse(s string) (float64, bool) {
+	s = cleanNumber(s)
+	s = strings.TrimSuffix(s, "f")
+	f, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return 0, false
+	}
+	return f, true
+
+}
+
+func (t FloatType) MustParse(s string) float64 {
+	r, ok := t.Parse(s)
+	if !ok {
+		panic(ErrUnexpectedType(t, s))
+	}
+	return r
+}
+
+func (t FloatType) Is(s string) bool {
+	_, ok := t.Parse(s)
+	return ok
+}
+
+func (t FloatType) Format(v float64) string {
+	return strconv.FormatFloat(v, 'g', 16, 64)
 }
 
 type IntType struct{}
@@ -133,4 +169,24 @@ func (t IntType) Is(s string) bool {
 
 func (t IntType) Format(v int) string {
 	return fmt.Sprintf("%v", v)
+}
+
+func isFormatting(ch rune) bool {
+	if ch == ',' || ch == '_' || ch == ' ' {
+		return true
+	}
+	if unicode.Is(unicode.Sc, ch) {
+		return true
+	}
+	return false
+}
+
+func cleanNumber(str string) string {
+	var res strings.Builder
+	for _, ch := range str {
+		if !isFormatting(ch) {
+			res.WriteRune(ch)
+		}
+	}
+	return res.String()
 }
