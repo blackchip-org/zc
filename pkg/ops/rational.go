@@ -29,7 +29,7 @@ func DivRational(c zc.Calc) {
 	a0 := zc.PopRational(c)
 
 	if a1.Cmp(&zeroRat) == 0 {
-		c.SetError(zc.ErrDivisionByZero)
+		zc.ErrDivisionByZero(c, a0, a1)
 		return
 	}
 

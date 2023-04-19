@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/blackchip-org/zc/calc"
-	"github.com/blackchip-org/zc/internal/ansi"
-	"github.com/blackchip-org/zc/repl"
+	"github.com/blackchip-org/zc/pkg/ansi"
+	"github.com/blackchip-org/zc/pkg/calc"
+	"github.com/blackchip-org/zc/pkg/repl"
 )
 
 func main() {

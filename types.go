@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/scanner"
+	"github.com/blackchip-org/zc/pkg/scanner"
 	"github.com/shopspring/decimal"
 )
 
@@ -27,6 +27,30 @@ var (
 	String   = StringType{}
 	Uint     = UintType{}
 )
+
+func Format(a any) string {
+	switch t := a.(type) {
+	case *big.Int:
+		return BigInt.Format(t)
+	case bool:
+		return Bool.Format(t)
+	case complex128:
+		return Complex.Format(t)
+	case decimal.Decimal:
+		return Decimal.Format(t)
+	case float64:
+		return Float.Format(t)
+	case int:
+		return Int.Format(t)
+	case *big.Rat:
+		return Rational.Format(t)
+	case string:
+		return String.Format(t)
+	case uint:
+		return Uint.Format(t)
+	}
+	return fmt.Sprintf("%v", a)
+}
 
 type BigIntType struct{}
 

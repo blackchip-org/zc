@@ -3,8 +3,8 @@ package repl
 import (
 	"testing"
 
-	"github.com/blackchip-org/zc/calc"
-	"github.com/blackchip-org/zc/internal/ansi"
+	"github.com/blackchip-org/zc/pkg/ansi"
+	"github.com/blackchip-org/zc/pkg/calc"
 )
 
 func TestUndo(t *testing.T) {

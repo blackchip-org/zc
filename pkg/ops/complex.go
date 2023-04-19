@@ -24,7 +24,7 @@ func DivComplex(c zc.Calc) {
 	a0 := zc.PopComplex(c)
 
 	if real(a1) == 0 && imag(a1) == 0 {
-		c.SetError(zc.ErrDivisionByZero)
+		zc.ErrDivisionByZero(c, a0, a1)
 		return
 	}
 

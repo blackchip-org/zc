@@ -6,7 +6,7 @@ install:
 	go install $(GOFLAGS) ./...
 
 doc:
-	go generate internal/gen/index/main.go
+	go generate internal/gen-index/main.go
 
 test:
 	go test $(GOFLAGS) ./...

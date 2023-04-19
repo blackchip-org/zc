@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/internal/ansi"
+	"github.com/blackchip-org/zc/pkg/ansi"
 	"github.com/peterh/liner"
 )
 

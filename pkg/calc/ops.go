@@ -2,7 +2,7 @@ package calc
 
 import (
 	"github.com/blackchip-org/zc"
-	"github.com/blackchip-org/zc/ops"
+	"github.com/blackchip-org/zc/pkg/ops"
 )
 
 var opsList = []zc.OpDecl{

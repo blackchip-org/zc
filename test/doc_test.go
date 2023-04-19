@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/blackchip-org/zc/calc"
+	"github.com/blackchip-org/zc/pkg/calc"
 )
 
 var (

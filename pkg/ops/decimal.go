@@ -1,6 +1,8 @@
 package ops
 
-import "github.com/blackchip-org/zc"
+import (
+	"github.com/blackchip-org/zc"
+)
 
 func AbsDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
@@ -26,7 +28,7 @@ func DivDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
 
 	if a1.IsZero() {
-		c.SetError(zc.ErrDivisionByZero)
+		zc.ErrDivisionByZero(c, a0, a1)
 		return
 	}
 
@@ -80,7 +82,7 @@ func ModDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
 
 	if a1.IsZero() {
-		c.SetError(zc.ErrDivisionByZero)
+		zc.ErrModuloByZero(c, a0, a1)
 		return
 	}
 

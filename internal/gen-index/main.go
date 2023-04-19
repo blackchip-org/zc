@@ -1,6 +1,6 @@
 package main
 
-//go:generate go run main.go ../../../doc/index.md
+//go:generate go run main.go ../../doc/index.md
 
 import (
 	"bufio"
@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	Root = "../../.."
+	Root = "../.."
 )
 
 var (
