@@ -6,128 +6,128 @@ import (
 	"github.com/blackchip-org/zc"
 )
 
-func AbsFloat(e zc.Env) {
-	a0 := zc.PopFloat(e)
+func AbsFloat(c zc.Calc) {
+	a0 := zc.PopFloat(c)
 	r0 := math.Abs(a0)
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func AddFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func AddFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 + a1
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func CeilFloat(e zc.Env) {
-	a0 := zc.PopFloat(e)
+func CeilFloat(c zc.Calc) {
+	a0 := zc.PopFloat(c)
 	r0 := math.Ceil(a0)
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func DivFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func DivFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 
 	if a1 == 0 {
-		e.Error(zc.ErrDivisionByZero)
+		c.SetError(zc.ErrDivisionByZero)
 		return
 	}
 
 	r0 := a0 / a1
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func EqFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func EqFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 == a1
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func FloorFloat(e zc.Env) {
-	a0 := zc.PopFloat(e)
+func FloorFloat(c zc.Calc) {
+	a0 := zc.PopFloat(c)
 	r0 := math.Floor(a0)
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func GtFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func GtFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 > a1
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func GteFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func GteFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 >= a1
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func LtFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func LtFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 < a1
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func LteFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func LteFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 <= a1
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func ModFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func ModFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 
 	if a1 == 0 {
-		e.Error(zc.ErrDivisionByZero)
+		c.SetError(zc.ErrDivisionByZero)
 		return
 	}
 
 	r0 := math.Mod(a0, a1)
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func MulFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func MulFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 * a1
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func NegFloat(e zc.Env) {
-	a0 := zc.PopFloat(e)
+func NegFloat(c zc.Calc) {
+	a0 := zc.PopFloat(c)
 	r0 := -a0
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func NeqFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func NeqFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 != a1
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func PowFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func PowFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := math.Pow(a0, a1)
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func RemFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func RemFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := math.Remainder(a0, a1)
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }
 
-func SignFloat(e zc.Env) {
-	a0 := zc.PopFloat(e)
+func SignFloat(c zc.Calc) {
+	a0 := zc.PopFloat(c)
 
 	r0 := 0
 	if a0 > 0 {
@@ -137,12 +137,12 @@ func SignFloat(e zc.Env) {
 		r0 = -1
 	}
 
-	zc.PushInt(e, r0)
+	zc.PushInt(c, r0)
 }
 
-func SubFloat(e zc.Env) {
-	a1 := zc.PopFloat(e)
-	a0 := zc.PopFloat(e)
+func SubFloat(c zc.Calc) {
+	a1 := zc.PopFloat(c)
+	a0 := zc.PopFloat(c)
 	r0 := a0 - a1
-	zc.PushFloat(e, r0)
+	zc.PushFloat(c, r0)
 }

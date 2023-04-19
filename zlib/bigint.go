@@ -9,147 +9,147 @@ import (
 
 var zeroBigInt big.Int
 
-func AbsBigInt(e zc.Env) {
+func AbsBigInt(c zc.Calc) {
 	var r0 big.Int
-	a0 := zc.PopBigInt(e)
+	a0 := zc.PopBigInt(c)
 	r0.Abs(a0)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func AddBigInt(e zc.Env) {
+func AddBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0.Add(a0, a1)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func AndBigInt(e zc.Env) {
+func AndBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0.And(a0, a1)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func EqBigInt(e zc.Env) {
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+func EqBigInt(c zc.Calc) {
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0 := a0.Cmp(a1) == 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func GtBigInt(e zc.Env) {
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+func GtBigInt(c zc.Calc) {
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0 := a0.Cmp(a1) > 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func GteBigInt(e zc.Env) {
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+func GteBigInt(c zc.Calc) {
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0 := a0.Cmp(a1) >= 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func HexBigInt(e zc.Env) {
-	a0 := zc.PopBigInt(e)
+func HexBigInt(c zc.Calc) {
+	a0 := zc.PopBigInt(c)
 	r0 := fmt.Sprintf("0x%x", a0)
-	e.Push(r0)
+	c.Push(r0)
 }
 
-func LtBigInt(e zc.Env) {
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+func LtBigInt(c zc.Calc) {
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0 := a0.Cmp(a1) < 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func LteBigInt(e zc.Env) {
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+func LteBigInt(c zc.Calc) {
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0 := a0.Cmp(a1) <= 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func ModBigInt(e zc.Env) {
+func ModBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 
 	if a1.Cmp(&zeroBigInt) == 0 {
-		e.Error(zc.ErrDivisionByZero)
+		c.SetError(zc.ErrDivisionByZero)
 		return
 	}
 
 	r0.Mod(a0, a1)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func MulBigInt(e zc.Env) {
+func MulBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0.Mul(a0, a1)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func NeqBigInt(e zc.Env) {
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+func NeqBigInt(c zc.Calc) {
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0 := a0.Cmp(a1) != 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func NegBigInt(e zc.Env) {
+func NegBigInt(c zc.Calc) {
 	var r0 big.Int
-	a0 := zc.PopBigInt(e)
+	a0 := zc.PopBigInt(c)
 	r0.Neg(a0)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func NotBigInt(e zc.Env) {
+func NotBigInt(c zc.Calc) {
 	var r0 big.Int
-	a0 := zc.PopBigInt(e)
+	a0 := zc.PopBigInt(c)
 	r0.Not(a0)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func OrBigInt(e zc.Env) {
+func OrBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0.Or(a0, a1)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func PowBigInt(e zc.Env) {
+func PowBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0.Exp(a0, a1, nil)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func RemBigInt(e zc.Env) {
+func RemBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0.Rem(a0, a1)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }
 
-func SignBigInt(e zc.Env) {
-	a0 := zc.PopBigInt(e)
+func SignBigInt(c zc.Calc) {
+	a0 := zc.PopBigInt(c)
 	r0 := a0.Sign()
-	zc.PushInt(e, r0)
+	zc.PushInt(c, r0)
 }
 
-func SubBigInt(e zc.Env) {
+func SubBigInt(c zc.Calc) {
 	var r0 big.Int
-	a1 := zc.PopBigInt(e)
-	a0 := zc.PopBigInt(e)
+	a1 := zc.PopBigInt(c)
+	a0 := zc.PopBigInt(c)
 	r0.Sub(a0, a1)
-	zc.PushBigInt(e, &r0)
+	zc.PushBigInt(c, &r0)
 }

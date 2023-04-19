@@ -6,18 +6,18 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-func PopBigInt(e Env) *big.Int         { return BigInt.MustParse(e.MustPop()) }
-func PopBool(e Env) bool               { return Bool.MustParse(e.MustPop()) }
-func PopComplex(e Env) complex128      { return Complex.MustParse(e.MustPop()) }
-func PopDecimal(e Env) decimal.Decimal { return Decimal.MustParse(e.MustPop()) }
-func PopFloat(e Env) float64           { return Float.MustParse(e.MustPop()) }
-func PopInt(e Env) int                 { return Int.MustParse(e.MustPop()) }
-func PopRational(e Env) *big.Rat       { return Rational.MustParse(e.MustPop()) }
+func PopBigInt(c Calc) *big.Int         { return BigInt.MustParse(c.MustPop()) }
+func PopBool(c Calc) bool               { return Bool.MustParse(c.MustPop()) }
+func PopComplex(c Calc) complex128      { return Complex.MustParse(c.MustPop()) }
+func PopDecimal(c Calc) decimal.Decimal { return Decimal.MustParse(c.MustPop()) }
+func PopFloat(c Calc) float64           { return Float.MustParse(c.MustPop()) }
+func PopInt(c Calc) int                 { return Int.MustParse(c.MustPop()) }
+func PopRational(c Calc) *big.Rat       { return Rational.MustParse(c.MustPop()) }
 
-func PushBigInt(e Env, r *big.Int)         { e.Push(BigInt.Format(r)) }
-func PushBool(e Env, r bool)               { e.Push(Bool.Format(r)) }
-func PushComplex(e Env, r complex128)      { e.Push(Complex.Format(r)) }
-func PushDecimal(e Env, r decimal.Decimal) { e.Push(Decimal.Format(r)) }
-func PushFloat(e Env, r float64)           { e.Push(Float.Format(r)) }
-func PushInt(e Env, r int)                 { e.Push(Int.Format(r)) }
-func PushRational(e Env, r *big.Rat)       { e.Push(Rational.Format(r)) }
+func PushBigInt(c Calc, r *big.Int)         { c.Push(BigInt.Format(r)) }
+func PushBool(c Calc, r bool)               { c.Push(Bool.Format(r)) }
+func PushComplex(c Calc, r complex128)      { c.Push(Complex.Format(r)) }
+func PushDecimal(c Calc, r decimal.Decimal) { c.Push(Decimal.Format(r)) }
+func PushFloat(c Calc, r float64)           { c.Push(Float.Format(r)) }
+func PushInt(c Calc, r int)                 { c.Push(Int.Format(r)) }
+func PushRational(c Calc, r *big.Rat)       { c.Push(Rational.Format(r)) }

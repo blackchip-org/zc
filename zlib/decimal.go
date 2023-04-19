@@ -2,121 +2,121 @@ package zlib
 
 import "github.com/blackchip-org/zc"
 
-func AbsDecimal(e zc.Env) {
-	a0 := zc.PopDecimal(e)
+func AbsDecimal(c zc.Calc) {
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Abs()
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func AddDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func AddDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Add(a1)
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func CeilDecimal(e zc.Env) {
-	a0 := zc.PopDecimal(e)
+func CeilDecimal(c zc.Calc) {
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Ceil()
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func DivDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func DivDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 
 	if a1.IsZero() {
-		e.Error(zc.ErrDivisionByZero)
+		c.SetError(zc.ErrDivisionByZero)
 		return
 	}
 
 	r0 := a0.Div(a1)
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func EqDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func EqDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Cmp(a1) == 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func FloorDecimal(e zc.Env) {
-	a0 := zc.PopDecimal(e)
+func FloorDecimal(c zc.Calc) {
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Floor()
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func GtDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func GtDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Cmp(a1) > 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func GteDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func GteDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Cmp(a1) >= 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func LtDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func LtDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Cmp(a1) < 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func LteDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func LteDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Cmp(a1) <= 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func ModDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func ModDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 
 	if a1.IsZero() {
-		e.Error(zc.ErrDivisionByZero)
+		c.SetError(zc.ErrDivisionByZero)
 		return
 	}
 
 	r0 := a0.Mod(a1)
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func MulDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func MulDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Mul(a1)
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func NegDecimal(e zc.Env) {
-	a0 := zc.PopDecimal(e)
+func NegDecimal(c zc.Calc) {
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Neg()
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }
 
-func NeqDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func NeqDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Cmp(a1) != 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func SignDecimal(e zc.Env) {
-	a0 := zc.PopDecimal(e)
+func SignDecimal(c zc.Calc) {
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Sign()
-	zc.PushInt(e, r0)
+	zc.PushInt(c, r0)
 }
 
-func SubDecimal(e zc.Env) {
-	a1 := zc.PopDecimal(e)
-	a0 := zc.PopDecimal(e)
+func SubDecimal(c zc.Calc) {
+	a1 := zc.PopDecimal(c)
+	a0 := zc.PopDecimal(c)
 	r0 := a0.Sub(a1)
-	zc.PushDecimal(e, r0)
+	zc.PushDecimal(c, r0)
 }

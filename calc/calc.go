@@ -11,6 +11,7 @@ import (
 type calc struct {
 	stack []string
 	err   error
+	info  string
 }
 
 func New() zc.Calc {
@@ -23,8 +24,23 @@ func (c *calc) Stack() []string {
 	return s
 }
 
+func (c *calc) SetStack(s []string) {
+	c.stack = c.stack[:len(s)]
+	copy(c.stack, s)
+}
+
+func (c *calc) Info() string {
+	return c.info
+}
+
+func (c *calc) SetInfo(info string) {
+	c.info = info
+}
+
 func (c *calc) Eval(s string) error {
 	c.err = nil
+	c.info = ""
+
 	words := c.parseWords(s)
 	for _, word := range words {
 		ch, _ := utf8.DecodeRuneInString(word)
@@ -38,6 +54,47 @@ func (c *calc) Eval(s string) error {
 		}
 	}
 	return nil
+}
+
+func (c *calc) Peek(i int) (string, bool) {
+	n := len(c.stack)
+	stackI := n - 1 - i
+	if stackI < 0 || stackI >= n {
+		return "", false
+	}
+	return c.stack[stackI], true
+}
+
+func (c *calc) Pop() (string, bool) {
+	n := len(c.stack)
+	if n == 0 {
+		return "", false
+	}
+	var item string
+	c.stack, item = c.stack[:n-1], c.stack[n-1]
+	return item, true
+}
+
+func (c *calc) MustPop() string {
+	item, ok := c.Pop()
+	if !ok {
+		panic(zc.ErrStackEmpty)
+	}
+	return item
+}
+
+func (c *calc) Push(item string) {
+	c.stack = append(c.stack, item)
+}
+
+func (c *calc) SetError(err error) {
+	if c.err == nil {
+		c.err = err
+	}
+}
+
+func (c *calc) Error() error {
+	return c.err
 }
 
 func (c *calc) parseWords(str string) []string {
@@ -91,7 +148,7 @@ func (c *calc) evalOp(name string) {
 		c.err = zc.ErrUnknownOp(name)
 		return
 	}
-	op(&env{calc: c})
+	op(c)
 }
 
 func isValue(ch rune) bool {

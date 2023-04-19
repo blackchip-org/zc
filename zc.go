@@ -1,20 +1,22 @@
 package zc
 
+const ProgName = "zc"
+
 type Calc interface {
 	Eval(string) error
 	Stack() []string
-}
-
-type Env interface {
+	SetStack([]string)
 	Peek(int) (string, bool)
 	Pop() (string, bool)
 	MustPop() string
 	Push(string)
-	Error(error)
-	//Eval(string)
+	Info() string
+	SetInfo(string)
+	Error() error
+	SetError(error)
 }
 
-type CalcFunc func(Env)
+type CalcFunc func(Calc)
 
 type OpDecl struct {
 	Name  string
@@ -44,20 +46,20 @@ func Func(fn CalcFunc, params ...Type) FuncDecl {
 }
 
 func EvalOp(op OpDecl) CalcFunc {
-	return func(e Env) {
+	return func(c Calc) {
 		for _, decl := range op.Funcs {
-			if isOpMatch(e, decl) {
-				decl.Func(e)
+			if isOpMatch(c, decl) {
+				decl.Func(c)
 				return
 			}
 		}
-		e.Error(ErrInvalidArgumentTypes(op.Name))
+		c.SetError(ErrInvalidArgumentTypes(op.Name))
 	}
 }
 
-func isOpMatch(e Env, decl FuncDecl) bool {
+func isOpMatch(c Calc, decl FuncDecl) bool {
 	for i, param := range decl.Params {
-		arg, ok := e.Peek(len(decl.Params) - i)
+		arg, ok := c.Peek(len(decl.Params) - i - 1)
 		if !ok {
 			return false
 		}
@@ -68,4 +70,4 @@ func isOpMatch(e Env, decl FuncDecl) bool {
 	return true
 }
 
-func NoOp(e Env) {}
+func NoOp(c Calc) {}

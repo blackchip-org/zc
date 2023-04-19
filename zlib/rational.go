@@ -8,102 +8,102 @@ import (
 
 var zeroRat big.Rat
 
-func AbsRational(e zc.Env) {
+func AbsRational(c zc.Calc) {
 	var r0 big.Rat
-	a0 := zc.PopRational(e)
+	a0 := zc.PopRational(c)
 	r0.Abs(a0)
-	zc.PushRational(e, &r0)
+	zc.PushRational(c, &r0)
 }
 
-func AddRational(e zc.Env) {
+func AddRational(c zc.Calc) {
 	var r0 big.Rat
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0.Add(a0, a1)
-	zc.PushRational(e, &r0)
+	zc.PushRational(c, &r0)
 }
 
-func DivRational(e zc.Env) {
+func DivRational(c zc.Calc) {
 	var r0 big.Rat
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 
 	if a1.Cmp(&zeroRat) == 0 {
-		e.Error(zc.ErrDivisionByZero)
+		c.SetError(zc.ErrDivisionByZero)
 		return
 	}
 
 	r0.Quo(a0, a1)
-	zc.PushRational(e, &r0)
+	zc.PushRational(c, &r0)
 }
 
-func EqRational(e zc.Env) {
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+func EqRational(c zc.Calc) {
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0 := a0.Cmp(a1) == 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func GtRational(e zc.Env) {
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+func GtRational(c zc.Calc) {
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0 := a0.Cmp(a1) > 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func GteRational(e zc.Env) {
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+func GteRational(c zc.Calc) {
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0 := a0.Cmp(a1) >= 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func LtRational(e zc.Env) {
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+func LtRational(c zc.Calc) {
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0 := a0.Cmp(a1) < 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func LteRational(e zc.Env) {
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+func LteRational(c zc.Calc) {
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0 := a0.Cmp(a1) <= 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func MulRational(e zc.Env) {
+func MulRational(c zc.Calc) {
 	var r0 big.Rat
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0.Mul(a0, a1)
-	zc.PushRational(e, &r0)
+	zc.PushRational(c, &r0)
 }
 
-func NegRational(e zc.Env) {
+func NegRational(c zc.Calc) {
 	var r0 big.Rat
-	a0 := zc.PopRational(e)
+	a0 := zc.PopRational(c)
 	r0.Neg(a0)
-	zc.PushRational(e, &r0)
+	zc.PushRational(c, &r0)
 }
 
-func NeqRational(e zc.Env) {
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+func NeqRational(c zc.Calc) {
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0 := a0.Cmp(a1) != 0
-	zc.PushBool(e, r0)
+	zc.PushBool(c, r0)
 }
 
-func SignRational(e zc.Env) {
-	a0 := zc.PopRational(e)
+func SignRational(c zc.Calc) {
+	a0 := zc.PopRational(c)
 	r0 := a0.Sign()
-	zc.PushInt(e, r0)
+	zc.PushInt(c, r0)
 }
 
-func SubRational(e zc.Env) {
+func SubRational(c zc.Calc) {
 	var r0 big.Rat
-	a1 := zc.PopRational(e)
-	a0 := zc.PopRational(e)
+	a1 := zc.PopRational(c)
+	a0 := zc.PopRational(c)
 	r0.Sub(a0, a1)
-	zc.PushRational(e, &r0)
+	zc.PushRational(c, &r0)
 }
