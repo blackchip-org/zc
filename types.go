@@ -52,6 +52,28 @@ func Format(a any) string {
 	return fmt.Sprintf("%v", a)
 }
 
+func Identify(v string) Type {
+	if BigInt.Is(v) {
+		return BigInt
+	}
+	if Decimal.Is(v) {
+		return Decimal
+	}
+	if Float.Is(v) {
+		return Float
+	}
+	if Rational.Is(v) {
+		return Rational
+	}
+	if Complex.Is(v) {
+		return Complex
+	}
+	if Bool.Is(v) {
+		return Bool
+	}
+	return String
+}
+
 type BigIntType struct{}
 
 func (t BigIntType) String() string { return "BigInt" }

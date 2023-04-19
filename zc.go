@@ -58,13 +58,29 @@ func EvalOp(op OpDecl) CalcFunc {
 			c.Eval(op.Macro)
 			return
 		}
+		if len(op.Funcs) == 0 {
+			panic("no functions for operation")
+		}
 		for _, decl := range op.Funcs {
 			if isOpMatch(c, decl) {
 				decl.Func(c)
 				return
 			}
 		}
-		c.SetError(ErrInvalidArgumentTypes(op.Name))
+
+		// For now, we are going to check the first decl to
+		// determine the number of arguments.
+		nArgs := len(op.Funcs[0].Params)
+		var types []Type
+		for i := 0; i < nArgs; i++ {
+			v, ok := c.Peek(i)
+			if !ok {
+				ErrNotEnoughArguments(c, op.Name, nArgs)
+				return
+			}
+			types = append(types, Identify(v))
+		}
+		ErrNoOpForTypes(c, op.Name, types...)
 	}
 }
 
