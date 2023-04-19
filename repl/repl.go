@@ -60,11 +60,7 @@ func (r *REPL) Close() {
 
 func (r *REPL) ReadLine() (string, error) {
 	text, err := r.cli.Prompt(r.getPrompt())
-	if err != nil {
-		log.Printf("error: %v", err)
-		return "", err
-	}
-	return text, nil
+	return text, err
 }
 
 func (r *REPL) Eval(text string) bool {
@@ -224,7 +220,10 @@ func Run(c zc.Calc) {
 	for {
 		line, err := repl.ReadLine()
 		if err != nil {
-			log.Fatal(err)
+			if err.Error() != "prompt aborted" {
+				log.Println(err)
+			}
+			return
 		}
 		ansi.Write(ansi.ClearScreen)
 		if ok := repl.Eval(line); !ok {

@@ -4,9 +4,11 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/blackchip-org/zc/calc"
+	"github.com/blackchip-org/zc/internal/ansi"
 	"github.com/blackchip-org/zc/repl"
 )
 
@@ -16,6 +18,9 @@ func main() {
 	flag.Parse()
 
 	if flag.NArg() == 0 {
+		if os.Getenv("ZC_NO_ANSI") != "" {
+			ansi.Enabled = false
+		}
 		repl.Run(c)
 		return
 	}
