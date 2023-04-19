@@ -12,7 +12,9 @@
 - [a](./../doc/ops/basic.md#add): Addition
 - [abs](./../doc/ops/sci.md#abs): Absolute value
 - [add](./../doc/ops/basic.md#add): Addition
-- [and](./../doc/ops/prog.md#and): Bitwise and
+- and
+  - [(bool) and](./../doc/ops/bool.md#and): Logical conjunction
+  - [(prog) and](./../doc/ops/prog.md#and): Bitwise and
 
 ## b
 
@@ -31,9 +33,19 @@
 - [dec](./../doc/ops/prog.md#dec): Convert to decimal
 - [div](./../doc/ops/basic.md#div): Division
 
+## e
+
+- [eq](./../doc/ops/bool.md#eq): Equals
+
 ## f
 
+- [false](./../doc/ops/bool.md#false): False
 - [floor](./../doc/ops/sci.md#floor): Floor
+
+## g
+
+- [gt](./../doc/ops/bool.md#gt): Greater than
+- [gte](./../doc/ops/bool.md#gte): Greater than or equals
 
 ## h
 
@@ -42,6 +54,8 @@
 ## l
 
 - [lsh](./../doc/ops/prog.md#lsh): Left shift
+- [lt](./../doc/ops/bool.md#lt): Less than
+- [lte](./../doc/ops/bool.md#lte): Less than or equals
 
 ## m
 
@@ -52,12 +66,17 @@
 ## n
 
 - [neg](./../doc/ops/basic.md#neg): Negation
-- [not](./../doc/ops/prog.md#not): Bitwise not
+- [neq](./../doc/ops/bool.md#neq): Not Equals
+- not
+  - [(bool) not](./../doc/ops/bool.md#not): Negation
+  - [(prog) not](./../doc/ops/prog.md#not): Bitwise not
 
 ## o
 
 - [oct](./../doc/ops/prog.md#oct): Convert to octal
-- [or](./../doc/ops/prog.md#or): Bitwise or
+- or
+  - [(bool) or](./../doc/ops/bool.md#or): Logical disjunction
+  - [(prog) or](./../doc/ops/prog.md#or): Bitwise or
 
 ## p
 
@@ -73,6 +92,10 @@
 - [s](./../doc/ops/basic.md#sub): Subtraction
 - [sign](./../doc/ops/basic.md#sign): Sign
 - [sub](./../doc/ops/basic.md#sub): Subtraction
+
+## t
+
+- [true](./../doc/ops/bool.md#true): True
 
 ## x
 

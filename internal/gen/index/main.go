@@ -23,10 +23,9 @@ const (
 var (
 	modDirective   = regexp.MustCompile(`^# *(.+) *$`)
 	indexDirective = regexp.MustCompile(`<!-- *index *-->`)
-	//mainDirective  = regexp.MustCompile(`<!-- *main: ([^ ]+) -->`)
-	tableHeader   = regexp.MustCompile(`.*Operation.*Description`)
-	operationName = regexp.MustCompile(`\[(.*)\]\((.*)\)`)
-	aliasFormat   = regexp.MustCompile("\\`[^\\`]+\\`")
+	tableHeader    = regexp.MustCompile(`.*Operation.*Description`)
+	operationName  = regexp.MustCompile(`\[(.*)\]\((.*)\)`)
+	aliasFormat    = regexp.MustCompile("\\`[^\\`]+\\`")
 )
 
 type Entry struct {
@@ -37,10 +36,12 @@ type Entry struct {
 	Anchor      string
 }
 
-var EntryMap map[string]Entry
+var EntryMap map[string][]Entry
+var IndexMainMap map[string]string
 
 func init() {
-	EntryMap = make(map[string]Entry)
+	EntryMap = make(map[string][]Entry)
+	IndexMainMap = make(map[string]string)
 }
 
 func main() {
@@ -90,9 +91,27 @@ func main() {
 			fmt.Fprintf(out, "\n## %v\n\n", string(heading))
 			thisHeading = heading
 		}
-		entry := EntryMap[key]
-		fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[4:], entry.Anchor, entry.Description)
-
+		entries := EntryMap[key]
+		if len(entries) == 1 {
+			entry := entries[0]
+			fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+		} else {
+			mainMod, ok := IndexMainMap[key]
+			if ok {
+				for _, entry := range entries {
+					if entry.Module == mainMod {
+						fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+					}
+				}
+			} else {
+				fmt.Fprintf(out, "- %v\n", key)
+			}
+			for _, entry := range entries {
+				if entry.Module != mainMod {
+					fmt.Fprintf(out, "  - [(%v) %v](%v%v): %v\n", entry.Module, entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+				}
+			}
+		}
 	}
 }
 
@@ -173,9 +192,7 @@ func indexTable(file string, mod string, scanner *bufio.Scanner) {
 }
 
 func addEntry(e Entry) {
-	_, exists := EntryMap[e.Func]
-	if exists {
-		panic(fmt.Sprintf("entry already exists: %v", e.Func))
-	}
-	EntryMap[e.Func] = e
+	entries := EntryMap[e.Func]
+	entries = append(entries, e)
+	EntryMap[e.Func] = entries
 }
