@@ -18,6 +18,7 @@ type Type interface {
 var (
 	BigInt  = BigIntType{}
 	Bool    = BoolType{}
+	Complex = ComplexType{}
 	Decimal = DecimalType{}
 	Float   = FloatType{}
 	Int     = IntType{}
@@ -50,6 +51,8 @@ func (t BigIntType) Is(s string) bool {
 func (t BigIntType) Format(v *big.Int) string {
 	return v.String()
 }
+
+// ---
 
 type BoolType struct{}
 
@@ -86,6 +89,42 @@ func (t BoolType) Format(v bool) string {
 	return "false"
 }
 
+// ---
+
+type ComplexType struct{}
+
+func (t ComplexType) String() string { return "Complex" }
+
+func (t ComplexType) Parse(s string) (complex128, bool) {
+	c, err := strconv.ParseComplex(s, 128)
+	if err != nil {
+		return 0, false
+	}
+	return c, true
+}
+
+func (t ComplexType) MustParse(s string) complex128 {
+	r, ok := t.Parse(s)
+	if !ok {
+		panic(ErrUnexpectedType(t, s))
+	}
+	return r
+}
+
+func (t ComplexType) Is(s string) bool {
+	_, ok := t.Parse(s)
+	return ok
+}
+
+func (t ComplexType) Format(v complex128) string {
+	s := strconv.FormatComplex(v, 'g', 16, 128)
+	// For some reason, the complex number is surrounded by parens.
+	// Remove them.
+	return s[1 : len(s)-1]
+}
+
+// ---
+
 type DecimalType struct{}
 
 func (t DecimalType) String() string { return "Decimal" }
@@ -112,6 +151,8 @@ func (t DecimalType) Is(s string) bool {
 func (t DecimalType) Format(v decimal.Decimal) string {
 	return v.String()
 }
+
+// ---
 
 type FloatType struct{}
 
@@ -145,6 +186,8 @@ func (t FloatType) Format(v float64) string {
 	return strconv.FormatFloat(v, 'g', 16, 64)
 }
 
+// ---
+
 type IntType struct{}
 
 func (t IntType) String() string { return "Int" }
@@ -170,6 +213,8 @@ func (t IntType) Is(s string) bool {
 func (t IntType) Format(v int) string {
 	return fmt.Sprintf("%v", v)
 }
+
+// ===
 
 func isFormatting(ch rune) bool {
 	if ch == ',' || ch == '_' || ch == ' ' {

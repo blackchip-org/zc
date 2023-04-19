@@ -9,6 +9,9 @@
     -4.4f abs
     4.4
 
+    3+4i abs
+    5
+
 ### and
 
     0xff 0xf0 and hex
@@ -25,8 +28,8 @@
     1.1f 2.2f add
     3.3
 
-    8 2 sub
-    6
+    6+2i 2+6i add
+    8+8i
 
 ## ceil
 
@@ -50,6 +53,11 @@
     2 0 div
     division by zero
 
+    6+8i 2+2i div
+    3.5+0.5i
+
+    6+8i 0+0i div
+    division by zero
 
 ## eq
 
@@ -68,6 +76,8 @@
     2.3 2.2 eq
     false
 
+    8+8i 8+8i eq
+    true
 
 ## floor
 
@@ -197,6 +207,40 @@
     5.75f 0f mod
     division by zero
 
+## mul
+
+    6 2 mul
+    12
+
+    6.6 2.2 mul
+    14.52
+
+    1e3 1e2 mul
+    100000
+
+    6+8i 2+2i mul
+    -4+28i
+
+## neq
+
+    2 2 neq
+    false
+
+    2 3 neq
+    true
+
+    2.2 2.2 neq
+    false
+
+    2.2f 2.2f neq
+    false
+
+    2.3 2.2 neq
+    true
+
+    8+8i 8+8i neq
+    false
+
 ## sub
 
     8 2 sub
@@ -208,4 +252,6 @@
     1.1f 2.2f sub
     -1.1
 
+    6+2i 2+6i sub
+    4-4i
 
