@@ -9,6 +9,9 @@
     -4.4f abs
     4.4
 
+    -1/2 abs
+    1/2
+
     3+4i abs
     5
 
@@ -27,6 +30,12 @@
 
     1.1f 2.2f add
     3.3
+
+    1/2 1/4 add
+    3/4
+
+    3-3/4 2-1/2 add
+    6 1/4
 
     6+2i 2+6i add
     8+8i
@@ -56,6 +65,9 @@
     6+8i 2+2i div
     3.5+0.5i
 
+    1/4 3/4 div
+    1/3
+
     6+8i 0+0i div
     division by zero
 
@@ -75,6 +87,9 @@
 
     2.3 2.2 eq
     false
+
+    1/2 0.5 eq
+    true
 
     8+8i 8+8i eq
     true
@@ -113,6 +128,9 @@
     6.2f 5.2f gt
     true
 
+    1/2 0.25 gt
+    true
+
 ## gte
 
     4 5 gte
@@ -134,6 +152,9 @@
     true
 
     6.2f 5.2f gte
+    true
+
+    1/2 0.25 gte
     true
 
 ## hex
@@ -164,6 +185,9 @@
     6.2f 5.2f lt
     false
 
+    1/2 0.25 lt
+    false
+
 ## lte
 
     4 5 lte
@@ -185,6 +209,9 @@
     false
 
     6.2f 5.2f lte
+    false
+
+    1/2 0.25 lte
     false
 
 ## mod
@@ -218,6 +245,9 @@
     1e3 1e2 mul
     100000
 
+    1/2 1/4 mul
+    1/8
+
     6+8i 2+2i mul
     -4+28i
 
@@ -241,6 +271,27 @@
     8+8i 8+8i neq
     false
 
+    1/2 1/2 neq
+    false
+
+
+## sign
+
+    -6 sign
+    -1
+
+    -2.2 sign
+    -1
+
+    -2.2f sign
+    -1
+
+    -1e30 sign
+    -1
+
+    -3/4 sign
+    -1
+
 ## sub
 
     8 2 sub
@@ -251,6 +302,9 @@
 
     1.1f 2.2f sub
     -1.1
+
+    3/4 1/2 sub
+    1/4
 
     6+2i 2+6i sub
     4-4i

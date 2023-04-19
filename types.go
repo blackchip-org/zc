@@ -7,6 +7,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/blackchip-org/zc/scanner"
 	"github.com/shopspring/decimal"
 )
 
@@ -16,12 +17,13 @@ type Type interface {
 }
 
 var (
-	BigInt  = BigIntType{}
-	Bool    = BoolType{}
-	Complex = ComplexType{}
-	Decimal = DecimalType{}
-	Float   = FloatType{}
-	Int     = IntType{}
+	BigInt   = BigIntType{}
+	Bool     = BoolType{}
+	Complex  = ComplexType{}
+	Decimal  = DecimalType{}
+	Float    = FloatType{}
+	Int      = IntType{}
+	Rational = RationalType{}
 )
 
 type BigIntType struct{}
@@ -212,6 +214,94 @@ func (t IntType) Is(s string) bool {
 
 func (t IntType) Format(v int) string {
 	return fmt.Sprintf("%v", v)
+}
+
+// ---
+
+type RationalType struct{}
+
+func (t RationalType) String() string { return "Rational" }
+
+func (t RationalType) Parse(s string) (*big.Rat, bool) {
+	i, err := strconv.ParseInt(s, 10, 64)
+	if err == nil {
+		return big.NewRat(i, 1), true
+	}
+	f, err := strconv.ParseFloat(s, 64)
+	if err == nil {
+		return new(big.Rat).SetFloat64(f), true
+	}
+
+	sc := scanner.NewString(s)
+
+	var w, n, d int64
+
+	s1 := sc.Scan(scanner.Int)
+	i1, err := strconv.ParseInt(s1, 10, 64)
+	if err != nil {
+		return &big.Rat{}, false
+	}
+	switch sc.Ch {
+	case '_', '-', ' ':
+		w = i1
+	case '/':
+		n = i1
+	default:
+		return &big.Rat{}, false
+	}
+	sc.Next()
+
+	s2 := sc.Scan(scanner.UInt)
+	i2, err := strconv.ParseInt(s2, 10, 64)
+	if err != nil {
+		return &big.Rat{}, false
+	}
+	if w != 0 {
+		n = i2
+		if sc.Ch != '/' {
+			return &big.Rat{}, false
+		}
+		sc.Next()
+		s3 := sc.Scan(scanner.UInt)
+		i3, err := strconv.ParseInt(s3, 10, 64)
+		if err != nil {
+			return &big.Rat{}, false
+		}
+		d = i3
+	} else {
+		d = i2
+	}
+
+	if w != 0 {
+		n = n + (d * w)
+	}
+
+	return big.NewRat(n, d), true
+}
+
+func (t RationalType) MustParse(s string) *big.Rat {
+	r, ok := t.Parse(s)
+	if !ok {
+		panic(ErrUnexpectedType(t, s))
+	}
+	return r
+}
+
+func (t RationalType) Is(s string) bool {
+	_, ok := t.Parse(s)
+	return ok
+}
+
+func (t RationalType) Format(v *big.Rat) string {
+	n := v.Num().Int64()
+	d := v.Denom().Int64()
+
+	if n > d {
+		w := n / d
+		n := n % d
+		return fmt.Sprintf("%v %v/%v", w, n, d)
+	}
+	return v.RatString()
 }
 
 // ===
