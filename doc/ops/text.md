@@ -6,8 +6,8 @@ Text operations
 
 | Operation        | Alias     | Description
 |------------------|-----------|----------------
-| [char-codepoint] | `char-cp` | Convert character to code point
-| [codepoint-char] | `cp-char` | Convert code point to character
+| [char-codepoint](#char-codepoint) | `char-cp` | Convert character to code point
+| [codepoint-char](#codepoint-char) | `cp-char` | Convert code point to character
 | [is](#is)        |           | True if strings are equal
 | [join](#join)    |           | Join stack elements into a single string
 | [left](#left)    |           | Substring from the left
