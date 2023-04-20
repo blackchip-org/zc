@@ -9,6 +9,7 @@ Random number generation
 | [choice](#choice)       | Randomly select an item on the stack
 | [rand](#rand)           | Random float between 0 and 1
 | [rand-int](#rand-int)   | Random integer between 1 and n
+| [roll](#roll)           | Dice roller
 | [seed](#seed)           | Random number seed, set
 | [seed=](#seed=)         | Random number seed, get
 | [shuffle](#shuffle)     | Shuffle the stack
@@ -62,6 +63,23 @@ Example:
 | `0 seed`      | *seed set to 0*
 | `10 rand-int` | `5`
 
+## roll
+
+Rolls dice as specified by `dice` in standard dice notation. The argument
+`dice` may start with the number of dice to roll, followed by the literal
+character `d`, and then the number of faces found on each die. For example,
+use `3d6` to roll three six sided dice.
+
+    ( dice:Str -- rolls...:Int )
+
+
+<!-- test: roll -->
+
+| Input           | Stack
+|-----------------|-------------|
+| `99 seed`       | *seed set to 99*
+| `3d6 roll`      | `6 \| 2 \| 1`
+| `sum`           | `9`
 
 ## seed
 

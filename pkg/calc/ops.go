@@ -159,6 +159,7 @@ var opsList = []zc.OpDecl{
 	zc.Op("reverse", ops.Reverse),
 	zc.Op("rgb-cmyk", ops.RBGToCMYK, zc.Uint8, zc.Uint8, zc.Uint8),
 	zc.Op("rgb-hsl", ops.RGBToHSL, zc.Uint8, zc.Uint8, zc.Uint8),
+	zc.Op("roll", ops.Roll, zc.String),
 	zc.Op("rsh", ops.Rsh, zc.BigInt, zc.Uint),
 	zc.Macro("s", "sub"),
 	zc.Op("seed", ops.Seed, zc.Int),

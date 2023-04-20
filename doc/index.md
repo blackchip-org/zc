@@ -100,7 +100,7 @@
 ## r
 
 - [rand](ops/rand.md#rand): Random float between 0 and 1
-- [rand-int](ops/rand.md#int): Random integer between 1 and n
+- [rand-int](ops/rand.md#rand-int): Random integer between 1 and n
 - [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder
 - [repeat](ops/hof.md#repeat): Repeat the execution of a function

@@ -3,8 +3,10 @@ package ops
 import (
 	"math/rand"
 	"time"
+	"unicode"
 
 	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/pkg/scanner"
 )
 
 type randState struct {
@@ -47,6 +49,35 @@ func RandInt(c zc.Calc) {
 	}
 	r0 := s.rand.Intn(max) + 1
 	zc.PushInt(c, r0)
+}
+
+func Roll(c zc.Calc) {
+	state := getRandState(c)
+	var s scanner.Scanner
+	a0 := zc.PopString(c)
+	s.SetString(a0)
+
+	nTok := s.Scan(scanner.UInt)
+	if unicode.ToLower(s.Ch) != 'd' {
+		zc.ErrInvalidArgument(c, c.Op(), a0)
+		return
+	}
+	s.Next()
+	sidesTok := s.Scan(scanner.UInt)
+	if sidesTok == "" || !s.End() {
+		zc.ErrInvalidArgument(c, c.Op(), a0)
+		return
+	}
+	if nTok == "" {
+		nTok = "1"
+	}
+	n := zc.Int.MustParse(nTok)
+	sides := zc.Int.MustParse(sidesTok)
+
+	for i := 0; i < n; i++ {
+		r := state.rand.Intn(sides) + 1
+		zc.PushInt(c, r)
+	}
 }
 
 func Seed(c zc.Calc) {
