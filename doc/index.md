@@ -28,6 +28,8 @@
 - [c](ops/stack.md#clear): Clear
 - [ceil](ops/sci.md#ceil): Ceiling
 - [clear](ops/stack.md#clear): Clear
+- [cmyk-rgb](ops/color.md#cmyk-rgb): Convert from CMYK to RGB color space
+- [color-sample](ops/color.md#color-sample): Render a sample of a color
 
 ## d
 
@@ -59,6 +61,7 @@
 ## h
 
 - [hex](ops/prog.md#hex): Convert to hexadecimal
+- [hsl-rgb](ops/color.md#hsl-rgb): Convert form HSL to RGB color space
 
 ## l
 
@@ -100,6 +103,8 @@
 - [repeat](ops/hof.md#repeat): Repeat the execution of a function
 - [rev](ops/stack.md#reverse): Reverse items on the stack
 - [reverse](ops/stack.md#reverse): Reverse items on the stack
+- [rgb-cmyk](ops/color.md#rgb-cmyk): Convert from RGB to CMYK color space
+- [rgb-hsl](ops/color.md#rgb-hsl): Convert from RGB to HSL color space
 - [rsh](ops/prog.md#rsh): Right shift
 
 ## s

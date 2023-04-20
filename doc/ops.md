@@ -17,4 +17,4 @@
 | Category               | Examples        | Description
 |------------------------|-----------------|---------------
 | [bool](ops/bool.md)    | `and`, `gte`    | Boolean operations and comparisons
-
+| [color](ops/color.md)  | `rgb-hsl`       | Color operations and conversions

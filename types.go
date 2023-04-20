@@ -26,6 +26,7 @@ var (
 	Rational = RationalType{}
 	String   = StringType{}
 	Uint     = UintType{}
+	Uint8    = Uint8Type{}
 )
 
 func Format(a any) string {
@@ -419,6 +420,37 @@ func (t UintType) Is(s string) bool {
 }
 
 func (t UintType) Format(v uint) string {
+	return fmt.Sprintf("%v", v)
+}
+
+// ---
+
+type Uint8Type struct{}
+
+func (t Uint8Type) String() string { return "Uint8" }
+
+func (t Uint8Type) Parse(s string) (uint8, error) {
+	r, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return 0, ErrUnexpectedType(t, s)
+	}
+	return uint8(r), nil
+}
+
+func (t Uint8Type) MustParse(s string) uint8 {
+	r, err := t.Parse(s)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
+func (t Uint8Type) Is(s string) bool {
+	_, err := t.Parse(s)
+	return err == nil
+}
+
+func (t Uint8Type) Format(v uint8) string {
 	return fmt.Sprintf("%v", v)
 }
 
