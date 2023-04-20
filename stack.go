@@ -12,6 +12,7 @@ func PopComplex(c Calc) complex128      { return Complex.MustParse(c.MustPop()) 
 func PopDecimal(c Calc) decimal.Decimal { return Decimal.MustParse(c.MustPop()) }
 func PopFloat(c Calc) float64           { return Float.MustParse(c.MustPop()) }
 func PopInt(c Calc) int                 { return Int.MustParse(c.MustPop()) }
+func PopInt64(c Calc) int64             { return Int64.MustParse(c.MustPop()) }
 func PopRational(c Calc) *big.Rat       { return Rational.MustParse(c.MustPop()) }
 func PopString(c Calc) string           { return c.MustPop() }
 func PopUint(c Calc) uint               { return Uint.MustParse(c.MustPop()) }
@@ -23,6 +24,7 @@ func PushComplex(c Calc, r complex128)      { c.Push(Complex.Format(r)) }
 func PushDecimal(c Calc, r decimal.Decimal) { c.Push(Decimal.Format(r)) }
 func PushFloat(c Calc, r float64)           { c.Push(Float.Format(r)) }
 func PushInt(c Calc, r int)                 { c.Push(Int.Format(r)) }
+func PushInt64(c Calc, r int64)             { c.Push(Int64.Format(r)) }
 func PushRational(c Calc, r *big.Rat)       { c.Push(Rational.Format(r)) }
 func PushString(c Calc, r string)           { c.Push(r) }
 func PushUint(c Calc, r uint)               { c.Push(Uint.Format(r)) }

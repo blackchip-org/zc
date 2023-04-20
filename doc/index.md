@@ -27,6 +27,7 @@
 
 - [c](ops/stack.md#clear): Clear
 - [ceil](ops/sci.md#ceil): Ceiling
+- [choice](ops/rand.md#choice): Randomly select an item on the stack
 - [clear](ops/stack.md#clear): Clear
 - [cmyk-rgb](ops/color.md#cmyk-rgb): Convert from CMYK to RGB color space
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
@@ -98,6 +99,8 @@
 
 ## r
 
+- [rand](ops/rand.md#rand): Random float between 0 and 1
+- [rand-int](ops/rand.md#int): Random integer between 1 and n
 - [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder
 - [repeat](ops/hof.md#repeat): Repeat the execution of a function
@@ -110,6 +113,9 @@
 ## s
 
 - [s](ops/basic.md#sub): Subtraction
+- [seed](ops/rand.md#seed): Random number seed, set
+- [seed=](ops/rand.md#seed=): Random number seed, get
+- [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
 - [sub](ops/basic.md#sub): Subtraction
 - [sw](ops/stack.md#swap): Swap the top two items on the stack

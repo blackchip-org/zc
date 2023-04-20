@@ -1,6 +1,7 @@
 package calc
 
 import (
+	"fmt"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -12,10 +13,12 @@ type calc struct {
 	stack []string
 	err   error
 	info  string
+	state map[string]any
+	op    string
 }
 
 func New() zc.Calc {
-	return &calc{}
+	return &calc{state: make(map[string]any)}
 }
 
 func (c *calc) Stack() []string {
@@ -37,8 +40,8 @@ func (c *calc) Info() string {
 	return c.info
 }
 
-func (c *calc) SetInfo(info string) {
-	c.info = info
+func (c *calc) SetInfo(format string, args ...any) {
+	c.info = fmt.Sprintf(format, args...)
 }
 
 func (c *calc) Eval(s string) error {
@@ -102,7 +105,20 @@ func (c *calc) Error() error {
 }
 
 func (c *calc) Derive() zc.Calc {
-	return &calc{}
+	return New()
+}
+
+func (c *calc) NewState(name string, s any) {
+	c.state[name] = s
+}
+
+func (c *calc) State(name string) (any, bool) {
+	s, ok := c.state[name]
+	return s, ok
+}
+
+func (c *calc) Op() string {
+	return c.op
 }
 
 func (c *calc) parseWords(str string) []string {
@@ -156,6 +172,7 @@ func (c *calc) evalOp(name string) {
 		c.err = zc.ErrUnknownOp(name)
 		return
 	}
+	c.op = name
 	op(c)
 }
 

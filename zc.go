@@ -12,10 +12,13 @@ type Calc interface {
 	MustPop() string
 	Push(string)
 	Info() string
-	SetInfo(string)
+	SetInfo(string, ...any)
 	Error() error
 	SetError(error)
 	Derive() Calc
+	NewState(string, any)
+	State(string) (any, bool)
+	Op() string
 }
 
 type CalcFunc func(Calc)

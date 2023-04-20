@@ -14,7 +14,8 @@
 
 ## Library
 
-| Category               | Examples        | Description
-|------------------------|-----------------|---------------
-| [bool](ops/bool.md)    | `and`, `gte`    | Boolean operations and comparisons
-| [color](ops/color.md)  | `rgb-hsl`       | Color operations and conversions
+| Category               | Examples              | Description
+|------------------------|-----------------------|---------------
+| [bool](ops/bool.md)    | `and`, `gte`          | Boolean operations and comparisons
+| [color](ops/color.md)  | `rgb-hsl`             | Color operations and conversions
+| [rand](ops/rand.md)    | `rand-int`, `shuffle` | Random number generation

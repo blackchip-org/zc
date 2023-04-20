@@ -23,6 +23,7 @@ var (
 	Decimal  = DecimalType{}
 	Float    = FloatType{}
 	Int      = IntType{}
+	Int64    = Int64Type{}
 	Rational = RationalType{}
 	String   = StringType{}
 	Uint     = UintType{}
@@ -43,6 +44,8 @@ func Format(a any) string {
 		return Float.Format(t)
 	case int:
 		return Int.Format(t)
+	case int64:
+		return Int64.Format(t)
 	case *big.Rat:
 		return Rational.Format(t)
 	case string:
@@ -279,6 +282,37 @@ func (t IntType) Is(s string) bool {
 }
 
 func (t IntType) Format(v int) string {
+	return fmt.Sprintf("%v", v)
+}
+
+// ---
+
+type Int64Type struct{}
+
+func (t Int64Type) String() string { return "Int64" }
+
+func (t Int64Type) Parse(s string) (int64, error) {
+	r, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return 0, ErrUnexpectedType(t, s)
+	}
+	return int64(r), nil
+}
+
+func (t Int64Type) MustParse(s string) int64 {
+	r, err := t.Parse(s)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
+func (t Int64Type) Is(s string) bool {
+	_, err := t.Parse(s)
+	return err == nil
+}
+
+func (t Int64Type) Format(v int64) string {
 	return fmt.Sprintf("%v", v)
 }
 

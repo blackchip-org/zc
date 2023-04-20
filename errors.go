@@ -15,6 +15,10 @@ var (
 		return fmt.Errorf("duplicate operation: %v", name)
 	}
 
+	ErrInvalidArgument = func(c Calc, op string, arg any) {
+		c.SetError(fmt.Errorf("%v: invalid argument: %v", op, Format(arg)))
+	}
+
 	ErrInvalidArgumentTypes = func(name string) error {
 		return fmt.Errorf("%v: invalid argument types", name)
 	}
