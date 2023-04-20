@@ -4,13 +4,13 @@ Higher order functions
 
 <!-- index -->
 
-| Operation                   | Description
-|-----------------------------|----------------
-| [eval](#eval)               | Evaluate top of stack
-| [filter](#filter)           | Filter items in the stack
-| [fold](#fold)               | Reduce items to a single value
-| [map](#map)                 | Apply a function to each item on the stack
-| [repeat](#repeat)           | Repeat the execution of a function
+| Operation           | Alias    | Description
+|---------------------|----------|----------------
+| [eval](#eval)       |          | Evaluate top of stack
+| [filter](#filter)   |          | Filter items in the stack
+| [fold](#fold)       | `reduce` | Reduce items to a single value
+| [map](#map)         |          | Apply a function to each item on the stack
+| [repeat](#repeat)   |         | Repeat the execution of a function
 
 
 ## eval
@@ -51,6 +51,8 @@ Example which filters the stack to only keep even numbers:
 Reduce `items` to a `reduced` value using function `f`.
 
     ( items...:Val f:Lambda -- reduced:Val )
+
+Alias: `reduce`
 
 Example which sums the numbers in the stack:
 
