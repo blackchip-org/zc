@@ -25,13 +25,19 @@
 
 ## c
 
+- [c](ops/stack.md#clear): Clear
 - [ceil](ops/sci.md#ceil): Ceiling
+- [clear](ops/stack.md#clear): Clear
 
 ## d
 
 - [d](ops/basic.md#div): Division
 - [dec](ops/prog.md#dec): Convert to decimal
 - [div](ops/basic.md#div): Division
+- [dn](ops/stack.md#down): Rotate stack by moving items downward
+- [down](ops/stack.md#down): Rotate stack by moving items downward
+- [drop](ops/stack.md#drop): Drop top item
+- [dup](ops/stack.md#dup): Duplicate top item
 
 ## e
 
@@ -69,6 +75,7 @@
 
 ## n
 
+- [n](ops/stack.md#n): Number of items on the stack
 - [neg](ops/basic.md#neg): Negation
 - [neq](ops/bool.md#neq): Not Equals
 - not
@@ -88,8 +95,11 @@
 
 ## r
 
+- [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder
 - [repeat](ops/hof.md#repeat): Repeat the execution of a function
+- [rev](ops/stack.md#reverse): Reverse items on the stack
+- [reverse](ops/stack.md#reverse): Reverse items on the stack
 - [rsh](ops/prog.md#rsh): Right shift
 
 ## s
@@ -97,10 +107,18 @@
 - [s](ops/basic.md#sub): Subtraction
 - [sign](ops/basic.md#sign): Sign
 - [sub](ops/basic.md#sub): Subtraction
+- [sw](ops/stack.md#swap): Swap the top two items on the stack
+- [swap](ops/stack.md#swap): Swap the top two items on the stack
 
 ## t
 
+- [take](ops/stack.md#take): Take top items from the stack
+- [top](ops/stack.md#top): Keep the top of the stack and discard the rest
 - [true](ops/bool.md#true): True
+
+## u
+
+- [up](ops/stack.md#up): Rotate items on the stack by moving upward
 
 ## x
 

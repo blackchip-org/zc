@@ -8,6 +8,7 @@
 | [hof](ops/hof.md)      | `map`, `reduce` | Higher-order functions
 | [prog](ops/prog.md)    | `xor`, `lsh`    | Programmer's calculator
 | [sci](ops/sci.md)      | `sin`, `cos`    | Advanced math found on scientific calculators
+| [stack](ops/stack.md)  | `dup`, `clear`  | Stack manipulations
 | [stat](ops/stat.md)    | `sum`, `stddev` | Statistical operations
 
 
