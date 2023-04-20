@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 
 	"github.com/blackchip-org/zc/pkg/scanner"
 	"github.com/shopspring/decimal"
@@ -26,6 +27,7 @@ var (
 	Int64    = Int64Type{}
 	Int32    = Int32Type{}
 	Rational = RationalType{}
+	Rune     = RuneType{}
 	String   = StringType{}
 	Uint     = UintType{}
 	Uint8    = Uint8Type{}
@@ -434,6 +436,37 @@ func (t RationalType) Format(v *big.Rat) string {
 		return fmt.Sprintf("%v %v/%v", w, n, d)
 	}
 	return v.RatString()
+}
+
+// ---
+
+type RuneType struct{}
+
+func (t RuneType) String() string { return "Rune" }
+
+func (t RuneType) Parse(s string) (rune, error) {
+	if utf8.RuneCountInString(s) != 1 {
+		return 0, ErrUnexpectedType(t, s)
+	}
+	r, _ := utf8.DecodeRuneInString(s)
+	return r, nil
+}
+
+func (t RuneType) MustParse(s string) rune {
+	r, err := t.Parse(s)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
+func (t RuneType) Is(s string) bool {
+	_, err := t.Parse(s)
+	return err == nil
+}
+
+func (t RuneType) Format(v rune) string {
+	return fmt.Sprintf("%c", v)
 }
 
 // ---

@@ -11,10 +11,16 @@
 
 - [a](ops/basic.md#add): Addition
 - [abs](ops/sci.md#abs): Absolute value
+- [acos](ops/sci.md#acos): Inverse cosine
+- [acosh](ops/sci.md#acosh): Inverse hyperbolic cosine
 - [add](ops/basic.md#add): Addition
 - and
   - [(bool) and](ops/bool.md#and): Logical conjunction
   - [(prog) and](ops/prog.md#and): Bitwise and
+- [asin](ops/sci.md#asin): Inverse sine
+- [asinh](ops/sci.md#asinh): Inverse hyperbolic sine
+- [atan](ops/sci.md#atan): Inverse tangent
+- [atanh](ops/sci.md#atanh): Inverse hyperbolic tangent
 
 ## b
 
@@ -31,6 +37,8 @@
 - [clear](ops/stack.md#clear): Clear
 - [cmyk-rgb](ops/color.md#cmyk-rgb): Convert from CMYK to RGB color space
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
+- [cos](ops/sci.md#cos): Cosine
+- [cosh](ops/sci.md#cosh): Hyperbolic cosine
 
 ## d
 
@@ -44,8 +52,10 @@
 
 ## e
 
+- [e](ops/sci.md#e): Natural logarithm base
 - [eq](ops/bool.md#eq): Equals
 - [eval](ops/hof.md#eval): Evaluate top of stack
+- [exp](ops/sci.md#exp): Natural exponential
 
 ## f
 
@@ -66,6 +76,9 @@
 
 ## l
 
+- [log](ops/sci.md#log): Natural logarithm
+- [log10](ops/sci.md#log10): Decimal logarithm
+- [log2](ops/sci.md#log2): Binary logarithm
 - [lsh](ops/prog.md#lsh): Left shift
 - [lt](ops/bool.md#lt): Less than
 - [lte](ops/bool.md#lte): Less than or equals
@@ -95,6 +108,7 @@
 
 ## p
 
+- [pi](ops/sci.md#pi): Circumference to diameter ratio
 - [pow](ops/basic.md#pow): Exponentiation
 
 ## r
@@ -119,10 +133,14 @@
 ## s
 
 - [s](ops/basic.md#sub): Subtraction
+- [scientific-notation](ops/sci.md#scientific-notation): Scientific notation
 - [seed](ops/rand.md#seed): Random number seed, set
 - [seed=](ops/rand.md#seed=): Random number seed, get
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
+- [sin](ops/sci.md#sin): Sine
+- [sinh](ops/sci.md#sinh): Hyperbolic sine
+- [sn](ops/sci.md#scientific-notation): Scientific notation
 - [sub](ops/basic.md#sub): Subtraction
 - [sw](ops/stack.md#swap): Swap the top two items on the stack
 - [swap](ops/stack.md#swap): Swap the top two items on the stack
@@ -130,6 +148,8 @@
 ## t
 
 - [take](ops/stack.md#take): Take top items from the stack
+- [tan](ops/sci.md#tan): Tangent
+- [tanh](ops/sci.md#tanh): Hyperbolic tangent
 - [top](ops/stack.md#top): Keep the top of the stack and discard the rest
 - [true](ops/bool.md#true): True
 
@@ -140,3 +160,7 @@
 ## x
 
 - [xor](ops/prog.md#xor): Bitwise exclusive or
+
+## π
+
+- [π](ops/sci.md#pi): Circumference to diameter ratio
