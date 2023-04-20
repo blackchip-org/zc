@@ -99,6 +99,7 @@
 
 ## r
 
+- [r](ops/format.md#round): Round to a given precision
 - [rand](ops/rand.md#rand): Random float between 0 and 1
 - [rand-int](ops/rand.md#rand-int): Random integer between 1 and n
 - [reduce](ops/hof.md#fold): Reduce items to a single value
@@ -108,6 +109,11 @@
 - [reverse](ops/stack.md#reverse): Reverse items on the stack
 - [rgb-cmyk](ops/color.md#rgb-cmyk): Convert from RGB to CMYK color space
 - [rgb-hsl](ops/color.md#rgb-hsl): Convert from RGB to HSL color space
+- [roll](ops/rand.md#roll): Dice roller
+- [rot-13](ops/crypto.md#rot-13): Rotate characters by 13
+- [round](ops/format.md#round): Round to a given precision
+- [rounding-mode](ops/format.md#rounding-mode): Method to use in rounding, set
+- [rounding-mode=](ops/format.md#rounding-mode=): Method to use in rounding, get
 - [rsh](ops/prog.md#rsh): Right shift
 
 ## s

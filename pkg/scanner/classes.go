@@ -22,6 +22,12 @@ func RuneRange(from rune, to rune) RuneClass {
 	}
 }
 
+func Not(class RuneClass) RuneClass {
+	return func(r0 rune) bool {
+		return !class(r0)
+	}
+}
+
 func Or(classes ...RuneClass) RuneClass {
 	return func(r0 rune) bool {
 		for _, class := range classes {

@@ -24,6 +24,7 @@ var (
 	Float    = FloatType{}
 	Int      = IntType{}
 	Int64    = Int64Type{}
+	Int32    = Int32Type{}
 	Rational = RationalType{}
 	String   = StringType{}
 	Uint     = UintType{}
@@ -313,6 +314,37 @@ func (t Int64Type) Is(s string) bool {
 }
 
 func (t Int64Type) Format(v int64) string {
+	return fmt.Sprintf("%v", v)
+}
+
+// ---
+
+type Int32Type struct{}
+
+func (t Int32Type) String() string { return "Int32" }
+
+func (t Int32Type) Parse(s string) (int32, error) {
+	r, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return 0, ErrUnexpectedType(t, s)
+	}
+	return int32(r), nil
+}
+
+func (t Int32Type) MustParse(s string) int32 {
+	r, err := t.Parse(s)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
+func (t Int32Type) Is(s string) bool {
+	_, err := t.Parse(s)
+	return err == nil
+}
+
+func (t Int32Type) Format(v int32) string {
 	return fmt.Sprintf("%v", v)
 }
 

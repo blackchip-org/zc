@@ -57,6 +57,7 @@ func (s *Scanner) SetName(name string) {
 func (s *Scanner) init() {
 	s.Error = nil
 	s.Ch, s.Lookahead = 0, 0
+	s.Text.Reset()
 	s.Next()
 	s.Next()
 	s.ChPos.Line = 1

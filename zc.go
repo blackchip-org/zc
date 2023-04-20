@@ -1,5 +1,11 @@
 package zc
 
+import (
+	"unicode"
+
+	"github.com/blackchip-org/zc/pkg/scanner"
+)
+
 const ProgName = "zc"
 
 type Calc interface {
@@ -101,3 +107,44 @@ func isOpMatch(c Calc, decl FuncDecl) bool {
 }
 
 func NoOp(c Calc) {}
+
+func IsValuePrefix(ch rune, next rune) bool {
+	switch {
+	case unicode.IsDigit(ch), unicode.Is(unicode.Sc, ch):
+		return true
+	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
+		return true
+	}
+	return false
+}
+
+func Quote(v string) string {
+	var s scanner.Scanner
+	s.SetString(v)
+
+	needsQuotes := false
+	if !IsValuePrefix(s.Ch, s.Lookahead) {
+		needsQuotes = true
+	} else {
+		s.ScanUntil(unicode.IsSpace)
+		if !s.End() {
+			needsQuotes = true
+		}
+	}
+
+	if !needsQuotes {
+		return v
+	}
+
+	s.SetString(v)
+	s.Text.WriteRune('\'')
+	for s.Ok() {
+		if s.Ch == '\'' {
+			s.Text.WriteString("\\'")
+		} else {
+			s.Keep()
+		}
+	}
+	s.Text.WriteRune('\'')
+	return s.Token()
+}
