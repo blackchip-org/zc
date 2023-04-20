@@ -31,6 +31,14 @@ var (
 		c.SetError(fmt.Errorf("%v: no operation for %v", op, strings.Join(typeNames, ", ")))
 	}
 
+	ErrNoReduce = func(c Calc, name string) {
+		c.SetError(fmt.Errorf("%v: function does not reduce", name))
+	}
+
+	ErrNoResults = func(c Calc, name string) {
+		c.SetError(fmt.Errorf("%v: no results from function", name))
+	}
+
 	ErrNotEnoughArguments = func(c Calc, op string, expected int) {
 		c.SetError(fmt.Errorf("%v: not enough arguments, expected %v", op, expected))
 	}

@@ -94,13 +94,13 @@ func main() {
 		entries := EntryMap[key]
 		if len(entries) == 1 {
 			entry := entries[0]
-			fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+			fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[10:], entry.Anchor, entry.Description)
 		} else {
 			mainMod, ok := IndexMainMap[key]
 			if ok {
 				for _, entry := range entries {
 					if entry.Module == mainMod {
-						fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+						fmt.Fprintf(out, "- [%v](%v%v): %v\n", entry.Func, entry.File[10:], entry.Anchor, entry.Description)
 					}
 				}
 			} else {
@@ -108,7 +108,7 @@ func main() {
 			}
 			for _, entry := range entries {
 				if entry.Module != mainMod {
-					fmt.Fprintf(out, "  - [(%v) %v](%v%v): %v\n", entry.Module, entry.Func, entry.File[4:], entry.Anchor, entry.Description)
+					fmt.Fprintf(out, "  - [(%v) %v](%v%v): %v\n", entry.Module, entry.Func, entry.File[10:], entry.Anchor, entry.Description)
 				}
 			}
 		}

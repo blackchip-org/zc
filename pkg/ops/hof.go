@@ -1,12 +1,35 @@
 package ops
 
-import (
-	"fmt"
+import "github.com/blackchip-org/zc"
 
-	"github.com/blackchip-org/zc"
-)
+func Eval(c zc.Calc) {
+	fn := zc.PopString(c)
+	c.Eval(fn)
+}
 
-var ErrNoReduce = func(name string) error { return fmt.Errorf("%v: function does not reduce", name) }
+func Filter(c zc.Calc) {
+	var rs []string
+	fn := zc.PopString(c)
+	for _, v := range c.Stack() {
+		dc := c.Derive()
+		dc.Push(v)
+		dc.Eval(fn)
+		out, ok := dc.Pop()
+		if !ok {
+			zc.ErrNoResults(c, fn)
+			return
+		}
+		r, err := zc.Bool.Parse(out)
+		if err != nil {
+			c.SetError(err)
+			return
+		}
+		if r {
+			rs = append(rs, v)
+		}
+	}
+	c.SetStack(rs)
+}
 
 func Fold(c zc.Calc) {
 	fn := zc.PopString(c)
@@ -17,7 +40,7 @@ func Fold(c zc.Calc) {
 			return
 		}
 		if c.StackLen() >= before {
-			c.SetError(ErrNoReduce(fn))
+			zc.ErrNoReduce(c, fn)
 			return
 		}
 	}
@@ -38,4 +61,14 @@ func Map(c zc.Calc) {
 		}
 	}
 	c.SetStack(rs)
+}
+
+const Reduce = "fold"
+
+func Repeat(c zc.Calc) {
+	n := zc.PopInt(c)
+	fn := zc.PopString(c)
+	for i := 0; i < n; i++ {
+		c.Eval(fn)
+	}
 }

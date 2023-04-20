@@ -5,9 +5,10 @@
 | Category               | Examples        | Description
 |------------------------|-----------------|---------------
 | [basic](ops/basic.md)  | `add`, `sub`    | Basic operations found on most calculators
+| [hof](ops/hof.md)      | `map`, `reduce` | Higher-order functions
+| [prog](ops/prog.md)    | `xor`, `lsh`    | Programmer's calculator
 | [sci](ops/sci.md)      | `sin`, `cos`    | Advanced math found on scientific calculators
 | [stat](ops/stat.md)    | `sum`, `stddev` | Statistical operations
-| [prog](ops/prog.md)    | `xor`, `lsh`    | Programmer's calculator
 
 
 ## Library
