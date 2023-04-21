@@ -25,6 +25,7 @@ type Calc interface {
 	NewState(string, any)
 	State(string) (any, bool)
 	Op() string
+	Ops() []string
 }
 
 type CalcFunc func(Calc)

@@ -125,6 +125,14 @@ func (c *calc) Op() string {
 	return c.op
 }
 
+func (c *calc) Ops() []string {
+	var os []string
+	for name := range opsTable {
+		os = append(os, name)
+	}
+	return os
+}
+
 func (c *calc) parseWords(str string) []string {
 	var words []string
 	var word strings.Builder

@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"sort"
 	"strings"
 
 	"github.com/blackchip-org/zc"
@@ -24,10 +25,11 @@ type REPL struct {
 	historyFile string
 	undoStack   [][]string
 	redoStack   [][]string
+	ops         []string
 }
 
 func New(calc zc.Calc) *REPL {
-	return &REPL{calc: calc}
+	return &REPL{calc: calc, ops: calc.Ops()}
 }
 
 func (r *REPL) Init() {
@@ -45,7 +47,7 @@ func (r *REPL) Init() {
 	r.cli = liner.NewLiner()
 	r.cli.SetCtrlCAborts(true)
 	r.cli.SetTabCompletionStyle(liner.TabPrints)
-	// r.cli.SetWordCompleter(r.calc.WordCompleter)
+	r.cli.SetWordCompleter(r.wordCompleter)
 
 	r.loadHistory()
 
@@ -189,6 +191,38 @@ func (r *REPL) saveHistory() {
 
 func (r *REPL) getPrompt() string {
 	return zc.ProgName + "> "
+}
+
+func (r *REPL) wordCompleter(line string, pos int) (string, []string, string) {
+	endPos := pos
+	for ; endPos < len(line); endPos++ {
+		if line[endPos] == ' ' {
+			break
+		}
+	}
+	startPos := pos
+	if startPos >= len(line) && len(line) > 0 {
+		startPos = len(line) - 1
+	}
+	for ; startPos > 0; startPos-- {
+		if line[startPos] == ' ' {
+			startPos++
+			break
+		}
+	}
+	prefix := line[:startPos]
+	word := line[startPos:endPos]
+	suffix := line[endPos:]
+
+	var candidates []string
+	for _, name := range r.ops {
+		if strings.HasPrefix(name, word) {
+			candidates = append(candidates, name)
+		}
+	}
+	sort.Strings(candidates)
+	//fmt.Printf("\n[%v] (%v)[%v] [%v]\n", prefix, word, candidates, suffix)
+	return prefix, candidates, suffix
 }
 
 func colorize(color string, text string) string {
