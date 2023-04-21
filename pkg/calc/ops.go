@@ -1,6 +1,8 @@
 package calc
 
 import (
+	"fmt"
+
 	"github.com/blackchip-org/zc/pkg/ops"
 	"github.com/blackchip-org/zc/pkg/zc"
 )
@@ -254,7 +256,7 @@ var opsList = []zc.OpDecl{
 	zc.Macro("r", "round"),
 	zc.Op("rand", ops.Rand),
 	zc.Op("rand-int", ops.RandInt, zc.Int),
-	zc.Macro("reduce", ops.Reduce),
+	zc.Macro("reduce", "fold"),
 	zc.GenOp("rem",
 		zc.Func(ops.RemBigInt, zc.BigInt, zc.BigInt),
 		zc.Func(ops.RemFloat, zc.Float, zc.Float),
@@ -345,7 +347,7 @@ func init() {
 	for _, v := range opsList {
 		k := v.Name
 		if _, exists := opsTable[k]; exists {
-			panic(zc.ErrDuplicateOp(k))
+			panic(fmt.Sprintf("duplication operation: %v", k))
 		}
 		opsTable[k] = zc.EvalOp(v)
 	}

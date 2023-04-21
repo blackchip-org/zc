@@ -27,11 +27,11 @@ func (t DateType) String() string { return "Date" }
 func (t DateType) Parse(s string) (time.Time, error) {
 	parsed, err := pt.ParseDate(s)
 	if err != nil {
-		return time.Time{}, ErrUnexpectedType(t, s)
+		return time.Time{}, ErrExpectedType(t, s)
 	}
 	tm, err := pt.Time(parsed, Now())
 	if err != nil {
-		return time.Time{}, ErrUnexpectedType(t, s)
+		return time.Time{}, ErrExpectedType(t, s)
 	}
 	return tm, nil
 }
@@ -65,11 +65,11 @@ func (t DateTimeType) String() string { return "DateTime" }
 func (t DateTimeType) Parse(s string) (time.Time, error) {
 	parsed, err := pt.Parse(s)
 	if err != nil {
-		return time.Time{}, ErrUnexpectedType(t, s)
+		return time.Time{}, ErrExpectedType(t, s)
 	}
 	tm, err := pt.Time(parsed, Now())
 	if err != nil {
-		return time.Time{}, ErrUnexpectedType(t, s)
+		return time.Time{}, ErrExpectedType(t, s)
 	}
 	return tm, nil
 }
@@ -103,7 +103,7 @@ func (t DurationType) String() string { return "Duration" }
 func (t DurationType) Parse(s string) (time.Duration, error) {
 	d, err := time.ParseDuration(s)
 	if err != nil {
-		return time.Duration(0), ErrUnexpectedType(t, s)
+		return time.Duration(0), ErrExpectedType(t, s)
 	}
 	return d, nil
 
@@ -149,11 +149,11 @@ func (t TimeType) String() string { return "Time" }
 func (t TimeType) Parse(s string) (time.Time, error) {
 	parsed, err := pt.ParseTime(s)
 	if err != nil {
-		return time.Time{}, ErrUnexpectedType(t, s)
+		return time.Time{}, ErrExpectedType(t, s)
 	}
 	tm, err := pt.Time(parsed, Now())
 	if err != nil {
-		return time.Time{}, ErrUnexpectedType(t, s)
+		return time.Time{}, ErrExpectedType(t, s)
 	}
 	return tm, nil
 }

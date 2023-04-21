@@ -85,12 +85,12 @@ func EvalOp(op OpDecl) CalcFunc {
 		for i := 0; i < nArgs; i++ {
 			v, ok := c.Peek(i)
 			if !ok {
-				ErrNotEnoughArguments(c, op.Name, nArgs)
+				ErrNotEnoughArgs(c, op.Name, nArgs)
 				return
 			}
 			types = append(types, Identify(v))
 		}
-		ErrNoOpForTypes(c, op.Name, types...)
+		ErrNoOpFor(c, op.Name, types...)
 	}
 }
 

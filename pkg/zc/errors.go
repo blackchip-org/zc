@@ -1,59 +1,42 @@
 package zc
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 )
 
-var (
-	ErrDivisionByZero = func(c Calc, a0 any, a1 any) {
-		c.SetError(fmt.Errorf("division by zero: %v %v", Format(a0), Format(a1)))
-	}
+func ErrDivisionByZero(c Calc, a0 any, a1 any) {
+	c.SetError(fmt.Errorf("division by zero: %v %v", Format(a0), Format(a1)))
+}
 
-	ErrDuplicateOp = func(name string) error {
-		return fmt.Errorf("duplicate operation: %v", name)
-	}
+func ErrExpectedType(t Type, val string) error {
+	return fmt.Errorf("expected %v for %v", t, Quote(val))
+}
 
-	ErrInvalidArgument = func(c Calc, op string, arg any) {
-		c.SetError(fmt.Errorf("%v: invalid argument: %v", op, Format(arg)))
-	}
+func ErrInvalidArg(c Calc, arg any) {
+	c.SetError(fmt.Errorf("[%v] invalid argument: %v", c.Op(), Format(arg)))
+}
 
-	ErrInvalidArgumentTypes = func(name string) error {
-		return fmt.Errorf("%v: invalid argument types", name)
-	}
+func ErrInvalidFunc(c Calc, fn string, reason string) {
+	c.SetError(fmt.Errorf("[%v] invalid function: %v", fn, reason))
+}
 
-	ErrModuloByZero = func(c Calc, a0 any, a1 any) {
-		c.SetError(fmt.Errorf("modulo by zero: %v %v", Format(a0), Format(a1)))
-	}
+func ErrModuloByZero(c Calc, a0 any, a1 any) {
+	c.SetError(fmt.Errorf("modulo by zero: %v %v", Format(a0), Format(a1)))
+}
 
-	ErrNoOpForTypes = func(c Calc, op string, types ...Type) {
-		var typeNames []string
-		for _, t := range types {
-			typeNames = append(typeNames, t.String())
-		}
-		c.SetError(fmt.Errorf("%v: no operation for %v", op, strings.Join(typeNames, ", ")))
+func ErrNoOpFor(c Calc, op string, types ...Type) {
+	var typeNames []string
+	for _, t := range types {
+		typeNames = append(typeNames, t.String())
 	}
+	c.SetError(fmt.Errorf("[%v] no operation for %v", op, strings.Join(typeNames, ", ")))
+}
 
-	ErrNoReduce = func(c Calc, name string) {
-		c.SetError(fmt.Errorf("%v: function does not reduce", name))
-	}
+func ErrNotEnoughArgs(c Calc, op string, expected int) {
+	c.SetError(fmt.Errorf("[%v] not enough arguments, expected %v", op, expected))
+}
 
-	ErrNoResults = func(c Calc, name string) {
-		c.SetError(fmt.Errorf("%v: no results from function", name))
-	}
-
-	ErrNotEnoughArguments = func(c Calc, op string, expected int) {
-		c.SetError(fmt.Errorf("%v: not enough arguments, expected %v", op, expected))
-	}
-
-	ErrStackEmpty = errors.New("stack empty")
-
-	ErrUnexpectedType = func(t Type, val string) error {
-		return fmt.Errorf("expected %v: %v", t, val)
-	}
-
-	ErrUnknownOp = func(name string) error {
-		return fmt.Errorf("unknown operation: %v", name)
-	}
-)
+func ErrUnknownOp(name string) error {
+	return fmt.Errorf("unknown operation: %v", name)
+}

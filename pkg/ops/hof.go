@@ -16,7 +16,7 @@ func Filter(c zc.Calc) {
 		dc.Eval(fn)
 		out, ok := dc.Pop()
 		if !ok {
-			zc.ErrNoResults(c, fn)
+			zc.ErrInvalidFunc(c, fn, "no results")
 			return
 		}
 		r, err := zc.Bool.Parse(out)
@@ -40,7 +40,7 @@ func Fold(c zc.Calc) {
 			return
 		}
 		if c.StackLen() >= before {
-			zc.ErrNoReduce(c, fn)
+			zc.ErrInvalidFunc(c, fn, "does not reduce")
 			return
 		}
 	}
@@ -62,8 +62,6 @@ func Map(c zc.Calc) {
 	}
 	c.SetStack(rs)
 }
-
-const Reduce = "fold"
 
 func Repeat(c zc.Calc) {
 	n := zc.PopInt(c)

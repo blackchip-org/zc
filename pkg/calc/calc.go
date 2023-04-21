@@ -89,7 +89,7 @@ func (c *calc) Pop() (string, bool) {
 func (c *calc) MustPop() string {
 	item, ok := c.Pop()
 	if !ok {
-		panic(zc.ErrStackEmpty)
+		panic("stack empty")
 	}
 	return item
 }

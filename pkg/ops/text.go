@@ -39,7 +39,7 @@ func Left(c zc.Calc) {
 	s := zc.PopString(c)
 
 	if i > len(s) || i < -len(s) {
-		zc.ErrInvalidArgument(c, c.Op(), i)
+		zc.ErrInvalidArg(c, i)
 		return
 	}
 
@@ -72,7 +72,7 @@ func Right(c zc.Calc) {
 	s := zc.PopString(c)
 
 	if i > len(s) || i < -len(s) {
-		zc.ErrInvalidArgument(c, c.Op(), i)
+		zc.ErrInvalidArg(c, i)
 		return
 	}
 

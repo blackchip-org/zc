@@ -67,8 +67,12 @@ func doTest(t *testing.T, input string, want []string) {
 	c := calc.New()
 	err := c.Eval(input)
 	if err != nil {
-		if len(want) == 0 || err.Error() != want[0] {
-			t.Fatalf("unexpected error: %v", err)
+		errWant := ""
+		if len(want) > 0 {
+			errWant = want[0]
+		}
+		if err.Error() != errWant {
+			t.Fatalf("\n have: %v \n want: %v", err.Error(), errWant)
 		}
 	} else {
 		have := c.Stack()

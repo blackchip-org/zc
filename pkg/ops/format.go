@@ -57,7 +57,7 @@ func RoundingMode(c zc.Calc) {
 	s := getFormatState(c)
 	a0 := zc.PopString(c)
 	if _, ok := roundingModes[a0]; !ok {
-		zc.ErrInvalidArgument(c, c.Op(), a0)
+		zc.ErrInvalidArg(c, a0)
 		return
 	}
 	s.roundingMode = a0
