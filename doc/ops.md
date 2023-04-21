@@ -23,3 +23,4 @@
 | [rand](ops/rand.md)     | `rand-int`, `shuffle` | Random number generation
 | [text](ops/text.md)     | `split`, `left`       | Text operations
 | [time](ops/time.md)     | `add`, `time-zone`    | Date and time calculations
+| [unit](ops/unit.md)     | `km-mi`, `mega`       | Units of measure
