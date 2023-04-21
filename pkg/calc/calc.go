@@ -6,7 +6,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 type calc struct {

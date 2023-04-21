@@ -9,8 +9,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/pkg/ansi"
+	"github.com/blackchip-org/zc/pkg/zc"
 	"github.com/peterh/liner"
 )
 

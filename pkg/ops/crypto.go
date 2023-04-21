@@ -3,8 +3,8 @@ package ops
 import (
 	"strings"
 
-	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/pkg/scanner"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 func Rot13(c zc.Calc) {

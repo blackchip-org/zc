@@ -4,7 +4,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 func AbsFloat(c zc.Calc) {

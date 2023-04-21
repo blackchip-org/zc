@@ -5,8 +5,8 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/pkg/scanner"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 type randState struct {

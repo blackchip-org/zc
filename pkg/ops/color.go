@@ -4,8 +4,8 @@ import (
 	"image/color"
 	"math"
 
-	"github.com/blackchip-org/zc"
 	"github.com/blackchip-org/zc/pkg/ansi"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 func CMYKToRGB(calc zc.Calc) {

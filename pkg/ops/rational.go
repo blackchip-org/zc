@@ -3,7 +3,7 @@ package ops
 import (
 	"math/big"
 
-	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 var zeroRat big.Rat

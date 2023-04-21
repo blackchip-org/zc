@@ -3,7 +3,7 @@ package ops
 import (
 	"math/cmplx"
 
-	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 func AbsComplex(c zc.Calc) {

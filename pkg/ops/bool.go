@@ -1,6 +1,6 @@
 package ops
 
-import "github.com/blackchip-org/zc"
+import "github.com/blackchip-org/zc/pkg/zc"
 
 const (
 	False = "[false]"

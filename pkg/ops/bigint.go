@@ -5,7 +5,7 @@ import (
 	"math"
 	"math/big"
 
-	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 var zeroBigInt big.Int

@@ -1,7 +1,7 @@
 package ops
 
 import (
-	"github.com/blackchip-org/zc"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 func AbsDecimal(c zc.Calc) {
