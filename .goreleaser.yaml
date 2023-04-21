@@ -12,6 +12,8 @@ builds:
       - darwin
     flags:
       - -tags=proj
+    ldflags:
+      - -X zc.Version={{.Version}} -X zc.BuildDate={{.Date}}
 
 archives:
   - format: tar.gz
