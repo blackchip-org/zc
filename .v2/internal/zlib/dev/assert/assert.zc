@@ -1,7 +1,0 @@
-native bigint
-native bool
-native decimal
-native float
-native int
-native int32
-native int64

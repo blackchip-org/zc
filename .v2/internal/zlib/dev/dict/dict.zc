@@ -1,8 +1,0 @@
-func get //dict /name
-    while dict; n 0 gt
-        key; /-dict
-        val; /-dict
-        if /name /key eq
-            /val
-            return
-    not-found

@@ -1,9 +1,0 @@
-import test
-
-func return-2
-    2
-    return
-    3
-
-func test-return-value
-    return-2 2 test.eq

@@ -1,4 +1,0 @@
-func bad
-	s1 0 div
-
-try bad

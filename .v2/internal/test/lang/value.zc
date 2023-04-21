@@ -1,5 +1,0 @@
-import test
-
-func test-bare-decimal-point
-    .25 .25 add
-    .5 test.eq

@@ -1,9 +1,0 @@
-if 2 mod 0 eq
-	'even'
-else
-	'odd'
-foo
-
-
-
-

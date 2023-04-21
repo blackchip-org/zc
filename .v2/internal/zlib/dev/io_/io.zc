@@ -1,4 +1,0 @@
-native print
-
-func println /a
-    '[/a]\n' print

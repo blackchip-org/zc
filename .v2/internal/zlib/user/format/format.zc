@@ -1,5 +1,0 @@
-native round
-native rounding-mode
-native rounding-mode=
-
-alias r round
