@@ -1,4 +1,4 @@
-.PHONY: all doc test
+.PHONY: all doc gen test
 
 all: doc install
 
@@ -10,3 +10,6 @@ doc:
 
 test:
 	go test $(GOFLAGS) ./...
+
+gen:
+	go generate internal/gen-tz/main.go

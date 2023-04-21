@@ -334,6 +334,12 @@ var opsList = []zc.OpDecl{
 
 var opsTable map[string]zc.CalcFunc
 
+func addMacros(table map[string]string) {
+	for k, v := range table {
+		opsTable[k] = zc.EvalOp(zc.Macro(k, v))
+	}
+}
+
 func init() {
 	opsTable = make(map[string]zc.CalcFunc)
 	for _, v := range opsList {
@@ -343,4 +349,5 @@ func init() {
 		}
 		opsTable[k] = zc.EvalOp(v)
 	}
+	addMacros(ops.TimeZones)
 }
