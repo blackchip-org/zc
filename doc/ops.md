@@ -22,3 +22,4 @@
 | [crypto](ops/crypto.md) | `md5`, `sha1`         | Cryptographic ciphers and hashes
 | [rand](ops/rand.md)     | `rand-int`, `shuffle` | Random number generation
 | [text](ops/text.md)     | `split`, `left`       | Text operations
+| [time](ops/time.md)     | `add`, `time-zone`    | Date and time calculations

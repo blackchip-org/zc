@@ -36,6 +36,7 @@ var opsList = []zc.OpDecl{
 	zc.Op("asinh", ops.AsinhFloat, zc.Float),
 	zc.Op("atan", ops.AtanFloat, zc.Float),
 	zc.Op("atanh", ops.AtanhFloat, zc.Float),
+	zc.Macro("atto", ops.Atto),
 	zc.GenOp("add",
 		zc.Func(ops.AddBigInt, zc.BigInt, zc.BigInt),
 		zc.Func(ops.AddDecimal, zc.Decimal, zc.Decimal),
@@ -58,11 +59,14 @@ var opsList = []zc.OpDecl{
 
 	// c
 	zc.Macro("c", "clear"),
+	zc.Macro("c-f", ops.CToF),
+	zc.Macro("c-k", ops.CToK),
 	zc.GenOp("ceil",
 		zc.Func(zc.NoOp, zc.BigInt),
 		zc.Func(ops.CeilDecimal, zc.Decimal),
 		zc.Func(ops.CeilFloat, zc.Float),
 	),
+	zc.Macro("centi", ops.Centi),
 	zc.Op("char-codepoint", ops.CharToCodePoint, zc.Rune),
 	zc.Macro("char-cp", "char-codepoint"),
 	zc.Op("choice", ops.Choice),
@@ -80,6 +84,8 @@ var opsList = []zc.OpDecl{
 	zc.Op("datetime", ops.DateTime, zc.DateTime),
 	zc.Op("day-year", ops.DayYear, zc.DateTime),
 	zc.Op("dec", ops.Dec, zc.BigInt),
+	zc.Macro("deca", ops.Deca),
+	zc.Macro("deci", ops.Deci),
 	zc.GenOp("div",
 		zc.Func(ops.DivDecimal, zc.Decimal),
 		zc.Func(ops.DivFloat, zc.Float, zc.Float),
@@ -102,10 +108,13 @@ var opsList = []zc.OpDecl{
 		zc.Func(ops.Is, zc.String, zc.String),
 	),
 	zc.Op("eval", ops.Eval, zc.String),
+	zc.Macro("exa", ops.Exa),
 	zc.Op("exp", ops.ExpFloat, zc.Float),
 
 	// f
+	zc.Macro("f-c", ops.FToC),
 	zc.Macro("false", ops.False),
+	zc.Macro("femto", ops.Femto),
 	zc.Op("filter", ops.Filter, zc.String),
 	zc.GenOp("floor",
 		zc.Func(zc.NoOp, zc.BigInt),
@@ -114,14 +123,8 @@ var opsList = []zc.OpDecl{
 	),
 	zc.Op("fold", ops.Fold),
 
-	// h
-	zc.Op("hours", ops.Hours, zc.Duration),
-
-	// l
-	zc.Op("local-zone", ops.LocalZone, zc.String),
-	zc.Op("local-zone=", ops.LocalZoneGet),
-
 	// g
+	zc.Macro("giga", ops.Giga),
 	zc.GenOp("gt",
 		zc.Func(ops.GtBigInt, zc.BigInt, zc.BigInt),
 		zc.Func(ops.GtDecimal, zc.Decimal, zc.Decimal),
@@ -136,7 +139,9 @@ var opsList = []zc.OpDecl{
 	),
 
 	// h
+	zc.Macro("hecto", ops.Hecto),
 	zc.Op("hex", ops.HexBigInt, zc.BigInt),
+	zc.Op("hours", ops.Hours, zc.Duration),
 	zc.Op("hsl-rgb", ops.HSLtoRGB, zc.Float, zc.Float, zc.Float),
 
 	// i
@@ -145,9 +150,17 @@ var opsList = []zc.OpDecl{
 	// j
 	zc.Op("join", ops.Join, zc.String),
 
+	// k
+	zc.Macro("k-c", ops.KToC),
+	zc.Macro("kilo", ops.Kilo),
+	zc.Macro("km-mi", ops.KmToMi),
+	zc.Macro("km-nmi", ops.KmToNmi),
+
 	// l
 	zc.Op("left", ops.Left, zc.String, zc.Int),
 	zc.Op("len", ops.Len, zc.String),
+	zc.Op("local-zone", ops.LocalZone, zc.String),
+	zc.Op("local-zone=", ops.LocalZoneGet),
 	zc.Op("log", ops.LogFloat, zc.Float),
 	zc.Op("log10", ops.Log10Float, zc.Float),
 	zc.Op("log2", ops.Log2Float, zc.Float),
@@ -168,7 +181,13 @@ var opsList = []zc.OpDecl{
 
 	// m
 	zc.Macro("m", "mul"),
+	zc.Macro("m-nmi", ops.MToNmi),
 	zc.Op("map", ops.Map, zc.String),
+	zc.Macro("mega", ops.Mega),
+	zc.Macro("mi-km", ops.MiToKm),
+	zc.Macro("mi-nmi", ops.MiToNmi),
+	zc.Macro("micro", ops.Micro),
+	zc.Macro("milli", ops.Milli),
 	zc.Op("minutes", ops.Minutes, zc.Duration),
 	zc.GenOp("mod",
 		zc.Func(ops.ModBigInt, zc.BigInt, zc.BigInt),
@@ -185,6 +204,7 @@ var opsList = []zc.OpDecl{
 
 	// n
 	zc.Op("n", ops.N, zc.String),
+	zc.Macro("nano", ops.Nano),
 	zc.GenOp("neg",
 		zc.Func(ops.NegBigInt, zc.BigInt),
 		zc.Func(ops.NegDecimal, zc.Decimal),
@@ -198,6 +218,9 @@ var opsList = []zc.OpDecl{
 		zc.Func(ops.NeqRational, zc.Rational, zc.Rational),
 		zc.Func(ops.NeqComplex, zc.Complex, zc.Complex),
 	),
+	zc.Macro("nmi-km", ops.NmiToKm),
+	zc.Macro("nmi-m", ops.NmiToM),
+	zc.Macro("nmi-mi", ops.NmiToMi),
 	zc.GenOp("not",
 		zc.Func(ops.NotBool, zc.Bool),
 		zc.Func(ops.NotBigInt, zc.BigInt),
@@ -214,12 +237,18 @@ var opsList = []zc.OpDecl{
 	),
 
 	// p
+	zc.Macro("peta", ops.Peta),
 	zc.Macro("pi", ops.Pi),
+	zc.Macro("pico", ops.Pico),
 	zc.GenOp("pow",
 		zc.Func(ops.PowBigInt, zc.BigInt, zc.BigInt),
 		zc.Func(ops.PowFloat, zc.Float, zc.Float),
 		zc.Func(ops.PowComplex, zc.Complex, zc.Complex),
 	),
+
+	// q
+	zc.Macro("quetta", ops.Quetta),
+	zc.Macro("quecto", ops.Quecto),
 
 	// r
 	zc.Macro("r", "round"),
@@ -236,6 +265,8 @@ var opsList = []zc.OpDecl{
 	zc.Op("rgb-hsl", ops.RGBToHSL, zc.Uint8, zc.Uint8, zc.Uint8),
 	zc.Op("right", ops.Right, zc.String, zc.Int),
 	zc.Op("roll", ops.Roll, zc.String),
+	zc.Macro("ronna", ops.Ronna),
+	zc.Macro("ronto", ops.Ronto),
 	zc.Op("rot-13", ops.Rot13, zc.String),
 	zc.Op("round", ops.Round, zc.Decimal, zc.Int),
 	zc.Op("rounding-mode", ops.RoundingMode, zc.String),
@@ -274,6 +305,7 @@ var opsList = []zc.OpDecl{
 	zc.Op("take", ops.Take, zc.Int),
 	zc.Op("tan", ops.TanFloat, zc.Float),
 	zc.Op("tanh", ops.TanhFloat, zc.Float),
+	zc.Macro("tera", ops.Tera),
 	zc.Op("time", ops.Time, zc.DateTime),
 	zc.Op("time-zone", ops.TimeZone, zc.DateTime, zc.String),
 	zc.Macro("top", ops.Top),
@@ -290,6 +322,14 @@ var opsList = []zc.OpDecl{
 
 	// x
 	zc.Op("xor", ops.Xor, zc.BigInt, zc.BigInt),
+
+	// y
+	zc.Macro("yotta", ops.Yotta),
+	zc.Macro("yocto", ops.Yocto),
+
+	// z
+	zc.Macro("zepto", ops.Zepto),
+	zc.Macro("zetta", ops.Zetta),
 }
 
 var opsTable map[string]zc.CalcFunc
