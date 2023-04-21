@@ -1,4 +1,4 @@
-.PHONY: all doc gen test
+.PHONY: all clean doc gen test
 
 all: doc install
 
@@ -11,5 +11,11 @@ doc:
 test:
 	go test $(GOFLAGS) ./...
 
+test-release: clean
+	goreleaser release --skip-publish
+
 gen:
 	go generate internal/gen-tz/main.go
+
+clean:
+	rm -rf dist

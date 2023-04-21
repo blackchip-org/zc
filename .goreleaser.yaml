@@ -13,7 +13,7 @@ builds:
     flags:
       - -tags=proj
     ldflags:
-      - -X zc.Version={{.Version}} -X zc.BuildDate={{.Date}}
+      - -X pkg/zc.Version={{.Version}} -X pkg/zc.BuildDate={{.Date}}
 
 archives:
   - format: tar.gz
