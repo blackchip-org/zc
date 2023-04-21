@@ -31,8 +31,6 @@ nonetheless. Also, it will always be a bit rough--full of bugs and
 inconsistencies. Features get added as I need or think of them. Bugs get fixed
 or ignored as I see them. There is no grand plan beyond tinkering around for
 entertainment. Things may change in backwards incompatible ways with no notice.
-If you find this useful and would like to contribute, send an email to
-zc@blackchip.org or submit a pull request.
 
 ## Installation
 
