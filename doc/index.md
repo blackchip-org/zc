@@ -52,6 +52,7 @@
 - [cmyk-rgb](ops/color.md#cmyk-rgb): Convert from CMYK to RGB color space
 - [codepoint-char](ops/text.md#codepoint-char): Convert code point to character
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
+- [complex](ops/sci.md#complex): Complex number
 - [cos](ops/sci.md#cos): Cosine
 - [cosh](ops/sci.md#cosh): Hyperbolic cosine
 - [cp-char](ops/text.md#codepoint-char): Convert code point to character
@@ -217,6 +218,7 @@
 - [sinh](ops/sci.md#sinh): Hyperbolic sine
 - [sn](ops/sci.md#scientific-notation): Scientific notation
 - [split](ops/text.md#split): Splits a string by a separator
+- [sqrt](ops/basic.md#sqrt): Square root
 - sub
   - [(basic) sub](ops/basic.md#sub): Subtraction
   - [(time) sub](ops/time.md#sub): Duration between two times
