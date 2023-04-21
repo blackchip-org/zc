@@ -1,7 +1,6 @@
 package zc
 
 var (
-	Version   = "dev"
-	Commit    = "none"
-	BuildDate = "unknown"
+	Version   = "v3.0.0"
+	BuildDate = "21 Apr 2023"
 )

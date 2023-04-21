@@ -7,6 +7,6 @@ import (
 )
 
 func Version(c zc.Calc) {
-	r0 := fmt.Sprintf("%v: %v %v %v", zc.ProgName, zc.Version, zc.BuildDate, zc.Commit)
+	r0 := fmt.Sprintf("%v: %v (%v)", zc.ProgName, zc.Version, zc.BuildDate)
 	zc.PushString(c, r0)
 }
