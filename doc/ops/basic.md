@@ -14,6 +14,7 @@ Basic mathematical operations.
 | [pow](#pow)             | `**`, `^` | Exponentiation
 | [rem](#rem)             |           | Remainder
 | [sign](#sign)           |           | Sign
+| [sqrt](#sqrt)           |           | Square root
 | [sub](#sub)             | `s`, `-`  | Subtraction
 
 
@@ -184,6 +185,21 @@ Example:
 | `6 sign`  | `1`
 | `clear`   |
 | `0 sign`  | `0`
+
+## sqrt
+
+The square root of `a0`. Returns a Float if `a0` is equal to or greater than
+zero, otherwise returns a Complex.
+
+    ( a0:Float -- r0:Float ); or
+    ( a0:Float -- r0:Complex)
+
+<!-- test: sqrt -->
+
+| Input     | Stack
+|-----------|-------------|
+| `256`     | `256`
+| `sqrt`    | `16`
 
 ## sub
 

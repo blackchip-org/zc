@@ -19,6 +19,13 @@ func AddComplex(c zc.Calc) {
 	zc.PushComplex(c, r0)
 }
 
+func Complex(c zc.Calc) {
+	i := zc.PopFloat(c)
+	r := zc.PopFloat(c)
+	r0 := complex(r, i)
+	zc.PushComplex(c, r0)
+}
+
 func DivComplex(c zc.Calc) {
 	a1 := zc.PopComplex(c)
 	a0 := zc.PopComplex(c)

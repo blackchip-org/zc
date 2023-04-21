@@ -2,6 +2,7 @@ package ops
 
 import (
 	"math"
+	"math/cmplx"
 	"strconv"
 
 	"github.com/blackchip-org/zc/pkg/zc"
@@ -233,6 +234,17 @@ func SinhFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 	r0 := math.Sinh(a0)
 	zc.PushFloat(c, r0)
+}
+
+func SqrtFloat(c zc.Calc) {
+	a0 := zc.PopFloat(c)
+	if a0 < 0 {
+		r0 := cmplx.Sqrt(complex(a0, 0))
+		zc.PushComplex(c, r0)
+	} else {
+		r0 := math.Sqrt(a0)
+		zc.PushFloat(c, r0)
+	}
 }
 
 func SubFloat(c zc.Calc) {

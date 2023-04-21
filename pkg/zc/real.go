@@ -81,7 +81,7 @@ func (t FloatType) Is(s string) bool {
 }
 
 func (t FloatType) Format(v float64) string {
-	return strconv.FormatFloat(v, 'g', 16, 64)
+	return fmt.Sprintf("%v", v)
 }
 
 // ---

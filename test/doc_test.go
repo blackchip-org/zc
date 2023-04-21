@@ -20,7 +20,7 @@ var (
 
 func TestDoc(t *testing.T) {
 	files := []string{
-		//"../README.md",
+		"../README.md",
 	}
 	dirs := []string{
 		"../doc/ops",

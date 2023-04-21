@@ -14,6 +14,7 @@ Advanced math operations found on scientific calculators.
 | [atan](#atan)           |           | Inverse tangent
 | [atanh](#atanh)         |           | Inverse hyperbolic tangent
 | [ceil](#ceil)           |           | Ceiling
+| [complex](#complex)     |           | Complex number
 | [cos](#cos)             |           | Cosine
 | [cosh](#cosh)           |           | Hyperbolic cosine
 | [e](#e)                 |           | Natural logarithm base
@@ -73,7 +74,7 @@ Example:
 
 | Input           | Stack
 |-----------------|-------------|
-| `0.5 acos`      | `1.047197551196598`
+| `0.5 acos`      | `1.0471975511965976`
 
 
 ## acosh
@@ -88,7 +89,7 @@ Example:
 
 | Input           | Stack
 |-----------------|-------------|
-| `2 acosh`       | `1.316957896924817`
+| `2 acosh`       | `1.3169578969248166`
 
 
 ## asin
@@ -118,7 +119,7 @@ Example:
 
 | Input           | Stack
 |-----------------|-------------|
-| `2 asinh`       | `1.44363547517881`
+| `2 asinh`       | `1.4436354751788103`
 
 
 ## atan
@@ -167,6 +168,22 @@ Example:
 | `6.12`  | `6.12`
 | `ceil`  | `7`
 
+## complex
+
+A complex number from a real `r` and an imaginary `i` numbers.
+
+    ( r:Float i:Float -- r0:Complex )
+
+Example:
+
+<!-- test: complex -->
+
+| Input     | Stack
+|-----------|-------------|
+| `6`       | `6`
+| `12`      | `6 \| 12`
+| `complex` | `6+12i`
+
 ## cos
 
 Cosine in radians
@@ -193,7 +210,7 @@ Example:
 
 | Input           | Stack
 |-----------------|-------------|
-| `2 cosh`        | `3.762195691083631`
+| `2 cosh`        | `3.7621956910836314`
 
 ## e
 
@@ -252,7 +269,7 @@ Example:
 
 | Input           | Stack
 |-----------------|-------------|
-| `8 log`         | `2.079441541679836`
+| `8 log`         | `2.0794415416798357`
 
 ## log10
 
@@ -266,7 +283,7 @@ Example:
 
 | Input           | Stack
 |-----------------|-------------|
-| `50 log10`      | `1.698970004336019`
+| `50 log10`      | `1.6989700043360187`
 
 ## log2
 

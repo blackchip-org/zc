@@ -75,10 +75,11 @@ var opsList = []zc.OpDecl{
 	zc.Op("clear", ops.Clear),
 	zc.Op("cmyk-rgb", ops.CMYKToRGB, zc.Uint8, zc.Uint8, zc.Uint8, zc.Uint8),
 	zc.Op("codepoint-char", ops.CodePointToChar, zc.Int32),
-	zc.Macro("cp-char", "codepoint-char"),
 	zc.Op("color-sample", ops.ColorSample, zc.Uint8, zc.Uint8, zc.Uint8),
+	zc.Op("complex", ops.Complex, zc.Float, zc.Float),
 	zc.Op("cos", ops.CosFloat, zc.Float),
 	zc.Op("cosh", ops.CoshFloat, zc.Float),
+	zc.Macro("cp-char", "codepoint-char"),
 
 	// d
 	zc.Macro("d", "div"),
@@ -292,6 +293,9 @@ var opsList = []zc.OpDecl{
 	zc.Op("sinh", ops.SinhFloat, zc.Float),
 	zc.Macro("sn", "scientific-notation"),
 	zc.Op("split", ops.Split, zc.String, zc.String),
+	zc.GenOp("sqrt",
+		zc.Func(ops.SqrtFloat, zc.Float),
+	),
 	zc.GenOp("sub",
 		zc.Func(ops.SubBigInt, zc.BigInt, zc.BigInt),
 		zc.Func(ops.SubDecimal, zc.Decimal, zc.Decimal),
