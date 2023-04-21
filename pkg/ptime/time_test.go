@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/blackchip-org/zc/ptime/locale"
+	"github.com/blackchip-org/zc/pkg/ptime/locale"
 )
 
 func TestTimeEnUS(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/blackchip-org/zc/ptime/locale"
+	"github.com/blackchip-org/zc/pkg/ptime/locale"
 )
 
 func Time(l *locale.Locale, p Parsed, now time.Time) (time.Time, error) {

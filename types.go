@@ -21,7 +21,10 @@ var (
 	BigInt   = BigIntType{}
 	Bool     = BoolType{}
 	Complex  = ComplexType{}
+	Date     = DateType{}
+	DateTime = DateTimeType{}
 	Decimal  = DecimalType{}
+	Duration = DurationType{}
 	Float    = FloatType{}
 	Int      = IntType{}
 	Int64    = Int64Type{}
@@ -29,6 +32,7 @@ var (
 	Rational = RationalType{}
 	Rune     = RuneType{}
 	String   = StringType{}
+	Time     = TimeType{}
 	Uint     = UintType{}
 	Uint8    = Uint8Type{}
 )

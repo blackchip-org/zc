@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"strings"
@@ -13,6 +14,7 @@ import (
 
 func main() {
 	log.SetFlags(0)
+
 	c := calc.New()
 
 	if len(os.Args) == 1 {
@@ -23,8 +25,18 @@ func main() {
 		return
 	}
 
-	line := strings.Join(os.Args[1:], " ")
-	err := c.Eval(line)
+	var source string
+	if len(os.Args) == 2 && os.Args[1] == "-" {
+		in, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			log.Fatal(err)
+		}
+		source = string(in)
+	} else {
+		source = strings.Join(os.Args[1:], " ")
+	}
+
+	err := c.Eval(source)
 	if err != nil {
 		log.Fatalf("(!) %v", err)
 	}

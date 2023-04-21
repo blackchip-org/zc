@@ -1,7 +1,5 @@
 # stack
 
-<!-- eval: use stack -->
-
 Stack manipulations.
 
 <!-- index -->

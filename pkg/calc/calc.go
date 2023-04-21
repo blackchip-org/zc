@@ -48,16 +48,20 @@ func (c *calc) Eval(s string) error {
 	c.err = nil
 	c.info = ""
 
-	words := c.parseWords(s)
-	for _, word := range words {
-		ch, _ := utf8.DecodeRuneInString(word)
-		if isValue(ch) {
-			c.stack = append(c.stack, strings.TrimPrefix(word, "\""))
-		} else {
-			c.evalOp(word)
-		}
-		if c.err != nil {
-			return c.err
+	lines := strings.Split(s, "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		words := c.parseWords(line)
+		for _, word := range words {
+			ch, _ := utf8.DecodeRuneInString(word)
+			if isValue(ch) {
+				c.stack = append(c.stack, strings.TrimPrefix(word, "\""))
+			} else {
+				c.evalOp(word)
+			}
+			if c.err != nil {
+				return c.err
+			}
 		}
 	}
 	return nil

@@ -13,8 +13,9 @@ import (
 )
 
 var (
-	testBanner  = regexp.MustCompile(`<!-- test: (.*) *-->`)
-	tableHeader = regexp.MustCompile(`.*Input.*Stack`)
+	evalDirective = regexp.MustCompile(`<!-- eval: (.*) -->`)
+	testBanner    = regexp.MustCompile(`<!-- test: (.*) *-->`)
+	tableHeader   = regexp.MustCompile(`.*Input.*Stack`)
 )
 
 func TestDoc(t *testing.T) {
@@ -50,6 +51,7 @@ func TestDoc(t *testing.T) {
 func testDocFile(t *testing.T, file fs.File) {
 	scanner := bufio.NewScanner(file)
 	testName := ""
+	var setup []string
 
 	for scanner.Scan() {
 		if scanner.Err() != nil {
@@ -57,7 +59,13 @@ func testDocFile(t *testing.T, file fs.File) {
 		}
 		line := scanner.Text()
 
-		matches := testBanner.FindStringSubmatch(line)
+		matches := evalDirective.FindStringSubmatch(line)
+		if matches != nil {
+			setup = append(setup, matches[1])
+			continue
+		}
+
+		matches = testBanner.FindStringSubmatch(line)
 		if matches == nil {
 			continue
 		}
@@ -76,14 +84,20 @@ func testDocFile(t *testing.T, file fs.File) {
 			}
 			scanner.Scan()
 			scanner.Scan()
-			testTable(t, scanner)
+			testTable(t, setup, scanner)
 		})
 
 	}
 }
 
-func testTable(t *testing.T, scanner *bufio.Scanner) {
+func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 	c := calc.New()
+
+	for _, l := range setup {
+		if err := c.Eval(l); err != nil {
+			t.Fatal(err)
+		}
+	}
 
 	for {
 		line := scanner.Text()

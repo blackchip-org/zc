@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/blackchip-org/zc/ptime"
-	"github.com/blackchip-org/zc/ptime/locale"
+	"github.com/blackchip-org/zc/pkg/ptime"
+	"github.com/blackchip-org/zc/pkg/ptime/locale"
 )
 
 func main() {

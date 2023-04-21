@@ -3,6 +3,7 @@
         "Deque",
         "elif",
         "println",
+        "ptime",
         "Stmts"
     ],
     "files.trimTrailingWhitespace": true
