@@ -190,7 +190,7 @@ Example:
 | `now-set`                   | *now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'*
 | `now`                       | `Sat Nov 5 1955 1:22:00am -0700 MST`
 
-## travel-end
+## now-restore
 
 Cancel override of the value returned by now
 
