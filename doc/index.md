@@ -2,10 +2,10 @@
 
 - [*](ops/basic.md#mul): Multiplication
 - [**](ops/basic.md#pow): Exponentiation
-- +
+- \+
   - [(basic) +](ops/basic.md#add): Addition
   - [(time) +](ops/time.md#add): Time after a duration
-- -
+- \-
   - [(basic) -](ops/basic.md#sub): Subtraction
   - [(time) -](ops/time.md#sub): Duration between two times
 - [/](ops/basic.md#div): Division
@@ -13,7 +13,7 @@
 
 ## a
 
-- a
+- \a
   - [(basic) a](ops/basic.md#add): Addition
   - [(time) a](ops/time.md#add): Time after a duration
 - [abs](ops/sci.md#abs): Absolute value
@@ -205,7 +205,7 @@
 
 ## s
 
-- s
+- \s
   - [(basic) s](ops/basic.md#sub): Subtraction
   - [(time) s](ops/time.md#sub): Duration between two times
 - [scientific-notation](ops/sci.md#scientific-notation): Scientific notation
@@ -259,7 +259,4 @@
 
 - [zepto](ops/unit.md#zepto): z, 1e-21
 - [zetta](ops/unit.md#zetta): Z, 1e21
-
-## π
-
 - [π](ops/sci.md#pi): Circumference to diameter ratio

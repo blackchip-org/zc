@@ -12,8 +12,9 @@ import (
 	"regexp"
 	"sort"
 	"strings"
-	"unicode"
 	"unicode/utf8"
+
+	"github.com/blackchip-org/zc/pkg/scanner"
 )
 
 const (
@@ -87,7 +88,7 @@ func main() {
 	thisHeading := rune(0)
 	for _, key := range keys {
 		heading, _ := utf8.DecodeRuneInString(key)
-		if unicode.IsLetter(heading) && heading != thisHeading {
+		if scanner.IsCharAZ(heading) && heading != thisHeading {
 			fmt.Fprintf(out, "\n## %v\n\n", string(heading))
 			thisHeading = heading
 		}
@@ -104,6 +105,9 @@ func main() {
 					}
 				}
 			} else {
+				if len(key) == 1 {
+					key = "\\" + key
+				}
 				fmt.Fprintf(out, "- %v\n", key)
 			}
 			for _, entry := range entries {
