@@ -5,24 +5,33 @@ import (
 	"strings"
 )
 
-func ErrDivisionByZero(c Calc, a0 any, a1 any) {
-	c.SetError(fmt.Errorf("division by zero: %v %v", Format(a0), Format(a1)))
+func ErrDivisionByZero(c Calc) {
+	c.SetError(fmt.Errorf("division by zero: %v", c.Op()))
 }
 
 func ErrExpectedType(t Type, val string) error {
 	return fmt.Errorf("expected %v for %v", t, Quote(val))
 }
 
-func ErrInvalidArg(c Calc, arg any) {
-	c.SetError(fmt.Errorf("[%v] invalid argument: %v", c.Op(), Format(arg)))
+func ErrInfinity(c Calc, sign int) {
+	var inf string
+	switch {
+	case sign < 1:
+		inf = "-infinity"
+	case sign > 0:
+		inf = "+infinity"
+	default:
+		inf = "infinity"
+	}
+	c.SetError(fmt.Errorf("%v: %v", inf, c.Op()))
+}
+
+func ErrInvalidArgs(c Calc) {
+	c.SetError(fmt.Errorf("invalid arguments: %v", c.Op()))
 }
 
 func ErrInvalidFunc(c Calc, fn string, reason string) {
 	c.SetError(fmt.Errorf("[%v] invalid function: %v", fn, reason))
-}
-
-func ErrModuloByZero(c Calc, a0 any, a1 any) {
-	c.SetError(fmt.Errorf("modulo by zero: %v %v", Format(a0), Format(a1)))
 }
 
 func ErrNoOpFor(c Calc, op string, types ...Type) {
@@ -31,6 +40,10 @@ func ErrNoOpFor(c Calc, op string, types ...Type) {
 		typeNames = append(typeNames, t.String())
 	}
 	c.SetError(fmt.Errorf("[%v] no operation for %v", op, strings.Join(typeNames, ", ")))
+}
+
+func ErrNotANumber(c Calc) {
+	c.SetError(fmt.Errorf("not a number: %v", c.Op()))
 }
 
 func ErrNotEnoughArgs(c Calc, op string, expected int) {

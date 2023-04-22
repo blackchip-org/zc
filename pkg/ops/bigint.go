@@ -134,7 +134,7 @@ func ModBigInt(c zc.Calc) {
 	a0 := zc.PopBigInt(c)
 
 	if a1.Cmp(&zeroBigInt) == 0 {
-		zc.ErrModuloByZero(c, a0, a1)
+		zc.ErrDivisionByZero(c)
 		return
 	}
 

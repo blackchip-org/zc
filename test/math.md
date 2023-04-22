@@ -60,7 +60,7 @@
     0.6666666666666666
 
     2 0 div
-    division by zero: 2 0
+    division by zero: 2 0 div
 
     6+8i 2+2i div
     3.5+0.5i
@@ -69,7 +69,7 @@
     1/3
 
     6+8i 0+0i div
-    division by zero: 6+8i 0+0i
+    division by zero: 6+8i 0+0i div
 
 ## eq
 
@@ -220,7 +220,7 @@
     1
 
     7 0 mod
-    modulo by zero: 7 0
+    division by zero: 7 0 mod
 
     5.75 0.5 mod
     0.25
@@ -229,10 +229,10 @@
     0.25
 
     5.75 0 mod
-    modulo by zero: 5.75 0
+    division by zero: 5.75 0 mod
 
     5.75f 0f mod
-    modulo by zero: 5.75 0
+    division by zero: 5.75f 0f mod
 
 ## mul
 

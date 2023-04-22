@@ -89,7 +89,7 @@ var opsList = []zc.OpDecl{
 	zc.Macro("deca", ops.Deca),
 	zc.Macro("deci", ops.Deci),
 	zc.GenOp("div",
-		zc.Func(ops.DivDecimal, zc.Decimal),
+		zc.Func(ops.DivDecimal, zc.Decimal, zc.Decimal),
 		zc.Func(ops.DivFloat, zc.Float, zc.Float),
 		zc.Func(ops.DivRational, zc.Rational, zc.Rational),
 		zc.Func(ops.DivComplex, zc.Complex, zc.Complex),
@@ -345,7 +345,7 @@ var opsTable map[string]zc.CalcFunc
 
 func addMacros(table map[string]string) {
 	for k, v := range table {
-		opsTable[k] = zc.EvalOp(zc.Macro(k, v))
+		opsTable[k] = evalOp(zc.Macro(k, v))
 	}
 }
 
@@ -354,9 +354,9 @@ func init() {
 	for _, v := range opsList {
 		k := v.Name
 		if _, exists := opsTable[k]; exists {
-			panic(fmt.Sprintf("duplication operation: %v", k))
+			panic(fmt.Sprintf("duplicate operation: %v", k))
 		}
-		opsTable[k] = zc.EvalOp(v)
+		opsTable[k] = evalOp(v)
 	}
 	addMacros(ops.TimeZones)
 }

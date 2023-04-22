@@ -2,6 +2,7 @@ package zc
 
 import (
 	"fmt"
+	"math"
 	"math/big"
 	"strconv"
 	"strings"
@@ -82,6 +83,19 @@ func (t FloatType) Is(s string) bool {
 
 func (t FloatType) Format(v float64) string {
 	return fmt.Sprintf("%v", v)
+}
+
+func PopFloat(c Calc) float64 { return Float.MustParse(c.MustPop()) }
+func PushFloat(c Calc, r float64) {
+	if math.IsNaN(r) {
+		ErrNotANumber(c)
+	} else if math.IsInf(r, 1) {
+		ErrInfinity(c, 1)
+	} else if math.IsInf(r, -1) {
+		ErrInfinity(c, -1)
+	} else {
+		c.Push(Float.Format(r))
+	}
 }
 
 // ---

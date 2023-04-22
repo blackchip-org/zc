@@ -80,7 +80,7 @@ func LocalZone(c zc.Calc) {
 	} else {
 		loc, err = time.LoadLocation(zone)
 		if err != nil {
-			zc.ErrInvalidArg(c, zone)
+			zc.ErrInvalidArgs(c)
 			return
 		}
 	}
@@ -149,7 +149,7 @@ func TimeZone(c zc.Calc) {
 	} else {
 		loc, err = time.LoadLocation(zone)
 		if err != nil {
-			zc.ErrInvalidArg(c, zone)
+			zc.ErrInvalidArgs(c)
 			return
 		}
 	}

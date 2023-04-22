@@ -47,7 +47,6 @@
 - [centi](ops/unit.md#centi): c, 1e-02
 - [char-codepoint](ops/text.md#char-codepoint): Convert character to code point
 - [char-cp](ops/text.md#char-codepoint): Convert character to code point
-- [choice](ops/rand.md#choice): Randomly select an item on the stack
 - [clear](ops/stack.md#clear): Clear
 - [cmyk-rgb](ops/color.md#cmyk-rgb): Convert from CMYK to RGB color space
 - [codepoint-char](ops/text.md#codepoint-char): Convert code point to character
@@ -185,7 +184,10 @@
 
 - [r](ops/format.md#round): Round to a given precision
 - [rand](ops/rand.md#rand): Random float between 0 and 1
+- [rand-choice](ops/rand.md#rand-choice): Randomly select an item on the stack
 - [rand-int](ops/rand.md#rand-int): Random integer between 1 and n
+- [rand-seed](ops/rand.md#rand-seed): Random number seed, set
+- [rand-seed=](ops/rand.md#rand-seed=): Random number seed, get
 - [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder
 - [repeat](ops/hof.md#repeat): Repeat the execution of a function
@@ -210,8 +212,6 @@
   - [(time) s](ops/time.md#sub): Duration between two times
 - [scientific-notation](ops/sci.md#scientific-notation): Scientific notation
 - [seconds](ops/time.md#seconds): Seconds in a duration
-- [seed](ops/rand.md#seed): Random number seed, set
-- [seed=](ops/rand.md#seed=): Random number seed, get
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
 - [sin](ops/sci.md#sin): Sine

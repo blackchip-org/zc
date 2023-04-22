@@ -80,7 +80,7 @@ func DivFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 
 	if a1 == 0 {
-		zc.ErrDivisionByZero(c, a0, a1)
+		zc.ErrDivisionByZero(c)
 		return
 	}
 
@@ -160,7 +160,7 @@ func ModFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 
 	if a1 == 0 {
-		zc.ErrModuloByZero(c, a0, a1)
+		zc.ErrDivisionByZero(c)
 		return
 	}
 

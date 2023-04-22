@@ -44,7 +44,7 @@ func RandInt(c zc.Calc) {
 	s := getRandState(c)
 	max := zc.PopInt(c)
 	if max < 1 {
-		zc.ErrInvalidArg(c, max)
+		zc.ErrInvalidArgs(c)
 		return
 	}
 	r0 := s.rand.Intn(max) + 1
@@ -71,13 +71,13 @@ func Roll(c zc.Calc) {
 
 	nTok := s.Scan(scanner.UInt)
 	if unicode.ToLower(s.Ch) != 'd' {
-		zc.ErrInvalidArg(c, a0)
+		zc.ErrInvalidArgs(c)
 		return
 	}
 	s.Next()
 	sidesTok := s.Scan(scanner.UInt)
 	if sidesTok == "" || !s.End() {
-		zc.ErrInvalidArg(c, a0)
+		zc.ErrInvalidArgs(c)
 		return
 	}
 	if nTok == "" {

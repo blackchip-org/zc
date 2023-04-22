@@ -31,7 +31,7 @@ func DivComplex(c zc.Calc) {
 	a0 := zc.PopComplex(c)
 
 	if real(a1) == 0 && imag(a1) == 0 {
-		zc.ErrDivisionByZero(c, a0, a1)
+		zc.ErrDivisionByZero(c)
 		return
 	}
 

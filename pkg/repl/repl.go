@@ -40,7 +40,7 @@ func New(calc zc.Calc) *REPL {
 		ops:    make(map[string]struct{}),
 		macros: make(map[string]string),
 	}
-	for _, o := range calc.Ops() {
+	for _, o := range calc.OpNames() {
 		r.ops[o] = struct{}{}
 	}
 	return r

@@ -10,7 +10,6 @@ func PopBigInt(c Calc) *big.Int         { return BigInt.MustParse(c.MustPop()) }
 func PopBool(c Calc) bool               { return Bool.MustParse(c.MustPop()) }
 func PopComplex(c Calc) complex128      { return Complex.MustParse(c.MustPop()) }
 func PopDecimal(c Calc) decimal.Decimal { return Decimal.MustParse(c.MustPop()) }
-func PopFloat(c Calc) float64           { return Float.MustParse(c.MustPop()) }
 func PopInt(c Calc) int                 { return Int.MustParse(c.MustPop()) }
 func PopInt64(c Calc) int64             { return Int64.MustParse(c.MustPop()) }
 func PopInt32(c Calc) int32             { return Int32.MustParse(c.MustPop()) }
@@ -24,7 +23,6 @@ func PushBigInt(c Calc, r *big.Int)         { c.Push(BigInt.Format(r)) }
 func PushBool(c Calc, r bool)               { c.Push(Bool.Format(r)) }
 func PushComplex(c Calc, r complex128)      { c.Push(Complex.Format(r)) }
 func PushDecimal(c Calc, r decimal.Decimal) { c.Push(Decimal.Format(r)) }
-func PushFloat(c Calc, r float64)           { c.Push(Float.Format(r)) }
 func PushInt(c Calc, r int)                 { c.Push(Int.Format(r)) }
 func PushInt64(c Calc, r int64)             { c.Push(Int64.Format(r)) }
 func PushInt32(c Calc, r int32)             { c.Push(Int32.Format(r)) }

@@ -15,6 +15,7 @@ type calc struct {
 	info  string
 	state map[string]any
 	op    string
+	args  []string
 }
 
 func New() zc.Calc {
@@ -121,11 +122,16 @@ func (c *calc) State(name string) (any, bool) {
 	return s, ok
 }
 
-func (c *calc) Op() string {
-	return c.op
+func (c *calc) SetOp(op string, args []string) {
+	c.op = op
+	c.args = args
 }
 
-func (c *calc) Ops() []string {
+func (c *calc) Op() zc.OpCall {
+	return zc.OpCall{Name: c.op, Args: c.args}
+}
+
+func (c *calc) OpNames() []string {
 	var os []string
 	for name := range opsTable {
 		os = append(os, name)
@@ -184,7 +190,6 @@ func (c *calc) evalOp(name string) {
 		c.err = zc.ErrUnknownOp(name)
 		return
 	}
-	c.op = name
 	op(c)
 }
 
@@ -202,4 +207,53 @@ func isValue(ch rune) bool {
 		return true
 	}
 	return false
+}
+
+func evalOp(op zc.OpDecl) zc.CalcFunc {
+	return func(c zc.Calc) {
+		if op.Macro != "" {
+			c.Eval(op.Macro)
+			return
+		}
+		if len(op.Funcs) == 0 {
+			panic("no functions for operation")
+		}
+		for _, decl := range op.Funcs {
+			if isOpMatch(c, decl) {
+				nArgs := len(decl.Params)
+				sLen := c.StackLen()
+				args := c.Stack()[sLen-nArgs:]
+				c.SetOp(op.Name, args)
+				decl.Func(c)
+				return
+			}
+		}
+
+		// For now, we are going to check the first decl to
+		// determine the number of arguments.
+		nArgs := len(op.Funcs[0].Params)
+		var types []zc.Type
+		for i := 0; i < nArgs; i++ {
+			v, ok := c.Peek(i)
+			if !ok {
+				zc.ErrNotEnoughArgs(c, op.Name, nArgs)
+				return
+			}
+			types = append(types, zc.Identify(v))
+		}
+		zc.ErrNoOpFor(c, op.Name, types...)
+	}
+}
+
+func isOpMatch(c zc.Calc, decl zc.FuncDecl) bool {
+	for i, param := range decl.Params {
+		arg, ok := c.Peek(len(decl.Params) - i - 1)
+		if !ok {
+			return false
+		}
+		if !param.Is(arg) {
+			return false
+		}
+	}
+	return true
 }

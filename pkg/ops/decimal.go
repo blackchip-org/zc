@@ -28,7 +28,7 @@ func DivDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
 
 	if a1.IsZero() {
-		zc.ErrDivisionByZero(c, a0, a1)
+		zc.ErrDivisionByZero(c)
 		return
 	}
 
@@ -82,7 +82,7 @@ func ModDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
 
 	if a1.IsZero() {
-		zc.ErrModuloByZero(c, a0, a1)
+		zc.ErrDivisionByZero(c)
 		return
 	}
 
