@@ -8,7 +8,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/blackchip-org/zc/pkg/ansi"
 	"github.com/blackchip-org/zc/pkg/calc"
+	"github.com/blackchip-org/zc/pkg/repl"
 )
 
 func TestOps(t *testing.T) {
@@ -65,7 +67,12 @@ func testFile(t *testing.T, file string) {
 
 func doTest(t *testing.T, input string, want []string) {
 	c := calc.New()
-	err := c.Eval(input)
+	r := repl.New(c)
+	ansi.Enabled = false
+	r.Out = &strings.Builder{}
+
+	r.Eval(input)
+	err := c.Error()
 	if err != nil {
 		errWant := ""
 		if len(want) > 0 {
