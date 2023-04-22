@@ -91,7 +91,7 @@ information line in italics.
 
 | Input         | Stack
 |---------------|-------------
-| `0 seed`      | *seed set to 0*
+| `0 rand-seed` | *seed set to 0*
 
 The basic math functions are:
 
@@ -140,17 +140,6 @@ The entry into the calculator looks like the following:
 | `2 pow`   | `9 \| 16`
 | `add`     | `25`
 | `sqrt`    | `5`
-
-## Commands
-
-These commands are available when running the calculator interactively:
-
-| Command      | Description
-|--------------|------------------------------------
-| *blank line* | Remove the first item from stack
-| `redo`, `r`  | Redo the last undo
-| `quit`       | Print the final stack and return to shell
-| `undo`, `u`  | Undo the last line entered
 
 ## Numbers
 
@@ -239,6 +228,66 @@ computes the length, in characters, of the given text:
 | `[one thousand` | `one thousand`
 | `len`           | `12`
 
+## Macros
+
+Let's say that you commonly have to compute a sales tax that is 5%. To
+compute the sales tax on something that costs $123:
+
+<!-- test: tax -->
+
+| Input               | Stack
+|---------------------|-------------------
+| `$123`              | `$123`
+| `dup`               | `$123 \| $123`
+| `0.05`              | `$123 \| $123 \| 0.05`
+| `mul`               | `$123 \| 6.15`
+| `add`               | `129.15`
+
+Repeated use of this pattern can be used with a macro:
+
+<!-- test: tax-macro -->
+
+| Input                    | Stack
+|--------------------------|-------------------
+| `def tax dup 0.05 mul  ` | *macro 'tax' defined*
+| `$123`                   | `$123`
+| `tax add`                | `129.15`
+
+The name of `=` is reserved for your macro use in bulk operations:
+
+<!-- test: bulk -->
+
+| Input                     | Stack
+|---------------------------|-------------------
+| `def = top f-c 2 round`   | *macro '=' defined*
+| `32 =`                    | `0`
+| `68 =`                    | `20`
+| `100 =`                   | `37.78`
+
+No operations start with a `/` or a `.` character and can be used for
+macro names. Play a game of rock, paper, scissors:
+
+<!-- test: rps -->
+
+| Input                                            | Stack
+|--------------------------------------------------|-------------------
+| `0 rand-seed`                                    | *seed set to 0*
+| `def /rps 'rock' 'paper' 'scissors' rand-choice` | *macro '/rps' defined*
+| `/rps`                                           | `rock`
+| `/rps`                                           | `paper`
+
+Macros can also be used to override calculator operations. Undefine the
+macro by using `def` without an expression.
+
+<!-- test: override -->
+
+| Input          | Stack
+|----------------|----------------------------
+| `def pi 'Yum`  | *macro 'pi' overrides*
+| `pi`           | `Yum`
+| `def pi`       | *macro 'pi' undefined*
+| `pi`           | `Yum \| 3.141592653589793`
+
 ## Higher order functions
 
 The `map` operation can be used to apply a function to each item on the stack.
@@ -264,9 +313,31 @@ value. For example, to sum all the numbers on the stack:
 Additional higher-order functions can be found in the [hof](doc/ops/hof.md)
 reference.
 
-## To Be Continued...
+## Commands
 
-Still a work in progress.
+These commands are available when running the calculator interactively:
+
+| Command      | Description
+|--------------|------------------------------------
+| *blank line* | Remove the first item from stack
+| `def`        | Define a macro
+| `redo`       | Redo the last undo
+| `quit`       | Print the final stack and return to shell
+| `undo`, `u`  | Undo the last line entered
+
+## Command line
+
+Any arguments found on the command line are passed to the calculator for a
+one-time evaluation:
+
+    $ zc 2 3 add
+    5
+
+Use a single argument of `-` to read from standard input:
+
+    $ echo "2 3 add" | zc -
+    5
+
 
 ## Credits
 

@@ -4,32 +4,15 @@ Random number generation
 
 <!-- index -->
 
-| Operation               | Description
-|-------------------------|-----------------------
-| [choice](#choice)       | Randomly select an item on the stack
-| [rand](#rand)           | Random float between 0 and 1
-| [rand-int](#rand-int)   | Random integer between 1 and n
-| [roll](#roll)           | Dice roller
-| [seed](#seed)           | Random number seed, set
-| [seed=](#seed=)         | Random number seed, get
-| [shuffle](#shuffle)     | Shuffle the stack
-
-
-## choice
-
-Randomly select an item on the stack
-
-    ( ...:any ?:any ...:any -- ?:any )
-
-Example:
-
-<!-- test: choice -->
-
-| Input          | Stack
-|----------------|-------------|
-| `2 seed`       | *seed set to 2*
-| `1 2 3 4 5 6`  | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
-| `choice`       | `5`
+| Operation                   | Description
+|-----------------------------|-----------------------
+| [rand](#rand)               | Random float between 0 and 1
+| [rand-choice](#rand-choice) | Randomly select an item on the stack
+| [rand-int](#rand-int)       | Random integer between 1 and n
+| [rand-seed](#rand-seed)     | Random number seed, set
+| [rand-seed=](#rand-seed=)   | Random number seed, get
+| [roll](#roll)               | Dice roller
+| [shuffle](#shuffle)         | Shuffle the stack
 
 
 ## rand
@@ -44,9 +27,24 @@ Example:
 
 | Input         | Stack
 |---------------|-------------|
-| `0 seed`      | *seed set to 0*
+| `0 rand-seed` | *seed set to 0*
 | `rand`        | `0.9451961492941164`
 
+## rand-choice
+
+Randomly select an item on the stack
+
+    ( ...:any ?:any ...:any -- ?:any )
+
+Example:
+
+<!-- test: rand-choice -->
+
+| Input          | Stack
+|----------------|-------------|
+| `2 rand-seed`  | *seed set to 2*
+| `1 2 3 4 5 6`  | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
+| `rand-choice`  | `5`
 
 ## rand-int
 
@@ -60,8 +58,34 @@ Example:
 
 | Input         | Stack
 |---------------|-------------|
-| `0 seed`      | *seed set to 0*
+| `0 rand-seed` | *seed set to 0*
 | `10 rand-int` | `5`
+
+## rand-seed
+
+Sets the random number seed
+
+    ( n:Int64 -- )
+
+<!-- test: rand-seed -->
+
+| Input         | Stack
+|---------------|-------------|
+| `1 rand-seed` | *seed set to 1*
+| `10 rand-int` | `2`
+
+## seed=
+
+Gets the random number seed
+
+    ( -- n:Int64 )
+
+<!-- test: rand-seed= -->
+
+| Input         | Stack
+|---------------|-------------|
+| `3 rand-seed` | *seed set to 3*
+| `rand-seed=`  | `3`
 
 ## roll
 
@@ -77,37 +101,9 @@ use `3d6` to roll three six sided dice.
 
 | Input           | Stack
 |-----------------|-------------|
-| `99 seed`       | *seed set to 99*
+| `99 rand-seed`  | *seed set to 99*
 | `3d6 roll`      | `6 \| 2 \| 1`
 | `sum`           | `9`
-
-## seed
-
-Sets the random number seed
-
-    ( n:Int64 -- )
-
-<!-- test: seed -->
-
-| Input         | Stack
-|---------------|-------------|
-| `1 seed`      | *seed set to 1*
-| `10 rand-int` | `2`
-
-
-## seed=
-
-Gets the random number seed
-
-    ( -- n:Int64 )
-
-<!-- test: seed= -->
-
-| Input         | Stack
-|---------------|-------------|
-| `3 seed`      | *seed set to 3*
-| `seed=`       | `3`
-
 
 ## shuffle
 
@@ -119,7 +115,7 @@ Shuffle the stack
 
 | Input          | Stack
 |----------------|-------------|
-| `0 seed`       | *seed set to 0*
+| `0 rand-seed`  | *seed set to 0*
 | `1 2 3 4 5 6`  | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
 | `shuffle`      | `5 \| 4 \| 1 \| 3 \| 2 \| 6`
 

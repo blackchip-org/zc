@@ -27,17 +27,17 @@ func getRandState(c zc.Calc) *randState {
 	return s.(*randState)
 }
 
-func Choice(c zc.Calc) {
-	s := getRandState(c)
-	n := c.StackLen()
-	i := s.rand.Intn(n)
-	c.SetStack([]string{c.Stack()[i]})
-}
-
 func Rand(c zc.Calc) {
 	s := getRandState(c)
 	r0 := s.rand.Float64()
 	zc.PushFloat(c, r0)
+}
+
+func RandChoice(c zc.Calc) {
+	s := getRandState(c)
+	n := c.StackLen()
+	i := s.rand.Intn(n)
+	c.SetStack([]string{c.Stack()[i]})
 }
 
 func RandInt(c zc.Calc) {
@@ -49,6 +49,18 @@ func RandInt(c zc.Calc) {
 	}
 	r0 := s.rand.Intn(max) + 1
 	zc.PushInt(c, r0)
+}
+
+func RandSeed(c zc.Calc) {
+	s := getRandState(c)
+	s.seed = zc.PopInt64(c)
+	s.rand = rand.New(rand.NewSource(s.seed))
+	c.SetInfo("seed set to %v", s.seed)
+}
+
+func RandSeedGet(c zc.Calc) {
+	s := getRandState(c)
+	zc.PushInt64(c, s.seed)
 }
 
 func Roll(c zc.Calc) {
@@ -78,18 +90,6 @@ func Roll(c zc.Calc) {
 		r := state.rand.Intn(sides) + 1
 		zc.PushInt(c, r)
 	}
-}
-
-func Seed(c zc.Calc) {
-	s := getRandState(c)
-	s.seed = zc.PopInt64(c)
-	s.rand = rand.New(rand.NewSource(s.seed))
-	c.SetInfo("seed set to %v", s.seed)
-}
-
-func SeedGet(c zc.Calc) {
-	s := getRandState(c)
-	zc.PushInt64(c, s.seed)
 }
 
 func Shuffle(c zc.Calc) {

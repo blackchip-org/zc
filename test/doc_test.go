@@ -9,7 +9,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/blackchip-org/zc/pkg/ansi"
 	"github.com/blackchip-org/zc/pkg/calc"
+	"github.com/blackchip-org/zc/pkg/repl"
 )
 
 var (
@@ -92,10 +94,13 @@ func testDocFile(t *testing.T, file fs.File) {
 
 func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 	c := calc.New()
+	r := repl.New(c)
+	r.Out = &strings.Builder{}
+	ansi.Enabled = false
 
 	for _, l := range setup {
-		if err := c.Eval(l); err != nil {
-			t.Fatal(err)
+		if r.Eval(l); c.Error() != nil {
+			t.Fatal(c.Error())
 		}
 	}
 
@@ -123,8 +128,8 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 
 		t.Log(in)
 
-		if err := c.Eval(in); err != nil {
-			t.Fatal(err)
+		if r.Eval(in); c.Error() != nil {
+			t.Fatal(c.Error())
 		}
 		if c.Info() != "" || info != "" {
 			have := "*" + c.Info() + "*"

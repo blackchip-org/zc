@@ -3,13 +3,16 @@ package repl
 import (
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path"
 	"sort"
 	"strings"
+	"unicode"
 
 	"github.com/blackchip-org/zc/pkg/ansi"
+	"github.com/blackchip-org/zc/pkg/scanner"
 	"github.com/blackchip-org/zc/pkg/zc"
 	"github.com/peterh/liner"
 )
@@ -18,18 +21,29 @@ var errQuit = errors.New("quit")
 
 type REPL struct {
 	MaxUndo     int
-	calc        zc.Calc
+	Calc        zc.Calc
+	Out         io.Writer
 	cli         *liner.State
 	homeDir     string
 	localDir    string
 	historyFile string
 	undoStack   [][]string
 	redoStack   [][]string
-	ops         []string
+	ops         map[string]struct{}
+	macros      map[string]string
 }
 
 func New(calc zc.Calc) *REPL {
-	return &REPL{calc: calc, ops: calc.Ops()}
+	r := &REPL{
+		Calc:   calc,
+		Out:    os.Stdout,
+		ops:    make(map[string]struct{}),
+		macros: make(map[string]string),
+	}
+	for _, o := range calc.Ops() {
+		r.ops[o] = struct{}{}
+	}
+	return r
 }
 
 func (r *REPL) Init() {
@@ -67,21 +81,24 @@ func (r *REPL) ReadLine() (string, error) {
 
 func (r *REPL) Eval(text string) bool {
 	var execError error
+	var s scanner.Scanner
 
-	prev := r.calc.Stack()
+	prev := r.Calc.Stack()
 
-	cmd := strings.TrimRight(text, " ")
-	switch cmd {
-	case "":
-		execError = r.pop()
-	case "quit":
-		execError = r.quit()
-	case "redo", "r":
-		execError = r.redo()
-	case "undo", "u":
-		execError = r.undo()
-	default:
-		execError = r.eval(cmd)
+	s.SetString(text)
+	s.ScanWhile(unicode.IsSpace)
+	cmdName := s.Scan(scanner.Word)
+	cmd, ok := cmds[cmdName]
+	// FIXME: should these errors always be set in the calculator?
+	if ok {
+		execError = cmd(r, &s)
+		r.Calc.SetError(execError)
+	} else {
+		execError = r.eval(text)
+		if execError == nil {
+			r.undoStack = append([][]string{prev}, r.undoStack...)
+			r.redoStack = nil
+		}
 	}
 	if execError == errQuit {
 		return false
@@ -90,35 +107,35 @@ func (r *REPL) Eval(text string) bool {
 	// Print out previous stack in dark gray
 	ansi.Write(ansi.DarkGray)
 	if execError == nil {
-		for _, val := range prev {
-			fmt.Println(raw(val))
+		if ansi.Enabled {
+			for _, val := range prev {
+				fmt.Fprintln(r.Out, raw(val))
+			}
+			fmt.Fprintln(r.Out)
 		}
-		fmt.Println()
-		r.undoStack = append([][]string{prev}, r.undoStack...)
-		r.redoStack = nil
 	} else {
-		r.calc.SetStack(prev)
+		r.Calc.SetStack(prev)
 	}
 	ansi.Write(ansi.Reset)
 
-	for i, val := range r.calc.Stack() {
+	for i, val := range r.Calc.Stack() {
 		color := ansi.LightBlue
-		if i == len(r.calc.Stack())-1 {
+		if i == len(r.Calc.Stack())-1 {
 			color = ansi.Bold
 		}
-		fmt.Print(colorize(color, val))
-		fmt.Println()
+		fmt.Fprint(r.Out, colorize(color, val))
+		fmt.Fprintln(r.Out)
 	}
 	if execError != nil {
 		ansi.Write(ansi.BrightYellow)
-		fmt.Printf("(!) %v\n", execError)
-		ansi.Write(ansi.Reset)
-	} else if r.calc.Info() != "" {
-		ansi.Write(ansi.LightGreen)
-		fmt.Println(r.calc.Info())
+		fmt.Fprintf(r.Out, "(!) %v\n", execError)
+		ansi.Fprint(r.Out, ansi.Reset)
+	} else if r.Calc.Info() != "" {
+		ansi.Fprint(r.Out, ansi.LightGreen)
+		fmt.Fprintln(r.Out, r.Calc.Info())
 		ansi.Write(ansi.Reset)
 	} else {
-		fmt.Println()
+		fmt.Fprintln(r.Out)
 	}
 	if strings.TrimSpace(text) != "" {
 		if r.cli != nil {
@@ -129,36 +146,20 @@ func (r *REPL) Eval(text string) bool {
 }
 
 func (r *REPL) eval(line string) error {
-	return r.calc.Eval(line)
-}
+	var out []string
+	var s scanner.Scanner
+	s.SetString(line)
 
-func (r *REPL) pop() error {
-	r.calc.Pop()
-	return nil
-}
-
-func (r *REPL) redo() error {
-	if len(r.redoStack) == 0 {
-		return fmt.Errorf("redo stack is empty")
+	for s.Ok() {
+		word := s.Scan(scanner.Word)
+		if mac, ok := r.macros[word]; ok {
+			out = append(out, mac)
+		} else {
+			out = append(out, word)
+		}
 	}
-	r.undoStack = append([][]string{r.calc.Stack()}, r.undoStack...)
-	r.calc.SetStack(r.redoStack[0])
-	r.redoStack = r.redoStack[1:]
-	return nil
-}
-
-func (r *REPL) quit() error {
-	return errQuit
-}
-
-func (r *REPL) undo() error {
-	if len(r.undoStack) == 0 {
-		return fmt.Errorf("undo stack is empty")
-	}
-	r.redoStack = append([][]string{r.calc.Stack()}, r.redoStack...)
-	r.calc.SetStack(r.undoStack[0])
-	r.undoStack = r.undoStack[1:]
-	return nil
+	outLine := strings.Join(out, " ")
+	return r.Calc.Eval(outLine)
 }
 
 func (r *REPL) loadHistory() {
@@ -215,7 +216,7 @@ func (r *REPL) wordCompleter(line string, pos int) (string, []string, string) {
 	suffix := line[endPos:]
 
 	var candidates []string
-	for _, name := range r.ops {
+	for name := range r.ops {
 		if strings.HasPrefix(name, word) {
 			candidates = append(candidates, name)
 		}

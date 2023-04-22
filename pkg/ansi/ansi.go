@@ -1,6 +1,9 @@
 package ansi
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 var Enabled bool = true
 
@@ -31,4 +34,11 @@ func Write(v string) {
 		return
 	}
 	fmt.Print(v)
+}
+
+func Fprint(o io.Writer, v string) {
+	if !Enabled {
+		return
+	}
+	fmt.Fprint(o, v)
 }

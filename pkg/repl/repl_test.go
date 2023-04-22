@@ -16,34 +16,36 @@ func TestUndo(t *testing.T) {
 	repl.Eval("2")
 	repl.Eval("3")
 	// 1 2 3
-	repl.undo()
+	repl.Eval("undo")
 	// 1 2
-	repl.undo()
+	repl.Eval("undo")
 	// 1
 	top, _ := c.Peek(0)
 	if top != "1" {
 		t.Fatalf("\n have: %v \n want: 1", top)
 	}
-	repl.undo()
+	repl.Eval("undo")
 	// empty
-	if err := repl.undo(); err == nil {
+	repl.Eval("undo")
+	if repl.Calc.Error() == nil {
 		t.Fatalf("expected error")
 	}
-	repl.redo()
+	repl.Eval("redo")
 	// 1
 	top, _ = c.Peek(0)
 	if top != "1" {
 		t.Fatalf("\n have: %v want: 1", top)
 	}
-	repl.redo()
+	repl.Eval("redo")
 	// 1 2
-	repl.redo()
+	repl.Eval("redo")
 	// 1 2 3
 	top, _ = c.Peek(0)
 	if top != "3" {
 		t.Fatalf("\n have: %v want: 3", top)
 	}
-	if err := repl.redo(); err == nil {
+	repl.Eval("redo")
+	if repl.Calc.Error() == nil {
 		t.Fatalf("expected error")
 	}
 }

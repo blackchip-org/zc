@@ -1,6 +1,9 @@
 package scanner
 
-import "errors"
+import (
+	"errors"
+	"unicode"
+)
 
 type Func func(*Scanner)
 
@@ -109,4 +112,9 @@ func UntilRepeatsFunc(is RuneClass, n int) Func {
 			s.Text.WriteString(text[0 : len(text)-count])
 		}
 	}
+}
+
+func Word(s *Scanner) {
+	s.ScanWhile(unicode.IsSpace)
+	s.ScanUntil(unicode.IsSpace)
 }

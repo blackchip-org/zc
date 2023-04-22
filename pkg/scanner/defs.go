@@ -71,5 +71,4 @@ var (
 	Whitespace = WhileFunc(unicode.IsSpace)
 	UInt       = NumberFunc(UIntDef)
 	UDec       = NumberFunc(UDecRef)
-	Word       = UntilFunc(unicode.IsSpace)
 )
