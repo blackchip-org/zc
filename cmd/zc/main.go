@@ -43,4 +43,7 @@ func main() {
 	for _, item := range c.Stack() {
 		fmt.Println(item)
 	}
+	if c.Info() != "" {
+		fmt.Println(c.Info())
+	}
 }
