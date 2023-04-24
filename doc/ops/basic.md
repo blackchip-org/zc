@@ -20,13 +20,16 @@ Basic mathematical operations.
 
 ## add
 
-Adds the value of `b` to `a`.
+Adds the value of *p1* to *p0*.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );    or
-    ( a:Rational b:Rational -- add:Rational ); or
-    ( a:Complex  b:Complex  -- add:Complex )
+    ( p0:T p1:T -- T )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
+- `Complex`
 
 Aliases: `a`, `+`
 
@@ -42,13 +45,16 @@ Example:
 
 ## div
 
-Divides the value of `a` by `b`. If `b` is zero, a 'division by zero' error is
-set.
+Divides the value of *p0* by *p1*. If *p1* is zero, a 'division by zero' error
+is raised.
 
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );    or
-    ( a:Rational b:Rational -- add:Rational ); or
-    ( a:Complex  b:Complex  -- add:Complex )
+    ( p0:T p1:T -- T )
+
+Where *T* is one of:
+- `Decimal`
+- `Float`
+- `Rational`
+- `Complex`
 
 Aliases: `d`, `/`
 
@@ -64,12 +70,15 @@ Example:
 
 ## mod
 
-The modulus when `a` is divided by `b`. If `b` is zero, a 'division by zero'
-error is set.
+The modulus when *p0* is divided by *p1*. If *p1* is zero, a 'division by zero'
+error is raised.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );
+    ( p0:T p1:T -- T )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
 
 Example:
 
@@ -81,36 +90,20 @@ Example:
 | `2`     | `-7 \| 2`
 | `mod`   | `1`
 
-## neg
-
-Changes the sign of `a`.
-
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );    or
-    ( a:Rational b:Rational -- add:Rational )
-
-Example:
-
-<!-- test: neg -->
-
-| Input   | Stack
-|---------|-------------|
-| `-6`    | `-6`
-| `neg`   | `6`
-| `neg`   | `-6`
-
 ## mul
 
-Multiplies `a` by `b`.
+Multiplies *p0* by *p1*.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );    or
-    ( a:Rational b:Rational -- add:Rational ); or
-    ( a:Complex  b:Complex  -- add:Complex )
+    ( p0:T p1:T -- T )
 
 Aliases: `m`, `*`
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
+- `Complex`
 
 Example:
 
@@ -122,13 +115,38 @@ Example:
 | `2`     | `6 \| 2`
 | `m`     | `12`
 
+## neg
+
+Changes the sign of `p0`
+
+    ( p0:T -- T )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
+
+Example:
+
+<!-- test: neg -->
+
+| Input   | Stack
+|---------|-------------|
+| `-6`    | `-6`
+| `neg`   | `6`
+| `neg`   | `-6`
+
 ## pow
 
-Raises `a` to the power of `b`.
+Raises *a* to the power of *b*.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Float    b:Float    -- add:Float );    or
-    ( a:Complex  b:Complex  -- add:Complex )
+    ( a:T b:T -- T )
+
+Where *T* is one of:
+- `BigInt`
+- `Float`
+- `Complex`
 
 Alias: `**`, `^`
 
@@ -144,10 +162,14 @@ Example:
 
 ## rem
 
-The remainder when `a` is divided by `b`. If `b` is zero, a 'division by zero' error is set.
+The remainder when *p0* is divided by *p1*. If *p1* is zero, a
+'division by zero' error is raised.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Float    b:Float    -- add:Float );
+    ( p0:T p1:T -- T )
+
+Where *T* is one of:
+- `BigInt`
+- `Float`
 
 Example:
 
@@ -161,18 +183,16 @@ Example:
 
 ## sign
 
-If:
+Returns `-1` if *p0* is negative, `1` if *p0* is positive, or `0` if *p0*
+is zero.
 
-* `a` is negative: `-1`
-* `a` is positive: `1`
-* `a` is zero: `0`
+    ( p0:T -- Int )
 
-```
-( a:BigInt   b:BigInt   -- add:BigInt );   or
-( a:Decimal  b:Decimal  -- add:Decimal );  or
-( a:Float    b:Float    -- add:Float );    or
-( a:Rational b:Rational -- add:Rational ); or
-```
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
 
 Example:
 
@@ -188,11 +208,13 @@ Example:
 
 ## sqrt
 
-The square root of `a0`. Returns a Float if `a0` is equal to or greater than
-zero, otherwise returns a Complex.
+The square root of `p0`.
 
-    ( a0:Float -- r0:Float ); or
-    ( a0:Float -- r0:Complex)
+    ( p0:Float -- T )
+
+Where *T* is one of:
+- `Float` if *p0* is positive or zero
+- `Complex` if *p0* is negative.
 
 <!-- test: sqrt -->
 
@@ -203,13 +225,16 @@ zero, otherwise returns a Complex.
 
 ## sub
 
-Subtracts `b` from `a`.
+Subtract *p1* from *p0*.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );    or
-    ( a:Rational b:Rational -- add:Rational ); or
-    ( a:Complex  b:Complex  -- add:Complex )
+    ( p0:Num p1:Num -- Num )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
+- `Complex`
 
 Aliases: `s`, `-`
 

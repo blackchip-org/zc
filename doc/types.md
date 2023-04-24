@@ -25,8 +25,6 @@ Table of contents:
 - [Duration](#duration)
 - [Int](#integer), [Int64](#integer), [Int32](#integer), [Int16](#integer), [Int8](#integer)
 - [Rational](#rational)
-- [Real](#real)
-- [Num](#num)
 - [Str](#strval)
 - [Time](#datetime)
 - [Uint](#integer), [Uint64](#integer), [Uint32](#integer), [Uint16](#integer), [Uint8](#integer)
@@ -52,9 +50,9 @@ Example:
 
 ## Complex
 
-A `Complex` value is a [`Num`](#num) that has a floating point real
-number, *real*, and a floating point imaginary number, *imag* in the form
-of *real*`+`*imag*`i`.
+A `Complex` value is a number that has a floating point real number, *real*,
+and a floating point imaginary number, *imag* in the form of
+*real*`+`*imag*`i`.
 
 <!-- test: complex -->
 
@@ -65,7 +63,8 @@ of *real*`+`*imag*`i`.
 
 ## DateTime
 
-Parsing of `DateTime` values tries to be as lenient as possible to allow easy entry by hand or from various sources via cut and paste. Parsing uses the
+Parsing of `DateTime` values tries to be as lenient as possible to allow easy
+entry by hand or from various sources via cut and paste. Parsing uses the
 following rules:
 
 - If a date and time is needed but the value only contains a time, the date
@@ -112,12 +111,12 @@ The examples above are the result if the current time is
 
 ## Decimal
 
-A `Decimal` value is a [`Real`](#real) using fixed-point math and support is
+A `Decimal` value is a number using fixed-point math and support is
 provided by the `shopspring/decimal`[https://github.com/shopspring/decimal]
 library. The calculator prefers working with `Decimal` values whenever an
 operation can use a function in this library.
 
-Decimal values first follow the parsing steps described by [`Real`](#real).
+Decimal values first remove [formatting characters](#formatting-characters).
 By default, values containing exponent notation are not parsed as a decimal.
 To parse as a decimal, add a `d` suffix to the number. Example:
 
@@ -143,9 +142,9 @@ of *hours*`h`*minutes*`m`*seconds*`s`. Zero values may be omitted. Examples:
 
 ## Float
 
-A `Float` value is a [`Real`](#real) using floating-point math. For operations
-supported by `Decimal`, those are preferred over using a `Float`. To force
-the use of a float, add a `f` suffix to the number.
+A `Float` value is a number using floating-point math. For operations supported
+by `Decimal`, those are preferred over using a `Float`. To force the use of a
+float, add a `f` suffix to the number.
 
 <!-- test: types-float -->
 
@@ -154,9 +153,24 @@ the use of a float, add a `f` suffix to the number.
 | `c 1.1 2.2 add`    | `3.3`
 | `c 1.1f 2.2f add`  | `3.3000000000000003`
 
+Float values first remove [formatting characters](#formatting-characters)
+when parsing. Exponents can follow a number using an `e`, or a `×10`. The
+latter form is useful in copy and paste operations (e.g., from Wikipedia).
+
+Example:
+
+3×102
+
+<!-- test: float-exponent -->
+
+| Input               | Stack
+|---------------------|-------------
+| `c 3e2 2e1 add`     | `320`
+| `c 3×102 2×101 add` | `320`
+
 ## Integer
 
-An `Integer` value is a [`Real`](#real) that can either be a:
+An `Integer` value is a number that can either be a:
 
 - `BigInt`; or
 - `Int`, `Int64`, `Int32`, `Int16`, `Int8`; or
@@ -170,8 +184,8 @@ The `Int` and `Uint` series of types are signed and unsigned integers of
 a specific size and are used when an underlying implementation of an
 operation needs that type.
 
-Integer values first follow the parsing steps described by [`Real`](#real).
-Integers may have a radix prefix of:
+Integer values first remove [formatting characters](#formatting-characters)
+when parsing. Integers may have a radix prefix of:
 
 - `0b`: binary number, base 2
 - `0o`: octal number, base 8
@@ -185,15 +199,11 @@ Integers may have a radix prefix of:
 | `c 0o377 dec`       | `255`
 | `c 0xff dec`        | `255`
 
-## Num
-
-A `Num` is either a [`Complex`](#complex) or a [`Real`](#real) number.
-
 ## Rational
 
-A `Rational` number is a [`Real`](#real) that has a numerator *n* and a
-denominator *d* in the form of *n*`/`*d*. A whole number can prefix a rational
-using a ` `, `_` or `-` character. Examples:
+A `Rational`value is a number that has a numerator *n* and a denominator *d* in
+the form of *n*`/`*d*. A whole number can prefix a rational using a ` `, `_` or
+`-` character. Examples:
 
 <!-- test: types-rational -->
 
@@ -203,33 +213,6 @@ using a ` `, `_` or `-` character. Examples:
 | `c 2_1/2 3_1/4 add`     | `5 3/4`
 | `c [2 1/2] [3 1/4] add` | `5 3/4`
 | `c 2-1/2 3-1/4 add`     | `5 3/4`
-
-## Real
-
-A `Real` number is a [Num](#num) that can be either a:
-
-- [Integer](#integer)
-- [Decimal](#decimal)
-- [Float](#float)
-- [Rational](#rational)
-
-Formatting characters are first removed when parsing real numbers. Those
-characters are:
-
-- Thousand separators (`','`, `'_'`, `' '`)
-- Currency symbols ('`$'`, `'€'`, `'¥'`)
-
-The following strings all parse to the same real number:
-
-<!-- test: parse-formatting -->
-
-| Input               | Stack
-|---------------------|-------------
-| `c 12,345.67 dec`   | `12345.67`
-| `c 12_345.67 dec  ` | `12345.67`
-| `c '12_345.67' dec` | `12345.67`
-| `c $12,345.67 dec`  | `12345.67`
-| `c 12,345.67$ dec`  | `12345.67`
 
 ## Str/Val
 
@@ -241,6 +224,22 @@ The type `Val` is used when an operation doesn't depend on the type of the
 value but is otherwise is the same as `Str`. It is used to notate operations
 such as `swap` where the types of the values being swapped is irrelevant.
 
+### Formatting Characters
 
+Formatting characters are first removed when parsing numbers that are either
+an `Integer`, `Decimal`, or `Float`. Those characters are:
 
+- Thousand separators (`','`, `'_'`, `' '`)
+- Currency symbols ('`$'`, `'€'`, `'¥'`)
 
+The following strings all parse to the same number:
+
+<!-- test: parse-formatting -->
+
+| Input               | Stack
+|---------------------|-------------
+| `c 12,345.67 dec`   | `12345.67`
+| `c 12_345.67 dec  ` | `12345.67`
+| `c '12_345.67' dec` | `12345.67`
+| `c $12,345.67 dec`  | `12345.67`
+| `c 12,345.67$ dec`  | `12345.67`

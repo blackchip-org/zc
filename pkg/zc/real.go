@@ -64,6 +64,8 @@ func (t FloatType) String() string { return "Float" }
 func (t FloatType) Parse(s string) (float64, bool) {
 	s = cleanNumber(s)
 	s = strings.TrimSuffix(s, "f")
+	s = strings.Replace(s, "×10", "e", 1)
+	s = strings.Replace(s, "x10", "e", 1)
 	f, err := strconv.ParseFloat(s, 64)
 	if err != nil {
 		return 0, false

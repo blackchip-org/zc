@@ -2,14 +2,7 @@
 
 Boolean operations.
 
-Comparison operations are parsed as numerics when possible. Therefore the
-following values are considered equal:
-
-- `1234.56`
-- `1234.560`
-- `1,234.56`
-- `$1,234.56`
-- `+1,234.56`
+The comparison operations will
 
 <!-- index -->
 
