@@ -31,6 +31,13 @@ func getTimeState(c zc.Calc) *timeState {
 	return s.(*timeState)
 }
 
+func AddDuration(c zc.Calc) {
+	a1 := zc.PopDuration(c)
+	a0 := zc.PopDuration(c)
+	r0 := a1 + a0
+	zc.PushDuration(c, r0)
+}
+
 func AddDurationDateTime(c zc.Calc) {
 	a1 := zc.PopDateTime(c)
 	a0 := zc.PopDuration(c)

@@ -43,7 +43,7 @@ func PushRune(c Calc, r rune) { c.Push(Rune.Format(r)) }
 
 type StringType struct{}
 
-func (t StringType) String() string { return "String" }
+func (t StringType) String() string { return "Str" }
 
 func (t StringType) Parse(s string) (string, bool) {
 	return s, true

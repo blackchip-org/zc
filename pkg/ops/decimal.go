@@ -2,6 +2,7 @@ package ops
 
 import (
 	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/shopspring/decimal"
 )
 
 func AbsDecimal(c zc.Calc) {
@@ -20,6 +21,17 @@ func AddDecimal(c zc.Calc) {
 func CeilDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
 	r0 := a0.Ceil()
+	zc.PushDecimal(c, r0)
+}
+
+func Dec(c zc.Calc) {
+	a0 := zc.PopDecimal(c)
+	zc.PushDecimal(c, a0)
+}
+
+func DecFloat(c zc.Calc) {
+	a0 := zc.PopFloat(c)
+	r0 := decimal.NewFromFloat(a0)
 	zc.PushDecimal(c, r0)
 }
 

@@ -66,7 +66,7 @@ func Bytes(c zc.Calc) {
 	zc.PushInt(c, r0)
 }
 
-func Dec(c zc.Calc) {
+func DecBigInt(c zc.Calc) {
 	a0 := zc.PopBigInt(c)
 	zc.PushBigInt(c, a0)
 }
@@ -104,6 +104,11 @@ func HexBigInt(c zc.Calc) {
 		r0 = fmt.Sprintf("0x%x", a0)
 	}
 	zc.PushString(c, r0)
+}
+
+func Int(c zc.Calc) {
+	a0 := zc.PopBigInt(c)
+	zc.PushBigInt(c, a0)
 }
 
 func Lsh(c zc.Calc) {
