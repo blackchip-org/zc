@@ -23,6 +23,7 @@ Table of contents:
 - [Decimal](#decimal)
 - [Duration](#duration)
 - [Int](#integer), [Int64](#integer), [Int32](#integer), [Int16](#integer), [Int8](#integer)
+- [Rational](#rational)
 - [Real](#real)
 - [Num](#num)
 - [Str](#strval)
@@ -172,7 +173,23 @@ Integers may have a radix prefix of:
 
 ## Num
 
-A `Num` is either a [Complex](#complex) or a [Real](#real) number.
+A `Num` is either a [`Complex`](#complex) or a [`Real`](#real) number.
+
+
+## Rational
+
+A `Rational` number is a [`Real`](#real) that has a numerator *n* and a
+denominator *d* in the form of *n*`/`*d*. A whole number can prefix a rational
+using a ` `, `_` or `-` character. Examples:
+
+<!-- test: types-rational -->
+
+| Input                   | Stack
+|-------------------------|-------------
+| `c 1/2 1/4 add`         | `3/4`
+| `c 2_1/2 3_1/4 add`     | `5 3/4`
+| `c [2 1/2] [3 1/4] add` | `5 3/4`
+| `c 2-1/2 3-1/4 add`     | `5 3/4`
 
 ## Real
 

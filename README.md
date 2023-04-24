@@ -6,6 +6,7 @@ Documentation:
 
 - [operations](doc/ops.md): Operation reference by category
 - [index](doc/index.md): Operation names listed alphabetically
+- [types](doc/types.md): Types of values
 
 ![ZC Demo](demo.gif)
 
