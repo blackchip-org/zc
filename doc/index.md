@@ -1,4 +1,4 @@
-# index
+# Operation Index
 
 - [*](ops/basic.md#mul): Multiplication
 - [**](ops/basic.md#pow): Exponentiation

@@ -4,9 +4,12 @@ A fun stack based calculator.
 
 Documentation:
 
-- [operations](doc/ops.md): Operation reference by category
-- [index](doc/index.md): Operation names listed alphabetically
-- [types](doc/types.md): Types of values
+- [Operation Reference](doc/ops.md)
+- [Operations Index](doc/index.md)
+- [Type Documentation](doc/types.md)
+- [Stack Notation](doc/stack.md)
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/pkg/zc.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/pkg/zc)
 
 ![ZC Demo](demo.gif)
 
@@ -160,8 +163,7 @@ Currency symbols are also ignored when parsing:
 |----------------|-------------------
 | `$1234 2 mul`  | `2468`
 
-Integer math uses arbitrary sized values
-(with [math/big](https://pkg.go.dev/math/big)) when possible:
+Integer math uses arbitrary sized values when possible:
 
 <!-- test: bigint -->
 
@@ -169,9 +171,7 @@ Integer math uses arbitrary sized values
 |----------------|-------------------
 | `2 128 pow`    | `340282366920938463463374607431768211456`
 
-Real number math uses fixed point math
-(with [shopspring/decimal](https://github.com/shopspring/decimal)) when
-possible:
+Real number math uses fixed point math when possible:
 
 <!-- test: decimal -->
 

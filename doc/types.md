@@ -1,4 +1,4 @@
-# types
+# Types
 
 <!-- eval: 'Jan 2 2006 15:04:05 -0700 MST' now-set -->
 <!-- eval: 'MST' local-zone -->
@@ -18,6 +18,7 @@ Table of contents:
 - [BigInt](#integer)
 - [Bool](#bool)
 - [Complex](#complex)
+- [Float](float)
 - [Date](#datetime)
 - [DateTime](#datetime)
 - [Decimal](#decimal)
@@ -140,6 +141,19 @@ of *hours*`h`*minutes*`m`*seconds*`s`. Zero values may be omitted. Examples:
 | `10s add`               | `4h26m`
 | `34m add`               | `5h`
 
+## Float
+
+A `Float` value is a [`Real`](#real) using floating-point math. For operations
+supported by `Decimal`, those are preferred over using a `Float`. To force
+the use of a float, add a `f` suffix to the number.
+
+<!-- test: types-float -->
+
+| Input              | Stack
+|--------------------|-------------
+| `c 1.1 2.2 add`    | `3.3`
+| `c 1.1f 2.2f add`  | `3.3000000000000003`
+
 ## Integer
 
 An `Integer` value is a [`Real`](#real) that can either be a:
@@ -174,7 +188,6 @@ Integers may have a radix prefix of:
 ## Num
 
 A `Num` is either a [`Complex`](#complex) or a [`Real`](#real) number.
-
 
 ## Rational
 
@@ -227,10 +240,6 @@ the string as-is.
 The type `Val` is used when an operation doesn't depend on the type of the
 value but is otherwise is the same as `Str`. It is used to notate operations
 such as `swap` where the types of the values being swapped is irrelevant.
-
-Sub-types:
-
-- [Num](#num)
 
 
 
