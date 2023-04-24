@@ -23,6 +23,7 @@ var (
 func TestDoc(t *testing.T) {
 	files := []string{
 		"../README.md",
+		"../doc/types.md",
 	}
 	dirs := []string{
 		"../doc/ops",
@@ -128,8 +129,13 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 
 		t.Log(in)
 
-		if r.Eval(in); c.Error() != nil {
-			t.Fatal(c.Error())
+		r.Eval(in)
+		if c.Error() != nil {
+			actualOut := c.Error().Error()
+			if actualOut != out {
+				t.Fatalf("\n have: %v \n want: %v", actualOut, out)
+			}
+			return
 		}
 		if c.Info() != "" || info != "" {
 			have := "*" + c.Info() + "*"

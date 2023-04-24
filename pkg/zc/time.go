@@ -24,29 +24,29 @@ type DateType struct{}
 
 func (t DateType) String() string { return "Date" }
 
-func (t DateType) Parse(s string) (time.Time, error) {
+func (t DateType) Parse(s string) (time.Time, bool) {
 	parsed, err := pt.ParseDate(s)
 	if err != nil {
-		return time.Time{}, ErrExpectedType(t, s)
+		return time.Time{}, false
 	}
 	tm, err := pt.Time(parsed, Now())
 	if err != nil {
-		return time.Time{}, ErrExpectedType(t, s)
+		return time.Time{}, false
 	}
-	return tm, nil
+	return tm, true
 }
 
 func (t DateType) MustParse(s string) time.Time {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t DateType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t DateType) Format(tm time.Time) string {
@@ -62,29 +62,29 @@ type DateTimeType struct{}
 
 func (t DateTimeType) String() string { return "DateTime" }
 
-func (t DateTimeType) Parse(s string) (time.Time, error) {
+func (t DateTimeType) Parse(s string) (time.Time, bool) {
 	parsed, err := pt.Parse(s)
 	if err != nil {
-		return time.Time{}, ErrExpectedType(t, s)
+		return time.Time{}, false
 	}
 	tm, err := pt.Time(parsed, Now())
 	if err != nil {
-		return time.Time{}, ErrExpectedType(t, s)
+		return time.Time{}, false
 	}
-	return tm, nil
+	return tm, true
 }
 
 func (t DateTimeType) MustParse(s string) time.Time {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t DateTimeType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t DateTimeType) Format(tm time.Time) string {
@@ -100,26 +100,25 @@ type DurationType struct{}
 
 func (t DurationType) String() string { return "Duration" }
 
-func (t DurationType) Parse(s string) (time.Duration, error) {
+func (t DurationType) Parse(s string) (time.Duration, bool) {
 	d, err := time.ParseDuration(s)
 	if err != nil {
-		return time.Duration(0), ErrExpectedType(t, s)
+		return time.Duration(0), false
 	}
-	return d, nil
-
+	return d, true
 }
 
 func (t DurationType) MustParse(s string) time.Duration {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t DurationType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t DurationType) Format(v time.Duration) string {
@@ -146,29 +145,29 @@ type TimeType struct{}
 
 func (t TimeType) String() string { return "Time" }
 
-func (t TimeType) Parse(s string) (time.Time, error) {
+func (t TimeType) Parse(s string) (time.Time, bool) {
 	parsed, err := pt.ParseTime(s)
 	if err != nil {
-		return time.Time{}, ErrExpectedType(t, s)
+		return time.Time{}, false
 	}
 	tm, err := pt.Time(parsed, Now())
 	if err != nil {
-		return time.Time{}, ErrExpectedType(t, s)
+		return time.Time{}, false
 	}
-	return tm, nil
+	return tm, true
 }
 
 func (t TimeType) MustParse(s string) time.Time {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t TimeType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t TimeType) Format(tm time.Time) string {

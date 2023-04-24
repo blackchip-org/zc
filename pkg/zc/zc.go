@@ -25,7 +25,8 @@ type Calc interface {
 	Derive() Calc
 	NewState(string, any)
 	State(string) (any, bool)
-	SetOp(string, []string)
+	SetOp(string)
+	SetArgs([]string)
 	Op() OpCall
 	OpNames() []string
 }

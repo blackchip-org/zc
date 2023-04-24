@@ -17,40 +17,43 @@ type DecimalType struct{}
 
 func (t DecimalType) String() string { return "Decimal" }
 
-func (t DecimalType) Parse(s string) (decimal.Decimal, error) {
+func (t DecimalType) Parse(s string) (decimal.Decimal, bool) {
 	ls := strings.ToLower(s)
 	if !strings.HasSuffix(ls, "d") {
 		// If scientific notation is being used, let this be parsed
 		// by the float type instead
 		if strings.Contains(ls, "e") {
-			return decimal.Zero, ErrExpectedType(t, s)
+			return decimal.Zero, false
 		}
 	}
 	s = strings.TrimSuffix(s, "d")
 	s = cleanNumber(s)
 	d, err := decimal.NewFromString(s)
 	if err != nil {
-		return decimal.Zero, ErrExpectedType(t, s)
+		return decimal.Zero, false
 	}
-	return d, nil
+	return d, true
 }
 
 func (t DecimalType) MustParse(s string) decimal.Decimal {
-	z, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
-	return z
+	return r
 }
 
 func (t DecimalType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t DecimalType) Format(v decimal.Decimal) string {
 	return v.String()
 }
+
+func PopDecimal(c Calc) decimal.Decimal     { return Decimal.MustParse(c.MustPop()) }
+func PushDecimal(c Calc, r decimal.Decimal) { c.Push(Decimal.Format(r)) }
 
 // ---
 
@@ -58,27 +61,27 @@ type FloatType struct{}
 
 func (t FloatType) String() string { return "Float" }
 
-func (t FloatType) Parse(s string) (float64, error) {
+func (t FloatType) Parse(s string) (float64, bool) {
 	s = cleanNumber(s)
 	s = strings.TrimSuffix(s, "f")
 	f, err := strconv.ParseFloat(s, 64)
 	if err != nil {
-		return 0, ErrExpectedType(t, s)
+		return 0, false
 	}
-	return f, nil
+	return f, true
 }
 
 func (t FloatType) MustParse(s string) float64 {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t FloatType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t FloatType) Format(v float64) string {
@@ -104,14 +107,14 @@ type RationalType struct{}
 
 func (t RationalType) String() string { return "Rational" }
 
-func (t RationalType) Parse(s string) (*big.Rat, error) {
+func (t RationalType) Parse(s string) (*big.Rat, bool) {
 	i, err := strconv.ParseInt(s, 10, 64)
 	if err == nil {
-		return big.NewRat(i, 1), nil
+		return big.NewRat(i, 1), true
 	}
 	f, err := strconv.ParseFloat(s, 64)
 	if err == nil {
-		return new(big.Rat).SetFloat64(f), nil
+		return new(big.Rat).SetFloat64(f), true
 	}
 
 	sc := scanner.NewString(s)
@@ -121,7 +124,7 @@ func (t RationalType) Parse(s string) (*big.Rat, error) {
 	s1 := sc.Scan(scanner.Int)
 	i1, err := strconv.ParseInt(s1, 10, 64)
 	if err != nil {
-		return &big.Rat{}, ErrExpectedType(t, s)
+		return nil, false
 	}
 	switch sc.Ch {
 	case '_', '-', ' ':
@@ -129,25 +132,25 @@ func (t RationalType) Parse(s string) (*big.Rat, error) {
 	case '/':
 		n = i1
 	default:
-		return &big.Rat{}, ErrExpectedType(t, s)
+		return nil, false
 	}
 	sc.Next()
 
 	s2 := sc.Scan(scanner.UInt)
 	i2, err := strconv.ParseInt(s2, 10, 64)
 	if err != nil {
-		return &big.Rat{}, ErrExpectedType(t, s)
+		return nil, false
 	}
 	if w != 0 {
 		n = i2
 		if sc.Ch != '/' {
-			return &big.Rat{}, ErrExpectedType(t, s)
+			return nil, false
 		}
 		sc.Next()
 		s3 := sc.Scan(scanner.UInt)
 		i3, err := strconv.ParseInt(s3, 10, 64)
 		if err != nil {
-			return &big.Rat{}, ErrExpectedType(t, s)
+			return nil, false
 		}
 		d = i3
 	} else {
@@ -158,20 +161,20 @@ func (t RationalType) Parse(s string) (*big.Rat, error) {
 		n = n + (d * w)
 	}
 
-	return big.NewRat(n, d), nil
+	return big.NewRat(n, d), true
 }
 
 func (t RationalType) MustParse(s string) *big.Rat {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t RationalType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t RationalType) Format(v *big.Rat) string {
@@ -185,3 +188,6 @@ func (t RationalType) Format(v *big.Rat) string {
 	}
 	return v.RatString()
 }
+
+func PopRational(c Calc) *big.Rat     { return Rational.MustParse(c.MustPop()) }
+func PushRational(c Calc, r *big.Rat) { c.Push(Rational.Format(r)) }

@@ -8,18 +8,11 @@ import (
 )
 
 var opsList = []zc.OpDecl{
-	zc.Macro("!=", "neq"),
-	zc.Macro("%", "mod"),
 	zc.Macro("*", "mul"),
 	zc.Macro("**", "pow"),
 	zc.Macro("+", "add"),
 	zc.Macro("-", "sub"),
 	zc.Macro("/", "div"),
-	zc.Macro("<", "lt"),
-	zc.Macro("<=", "lte"),
-	zc.Macro("==", "eq"),
-	zc.Macro(">", "gt"),
-	zc.Macro(">=", "gte"),
 	zc.Macro("^", "pow"),
 	zc.Macro("π", "pi"),
 
@@ -50,7 +43,7 @@ var opsList = []zc.OpDecl{
 	),
 	zc.GenOp("and",
 		zc.Func(ops.AndBool, zc.Bool, zc.Bool),
-		zc.Func(ops.AndBigInt, zc.BigInt),
+		zc.Func(ops.AndBigInt, zc.BigInt, zc.BigInt),
 	),
 
 	// b

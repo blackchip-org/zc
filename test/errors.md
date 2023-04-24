@@ -1,13 +1,13 @@
 # errors
 
 1 add
-[add] not enough arguments, expected 2
+add: not enough arguments, expected 2
 
 'a' 'b' add
-[add] no operation for String, String
+no operation for: 'a' 'b' add
 
 1 2 3 [1 add] fold
-[1 add] invalid function: does not reduce
+function '1 add' is invalid: does not reduce
 
 ## macros
 

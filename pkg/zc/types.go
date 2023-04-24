@@ -61,56 +61,34 @@ func Format(a any) string {
 	return fmt.Sprintf("%v", a)
 }
 
-func Identify(v string) Type {
-	if BigInt.Is(v) {
-		return BigInt
-	}
-	if Decimal.Is(v) {
-		return Decimal
-	}
-	if Float.Is(v) {
-		return Float
-	}
-	if Rational.Is(v) {
-		return Rational
-	}
-	if Complex.Is(v) {
-		return Complex
-	}
-	if Bool.Is(v) {
-		return Bool
-	}
-	return String
-}
-
 // ---
 
 type BoolType struct{}
 
 func (t BoolType) String() string { return "Bool" }
 
-func (t BoolType) Parse(s string) (bool, error) {
-	ls := strings.ToLower(s)
+func (t BoolType) Parse(s string) (bool, bool) {
+	ls := strings.TrimSpace(strings.ToLower(s))
 	switch ls {
 	case "true":
-		return true, nil
+		return true, true
 	case "false":
-		return false, nil
+		return false, true
 	}
-	return false, ErrExpectedType(t, s)
+	return false, false
 }
 
 func (t BoolType) MustParse(s string) bool {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t BoolType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t BoolType) Format(v bool) string {
@@ -120,31 +98,34 @@ func (t BoolType) Format(v bool) string {
 	return "false"
 }
 
+func PopBool(c Calc) bool     { return Bool.MustParse(c.MustPop()) }
+func PushBool(c Calc, r bool) { c.Push(Bool.Format(r)) }
+
 // ---
 
 type ComplexType struct{}
 
 func (t ComplexType) String() string { return "Complex" }
 
-func (t ComplexType) Parse(s string) (complex128, error) {
+func (t ComplexType) Parse(s string) (complex128, bool) {
 	c, err := strconv.ParseComplex(s, 128)
 	if err != nil {
-		return 0, ErrExpectedType(t, s)
+		return 0, false
 	}
-	return c, nil
+	return c, true
 }
 
 func (t ComplexType) MustParse(s string) complex128 {
-	r, err := t.Parse(s)
-	if err != nil {
-		panic(err)
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
 	}
 	return r
 }
 
 func (t ComplexType) Is(s string) bool {
-	_, err := t.Parse(s)
-	return err == nil
+	_, ok := t.Parse(s)
+	return ok
 }
 
 func (t ComplexType) Format(v complex128) string {
@@ -153,6 +134,9 @@ func (t ComplexType) Format(v complex128) string {
 	// Remove them.
 	return s[1 : len(s)-1]
 }
+
+func PopComplex(c Calc) complex128     { return Complex.MustParse(c.MustPop()) }
+func PushComplex(c Calc, r complex128) { c.Push(Complex.Format(r)) }
 
 // ===
 

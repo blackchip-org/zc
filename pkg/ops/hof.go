@@ -19,9 +19,9 @@ func Filter(c zc.Calc) {
 			zc.ErrInvalidFunc(c, fn, "no results")
 			return
 		}
-		r, err := zc.Bool.Parse(out)
-		if err != nil {
-			c.SetError(err)
+		r, ok := zc.Bool.Parse(out)
+		if !ok {
+			zc.ErrExpectedType(c, zc.Bool, out)
 			return
 		}
 		if r {

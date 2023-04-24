@@ -48,6 +48,8 @@ func (c *calc) SetInfo(format string, args ...any) {
 func (c *calc) Eval(s string) error {
 	c.err = nil
 	c.info = ""
+	c.op = ""
+	c.args = nil
 
 	lines := strings.Split(s, "\n")
 	for _, line := range lines {
@@ -122,8 +124,11 @@ func (c *calc) State(name string) (any, bool) {
 	return s, ok
 }
 
-func (c *calc) SetOp(op string, args []string) {
+func (c *calc) SetOp(op string) {
 	c.op = op
+}
+
+func (c *calc) SetArgs(args []string) {
 	c.args = args
 }
 
@@ -211,38 +216,67 @@ func isValue(ch rune) bool {
 
 func evalOp(op zc.OpDecl) zc.CalcFunc {
 	return func(c zc.Calc) {
+		c.SetOp(op.Name)
 		if op.Macro != "" {
 			c.Eval(op.Macro)
 			return
 		}
-		if len(op.Funcs) == 0 {
+		switch len(op.Funcs) {
+		case 0:
 			panic("no functions for operation")
+		case 1:
+			evalOpSingle(c, op)
+		default:
+			evalOpDispatch(c, op)
 		}
-		for _, decl := range op.Funcs {
-			if isOpMatch(c, decl) {
-				nArgs := len(decl.Params)
-				sLen := c.StackLen()
-				args := c.Stack()[sLen-nArgs:]
-				c.SetOp(op.Name, args)
-				decl.Func(c)
-				return
-			}
-		}
-
-		// For now, we are going to check the first decl to
-		// determine the number of arguments.
-		nArgs := len(op.Funcs[0].Params)
-		var types []zc.Type
-		for i := 0; i < nArgs; i++ {
-			v, ok := c.Peek(i)
-			if !ok {
-				zc.ErrNotEnoughArgs(c, op.Name, nArgs)
-				return
-			}
-			types = append(types, zc.Identify(v))
-		}
-		zc.ErrNoOpFor(c, op.Name, types...)
 	}
+}
+
+func evalOpSingle(c zc.Calc, op zc.OpDecl) {
+	fn := op.Funcs[0]
+	var args []string
+	n := len(fn.Params)
+	for i, p := range fn.Params {
+		v, ok := c.Peek(n - i - 1)
+		if !ok {
+			zc.ErrNotEnoughArgs(c, op.Name, len(fn.Params))
+			return
+		}
+		if !p.Is(v) {
+			zc.ErrExpectedType(c, p, v)
+			return
+		}
+		args = append(args, v)
+	}
+	c.SetArgs(args)
+	fn.Func(c)
+}
+
+func evalOpDispatch(c zc.Calc, op zc.OpDecl) {
+	for _, decl := range op.Funcs {
+		if isOpMatch(c, decl) {
+			nArgs := len(decl.Params)
+			n := c.StackLen()
+			args := c.Stack()[n-nArgs:]
+			c.SetArgs(args)
+			decl.Func(c)
+			return
+		}
+	}
+
+	// For now, we are going to check the first decl to
+	// determine the number of arguments.
+	nArgs := len(op.Funcs[0].Params)
+	var args []string
+	for i := nArgs - 1; i >= 0; i-- {
+		v, ok := c.Peek(i)
+		if !ok {
+			zc.ErrNotEnoughArgs(c, op.Name, nArgs)
+			return
+		}
+		args = append(args, v)
+	}
+	zc.ErrNoOpFor(c, op.Name, args)
 }
 
 func isOpMatch(c zc.Calc, decl zc.FuncDecl) bool {
