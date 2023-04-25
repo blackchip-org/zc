@@ -118,3 +118,8 @@ func Word(s *Scanner) {
 	s.ScanWhile(unicode.IsSpace)
 	s.ScanUntil(unicode.IsSpace)
 }
+
+func Line(s *Scanner) {
+	s.ScanUntil(IsNewline)
+	s.Next()
+}

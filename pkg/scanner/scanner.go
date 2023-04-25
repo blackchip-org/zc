@@ -141,3 +141,10 @@ func (s *Scanner) End() bool {
 func (s *Scanner) Ok() bool {
 	return !s.End() && s.Error == nil
 }
+
+func (s *Scanner) setErr(err error) {
+	s.Ch = EndCh
+	if err != io.EOF {
+		s.Error = err
+	}
+}
