@@ -13,7 +13,7 @@
 
 ## a
 
-- \a
+- a
   - [(basic) a](ops/basic.md#add): Addition
   - [(time) a](ops/time.md#add): Time after a duration
 - [abs](ops/sci.md#abs): Absolute value
@@ -207,7 +207,7 @@
 
 ## s
 
-- \s
+- s
   - [(basic) s](ops/basic.md#sub): Subtraction
   - [(time) s](ops/time.md#sub): Duration between two times
 - [scientific-notation](ops/sci.md#scientific-notation): Scientific notation

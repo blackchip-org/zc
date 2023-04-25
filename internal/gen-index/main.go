@@ -105,7 +105,7 @@ func main() {
 					}
 				}
 			} else {
-				if len(key) == 1 {
+				if key == "-" || key == "+" {
 					key = "\\" + key
 				}
 				fmt.Fprintf(out, "- %v\n", key)
