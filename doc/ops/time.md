@@ -28,12 +28,12 @@ Date, time, and duration operations
 
 ## add
 
-Adds the duration `d` to time `t`.
-
-    ( t:DateTime d:Duration -- add:DateTime); or
-    ( d:Duration t:DateTime -- add:DateTime)
+Adds the duration *d* to time *t*.
 
 Aliases: `a`, `+`
+
+    ( t:DateTime d:Duration -- DateTime); or
+    ( d:Duration t:DateTime -- DateTime)
 
 Example:
 
@@ -44,11 +44,25 @@ Example:
 | `3:30pm`   | `3:30pm`
 | `2h add`   | `Mon Jan 2 2006 5:30:00pm -0700 MST`
 
+Or, adds the duration of *p0* to *p1*.
+
+    ( p0:Duration p1:Duration -- Duration )
+
+Example:
+
+<!-- test: add-duration-2 -->
+
+| Input      | Stack
+|------------|------------------
+| `2h30m`    | `2h30m`
+| `45m add`  | `3h15m`
+
 ## date
 
-Formats a the date `d` with the default layout
+Formats a date/time to a common date layout. Time information, if any, is
+removed.
 
-    ( d:DateTime -- date:Date )
+    ( DateTime -- date:Date )
 
 Example:
 
@@ -61,9 +75,9 @@ Example:
 
 ## datetime
 
-Formats a the date `d` with the default layout
+Formats a date/time to a common layout.
 
-    ( d:DateTime -- date:Date )
+    ( DateTime -- DateTime )
 
 Aliases: `dt`
 
@@ -80,7 +94,7 @@ Example:
 
 Day of year for a given date.
 
-    ( dt:DateTime -- Int )
+    ( DateTime -- Int )
 
 Example:
 
@@ -95,8 +109,7 @@ Example:
 
 Hours in duration.
 
-    ( d:Duration -- hours:Float )
-
+    ( Duration -- Float )
 
 Example:
 
@@ -112,7 +125,7 @@ Example:
 
 Sets the local time zone.
 
-    ( zone:String -- )
+    ( String -- )
 
 Example:
 
@@ -121,18 +134,16 @@ Example:
 | Input                           | Stack
 |---------------------------------|------------------
 | `now time`                      | `3:04:05pm -0700 MST`
-| `clear`                         |
-| `'est' local-zone`              | *local time zone is now 'EST'*
+| `c 'est' local-zone`            | *local time zone is now 'EST'*
 | `now time`                      | `5:04:05pm -0500 EST`
-| `clear`                         |
-| `'Asia/Jakarta' local-zone`     | *local time zone is now 'Asia/Jakarta'*
+| `c 'Asia/Jakarta' local-zone`   | *local time zone is now 'Asia/Jakarta'*
 | `now time`                      | `5:04:05am +0700`
 
 ## local-zone=
 
 Gets the local time zone.
 
-    ( -- zone:String )
+    ( -- String )
 
 Example:
 
@@ -142,13 +153,11 @@ Example:
 |------------------------|------------------
 | `local-zone=`          | `MST`
 
-
 ## minutes
 
 Minutes in duration.
 
-    ( d:Duration -- hours:Float )
-
+    ( Duration -- Float )
 
 Example:
 
@@ -159,13 +168,12 @@ Example:
 | `10h20m30s`       | `10h20m30s`
 | `minutes 2 round` | `620.5`
 
-
 ## now
 
 The current date and time. If `now-set` has been called, that date and
 time will be returned instead.
 
-    ( -- now:DateTime )
+    ( -- DateTime )
 
 <!-- test: now -->
 
@@ -178,7 +186,7 @@ time will be returned instead.
 Override the value returned by `now`. Useful for to mock current time while
 testing.
 
-    ( dt:DateTime -- )
+    ( DateTime -- )
 
 Example:
 
@@ -198,8 +206,7 @@ Cancel override of the value returned by now
 
 Seconds in duration.
 
-    ( d:Duration -- hours:Float )
-
+    ( Duration -- Float )
 
 Example:
 
@@ -210,12 +217,11 @@ Example:
 | `10h20m30s`       | `10h20m30s`
 | `seconds`         | `37230`
 
-
 ## sub
 
-The duration in time by subtracting `b` from `a`.
+The duration in time by subtracting `p1` from `p0`.
 
-    ( a:DateTime b:DateTime -- sub-t:Duration )
+    ( p0:DateTime p1:DateTime -- Duration )
 
 Aliases: `s`, `-`
 
@@ -226,12 +232,12 @@ Aliases: `s`, `-`
 | `'Jan 2 2006 10:00am`        | `Jan 2 2006 10:00am`
 | `'Dec 31 2005 5:30pm' sub`   | `40h30m`
 
-
 ## time
 
-Formats a time with the default layout
+Formats a date/time with the common time layout. Date information, if any,
+is discarded.
 
-    ( t:DateTime -- time:Time )
+    ( DateTime -- Time )
 
 Example:
 
@@ -244,9 +250,9 @@ Example:
 
 ## time-zone
 
-Convert time to a given time zone
+Convert *time** to a given time *zone*
 
-    ( dt:DateTime zone:String -- dt:DateTime )
+    ( time:DateTime zone:String -- DateTime )
 
 Aliases: `tz`
 

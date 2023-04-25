@@ -27,7 +27,7 @@ Units of length
 
 Kilometers to miles
 
-    ( km:Num -- mi:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -43,7 +43,7 @@ Example:
 
 Kilometers to nautical miles
 
-    ( km:Num -- nmi:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -59,7 +59,7 @@ Example:
 
 Meters to nautical miles
 
-    ( m:Num -- nmi:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -74,7 +74,7 @@ Example:
 
 Miles to kilometers
 
-    ( mi:Num -- km:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -90,7 +90,7 @@ Example:
 
 Miles to nautical miles
 
-    ( mi:Num -- nmi:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -106,7 +106,7 @@ Example:
 
 Nautical miles to kilometers
 
-    ( nmi:Num -- km:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -121,7 +121,7 @@ Example:
 
 Nautical miles to kilometers
 
-    ( nmi:Num -- km:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -136,7 +136,7 @@ Example:
 
 Nautical miles to meters
 
-    ( nmi:Num -- m:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -151,7 +151,7 @@ Example:
 
 Nautical miles to miles
 
-    ( nmi:Num -- mi:Num )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -200,7 +200,7 @@ Prefixes for the International System of Units
 
 Q, 1e30
 
-    ( -- '1e30' )
+    ( -- Float )
 
 Example:
 
@@ -214,7 +214,7 @@ Example:
 
 R, 1e27
 
-    ( -- '1e27' )
+    ( -- Float )
 
 Example:
 
@@ -228,7 +228,7 @@ Example:
 
 Y, 1e24
 
-    ( -- '1e24' )
+    ( -- Float )
 
 Example:
 
@@ -242,7 +242,7 @@ Example:
 
 Z, 1e21
 
-    ( -- '1e21' )
+    ( -- Float )
 
 Example:
 
@@ -256,7 +256,7 @@ Example:
 
 E, 1e18
 
-    ( -- '1e18' )
+    ( -- Float )
 
 Example:
 
@@ -270,7 +270,7 @@ Example:
 
 P, 1e15
 
-    ( -- '1e15' )
+    ( -- Float )
 
 Example:
 
@@ -284,7 +284,7 @@ Example:
 
 T, 1e12
 
-    ( -- '1e12' )
+    ( -- Float )
 
 Example:
 
@@ -298,7 +298,7 @@ Example:
 
 G, 1e9
 
-    ( -- '1e9' )
+    ( -- Float )
 
 Example:
 
@@ -312,7 +312,7 @@ Example:
 
 M, 1e6
 
-    ( -- '1e6' )
+    ( -- Float )
 
 Example:
 
@@ -326,7 +326,7 @@ Example:
 
 k, 1e3
 
-    ( -- '1e3' )
+    ( -- Float )
 
 Example:
 
@@ -340,7 +340,7 @@ Example:
 
 h, 1e2
 
-    ( -- '1e2' )
+    ( -- Float )
 
 Example:
 
@@ -354,7 +354,7 @@ Example:
 
 da, 1e1
 
-    ( -- '1e1' )
+    ( -- Float )
 
 Example:
 
@@ -368,7 +368,7 @@ Example:
 
 d, 1e-1
 
-    ( -- '1e-1' )
+    ( -- Float )
 
 Example:
 
@@ -382,7 +382,7 @@ Example:
 
 c, 1e-2
 
-    ( -- '1e-2' )
+    ( -- Float )
 
 Example:
 
@@ -396,7 +396,7 @@ Example:
 
 d, 1e-3
 
-    ( -- '1e-3' )
+    ( -- Float )
 
 Example:
 
@@ -410,7 +410,7 @@ Example:
 
 μ, 1e-6
 
-    ( -- '1e-6' )
+    ( -- Float )
 
 Example:
 
@@ -424,7 +424,7 @@ Example:
 
 n, 1e-9
 
-    ( -- '1e-9' )
+    ( -- Float )
 
 Example:
 
@@ -438,7 +438,7 @@ Example:
 
 p, 1e-12
 
-    ( -- '1e-12' )
+    ( -- Float )
 
 Example:
 
@@ -452,7 +452,7 @@ Example:
 
 f, 1e-15
 
-    ( -- '1e-15' )
+    ( -- Float )
 
 Example:
 
@@ -466,7 +466,7 @@ Example:
 
 a, 1e-18
 
-    ( -- '1e-18' )
+    ( -- Float )
 
 Example:
 
@@ -480,7 +480,7 @@ Example:
 
 z, 1e-21
 
-    ( -- '1e-21' )
+    ( -- Float )
 
 Example:
 
@@ -494,7 +494,7 @@ Example:
 
 y, 1e-24
 
-    ( -- '1e-24' )
+    ( -- Float )
 
 Example:
 
@@ -508,7 +508,7 @@ Example:
 
 r, 1e-27
 
-    ( -- '1e-27' )
+    ( -- Float )
 
 Example:
 
@@ -522,7 +522,7 @@ Example:
 
 q, 1e-30
 
-    ( -- '1e-30' )
+    ( -- Float )
 
 Example:
 
@@ -551,7 +551,7 @@ Temperature conversions
 
 Celsius to Fahrenheit
 
-    ( c:Number -- f:Number )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -566,7 +566,7 @@ Example:
 
 Celsius to Kelvin
 
-    ( c:Number -- k:Number )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -581,7 +581,7 @@ Example:
 
 Fahrenheit to Celsius
 
-    ( f:Number -- c:Number )
+    ( Decimal -- Decimal )
 
 Example:
 
@@ -596,7 +596,7 @@ Example:
 
 Kelvin to Celsius
 
-    ( k:Number -- c:Number )
+    ( Decimal -- Decimal )
 
 Example:
 

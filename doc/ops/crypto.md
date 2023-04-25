@@ -11,9 +11,9 @@ Cryptographic ciphers
 
 ## rot-13
 
-Rotate all characters in string `s` by 13 spaces.
+Rotate all characters in string *s* by 13 spaces.
 
-    ( s:Str -- rotate:Str )
+    ( s:Str -- Str )
 
 Example:
 

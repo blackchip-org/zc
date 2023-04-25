@@ -15,9 +15,9 @@ Higher order functions
 
 ## eval
 
-Evaluate the `top` of the stack as if it was input to the calculator.
+Evaluate *expr* as if it was input to the calculator.
 
-    ( items:Val* top:Val -- items:Val* )
+    ( Val* expr:Str -- Val* )
 
 
 <!-- test: eval -->
@@ -30,10 +30,9 @@ Evaluate the `top` of the stack as if it was input to the calculator.
 
 ## filter
 
-Filter `items` in the stack where each item true when evaluated by
-function `f`.
+Filter the stack by keeping items that are true when evaluated by expression *expr*.
 
-    ( items...:Val `f`:Lambda -- filtered...:Val )
+    ( Val* expr:Str -- Val* )
 
 Example which filters the stack to only keep even numbers:
 
@@ -45,12 +44,12 @@ Example which filters the stack to only keep even numbers:
 | `'2 mod 0 eq`       | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 2 mod 0 eq`
 | `filter`            | `2 \| 4 \| 6`
 
-
 ## fold
 
-Reduce `items` to a `reduced` value using function `f`.
+Reduce the stack to a single value using the expression *expr*. An
+'invalid function' error is raised if *expr* does not reduce.
 
-    ( items...:Val f:Lambda -- reduced:Val )
+    ( Val* expr:Str -- Val )
 
 Alias: `reduce`
 
@@ -67,11 +66,11 @@ Example which sums the numbers in the stack:
 
 ## map
 
-Apply function `f` to each value in `items`.
+Apply expression *expr* to each value in the stack.
 
-    ( items...:Val f:Lambda -- applied...:Val )
+    ( Val* expr:Str -- Val* )
 
-Example which doubles all numbers on thes tack:
+Example which doubles all numbers on the stack:
 
 <!-- test: map -->
 
@@ -84,9 +83,9 @@ Example which doubles all numbers on thes tack:
 
 ## repeat
 
-Repeat execution of function `f` for `n` times.
+Repeat execution of expression *expr* for *n* times.
 
-    ( items...:Val f:Lambda n:Int -- items...:Val )
+    ( Val* expr:Str n:Int -- Val* )
 
 Example:
 

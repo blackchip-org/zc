@@ -22,9 +22,9 @@ Text operations
 
 ## char-codepoint
 
-Convert character `c` into an integer code point `cp`.
+Convert character into an integer code point.
 
-    ( c:Char -- cp:Int32 )
+    ( Char -- Int32 )
 
 <!-- test: char-codepoint -->
 
@@ -36,9 +36,9 @@ Convert character `c` into an integer code point `cp`.
 
 ## codepoint-char
 
-Convert code point `cp` to character `c`.
+Convert code point to character.
 
-    ( cp:Int32 -- c:Char )
+    ( Int32 -- Char )
 
 <!-- test: codepoint-char -->
 
@@ -49,9 +49,9 @@ Convert code point `cp` to character `c`.
 
 ## is
 
-True if `a0` and `a1` are the same.
+True if *a0* and *a1* are the same, character by character.
 
-    ( a0:String a1:String -- r0:Bool )
+    ( a0:String a1:String -- Bool )
 
 Example:
 
@@ -65,12 +65,11 @@ Example:
 | `1.2 1.2`    |  `1.2 \| 1.2`
 | `is`         | `true`
 
-
 ## join
 
-Join all stack elements into a single string separated by `sep`.
+Join all stack elements into a single string separated by *sep*.
 
-    ( items...:Str sep:Str -- join:Str )
+    ( Val* sep:Str -- Str )
 
 Example:
 
@@ -84,19 +83,18 @@ Example:
 | `1 2 3 4`    |  `1 \| 2 \| 3 \| 4`
 | `'' join`    | `1234`
 
-
 ## left
 
-Substring of `s` from the left.
+Substring of *s* from the left.
 
-If `i` is positive, `i` characters are taken from the left. If `i` is negative,
-characters are taken from the left until there are `i` characters remaining. If
-`i` is zero, `s` is returned without change.
+If *n* is positive, *m* characters are taken from the left. If *n* is negative,
+characters are taken from the left until there are *n* characters remaining. If
+*n* is zero, *s* is returned without change.
 
-If the absolute value of `i` is greater then then length of `s`, an error
-is raised.
+If the absolute value of *n* is greater then then length of *s*, an
+'illegal arguments' error is raised.
 
-    ( s:String i:Int -- left:String )
+    ( s:String n:Int -- String )
 
 Example:
 
@@ -108,12 +106,11 @@ Example:
 | `4 left`     | `abcd`
 | `-1 left`    | `abc`
 
-
 ## len
 
-Length of string `a`.
+Length of string in characters.
 
-    ( a:Str -- len:Int )
+    ( Str -- Int )
 
 Example:
 
@@ -126,9 +123,9 @@ Example:
 
 ## lower
 
-Converts `s` to lowercase.
+Converts the string to lowercase.
 
-    ( s:Str -- lower:Str )
+    ( Str -- Str )
 
 Example:
 
@@ -141,16 +138,16 @@ Example:
 
 ## right
 
-Substring of `s` from the right.
+Substring of *s* from the right.
 
-If `i` is positive, `i` characters are taken from the right. If `i` is
-negative, characters are taken from the right until there are `i` characters
-remaining. If `i` is zero, `s` is returned without change.
+If *n* is positive, *n* characters are taken from the right. If *n* is
+negative, characters are taken from the right until there are *n* characters
+remaining. If *n* is zero, *s* is returned without change.
 
-If the absolute value of `i` is greater then then length of `s`, an error
-is raised.
+If the absolute value of *n* is greater then then length of *s*, an
+'illegal arguments' error is raised.
 
-    ( s:String i:Int -- right:String )
+    ( s:String n:Int -- right:String )
 
 Example:
 
@@ -165,9 +162,9 @@ Example:
 
 ## split
 
-Split `s` into multiple strings that are separated by `sep`.
+Split `p0` into multiple strings that are separated by `sep`.
 
-    ( s:Str sep:Str -- split...:Str )
+    ( p0:Str sep:Str -- Str* )
 
 Example:
 
@@ -183,9 +180,9 @@ Example:
 
 ## upper
 
-Converts `s` to uppercase.
+Converts a string to uppercase.
 
-    ( s:Str -- upper:Str )
+    ( Str -- Str )
 
 Example:
 
@@ -198,9 +195,9 @@ Example:
 
 ## utf-8-decode
 
-Decode the UTF-8 bytes in `b` to a string.
+Decode UTF-8 bytes into to a string.
 
-    ( b:BigInt -- s:Str )
+    ( BigInt -- Str )
 
 Alias: `u8de`
 
@@ -213,12 +210,11 @@ Example:
 | `0x3534c2b0`      | `0x3534c2b0`
 | `utf-8-decode`    | `54°`
 
-
 ## utf-8-encode
 
-Encode the string `s` into UTF-8 bytes.
+Encode a string into UTF-8 bytes.
 
-    ( s:Str -- encode:BigInt )
+    ( Str -- BigInt )
 
 Alias: `u8en`
 

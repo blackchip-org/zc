@@ -33,12 +33,15 @@ Advanced math operations found on scientific calculators.
 
 ## abs
 
-If `a` is less than zero, the negated value of `a`, otherwise `a`.
+If *p0* is less than zero, the negated value of *p0*, otherwise *p0*.
 
-    ( a:BigInt   -- abs:BigInt );   or
-    ( a:Decimal  -- abs:Decimal );  or
-    ( a:Float    -- abs:Float );    or
-    ( a:Rational -- abs:Rational );
+    ( p0:T -- T )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
 
 Example:
 
@@ -49,9 +52,9 @@ Example:
 | `-6`    | `-6`
 | `abs`   | `6`
 
-The distance of `a` from zero in the complex plane.
+The distance of *p0* from zero in the complex plane.
 
-    ( a:Complex -- abs:Complex )
+    ( p0:Complex -- Complex )
 
 Example:
 
@@ -64,9 +67,9 @@ Example:
 
 ## acos
 
-Inverse cosine in radians
+Inverse cosine of *p0* in radians
 
-    ( x:Float -- acos:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -76,12 +79,11 @@ Example:
 |-----------------|-------------|
 | `0.5 acos`      | `1.0471975511965976`
 
-
 ## acosh
 
-Inverse hyperbolic cosine in radians
+Inverse hyperbolic cosine of *p0* in radians
 
-    ( x:Float -- acosh:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -91,12 +93,11 @@ Example:
 |-----------------|-------------|
 | `2 acosh`       | `1.3169578969248166`
 
-
 ## asin
 
-Inverse sine in radians
+Inverse sine of *p0* in radians
 
-    ( x:Float -- asin:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -106,12 +107,11 @@ Example:
 |-----------------|-------------|
 | `0.5 asin`      | `0.5235987755982989`
 
-
 ## asinh
 
-Inverse hyperbolic sine in radians
+Inverse hyperbolic sine of *p0* in radians
 
-    ( x:Float -- asinh:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -121,12 +121,11 @@ Example:
 |-----------------|-------------|
 | `2 asinh`       | `1.4436354751788103`
 
-
 ## atan
 
-Inverse tangent in radians
+Inverse tangent of *p0* in radians
 
-    ( x:Float -- atan:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -136,12 +135,11 @@ Example:
 |-----------------|-------------|
 | `0.5 atan`      | `0.4636476090008061`
 
-
 ## atanh
 
-Inverse hyperbolic tangent in radians
+Inverse hyperbolic tangent of *p0* in radians
 
-    ( x:Float -- atanh:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -153,11 +151,14 @@ Example:
 
 ## ceil
 
-The nearest integer value greater than or equal to `a`.
+The nearest integer value greater than or equal to *p0*.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );    or
+    ( p0:T -- Int )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
 
 Example:
 
@@ -170,9 +171,9 @@ Example:
 
 ## complex
 
-A complex number from a real `r` and an imaginary `i` numbers.
+A complex number from a real *r* and an imaginary *i* number.
 
-    ( r:Float i:Float -- r0:Complex )
+    ( r:Float i:Float -- Complex )
 
 Example:
 
@@ -186,9 +187,9 @@ Example:
 
 ## cos
 
-Cosine in radians
+Cosine of *p0* in radians
 
-    ( x:Float -- cos:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -200,9 +201,9 @@ Example:
 
 ## cosh
 
-Hyperbolic cosine in radians
+Hyperbolic cosine of *p0* in radians
 
-    ( x:Float -- cosh:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -216,7 +217,7 @@ Example:
 
 Euler's number, the natural logarithm base.
 
-    ( -- e:Float )
+    ( -- Float )
 
 Example:
 
@@ -228,9 +229,9 @@ Example:
 
 ## exp
 
-Natural exponential
+Natural exponential of *p0*.
 
-    ( x:Float -- exp:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -242,11 +243,14 @@ Example:
 
 ## floor
 
-The nearest integer value less than or equal to `a`.
+The nearest integer value less than or equal to *p0*.
 
-    ( a:BigInt   b:BigInt   -- add:BigInt );   or
-    ( a:Decimal  b:Decimal  -- add:Decimal );  or
-    ( a:Float    b:Float    -- add:Float );    or
+    ( p0:T -- Int )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
 
 Example:
 
@@ -259,9 +263,9 @@ Example:
 
 ## log
 
-Natural logarithm
+Natural logarithm of *p0*.
 
-    ( x:Float -- log:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -273,9 +277,9 @@ Example:
 
 ## log10
 
-Decimal logarithm
+Decimal logarithm of *p0*.
 
-    ( x:Float -- log10:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -287,9 +291,9 @@ Example:
 
 ## log2
 
-Binary logarithm
+Binary logarithm of *p0*.
 
-    ( x:Float -- log10:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -303,7 +307,7 @@ Example:
 
 Circumference to diameter ratio of a circle
 
-    ( -- pi:Float )
+    ( -- Float )
 
 Alias: `π`
 
@@ -315,9 +319,9 @@ Alias: `π`
 
 ## sin
 
-Sine in radians
+Sine of *p0* in radians
 
-    ( x:Float -- sin:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -329,9 +333,9 @@ Example:
 
 ## sinh
 
-Hyperbolic sine in radians
+Hyperbolic sine of *p0* in radians
 
-    ( x:Float -- sinh:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -343,9 +347,9 @@ Example:
 
 ## tan
 
-Tangent in radians
+Tangent of *p0* in radians
 
-    ( x:Float -- tan:Float )
+    ( p0:Float -- Float )
 
 Example:
 
@@ -357,9 +361,9 @@ Example:
 
 ## tanh
 
-Hyperbolic tangent in radians
+Hyperbolic tangent of *p0* in radians
 
-    ( x:Float -- tanh:Float )
+    ( p0:Float -- Float )
 
 Example:
 

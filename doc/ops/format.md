@@ -12,9 +12,9 @@ Numeric formatting
 
 ## round
 
-Rounds the number `n` to `d` digits using the current rounding mode.
+Rounds the number *n* to *d* digits using the current rounding mode.
 
-    ( n:Num d:Int -- round:Num )
+    ( n:Int d:Decimal -- Decimal )
 
 Example:
 
@@ -37,7 +37,7 @@ Sets the mode to be used when rounding. Valid modes are:
 - `half-even`
 - `up`
 
-    ( m:Str -- )
+    ( Str -- )
 
 Example:
 
@@ -57,7 +57,7 @@ Example:
 
 Gets the current rounding mode
 
-    ( -- m:Str )
+    ( -- Str )
 
 Example:
 

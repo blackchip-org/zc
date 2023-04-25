@@ -19,7 +19,7 @@ Random number generation
 
 Random float between 0 and 1
 
-    ( -- rand:Float )
+    ( -- Float )
 
 Example:
 
@@ -34,7 +34,7 @@ Example:
 
 Randomly select an item on the stack
 
-    ( ...:any ?:any ...:any -- ?:any )
+    ( ... a0:Val ... -- a0:Val )
 
 Example:
 
@@ -48,9 +48,9 @@ Example:
 
 ## rand-int
 
-Random integer between 1 and n
+Random integer between 1 and *n*
 
-    ( n:Int -- rand:Int )
+    ( n:Int -- Int )
 
 Example:
 
@@ -63,9 +63,9 @@ Example:
 
 ## rand-seed
 
-Sets the random number seed
+Sets the random number seed to *seed*.
 
-    ( n:Int64 -- )
+    ( seed:Int64 -- )
 
 <!-- test: rand-seed -->
 
@@ -78,7 +78,7 @@ Sets the random number seed
 
 Gets the random number seed
 
-    ( -- n:Int64 )
+    ( -- Int64 )
 
 <!-- test: rand-seed= -->
 
@@ -89,13 +89,12 @@ Gets the random number seed
 
 ## roll
 
-Rolls dice as specified by `dice` in standard dice notation. The argument
-`dice` may start with the number of dice to roll, followed by the literal
+Rolls dice as specified by *dice* in standard dice notation. The argument
+*dice* may start with the number of dice to roll, followed by the literal
 character `d`, and then the number of faces found on each die. For example,
 use `3d6` to roll three six sided dice.
 
-    ( dice:Str -- rolls...:Int )
-
+    ( dice:Str -- Int* )
 
 <!-- test: roll -->
 
@@ -109,7 +108,7 @@ use `3d6` to roll three six sided dice.
 
 Shuffle the stack
 
-    ( ...:Any -- ...:Any )
+    ( ... -- ... )
 
 <!-- test: shuffle -->
 

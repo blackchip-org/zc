@@ -23,9 +23,9 @@ Programmer's calculator.
 
 ## and
 
-The bitwise and of `a` and `b`.
+The bitwise and of `p0` and `p1`
 
-    ( a:BigInt b:BigInt -- and:BigInt )
+    ( p0:BigInt p1:BigInt -- BigInt )
 
 Example:
 
@@ -39,9 +39,9 @@ Example:
 
 ## bin
 
-Convert the value of `a` to a binary number.
+Convert the value of *p0* to a binary number.
 
-    ( a:BigInt -- dec:BigInt )
+    ( p0:BigInt -- BigInt )
 
 Example:
 
@@ -52,12 +52,11 @@ Example:
 | `0xf`       | `0xf`
 | `bin`       | `0b1111`
 
-
 ## bit
 
-The value of the `b`th bit of `a`.
+The value of the *n*th bit of *p0*.
 
-    ( a:BigInt b:Int -- bit:Uint )
+    ( p0:BigInt n:Int -- Uint )
 
 Example:
 
@@ -68,12 +67,11 @@ Example:
 | `0b100`     | `0b100`
 | `2 bit`     | `1`
 
-
 ## bits
 
-The length of `a` in bits.
+The length of *p0* in bits.
 
-    ( a:BigInt -- len:Int )
+    ( p0:BigInt -- Int )
 
 Example:
 
@@ -84,12 +82,11 @@ Example:
 | `0b11111`   | `0b11111`
 | `bits`      | `5`
 
-
 ## bytes
 
-The length of `a` in bytes.
+The length of *p0* in bytes.
 
-    ( a:BigInt -- len:Int )
+    ( p0:BigInt -- Int )
 
 Example:
 
@@ -100,12 +97,11 @@ Example:
 | `0x1ff`     | `0x1ff`
 | `bytes`     | `2`
 
-
 ## dec
 
-Convert the value of `a` to a decimal number.
+Convert the value of *p0* to a decimal number.
 
-    ( a:BigInt -- dec:BigInt )
+    ( p0:BigInt -- BigInt )
 
 Example:
 
@@ -116,12 +112,11 @@ Example:
 | `0xf`       | `0xf`
 | `dec`       | `15`
 
-
 ## hex
 
-Convert the value of `a` to a hexadecimal number.
+Convert the value of *p0* to a hexadecimal number.
 
-    ( a:BigInt -- dec:BigInt )
+    ( p0:BigInt -- BigInt )
 
 Example:
 
@@ -134,9 +129,9 @@ Example:
 
 ## lsh
 
-Shifts all bits in `a` to the left by `b`
+Shifts all bits in *p0* to the left by *n*
 
-    ( a:BigInt b:Uint -- lsh:BigInt )
+    ( p0:BigInt n:Uint -- BigInt )
 
 Example:
 
@@ -147,12 +142,11 @@ Example:
 | `0b10`      | `0b10`
 | `2 lsh bin` | `0b1000`
 
-
 ## not
 
-The bitwise not of `a` and `b`.
+The bitwise not of *p0* and *p1*.
 
-    ( a:BigInt b:BigInt -- and:BigInt )
+    ( p0:BigInt p1:BigInt -- BigInt )
 
 Example:
 
@@ -163,10 +157,9 @@ Example:
 | `0b101`     | `0b101`
 | `not bin`   | `-0b110`
 
-
 ## oct
 
-Convert the value of `a` to an octal number.
+Convert the value of *p0* to an octal number.
 
     ( a:BigInt -- dec:BigInt )
 
@@ -179,10 +172,9 @@ Example:
 | `0b1111`    | `0b1111`
 | `oct`       | `0o17`
 
-
 ## or
 
-The bitwise or of `a` and `b`.
+The bitwise or of *p0* and *p1*.
 
     ( a:BigInt b:BigInt -- and:BigInt )
 
