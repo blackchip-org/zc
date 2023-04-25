@@ -1,10 +1,12 @@
 package zc
 
 import (
+	"fmt"
 	"strings"
 	"unicode"
 
 	"github.com/blackchip-org/zc/pkg/scanner"
+	"golang.org/x/exp/constraints"
 )
 
 const ProgName = "zc"
@@ -110,10 +112,30 @@ func Quote(v string) string {
 	for s.Ok() {
 		if s.Ch == '\'' {
 			s.Text.WriteString("\\'")
+			s.Next()
 		} else {
 			s.Keep()
 		}
 	}
 	s.Text.WriteRune('\'')
 	return s.Token()
+}
+
+func StackString(c Calc) string {
+	var items []string
+	for _, item := range c.Stack() {
+		fmt.Printf("** QUOTING: %v\n", item)
+		items = append(items, Quote(item))
+	}
+	return strings.Join(items, " | ")
+}
+
+func Clamp[T constraints.Ordered](v T, min T, max T) T {
+	if v > max {
+		return max
+	}
+	if v < min {
+		return min
+	}
+	return v
 }

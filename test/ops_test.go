@@ -1,19 +1,20 @@
 package test
 
 import (
-	"bufio"
 	"os"
 	"path"
-	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/blackchip-org/zc/pkg/ansi"
 	"github.com/blackchip-org/zc/pkg/calc"
 	"github.com/blackchip-org/zc/pkg/repl"
+	"github.com/blackchip-org/zc/pkg/scanner"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 func TestOps(t *testing.T) {
+	ansi.Enabled = false
 	testDir(t, ".")
 }
 
@@ -26,7 +27,7 @@ func testDir(t *testing.T, dir string) {
 		if !strings.HasSuffix(file.Name(), ".md") {
 			continue
 		}
-		t.Run(file.Name(), func(*testing.T) {
+		t.Run(file.Name(), func(t *testing.T) {
 			name := path.Join(dir, file.Name())
 			if file.IsDir() {
 				testDir(t, name)
@@ -44,47 +45,55 @@ func testFile(t *testing.T, file string) {
 	}
 	defer f.Close()
 
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		input := strings.TrimSpace(scanner.Text())
-		if input == "" || strings.HasPrefix(input, "#") {
-			continue
-		}
-		var output []string
-		for scanner.Scan() {
-			o := strings.TrimSpace(scanner.Text())
-			if o == "" {
-				break
-			}
-			output = append(output, o)
-		}
+	var c zc.Calc
+	var r *repl.REPL
+	var out strings.Builder
 
-		t.Run(input, func(t *testing.T) {
-			doTest(t, input, output)
-		})
+	var reset = func() {
+		c = calc.New()
+		r = repl.New(c)
+		r.Out = &out
+		out.Reset()
 	}
-}
 
-func doTest(t *testing.T, input string, want []string) {
-	c := calc.New()
-	r := repl.New(c)
-	ansi.Enabled = false
-	r.Out = &strings.Builder{}
+	s := scanner.New(f)
+	space4 := "    "
+	space8 := space4 + space4
 
-	r.Eval(input)
-	err := c.Error()
-	if err != nil {
-		errWant := ""
-		if len(want) > 0 {
-			errWant = want[0]
-		}
-		if err.Error() != errWant {
-			t.Fatalf("\n have: %v \n want: %v", err.Error(), errWant)
-		}
-	} else {
-		have := c.Stack()
-		if !reflect.DeepEqual(have, want) {
-			t.Fatalf("\n have: %v \n want: %v", have, want)
+	for s.Ok() {
+		space := s.ScanWhile(scanner.Rune(' '))
+		switch space {
+		case space4:
+			if c == nil {
+				t.Log("reset")
+				reset()
+			}
+			expr := s.ScanUntil(scanner.IsNewline)
+			s.Next()
+			t.Logf("-> %v", expr)
+			r.Eval(expr)
+			if c.Error() != nil {
+				c.Push(c.Error().Error())
+			}
+		case space8:
+			rem := s.ScanUntil(scanner.IsNewline)
+			s.Next()
+			t.Logf("<- %v", zc.StackString(c))
+			wants := strings.Split(rem, "|")
+			for i := len(wants) - 1; i >= 0; i-- {
+				want := strings.TrimSpace(wants[i])
+				have, ok := c.Pop()
+				if !ok {
+					t.Fatalf("\n have: empty stack \n want: %v", zc.Quote(want))
+				}
+				if have != want {
+					t.Fatalf("\n have: %v \n want: %v\n", zc.Quote(have), zc.Quote(want))
+				}
+			}
+		default:
+			c = nil
+			s.ScanUntil(scanner.IsNewline)
+			s.Next()
 		}
 	}
 }

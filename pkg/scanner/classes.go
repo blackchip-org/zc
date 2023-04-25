@@ -51,6 +51,7 @@ var (
 	IsEnd         = Rune(EndCh)
 	IsLowerCharAF = RuneRange('a', 'f')
 	IsLowerCharAZ = RuneRange('a', 'z')
+	IsNewline     = Rune('\n')
 	Never         = func(r rune) bool { return false }
 	IsUpperCharAF = RuneRange('A', 'F')
 	IsUpperCharAZ = RuneRange('A', 'Z')

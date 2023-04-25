@@ -35,6 +35,9 @@ func HSLtoRGB(calc zc.Calc) {
 	s := zc.PopFloat(calc)
 	h := zc.PopFloat(calc)
 
+	l = zc.Clamp(l, 0.0, 1.0)
+	s = zc.Clamp(s, 0.0, 1.0)
+
 	// Written by ChatGPT
 	c := (1 - math.Abs(2*l-1)) * s
 	x := c * (1 - math.Abs(math.Mod(h/60, 2)-1))

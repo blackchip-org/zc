@@ -1,5 +1,5 @@
 # bool
 
-[  true  ] [  true  ] and
-true
+    [true] [ true ] and
+        true
 
