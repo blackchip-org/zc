@@ -112,7 +112,7 @@ The examples above are the result if the current time is
 ## Decimal
 
 A `Decimal` value is a number using fixed-point math and support is
-provided by the `shopspring/decimal`[https://github.com/shopspring/decimal]
+provided by the [shopspring/decimal](https://github.com/shopspring/decimal)
 library. The calculator prefers working with `Decimal` values whenever an
 operation can use a function in this library.
 

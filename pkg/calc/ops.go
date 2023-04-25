@@ -130,12 +130,14 @@ var opsList = []zc.OpDecl{
 		zc.Func(ops.GtDecimal, zc.Decimal, zc.Decimal),
 		zc.Func(ops.GtRational, zc.Rational, zc.Rational),
 		zc.Func(ops.GtFloat, zc.Float, zc.Float),
+		zc.Func(ops.GtStr, zc.String, zc.String),
 	),
 	zc.GenOp("gte",
 		zc.Func(ops.GteBigInt, zc.BigInt, zc.BigInt),
 		zc.Func(ops.GteDecimal, zc.Decimal, zc.Decimal),
 		zc.Func(ops.GteRational, zc.Rational, zc.Rational),
 		zc.Func(ops.GteFloat, zc.Float, zc.Float),
+		zc.Func(ops.GteStr, zc.String, zc.String),
 	),
 
 	// h
@@ -171,12 +173,14 @@ var opsList = []zc.OpDecl{
 		zc.Func(ops.LtDecimal, zc.Decimal, zc.Decimal),
 		zc.Func(ops.LtRational, zc.Rational, zc.Rational),
 		zc.Func(ops.LtFloat, zc.Float, zc.Float),
+		zc.Func(ops.LtStr, zc.String, zc.String),
 	),
 	zc.GenOp("lte",
 		zc.Func(ops.LteBigInt, zc.BigInt, zc.BigInt),
 		zc.Func(ops.LteDecimal, zc.Decimal, zc.Decimal),
 		zc.Func(ops.LteRational, zc.Rational, zc.Rational),
 		zc.Func(ops.LteFloat, zc.Float, zc.Float),
+		zc.Func(ops.LteStr, zc.String, zc.String),
 	),
 
 	// m

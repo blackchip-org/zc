@@ -334,6 +334,18 @@ one-time evaluation:
     $ zc 2 3 add
     5
 
+Using quotes from the command line can be tricky since they are interpreted by
+the shell:
+
+    $ zc 'foo' len
+    (!) unknown operation: abc
+
+In this case, wrap the expression with quotes and then use square brackets
+for foo:
+
+    $ zc '[foo] len'
+    3
+
 Use a single argument of `-` to read from standard input:
 
     $ echo "2 3 add" | zc -

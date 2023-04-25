@@ -198,13 +198,11 @@ Example:
 
 <!-- test: sign -->
 
-| Input     | Stack
-|-----------|-------------|
-| `-6 sign` | `-1`
-| `clear`   |
-| `6 sign`  | `1`
-| `clear`   |
-| `0 sign`  | `0`
+| Input       | Stack
+|-------------|-------------|
+| `c -6 sign` | `-1`
+| `c 6  sign` | `1`
+| `c 0  sign` | `0`
 
 ## sqrt
 

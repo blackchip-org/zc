@@ -21,6 +21,20 @@ func CodePointToChar(c zc.Calc) {
 	zc.PushRune(c, r0)
 }
 
+func GtStr(c zc.Calc) {
+	a1 := zc.PopString(c)
+	a0 := zc.PopString(c)
+	r0 := a0 > a1
+	zc.PushBool(c, r0)
+}
+
+func GteStr(c zc.Calc) {
+	a1 := zc.PopString(c)
+	a0 := zc.PopString(c)
+	r0 := a0 >= a1
+	zc.PushBool(c, r0)
+}
+
 func Is(c zc.Calc) {
 	a1 := zc.PopString(c)
 	a0 := zc.PopString(c)
@@ -65,6 +79,20 @@ func Lower(c zc.Calc) {
 	a0 := zc.PopString(c)
 	r0 := strings.ToLower(a0)
 	zc.PushString(c, r0)
+}
+
+func LtStr(c zc.Calc) {
+	a1 := zc.PopString(c)
+	a0 := zc.PopString(c)
+	r0 := a0 < a1
+	zc.PushBool(c, r0)
+}
+
+func LteStr(c zc.Calc) {
+	a1 := zc.PopString(c)
+	a0 := zc.PopString(c)
+	r0 := a0 <= a1
+	zc.PushBool(c, r0)
 }
 
 func Right(c zc.Calc) {

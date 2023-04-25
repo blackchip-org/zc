@@ -2,8 +2,6 @@
 
 Boolean operations.
 
-The comparison operations will
-
 <!-- index -->
 
 | Operation         | Description
@@ -22,47 +20,50 @@ The comparison operations will
 
 ## and
 
-The logical conjunction of `a` and `b`.
+The logical conjunction of *p0* and *p1*.
 
-    ( a:Bool b:Bool -- and:Bool )
+    ( p0:Bool p1:Bool -- Bool )
 
 Example:
 
 <!-- test: and -->
 
-| Input             | Stack
-|-------------------|-------------|
-| `true true and`   | `true`
-| `clear`           |
-| `true false and`  | `false`
-| `clear`           |
-| `false false and` | `false`
+| Input               | Stack
+|---------------------|-------------|
+| `c true true   and` | `true`
+| `c true false  and` | `false`
+| `c false false and` | `false`
 
 ## eq
 
-`true` if `a` and `b` are equal, otherwise `false`.
+`true` if *p0* and *p1* are equal, otherwise `false`.
 
-    ( a:Val b:Val -- eq:Bool )
+    ( p0:T p1:T -- Bool )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
+- `Complex`
+- `Str`
 
 Example:
 
 <!-- test: eq -->
 
-| Input                  | Stack
-|------------------------|-------------|
-| `1234.56 1,234.56 eq`  | `true`
-| `clear`                |
-| `1234.56 1234.560 eq`  | `true`
-| `clear`                |
-| `1234.56 $1,234.56 eq` | `true`
-| `clear`                |
-| `1234.56 +1,234.56 eq` | `true`
+| Input                      | Stack
+|----------------------------|-------------|
+| `c 1234.56 1,234.56   eq`  | `true`
+| `c 1234.56 1234.56000 eq`  | `true`
+| `c 1234.56 $1,234.56  eq`  | `true`
+| `c 1234.56 +1,234.56  eq`  | `true`
 
 ## false
 
 Places `false` on the stack.
 
-    ( -- 'false' )
+    ( -- Str )
 
 Example:
 
@@ -72,48 +73,57 @@ Example:
 |----------|-------------|
 | `false`  | `false`
 
-
 ## gt
 
-`true` if `a` is greater than `b`, otherwise `false`.
+`true` if *p0* is greater than *p1*, otherwise `false`.
 
-    ( a:Val b:Val -- gt:Bool )
+    ( p0:T p1:T -- Bool )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Rational`
+- `Float`
+- `Str`
 
 Example:
 
 <!-- test: gt -->
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 gt`   | `true`
-| `clear`    |
-| `0 0 gt`   | `false`
-| `clear`    |
-| `-1 0 gt`  | `false`
+| Input        | Stack
+|--------------|-------------|
+| `c 1  0 gt`  | `true`
+| `c 0  0 gt`  | `false`
+| `c -1 0 gt`  | `false`
 
 ## gte
 
-`true` if `a` is greater than or equal to `b`, otherwise `false`.
+`true` if *p0* is greater than or equal to *p1*, otherwise `false`.
 
-    ( a:Val b:Val -- gte:Bool )
+    ( p0:T p1:T -- Bool )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Rational`
+- `Float`
+- `Str`
 
 Example:
 
 <!-- test: false -->
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 gte`  | `true`
-| `clear`    |
-| `0 0 gte`  | `true`
-| `clear`    |
-| `-1 0 gt`  | `false`
+| Input        | Stack
+|--------------|-------------|
+| `c 1 0  gte` | `true`
+| `c 0 0  gte` | `true`
+| `c -1 0 gte` | `false`
 
 ## true
 
 Places `true` on the stack.
 
-    ( -- 'true' )
+    ( -- Str )
 
 Example:
 
@@ -125,45 +135,62 @@ Example:
 
 ## lt
 
-`true` if `a` is less than `b`, otherwise `false`.
+`true` if *p0* is less than *p1*, otherwise `false`.
 
-    ( a:Val b:Val -- lt:Bool )
+    ( p0:T p1:T -- Bool )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Rational`
+- `Float`
+- `Str`
 
 Example:
 
 <!-- test: lt -->
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 lt`   | `false`
-| `clear`    |
-| `0 0 lt`   | `false`
-| `clear`    |
-| `-1 0 lt`  | `true`
+| Input        | Stack
+|--------------|-------------|
+| `c 1 0  lt`  | `false`
+| `c 0 0  lt`  | `false`
+| `c -1 0 lt`  | `true`
 
 ## lte
 
-`true` if `a` is less than or equal to `b`, otherwise `false`.
+`true` if *p0* is less than or equal to *p1*, otherwise `false`.
 
-    ( a:Val b:Val -- lte:Bool )
+    ( p0:T p1:T -- Bool )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Rational`
+- `Float`
+- `Str`
 
 Example:
 
 <!-- test: lte -->
 
-| Input      | Stack
-|------------|-------------|
-| `1 0 lte`  | `false`
-| `clear`    |
-| `0 0 lte`  | `true`
-| `clear`    |
-| `-1 0 lte` | `true`
+| Input        | Stack
+|--------------|-------------|
+| `c 1 0  lte` | `false`
+| `c 0 0  lte` | `true`
+| `c -1 0 lte` | `true`
 
 ## neq
 
-`true` if `a` and `b` are not equal to each other, otherwise `false`.
+`true` if *p0* and *p1* are not equal to each other, otherwise `false`.
 
-    ( a:Val b:Val -- neq:Bool )
+    ( p0:T p1:T -- Bool )
+
+Where *T* is one of:
+- `BigInt`
+- `Decimal`
+- `Float`
+- `Rational`
+- `Complex`
 
 Example:
 
@@ -175,12 +202,11 @@ Example:
 | `clear`                |
 | `123 456 neq`          | `true`
 
-
 ## not
 
-`true` if `a` is false, otherwise `false`
+`true` if *p0* is `false`, otherwise `false`
 
-    ( a:Bool -- not:Bool )
+    ( p0:Bool -- Bool )
 
 Example:
 
@@ -191,22 +217,18 @@ Example:
 | `true not`             | `false`
 | `not`                  | `true`
 
-
 ## or
 
-The logical disjunction of `a` and `b`.
+The logical disjunction of *p0* and *p1*.
 
-    ( a:Bool b:Bool -- or:Bool )
+    ( p0:Bool p1:Bool -- Bool )
 
 Example:
 
 <!-- test: or -->
 
-| Input            | Stack
-|------------------|-------------|
-| `true true or`   | `true`
-| `clear`          |
-| `true false or`  | `true`
-| `clear`          |
-| `false false or` | `false`
-
+| Input              | Stack
+|--------------------|-------------|
+| `c true true   or` | `true`
+| `c true false  or` | `true`
+| `c false false or` | `false`
