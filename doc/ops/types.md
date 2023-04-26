@@ -3,10 +3,10 @@
 
 Type information and conversions
 
-| Operation           | Description
-|---------------------|---------------
+| Operation      | Description
+|----------------|---------------
 | [`complex`](#complex) | Complex from real and imaginary
-| [`dec`](#dec)       | Decimal number
+| [`dec`](#dec)  | Decimal number
 
 
 ## complex

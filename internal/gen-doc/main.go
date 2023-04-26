@@ -50,7 +50,9 @@ func writeGroup(group string, ops []*doc.Op) {
 
 	width := 0
 	for _, name := range names {
-		w := len(name)*2 + 5
+		op := table[name]
+		contents := strings.Join(op.AllNames(), ", ")
+		w := len(contents) + len(name)
 		if w > width {
 			width = w
 		}
@@ -63,8 +65,7 @@ func writeGroup(group string, ops []*doc.Op) {
 		if op.Name != name {
 			continue
 		}
-		allNames := append([]string{op.Name}, op.Aliases...)
-		entry := fmt.Sprintf("[`%v`](#%v)", strings.Join(allNames, ", "), name)
+		entry := fmt.Sprintf("[`%v`](#%v)", strings.Join(op.AllNames(), ", "), name)
 		fmt.Fprintf(out, "| %-[1]*v | %v\n", width, entry, table[name].Title)
 	}
 	fmt.Fprintln(out, "")

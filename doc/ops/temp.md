@@ -3,8 +3,8 @@
 
 Temperature
 
-| Operation   | Description
-|-------------|---------------
+| Operation | Description
+|--------|---------------
 | [`c-f`](#c-f) | Celsius to Fahrenheit
 | [`c-k`](#c-k) | Celsius to Kelvin
 | [`f-c`](#f-c) | Fahrenheit to Celsius

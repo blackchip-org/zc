@@ -3,18 +3,18 @@
 
 Basic calculator
 
-| Operation                   | Description
-|-----------------------------|---------------
-| [`add, a, +`](#add)         | Addition
-| [`div, d, /`](#div)         | Division
-| [`mod`](#mod)               | Modulus
-| [`mul, m, *`](#mul)         | Multiplication
-| [`neg`](#neg)               | Negation
-| [`pow, **, ^`](#pow)        | Exponentiation
-| [`rem`](#rem)               | Remainder
-| [`sign`](#sign)             | Sign
+| Operation                    | Description
+|------------------------------|---------------
+| [`add, a, +`](#add)          | Addition
+| [`div, d, /`](#div)          | Division
+| [`mod`](#mod)                | Modulus
+| [`mul, m, *`](#mul)          | Multiplication
+| [`neg`](#neg)                | Negation
+| [`pow, **, ^`](#pow)         | Exponentiation
+| [`rem`](#rem)                | Remainder
+| [`sign`](#sign)              | Sign
 | [`sqrt, square-root`](#sqrt) | Square root
-| [`sub, s, -`](#sub)         | Subtraction
+| [`sub, s, -`](#sub)          | Subtraction
 
 
 ## mul

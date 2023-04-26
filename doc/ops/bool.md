@@ -3,12 +3,12 @@
 
 Boolean operations
 
-| Operation       | Description
-|-----------------|---------------
-| [`and`](#and)   | Logical conjunction
+| Operation  | Description
+|------------|---------------
+| [`and`](#and) | Logical conjunction
 | [`false`](#false) | False
-| [`not`](#not)   | Negation
-| [`or`](#or)     | Logical disjunction
+| [`not`](#not) | Negation
+| [`or`](#or) | Logical disjunction
 | [`true`](#true) | False
 
 

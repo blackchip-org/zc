@@ -3,8 +3,8 @@
 
 Cryptographic ciphers
 
-| Operation               | Description
-|-------------------------|---------------
+| Operation                 | Description
+|---------------------------|---------------
 | [`rotate-13, rot13`](#rotate-13) | Rotate characters by 13
 
 

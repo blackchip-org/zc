@@ -7,22 +7,22 @@
 
 Date, time, and duration operations
 
-| Operation                   | Description
-|-----------------------------|---------------
-| [`add, a, +`](#add)         | Time or duration addition
-| [`date`](#date)             | Formats to a common date layout
+| Operation              | Description
+|------------------------|---------------
+| [`add, a, +`](#add)    | Time or duration addition
+| [`date`](#date)        | Formats to a common date layout
 | [`datetime, dt`](#datetime) | Formats to a common date/time layout
 | [`day-year, doy`](#day-year) | Day of year
-| [`hours`](#hours)           | Hours in duration
+| [`hours`](#hours)      | Hours in duration
 | [`local-zone`](#local-zone) | Sets the local time zone
 | [`local-zone=`](#local-zone=) | Gets the local time zone
-| [`minutes`](#minutes)       | Minutes in duration
-| [`now`](#now)               | Current date and time
+| [`minutes`](#minutes)  | Minutes in duration
+| [`now`](#now)          | Current date and time
 | [`now-restore`](#now-restore) | Cancel now override
-| [`now-set`](#now-set)       | Override now value
-| [`seconds`](#seconds)       | Seconds in duration
-| [`sub, s, -`](#sub)         | Time or duration subtractoin
-| [`time`](#time)             | Formats to a common time layout
+| [`now-set`](#now-set)  | Override now value
+| [`seconds`](#seconds)  | Seconds in duration
+| [`sub, s, -`](#sub)    | Time or duration subtractoin
+| [`time`](#time)        | Formats to a common time layout
 | [`timezone, tz`](#timezone) | Convert time to another time zone
 
 

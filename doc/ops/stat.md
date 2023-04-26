@@ -3,8 +3,8 @@
 
 Statistical calculations
 
-| Operation   | Description
-|-------------|---------------
+| Operation | Description
+|--------|---------------
 | [`sum`](#sum) | Summation
 
 

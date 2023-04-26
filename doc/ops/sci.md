@@ -3,9 +3,9 @@
 
 Scientific calculator
 
-| Operation       | Description
-|-----------------|---------------
-| [`abs`](#abs)   | Absolute value
+| Operation  | Description
+|------------|---------------
+| [`abs`](#abs) | Absolute value
 | [`acos`](#acos) | Inverse cosine
 | [`acosh`](#acosh) | Inverse hyperbolic cosine
 | [`asin`](#asin) | Inverse sine
@@ -13,18 +13,18 @@ Scientific calculator
 | [`atan`](#atan) | Inverse tangent
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
 | [`ceil`](#ceil) | Ceiling
-| [`cos`](#cos)   | Cosine
+| [`cos`](#cos) | Cosine
 | [`cosh`](#cosh) | Hyperbolic cosine
-| [`e`](#e)       | Euler's number
-| [`exp`](#exp)   | Natural exponential
+| [`e`](#e)  | Euler's number
+| [`exp`](#exp) | Natural exponential
 | [`floor`](#floor) | Floor
-| [`log`](#log)   | Natural logarithm
+| [`log`](#log) | Natural logarithm
 | [`log10`](#log10) | Decimal logarithm
 | [`log2`](#log2) | Binary logarithm
-| [`pi, π`](#pi)  | Circumference to diameter ratio
-| [`sin`](#sin)   | Sine
+| [`pi, π`](#pi) | Circumference to diameter ratio
+| [`sin`](#sin) | Sine
 | [`sinh`](#sinh) | Hyperbolic sine
-| [`tan`](#tan)   | Tangent
+| [`tan`](#tan) | Tangent
 | [`tanh`](#tanh) | Hyperbolic tangent
 
 

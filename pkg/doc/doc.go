@@ -51,6 +51,10 @@ type Op struct {
 	Macro   string
 }
 
+func (o Op) AllNames() []string {
+	return append([]string{o.Name}, o.Aliases...)
+}
+
 type OpByGroup []*Op
 
 func (b OpByGroup) Len() int           { return len(b) }

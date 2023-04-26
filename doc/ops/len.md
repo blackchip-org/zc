@@ -3,8 +3,8 @@
 
 Length
 
-| Operation         | Description
-|-------------------|---------------
+| Operation    | Description
+|--------------|---------------
 | [`km-mi`](#km-mi) | Kilometers to miles
 | [`km-nmi`](#km-nmi) | Kilometers to nautical miles
 | [`m-nmi`](#m-nmi) | Meters to nautical miles
