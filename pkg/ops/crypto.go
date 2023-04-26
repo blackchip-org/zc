@@ -7,6 +7,22 @@ import (
 	"github.com/blackchip-org/zc/pkg/zc"
 )
 
+/*
+oper	rotate-13
+func	Rot13 p0:Str -- Str
+alias	rot13
+title	Rotate characters by 13
+
+desc
+Rotate all characters in string *p0* by 13.
+end
+
+example
+'Behind the tree! -- Behind the tree!
+rot-13            -- Oruvaq gur gerr!
+rot-13            -- Behind the tree!
+end
+*/
 func Rot13(c zc.Calc) {
 	a0 := zc.PopString(c)
 	var r0 strings.Builder

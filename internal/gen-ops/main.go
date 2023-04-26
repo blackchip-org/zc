@@ -21,7 +21,7 @@ import (
 	"github.com/blackchip-org/zc/pkg/zc"
 )
 
-var opsList2 = []zc.OpDecl{
+var opsList = []zc.OpDecl{
 `)
 
 var epilog = strings.TrimSpace(`
@@ -54,14 +54,23 @@ func main() {
 	fmt.Fprintf(out, "%v\n", prelude)
 	for _, name := range names {
 		op := table[name]
+		if op.Macro != "" {
+			fmt.Fprintf(out, "\tzc.Macro(\"%v\", \"%v\"),\n", name, op.Macro)
+			continue
+		}
+
 		if len(op.Funcs) > 1 {
 			fmt.Fprintf(out, "\tzc.GenOp(\"%v\",\n", name)
 			for _, fn := range op.Funcs {
-				fmt.Fprintf(out, "\t\tzc.Func(ops.%v%v),\n", fn.Name, paramTypes(fn.Params))
+				if fn.Name == "-" {
+					continue
+				}
+				fmt.Fprintf(out, "\t\tzc.Func(%v%v),\n", qnameFn(fn.Name), paramTypes(fn.Params))
 			}
+			fmt.Fprintf(out, "\t),\n")
 		} else {
 			fn := op.Funcs[0]
-			fmt.Fprintf(out, "\tzc.Op(\"%v\", ops.%v%v),\n", name, fn.Name, paramTypes(fn.Params))
+			fmt.Fprintf(out, "\tzc.Op(\"%v\", %v%v),\n", name, qnameFn(fn.Name), paramTypes(fn.Params))
 		}
 	}
 	out.WriteString(epilog)
@@ -81,5 +90,15 @@ func paramTypes(params []doc.Param) string {
 		}
 		inTypes = append(inTypes, "zc."+p.Type)
 	}
+	if len(inTypes) == 0 {
+		return ""
+	}
 	return fmt.Sprintf(", %v", strings.Join(inTypes, ", "))
+}
+
+func qnameFn(name string) string {
+	if name == "NoOp" {
+		return "zc.NoOp"
+	}
+	return "ops." + name
 }

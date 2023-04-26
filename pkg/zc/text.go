@@ -7,11 +7,11 @@ import (
 
 // ---
 
-type RuneType struct{}
+type CharType struct{}
 
-func (t RuneType) String() string { return "Rune" }
+func (t CharType) String() string { return "Char" }
 
-func (t RuneType) Parse(s string) (rune, bool) {
+func (t CharType) Parse(s string) (rune, bool) {
 	if utf8.RuneCountInString(s) != 1 {
 		return 0, false
 	}
@@ -19,7 +19,7 @@ func (t RuneType) Parse(s string) (rune, bool) {
 	return r, true
 }
 
-func (t RuneType) MustParse(s string) rune {
+func (t CharType) MustParse(s string) rune {
 	r, ok := t.Parse(s)
 	if !ok {
 		PanicExpectedType(t, s)
@@ -27,37 +27,37 @@ func (t RuneType) MustParse(s string) rune {
 	return r
 }
 
-func (t RuneType) Is(s string) bool {
+func (t CharType) Is(s string) bool {
 	_, ok := t.Parse(s)
 	return ok
 }
 
-func (t RuneType) Format(v rune) string {
+func (t CharType) Format(v rune) string {
 	return fmt.Sprintf("%c", v)
 }
 
-func PopRune(c Calc) rune     { return Rune.MustParse(c.MustPop()) }
-func PushRune(c Calc, r rune) { c.Push(Rune.Format(r)) }
+func PopRune(c Calc) rune     { return Char.MustParse(c.MustPop()) }
+func PushRune(c Calc, r rune) { c.Push(Char.Format(r)) }
 
 // ---
 
-type StringType struct{}
+type StrType struct{}
 
-func (t StringType) String() string { return "Str" }
+func (t StrType) String() string { return "Str" }
 
-func (t StringType) Parse(s string) (string, bool) {
+func (t StrType) Parse(s string) (string, bool) {
 	return s, true
 }
 
-func (t StringType) MustParse(s string) string {
+func (t StrType) MustParse(s string) string {
 	return s
 }
 
-func (t StringType) Is(s string) bool {
+func (t StrType) Is(s string) bool {
 	return true
 }
 
-func (t StringType) Format(v string) string {
+func (t StrType) Format(v string) string {
 	return v
 }
 

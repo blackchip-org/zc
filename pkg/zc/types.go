@@ -18,6 +18,7 @@ type Type interface {
 var (
 	BigInt   = BigIntType{}
 	Bool     = BoolType{}
+	Char     = CharType{}
 	Complex  = ComplexType{}
 	Date     = DateType{}
 	DateTime = DateTimeType{}
@@ -28,8 +29,7 @@ var (
 	Int64    = Int64Type{}
 	Int32    = Int32Type{}
 	Rational = RationalType{}
-	Rune     = RuneType{}
-	String   = StringType{}
+	Str      = StrType{}
 	Time     = TimeType{}
 	Uint     = UintType{}
 	Uint8    = Uint8Type{}
@@ -54,7 +54,7 @@ func Format(a any) string {
 	case *big.Rat:
 		return Rational.Format(t)
 	case string:
-		return String.Format(t)
+		return Str.Format(t)
 	case uint:
 		return Uint.Format(t)
 	}

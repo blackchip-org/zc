@@ -38,6 +38,8 @@ func writeGroup(group string, ops []doc.Op) {
 	fmt.Fprintf(out, "# %v\n\n", group)
 	if groupTitle, ok := doc.GroupTitles[group]; ok {
 		fmt.Fprintf(out, "%v\n\n", groupTitle)
+	} else {
+		log.Fatalf("no group title for %v\n", group)
 	}
 
 	width := 0
@@ -110,10 +112,14 @@ func writeExample(out *strings.Builder, expected []doc.Expect) {
 			width = w
 		}
 	}
+	if width < 3 {
+		width = 3
+	}
 
 	fmt.Fprintf(out, "| %-[1]*v | Stack\n", width+2, "Input")
 	fmt.Fprintf(out, "|%v|%v\n", strings.Repeat("-", width+4), strings.Repeat("-", 15))
 	for _, ex := range expected {
-		fmt.Fprintf(out, "| `%-[1]*v` | `%v` \n", width, ex.In, ex.Out)
+		escOut := strings.ReplaceAll(ex.Out, "|", "\\|")
+		fmt.Fprintf(out, "| `%-[1]*v` | `%v` \n", width, ex.In, escOut)
 	}
 }

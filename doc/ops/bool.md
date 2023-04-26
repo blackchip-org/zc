@@ -4,11 +4,13 @@
 
 Boolean operations
 
-| Operation   | Description
-|-------------|---------------
-| [and](#and) | Logical conjunction
-| [not](#not) | Negation
-| [or](#or)   | Logical disjunction
+| Operation       | Description
+|-----------------|---------------
+| [and](#and)     | Logical conjunction
+| [false](#false) | False
+| [not](#not)     | Negation
+| [or](#or)       | Logical disjunction
+| [true](#true)   | False
 
 
 ## and
@@ -28,6 +30,20 @@ Example:
 | `c true  true   and` | `true` 
 | `c true  false  and` | `false` 
 | `c false false  and` | `false` 
+
+## false
+
+Places `false` on the stack
+
+	(  -- Bool )
+
+Example:
+
+<!-- test: false -->
+
+| Input   | Stack
+|---------|---------------
+| `false` | `false` 
 
 ## not
 
@@ -59,3 +75,17 @@ Example:
 | `c true  true  or` | `true` 
 | `c true  false or` | `true` 
 | `c false false or` | `false` 
+
+## true
+
+Places `true` on the stack
+
+	(  -- Bool )
+
+Example:
+
+<!-- test: true -->
+
+| Input  | Stack
+|--------|---------------
+| `true` | `true` 

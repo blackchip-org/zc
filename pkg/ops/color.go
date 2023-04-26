@@ -8,6 +8,21 @@ import (
 	"github.com/blackchip-org/zc/pkg/zc"
 )
 
+/*
+oper	cmyk-rgb
+func	CMYKToRGB c:Uint8 m:Uint8 y:Uint8 k:Uint8 -- r:Uint8 g:Uint8 b:Uint8
+title   CMYK to RGB color space
+
+desc
+Convert the CMYK color *c*, *m*, *y*, *k*, to the RGB color space as *r*, *b*,
+*g*.
+end
+
+example
+0 127 191 127 -- 0 | 127 | 191 | 127
+cmyk-rgb -- 128 | 64 | 32
+end
+*/
 func CMYKToRGB(calc zc.Calc) {
 	k := zc.PopUint8(calc)
 	y := zc.PopUint8(calc)
@@ -21,6 +36,16 @@ func CMYKToRGB(calc zc.Calc) {
 	zc.PushUint8(calc, b)
 }
 
+/*
+oper	color-sample
+func	ColorSample r:Uint8 g:Uint8 b:Uint8 -- Str
+title	Render a sample of a color
+
+desc
+Render five spaces with a background color of *r*, *g*, and *b*. The
+terminal in use must be able to support 24-bit ANSI color codes.
+end
+*/
 func ColorSample(calc zc.Calc) {
 	b := zc.PopUint8(calc)
 	g := zc.PopUint8(calc)
@@ -30,7 +55,21 @@ func ColorSample(calc zc.Calc) {
 	zc.PushString(calc, r0)
 }
 
-func HSLtoRGB(calc zc.Calc) {
+/*
+oper	hsl-rgb
+func	HSLToRGB h:Float s:Float l:Float -- r:Uint8 g:Uint8 b:Uint8
+title	HSL to RGB color space
+
+desc
+Convert the HSL color *h*, *s*, *l* to the RGB color space as *r*, *g*, *b*.
+end
+
+example
+20 0.6 0.314 -- 20 | 0.6 | 0.314
+hsl-rgb -- 128 | 64 | 32
+end
+*/
+func HSLToRGB(calc zc.Calc) {
 	l := zc.PopFloat(calc)
 	s := zc.PopFloat(calc)
 	h := zc.PopFloat(calc)
@@ -68,7 +107,22 @@ func HSLtoRGB(calc zc.Calc) {
 	zc.PushUint8(calc, b)
 }
 
-func RBGToCMYK(calc zc.Calc) {
+/*
+oper	rgb-cmyk
+func	RGBToCMYK r:Uint8 g:Uint8 b:Uint8 -- c:Uint8 m:Uint8 y:Uint8 k:Uint8
+title	RGB to CMYK color space
+
+desc
+Convert the RGB color *r*, *b*, *g* to the CMYK color space as *c*, *m*, *y*,
+*k*.
+end
+
+example
+128 64 32 -- 128 | 64 | 32
+rgb-cmyk -- 0 | 127 | 191 | 127
+end
+*/
+func RGBToCMYK(calc zc.Calc) {
 	b := zc.PopUint8(calc)
 	g := zc.PopUint8(calc)
 	r := zc.PopUint8(calc)
@@ -80,6 +134,21 @@ func RBGToCMYK(calc zc.Calc) {
 	zc.PushUint8(calc, y)
 	zc.PushUint8(calc, k)
 }
+
+/*
+oper	rgb-hsl
+func	RGBToHSL r:Uint8 g:Uint8 b:Uint8 -- h:Float s:Float l:Float
+title	RGB to HSL color space
+
+desc
+Convert the RGB color *r*, *g*, *b* to the HSL color space as *h*, *s*, *l*.
+end
+
+example
+128 64 32 -- 128 | 64 | 32
+rgb-hsl [3 round] map -- 20 | 0.6 | 0.314
+end
+*/
 
 func RGBToHSL(calc zc.Calc) {
 	b := zc.PopUint8(calc)

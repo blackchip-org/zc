@@ -2,11 +2,6 @@ package ops
 
 import "github.com/blackchip-org/zc/pkg/zc"
 
-const (
-	False = "[false]"
-	True  = "[true]"
-)
-
 /*
 oper	and
 func	AndBool p0:Bool p1:Bool -- Bool
@@ -30,6 +25,21 @@ func AndBool(c zc.Calc) {
 	r0 := a0 && a1
 	zc.PushBool(c, r0)
 }
+
+/*
+oper	false
+func	- -- Bool
+macro	[false]
+title	False
+
+desc
+Places `false` on the stack
+end
+
+example
+false -- false
+end
+*/
 
 /*
 oper	not
@@ -72,3 +82,18 @@ func OrBool(c zc.Calc) {
 	r0 := a0 || a1
 	zc.PushBool(c, r0)
 }
+
+/*
+oper	true
+func	- -- Bool
+macro	[true]
+title	False
+
+desc
+Places `true` on the stack
+end
+
+example
+true -- true
+end
+*/

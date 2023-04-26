@@ -48,6 +48,7 @@ type Op struct {
 	Title   string
 	Desc    string
 	Example []Expect
+	Macro   string
 }
 
 func ParseSourceFile(name string) ([]Op, error) {
@@ -60,11 +61,29 @@ func ParseSourceFile(name string) ([]Op, error) {
 
 	group := strings.TrimSuffix(path.Base(name), ".go")
 	s := scanner.New(f)
+	s.SetName(name)
 	//s.Debug = true
 	for s.Ok() {
 		if s.Ch == '/' && s.Lookahead == '*' {
 			s.Scan(scanner.Line)
-			ops = append(ops, parseOp(s, group))
+			op, err := parseOp(s, group)
+			if err != nil {
+				return nil, err
+			}
+			ops = append(ops, op)
+		} else if s.Ch == '/' && s.Lookahead == '/' {
+			s.Next()
+			s.Next()
+			word := s.Scan(scanner.Word)
+			if word == "tab" {
+				op, err := parseTableOp(s, group)
+				if err != nil {
+					return nil, err
+				}
+				ops = append(ops, op)
+			} else {
+				s.Scan(scanner.Line)
+			}
 		} else {
 			s.Scan(scanner.Line)
 		}
@@ -92,16 +111,21 @@ func ParseSourceFiles(dir string) ([]Op, error) {
 	return ops, nil
 }
 
-func parseOp(s *scanner.Scanner, group string) Op {
+func parseOp(s *scanner.Scanner, group string) (Op, error) {
 	op := Op{Group: group}
 loop:
 	for s.Ok() {
+		var err error
 		word := s.Scan(scanner.Word)
 		switch word {
 		case "oper":
 			op.Name = s.Scan(scanner.LineTrimSpace)
 		case "func":
-			op.Funcs = append(op.Funcs, parseFn(s))
+			var fn FuncDecl
+			fn, err = parseFn(s)
+			op.Funcs = append(op.Funcs, fn)
+		case "macro":
+			op.Macro = s.Scan(scanner.LineTrimSpace)
 		case "alias":
 			op.Aliases = append(op.Aliases, s.Scan(scanner.LineTrimSpace))
 		case "title":
@@ -109,51 +133,75 @@ loop:
 		case "desc":
 			op.Desc = parseDesc(s)
 		case "example":
-			op.Example = parseExample(s)
+			op.Example, err = parseExample(s)
 		case "*/":
 			break loop
 		}
+		if err != nil {
+			return op, err
+		}
 	}
-	return op
+	if op.Title == "" {
+		return op, scanErr(s, "no title for %v", op.Name)
+	}
+	return op, nil
 }
 
-func parseFn(s *scanner.Scanner) FuncDecl {
+func parseFn(s *scanner.Scanner) (FuncDecl, error) {
 	fn := FuncDecl{
 		Name: s.Scan(scanner.Word),
 	}
-	fn.Params = parseParams(s)
-	fn.Returns = parseParams(s)
-	return fn
+	var err error
+	fn.Params, err = parseParams(s)
+	if err != nil {
+		return fn, err
+	}
+	fn.Returns, err = parseParams(s)
+	if err != nil {
+		return fn, err
+	}
+	return fn, nil
 }
 
-func parseParams(s *scanner.Scanner) []Param {
+func parseParams(s *scanner.Scanner) ([]Param, error) {
 	var params []Param
 	for s.Ok() {
 		s.ScanWhile(scanner.Rune(' '))
 		if s.Ch == '\n' {
 			s.Next()
-			return params
+			return params, nil
 		}
 		if s.Ch == '-' && s.Lookahead == '-' {
 			s.Next()
 			s.Next()
-			return params
+			return params, nil
 		}
 		var all bool
 		var name, pType string
 		t := s.ScanWhile(scanner.Or(
 			scanner.IsCharAZ,
 			scanner.IsDigit09,
+			scanner.Rune('.'),
 		))
 		if t == "" {
-			panic("no progress")
+			return nil, scanErr(s, "did not find a parameter name or type")
+		}
+		if t == "..." {
+			continue
 		}
 		if s.Ch == ':' {
 			name = t
 			s.Next()
-			t = s.ScanWhile(scanner.IsCharAZ)
+			t = s.ScanWhile(scanner.Or(
+				scanner.IsCharAZ,
+				scanner.IsDigit09,
+				scanner.Rune('.'),
+			))
 		}
 		pType = t
+		if pType == "Val" {
+			pType = "Str"
+		}
 		if s.Ch == '*' {
 			s.Next()
 			all = true
@@ -164,7 +212,7 @@ func parseParams(s *scanner.Scanner) []Param {
 			All:  all,
 		})
 	}
-	return params
+	return params, nil
 }
 
 func parseDesc(s *scanner.Scanner) string {
@@ -180,7 +228,7 @@ func parseDesc(s *scanner.Scanner) string {
 	return strings.Join(desc, "\n")
 }
 
-func parseExample(s *scanner.Scanner) []Expect {
+func parseExample(s *scanner.Scanner) ([]Expect, error) {
 	var example []Expect
 	s.Scan(scanner.Line)
 	for s.Ok() {
@@ -189,14 +237,32 @@ func parseExample(s *scanner.Scanner) []Expect {
 			break
 		}
 		if line == "*/" {
-			panic("unexpected end of comment")
+			return nil, scanErr(s, "unexpected end of comment")
 		}
 		parts := strings.Split(line, "--")
+		if len(parts) != 2 {
+			return nil, scanErr(s, "invalid example line: %v", line)
+		}
 		in := strings.TrimSpace(parts[0])
 		out := strings.TrimSpace(parts[1])
 		example = append(example, Expect{In: in, Out: out})
 	}
-	return example
+	return example, nil
+}
+
+func parseTableOp(s *scanner.Scanner, group string) (Op, error) {
+	line := s.Scan(scanner.LineTrimSpace)
+	parts := strings.Split(line, "--")
+	if len(parts) != 3 {
+		return Op{}, scanErr(s, "invalid table line: %v", line)
+	}
+	return Op{
+		Group: group,
+		Name:  strings.TrimSpace(parts[0]),
+		Macro: strings.TrimSpace(parts[1]),
+		Title: strings.TrimSpace(parts[2]),
+		Desc:  strings.TrimSpace(parts[2]),
+	}, nil
 }
 
 func FilterByGroup(src []Op, group string) []Op {
@@ -227,4 +293,9 @@ func SortedNames(src []Op) []string {
 	}
 	sort.Strings(names)
 	return names
+}
+
+func scanErr(s *scanner.Scanner, format string, a ...any) error {
+	msg := fmt.Sprintf(format, a...)
+	return fmt.Errorf("[%v] %v", s.TokenPos, msg)
 }

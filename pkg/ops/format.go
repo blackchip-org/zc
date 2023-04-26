@@ -1,6 +1,8 @@
 package ops
 
 import (
+	"strconv"
+
 	"github.com/blackchip-org/zc/pkg/zc"
 	"github.com/shopspring/decimal"
 )
@@ -45,6 +47,21 @@ func round(d decimal.Decimal, places int32, mode string) decimal.Decimal {
 	panic("invalid rounding mode")
 }
 
+/*
+oper	round
+func	Round n:Int d:Decimal -- Decimal
+alias	r
+title	Round to a given precision
+
+desc
+Rounds the number *n* to *d* digits using the current rounding mode.
+end
+
+example
+2 3 div -- 0.6666666666666667
+2 round -- 0.67
+end
+*/
 func Round(c zc.Calc) {
 	s := getFormatState(c)
 	places := zc.PopInt32(c)
@@ -53,6 +70,30 @@ func Round(c zc.Calc) {
 	zc.PushDecimal(c, r0)
 }
 
+/*
+oper	rounding-mode
+func	RoundingMode -- Str
+title	Set method to use in rounding
+
+desc
+Sets the mode to be used when rounding. Valid modes are:
+
+- `half-up`
+- `ceil`
+- `down`
+- `floor`
+- `half-even`
+- `up`
+end
+
+example
+1.01 0.05 mul -- 0.0505
+2 round -- 0.05
+'up' rounding-mode -- *rounding-mode set to 'up'*
+c 1.01 0.05 mul -- 0.0505
+2 round -- 0.06
+end
+*/
 func RoundingMode(c zc.Calc) {
 	s := getFormatState(c)
 	a0 := zc.PopString(c)
@@ -64,7 +105,40 @@ func RoundingMode(c zc.Calc) {
 	c.SetInfo("rounding-mode set to %v", zc.Quote(a0))
 }
 
+/*
+oper rounding-mode-
+func RoundingModeGet -- Str
+title Method to use in rounding
+
+desc
+Gets the current rounding mode
+end
+
+example
+rounding-mode= -- half-up
+end
+*/
 func RoundingModeGet(c zc.Calc) {
 	s := getFormatState(c)
 	zc.PushString(c, s.roundingMode)
+}
+
+/*
+oper	scientific-notation
+func	ScientificNotation p0:Float -- Float
+alias	sn
+title	Scientific notatoin
+
+desc
+Formats the value *p0* using scientific notation.
+end
+
+example
+1234 -- 1.234e03
+end
+*/
+func ScientificNotation(c zc.Calc) {
+	a0 := zc.PopFloat(c)
+	r0 := strconv.FormatFloat(a0, 'e', -1, 64)
+	zc.PushString(c, r0)
 }

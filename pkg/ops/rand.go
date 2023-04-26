@@ -27,12 +27,41 @@ func getRandState(c zc.Calc) *randState {
 	return s.(*randState)
 }
 
+/*
+expr	rand
+func	Rand -- Float
+title	Random float
+
+desc
+Random number between 0 and 1.
+end
+
+example
+0 rand-seed -- *seed set to 0*
+rand -- 0.9451961492941164
+end
+*/
 func Rand(c zc.Calc) {
 	s := getRandState(c)
 	r0 := s.rand.Float64()
 	zc.PushFloat(c, r0)
 }
 
+/*
+oper	rand-choice
+func	RandChoice ... a0:Val ... -- a0:Val
+title	Randomly select item on stack
+
+desc
+Randomly select an item on the stack.
+end
+
+example
+2 rand-seed -- *seed set to 2*
+1 2 3 4 5 6 -- 1 | 2 | 3 | 4 | 5 | 6
+rand-choice -- 5
+end
+*/
 func RandChoice(c zc.Calc) {
 	s := getRandState(c)
 	n := c.StackLen()
@@ -40,6 +69,20 @@ func RandChoice(c zc.Calc) {
 	c.SetStack([]string{c.Stack()[i]})
 }
 
+/*
+oper	rand-int
+func	RandInt n:Int -- Int
+title	Random integer
+
+desc
+Random integer between 1 and *n*.
+end
+
+example
+0 rand-seed -- *seed set to 0*
+10 rand-int -- 5
+end
+*/
 func RandInt(c zc.Calc) {
 	s := getRandState(c)
 	max := zc.PopInt(c)
@@ -51,6 +94,20 @@ func RandInt(c zc.Calc) {
 	zc.PushInt(c, r0)
 }
 
+/*
+oper 	rand-seed
+func	RandSeed seed:Int64 --
+title	Set the random number seed
+
+desc
+Sets the random number seed to *seed*.
+end
+
+example
+1 rand-seed -- *seed set to 1*
+10 rand-int -- 2
+end
+*/
 func RandSeed(c zc.Calc) {
 	s := getRandState(c)
 	s.seed = zc.PopInt64(c)
@@ -58,11 +115,43 @@ func RandSeed(c zc.Calc) {
 	c.SetInfo("seed set to %v", s.seed)
 }
 
+/*
+oper	rand-seed=
+func	RandSeedGet -- Int64
+title	Get the random number seed
+
+desc
+Gets the random number seed.
+end
+
+example
+3 rand-seed -- *seed set to 3*
+rand-seed= -- 3
+end
+*/
 func RandSeedGet(c zc.Calc) {
 	s := getRandState(c)
 	zc.PushInt64(c, s.seed)
 }
 
+/*
+oper	roll
+func	Roll dice:Str -- Int*
+title	Dice roller
+
+desc
+Rolls dice as specified by *dice* in standard dice notation. The argument
+*dice* may start with the number of dice to roll, followed by the literal
+character `d`, and then the number of faces found on each die. For example,
+use `3d6` to roll three six sided dice.
+end
+
+example
+99 rand-seed -- *seed set to 99*
+3d6 roll -- 6 | 2 | 1
+sum -- `9
+end
+*/
 func Roll(c zc.Calc) {
 	state := getRandState(c)
 	var s scanner.Scanner
@@ -92,6 +181,21 @@ func Roll(c zc.Calc) {
 	}
 }
 
+/*
+oper	shuffle
+func	Shuffle ... -- ...
+title	Shuffle the stack
+
+desc
+Shuffle the stack.
+end
+
+example
+0 rand-seed -- *seed set to 0*
+1 2 3 4 5 6 -- 1 | 2 | 3 | 4 | 5 | 6
+shuffle -- 5 | 4 | 1 | 3 | 2 | 6`
+end
+*/
 func Shuffle(c zc.Calc) {
 	s := getRandState(c)
 	as := c.Stack()

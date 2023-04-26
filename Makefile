@@ -14,7 +14,11 @@ test:
 test-release: clean
 	goreleaser release --skip-publish
 
-gen:
+gen-ops:
+	go generate internal/gen-ops/main.go
+	go generate internal/gen-doc/main.go
+
+gen: gen-ops
 	go generate internal/gen-tz/main.go
 
 clean:

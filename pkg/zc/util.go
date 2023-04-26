@@ -1,7 +1,6 @@
 package zc
 
 import (
-	"fmt"
 	"strings"
 	"unicode"
 
@@ -32,7 +31,6 @@ func IsValuePrefix(ch rune, next rune) bool {
 func StackString(c Calc) string {
 	var items []string
 	for _, item := range c.Stack() {
-		fmt.Printf("** QUOTING: %v\n", item)
 		items = append(items, Quote(item))
 	}
 	return strings.Join(items, " | ")
