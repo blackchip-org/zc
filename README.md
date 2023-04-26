@@ -338,7 +338,7 @@ Using quotes from the command line can be tricky since they are interpreted by
 the shell:
 
     $ zc 'foo' len
-    (!) unknown operation: abc
+    (!) unknown operation: foo
 
 In this case, wrap the expression with quotes and then use square brackets
 for foo:

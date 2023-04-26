@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"errors"
+	"strings"
 	"unicode"
 )
 
@@ -122,4 +123,11 @@ func Word(s *Scanner) {
 func Line(s *Scanner) {
 	s.ScanUntil(IsNewline)
 	s.Next()
+}
+
+func LineTrimSpace(s *Scanner) {
+	Line(s)
+	l := s.Token()
+	s.Text.Reset()
+	s.Text.WriteString(strings.TrimSpace(l))
 }

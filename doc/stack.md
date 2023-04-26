@@ -15,7 +15,7 @@ An operation that consumes no values from the stack is notated as:
 
     ( -- BigInt )
 
-An operation that produces to values from the stack is notated as:
+An operation that produces no values to the stack is notated as:
 
     ( BigInt -- )
 

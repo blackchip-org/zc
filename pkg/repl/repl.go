@@ -191,7 +191,7 @@ func (r *REPL) saveHistory() {
 }
 
 func (r *REPL) getPrompt() string {
-	return zc.ProgName + "> "
+	return zc.ProgName + " > "
 }
 
 func (r *REPL) wordCompleter(line string, pos int) (string, []string, string) {

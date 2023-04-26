@@ -3,6 +3,7 @@ package scanner
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"io"
 	"strings"
 )
@@ -16,6 +17,7 @@ type Scanner struct {
 	Text      strings.Builder
 	TokenPos  Pos
 	ChPos     Pos
+	Debug     bool
 	src       *bufio.Reader
 }
 
@@ -80,10 +82,16 @@ func (s *Scanner) ScanWhile(c RuneClass) string {
 
 func (s *Scanner) Next() {
 	if s.Ch == EndCh || s.src == nil {
+		if s.Debug {
+			fmt.Println("scan: end")
+		}
 		return
 	}
 
 	s.Ch = s.Lookahead
+	if s.Debug {
+		fmt.Printf("scan: %v(%c)\n", s.Ch, s.Ch)
+	}
 
 	r, _, err := s.src.ReadRune()
 	if err != nil {
