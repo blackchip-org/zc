@@ -32,6 +32,7 @@
 | [stack](ops/stack.md)     | Stack manipulations 
 | [text](ops/text.md)       | Text operations 
 | [types](ops/types.md)     | Type information and conversions 
+| [zc](ops/zc.md)           | About this calculator 
 
 
 ## Library

@@ -20,4 +20,5 @@ var GroupTitles = map[string]string{
 	"time":   "Date, time, and duration operations",
 	"types":  "Type information and conversions",
 	"tz":     "Time zone database",
+	"zc":     "About this calculator",
 }

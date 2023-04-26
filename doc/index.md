@@ -260,6 +260,10 @@
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [utf8-encode](ops/text.md#utf8-encode): Encode UTF-8 bytes
 
+## v
+
+- [version](ops/zc.md#version): Version number
+
 ## x
 
 - [xor](ops/prog.md#xor): Bitwise exclusive or

@@ -298,6 +298,7 @@ var opsList = []zc.OpDecl{
 	zc.Op("upper", ops.Upper, zc.Str),
 	zc.Op("utf8-decode", ops.UTF8Decode, zc.BigInt),
 	zc.Op("utf8-encode", ops.UTF8Encode, zc.Str),
+	zc.Op("version", ops.Version),
 	zc.Op("xor", ops.Xor, zc.BigInt, zc.BigInt),
 	zc.Macro("yocto", "1e-24"),
 	zc.Macro("yotta", "1e24"),

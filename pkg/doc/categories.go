@@ -25,6 +25,7 @@ var Categories = []Category{
 		"stack",
 		"text",
 		"types",
+		"zc",
 	}},
 	{"Library", []string{
 		"color",
