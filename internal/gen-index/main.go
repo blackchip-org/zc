@@ -69,7 +69,7 @@ func main() {
 		} else {
 			fmt.Fprintf(out, "- %v\n", name)
 			for _, op := range ops {
-				fmt.Fprintf(out, "  - [(%v) %v](ops/%v#%v.md): %v\n", op.Group, name, op.Group, op.Name, op.Title)
+				fmt.Fprintf(out, "  - [(%v) %v](ops/%v.md#%v): %v\n", op.Group, name, op.Group, op.Name, op.Title)
 			}
 		}
 	}

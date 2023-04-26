@@ -5,28 +5,28 @@
 - [*](ops/basic.md#mul): Multiplication
 - [**](ops/basic.md#pow): Exponentiation
 - \+
-  - [(basic) \+](ops/basic#add.md): Addition
-  - [(time) \+](ops/time#add.md): Time or duration addition
+  - [(basic) \+](ops/basic.md#add): Addition
+  - [(time) \+](ops/time.md#add): Time or duration addition
 - \-
-  - [(basic) \-](ops/basic#sub.md): Subtraction
-  - [(time) \-](ops/time#sub.md): Time or duration subtractoin
+  - [(basic) \-](ops/basic.md#sub): Subtraction
+  - [(time) \-](ops/time.md#sub): Time or duration subtractoin
 - [/](ops/basic.md#div): Division
 - [^](ops/basic.md#pow): Exponentiation
 
 ## a
 
 - a
-  - [(basic) a](ops/basic#add.md): Addition
-  - [(time) a](ops/time#add.md): Time or duration addition
+  - [(basic) a](ops/basic.md#add): Addition
+  - [(time) a](ops/time.md#add): Time or duration addition
 - [abs](ops/sci.md#abs): Absolute value
 - [acos](ops/sci.md#acos): Inverse cosine
 - [acosh](ops/sci.md#acosh): Inverse hyperbolic cosine
 - add
-  - [(basic) add](ops/basic#add.md): Addition
-  - [(time) add](ops/time#add.md): Time or duration addition
+  - [(basic) add](ops/basic.md#add): Addition
+  - [(time) add](ops/time.md#add): Time or duration addition
 - and
-  - [(bool) and](ops/bool#and.md): Logical conjunction
-  - [(prog) and](ops/prog#and.md): Bitwise and
+  - [(bool) and](ops/bool.md#and): Logical conjunction
+  - [(prog) and](ops/prog.md#and): Bitwise and
 - [asin](ops/sci.md#asin): Inverse sine
 - [asinh](ops/sci.md#asinh): Inverse hyperbolic sine
 - [atan](ops/sci.md#atan): Inverse tangent
@@ -65,8 +65,8 @@
 - [datetime](ops/time.md#datetime): Formats to a common date/time layout
 - [day-year](ops/time.md#day-year): Day of year
 - dec
-  - [(prog) dec](ops/prog#dec.md): Decimal conversion
-  - [(types) dec](ops/types#dec.md): Decimal number
+  - [(prog) dec](ops/prog.md#dec): Decimal conversion
+  - [(types) dec](ops/types.md#dec): Decimal number
 - [deca](ops/si.md#deca): SI prefix da, 1e01
 - [deci](ops/si.md#deci): SI prefix d, 1e-01
 - [div](ops/basic.md#div): Division
@@ -166,8 +166,8 @@
 - [nmi-m](ops/len.md#nmi-m): Nautical miles to meters
 - [nmi-mi](ops/len.md#nmi-mi): Nautical miles to miles
 - not
-  - [(bool) not](ops/bool#not.md): Negation
-  - [(prog) not](ops/prog#not.md): Bitwise not
+  - [(bool) not](ops/bool.md#not): Negation
+  - [(prog) not](ops/prog.md#not): Bitwise not
 - [now](ops/time.md#now): Current date and time
 - [now-restore](ops/time.md#now-restore): Cancel now override
 - [now-set](ops/time.md#now-set): Override now value
@@ -176,8 +176,8 @@
 
 - [oct](ops/prog.md#oct): Octal conversion
 - or
-  - [(bool) or](ops/bool#or.md): Logical disjunction
-  - [(prog) or](ops/prog#or.md): Bitwise or
+  - [(bool) or](ops/bool.md#or): Logical disjunction
+  - [(prog) or](ops/prog.md#or): Bitwise or
 
 ## p
 
@@ -221,8 +221,8 @@
 ## s
 
 - s
-  - [(basic) s](ops/basic#sub.md): Subtraction
-  - [(time) s](ops/time#sub.md): Time or duration subtractoin
+  - [(basic) s](ops/basic.md#sub): Subtraction
+  - [(time) s](ops/time.md#sub): Time or duration subtractoin
 - [scientific-notation](ops/format.md#scientific-notation): Scientific notatoin
 - [seconds](ops/time.md#seconds): Seconds in duration
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
@@ -234,8 +234,8 @@
 - [sqrt](ops/basic.md#sqrt): Square root
 - [square-root](ops/basic.md#sqrt): Square root
 - sub
-  - [(basic) sub](ops/basic#sub.md): Subtraction
-  - [(time) sub](ops/time#sub.md): Time or duration subtractoin
+  - [(basic) sub](ops/basic.md#sub): Subtraction
+  - [(time) sub](ops/time.md#sub): Time or duration subtractoin
 - [sum](ops/stat.md#sum): Summation
 - [swap](ops/stack.md#swap): Swap top two items on the stack
 
