@@ -6,9 +6,9 @@
 
 | Volume                    | Description
 |---------------------------|-----------
-| [basic](ops/basic.md)     | Basic mathematical calculations 
+| [basic](ops/basic.md)     | Basic calculator 
 | [prog](ops/prog.md)       | Programmer's calculator 
-| [sci](ops/sci.md)         | Scientific calculations 
+| [sci](ops/sci.md)         | Scientific calculator 
 | [stat](ops/stat.md)       | Statistical calculations 
 
 
@@ -16,9 +16,9 @@
 
 | Volume                    | Description
 |---------------------------|-----------
-| [len](ops/len.md)         | Conversions for units of length 
-| [si](ops/si.md)           | Prefixes for the International System of Units 
-| [temp](ops/temp.md)       | Conversions for units of temperature 
+| [len](ops/len.md)         | Length 
+| [si](ops/si.md)           | International System of Units 
+| [temp](ops/temp.md)       | Temperature 
 
 
 ## Standard Operations
