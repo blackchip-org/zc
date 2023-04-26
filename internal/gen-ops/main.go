@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"sort"
 	"strings"
 
 	"github.com/blackchip-org/zc/pkg/doc"
@@ -36,25 +35,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var names []string
-	table := make(map[string]*doc.Op)
-	for _, op := range ops {
-		other, ok := table[op.Name]
-		if ok {
-			other.Aliases = append(other.Aliases, op.Aliases...)
-			other.Funcs = append(other.Funcs, op.Funcs...)
-		} else {
-			table[op.Name] = op
-			names = append(names, op.Name)
-		}
-		for _, a := range op.Aliases {
-			if _, exists := table[a]; !exists {
-				table[a] = op
-				names = append(names, a)
-			}
-		}
-	}
-	sort.Strings(names)
+	table := doc.Table(ops)
+	names := doc.SortedNames(table)
 
 	out := &strings.Builder{}
 	fmt.Fprintf(out, "%v\n", prelude)

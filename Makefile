@@ -6,6 +6,7 @@ install:
 	go install $(GOFLAGS) ./...
 
 doc:
+	go generate internal/gen-doc/main.go
 	go generate internal/gen-index/main.go
 
 test: gen
@@ -16,9 +17,8 @@ test-release: clean
 
 gen-ops:
 	go generate internal/gen-ops/main.go
-	go generate internal/gen-doc/main.go
 
-gen: gen-ops
+gen: gen-ops gen-doc
 	go generate internal/gen-tz/main.go
 
 clean:

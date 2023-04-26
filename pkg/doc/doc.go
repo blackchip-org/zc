@@ -51,6 +51,12 @@ type Op struct {
 	Macro   string
 }
 
+type OpByGroup []*Op
+
+func (b OpByGroup) Len() int           { return len(b) }
+func (b OpByGroup) Swap(i, j int)      { b[i], b[j] = b[j], b[i] }
+func (b OpByGroup) Less(i, j int) bool { return b[i].Group < b[j].Group }
+
 func ParseSourceFile(name string) ([]*Op, error) {
 	var ops []*Op
 	f, err := os.Open(name)
@@ -278,31 +284,49 @@ func FilterByGroup(src []*Op, group string) []*Op {
 	return target
 }
 
-func ByName(src []*Op) (map[string]*Op, error) {
-	target := make(map[string]*Op)
-	for _, o := range src {
-		if _, exists := target[o.Name]; exists {
-			return nil, fmt.Errorf("duplicate op: %v", o.Name)
-		}
-		target[o.Name] = o
-		for _, a := range o.Aliases {
-			if _, exists := target[a]; exists {
-				return nil, fmt.Errorf("duplicate op: %v", a)
-			}
-			target[a] = o
-		}
-	}
-	return target, nil
-}
-
-func SortedNames(src []*Op) []string {
+func SortedNames(table map[string]*Op) []string {
 	var names []string
-	for _, o := range src {
-		names = append(names, o.Name)
-		names = append(names, o.Aliases...)
+	for name := range table {
+		names = append(names, name)
 	}
 	sort.Strings(names)
 	return names
+}
+
+func Table(ops []*Op) map[string]*Op {
+	table := make(map[string]*Op)
+	for _, op := range ops {
+		other, ok := table[op.Name]
+		if ok {
+			other.Aliases = append(other.Aliases, op.Aliases...)
+			other.Funcs = append(other.Funcs, op.Funcs...)
+		} else {
+			table[op.Name] = op
+		}
+		for _, a := range op.Aliases {
+			if _, exists := table[a]; !exists {
+				table[a] = op
+			}
+		}
+	}
+	return table
+}
+
+func Group(ops []*Op) map[string][]*Op {
+	table := make(map[string][]*Op)
+	for _, op := range ops {
+		names := append([]string{op.Name}, op.Aliases...)
+		for _, name := range names {
+			if other, ok := table[name]; ok {
+				other = append(other, op)
+				sort.Sort(OpByGroup(other))
+				table[name] = other
+			} else {
+				table[name] = []*Op{op}
+			}
+		}
+	}
+	return table
 }
 
 func scanErr(s *scanner.Scanner, format string, a ...any) error {

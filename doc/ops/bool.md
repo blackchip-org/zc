@@ -5,8 +5,6 @@ Boolean operations
 
 | Operation       | Description
 |-----------------|---------------
-| [+](#+)         | Logical conjunction
-| [a](#a)         | Logical conjunction
 | [and](#and)     | Logical conjunction
 | [false](#false) | False
 | [not](#not)     | Negation
@@ -17,44 +15,6 @@ Boolean operations
 ## and
 
 The logical conjunction of *p0* and *p1*.
-
-Aliases: `a`, `+`
-
-	( p0:Bool p1:Bool -- Bool )
-
-Example:
-
-<!-- test: and -->
-
-| Input                | Stack
-|----------------------|---------------
-| `c true  true   and` | `true` 
-| `c true  false  and` | `false` 
-| `c false false  and` | `false` 
-
-## and
-
-The logical conjunction of *p0* and *p1*.
-
-Aliases: `a`, `+`
-
-	( p0:Bool p1:Bool -- Bool )
-
-Example:
-
-<!-- test: and -->
-
-| Input                | Stack
-|----------------------|---------------
-| `c true  true   and` | `true` 
-| `c true  false  and` | `false` 
-| `c false false  and` | `false` 
-
-## and
-
-The logical conjunction of *p0* and *p1*.
-
-Aliases: `a`, `+`
 
 	( p0:Bool p1:Bool -- Bool )
 

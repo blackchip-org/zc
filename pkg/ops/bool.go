@@ -5,8 +5,6 @@ import "github.com/blackchip-org/zc/pkg/zc"
 /*
 oper	and
 func	AndBool p0:Bool p1:Bool -- Bool
-alias 	a
-alias 	+
 title 	Logical conjunction
 
 desc
