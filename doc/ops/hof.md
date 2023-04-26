@@ -5,12 +5,11 @@ Higher-order functions
 
 | Operation         | Description
 |-------------------|---------------
-| [eval](#eval)     | Evaluate top of stack
-| [filter](#filter) | Filter items in the stack
-| [fold](#fold)     | Reduce items to a single value
-| [map](#map)       | Apply a function to each item on the stack
-| [reduce](#reduce) | Reduce items to a single value
-| [repeat](#repeat) | Repeat the execution of a function
+| [`eval`](#eval)   | Evaluate top of stack
+| [`filter`](#filter) | Filter items in the stack
+| [`fold, reduce`](#fold) | Reduce items to a single value
+| [`map`](#map)     | Apply a function to each item on the stack
+| [`repeat`](#repeat) | Repeat the execution of a function
 
 
 ## eval

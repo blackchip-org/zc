@@ -5,27 +5,16 @@ Basic calculator
 
 | Operation                   | Description
 |-----------------------------|---------------
-| [*](#*)                     | Multiplication
-| [**](#**)                   | Exponentiation
-| [+](#+)                     | Addition
-| [-](#-)                     | Subtraction
-| [/](#/)                     | Division
-| [^](#^)                     | Exponentiation
-| [a](#a)                     | Addition
-| [add](#add)                 | Addition
-| [d](#d)                     | Division
-| [div](#div)                 | Division
-| [m](#m)                     | Multiplication
-| [mod](#mod)                 | Modulus
-| [mul](#mul)                 | Multiplication
-| [neg](#neg)                 | Negation
-| [pow](#pow)                 | Exponentiation
-| [rem](#rem)                 | Remainder
-| [s](#s)                     | Subtraction
-| [sign](#sign)               | Sign
-| [sqrt](#sqrt)               | Square root
-| [square-root](#square-root) | Square root
-| [sub](#sub)                 | Subtraction
+| [`add, a, +`](#add)         | Addition
+| [`div, d, /`](#div)         | Division
+| [`mod`](#mod)               | Modulus
+| [`mul, m, *`](#mul)         | Multiplication
+| [`neg`](#neg)               | Negation
+| [`pow, **, ^`](#pow)        | Exponentiation
+| [`rem`](#rem)               | Remainder
+| [`sign`](#sign)             | Sign
+| [`sqrt, square-root`](#sqrt) | Square root
+| [`sub, s, -`](#sub)         | Subtraction
 
 
 ## mul

@@ -5,10 +5,10 @@ Temperature
 
 | Operation   | Description
 |-------------|---------------
-| [c-f](#c-f) | Celsius to Fahrenheit
-| [c-k](#c-k) | Celsius to Kelvin
-| [f-c](#f-c) | Fahrenheit to Celsius
-| [k-c](#k-c) | Kelvin to Celsius
+| [`c-f`](#c-f) | Celsius to Fahrenheit
+| [`c-k`](#c-k) | Celsius to Kelvin
+| [`f-c`](#f-c) | Fahrenheit to Celsius
+| [`k-c`](#k-c) | Kelvin to Celsius
 
 
 ## c-f

@@ -5,8 +5,8 @@ Type information and conversions
 
 | Operation           | Description
 |---------------------|---------------
-| [complex](#complex) | Complex from real and imaginary
-| [dec](#dec)         | Decimal number
+| [`complex`](#complex) | Complex from real and imaginary
+| [`dec`](#dec)       | Decimal number
 
 
 ## complex

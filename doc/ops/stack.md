@@ -5,19 +5,16 @@ Stack manipulations
 
 | Operation           | Description
 |---------------------|---------------
-| [c](#c)             | Clear the stack
-| [clear](#clear)     | Clear the stack
-| [dn](#dn)           | Rotate stack downward
-| [down](#down)       | Rotate stack downward
-| [drop](#drop)       | Drop top item from stack
-| [dup](#dup)         | Duplicate top stack item
-| [n](#n)             | Number of stack items
-| [rev](#rev)         | Reverse stack
-| [reverse](#reverse) | Reverse stack
-| [swap](#swap)       | Swap top two items on the stack
-| [take](#take)       | Take elements from the stack
-| [top](#top)         | Take top element from the stack
-| [up](#up)           | Rotate items upward
+| [`clear, c`](#clear) | Clear the stack
+| [`down, dn`](#down) | Rotate stack downward
+| [`drop`](#drop)     | Drop top item from stack
+| [`dup`](#dup)       | Duplicate top stack item
+| [`n`](#n)           | Number of stack items
+| [`reverse, rev`](#reverse) | Reverse stack
+| [`swap`](#swap)     | Swap top two items on the stack
+| [`take`](#take)     | Take elements from the stack
+| [`top`](#top)       | Take top element from the stack
+| [`up`](#up)         | Rotate items upward
 
 
 ## clear

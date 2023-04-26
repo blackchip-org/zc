@@ -9,28 +9,21 @@ Date, time, and duration operations
 
 | Operation                   | Description
 |-----------------------------|---------------
-| [+](#+)                     | Time or duration addition
-| [-](#-)                     | Time or duration subtractoin
-| [a](#a)                     | Time or duration addition
-| [add](#add)                 | Time or duration addition
-| [date](#date)               | Formats to a common date layout
-| [datetime](#datetime)       | Formats to a common date/time layout
-| [day-year](#day-year)       | Day of year
-| [doy](#doy)                 | Day of year
-| [dt](#dt)                   | Formats to a common date/time layout
-| [hours](#hours)             | Hours in duration
-| [local-zone](#local-zone)   | Sets the local time zone
-| [local-zone=](#local-zone=) | Gets the local time zone
-| [minutes](#minutes)         | Minutes in duration
-| [now](#now)                 | Current date and time
-| [now-restore](#now-restore) | Cancel now override
-| [now-set](#now-set)         | Override now value
-| [s](#s)                     | Time or duration subtractoin
-| [seconds](#seconds)         | Seconds in duration
-| [sub](#sub)                 | Time or duration subtractoin
-| [time](#time)               | Formats to a common time layout
-| [timezone](#timezone)       | Convert time to another time zone
-| [tz](#tz)                   | Convert time to another time zone
+| [`add, a, +`](#add)         | Time or duration addition
+| [`date`](#date)             | Formats to a common date layout
+| [`datetime, dt`](#datetime) | Formats to a common date/time layout
+| [`day-year, doy`](#day-year) | Day of year
+| [`hours`](#hours)           | Hours in duration
+| [`local-zone`](#local-zone) | Sets the local time zone
+| [`local-zone=`](#local-zone=) | Gets the local time zone
+| [`minutes`](#minutes)       | Minutes in duration
+| [`now`](#now)               | Current date and time
+| [`now-restore`](#now-restore) | Cancel now override
+| [`now-set`](#now-set)       | Override now value
+| [`seconds`](#seconds)       | Seconds in duration
+| [`sub, s, -`](#sub)         | Time or duration subtractoin
+| [`time`](#time)             | Formats to a common time layout
+| [`timezone, tz`](#timezone) | Convert time to another time zone
 
 
 ## add

@@ -5,18 +5,14 @@ Comparisons
 
 | Operation                                       | Description
 |-------------------------------------------------|---------------
-| [eq](#eq)                                       | Equal
-| [greater-than](#greater-than)                   | Greater than
-| [greater-than-or-equal](#greater-than-or-equal) | Greater than or equal
-| [gt](#gt)                                       | Greater than
-| [gte](#gte)                                     | Greater than or equal
-| [is](#is)                                       | Byte equality
-| [is-not](#is-not)                               | Byte inequality
-| [less-than](#less-than)                         | Less than
-| [less-than-or-equal](#less-than-or-equal)       | Less than or equal
-| [lt](#lt)                                       | Less than
-| [lte](#lte)                                     | Less than or equal
-| [neq](#neq)                                     | Not equal
+| [`eq`](#eq)                                     | Equal
+| [`gt, greater-than`](#gt)                       | Greater than
+| [`gte, greater-than-or-equal`](#gte)            | Greater than or equal
+| [`is`](#is)                                     | Byte equality
+| [`is-not`](#is-not)                             | Byte inequality
+| [`lt, less-than`](#lt)                          | Less than
+| [`lte, less-than-or-equal`](#lte)               | Less than or equal
+| [`neq`](#neq)                                   | Not equal
 
 
 ## eq

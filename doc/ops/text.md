@@ -5,21 +5,17 @@ Text operations
 
 | Operation                         | Description
 |-----------------------------------|---------------
-| [char-codepoint](#char-codepoint) | Character to code point
-| [char-cp](#char-cp)               | Character to code point
-| [codepoint-char](#codepoint-char) | Code point to character
-| [cp-char](#cp-char)               | Code point to character
-| [join](#join)                     | Join stack elements
-| [left](#left)                     | Left substring
-| [len](#len)                       | Length of string
-| [lower](#lower)                   | Lowercase
-| [right](#right)                   | Right substring
-| [split](#split)                   | Split string
-| [u8de](#u8de)                     | Decode UTF-8 bytes
-| [u8en](#u8en)                     | Encode UTF-8 bytes
-| [upper](#upper)                   | Uppercase
-| [utf8-decode](#utf8-decode)       | Decode UTF-8 bytes
-| [utf8-encode](#utf8-encode)       | Encode UTF-8 bytes
+| [`char-codepoint, char-cp`](#char-codepoint) | Character to code point
+| [`codepoint-char, cp-char`](#codepoint-char) | Code point to character
+| [`join`](#join)                   | Join stack elements
+| [`left`](#left)                   | Left substring
+| [`len`](#len)                     | Length of string
+| [`lower`](#lower)                 | Lowercase
+| [`right`](#right)                 | Right substring
+| [`split`](#split)                 | Split string
+| [`upper`](#upper)                 | Uppercase
+| [`utf8-decode, u8de`](#utf8-decode) | Decode UTF-8 bytes
+| [`utf8-encode, u8en`](#utf8-encode) | Encode UTF-8 bytes
 
 
 ## char-codepoint

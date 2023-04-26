@@ -5,14 +5,14 @@ Length
 
 | Operation         | Description
 |-------------------|---------------
-| [km-mi](#km-mi)   | Kilometers to miles
-| [km-nmi](#km-nmi) | Kilometers to nautical miles
-| [m-nmi](#m-nmi)   | Meters to nautical miles
-| [mi-km](#mi-km)   | Miles to kilomters
-| [mi-nmi](#mi-nmi) | Miles to nautical miles
-| [nmi-km](#nmi-km) | Nautical miles to kiometers
-| [nmi-m](#nmi-m)   | Nautical miles to meters
-| [nmi-mi](#nmi-mi) | Nautical miles to miles
+| [`km-mi`](#km-mi) | Kilometers to miles
+| [`km-nmi`](#km-nmi) | Kilometers to nautical miles
+| [`m-nmi`](#m-nmi) | Meters to nautical miles
+| [`mi-km`](#mi-km) | Miles to kilomters
+| [`mi-nmi`](#mi-nmi) | Miles to nautical miles
+| [`nmi-km`](#nmi-km) | Nautical miles to kiometers
+| [`nmi-m`](#nmi-m) | Nautical miles to meters
+| [`nmi-mi`](#nmi-mi) | Nautical miles to miles
 
 
 ## km-mi

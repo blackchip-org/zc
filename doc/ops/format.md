@@ -5,12 +5,10 @@ Value formatting
 
 | Operation                                   | Description
 |---------------------------------------------|---------------
-| [r](#r)                                     | Round to a given precision
-| [round](#round)                             | Round to a given precision
-| [rounding-mode](#rounding-mode)             | Set method to use in rounding
-| [rounding-mode=](#rounding-mode=)           | Method to use in rounding
-| [scientific-notation](#scientific-notation) | Scientific notatoin
-| [sn](#sn)                                   | Scientific notatoin
+| [`round, r`](#round)                        | Round to a given precision
+| [`rounding-mode`](#rounding-mode)           | Set method to use in rounding
+| [`rounding-mode=`](#rounding-mode=)         | Method to use in rounding
+| [`scientific-notation, sn`](#scientific-notation) | Scientific notatoin
 
 
 ## round

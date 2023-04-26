@@ -5,7 +5,7 @@ Statistical calculations
 
 | Operation   | Description
 |-------------|---------------
-| [sum](#sum) | Summation
+| [`sum`](#sum) | Summation
 
 
 ## sum

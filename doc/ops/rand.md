@@ -5,13 +5,13 @@ Random number generation
 
 | Operation                   | Description
 |-----------------------------|---------------
-| [rand](#rand)               | Random float
-| [rand-choice](#rand-choice) | Randomly select item on stack
-| [rand-int](#rand-int)       | Random integer
-| [rand-seed](#rand-seed)     | Set the random number seed
-| [rand-seed=](#rand-seed=)   | Get the random number seed
-| [roll](#roll)               | Dice roller
-| [shuffle](#shuffle)         | Shuffle the stack
+| [`rand`](#rand)             | Random float
+| [`rand-choice`](#rand-choice) | Randomly select item on stack
+| [`rand-int`](#rand-int)     | Random integer
+| [`rand-seed`](#rand-seed)   | Set the random number seed
+| [`rand-seed=`](#rand-seed=) | Get the random number seed
+| [`roll`](#roll)             | Dice roller
+| [`shuffle`](#shuffle)       | Shuffle the stack
 
 
 ## rand

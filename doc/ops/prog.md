@@ -5,21 +5,19 @@ Programmer's calculator
 
 | Operation                   | Description
 |-----------------------------|---------------
-| [and](#and)                 | Bitwise and
-| [bin](#bin)                 | Binary conversion
-| [bit](#bit)                 | Bit value
-| [bits](#bits)               | Length in bits
-| [bytes](#bytes)             | Length in bytes
-| [dec](#dec)                 | Decimal conversion
-| [hex](#hex)                 | Hexadecimal conversion
-| [left-shift](#left-shift)   | Left shift bits
-| [lsh](#lsh)                 | Left shift bits
-| [not](#not)                 | Bitwise not
-| [oct](#oct)                 | Octal conversion
-| [or](#or)                   | Bitwise or
-| [right-shift](#right-shift) | Right shift bits
-| [rsh](#rsh)                 | Right shift bits
-| [xor](#xor)                 | Bitwise exclusive or
+| [`and`](#and)               | Bitwise and
+| [`bin`](#bin)               | Binary conversion
+| [`bit`](#bit)               | Bit value
+| [`bits`](#bits)             | Length in bits
+| [`bytes`](#bytes)           | Length in bytes
+| [`dec`](#dec)               | Decimal conversion
+| [`hex`](#hex)               | Hexadecimal conversion
+| [`lsh, left-shift`](#lsh)   | Left shift bits
+| [`not`](#not)               | Bitwise not
+| [`oct`](#oct)               | Octal conversion
+| [`or`](#or)                 | Bitwise or
+| [`rsh, right-shift`](#rsh)  | Right shift bits
+| [`xor`](#xor)               | Bitwise exclusive or
 
 
 ## and

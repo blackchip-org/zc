@@ -5,11 +5,11 @@ Color conversions
 
 | Operation                     | Description
 |-------------------------------|---------------
-| [cmyk-rgb](#cmyk-rgb)         | CMYK to RGB color space
-| [color-sample](#color-sample) | Render a sample of a color
-| [hsl-rgb](#hsl-rgb)           | HSL to RGB color space
-| [rgb-cmyk](#rgb-cmyk)         | RGB to CMYK color space
-| [rgb-hsl](#rgb-hsl)           | RGB to HSL color space
+| [`cmyk-rgb`](#cmyk-rgb)       | CMYK to RGB color space
+| [`color-sample`](#color-sample) | Render a sample of a color
+| [`hsl-rgb`](#hsl-rgb)         | HSL to RGB color space
+| [`rgb-cmyk`](#rgb-cmyk)       | RGB to CMYK color space
+| [`rgb-hsl`](#rgb-hsl)         | RGB to HSL color space
 
 
 ## cmyk-rgb

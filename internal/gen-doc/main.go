@@ -59,7 +59,12 @@ func writeGroup(group string, ops []*doc.Op) {
 	fmt.Fprintf(out, "| %-[1]*v | Description\n", width, "Operation")
 	fmt.Fprintf(out, "|%v|%v\n", strings.Repeat("-", width+2), strings.Repeat("-", 15))
 	for _, name := range names {
-		entry := fmt.Sprintf("[%v](#%v)", name, name)
+		op := table[name]
+		if op.Name != name {
+			continue
+		}
+		allNames := append([]string{op.Name}, op.Aliases...)
+		entry := fmt.Sprintf("[`%v`](#%v)", strings.Join(allNames, ", "), name)
 		fmt.Fprintf(out, "| %-[1]*v | %v\n", width, entry, table[name].Title)
 	}
 	fmt.Fprintln(out, "")
