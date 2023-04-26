@@ -23,20 +23,6 @@ An operation that does not modify the stack is shown by:
 
     ( -- )
 
-If an operation can accept multiple types, a type parameter, such as `T` is
-used:
-
-    ( T T -- T )
-
-The allowed types are then listed in the order that they are used for parsing. For
-example:
-
-where *T* is one of:
-- BigInt
-- Float
-
-Values are parsed, in order, for the types listed. The first type that successfully parses the value is the type used for *T*.
-
 Parameters can be named by placing a name and a `:` before the type:
 
     ( real:Float imag:Float -- Complex )
@@ -61,9 +47,4 @@ the stack. if any. For example, the stack notation for the `sum` operation is:
 
     ( T* -- T )
 
-A `...` is a placeholder for all other items in the stack. For example, the
-notation for `down` which takes the top element and places it on the bottom
-of the stack is as follows:
-
-    ( ... Val -- Val ... )
-
+A `...` is a placeholder for all other items in the stack.
