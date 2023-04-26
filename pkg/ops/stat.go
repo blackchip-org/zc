@@ -16,6 +16,6 @@ end
 
 example
 1 2 3 4 5 -- 1 | 2 | 3 | 4 | 5
-sum -- 10
+sum -- 15
 end
 */

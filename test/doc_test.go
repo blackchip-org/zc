@@ -133,14 +133,14 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 		if c.Error() != nil {
 			actualOut := c.Error().Error()
 			if actualOut != out {
-				t.Fatalf("\n have: %v \n want: %v", actualOut, out)
+				t.Fatalf("\n have error: %v \n want error: %v", actualOut, out)
 			}
 			return
 		}
 		if c.Info() != "" || info != "" {
 			have := "*" + c.Info() + "*"
 			if have != info {
-				t.Fatalf("\n have: %v \n want: %v", have, info)
+				t.Fatalf("\n have info: %v \n want info: %v", have, info)
 			}
 		} else {
 			actualOut := strings.Join(c.Stack(), " | ")

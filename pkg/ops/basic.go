@@ -154,9 +154,7 @@ error is raised.
 end
 
 example
--7 -- 7
-2 -- -7 | 2
-mod -- 1
+-7 2 mod -- 1
 end
 */
 func ModBigInt(c zc.Calc) {

@@ -202,7 +202,7 @@ Gets the local time zone.
 end
 
 example
-local-zone -- MST
+local-zone= -- MST
 end
 */
 func LocalZoneGet(c zc.Calc) {
@@ -320,16 +320,14 @@ Subtraces a duration from a time or subracts two durations.
 end
 
 example
-c 3:30pm -- 3:30pm
-2h sub -- Mon Jan 2 2006 1:30:00pm -0700 MST
-c 2h30m -- 2h30m
-45m sub -- 1h45m
+c 3:30pm 2h sub -- Mon Jan 2 2006 1:30:00pm -0700 MST
+c 2h30m 45m sub -- 1h45m
 end
 */
 func SubDuration(c zc.Calc) {
 	a1 := zc.PopDuration(c)
 	a0 := zc.PopDuration(c)
-	r0 := a1 - a0
+	r0 := a0 - a1
 	zc.PushDuration(c, r0)
 }
 

@@ -232,7 +232,7 @@ Convert string *p0* to uppercase.
 end
 
 example
-AbCd -- AbCd
+'AbCd -- AbCd
 upper -- ABCD
 end
 */

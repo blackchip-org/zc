@@ -51,8 +51,8 @@ type Op struct {
 	Macro   string
 }
 
-func ParseSourceFile(name string) ([]Op, error) {
-	var ops []Op
+func ParseSourceFile(name string) ([]*Op, error) {
+	var ops []*Op
 	f, err := os.Open(name)
 	if err != nil {
 		return nil, fmt.Errorf("unable to read file: %v", err)
@@ -91,13 +91,13 @@ func ParseSourceFile(name string) ([]Op, error) {
 	return ops, s.Error
 }
 
-func ParseSourceFiles(dir string) ([]Op, error) {
+func ParseSourceFiles(dir string) ([]*Op, error) {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, err
 	}
 
-	var ops []Op
+	var ops []*Op
 	for _, f := range files {
 		if strings.HasSuffix(f.Name(), ".go") {
 			name := path.Join(dir, f.Name())
@@ -111,8 +111,8 @@ func ParseSourceFiles(dir string) ([]Op, error) {
 	return ops, nil
 }
 
-func parseOp(s *scanner.Scanner, group string) (Op, error) {
-	op := Op{Group: group}
+func parseOp(s *scanner.Scanner, group string) (*Op, error) {
+	op := &Op{Group: group}
 loop:
 	for s.Ok() {
 		var err error
@@ -140,6 +140,9 @@ loop:
 		if err != nil {
 			return op, err
 		}
+	}
+	if op.Name == "" {
+		return op, scanErr(s, "no name")
 	}
 	if op.Title == "" {
 		return op, scanErr(s, "no title for %v", op.Name)
@@ -250,13 +253,13 @@ func parseExample(s *scanner.Scanner) ([]Expect, error) {
 	return example, nil
 }
 
-func parseTableOp(s *scanner.Scanner, group string) (Op, error) {
+func parseTableOp(s *scanner.Scanner, group string) (*Op, error) {
 	line := s.Scan(scanner.LineTrimSpace)
 	parts := strings.Split(line, "--")
 	if len(parts) != 3 {
-		return Op{}, scanErr(s, "invalid table line: %v", line)
+		return nil, scanErr(s, "invalid table line: %v", line)
 	}
-	return Op{
+	return &Op{
 		Group: group,
 		Name:  strings.TrimSpace(parts[0]),
 		Macro: strings.TrimSpace(parts[1]),
@@ -265,8 +268,8 @@ func parseTableOp(s *scanner.Scanner, group string) (Op, error) {
 	}, nil
 }
 
-func FilterByGroup(src []Op, group string) []Op {
-	var target []Op
+func FilterByGroup(src []*Op, group string) []*Op {
+	var target []*Op
 	for _, o := range src {
 		if o.Group == group {
 			target = append(target, o)
@@ -275,21 +278,28 @@ func FilterByGroup(src []Op, group string) []Op {
 	return target
 }
 
-func ByName(src []Op) map[string]Op {
-	target := make(map[string]Op)
+func ByName(src []*Op) (map[string]*Op, error) {
+	target := make(map[string]*Op)
 	for _, o := range src {
 		if _, exists := target[o.Name]; exists {
-			panic(fmt.Sprintf("duplicate op: %v", o.Name))
+			return nil, fmt.Errorf("duplicate op: %v", o.Name)
 		}
 		target[o.Name] = o
+		for _, a := range o.Aliases {
+			if _, exists := target[a]; exists {
+				return nil, fmt.Errorf("duplicate op: %v", a)
+			}
+			target[a] = o
+		}
 	}
-	return target
+	return target, nil
 }
 
-func SortedNames(src []Op) []string {
+func SortedNames(src []*Op) []string {
 	var names []string
 	for _, o := range src {
 		names = append(names, o.Name)
+		names = append(names, o.Aliases...)
 	}
 	sort.Strings(names)
 	return names

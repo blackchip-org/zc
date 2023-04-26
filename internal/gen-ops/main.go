@@ -37,7 +37,7 @@ func main() {
 	}
 
 	var names []string
-	table := make(map[string]doc.Op)
+	table := make(map[string]*doc.Op)
 	for _, op := range ops {
 		other, ok := table[op.Name]
 		if ok {
@@ -47,6 +47,12 @@ func main() {
 			table[op.Name] = op
 			names = append(names, op.Name)
 		}
+		for _, a := range op.Aliases {
+			if _, exists := table[a]; !exists {
+				table[a] = op
+				names = append(names, a)
+			}
+		}
 	}
 	sort.Strings(names)
 
@@ -54,6 +60,10 @@ func main() {
 	fmt.Fprintf(out, "%v\n", prelude)
 	for _, name := range names {
 		op := table[name]
+		if name != op.Name {
+			fmt.Fprintf(out, "\tzc.Macro(\"%v\", \"%v\"),\n", name, op.Name)
+			continue
+		}
 		if op.Macro != "" {
 			fmt.Fprintf(out, "\tzc.Macro(\"%v\", \"%v\"),\n", name, op.Macro)
 			continue

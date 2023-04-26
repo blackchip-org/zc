@@ -26,7 +26,7 @@ Convert *p0* in kilometers to nautical miles.
 end
 
 example
-100 km-nmi -- 54
+100 km-nmi 2 round -- 54
 end
 */
 
@@ -41,7 +41,7 @@ Convert *p0* in meters to nautical miles.
 end
 
 example
-100,000 m-nmi -- 54
+100,000 m-nmi 2 round -- 54
 end
 */
 
@@ -56,7 +56,7 @@ Convert *p0* in miles to kilometers
 end
 
 example
-100 mk-km 2 round -- 160.93
+100 mi-km 2 round -- 160.93
 end
 */
 

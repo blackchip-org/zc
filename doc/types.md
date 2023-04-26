@@ -124,7 +124,7 @@ To parse as a decimal, add a `d` suffix to the number. Example:
 
 | Input               | Stack
 |---------------------|-------------
-| `c 1e10 1e10 add`   | `2e+10`
+| `c 1e10 1e10 add`   | `2e10`
 | `c 1e10d 1e10d add` | `20000000000`
 
 ## Duration

@@ -28,7 +28,7 @@ func getRandState(c zc.Calc) *randState {
 }
 
 /*
-expr	rand
+oper	rand
 func	Rand -- Float
 title	Random float
 

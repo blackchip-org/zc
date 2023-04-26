@@ -177,6 +177,7 @@ func (c *calc) parseWords(str string) []string {
 		} else {
 			if (unicode.IsSpace(ch) && !inQuote) || ch == endQuote {
 				inWord = false
+				inQuote = false
 				words = append(words, word.String())
 			} else {
 				word.WriteRune(ch)

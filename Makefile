@@ -8,7 +8,7 @@ install:
 doc:
 	go generate internal/gen-index/main.go
 
-test:
+test: gen
 	go test $(GOFLAGS) ./...
 
 test-release: clean

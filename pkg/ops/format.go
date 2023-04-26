@@ -2,6 +2,7 @@ package ops
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/blackchip-org/zc/pkg/zc"
 	"github.com/shopspring/decimal"
@@ -49,7 +50,7 @@ func round(d decimal.Decimal, places int32, mode string) decimal.Decimal {
 
 /*
 oper	round
-func	Round n:Int d:Decimal -- Decimal
+func	Round d:Decimal n:Int -- Decimal
 alias	r
 title	Round to a given precision
 
@@ -106,7 +107,7 @@ func RoundingMode(c zc.Calc) {
 }
 
 /*
-oper rounding-mode-
+oper rounding-mode=
 func RoundingModeGet -- Str
 title Method to use in rounding
 
@@ -134,11 +135,12 @@ Formats the value *p0* using scientific notation.
 end
 
 example
-1234 -- 1.234e03
+1234 sn -- 1.234e03
 end
 */
 func ScientificNotation(c zc.Calc) {
 	a0 := zc.PopFloat(c)
-	r0 := strconv.FormatFloat(a0, 'e', -1, 64)
+	t0 := strconv.FormatFloat(a0, 'e', -1, 64)
+	r0 := strings.Replace(t0, "e+", "e", 1)
 	zc.PushString(c, r0)
 }

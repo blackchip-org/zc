@@ -87,7 +87,8 @@ func (t FloatType) Is(s string) bool {
 }
 
 func (t FloatType) Format(v float64) string {
-	return fmt.Sprintf("%v", v)
+	s := fmt.Sprintf("%v", v)
+	return strings.Replace(s, "e+", "e", 1)
 }
 
 func PopFloat(c Calc) float64 { return Float.MustParse(c.MustPop()) }

@@ -19,7 +19,7 @@ end
 
 example
 0b1100 -- 0b1100
-0b1010 -- 0b1100 0b1010
+0b1010 -- 0b1100 | 0b1010
 and bin -- 0b1000
 end
 */
@@ -196,12 +196,12 @@ func Lsh(c zc.Calc) {
 }
 
 /*
-expr	not
-func	NotBigInt p0:BigInt p1:BigInt -- BigInt
+oper	not
+func	NotBigInt p0:BigInt -- BigInt
 title	Bitwise not
 
 desc
-The bitwise not of *p0* and *p1*.
+The bitwise not of *p0*.
 end
 
 example
@@ -254,7 +254,7 @@ The bitwise or of *p0* and *p1*.
 end
 
 example
-0b110 -- 0b110
+0b1100 -- 0b1100
 0b1010 -- 0b1100 | 0b1010
 or bin -- 0b1110
 end
@@ -294,6 +294,8 @@ func Rsh(c zc.Calc) {
 oper	xor
 func	Xor a:BigInt b:BigInt -- and:BigInt
 title	Bitwise exclusive or
+
+	log.Panicf("the fields are: [%v]\n", fields[2])
 
 desc
 The bitwise exclusive or of `a` and `b`.

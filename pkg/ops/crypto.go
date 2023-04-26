@@ -19,8 +19,8 @@ end
 
 example
 'Behind the tree! -- Behind the tree!
-rot-13            -- Oruvaq gur gerr!
-rot-13            -- Behind the tree!
+rot13             -- Oruvaq gur gerr!
+rot13             -- Behind the tree!
 end
 */
 func Rot13(c zc.Calc) {
