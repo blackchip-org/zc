@@ -29,11 +29,7 @@ func IsValuePrefix(ch rune, next rune) bool {
 }
 
 func StackString(c Calc) string {
-	var items []string
-	for _, item := range c.Stack() {
-		items = append(items, Quote(item))
-	}
-	return strings.Join(items, " | ")
+	return strings.Join(c.Stack(), " | ")
 }
 
 func Quote(v string) string {

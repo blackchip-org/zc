@@ -13,9 +13,11 @@ import (
 	"github.com/blackchip-org/zc/pkg/zc"
 )
 
+const space4 = "    "
+
 func TestOps(t *testing.T) {
 	ansi.Enabled = false
-	testDir(t, ".")
+	testDir(t, "./ops")
 }
 
 func testDir(t *testing.T, dir string) {
@@ -45,55 +47,41 @@ func testFile(t *testing.T, file string) {
 	}
 	defer f.Close()
 
-	var c zc.Calc
-	var r *repl.REPL
-	var out strings.Builder
-
-	var reset = func() {
-		c = calc.New()
-		r = repl.New(c)
-		r.Out = &out
-		out.Reset()
-	}
-
 	s := scanner.New(f)
-	space4 := "    "
-	space8 := space4 + space4
+
+	var blockName string
+	for s.Ok() {
+		if s.Ch == '#' && s.Lookahead == '#' {
+			s.Next()
+			s.Next()
+			blockName = s.Scan(scanner.LineTrimSpace)
+		} else {
+			space := s.ScanWhile(scanner.Rune(' '))
+			if space == space4 {
+				t.Run(blockName, func(t *testing.T) {
+					testBlock(t, s)
+				})
+			} else {
+				s.Scan(scanner.Line)
+			}
+		}
+	}
+}
+
+func testBlock(t *testing.T, s *scanner.Scanner) {
+	c := calc.New()
+	r := repl.New(c)
+	out := &strings.Builder{}
+	r.Out = out
 
 	for s.Ok() {
+		test := s.Scan(scanner.LineTrimSpace)
+		if !repl.Test(r, test) {
+			t.Errorf("\n output: %v (error %v) \n  input: %v\n", zc.StackString(c), c.Error(), test)
+		}
 		space := s.ScanWhile(scanner.Rune(' '))
-		switch space {
-		case space4:
-			if c == nil {
-				t.Log("reset")
-				reset()
-			}
-			expr := s.ScanUntil(scanner.IsNewline)
-			s.Next()
-			t.Logf("-> %v", expr)
-			r.Eval(expr)
-			if c.Error() != nil {
-				c.Push(c.Error().Error())
-			}
-		case space8:
-			rem := s.ScanUntil(scanner.IsNewline)
-			s.Next()
-			t.Logf("<- %v", zc.StackString(c))
-			wants := strings.Split(rem, "|")
-			for i := len(wants) - 1; i >= 0; i-- {
-				want := strings.TrimSpace(wants[i])
-				have, ok := c.Pop()
-				if !ok {
-					t.Fatalf("\n have: empty stack \n want: %v", zc.Quote(want))
-				}
-				if have != want {
-					t.Fatalf("\n have: %v \n want: %v\n", zc.Quote(have), zc.Quote(want))
-				}
-			}
-		default:
-			c = nil
-			s.ScanUntil(scanner.IsNewline)
-			s.Next()
+		if space != space4 {
+			break
 		}
 	}
 }
