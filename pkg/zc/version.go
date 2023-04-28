@@ -1,6 +1,6 @@
 package zc
 
 var (
-	Version   = "v4.0.0"
-	BuildDate = "26 Apr 2023"
+	Version   = "v5.0.0"
+	BuildDate = "28 Apr 2023"
 )
