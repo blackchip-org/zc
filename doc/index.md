@@ -31,7 +31,6 @@
 - [asinh](ops/sci.md#asinh): Inverse hyperbolic sine
 - [atan](ops/sci.md#atan): Inverse tangent
 - [atanh](ops/sci.md#atanh): Inverse hyperbolic tangent
-- [atto](ops/si.md#atto): SI prefix a, 1e-18
 
 ## b
 
@@ -46,7 +45,6 @@
 - [c-f](ops/temp.md#c-f): Celsius to Fahrenheit
 - [c-k](ops/temp.md#c-k): Celsius to Kelvin
 - [ceil](ops/sci.md#ceil): Ceiling
-- [centi](ops/si.md#centi): SI prefix c, 1e-02
 - [char-codepoint](ops/text.md#char-codepoint): Character to code point
 - [char-cp](ops/text.md#char-codepoint): Character to code point
 - [clear](ops/stack.md#clear): Clear the stack
@@ -68,8 +66,6 @@
   - [(angle) dec](ops/angle.md#dec): DMS angle to decimal degrees
   - [(prog) dec](ops/prog.md#dec): Decimal conversion
   - [(types) dec](ops/types.md#dec): Decimal number
-- [deca](ops/si.md#deca): SI prefix da, 1e01
-- [deci](ops/si.md#deci): SI prefix d, 1e-01
 - [deg-min](ops/angle.md#deg-min): Angle in degrees and minutes
 - [deg-min-round](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
 - [deg-min-sec](ops/angle.md#deg-min-sec): Angle in degrees and minutes
@@ -90,23 +86,23 @@
 ## e
 
 - [e](ops/sci.md#e): Euler's number
+- [epsg.utm](ops/epsg.md#epsg.utm): Universal Transverse Mercator (WGS-84)
+- [epsg.web-mercator](ops/epsg.md#epsg.web-mercator): Web Mercator, EPSG:3857
+- [epsg.wgs-84](ops/epsg.md#epsg.wgs-84): World Geodetic System of 1984, EPSG:4326
 - [eq](ops/cmp.md#eq): Equal
 - [eval](ops/hof.md#eval): Evaluate top of stack
-- [exa](ops/si.md#exa): SI prefix E, 1e18
 - [exp](ops/sci.md#exp): Natural exponential
 
 ## f
 
 - [f-c](ops/temp.md#f-c): Fahrenheit to Celsius
 - [false](ops/bool.md#false): False
-- [femto](ops/si.md#femto): SI prefix f, 1e-15
 - [filter](ops/hof.md#filter): Filter items in the stack
 - [floor](ops/sci.md#floor): Floor
 - [fold](ops/hof.md#fold): Reduce items to a single value
 
 ## g
 
-- [giga](ops/si.md#giga): SI prefix G, 1e09
 - [greater-than](ops/cmp.md#gt): Greater than
 - [greater-than-or-equal](ops/cmp.md#gte): Greater than or equal
 - [gt](ops/cmp.md#gt): Greater than
@@ -114,7 +110,6 @@
 
 ## h
 
-- [hecto](ops/si.md#hecto): SI prefix h, 1e02
 - [hex](ops/prog.md#hex): Hexadecimal conversion
 - [hours](ops/time.md#hours): Hours in duration
 - [hsl-rgb](ops/color.md#hsl-rgb): HSL to RGB color space
@@ -133,7 +128,6 @@
 ## k
 
 - [k-c](ops/temp.md#k-c): Kelvin to Celsius
-- [kilo](ops/si.md#kilo): SI prefix k, 1e03
 - [km-mi](ops/len.md#km-mi): Kilometers to miles
 - [km-nmi](ops/len.md#km-nmi): Kilometers to nautical miles
 
@@ -159,11 +153,8 @@
 - [m](ops/basic.md#mul): Multiplication
 - [m-nmi](ops/len.md#m-nmi): Meters to nautical miles
 - [map](ops/hof.md#map): Apply a function to each item on the stack
-- [mega](ops/si.md#mega): SI prefix M, 1e06
 - [mi-km](ops/len.md#mi-km): Miles to kilomters
 - [mi-nmi](ops/len.md#mi-nmi): Miles to nautical miles
-- [micro](ops/si.md#micro): SI prefix μ, 1e-06
-- [milli](ops/si.md#milli): SI prefix m, 1e-03
 - minutes
   - [(angle) minutes](ops/angle.md#minutes): Angle in minutes
   - [(time) minutes](ops/time.md#minutes): Minutes in duration
@@ -173,7 +164,6 @@
 ## n
 
 - [n](ops/stack.md#n): Number of stack items
-- [nano](ops/si.md#nano): SI prefix n, 1e-09
 - [neg](ops/basic.md#neg): Negation
 - [neq](ops/cmp.md#neq): Not equal
 - [nmi-km](ops/len.md#nmi-km): Nautical miles to kiometers
@@ -195,15 +185,9 @@
 
 ## p
 
-- [peta](ops/si.md#peta): SI prefix P, 1e15
 - [pi](ops/sci.md#pi): Circumference to diameter ratio
-- [pico](ops/si.md#pico): SI prefix p, 1e-12
 - [pow](ops/basic.md#pow): Exponentiation
-
-## q
-
-- [quecto](ops/si.md#quecto): SI prefix q, 1e-30
-- [quetta](ops/si.md#quetta): SI prefix Q, 1e30
+- [proj](ops/geo.md#proj): Transform coordinate
 
 ## r
 
@@ -224,8 +208,6 @@
 - [right](ops/text.md#right): Right substring
 - [right-shift](ops/prog.md#rsh): Right shift bits
 - [roll](ops/rand.md#roll): Dice roller
-- [ronna](ops/si.md#ronna): SI prefix R, 1e27
-- [ronto](ops/si.md#ronto): SI prefix r, 1e-27
 - [rot13](ops/crypto.md#rotate-13): Rotate characters by 13
 - [rotate-13](ops/crypto.md#rotate-13): Rotate characters by 13
 - [round](ops/format.md#round): Round to a given precision
@@ -243,6 +225,30 @@
   - [(angle) seconds](ops/angle.md#seconds): Angle in seconds
   - [(time) seconds](ops/time.md#seconds): Seconds in duration
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
+- [si.atto](ops/si.md#si.atto): SI prefix a, 1e-18
+- [si.centi](ops/si.md#si.centi): SI prefix c, 1e-02
+- [si.deca](ops/si.md#si.deca): SI prefix da, 1e01
+- [si.deci](ops/si.md#si.deci): SI prefix d, 1e-01
+- [si.exa](ops/si.md#si.exa): SI prefix E, 1e18
+- [si.femto](ops/si.md#si.femto): SI prefix f, 1e-15
+- [si.giga](ops/si.md#si.giga): SI prefix G, 1e09
+- [si.hecto](ops/si.md#si.hecto): SI prefix h, 1e02
+- [si.kilo](ops/si.md#si.kilo): SI prefix k, 1e03
+- [si.mega](ops/si.md#si.mega): SI prefix M, 1e06
+- [si.micro](ops/si.md#si.micro): SI prefix μ, 1e-06
+- [si.milli](ops/si.md#si.milli): SI prefix m, 1e-03
+- [si.nano](ops/si.md#si.nano): SI prefix n, 1e-09
+- [si.peta](ops/si.md#si.peta): SI prefix P, 1e15
+- [si.pico](ops/si.md#si.pico): SI prefix p, 1e-12
+- [si.quecto](ops/si.md#si.quecto): SI prefix q, 1e-30
+- [si.quetta](ops/si.md#si.quetta): SI prefix Q, 1e30
+- [si.ronna](ops/si.md#si.ronna): SI prefix R, 1e27
+- [si.ronto](ops/si.md#si.ronto): SI prefix r, 1e-27
+- [si.terra](ops/si.md#si.terra): SI prefix T, 1e12
+- [si.yocto](ops/si.md#si.yocto): SI prefix y, 1e-24
+- [si.yotta](ops/si.md#si.yotta): SI prefix Y, 1e24
+- [si.zepto](ops/si.md#si.zepto): SI prefix z, 1e-21
+- [si.zetta](ops/si.md#si.zetta): SI prefix Z, 1e21
 - [sign](ops/basic.md#sign): Sign
 - [sin](ops/sci.md#sin): Sine
 - [sinh](ops/sci.md#sinh): Hyperbolic sine
@@ -261,7 +267,6 @@
 - [take](ops/stack.md#take): Take elements from the stack
 - [tan](ops/sci.md#tan): Tangent
 - [tanh](ops/sci.md#tanh): Hyperbolic tangent
-- [terra](ops/si.md#terra): SI prefix T, 1e12
 - [time](ops/time.md#time): Formats to a common time layout
 - [timezone](ops/time.md#timezone): Convert time to another time zone
 - [top](ops/stack.md#top): Take top element from the stack
@@ -284,14 +289,4 @@
 ## x
 
 - [xor](ops/prog.md#xor): Bitwise exclusive or
-
-## y
-
-- [yocto](ops/si.md#yocto): SI prefix y, 1e-24
-- [yotta](ops/si.md#yotta): SI prefix Y, 1e24
-
-## z
-
-- [zepto](ops/si.md#zepto): SI prefix z, 1e-21
-- [zetta](ops/si.md#zetta): SI prefix Z, 1e21
 - [π](ops/sci.md#pi): Circumference to diameter ratio

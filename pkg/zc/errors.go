@@ -17,6 +17,10 @@ func PanicExpectedType(t Type, val string) {
 	panic(fmt.Errorf("expected %v for %v", t, Quote(val)))
 }
 
+func ErrFeatureNotSupported(name string) error {
+	return fmt.Errorf("feature not supported: %v", name)
+}
+
 func ErrInfinity(c Calc, sign int) {
 	var inf string
 	switch {

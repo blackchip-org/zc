@@ -111,8 +111,35 @@ func ParseDMS(str string) (DMS, bool) {
 			return DMS{}, false
 		}
 	}
+	if sMin != "" && sDeg != "" {
+		if min.IsNegative() {
+			return DMS{}, false
+		}
+	}
+	if sSec != "" && (sDeg != "" || sMin != "") {
+		if min.IsNegative() {
+			return DMS{}, false
+		}
+	}
 
 	s.ScanWhile(unicode.IsSpace)
+	suffix := s.Scan(scanner.Remaining)
+
+	switch suffix {
+	case "N", "n", "E", "e":
+	case "S", "s", "W", "w":
+		// If the number is already negative, don't allow a hemisphere
+		// flag
+		if v.IsNegative() {
+			return DMS{}, false
+		}
+		v = v.Neg()
+	case "":
+		// No more data is okay at this point
+	default:
+		// But more data that doesn't match the above is not
+		return DMS{}, false
+	}
 	if !s.End() {
 		return DMS{}, false
 	}

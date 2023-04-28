@@ -3,173 +3,173 @@
 
 International System of Units
 
-| Operation    | Description
-|--------------|---------------
-| [`atto`](#atto) | SI prefix a, 1e-18
-| [`centi`](#centi) | SI prefix c, 1e-02
-| [`deca`](#deca) | SI prefix da, 1e01
-| [`deci`](#deci) | SI prefix d, 1e-01
-| [`exa`](#exa) | SI prefix E, 1e18
-| [`femto`](#femto) | SI prefix f, 1e-15
-| [`giga`](#giga) | SI prefix G, 1e09
-| [`hecto`](#hecto) | SI prefix h, 1e02
-| [`kilo`](#kilo) | SI prefix k, 1e03
-| [`mega`](#mega) | SI prefix M, 1e06
-| [`micro`](#micro) | SI prefix μ, 1e-06
-| [`milli`](#milli) | SI prefix m, 1e-03
-| [`nano`](#nano) | SI prefix n, 1e-09
-| [`peta`](#peta) | SI prefix P, 1e15
-| [`pico`](#pico) | SI prefix p, 1e-12
-| [`quecto`](#quecto) | SI prefix q, 1e-30
-| [`quetta`](#quetta) | SI prefix Q, 1e30
-| [`ronna`](#ronna) | SI prefix R, 1e27
-| [`ronto`](#ronto) | SI prefix r, 1e-27
-| [`terra`](#terra) | SI prefix T, 1e12
-| [`yocto`](#yocto) | SI prefix y, 1e-24
-| [`yotta`](#yotta) | SI prefix Y, 1e24
-| [`zepto`](#zepto) | SI prefix z, 1e-21
-| [`zetta`](#zetta) | SI prefix Z, 1e21
+| Operation          | Description
+|--------------------|---------------
+| [`si.atto`](#si.atto) | SI prefix a, 1e-18
+| [`si.centi`](#si.centi) | SI prefix c, 1e-02
+| [`si.deca`](#si.deca) | SI prefix da, 1e01
+| [`si.deci`](#si.deci) | SI prefix d, 1e-01
+| [`si.exa`](#si.exa) | SI prefix E, 1e18
+| [`si.femto`](#si.femto) | SI prefix f, 1e-15
+| [`si.giga`](#si.giga) | SI prefix G, 1e09
+| [`si.hecto`](#si.hecto) | SI prefix h, 1e02
+| [`si.kilo`](#si.kilo) | SI prefix k, 1e03
+| [`si.mega`](#si.mega) | SI prefix M, 1e06
+| [`si.micro`](#si.micro) | SI prefix μ, 1e-06
+| [`si.milli`](#si.milli) | SI prefix m, 1e-03
+| [`si.nano`](#si.nano) | SI prefix n, 1e-09
+| [`si.peta`](#si.peta) | SI prefix P, 1e15
+| [`si.pico`](#si.pico) | SI prefix p, 1e-12
+| [`si.quecto`](#si.quecto) | SI prefix q, 1e-30
+| [`si.quetta`](#si.quetta) | SI prefix Q, 1e30
+| [`si.ronna`](#si.ronna) | SI prefix R, 1e27
+| [`si.ronto`](#si.ronto) | SI prefix r, 1e-27
+| [`si.terra`](#si.terra) | SI prefix T, 1e12
+| [`si.yocto`](#si.yocto) | SI prefix y, 1e-24
+| [`si.yotta`](#si.yotta) | SI prefix Y, 1e24
+| [`si.zepto`](#si.zepto) | SI prefix z, 1e-21
+| [`si.zetta`](#si.zetta) | SI prefix Z, 1e21
 
 
-## atto
+## si.atto
 
 SI prefix a, 1e-18
 
 
 
-## centi
+## si.centi
 
 SI prefix c, 1e-02
 
 
 
-## deca
+## si.deca
 
 SI prefix da, 1e01
 
 
 
-## deci
+## si.deci
 
 SI prefix d, 1e-01
 
 
 
-## exa
+## si.exa
 
 SI prefix E, 1e18
 
 
 
-## femto
+## si.femto
 
 SI prefix f, 1e-15
 
 
 
-## giga
+## si.giga
 
 SI prefix G, 1e09
 
 
 
-## hecto
+## si.hecto
 
 SI prefix h, 1e02
 
 
 
-## kilo
+## si.kilo
 
 SI prefix k, 1e03
 
 
 
-## mega
+## si.mega
 
 SI prefix M, 1e06
 
 
 
-## micro
+## si.micro
 
 SI prefix μ, 1e-06
 
 
 
-## milli
+## si.milli
 
 SI prefix m, 1e-03
 
 
 
-## nano
+## si.nano
 
 SI prefix n, 1e-09
 
 
 
-## peta
+## si.peta
 
 SI prefix P, 1e15
 
 
 
-## pico
+## si.pico
 
 SI prefix p, 1e-12
 
 
 
-## quecto
+## si.quecto
 
 SI prefix q, 1e-30
 
 
 
-## quetta
+## si.quetta
 
 SI prefix Q, 1e30
 
 
 
-## ronna
+## si.ronna
 
 SI prefix R, 1e27
 
 
 
-## ronto
+## si.ronto
 
 SI prefix r, 1e-27
 
 
 
-## terra
+## si.terra
 
 SI prefix T, 1e12
 
 
 
-## yocto
+## si.yocto
 
 SI prefix y, 1e-24
 
 
 
-## yotta
+## si.yotta
 
 SI prefix Y, 1e24
 
 
 
-## zepto
+## si.zepto
 
 SI prefix z, 1e-21
 
 
 
-## zetta
+## si.zetta
 
 SI prefix Z, 1e21
 

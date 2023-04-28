@@ -18,11 +18,12 @@ Table of contents:
 - [BigInt](#integer)
 - [Bool](#bool)
 - [Complex](#complex)
-- [Float](float)
 - [Date](#datetime)
 - [DateTime](#datetime)
 - [Decimal](#decimal)
+- [DMS](#dms)
 - [Duration](#duration)
+- [Float](float)
 - [Int](#integer), [Int64](#integer), [Int32](#integer), [Int16](#integer), [Int8](#integer)
 - [Rational](#rational)
 - [Str](#strval)
@@ -126,6 +127,35 @@ To parse as a decimal, add a `d` suffix to the number. Example:
 |---------------------|-------------
 | `c 1e10 1e10 add`   | `2e10`
 | `c 1e10d 1e10d add` | `20000000000`
+
+## DMS
+
+A `DMS` value is an angle that can be expressed as:
+
+- decimal degrees
+- degrees and minutes
+- degrees, minutes, and seconds
+
+Any valid decimal number, such as `12.345` can be parsed as a DMS value.
+Use unit markers to designate each part of the DMS by using:
+
+- degrees: `d`, `°`
+- minutes: `m`, `'`, `′`
+- seconds: `s`, `"`, `″`
+
+Using the letter unit markers with no whitespace is the easiest to use when entering values manually. All of the following parse to the same
+value:
+
+<!-- test: dms-parsing -->
+
+| Input                 | Stack
+|-----------------------|-------------
+| `c 10.5125 dec`       | `10.5125`
+| `c 10.5125d dec`      | `10.5125`
+| `c 10.5125° dec`      | `10.5125`
+| `c 10d30.75m dec`     | `10.5125`
+| `c 10d30.75' dec`     | `10.5125`
+| `c [10° 30′ 45″] dec` | `10.5125`
 
 ## Duration
 

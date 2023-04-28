@@ -14,7 +14,6 @@ var Categories = []Category{
 	}},
 	{"Units of Measure", []string{
 		"len",
-		"si",
 		"temp",
 	}},
 	{"Standard Operations", []string{
@@ -31,10 +30,13 @@ var Categories = []Category{
 		"angle",
 		"color",
 		"crypto",
+		"geo",
 		"rand",
 		"time",
 	}},
 	{"Tables", []string{
+		"epsg",
+		"si",
 		"tz",
 	}},
 }

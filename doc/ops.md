@@ -17,7 +17,6 @@
 | Volume                    | Description
 |---------------------------|-----------
 | [len](ops/len.md)         | Length 
-| [si](ops/si.md)           | International System of Units 
 | [temp](ops/temp.md)       | Temperature 
 
 
@@ -42,6 +41,7 @@
 | [angle](ops/angle.md)     | Angular calculations 
 | [color](ops/color.md)     | Color conversions 
 | [crypto](ops/crypto.md)   | Cryptographic ciphers 
+| [geo](ops/geo.md)         | Geo-spatial calculations 
 | [rand](ops/rand.md)       | Random number generation 
 | [time](ops/time.md)       | Date, time, and duration operations 
 
@@ -50,6 +50,8 @@
 
 | Volume                    | Description
 |---------------------------|-----------
+| [epsg](ops/epsg.md)       | EPSG Geodetic Parameter Dataset 
+| [si](ops/si.md)           | International System of Units 
 | [tz](ops/tz.md)           | Time zone database 
 
 

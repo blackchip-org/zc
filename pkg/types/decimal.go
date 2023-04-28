@@ -68,6 +68,14 @@ func (d Decimal) IsInteger() bool {
 	return d.v.IsInteger()
 }
 
+func (d Decimal) IsNegative() bool {
+	return d.v.IsNegative()
+}
+
+func (d Decimal) IsPositive() bool {
+	return d.v.IsPositive()
+}
+
 func (d Decimal) IsZero() bool {
 	return d.v.IsZero()
 }

@@ -1,5 +1,7 @@
 .PHONY: all clean doc gen test
 
+GOFLAGS=-tags proj
+
 all: doc install
 
 install: gen
