@@ -351,6 +351,14 @@ Use a single argument of `-` to read from standard input:
     $ echo "2 3 add" | zc -
     5
 
+## External Libraries
+
+Some features of the calculator use external C libraries. The current
+release binaries do not include these external libraries and using one
+of these operations will raise a "feature not supported" error.
+
+To use these features, install the necessary dependencies and build
+locally using `make`. See the credits below for more information.
 
 ## Credits
 
