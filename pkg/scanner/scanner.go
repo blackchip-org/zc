@@ -18,6 +18,7 @@ type Scanner struct {
 	TokenPos  Pos
 	ChPos     Pos
 	Debug     bool
+	TrimText  bool
 	src       *bufio.Reader
 }
 
@@ -69,7 +70,11 @@ func (s *Scanner) init() {
 func (s *Scanner) Scan(fn Func) string {
 	s.Start()
 	fn(s)
-	return s.Text.String()
+	text := s.Text.String()
+	if s.TrimText {
+		text = strings.TrimSpace(text)
+	}
+	return text
 }
 
 func (s *Scanner) ScanUntil(c RuneClass) string {
@@ -118,7 +123,13 @@ func (s *Scanner) Start() {
 }
 
 func (s *Scanner) Token() string {
-	return s.Text.String()
+	tok := s.Text.String()
+	s.Text.Reset()
+	return tok
+}
+
+func (s *Scanner) TrimToken() string {
+	return strings.TrimSpace(s.Token())
 }
 
 func (s *Scanner) Keep() {

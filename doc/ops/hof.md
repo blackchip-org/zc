@@ -76,24 +76,6 @@ Example:
 | `1 2 3 4 5  ` | `1 \| 2 \| 3 \| 4 \| 5` 
 | `[2 mul] map` | `2 \| 4 \| 6 \| 8 \| 10` 
 
-## fold
-
-Reduce the stack to a single value using the expression *expr*. An
-'invalid function' error is raised if *expr* does not reduce.
-
-Alias: `reduce`
-
-	( Str* expr:Str -- Str )
-
-Example:
-
-<!-- test: fold -->
-
-| Input        | Stack
-|--------------|---------------
-| `1 2 3 4 5 ` | `1 \| 2 \| 3 \| 4 \| 5` 
-| `[add] fold` | `15` 
-
 ## repeat
 
 Repeat execution of expression *expr* for *n* times.

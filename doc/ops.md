@@ -39,6 +39,7 @@
 
 | Volume                    | Description
 |---------------------------|-----------
+| [angle](ops/angle.md)     | Angular calculations 
 | [color](ops/color.md)     | Color conversions 
 | [crypto](ops/crypto.md)   | Cryptographic ciphers 
 | [rand](ops/rand.md)       | Random number generation 

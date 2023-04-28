@@ -36,41 +36,6 @@ Example:
 | `char-cp` | `176` 
 | `hex    ` | `0xb0` 
 
-## char-codepoint
-
-Converts the character *p0* into an integer code point.
-
-Alias: `char-cp`
-
-	( p0:Char -- Int32 )
-
-Example:
-
-<!-- test: char-codepoint -->
-
-| Input     | Stack
-|-----------|---------------
-| `[°]    ` | `°` 
-| `char-cp` | `176` 
-| `hex    ` | `0xb0` 
-
-## codepoint-char
-
-Coverts the code point *p0* to a character.
-
-Alias: `cp-char`
-
-	( p0:Int32 -- Char )
-
-Example:
-
-<!-- test: codepoint-char -->
-
-| Input     | Stack
-|-----------|---------------
-| `0xb0   ` | `0xb0` 
-| `cp-char` | `°` 
-
 ## codepoint-char
 
 Coverts the code point *p0* to a character.
@@ -193,40 +158,6 @@ Example:
 |--------------|---------------
 | `128.8.74.2` | `128.8.74.2` 
 | `'.' split ` | `128 \| 8 \| 74 \| 2` 
-
-## utf8-decode
-
-Decode UTF-8 bytes in *p0* into to a string.
-
-Alias: `u8de`
-
-	( p0:BigInt -- Str )
-
-Example:
-
-<!-- test: utf8-decode -->
-
-| Input         | Stack
-|---------------|---------------
-| `0x3534c2b0 ` | `0x3534c2b0` 
-| `utf8-decode` | `54°` 
-
-## utf8-encode
-
-Encode a string into UTF-8 bytes.
-
-Alias: `u8en`
-
-	( p0:Str -- BigInt )
-
-Example:
-
-<!-- test: utf8-encode -->
-
-| Input             | Stack
-|-------------------|---------------
-| `54°            ` | `54°` 
-| `utf8-encode hex` | `0x3534c2b0` 
 
 ## upper
 

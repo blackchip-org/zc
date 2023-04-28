@@ -9,7 +9,7 @@
   - [(time) \+](ops/time.md#add): Time or duration addition
 - \-
   - [(basic) \-](ops/basic.md#sub): Subtraction
-  - [(time) \-](ops/time.md#sub): Time or duration subtractoin
+  - [(time) \-](ops/time.md#sub): Time or duration subtraction
 - [/](ops/basic.md#div): Division
 - [^](ops/basic.md#pow): Exponentiation
 
@@ -65,11 +65,21 @@
 - [datetime](ops/time.md#datetime): Formats to a common date/time layout
 - [day-year](ops/time.md#day-year): Day of year
 - dec
+  - [(angle) dec](ops/angle.md#dec): DMS angle to decimal degrees
   - [(prog) dec](ops/prog.md#dec): Decimal conversion
   - [(types) dec](ops/types.md#dec): Decimal number
 - [deca](ops/si.md#deca): SI prefix da, 1e01
 - [deci](ops/si.md#deci): SI prefix d, 1e-01
+- [deg-min](ops/angle.md#deg-min): Angle in degrees and minutes
+- [deg-min-round](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
+- [deg-min-sec](ops/angle.md#deg-min-sec): Angle in degrees and minutes
+- [deg-min-sec-round](ops/angle.md#deg-min-sec-round): Rounded angle in degrees, minutes, seconds
+- [deg-rad](ops/angle.md#deg-rad): Degrees to radians
 - [div](ops/basic.md#div): Division
+- [dm](ops/angle.md#deg-min): Angle in degrees and minutes
+- [dmr](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
+- [dms](ops/angle.md#deg-min-sec): Angle in degrees and minutes
+- [dmsr](ops/angle.md#deg-min-sec-round): Rounded angle in degrees, minutes, seconds
 - [dn](ops/stack.md#down): Rotate stack downward
 - [down](ops/stack.md#down): Rotate stack downward
 - [doy](ops/time.md#day-year): Day of year
@@ -112,6 +122,8 @@
 ## i
 
 - [is](ops/cmp.md#is): Byte equality
+- [is-dec-min-sec](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
+- [is-dms](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
 - [is-not](ops/cmp.md#is-not): Byte inequality
 
 ## j
@@ -152,7 +164,9 @@
 - [mi-nmi](ops/len.md#mi-nmi): Miles to nautical miles
 - [micro](ops/si.md#micro): SI prefix μ, 1e-06
 - [milli](ops/si.md#milli): SI prefix m, 1e-03
-- [minutes](ops/time.md#minutes): Minutes in duration
+- minutes
+  - [(angle) minutes](ops/angle.md#minutes): Angle in minutes
+  - [(time) minutes](ops/time.md#minutes): Minutes in duration
 - [mod](ops/basic.md#mod): Modulus
 - [mul](ops/basic.md#mul): Multiplication
 
@@ -194,6 +208,7 @@
 ## r
 
 - [r](ops/format.md#round): Round to a given precision
+- [rad-deg](ops/angle.md#rad-deg): Degrees to radians
 - [rand](ops/rand.md#rand): Random float
 - [rand-choice](ops/rand.md#rand-choice): Randomly select item on stack
 - [rand-int](ops/rand.md#rand-int): Random integer
@@ -222,9 +237,11 @@
 
 - s
   - [(basic) s](ops/basic.md#sub): Subtraction
-  - [(time) s](ops/time.md#sub): Time or duration subtractoin
+  - [(time) s](ops/time.md#sub): Time or duration subtraction
 - [scientific-notation](ops/format.md#scientific-notation): Scientific notatoin
-- [seconds](ops/time.md#seconds): Seconds in duration
+- seconds
+  - [(angle) seconds](ops/angle.md#seconds): Angle in seconds
+  - [(time) seconds](ops/time.md#seconds): Seconds in duration
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
 - [sin](ops/sci.md#sin): Sine
@@ -235,7 +252,7 @@
 - [square-root](ops/basic.md#sqrt): Square root
 - sub
   - [(basic) sub](ops/basic.md#sub): Subtraction
-  - [(time) sub](ops/time.md#sub): Time or duration subtractoin
+  - [(time) sub](ops/time.md#sub): Time or duration subtraction
 - [sum](ops/stat.md#sum): Summation
 - [swap](ops/stack.md#swap): Swap top two items on the stack
 

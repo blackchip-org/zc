@@ -143,23 +143,6 @@ Example:
 | `0b10     ` | `0b10` 
 | `2 lsh bin` | `0b1000` 
 
-## lsh
-
-Shifts all bits in *p0* to the left by *n*.
-
-Alias: `left-shift`
-
-	( p0:BigInt n:Uint -- BigInt )
-
-Example:
-
-<!-- test: lsh -->
-
-| Input       | Stack
-|-------------|---------------
-| `0b10     ` | `0b10` 
-| `2 lsh bin` | `0b1000` 
-
 ## not
 
 The bitwise not of *p0*.
@@ -205,23 +188,6 @@ Example:
 | `0b1100` | `0b1100` 
 | `0b1010` | `0b1100 \| 0b1010` 
 | `or bin` | `0b1110` 
-
-## rsh
-
-Shifts all bits in *p0* to the right by *n*.
-
-Alias: `right-shift`
-
-	( p0:BigInt n:Uint -- BigInt )
-
-Example:
-
-<!-- test: rsh -->
-
-| Input       | Stack
-|-------------|---------------
-| `0b1000   ` | `0b1000` 
-| `2 rsh bin` | `0b10` 
 
 ## rsh
 

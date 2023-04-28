@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/blackchip-org/zc/pkg/types"
 	"github.com/blackchip-org/zc/pkg/zc"
-	"github.com/shopspring/decimal"
 )
 
 type formatState struct {
@@ -30,7 +30,7 @@ var roundingModes = map[string]struct{}{
 	"up":        {},
 }
 
-func round(d decimal.Decimal, places int32, mode string) decimal.Decimal {
+func round(d types.Decimal, places int32, mode string) types.Decimal {
 	switch mode {
 	case "ceil":
 		return d.RoundCeil(places)
@@ -59,7 +59,7 @@ Rounds the number *n* to *d* digits using the current rounding mode.
 end
 
 example
-2 3 div -- 0.6666666666666667
+2 3 div -- 0.6666666666666666666
 2 round -- 0.67
 end
 */

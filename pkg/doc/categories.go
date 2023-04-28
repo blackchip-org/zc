@@ -28,6 +28,7 @@ var Categories = []Category{
 		"zc",
 	}},
 	{"Library", []string{
+		"angle",
 		"color",
 		"crypto",
 		"rand",

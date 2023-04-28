@@ -16,6 +16,17 @@ func Rune2(r1 rune, r2 rune) RuneClass {
 	}
 }
 
+func Runes(rs ...rune) RuneClass {
+	return func(r0 rune) bool {
+		for _, r := range rs {
+			if r == r0 {
+				return true
+			}
+		}
+		return false
+	}
+}
+
 func RuneRange(from rune, to rune) RuneClass {
 	return func(r0 rune) bool {
 		return r0 >= from && r0 <= to

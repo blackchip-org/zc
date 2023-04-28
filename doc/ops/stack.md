@@ -35,46 +35,6 @@ Example:
 | `2    ` | `1 \| 2` 
 | `clear` | `` 
 
-## clear
-
-Remove all items from the stack.
-
-Alias: `c`
-
-	(  --  )
-
-Example:
-
-<!-- test: clear -->
-
-| Input   | Stack
-|---------|---------------
-| `1    ` | `1` 
-| `2    ` | `1 \| 2` 
-| `clear` | `` 
-
-## down
-
-Rotate items on the stack by moving downward.
-
-In the interactive calculator, the top of the stack is towards the bottom of
-the terminal so downward means seeing all items moves toward the bottom. The
-top of the stack wraps around to be the bottom of the stack.
-
-Alias: `dn`
-
-	(  --  )
-
-Example:
-
-<!-- test: down -->
-
-| Input   | Stack
-|---------|---------------
-| `1 2 3` | `1 \| 2 \| 3` 
-| `down ` | `3 \| 1 \| 2` 
-| `down ` | `2 \| 3 \| 1` 
-
 ## down
 
 Rotate items on the stack by moving downward.
@@ -142,23 +102,6 @@ Example:
 |-----------|---------------
 | `1 1 1 1` | `1 \| 1 \| 1 \| 1` 
 | `n      ` | `1 \| 1 \| 1 \| 1 \| 4` 
-
-## reverse
-
-Reverses the elements on the stack.
-
-Alias: `rev`
-
-	(  --  )
-
-Example:
-
-<!-- test: reverse -->
-
-| Input       | Stack
-|-------------|---------------
-| `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5` 
-| `reverse  ` | `5 \| 4 \| 3 \| 2 \| 1` 
 
 ## reverse
 

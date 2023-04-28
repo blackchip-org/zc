@@ -25,24 +25,7 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `2 3 div` | `0.6666666666666667` 
-| `2 round` | `0.67` 
-
-## round
-
-Rounds the number *n* to *d* digits using the current rounding mode.
-
-Alias: `r`
-
-	( d:Decimal n:Int -- Decimal )
-
-Example:
-
-<!-- test: round -->
-
-| Input     | Stack
-|-----------|---------------
-| `2 3 div` | `0.6666666666666667` 
+| `2 3 div` | `0.6666666666666666666` 
 | `2 round` | `0.67` 
 
 ## rounding-mode
@@ -83,22 +66,6 @@ Example:
 | Input            | Stack
 |------------------|---------------
 | `rounding-mode=` | `half-up` 
-
-## scientific-notation
-
-Formats the value *p0* using scientific notation.
-
-Alias: `sn`
-
-	( p0:Float -- Float )
-
-Example:
-
-<!-- test: scientific-notation -->
-
-| Input     | Stack
-|-----------|---------------
-| `1234 sn` | `1.234e03` 
 
 ## scientific-notation
 

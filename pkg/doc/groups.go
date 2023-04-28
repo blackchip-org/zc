@@ -1,6 +1,7 @@
 package doc
 
 var GroupTitles = map[string]string{
+	"angle":  "Angular calculations",
 	"basic":  "Basic calculator",
 	"bool":   "Boolean operations",
 	"color":  "Color conversions",

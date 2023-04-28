@@ -280,7 +280,7 @@ Example:
 
 | Input | Stack
 |-------|---------------
-| `pi ` | `3.141592653589793` 
+| `pi ` | `3.14159265358979323` 
 
 ## sin
 
@@ -337,19 +337,3 @@ Example:
 | Input    | Stack
 |----------|---------------
 | `2 tanh` | `0.9640275800758169` 
-
-## pi
-
-Circumference to diameter ratio of a circle
-
-Alias: `π`
-
-	(  -- Float )
-
-Example:
-
-<!-- test: pi -->
-
-| Input | Stack
-|-------|---------------
-| `pi ` | `3.141592653589793` 

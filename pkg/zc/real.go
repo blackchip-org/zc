@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc/pkg/scanner"
-	"github.com/shopspring/decimal"
+	"github.com/blackchip-org/zc/pkg/types"
 )
 
 // ---
@@ -17,25 +17,25 @@ type DecimalType struct{}
 
 func (t DecimalType) String() string { return "Decimal" }
 
-func (t DecimalType) Parse(s string) (decimal.Decimal, bool) {
+func (t DecimalType) Parse(s string) (types.Decimal, bool) {
 	ls := strings.ToLower(s)
 	if !strings.HasSuffix(ls, "d") {
 		// If scientific notation is being used, let this be parsed
 		// by the float type instead
 		if strings.Contains(ls, "e") {
-			return decimal.Zero, false
+			return types.DecimalZero, false
 		}
 	}
 	s = strings.TrimSuffix(s, "d")
 	s = cleanNumber(s)
-	d, err := decimal.NewFromString(s)
+	d, err := types.NewDecimalFromString(s)
 	if err != nil {
-		return decimal.Zero, false
+		return types.DecimalZero, false
 	}
 	return d, true
 }
 
-func (t DecimalType) MustParse(s string) decimal.Decimal {
+func (t DecimalType) MustParse(s string) types.Decimal {
 	r, ok := t.Parse(s)
 	if !ok {
 		PanicExpectedType(t, s)
@@ -48,12 +48,12 @@ func (t DecimalType) Is(s string) bool {
 	return ok
 }
 
-func (t DecimalType) Format(v decimal.Decimal) string {
+func (t DecimalType) Format(v types.Decimal) string {
 	return v.String()
 }
 
-func PopDecimal(c Calc) decimal.Decimal     { return Decimal.MustParse(c.MustPop()) }
-func PushDecimal(c Calc, r decimal.Decimal) { c.Push(Decimal.Format(r)) }
+func PopDecimal(c Calc) types.Decimal     { return Decimal.MustParse(c.MustPop()) }
+func PushDecimal(c Calc, r types.Decimal) { c.Push(Decimal.Format(r)) }
 
 // ---
 

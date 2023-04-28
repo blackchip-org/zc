@@ -72,7 +72,9 @@ func writeGroup(group string, ops []*doc.Op) {
 
 	for _, name := range names {
 		op := table[name]
-		writeOp(out, op)
+		if name == op.Name {
+			writeOp(out, op)
+		}
 	}
 
 	file := path.Join("../../doc/ops", group+".md")

@@ -81,50 +81,6 @@ Example:
 | `c 0  0 gte` | `true` 
 | `c -1 0 gte` | `false` 
 
-## gt
-
-`true` if *p0* is greater than *p1*, otherwise `false`.
-
-Alias: `greater-than`
-
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
-
-Example:
-
-<!-- test: gt -->
-
-| Input       | Stack
-|-------------|---------------
-| `c 1  0 gt` | `true` 
-| `c 0  0 gt` | `false` 
-| `c -1 0 gt` | `false` 
-
-## gte
-
-`true` if *p0* is greater than or equal *p1*, otherwise `false`.
-
-Alias: `greater-than-or-equal`
-
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
-
-Example:
-
-<!-- test: gte -->
-
-| Input        | Stack
-|--------------|---------------
-| `c 1  0 gte` | `true` 
-| `c 0  0 gte` | `true` 
-| `c -1 0 gte` | `false` 
-
 ## is
 
 `true` if *p0* and *p1* are the same, byte by byte.
@@ -154,50 +110,6 @@ Example:
 |---------------------|---------------
 | `c 1.2 1.20 is-not` | `true` 
 | `c 1.2 1.2 is-not ` | `false` 
-
-## lt
-
-`true` if *p0* is less than *p1*, otherwise `false`.
-
-Alias: `less-than`
-
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
-
-Example:
-
-<!-- test: lt -->
-
-| Input       | Stack
-|-------------|---------------
-| `c 1  0 lt` | `false` 
-| `c 0  0 lt` | `false` 
-| `c -1 0 lt` | `true` 
-
-## lte
-
-`true` if *p0* is less than or equal to *p1*, otherwise `false`.
-
-Alias: `less-than-or-equal`
-
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
-
-Example:
-
-<!-- test: lte -->
-
-| Input        | Stack
-|--------------|---------------
-| `c 1  0 lte` | `false` 
-| `c 0  0 lte` | `true` 
-| `c -1 0 lte` | `true` 
 
 ## lt
 

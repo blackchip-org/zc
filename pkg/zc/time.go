@@ -1,12 +1,11 @@
 package zc
 
 import (
-	"fmt"
-	"math"
 	"time"
 
 	"github.com/blackchip-org/zc/pkg/ptime"
 	"github.com/blackchip-org/zc/pkg/ptime/locale"
+	"github.com/blackchip-org/zc/pkg/types"
 )
 
 const (
@@ -62,8 +61,8 @@ type DateTimeType struct{}
 
 func (t DateTimeType) String() string { return "DateTime" }
 
-func (t DateTimeType) Parse(s string) (time.Time, bool) {
-	parsed, err := pt.Parse(s)
+func (t DateTimeType) Parse(str string) (time.Time, bool) {
+	parsed, err := pt.Parse(str)
 	if err != nil {
 		return time.Time{}, false
 	}
@@ -100,12 +99,8 @@ type DurationType struct{}
 
 func (t DurationType) String() string { return "Duration" }
 
-func (t DurationType) Parse(s string) (time.Duration, bool) {
-	d, err := time.ParseDuration(s)
-	if err != nil {
-		return time.Duration(0), false
-	}
-	return d, true
+func (t DurationType) Parse(str string) (time.Duration, bool) {
+	return types.ParseDuration(str)
 }
 
 func (t DurationType) MustParse(s string) time.Duration {
@@ -122,18 +117,7 @@ func (t DurationType) Is(s string) bool {
 }
 
 func (t DurationType) Format(v time.Duration) string {
-	dsec := int(v.Truncate(time.Second).Seconds())
-	sec := math.Abs(float64(dsec % 60))
-	min := math.Abs(float64(dsec / 60 % 60))
-	hrs := dsec / 3600
-
-	if min == 0 && sec == 0 {
-		return fmt.Sprintf("%vh", hrs)
-	}
-	if sec == 0 {
-		return fmt.Sprintf("%vh%vm", hrs, min)
-	}
-	return fmt.Sprintf("%vh%vm%vs", hrs, min, sec)
+	return types.FormatDuration(v)
 }
 
 func PopDuration(c Calc) time.Duration     { return Duration.MustParse(c.MustPop()) }

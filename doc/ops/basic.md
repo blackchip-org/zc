@@ -17,156 +17,6 @@ Basic calculator
 | [`sub, s, -`](#sub)          | Subtraction
 
 
-## mul
-
-Multiplies *p0* by *p1*.
-
-Aliases: `m`, `*`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: mul -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `m  ` | `12` 
-
-## pow
-
-Raises *p0* to the power of *p1*.
-
-Aliases: `**`, `^`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Float p1:Float -- Float )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: pow -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `pow` | `36` 
-
-## add
-
-Adds the value of *p1* to *p0*.
-
-Aliases: `a`, `+`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: add -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `a  ` | `8` 
-
-## sub
-
-Subtract *p1* from *p0*.
-
-Aliases: `s`, `-`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: sub -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `s  ` | `4` 
-
-## div
-
-Divides the value of *p0* by *p1*. If *p1* is zero, a 'division by zero' error
-is raised.
-
-Aliases: `d`, `/`
-
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: div -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `d  ` | `3` 
-
-## pow
-
-Raises *p0* to the power of *p1*.
-
-Aliases: `**`, `^`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Float p1:Float -- Float )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: pow -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `pow` | `36` 
-
-## add
-
-Adds the value of *p1* to *p0*.
-
-Aliases: `a`, `+`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: add -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `a  ` | `8` 
-
 ## add
 
 Adds the value of *p1* to *p0*.
@@ -210,50 +60,6 @@ Example:
 | `6  ` | `6` 
 | `2  ` | `6 \| 2` 
 | `d  ` | `3` 
-
-## div
-
-Divides the value of *p0* by *p1*. If *p1* is zero, a 'division by zero' error
-is raised.
-
-Aliases: `d`, `/`
-
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: div -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `d  ` | `3` 
-
-## mul
-
-Multiplies *p0* by *p1*.
-
-Aliases: `m`, `*`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: mul -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `m  ` | `12` 
 
 ## mod
 
@@ -351,28 +157,6 @@ Example:
 | `2  ` | `-7 \| 2` 
 | `rem` | `-1` 
 
-## sub
-
-Subtract *p1* from *p0*.
-
-Aliases: `s`, `-`
-
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-
-Example:
-
-<!-- test: sub -->
-
-| Input | Stack
-|-------|---------------
-| `6  ` | `6` 
-| `2  ` | `6 \| 2` 
-| `s  ` | `4` 
-
 ## sign
 
 Returns `-1` if *p0* is negative, `1` if *p0* is positive, or `0` if *p0*
@@ -392,26 +176,6 @@ Example:
 | `c -6 sign` | `-1` 
 | `c 6 sign ` | `1` 
 | `c 0 sign ` | `0` 
-
-## sqrt
-
-The square root of `p0`. If *p0* is a positive or zero `Float` then a `Float` is
-returned. If *p0* is negative `Float`, a `Complex`is returned.
-
-Alias: `square-root`
-
-	( p0:Float -- Float )
-	( p0:Float -- Complex )
-	( p0:Complex -- Complex )
-
-Example:
-
-<!-- test: sqrt -->
-
-| Input  | Stack
-|--------|---------------
-| `256 ` | `256` 
-| `sqrt` | `16` 
 
 ## sqrt
 

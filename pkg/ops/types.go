@@ -1,8 +1,8 @@
 package ops
 
 import (
+	"github.com/blackchip-org/zc/pkg/types"
 	"github.com/blackchip-org/zc/pkg/zc"
-	"github.com/shopspring/decimal"
 )
 
 /*
@@ -48,6 +48,6 @@ func Dec(c zc.Calc) {
 
 func DecFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
-	r0 := decimal.NewFromFloat(a0)
+	r0 := types.NewDecimalFromFloat(a0)
 	zc.PushDecimal(c, r0)
 }

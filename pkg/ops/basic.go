@@ -96,7 +96,7 @@ func DivDecimal(c zc.Calc) {
 		return
 	}
 
-	r0 := a0.Div(a1)
+	r0 := a0.Div(a1).Truncate(19)
 	zc.PushDecimal(c, r0)
 }
 
@@ -230,7 +230,7 @@ func MulBigInt(c zc.Calc) {
 func MulDecimal(c zc.Calc) {
 	a1 := zc.PopDecimal(c)
 	a0 := zc.PopDecimal(c)
-	r0 := a0.Mul(a1)
+	r0 := a0.Mul(a1).Round(17).Truncate(16)
 	zc.PushDecimal(c, r0)
 }
 

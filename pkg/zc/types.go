@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/shopspring/decimal"
+	"github.com/blackchip-org/zc/pkg/types"
 )
 
 type Type interface {
@@ -23,6 +23,7 @@ var (
 	Date     = DateType{}
 	DateTime = DateTimeType{}
 	Decimal  = DecimalType{}
+	DMS      = DMSType{}
 	Duration = DurationType{}
 	Float    = FloatType{}
 	Int      = IntType{}
@@ -43,7 +44,7 @@ func Format(a any) string {
 		return Bool.Format(t)
 	case complex128:
 		return Complex.Format(t)
-	case decimal.Decimal:
+	case types.Decimal:
 		return Decimal.Format(t)
 	case float64:
 		return Float.Format(t)

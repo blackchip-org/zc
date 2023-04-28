@@ -136,8 +136,8 @@ of *hours*`h`*minutes*`m`*seconds*`s`. Zero values may be omitted. Examples:
 
 | Input                   | Stack
 |-------------------------|-------------
-| `4h15m30s 10m20s add`   | `4h25m50s`
-| `10s add`               | `4h26m`
+| `4h15m30s 10m20s add`   | `4h 25m 50s`
+| `10s add`               | `4h 26m`
 | `34m add`               | `5h`
 
 ## Float

@@ -21,7 +21,7 @@ Date, time, and duration operations
 | [`now-restore`](#now-restore) | Cancel now override
 | [`now-set`](#now-set)  | Override now value
 | [`seconds`](#seconds)  | Seconds in duration
-| [`sub, s, -`](#sub)    | Time or duration subtractoin
+| [`sub, s, -`](#sub)    | Time or duration subtraction
 | [`time`](#time)        | Formats to a common time layout
 | [`timezone, tz`](#timezone) | Convert time to another time zone
 
@@ -45,67 +45,7 @@ Example:
 | `c 3:30pm` | `3:30pm` 
 | `2h add  ` | `Mon Jan 2 2006 5:30:00pm -0700 MST` 
 | `c 2h30m ` | `2h30m` 
-| `45m add ` | `3h15m` 
-
-## sub
-
-Subtraces a duration from a time or subracts two durations.
-
-Aliases: `s`, `-`
-
-	( p0:Duration p1:Duration -- Duration )
-	( p0:DateTime p1:Duration -- Duration )
-
-Example:
-
-<!-- test: sub -->
-
-| Input             | Stack
-|-------------------|---------------
-| `c 3:30pm 2h sub` | `Mon Jan 2 2006 1:30:00pm -0700 MST` 
-| `c 2h30m 45m sub` | `1h45m` 
-
-## add
-
-Adds a duration and time or adds two durations.
-
-Aliases: `a`, `+`
-
-	( p0:Duration p1:Duration -- Duration )
-	( p0:Duration p1:DateTime -- Duration )
-	( p0:DateTime p1:Duration -- Duration )
-
-Example:
-
-<!-- test: add -->
-
-| Input      | Stack
-|------------|---------------
-| `c 3:30pm` | `3:30pm` 
-| `2h add  ` | `Mon Jan 2 2006 5:30:00pm -0700 MST` 
-| `c 2h30m ` | `2h30m` 
-| `45m add ` | `3h15m` 
-
-## add
-
-Adds a duration and time or adds two durations.
-
-Aliases: `a`, `+`
-
-	( p0:Duration p1:Duration -- Duration )
-	( p0:Duration p1:DateTime -- Duration )
-	( p0:DateTime p1:Duration -- Duration )
-
-Example:
-
-<!-- test: add -->
-
-| Input      | Stack
-|------------|---------------
-| `c 3:30pm` | `3:30pm` 
-| `2h add  ` | `Mon Jan 2 2006 5:30:00pm -0700 MST` 
-| `c 2h30m ` | `2h30m` 
-| `45m add ` | `3h15m` 
+| `45m add ` | `3h 15m` 
 
 ## date
 
@@ -156,40 +96,6 @@ Example:
 |--------------|---------------
 | `2006-03-15` | `2006-03-15` 
 | `day-year  ` | `74` 
-
-## day-year
-
-Day of year for a given date *p0*.
-
-Alias: `doy`
-
-	( p0:DateTime -- Int )
-
-Example:
-
-<!-- test: day-year -->
-
-| Input        | Stack
-|--------------|---------------
-| `2006-03-15` | `2006-03-15` 
-| `day-year  ` | `74` 
-
-## datetime
-
-Formats a date/time to a common layout.
-
-Alias: `dt`
-
-	( p0:DateTime -- DateTime )
-
-Example:
-
-<!-- test: datetime -->
-
-| Input                      | Stack
-|----------------------------|---------------
-| `'2006-01-02T15:04:05 UTC` | `2006-01-02T15:04:05 UTC` 
-| `datetime                ` | `Mon Jan 2 2006 3:04:05pm UTC` 
 
 ## hours
 
@@ -281,24 +187,6 @@ Example:
 | `now-set          ` | *now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'* 
 | `now              ` | `Sat Nov 5 1955 1:22:00am -0700 MST` 
 
-## sub
-
-Subtraces a duration from a time or subracts two durations.
-
-Aliases: `s`, `-`
-
-	( p0:Duration p1:Duration -- Duration )
-	( p0:DateTime p1:Duration -- Duration )
-
-Example:
-
-<!-- test: sub -->
-
-| Input             | Stack
-|-------------------|---------------
-| `c 3:30pm 2h sub` | `Mon Jan 2 2006 1:30:00pm -0700 MST` 
-| `c 2h30m 45m sub` | `1h45m` 
-
 ## seconds
 
 Converts the duration *p0* into seconds.
@@ -316,7 +204,7 @@ Example:
 
 ## sub
 
-Subtraces a duration from a time or subracts two durations.
+Subtracts a duration from a time or subtracts two durations.
 
 Aliases: `s`, `-`
 
@@ -330,7 +218,7 @@ Example:
 | Input             | Stack
 |-------------------|---------------
 | `c 3:30pm 2h sub` | `Mon Jan 2 2006 1:30:00pm -0700 MST` 
-| `c 2h30m 45m sub` | `1h45m` 
+| `c 2h30m 45m sub` | `1h 45m` 
 
 ## time
 
@@ -347,24 +235,6 @@ Example:
 |----------------------------|---------------
 | `'2006-01-02T15:04:05 UTC` | `2006-01-02T15:04:05 UTC` 
 | `time                    ` | `3:04:05pm UTC` 
-
-## timezone
-
-Converts time *p0* to a given time *zone*.
-
-Alias: `tz`
-
-	( p0:DateTime zone:Str -- DateTime )
-
-Example:
-
-<!-- test: timezone -->
-
-| Input               | Stack
-|---------------------|---------------
-| `now              ` | `Mon Jan 2 2006 3:04:05pm -0700 MST` 
-| `[PST] tz         ` | `Mon Jan 2 2006 2:04:05pm -0800 PST` 
-| `[Asia/Jakarta] tz` | `Tue Jan 3 2006 5:04:05am +0700 WIB` 
 
 ## timezone
 

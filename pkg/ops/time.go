@@ -48,7 +48,7 @@ example
 c 3:30pm -- 3:30pm
 2h add -- Mon Jan 2 2006 5:30:00pm -0700 MST
 c 2h30m -- 2h30m
-45m add -- 3h15m
+45m add -- 3h 15m
 end
 */
 func AddDuration(c zc.Calc) {
@@ -313,15 +313,14 @@ func	SubDuration p0:Duration p1:Duration -- Duration
 func	SubDateTimeDuration p0:DateTime p1:Duration -- Duration
 alias	s
 alias	-
-title	Time or duration subtractoin
-
+title	Time or duration subtraction
 desc
-Subtraces a duration from a time or subracts two durations.
+Subtracts a duration from a time or subtracts two durations.
 end
 
 example
 c 3:30pm 2h sub -- Mon Jan 2 2006 1:30:00pm -0700 MST
-c 2h30m 45m sub -- 1h45m
+c 2h30m 45m sub -- 1h 45m
 end
 */
 func SubDuration(c zc.Calc) {

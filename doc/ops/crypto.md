@@ -25,21 +25,3 @@ Example:
 | `'Behind the tree!` | `Behind the tree!` 
 | `rot13            ` | `Oruvaq gur gerr!` 
 | `rot13            ` | `Behind the tree!` 
-
-## rotate-13
-
-Rotate all characters in string *p0* by 13.
-
-Alias: `rot13`
-
-	( p0:Str -- Str )
-
-Example:
-
-<!-- test: rotate-13 -->
-
-| Input               | Stack
-|---------------------|---------------
-| `'Behind the tree!` | `Behind the tree!` 
-| `rot13            ` | `Oruvaq gur gerr!` 
-| `rot13            ` | `Behind the tree!` 

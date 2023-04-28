@@ -2,14 +2,10 @@
 
 all: doc install
 
-install:
+install: gen
 	go install $(GOFLAGS) ./...
 
-doc:
-	go generate internal/gen-doc/main.go
-	go generate internal/gen-index/main.go
-
-test: gen
+test: ops doc
 	go test $(GOFLAGS) ./...
 
 test-release: clean
@@ -18,11 +14,19 @@ test-release: clean
 release: clean gen
 	goreleaser release
 
-gen-ops:
+doc:
+	go generate internal/gen-doc/main.go
+
+index:
+	go generate internal/gen-index/main.go
+
+ops:
 	go generate internal/gen-ops/main.go
 
-gen: gen-ops doc
+tz:
 	go generate internal/gen-tz/main.go
+
+gen: ops doc index
 
 clean:
 	rm -rf dist
