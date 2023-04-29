@@ -10,3 +10,5 @@
     def 0 'foo'     !- invalid name
     def /foo        !- invalid name
 
+## exceptions
+

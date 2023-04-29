@@ -18,12 +18,12 @@ var Categories = []Category{
 	}},
 	{"Standard Operations", []string{
 		"bool",
+		"conv",
 		"cmp",
 		"format",
 		"hof",
 		"stack",
 		"text",
-		"types",
 		"zc",
 	}},
 	{"Library", []string{

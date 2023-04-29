@@ -13,15 +13,20 @@ Scientific calculator
 | [`atan`](#atan) | Inverse tangent
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
 | [`ceil`](#ceil) | Ceiling
+| [`conj`](#conj) | Complex conjugate
 | [`cos`](#cos) | Cosine
 | [`cosh`](#cosh) | Hyperbolic cosine
+| [`cot`](#cot) | Cotangent
 | [`e`](#e)  | Euler's number
 | [`exp`](#exp) | Natural exponential
 | [`floor`](#floor) | Floor
 | [`log`](#log) | Natural logarithm
 | [`log10`](#log10) | Decimal logarithm
 | [`log2`](#log2) | Binary logarithm
+| [`phase`](#phase) | Phase (argument)
 | [`pi, π`](#pi) | Circumference to diameter ratio
+| [`polar`](#polar) | Complex to polar
+| [`rect`](#rect) | Polar to complex
 | [`sin`](#sin) | Sine
 | [`sinh`](#sinh) | Hyperbolic sine
 | [`tan`](#tan) | Tangent
@@ -55,6 +60,7 @@ Example:
 Inverse cosine of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -69,6 +75,7 @@ Example:
 Inverse cosine of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -83,6 +90,7 @@ Example:
 Inverse sine of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -97,6 +105,7 @@ Example:
 Inverse hyperbolic sine of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -111,6 +120,7 @@ Example:
 Inverse tangent of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -124,6 +134,7 @@ Example:
 
 Inverse hyperbolic tangent of *p0* in radians.
 
+	( p0:Float -- Float )
 	( p0:Float -- Float )
 
 Example:
@@ -151,11 +162,26 @@ Example:
 | `6.12` | `6.12` 
 | `ceil` | `7` 
 
+## conj
+
+The complex conjugate of *p0*
+
+	( p0:Complex -- Complex )
+
+Example:
+
+<!-- test: conj -->
+
+| Input       | Stack
+|-------------|---------------
+| `5+3i conj` | `5-3i` 
+
 ## cos
 
 Cosine of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -170,6 +196,7 @@ Example:
 Hyperbolic cosine of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Float -- Float )
 
 Example:
 
@@ -178,6 +205,20 @@ Example:
 | Input    | Stack
 |----------|---------------
 | `2 cosh` | `3.7621956910836314` 
+
+## cot
+
+Cotangent of *p0*.
+
+	( p0:Complex -- Complex )
+
+Example:
+
+<!-- test: cot -->
+
+| Input      | Stack
+|------------|---------------
+| `2+3i cot` | `-0.003739710376336956-0.9967577965693583i` 
 
 ## e
 
@@ -198,6 +239,7 @@ Example:
 Natural exponential of *p0*.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -229,6 +271,7 @@ Example:
 Natural logarithm of *p0*.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -243,6 +286,7 @@ Example:
 Decimal logarithm of *p0*.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -266,6 +310,20 @@ Example:
 |------------|---------------
 | `250 log2` | `7.965784284662087` 
 
+## phase
+
+The phase, or argument, of *p0* in the range of [-π, π]
+
+	( p0:Complex -- Float )
+
+Example:
+
+<!-- test: phase -->
+
+| Input        | Stack
+|--------------|---------------
+| `1+1i phase` | `0.7853981633974483` 
+
 ## pi
 
 Circumference to diameter ratio of a circle
@@ -282,11 +340,40 @@ Example:
 |-------|---------------
 | `pi ` | `3.14159265358979323` 
 
+## polar
+
+The absolute value *r* and phase *θ* of *p0*.
+
+	( p0:Complex -- r:Float θ:Float )
+
+Example:
+
+<!-- test: polar -->
+
+| Input                     | Stack
+|---------------------------|---------------
+| `2i polar pi div 1 round` | `2 \| 0.5` 
+
+## rect
+
+The complex number with polar coordinates *r* and *θ*.
+
+	( r:Float θ:Float -- Complex )
+
+Example:
+
+<!-- test: rect -->
+
+| Input                    | Stack
+|--------------------------|---------------
+| `2 0.5 pi mul rect imag` | `2` 
+
 ## sin
 
 Sine of *p0* in radians
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -301,6 +388,7 @@ Example:
 Hyperbolic sine of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -315,6 +403,7 @@ Example:
 Tangent of *p0* in radians
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 
@@ -329,6 +418,7 @@ Example:
 Hyperbolic tangent of *p0* in radians.
 
 	( p0:Float -- Float )
+	( p0:Complex -- Complex )
 
 Example:
 

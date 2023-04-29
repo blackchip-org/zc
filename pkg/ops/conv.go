@@ -51,3 +51,41 @@ func DecFloat(c zc.Calc) {
 	r0 := types.NewDecimalFromFloat(a0)
 	zc.PushDecimal(c, r0)
 }
+
+/*
+oper	imag
+func	Imag p0:Complex -- Float
+title	Imaginary number from complex
+
+desc
+The imaginary number part of complex number *p0*
+end
+
+example
+3+4i imag -- 4
+end
+*/
+func Imag(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := imag(a0)
+	zc.PushFloat(c, r0)
+}
+
+/*
+oper	real
+func	Real p0:Complex -- Float
+title	Real number from complex
+
+desc
+The real number part of complex number *p0*
+end
+
+example
+3+4i real -- 3
+end
+*/
+func Real(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := real(a0)
+	zc.PushFloat(c, r0)
+}

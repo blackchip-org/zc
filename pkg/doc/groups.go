@@ -5,6 +5,7 @@ var GroupTitles = map[string]string{
 	"basic":  "Basic calculator",
 	"bool":   "Boolean operations",
 	"color":  "Color conversions",
+	"conv":   "Type conversions",
 	"cmp":    "Comparisons",
 	"crypto": "Cryptographic ciphers",
 	"epsg":   "EPSG Geodetic Parameter Dataset",
@@ -21,7 +22,6 @@ var GroupTitles = map[string]string{
 	"temp":   "Temperature",
 	"text":   "Text operations",
 	"time":   "Date, time, and duration operations",
-	"types":  "Type information and conversions",
 	"tz":     "Time zone database",
 	"zc":     "About this calculator",
 }

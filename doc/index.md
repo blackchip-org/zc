@@ -52,8 +52,10 @@
 - [codepoint-char](ops/text.md#codepoint-char): Code point to character
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/types.md#complex): Complex from real and imaginary
+- [conj](ops/sci.md#conj): Complex conjugate
 - [cos](ops/sci.md#cos): Cosine
 - [cosh](ops/sci.md#cosh): Hyperbolic cosine
+- [cot](ops/sci.md#cot): Cotangent
 - [cp-char](ops/text.md#codepoint-char): Code point to character
 
 ## d

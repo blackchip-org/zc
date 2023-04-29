@@ -25,12 +25,12 @@
 | Volume                    | Description
 |---------------------------|-----------
 | [bool](ops/bool.md)       | Boolean operations 
+| [conv](ops/conv.md)       | Type conversions 
 | [cmp](ops/cmp.md)         | Comparisons 
 | [format](ops/format.md)   | Value formatting 
 | [hof](ops/hof.md)         | Higher-order functions 
 | [stack](ops/stack.md)     | Stack manipulations 
 | [text](ops/text.md)       | Text operations 
-| [types](ops/types.md)     | Type information and conversions 
 | [zc](ops/zc.md)           | About this calculator 
 
 

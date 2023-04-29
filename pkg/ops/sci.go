@@ -64,6 +64,7 @@ func AbsComplex(c zc.Calc) {
 /*
 oper 	acos
 func	AcosFloat p0:Float -- Float
+func	AcosComplex p0:Complex -- Complex
 title	Inverse cosine
 
 desc
@@ -80,9 +81,16 @@ func AcosFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func AcosComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Acos(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	acosh
 func	AcoshFloat p0:Float -- Float
+func	AcoshComplex p0:Complex -- Complex
 title	Inverse hyperbolic cosine
 
 desc
@@ -99,9 +107,16 @@ func AcoshFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func AcoshComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Acosh(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	asin
 func	AsinFloat p0:Float -- Float
+func	AsinComplex p0:Complex -- Complex
 title	Inverse sine
 
 desc
@@ -118,9 +133,16 @@ func AsinFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func AsinComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Asin(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	asinh
 func	AsinhFloat p0:Float -- Float
+func	AsinComplex p0:Complex -- Complex
 title 	Inverse hyperbolic sine
 
 desc
@@ -137,9 +159,16 @@ func AsinhFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func AsinhComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Asinh(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	atan
 func	AtanFloat p0:Float -- Float
+func	AtanComplex p0:Complex -- Complex
 title	Inverse tangent
 
 desc
@@ -156,9 +185,16 @@ func AtanFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func AtanComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Atan(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	atanh
 func	AtanhFloat p0:Float -- Float
+func	AtanhComplex p0:Float -- Float
 title	Inverse hyperbolic tangent
 
 desc
@@ -173,6 +209,12 @@ func AtanhFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 	r0 := math.Atanh(a0)
 	zc.PushFloat(c, r0)
+}
+
+func AtanhComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Atanh(a0)
+	zc.PushComplex(c, r0)
 }
 
 /*
@@ -204,8 +246,28 @@ func CeilFloat(c zc.Calc) {
 }
 
 /*
+oper	conj
+func	Conj p0:Complex -- Complex
+title 	Complex conjugate
+
+desc
+The complex conjugate of *p0*
+end
+
+example
+5+3i conj -- 5-3i
+end
+*/
+func Conj(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Conj(a0)
+	zc.PushComplex(c, r0)
+}
+
+/*
 oper	cos
 func	CosFloat p0:Float -- Float
+func	CosComplex p0:Complex -- Complex
 title	Cosine
 
 desc
@@ -222,9 +284,16 @@ func CosFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func CosComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Cos(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper 	cosh
 func	CoshFloat p0:Float -- Float
+func	CoshComplex p0:Float -- Float
 title	Hyperbolic cosine
 
 desc
@@ -239,6 +308,31 @@ func CoshFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 	r0 := math.Cosh(a0)
 	zc.PushFloat(c, r0)
+}
+
+func CoshComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Cosh(a0)
+	zc.PushComplex(c, r0)
+}
+
+/*
+oper	cot
+func	CotComplex p0:Complex -- Complex
+title	Cotangent
+
+desc
+Cotangent of *p0*.
+end
+
+example
+2+3i cot -- -0.003739710376336956-0.9967577965693583i
+end
+*/
+func CotComplex(c zc.Calc) {
+	p0 := zc.PopComplex(c)
+	r0 := cmplx.Cot(p0)
+	zc.PushComplex(c, r0)
 }
 
 /*
@@ -259,6 +353,7 @@ end
 /*
 oper	exp
 func	ExpFloat p0:Float -- Float
+func	ExpComplex p0:Complex -- Complex
 title	Natural exponential
 
 desc
@@ -273,6 +368,12 @@ func ExpFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 	r0 := math.Exp(a0)
 	zc.PushFloat(c, r0)
+}
+
+func ExpComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Exp(a0)
+	zc.PushComplex(c, r0)
 }
 
 /*
@@ -306,6 +407,7 @@ func FloorFloat(c zc.Calc) {
 /*
 oper	log
 func	LogFloat p0:Float -- Float
+func	LogFloat p0:Complex -- Complex
 title	Natural logarithm
 
 desc
@@ -322,9 +424,16 @@ func LogFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func LogComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Log(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	log10
 func	Log10Float p0:Float -- Float
+func	Log10Complex p0:Complex -- Complex
 title	Decimal logarithm
 
 desc
@@ -339,6 +448,12 @@ func Log10Float(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 	r0 := math.Log10(a0)
 	zc.PushFloat(c, r0)
+}
+
+func Log10Complex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Log10(a0)
+	zc.PushComplex(c, r0)
 }
 
 /*
@@ -361,6 +476,26 @@ func Log2Float(c zc.Calc) {
 }
 
 /*
+oper	phase
+func	PhaseComplex p0:Complex -- Float
+title	Phase (argument)
+
+desc
+The phase, or argument, of *p0* in the range of [-π, π]
+end
+
+example
+1+1i phase -- 0.7853981633974483
+end
+*/
+
+func PhaseComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Phase(a0)
+	zc.PushFloat(c, r0)
+}
+
+/*
 oper	pi
 func	- -- Float
 macro	3.14159265358979323
@@ -377,8 +512,49 @@ end
 */
 
 /*
+oper	polar
+func	PolarComplex p0:Complex -- r:Float θ:Float
+title	Complex to polar
+
+desc
+The absolute value *r* and phase *θ* of *p0*.
+end
+
+example
+2i polar pi div 1 round -- 2 | 0.5
+end
+*/
+func PolarComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r, θ := cmplx.Polar(a0)
+	zc.PushFloat(c, r)
+	zc.PushFloat(c, θ)
+}
+
+/*
+oper	rect
+func	RectComplex r:Float θ:Float -- Complex
+title	Polar to complex
+
+desc
+The complex number with polar coordinates *r* and *θ*.
+end
+
+example
+2 0.5 pi mul rect imag -- 2
+end
+*/
+func RectComplex(c zc.Calc) {
+	θ := zc.PopFloat(c)
+	r := zc.PopFloat(c)
+	r0 := cmplx.Rect(r, θ)
+	zc.PushComplex(c, r0)
+}
+
+/*
 oper	sin
 func	SinFloat p0:Float -- Float
+func 	SinComplex p0:Complex -- Complex
 title	Sine
 
 desc
@@ -395,9 +571,16 @@ func SinFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func SinComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Sin(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	sinh
 func	SinhFloat p0:Float -- Float
+func	SinhComplex p0:Complex -- Complex
 title 	Hyperbolic sine
 
 desc
@@ -414,9 +597,16 @@ func SinhFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func SinhComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Sinh(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper	tan
 func	TanFloat p0:Float -- Float
+func	TanComplex p0:Complex -- Complex
 title	Tangent
 
 desc
@@ -433,9 +623,16 @@ func TanFloat(c zc.Calc) {
 	zc.PushFloat(c, r0)
 }
 
+func TanComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Tan(a0)
+	zc.PushComplex(c, r0)
+}
+
 /*
 oper 	tanh
 func	TanhFloat p0:Float -- Float
+func	TanhComplex p0:Complex -- Complex
 title	Hyperbolic tangent
 
 desc
@@ -450,4 +647,10 @@ func TanhFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 	r0 := math.Tanh(a0)
 	zc.PushFloat(c, r0)
+}
+
+func TanhComplex(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := cmplx.Tanh(a0)
+	zc.PushComplex(c, r0)
 }

@@ -6,6 +6,7 @@ import (
 	"path"
 	"sort"
 	"strings"
+	"unicode"
 
 	"github.com/blackchip-org/zc/pkg/scanner"
 )
@@ -192,8 +193,8 @@ func parseParams(s *scanner.Scanner) ([]Param, error) {
 		var all bool
 		var name, pType string
 		t := s.ScanWhile(scanner.Or(
-			scanner.IsCharAZ,
-			scanner.IsDigit09,
+			unicode.IsLetter,
+			unicode.IsDigit,
 			scanner.Rune('.'),
 		))
 		if t == "" {
@@ -206,8 +207,8 @@ func parseParams(s *scanner.Scanner) ([]Param, error) {
 			name = t
 			s.Next()
 			t = s.ScanWhile(scanner.Or(
-				scanner.IsCharAZ,
-				scanner.IsDigit09,
+				unicode.IsLetter,
+				unicode.IsDigit,
 				scanner.Rune('.'),
 			))
 		}
