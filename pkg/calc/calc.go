@@ -45,13 +45,14 @@ func (c *calc) SetInfo(format string, args ...any) {
 	c.info = fmt.Sprintf(format, args...)
 }
 
-func (c *calc) Eval(s string) error {
+func (c *calc) Eval(s string, args ...any) error {
 	c.err = nil
 	c.info = ""
 	c.op = ""
 	c.args = nil
 
-	lines := strings.Split(s, "\n")
+	eval := fmt.Sprintf(s, args...)
+	lines := strings.Split(eval, "\n")
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
 		words := c.parseWords(line)

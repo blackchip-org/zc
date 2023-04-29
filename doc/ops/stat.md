@@ -3,10 +3,27 @@
 
 Statistical calculations
 
-| Operation | Description
-|--------|---------------
-| [`sum`](#sum) | Summation
+| Operation           | Description
+|---------------------|---------------
+| [`average, avg`](#average) | Average
+| [`sum`](#sum)       | Summation
 
+
+## average
+
+The average of all items on the stack.
+
+Alias: `avg`
+
+	(  -- BigInt )
+
+Example:
+
+<!-- test: average -->
+
+| Input             | Stack
+|-------------------|---------------
+| `0 100 25 75 avg` | `50` 
 
 ## sum
 

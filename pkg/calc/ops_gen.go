@@ -59,6 +59,8 @@ var opsList = []zc.OpDecl{
 		zc.Func(ops.AtanhFloat, zc.Float),
 		zc.Func(ops.AtanhComplex, zc.Float),
 	),
+	zc.Op("average", ops.Average),
+	zc.Macro("avg", "average"),
 	zc.Op("bin", ops.Bin, zc.BigInt),
 	zc.Op("bit", ops.Bit, zc.BigInt, zc.Int),
 	zc.Op("bits", ops.Bits, zc.BigInt),

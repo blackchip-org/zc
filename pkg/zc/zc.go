@@ -7,7 +7,7 @@ import (
 const ProgName = "zc"
 
 type Calc interface {
-	Eval(string) error
+	Eval(string, ...any) error
 	Stack() []string
 	StackLen() int
 	SetStack([]string)
