@@ -1,9 +1,51 @@
 package ops
 
 import (
+	"math"
+
 	"github.com/blackchip-org/zc/pkg/ext"
 	"github.com/blackchip-org/zc/pkg/zc"
 )
+
+const EarthRadius = 6371000
+
+/*
+oper	haversine
+func	Haversine lat0:DMS lon0:DMS lat1:DMS lon1:DMS -- Float
+title	Great circle distance between two points
+
+desc
+Calculates the great circle distance between (*lat0*, *lon0*) and
+(*lat1*, *lon1*) using the haversine formula.
+
+Source:
+https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128
+end
+
+example
+51.510357 -0.116773 -- 51.510357 | -0.116773
+38.889931 -77.009003 -- 51.510357 | -0.116773 | 38.889931 | -77.009003
+haversine 3 round dec -- 5897658.289
+end
+*/
+func Haversine(c zc.Calc) {
+	lon2 := zc.PopDMS(c)
+	lat2 := zc.PopDMS(c)
+	lon1 := zc.PopDMS(c)
+	lat1 := zc.PopDMS(c)
+
+	phi1 := lat1.Radians()
+	phi2 := lat2.Radians()
+
+	deltaPhi := lat2.Sub(lat1).Radians()
+	deltaLambda := lon2.Sub(lon1).Radians()
+
+	a := math.Pow(math.Sin(deltaPhi/2), 2) + math.Cos(phi1)*math.Cos(phi2)*math.Pow(math.Sin(deltaLambda/2.0), 2)
+	c0 := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
+	r0 := EarthRadius * c0
+
+	zc.PushFloat(c, r0)
+}
 
 /*
 oper	proj

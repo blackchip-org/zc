@@ -3,10 +3,31 @@
 
 Geo-spatial calculations
 
-| Operation | Description
-|----------|---------------
-| [`proj`](#proj) | Transform coordinate
+| Operation          | Description
+|--------------------|---------------
+| [`haversine`](#haversine) | Great circle distance between two points
+| [`proj`](#proj)    | Transform coordinate
 
+
+## haversine
+
+Calculates the great circle distance between (*lat0*, *lon0*) and
+(*lat1*, *lon1*) using the haversine formula.
+
+Source:
+https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128
+
+	( lat0:DMS lon0:DMS lat1:DMS lon1:DMS -- Float )
+
+Example:
+
+<!-- test: haversine -->
+
+| Input                   | Stack
+|-------------------------|---------------
+| `51.510357 -0.116773  ` | `51.510357 \| -0.116773` 
+| `38.889931 -77.009003 ` | `51.510357 \| -0.116773 \| 38.889931 \| -77.009003` 
+| `haversine 3 round dec` | `5897658.289` 
 
 ## proj
 

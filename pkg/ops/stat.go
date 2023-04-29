@@ -24,7 +24,7 @@ end
 
 /*
 oper 	average
-func	- ... -- BigInt
+func	Average ... -- BigInt
 func	- ... -- Decimal
 func	- ... -- Float
 func	- ... -- Rational

@@ -31,6 +31,8 @@
 - [asinh](ops/sci.md#asinh): Inverse hyperbolic sine
 - [atan](ops/sci.md#atan): Inverse tangent
 - [atanh](ops/sci.md#atanh): Inverse hyperbolic tangent
+- [average](ops/stat.md#average): Average
+- [avg](ops/stat.md#average): Average
 
 ## b
 
@@ -73,6 +75,7 @@
 - [deg-min-sec](ops/angle.md#deg-min-sec): Angle in degrees and minutes
 - [deg-min-sec-round](ops/angle.md#deg-min-sec-round): Rounded angle in degrees, minutes, seconds
 - [deg-rad](ops/angle.md#deg-rad): Degrees to radians
+- [denom](ops/conv.md#denom): Denominator
 - [div](ops/basic.md#div): Division
 - [dm](ops/angle.md#deg-min): Angle in degrees and minutes
 - [dmr](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
@@ -112,6 +115,7 @@
 
 ## h
 
+- [haversine](ops/geo.md#haversine): Great circle distance between two points
 - [hex](ops/prog.md#hex): Hexadecimal conversion
 - [hours](ops/time.md#hours): Hours in duration
 - [hsl-rgb](ops/color.md#hsl-rgb): HSL to RGB color space
@@ -178,6 +182,7 @@
 - [now](ops/time.md#now): Current date and time
 - [now-restore](ops/time.md#now-restore): Cancel now override
 - [now-set](ops/time.md#now-set): Override now value
+- [num](ops/conv.md#num): Numerator
 
 ## o
 

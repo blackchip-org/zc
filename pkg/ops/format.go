@@ -50,7 +50,8 @@ func round(d types.Decimal, places int32, mode string) types.Decimal {
 
 /*
 oper	round
-func	Round d:Decimal n:Int -- Decimal
+func	RoundDecimal d:Decimal n:Int -- Decimal
+func	RoundFloat d:Float n:Int -- Float
 alias	r
 title	Round to a given precision
 
@@ -63,12 +64,20 @@ example
 2 round -- 0.67
 end
 */
-func Round(c zc.Calc) {
+func RoundDecimal(c zc.Calc) {
 	s := getFormatState(c)
 	places := zc.PopInt32(c)
 	a0 := zc.PopDecimal(c)
 	r0 := round(a0, places, s.roundingMode)
 	zc.PushDecimal(c, r0)
+}
+
+func RoundFloat(c zc.Calc) {
+	s := getFormatState(c)
+	places := zc.PopInt32(c)
+	a0 := types.NewDecimalFromFloat(zc.PopFloat(c))
+	r0 := round(a0, places, s.roundingMode)
+	zc.PushFloat(c, r0.Float())
 }
 
 /*

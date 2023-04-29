@@ -16,6 +16,10 @@ The average of all items on the stack.
 Alias: `avg`
 
 	(  -- BigInt )
+	(  -- Decimal )
+	(  -- Float )
+	(  -- Rational )
+	(  -- Complex )
 
 Example:
 

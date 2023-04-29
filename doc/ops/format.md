@@ -18,6 +18,7 @@ Rounds the number *n* to *d* digits using the current rounding mode.
 Alias: `r`
 
 	( d:Decimal n:Int -- Decimal )
+	( d:Float n:Int -- Float )
 
 Example:
 

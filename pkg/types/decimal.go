@@ -56,6 +56,11 @@ func (d Decimal) Floor() Decimal {
 	return Decimal{v: d.v.Floor()}
 }
 
+func (d Decimal) Float() float64 {
+	f, _ := d.v.Float64()
+	return f
+}
+
 func (d Decimal) GreaterThan(d2 Decimal) bool {
 	return d.v.GreaterThan(d2.v)
 }

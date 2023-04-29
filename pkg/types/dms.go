@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"math"
 	"unicode"
 
 	"github.com/blackchip-org/zc/pkg/scanner"
@@ -30,6 +31,14 @@ func (d DMS) Minutes() Decimal {
 
 func (d DMS) Seconds() Decimal {
 	return d.v.Mul(d3600)
+}
+
+func (d DMS) Radians() float64 {
+	return math.Pi / 180.0 * d.v.Float()
+}
+
+func (d DMS) Sub(d2 DMS) DMS {
+	return DMS{v: d.v.Sub(d2.v)}
 }
 
 func (d DMS) FormatDMS(places int32) string {
