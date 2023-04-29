@@ -327,14 +327,17 @@ text. For example, values are given an 'inexact' annotation when a
 |---------------------|---------------------|
 | `2/3 dec`           | `0.6666666666666666 # inexact`
 
-Annotations are also used to indicate the units for a result:
+Annotations are also used to indicate the units for a result.
 
 <!-- test: anno-haversine -->
 
-| Input               | Stack
-|---------------------|---------------------|
-| `1 1 2 2`           | `1 \| 1 \| 2 \| 2`
-| `haversine`         | `157225.4320380729 # meters`
+| Input                 | Stack
+|-----------------------|---------------------|
+| `1 1 2 2`             | `1 \| 1 \| 2 \| 2`
+| `haversine`           | `157225.4320380729 # meters`
+| `si.kilo div 2 round` | `157.23`
+
+Note that annotations are lost when values are popped off the stack.
 
 Use the `anno` operation to annotate a value and the `no-anno` or `noa`
 operation to remove an annotation:
@@ -348,7 +351,6 @@ operation to remove an annotation:
 | `noa`               | `42`
 
 To disable annotations, set the `ZC_NO_ANNO` environment variable to any value.
-Annotations are stripped from values when they are popped from the stack.
 
 ## Commands
 
