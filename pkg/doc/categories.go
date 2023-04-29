@@ -17,6 +17,7 @@ var Categories = []Category{
 		"temp",
 	}},
 	{"Standard Operations", []string{
+		"anno",
 		"bool",
 		"conv",
 		"cmp",

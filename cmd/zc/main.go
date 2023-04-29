@@ -10,6 +10,7 @@ import (
 	"github.com/blackchip-org/zc/pkg/ansi"
 	"github.com/blackchip-org/zc/pkg/calc"
 	"github.com/blackchip-org/zc/pkg/repl"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 func main() {
@@ -41,7 +42,7 @@ func main() {
 		log.Fatalf("(!) %v", err)
 	}
 	for _, item := range c.Stack() {
-		fmt.Println(item)
+		fmt.Println(zc.FormatStackItem(item))
 	}
 	if c.Info() != "" {
 		fmt.Println(c.Info())

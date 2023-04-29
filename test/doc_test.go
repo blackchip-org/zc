@@ -12,6 +12,7 @@ import (
 	"github.com/blackchip-org/zc/pkg/ansi"
 	"github.com/blackchip-org/zc/pkg/calc"
 	"github.com/blackchip-org/zc/pkg/repl"
+	"github.com/blackchip-org/zc/pkg/zc"
 )
 
 var (
@@ -143,7 +144,7 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 				t.Fatalf("\n have info: %v \n want info: %v", have, info)
 			}
 		} else {
-			actualOut := strings.Join(c.Stack(), " | ")
+			actualOut := zc.StackString(c)
 			if actualOut != out {
 				t.Fatalf("\n have: %v \n want: %v", actualOut, out)
 			}

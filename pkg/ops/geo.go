@@ -10,6 +10,63 @@ import (
 const EarthRadius = 6371000
 
 /*
+oper	earth-equatorial-radius
+func	- -- Int
+macro	6378137 'meters' anno
+title	Equatorial radius of the Earth
+
+desc
+The equatorial radius of the Earth in meters.
+
+Source:
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+end
+
+example
+earth-equatorial-radius -- 6378137 # meters
+end
+*/
+
+/*
+oper	earth-polar-radius
+func	- -- Int
+macro	6356752 'meters' anno
+title	Polar radius of the Earth
+
+desc
+The polar radius,of the Earth in meters.
+
+Source:
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+end
+
+example
+earth-equatorial-radius -- 6378137 # meters
+end
+*/
+
+/*
+oper	earth-radius
+func	EarthRadiusFn -- Int
+title	Average radius of the Earth
+
+desc
+The globally-average value of the Earth in meters.
+
+Source:
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+end
+
+example
+earth-radius -- 6371000 # meters
+end
+*/
+func EarthRadiusFn(c zc.Calc) {
+	zc.PushInt(c, EarthRadius)
+	zc.Annotate(c, "meters")
+}
+
+/*
 oper	haversine
 func	Haversine lat0:DMS lon0:DMS lat1:DMS lon1:DMS -- Float
 title	Great circle distance between two points
@@ -45,6 +102,7 @@ func Haversine(c zc.Calc) {
 	r0 := EarthRadius * c0
 
 	zc.PushFloat(c, r0)
+	zc.Annotate(c, "meters")
 }
 
 /*

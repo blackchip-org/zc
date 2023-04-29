@@ -55,8 +55,11 @@ func DecFloat(c zc.Calc) {
 
 func DecRational(c zc.Calc) {
 	a0 := zc.PopRational(c)
-	r0, _ := a0.Float64()
+	r0, exact := a0.Float64()
 	zc.PushFloat(c, r0)
+	if !exact {
+		zc.Annotate(c, "inexact")
+	}
 }
 
 /*

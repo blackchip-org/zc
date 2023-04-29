@@ -228,12 +228,19 @@ func (r *REPL) wordCompleter(line string, pos int) (string, []string, string) {
 
 func colorize(color string, text string) string {
 	if !ansi.Enabled {
-		return text
+		return zc.FormatStackItem(text)
 	}
 	if strings.HasPrefix(text, "#raw:") {
 		return text[5:] + ansi.Reset
 	}
-	return color + text + ansi.Reset
+
+	var display string
+	parts := strings.SplitN(text, zc.AnnotationMarker, 2)
+	display = parts[0]
+	if len(parts) > 1 {
+		display += ansi.DarkGray + "#" + parts[1]
+	}
+	return color + display + ansi.Reset
 }
 
 func raw(text string) string {
@@ -245,7 +252,7 @@ func raw(text string) string {
 			s.WriteRune(ch)
 		}
 	}
-	return s.String()
+	return zc.FormatStackItem(s.String())
 }
 
 func Run(c zc.Calc) {

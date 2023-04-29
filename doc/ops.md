@@ -24,6 +24,7 @@
 
 | Volume                    | Description
 |---------------------------|-----------
+| [anno](ops/anno.md)       | Annotations 
 | [bool](ops/bool.md)       | Boolean operations 
 | [conv](ops/conv.md)       | Type conversions 
 | [cmp](ops/cmp.md)         | Comparisons 

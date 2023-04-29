@@ -2,6 +2,7 @@ package doc
 
 var GroupTitles = map[string]string{
 	"angle":  "Angular calculations",
+	"anno":   "Annotations",
 	"basic":  "Basic calculator",
 	"bool":   "Boolean operations",
 	"color":  "Color conversions",

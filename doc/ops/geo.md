@@ -3,11 +3,65 @@
 
 Geo-spatial calculations
 
-| Operation          | Description
-|--------------------|---------------
-| [`haversine`](#haversine) | Great circle distance between two points
-| [`proj`](#proj)    | Transform coordinate
+| Operation                                      | Description
+|------------------------------------------------|---------------
+| [`earth-equatorial-radius`](#earth-equatorial-radius) | Equatorial radius of the Earth
+| [`earth-polar-radius`](#earth-polar-radius)    | Polar radius of the Earth
+| [`earth-radius`](#earth-radius)                | Average radius of the Earth
+| [`haversine`](#haversine)                      | Great circle distance between two points
+| [`proj`](#proj)                                | Transform coordinate
 
+
+## earth-equatorial-radius
+
+The equatorial radius of the Earth in meters.
+
+Source:
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+
+	(  -- Int )
+
+Example:
+
+<!-- test: earth-equatorial-radius -->
+
+| Input                     | Stack
+|---------------------------|---------------
+| `earth-equatorial-radius` | `6378137 # meters` 
+
+## earth-polar-radius
+
+The polar radius,of the Earth in meters.
+
+Source:
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+
+	(  -- Int )
+
+Example:
+
+<!-- test: earth-polar-radius -->
+
+| Input                     | Stack
+|---------------------------|---------------
+| `earth-equatorial-radius` | `6378137 # meters` 
+
+## earth-radius
+
+The globally-average value of the Earth in meters.
+
+Source:
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+
+	(  -- Int )
+
+Example:
+
+<!-- test: earth-radius -->
+
+| Input          | Stack
+|----------------|---------------
+| `earth-radius` | `6371000 # meters` 
 
 ## haversine
 

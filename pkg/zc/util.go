@@ -1,12 +1,39 @@
 package zc
 
 import (
+	"fmt"
+	"os"
 	"strings"
 	"unicode"
 
 	"github.com/blackchip-org/zc/pkg/scanner"
 	"golang.org/x/exp/constraints"
 )
+
+const (
+	AnnotationMarker = "#!(anno)"
+	AnnotationSep    = "#"
+)
+
+func Annotate(c Calc, format string, a ...any) {
+	if os.Getenv("ZC_NO_ANNO") != "" {
+		return
+	}
+	anno := fmt.Sprintf(format, a...)
+	v := c.MustPop()
+	c.Push(fmt.Sprintf("%v %v %v", v, AnnotationMarker, anno))
+}
+
+func FormatStackItem(v string) string {
+	return strings.Replace(v, AnnotationMarker, AnnotationSep, 1)
+}
+
+func RemoveAnnotation(v string) string {
+	if i := strings.Index(v, AnnotationMarker); i >= 0 {
+		v = v[:i-1]
+	}
+	return v
+}
 
 func Clamp[T constraints.Ordered](v T, min T, max T) T {
 	if v > max {
@@ -29,7 +56,11 @@ func IsValuePrefix(ch rune, next rune) bool {
 }
 
 func StackString(c Calc) string {
-	return strings.Join(c.Stack(), " | ")
+	var items []string
+	for _, item := range c.Stack() {
+		items = append(items, FormatStackItem(item))
+	}
+	return strings.Join(items, " | ")
 }
 
 func Quote(v string) string {

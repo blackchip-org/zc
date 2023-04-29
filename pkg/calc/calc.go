@@ -77,7 +77,7 @@ func (c *calc) Peek(i int) (string, bool) {
 	if stackI < 0 || stackI >= n {
 		return "", false
 	}
-	return c.stack[stackI], true
+	return zc.RemoveAnnotation(c.stack[stackI]), true
 }
 
 func (c *calc) Pop() (string, bool) {
@@ -87,7 +87,7 @@ func (c *calc) Pop() (string, bool) {
 	}
 	var item string
 	c.stack, item = c.stack[:n-1], c.stack[n-1]
-	return item, true
+	return zc.RemoveAnnotation(item), true
 }
 
 func (c *calc) MustPop() string {
