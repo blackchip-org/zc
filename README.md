@@ -314,6 +314,41 @@ value. For example, to sum all the numbers on the stack:
 Additional higher-order functions can be found in the [hof](doc/ops/hof.md)
 reference.
 
+## Annotations
+
+Values on the stack may have annotations to provide some additional
+metadata. An annotated value ends with a hash mark `#` and the annotation
+text. For example, values are given an 'inexact' annotation when a
+`Rational` value cannot be exactly converted to a `Decimal`. Examle:
+
+<!-- test: anno -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `2/3 dec`           | `0.6666666666666666 # inexact`
+
+Annotations are also used to indicate the units for a result:
+
+<!-- test: anno-haversine -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `1 1 2 2`           | `1 \| 1 \| 2 \| 2`
+| `haversine`         | `157225.4320380729 # meters`
+
+Use the `anno` operation to annotate a value and the `no-anno` or `noa`
+operation to remove an annotation:
+
+<!-- test: add-rm-anno -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `42`                | `42`
+| `[the answer] anno` | `42 # the answer`
+| `noa`               | `42`
+
+Annotations are stripped from values when they are popped from the stack.
+
 ## Commands
 
 These commands are available when running the calculator interactively:
