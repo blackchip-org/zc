@@ -31,6 +31,7 @@ func Complex(c zc.Calc) {
 oper	dec
 func	Dec p0:Decimal -- Decimal
 func	DecFloat p0:Float -- Decimal
+func	DecRational p0:Rational -- Decimal
 title	Decimal number
 
 desc
@@ -52,6 +53,31 @@ func DecFloat(c zc.Calc) {
 	zc.PushDecimal(c, r0)
 }
 
+func DecRational(c zc.Calc) {
+	a0 := zc.PopRational(c)
+	r0, _ := a0.Float64()
+	zc.PushFloat(c, r0)
+}
+
+/*
+oper	denom
+func	Denom p0:Rational -- BigInt
+title	Denominator
+
+desc
+The denominator of rational number *p0*.
+end
+
+example
+2/3 denom -- 3
+end
+*/
+func Denom(c zc.Calc) {
+	a0 := zc.PopRational(c)
+	r0 := a0.Denom()
+	zc.PushBigInt(c, r0)
+}
+
 /*
 oper	imag
 func	Imag p0:Complex -- Float
@@ -69,6 +95,25 @@ func Imag(c zc.Calc) {
 	a0 := zc.PopComplex(c)
 	r0 := imag(a0)
 	zc.PushFloat(c, r0)
+}
+
+/*
+oper	num
+func	Num p0:Rational -- BigInt
+title	Numerator
+
+desc
+The numerator of rational number *p0*.
+end
+
+example
+2/3 num -- 2
+end
+*/
+func Num(c zc.Calc) {
+	a0 := zc.PopRational(c)
+	r0 := a0.Num()
+	zc.PushBigInt(c, r0)
 }
 
 /*

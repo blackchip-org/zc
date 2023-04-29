@@ -7,7 +7,9 @@ Type conversions
 |----------------|---------------
 | [`complex`](#complex) | Complex from real and imaginary
 | [`dec`](#dec)  | Decimal number
+| [`denom`](#denom) | Denominator
 | [`imag`](#imag) | Imaginary number from complex
+| [`num`](#num)  | Numerator
 | [`real`](#real) | Real number from complex
 
 
@@ -33,6 +35,7 @@ Pops *p0* from the stack and formats it as a `Decimal`.
 
 	( p0:Decimal -- Decimal )
 	( p0:Float -- Decimal )
+	( p0:Rational -- Decimal )
 
 Example:
 
@@ -41,6 +44,20 @@ Example:
 | Input     | Stack
 |-----------|---------------
 | `1e3 dec` | `1000` 
+
+## denom
+
+The denominator of rational number *p0*.
+
+	( p0:Rational -- BigInt )
+
+Example:
+
+<!-- test: denom -->
+
+| Input       | Stack
+|-------------|---------------
+| `2/3 denom` | `3` 
 
 ## imag
 
@@ -55,6 +72,20 @@ Example:
 | Input       | Stack
 |-------------|---------------
 | `3+4i imag` | `4` 
+
+## num
+
+The numerator of rational number *p0*.
+
+	( p0:Rational -- BigInt )
+
+Example:
+
+<!-- test: num -->
+
+| Input     | Stack
+|-----------|---------------
+| `2/3 num` | `2` 
 
 ## real
 

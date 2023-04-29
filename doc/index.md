@@ -51,7 +51,7 @@
 - [cmyk-rgb](ops/color.md#cmyk-rgb): CMYK to RGB color space
 - [codepoint-char](ops/text.md#codepoint-char): Code point to character
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
-- [complex](ops/types.md#complex): Complex from real and imaginary
+- [complex](ops/conv.md#complex): Complex from real and imaginary
 - [conj](ops/sci.md#conj): Complex conjugate
 - [cos](ops/sci.md#cos): Cosine
 - [cosh](ops/sci.md#cosh): Hyperbolic cosine
@@ -66,8 +66,8 @@
 - [day-year](ops/time.md#day-year): Day of year
 - dec
   - [(angle) dec](ops/angle.md#dec): DMS angle to decimal degrees
+  - [(conv) dec](ops/conv.md#dec): Decimal number
   - [(prog) dec](ops/prog.md#dec): Decimal conversion
-  - [(types) dec](ops/types.md#dec): Decimal number
 - [deg-min](ops/angle.md#deg-min): Angle in degrees and minutes
 - [deg-min-round](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
 - [deg-min-sec](ops/angle.md#deg-min-sec): Angle in degrees and minutes
@@ -118,6 +118,7 @@
 
 ## i
 
+- [imag](ops/conv.md#imag): Imaginary number from complex
 - [is](ops/cmp.md#is): Byte equality
 - [is-dec-min-sec](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
 - [is-dms](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
@@ -187,7 +188,9 @@
 
 ## p
 
+- [phase](ops/sci.md#phase): Phase (argument)
 - [pi](ops/sci.md#pi): Circumference to diameter ratio
+- [polar](ops/sci.md#polar): Complex to polar
 - [pow](ops/basic.md#pow): Exponentiation
 - [proj](ops/geo.md#proj): Transform coordinate
 
@@ -200,6 +203,8 @@
 - [rand-int](ops/rand.md#rand-int): Random integer
 - [rand-seed](ops/rand.md#rand-seed): Set the random number seed
 - [rand-seed=](ops/rand.md#rand-seed=): Get the random number seed
+- [real](ops/conv.md#real): Real number from complex
+- [rect](ops/sci.md#rect): Polar to complex
 - [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder
 - [repeat](ops/hof.md#repeat): Repeat the execution of a function
