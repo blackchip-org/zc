@@ -319,7 +319,7 @@ reference.
 Values on the stack may have annotations to provide some additional
 metadata. An annotated value ends with a hash mark `#` and the annotation
 text. For example, values are given an 'inexact' annotation when a
-`Rational` value cannot be exactly converted to a `Decimal`. Examle:
+`Rational` value cannot be exactly converted to a `Decimal`. Example:
 
 <!-- test: anno -->
 
@@ -347,6 +347,7 @@ operation to remove an annotation:
 | `[the answer] anno` | `42 # the answer`
 | `noa`               | `42`
 
+To disable annotations, set the `ZC_NO_ANNO` environment variable to any value.
 Annotations are stripped from values when they are popped from the stack.
 
 ## Commands
