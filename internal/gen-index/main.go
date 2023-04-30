@@ -91,9 +91,8 @@ func main() {
 			op := ops[0]
 			fmt.Fprintf(out, "- [%v](ops/%v.md#%v): %v\n", name, op.Group, op.Name, op.Title)
 		} else {
-			fmt.Fprintf(out, "- %v\n", name)
 			for _, op := range ops {
-				fmt.Fprintf(out, "  - [(%v) %v](ops/%v.md#%v): %v\n", op.Group, name, op.Group, op.Name, op.Title)
+				fmt.Fprintf(out, "- [%v](ops/%v.md#%v) (%v): %v\n", name, op.Group, op.Name, op.Group, op.Title)
 			}
 		}
 	}
