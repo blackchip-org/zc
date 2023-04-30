@@ -41,6 +41,7 @@
 |---------------------------|-----------
 | [angle](ops/angle.md)     | Angular calculations 
 | [color](ops/color.md)     | Color conversions 
+| [complex](ops/complex.md) | Complex numbers 
 | [crypto](ops/crypto.md)   | Cryptographic ciphers 
 | [geo](ops/geo.md)         | Geo-spatial calculations 
 | [rand](ops/rand.md)       | Random number generation 

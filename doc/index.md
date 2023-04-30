@@ -15,19 +15,27 @@
 
 - [a](ops/basic.md#add) (basic): Addition
 - [a](ops/time.md#add) (time): Time or duration addition
-- [abs](ops/sci.md#abs): Absolute value
-- [acos](ops/sci.md#acos): Inverse cosine
-- [acosh](ops/sci.md#acosh): Inverse hyperbolic cosine
+- [abs](ops/complex.md#abs) (complex): Distance from zero in complex plane
+- [abs](ops/sci.md#abs) (sci): Absolute value
+- [acos](ops/complex.md#acos) (complex): Inverse cosine
+- [acos](ops/sci.md#acos) (sci): Inverse cosine
+- [acosh](ops/complex.md#acosh) (complex): Inverse hyperbolic cosine
+- [acosh](ops/sci.md#acosh) (sci): Inverse hyperbolic cosine
 - [add](ops/basic.md#add) (basic): Addition
 - [add](ops/time.md#add) (time): Time or duration addition
 - [and](ops/bool.md#and) (bool): Logical conjunction
 - [and](ops/prog.md#and) (prog): Bitwise and
 - [anno](ops/anno.md#anno): Annotate value
 - [annotate](ops/anno.md#anno): Annotate value
-- [asin](ops/sci.md#asin): Inverse sine
-- [asinh](ops/sci.md#asinh): Inverse hyperbolic sine
-- [atan](ops/sci.md#atan): Inverse tangent
-- [atanh](ops/sci.md#atanh): Inverse hyperbolic tangent
+- [asin](ops/complex.md#asin) (complex): Inverse sine
+- [asin](ops/sci.md#asin) (sci): Inverse sine
+- [asinh](ops/complex.md#asinh) (complex): Inverse hyperbolic sine
+- [asinh](ops/sci.md#asinh) (sci): Inverse hyperbolic sine
+- [atan](ops/complex.md#atan) (complex): Inverse tangent
+- [atan](ops/sci.md#atan) (sci): Inverse tangent
+- [atan2](ops/sci.md#atan2): Inverse tangent
+- [atanh](ops/complex.md#atanh) (complex): Inverse hyperbolic tangent
+- [atanh](ops/sci.md#atanh) (sci): Inverse hyperbolic tangent
 - [si.atto](ops/si.md#si.atto): SI prefix a, 1e-18
 - [average](ops/stat.md#average): Average
 - [avg](ops/stat.md#average): Average
@@ -53,10 +61,12 @@
 - [codepoint-char](ops/text.md#codepoint-char): Code point to character
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/conv.md#complex): Complex from real and imaginary
-- [conj](ops/sci.md#conj): Complex conjugate
-- [cos](ops/sci.md#cos): Cosine
-- [cosh](ops/sci.md#cosh): Hyperbolic cosine
-- [cot](ops/sci.md#cot): Cotangent
+- [conj](ops/complex.md#conj): Complex conjugate
+- [cos](ops/complex.md#cos) (complex): Cosine
+- [cos](ops/sci.md#cos) (sci): Cosine
+- [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
+- [cosh](ops/sci.md#cosh) (sci): Hyperbolic cosine
+- [cot](ops/complex.md#cot): Cotangent
 - [cp-char](ops/text.md#codepoint-char): Code point to character
 
 ## d
@@ -97,7 +107,8 @@
 - [eq](ops/cmp.md#eq): Equal
 - [eval](ops/hof.md#eval): Evaluate top of stack
 - [si.exa](ops/si.md#si.exa): SI prefix E, 1e18
-- [exp](ops/sci.md#exp): Natural exponential
+- [exp](ops/complex.md#exp) (complex): Natural exponential
+- [exp](ops/sci.md#exp) (sci): Natural exponential
 
 ## f
 
@@ -152,8 +163,10 @@
 - [less-than-or-equal](ops/cmp.md#lte): Less than or equal
 - [local-zone](ops/time.md#local-zone): Sets the local time zone
 - [local-zone=](ops/time.md#local-zone=): Gets the local time zone
-- [log](ops/sci.md#log): Natural logarithm
-- [log10](ops/sci.md#log10): Decimal logarithm
+- [log](ops/complex.md#log) (complex): Natural logarithm
+- [log](ops/sci.md#log) (sci): Natural logarithm
+- [log10](ops/complex.md#log10) (complex): Decimal logarithm
+- [log10](ops/sci.md#log10) (sci): Decimal logarithm
 - [log2](ops/sci.md#log2): Binary logarithm
 - [lower](ops/text.md#lower): Lowercase
 - [lsh](ops/prog.md#lsh): Left shift bits
@@ -203,10 +216,10 @@
 ## p
 
 - [si.peta](ops/si.md#si.peta): SI prefix P, 1e15
-- [phase](ops/sci.md#phase): Phase (argument)
+- [phase](ops/complex.md#phase): Phase (argument)
 - [pi](ops/sci.md#pi): Circumference to diameter ratio
 - [si.pico](ops/si.md#si.pico): SI prefix p, 1e-12
-- [polar](ops/sci.md#polar): Complex to polar
+- [polar](ops/complex.md#polar): Complex to polar
 - [pow](ops/basic.md#pow): Exponentiation
 - [proj](ops/geo.md#proj): Transform coordinate
 
@@ -217,7 +230,8 @@
 
 ## r
 
-- [r](ops/format.md#round): Round to a given precision
+- [r](ops/complex.md#round) (complex): Round to a given precision
+- [r](ops/format.md#round) (format): Round to a given precision
 - [rad-deg](ops/angle.md#rad-deg): Degrees to radians
 - [rand](ops/rand.md#rand): Random float
 - [rand-choice](ops/rand.md#rand-choice): Randomly select item on stack
@@ -225,7 +239,7 @@
 - [rand-seed](ops/rand.md#rand-seed): Set the random number seed
 - [rand-seed=](ops/rand.md#rand-seed=): Get the random number seed
 - [real](ops/conv.md#real): Real number from complex
-- [rect](ops/sci.md#rect): Polar to complex
+- [rect](ops/complex.md#rect): Polar to complex
 - [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder
 - [repeat](ops/hof.md#repeat): Repeat the execution of a function
@@ -240,7 +254,8 @@
 - [si.ronto](ops/si.md#si.ronto): SI prefix r, 1e-27
 - [rot13](ops/crypto.md#rotate-13): Rotate characters by 13
 - [rotate-13](ops/crypto.md#rotate-13): Rotate characters by 13
-- [round](ops/format.md#round): Round to a given precision
+- [round](ops/complex.md#round) (complex): Round to a given precision
+- [round](ops/format.md#round) (format): Round to a given precision
 - [rounding-mode](ops/format.md#rounding-mode): Set method to use in rounding
 - [rounding-mode=](ops/format.md#rounding-mode=): Method to use in rounding
 - [rsh](ops/prog.md#rsh): Right shift bits
@@ -254,8 +269,10 @@
 - [seconds](ops/time.md#seconds) (time): Seconds in duration
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
-- [sin](ops/sci.md#sin): Sine
-- [sinh](ops/sci.md#sinh): Hyperbolic sine
+- [sin](ops/complex.md#sin) (complex): Sine
+- [sin](ops/sci.md#sin) (sci): Sine
+- [sinh](ops/complex.md#sinh) (complex): Hyperbolic sine
+- [sinh](ops/sci.md#sinh) (sci): Hyperbolic sine
 - [sn](ops/format.md#scientific-notation): Scientific notatoin
 - [split](ops/text.md#split): Split string
 - [sqrt](ops/basic.md#sqrt): Square root
@@ -268,8 +285,10 @@
 ## t
 
 - [take](ops/stack.md#take): Take elements from the stack
-- [tan](ops/sci.md#tan): Tangent
-- [tanh](ops/sci.md#tanh): Hyperbolic tangent
+- [tan](ops/complex.md#tan) (complex): Tangent
+- [tan](ops/sci.md#tan) (sci): Tangent
+- [tanh](ops/complex.md#tanh) (complex): Hyperbolic tangent
+- [tanh](ops/sci.md#tanh) (sci): Hyperbolic tangent
 - [si.terra](ops/si.md#si.terra): SI prefix T, 1e12
 - [time](ops/time.md#time): Formats to a common time layout
 - [timezone](ops/time.md#timezone): Convert time to another time zone

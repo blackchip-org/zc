@@ -16,7 +16,7 @@ test-release: clean
 release: clean gen
 	goreleaser release
 
-doc:
+doc: index
 	go generate internal/gen-doc/main.go
 
 index:

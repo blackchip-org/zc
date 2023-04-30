@@ -30,6 +30,7 @@ var Categories = []Category{
 	{"Library", []string{
 		"angle",
 		"color",
+		"complex",
 		"crypto",
 		"geo",
 		"rand",

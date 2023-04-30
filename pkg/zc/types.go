@@ -109,6 +109,9 @@ type ComplexType struct{}
 func (t ComplexType) String() string { return "Complex" }
 
 func (t ComplexType) Parse(s string) (complex128, bool) {
+	if !strings.HasSuffix(s, "i") {
+		return 0, false
+	}
 	c, err := strconv.ParseComplex(s, 128)
 	if err != nil {
 		return 0, false
