@@ -60,7 +60,7 @@ Inverse cosine of *p0* in radians.
 end
 
 example
-0.5 acos -- 1.0471975511965976
+0.5 acos 5 round -- 1.0472
 end
 */
 func AcosFloat(c zc.Calc) {
@@ -79,7 +79,7 @@ Inverse cosine of *p0* in radians.
 end
 
 example
-2 acosh -- 1.3169578969248166
+2 acosh 5 round -- 1.31696
 end
 */
 func AcoshFloat(c zc.Calc) {
@@ -98,7 +98,7 @@ Inverse sine of *p0* in radians.
 end
 
 example
-0.5 asin -- 0.5235987755982989
+0.5 asin 5 round -- 0.5236
 end
 */
 func AsinFloat(c zc.Calc) {
@@ -117,7 +117,7 @@ Inverse hyperbolic sine of *p0* in radians.
 end
 
 example
-2 asinh -- 1.4436354751788103
+2 asinh 5 round -- 1.44364
 end
 */
 func AsinhFloat(c zc.Calc) {
@@ -136,7 +136,7 @@ Inverse tangent of *p0* in radians.
 end
 
 example
-0.5 atan -- 0.4636476090008061
+0.5 atan 5 round -- 0.46365
 end
 */
 func AtanFloat(c zc.Calc) {
@@ -175,7 +175,7 @@ Inverse hyperbolic tangent of *p0* in radians.
 end
 
 example
-0.5 atanh -- 0.5493061443340548
+0.5 atanh 5 round -- 0.54931
 end
 */
 func AtanhFloat(c zc.Calc) {
@@ -222,7 +222,7 @@ Cosine of *p0* in radians.
 end
 
 example
-2 cos -- -0.4161468365471424
+2 cos 5 round -- -0.41615
 end
 */
 func CosFloat(c zc.Calc) {
@@ -241,7 +241,7 @@ Hyperbolic cosine of *p0* in radians.
 end
 
 example
-2 cosh -- 3.7621956910836314
+2 cosh 5 round -- 3.7622
 end
 */
 func CoshFloat(c zc.Calc) {
@@ -275,7 +275,7 @@ Natural exponential of *p0*.
 end
 
 example
-2 exp -- 7.38905609893065
+2 exp 5 round -- 7.38906
 end
 */
 func ExpFloat(c zc.Calc) {
@@ -322,7 +322,7 @@ Natural logarithm of *p0*.
 end
 
 example
-8 log -- 2.0794415416798357
+8 log 5 round -- 2.07944
 end
 */
 func LogFloat(c zc.Calc) {
@@ -341,7 +341,7 @@ Decimal logarithm of *p0*.
 end
 
 example
-50 log10 -- 1.6989700043360187
+50 log10 5 round -- 1.69897
 end
 */
 func Log10Float(c zc.Calc) {
@@ -360,7 +360,7 @@ Binary logarithm of *p0*.
 end
 
 example
-250 log2 -- 7.965784284662087
+250 log2 5 round -- 7.96578
 end
 */
 func Log2Float(c zc.Calc) {
@@ -395,7 +395,7 @@ Sine of *p0* in radians.
 end
 
 example
-2 sin -- 0.9092974268256816
+2 sin 5 round -- 0.9093
 end
 */
 func SinFloat(c zc.Calc) {
@@ -414,7 +414,7 @@ Hyperbolic sine of *p0* in radians.
 end
 
 example
-2 sinh -- 3.626860407847019
+2 sinh 5 round -- 3.62686
 end
 */
 func SinhFloat(c zc.Calc) {
@@ -433,7 +433,7 @@ Tangent of *p0* in radians.
 end
 
 example
-2 tan -- -2.185039863261519
+2 tan 5 round -- -2.18504
 end
 */
 func TanFloat(c zc.Calc) {
@@ -452,7 +452,7 @@ Hyperbolic tangent of *p0* in radians.
 end
 
 example
-2 tanh -- 0.9640275800758169
+2 tanh 5 round -- 0.96403
 end
 */
 func TanhFloat(c zc.Calc) {
