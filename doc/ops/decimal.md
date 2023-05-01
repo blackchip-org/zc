@@ -13,7 +13,7 @@ Decimal numbers
 
 ## coeff
 
-
+The value of *p0* without the decimal point.
 
 	( p0:Decimal -- BigInt )
 
@@ -43,7 +43,7 @@ Example:
 
 ## div-rem
 
-
+Divides *p0* by *p1* and returns the quotient *q* and remainder *r*.
 
 Alias: `dr`
 
@@ -59,7 +59,10 @@ Example:
 
 ## quo-rem
 
-
+Divides *p0* by *p1* and returns the quotient *q* and remainder *r* at a
+certain precision. The following shows how to divide one dollar
+with three people which gives a quotient of $0.33 and a remainder of one
+cent.
 
 	( p0:Decimal p1:Decimal prec:Int32 -- r:Decimal q:Decimal )
 

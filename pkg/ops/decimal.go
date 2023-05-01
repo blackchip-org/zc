@@ -10,8 +10,8 @@ oper	coeff
 func	Coeff p0:Decimal -- BigInt
 title 	Coefficient
 
-expr
-The vaue of *p0* without the decimal point.
+desc
+The value of *p0* without the decimal point.
 end
 
 example
@@ -65,7 +65,7 @@ func	DivRem p0:Decimal p1:Decimal -- r:Decimal q:Decimal
 alias	dr
 title	Division with remainder
 
-expr
+desc
 Divides *p0* by *p1* and returns the quotient *q* and remainder *r*.
 end
 
@@ -86,7 +86,7 @@ oper	quo-rem
 func	QuoRem p0:Decimal p1:Decimal prec:Int32 -- r:Decimal q:Decimal
 title	Division with remainder at a precision
 
-expr
+desc
 Divides *p0* by *p1* and returns the quotient *q* and remainder *r* at a
 certain precision. The following shows how to divide one dollar
 with three people which gives a quotient of $0.33 and a remainder of one
