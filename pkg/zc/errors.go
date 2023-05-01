@@ -34,8 +34,8 @@ func ErrInfinity(c Calc, sign int) {
 	c.SetError(fmt.Errorf("%v: %v", inf, c.Op()))
 }
 
-func ErrInvalidArgs(c Calc) {
-	c.SetError(fmt.Errorf("invalid arguments: %v", c.Op()))
+func ErrInvalidArgs(c Calc, reason string) {
+	c.SetError(fmt.Errorf("invalid arguments, %v: %v", reason, c.Op()))
 }
 
 func ErrInvalidFunc(c Calc, fn string, reason string) {

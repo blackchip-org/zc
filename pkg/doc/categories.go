@@ -19,8 +19,8 @@ var Categories = []Category{
 	{"Standard Operations", []string{
 		"anno",
 		"bool",
-		"conv",
 		"cmp",
+		"decimal",
 		"format",
 		"hof",
 		"stack",
@@ -34,6 +34,7 @@ var Categories = []Category{
 		"crypto",
 		"geo",
 		"rand",
+		"rational",
 		"time",
 	}},
 	{"Tables", []string{

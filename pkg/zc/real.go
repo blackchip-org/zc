@@ -187,6 +187,9 @@ func (t RationalType) Format(v *big.Rat) string {
 	if n > d {
 		w := n / d
 		n := n % d
+		if n == 0 && d == 1 {
+			return fmt.Sprintf("%v", w)
+		}
 		return fmt.Sprintf("%v %v/%v", w, n, d)
 	}
 	return v.RatString()

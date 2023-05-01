@@ -1,6 +1,10 @@
 package types
 
-import "github.com/shopspring/decimal"
+import (
+	"math/big"
+
+	"github.com/shopspring/decimal"
+)
 
 func init() {
 	decimal.DivisionPrecision = 20
@@ -42,6 +46,10 @@ func (d Decimal) Ceil() Decimal {
 
 func (d Decimal) Cmp(d2 Decimal) int {
 	return d.v.Cmp(d2.v)
+}
+
+func (d Decimal) Coefficient() *big.Int {
+	return d.v.Coefficient()
 }
 
 func (d Decimal) Div(d2 Decimal) Decimal {
@@ -107,6 +115,11 @@ func (d Decimal) Neg() Decimal {
 
 func (d Decimal) Pow(d2 Decimal) Decimal {
 	return Decimal{v: d.v.Pow(d2.v)}
+}
+
+func (d Decimal) QuoRem(d2 Decimal, prec int32) (Decimal, Decimal) {
+	q, r := d.v.QuoRem(d2.v, prec)
+	return Decimal{q}, Decimal{r}
 }
 
 func (d Decimal) Round(places int32) Decimal {

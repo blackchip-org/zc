@@ -36,13 +36,13 @@ func UTM(c zc.Calc) {
 	case 's', 'S':
 		base = 32700
 	default:
-		zc.ErrInvalidArgs(c)
+		zc.ErrInvalidArgs(c, "hemisphere")
 		return
 	}
 
 	zone, err := strconv.Atoi(string(rZone))
 	if err != nil || zone < 0 || zone > 60 {
-		zc.ErrInvalidArgs(c)
+		zc.ErrInvalidArgs(c, "zone")
 		return
 	}
 	r0 := fmt.Sprintf("EPSG:%v", base+zone)

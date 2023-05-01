@@ -143,6 +143,28 @@ func AtanhComplex(c zc.Calc) {
 }
 
 /*
+oper	complex
+func	Complex r:Float i:Float -- Float
+title	Complex from real and imaginary
+
+desc
+A complex number from a real *r* and an imaginary *i* number.
+end
+
+example
+6 -- 6
+12 -- 6 | 12
+complex -- 6+12i
+end
+*/
+func Complex(c zc.Calc) {
+	i := zc.PopFloat(c)
+	r := zc.PopFloat(c)
+	r0 := complex(r, i)
+	zc.PushComplex(c, r0)
+}
+
+/*
 oper	conj
 func	Conj p0:Complex -- Complex
 title 	Complex conjugate
@@ -238,6 +260,25 @@ func ExpComplex(c zc.Calc) {
 }
 
 /*
+oper	imag
+func	Imag p0:Complex -- Float
+title	Imaginary number from complex
+
+desc
+The imaginary number part of complex number *p0*
+end
+
+example
+3+4i imag -- 4
+end
+*/
+func Imag(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := imag(a0)
+	zc.PushFloat(c, r0)
+}
+
+/*
 oper	log
 func	LogComplex p0:Complex -- Complex
 title	Natural logarithm
@@ -273,6 +314,25 @@ func Log10Complex(c zc.Calc) {
 	a0 := zc.PopComplex(c)
 	r0 := cmplx.Log10(a0)
 	zc.PushComplex(c, r0)
+}
+
+/*
+oper	real
+func	Real p0:Complex -- Float
+title	Real number from complex
+
+desc
+The real number part of complex number *p0*
+end
+
+example
+3+4i real -- 3
+end
+*/
+func Real(c zc.Calc) {
+	a0 := zc.PopComplex(c)
+	r0 := real(a0)
+	zc.PushFloat(c, r0)
 }
 
 /*

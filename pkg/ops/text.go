@@ -99,7 +99,7 @@ func Left(c zc.Calc) {
 	s := zc.PopString(c)
 
 	if i > len(s) || i < -len(s) {
-		zc.ErrInvalidArgs(c)
+		zc.ErrInvalidArgs(c, "index out of range")
 		return
 	}
 
@@ -182,7 +182,7 @@ func Right(c zc.Calc) {
 	s := zc.PopString(c)
 
 	if i > len(s) || i < -len(s) {
-		zc.ErrInvalidArgs(c)
+		zc.ErrInvalidArgs(c, "index out of range")
 		return
 	}
 

@@ -59,8 +59,9 @@
 - [clear](ops/stack.md#clear): Clear the stack
 - [cmyk-rgb](ops/color.md#cmyk-rgb): CMYK to RGB color space
 - [codepoint-char](ops/text.md#codepoint-char): Code point to character
+- [coeff](ops/decimal.md#coeff): Coefficient
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
-- [complex](ops/conv.md#complex): Complex from real and imaginary
+- [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
@@ -76,7 +77,7 @@
 - [datetime](ops/time.md#datetime): Formats to a common date/time layout
 - [day-year](ops/time.md#day-year): Day of year
 - [dec](ops/angle.md#dec) (angle): DMS angle to decimal degrees
-- [dec](ops/conv.md#dec) (conv): Decimal number
+- [dec](ops/decimal.md#dec) (decimal): Decimal number
 - [dec](ops/prog.md#dec) (prog): Decimal conversion
 - [si.deca](ops/si.md#si.deca): SI prefix da, 1e01
 - [si.deci](ops/si.md#si.deci): SI prefix d, 1e-01
@@ -85,8 +86,9 @@
 - [deg-min-sec](ops/angle.md#deg-min-sec): Angle in degrees and minutes
 - [deg-min-sec-round](ops/angle.md#deg-min-sec-round): Rounded angle in degrees, minutes, seconds
 - [deg-rad](ops/angle.md#deg-rad): Degrees to radians
-- [denom](ops/conv.md#denom): Denominator
+- [denom](ops/rational.md#denom): Denominator
 - [div](ops/basic.md#div): Division
+- [div-rem](ops/decimal.md#div-rem): Division with remainder
 - [dm](ops/angle.md#deg-min): Angle in degrees and minutes
 - [dmr](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
 - [dms](ops/angle.md#deg-min-sec): Angle in degrees and minutes
@@ -94,6 +96,7 @@
 - [dn](ops/stack.md#down): Rotate stack downward
 - [down](ops/stack.md#down): Rotate stack downward
 - [doy](ops/time.md#day-year): Day of year
+- [dr](ops/decimal.md#div-rem): Division with remainder
 - [drop](ops/stack.md#drop): Drop top item from stack
 - [dt](ops/time.md#datetime): Formats to a common date/time layout
 - [dup](ops/stack.md#dup): Duplicate top stack item
@@ -137,11 +140,13 @@
 
 ## i
 
-- [imag](ops/conv.md#imag): Imaginary number from complex
+- [imag](ops/complex.md#imag): Imaginary number from complex
+- [inv](ops/rational.md#inv): Inverse
 - [is](ops/cmp.md#is): Byte equality
 - [is-dec-min-sec](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
 - [is-dms](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
 - [is-not](ops/cmp.md#is-not): Byte inequality
+- [is-rational](ops/rational.md#is-rational): Checks value can be parsed as a rational
 
 ## j
 
@@ -205,7 +210,7 @@
 - [now](ops/time.md#now): Current date and time
 - [now-restore](ops/time.md#now-restore): Cancel now override
 - [now-set](ops/time.md#now-set): Override now value
-- [num](ops/conv.md#num): Numerator
+- [num](ops/rational.md#num): Numerator
 
 ## o
 
@@ -227,6 +232,7 @@
 
 - [si.quecto](ops/si.md#si.quecto): SI prefix q, 1e-30
 - [si.quetta](ops/si.md#si.quetta): SI prefix Q, 1e30
+- [quo-rem](ops/decimal.md#quo-rem): Division with remainder at a precision
 
 ## r
 
@@ -238,7 +244,9 @@
 - [rand-int](ops/rand.md#rand-int): Random integer
 - [rand-seed](ops/rand.md#rand-seed): Set the random number seed
 - [rand-seed=](ops/rand.md#rand-seed=): Get the random number seed
-- [real](ops/conv.md#real): Real number from complex
+- [rat](ops/rational.md#rational): Convert to a Rational
+- [rational](ops/rational.md#rational): Convert to a Rational
+- [real](ops/complex.md#real): Real number from complex
 - [rect](ops/complex.md#rect): Polar to complex
 - [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder

@@ -3,31 +3,18 @@
 
 Type conversions
 
-| Operation      | Description
-|----------------|---------------
-| [`complex`](#complex) | Complex from real and imaginary
-| [`dec`](#dec)  | Decimal number
-| [`denom`](#denom) | Denominator
-| [`imag`](#imag) | Imaginary number from complex
-| [`num`](#num)  | Numerator
-| [`real`](#real) | Real number from complex
+| Operation  | Description
+|------------|---------------
+| [`coeff`](#coeff) | TODO
+| [`dec`](#dec) | Decimal number
 
 
-## complex
+## coeff
 
-A complex number from a real *r* and an imaginary *i* number.
 
-	( r:Float i:Float -- Float )
 
-Example:
+	( p0:Decimal -- BigInt )
 
-<!-- test: complex -->
-
-| Input     | Stack
-|-----------|---------------
-| `6      ` | `6` 
-| `12     ` | `6 \| 12` 
-| `complex` | `6+12i` 
 
 ## dec
 
@@ -44,59 +31,3 @@ Example:
 | Input     | Stack
 |-----------|---------------
 | `1e3 dec` | `1000` 
-
-## denom
-
-The denominator of rational number *p0*.
-
-	( p0:Rational -- BigInt )
-
-Example:
-
-<!-- test: denom -->
-
-| Input       | Stack
-|-------------|---------------
-| `2/3 denom` | `3` 
-
-## imag
-
-The imaginary number part of complex number *p0*
-
-	( p0:Complex -- Float )
-
-Example:
-
-<!-- test: imag -->
-
-| Input       | Stack
-|-------------|---------------
-| `3+4i imag` | `4` 
-
-## num
-
-The numerator of rational number *p0*.
-
-	( p0:Rational -- BigInt )
-
-Example:
-
-<!-- test: num -->
-
-| Input     | Stack
-|-----------|---------------
-| `2/3 num` | `2` 
-
-## real
-
-The real number part of complex number *p0*
-
-	( p0:Complex -- Float )
-
-Example:
-
-<!-- test: real -->
-
-| Input       | Stack
-|-------------|---------------
-| `3+4i real` | `3` 

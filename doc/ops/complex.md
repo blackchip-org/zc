@@ -3,29 +3,32 @@
 
 Complex numbers
 
-| Operation     | Description
-|---------------|---------------
-| [`abs`](#abs) | Distance from zero in complex plane
+| Operation      | Description
+|----------------|---------------
+| [`abs`](#abs)  | Distance from zero in complex plane
 | [`acos`](#acos) | Inverse cosine
 | [`acosh`](#acosh) | Inverse hyperbolic cosine
 | [`asin`](#asin) | Inverse sine
 | [`asinh`](#asinh) | Inverse hyperbolic sine
 | [`atan`](#atan) | Inverse tangent
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
+| [`complex`](#complex) | Complex from real and imaginary
 | [`conj`](#conj) | Complex conjugate
-| [`cos`](#cos) | Cosine
+| [`cos`](#cos)  | Cosine
 | [`cosh`](#cosh) | Hyperbolic cosine
-| [`cot`](#cot) | Cotangent
-| [`exp`](#exp) | Natural exponential
-| [`log`](#log) | Natural logarithm
+| [`cot`](#cot)  | Cotangent
+| [`exp`](#exp)  | Natural exponential
+| [`imag`](#imag) | Imaginary number from complex
+| [`log`](#log)  | Natural logarithm
 | [`log10`](#log10) | Decimal logarithm
 | [`phase`](#phase) | Phase (argument)
 | [`polar`](#polar) | Complex to polar
+| [`real`](#real) | Real number from complex
 | [`rect`](#rect) | Polar to complex
 | [`round, r`](#round) | Round to a given precision
-| [`sin`](#sin) | Sine
+| [`sin`](#sin)  | Sine
 | [`sinh`](#sinh) | Hyperbolic sine
-| [`tan`](#tan) | Tangent
+| [`tan`](#tan)  | Tangent
 | [`tanh`](#tanh) | Hyperbolic tangent
 
 
@@ -127,6 +130,22 @@ Example:
 |------------------------|---------------
 | `0.5+2i atanh 5 round` | `0.09642+1.12656i` 
 
+## complex
+
+A complex number from a real *r* and an imaginary *i* number.
+
+	( r:Float i:Float -- Float )
+
+Example:
+
+<!-- test: complex -->
+
+| Input     | Stack
+|-----------|---------------
+| `6      ` | `6` 
+| `12     ` | `6 \| 12` 
+| `complex` | `6+12i` 
+
 ## conj
 
 The complex conjugate of *p0*
@@ -197,6 +216,20 @@ Example:
 |--------------------|---------------
 | `2+2i exp 5 round` | `-3.07493+6.71885i` 
 
+## imag
+
+The imaginary number part of complex number *p0*
+
+	( p0:Complex -- Float )
+
+Example:
+
+<!-- test: imag -->
+
+| Input       | Stack
+|-------------|---------------
+| `3+4i imag` | `4` 
+
 ## log
 
 Natural logarithm of *p0*.
@@ -252,6 +285,20 @@ Example:
 | Input                     | Stack
 |---------------------------|---------------
 | `2i polar pi div 1 round` | `2 \| 0.5` 
+
+## real
+
+The real number part of complex number *p0*
+
+	( p0:Complex -- Float )
+
+Example:
+
+<!-- test: real -->
+
+| Input       | Stack
+|-------------|---------------
+| `3+4i real` | `3` 
 
 ## rect
 

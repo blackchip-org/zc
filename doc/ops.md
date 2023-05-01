@@ -26,8 +26,8 @@
 |---------------------------|-----------
 | [anno](ops/anno.md)       | Annotations 
 | [bool](ops/bool.md)       | Boolean operations 
-| [conv](ops/conv.md)       | Type conversions 
 | [cmp](ops/cmp.md)         | Comparisons 
+| [decimal](ops/decimal.md) | Decimal numbers 
 | [format](ops/format.md)   | Value formatting 
 | [hof](ops/hof.md)         | Higher-order functions 
 | [stack](ops/stack.md)     | Stack manipulations 
@@ -45,6 +45,7 @@
 | [crypto](ops/crypto.md)   | Cryptographic ciphers 
 | [geo](ops/geo.md)         | Geo-spatial calculations 
 | [rand](ops/rand.md)       | Random number generation 
+| [rational](ops/rational.md) | Rational numbers (fractions) 
 | [time](ops/time.md)       | Date, time, and duration operations 
 
 

@@ -183,7 +183,7 @@ func LocalZone(c zc.Calc) {
 	} else {
 		loc, err = time.LoadLocation(zone)
 		if err != nil {
-			zc.ErrInvalidArgs(c)
+			zc.ErrInvalidArgs(c, "unknown time zone")
 			return
 		}
 	}
@@ -386,7 +386,7 @@ func TimeZone(c zc.Calc) {
 	} else {
 		loc, err = time.LoadLocation(zone)
 		if err != nil {
-			zc.ErrInvalidArgs(c)
+			zc.ErrInvalidArgs(c, "unknown time zone")
 			return
 		}
 	}
