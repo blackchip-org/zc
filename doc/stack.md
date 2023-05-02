@@ -43,8 +43,14 @@ example, the *y* value is changed but the *x* value is not:
     ( x:Float y1:Float -- x:Float y2:Float )
 
 A suffix of `*` is used when the parameter consumes the remaining elements of
-the stack. if any. For example, the stack notation for the `sum` operation is:
+the stack. if any. For example, the stack notation for the `sum` operation for
+`Decimal` values is:
 
-    ( T* -- T )
+    ( Decimal* -- Decimal )
 
-A `...` is a placeholder for all other items in the stack.
+A `...` is a placeholder for all other items in the stack. Notation to clear
+the entire stack is:
+
+    ( ... -- )
+
+

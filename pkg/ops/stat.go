@@ -4,11 +4,11 @@ import "github.com/blackchip-org/zc/pkg/zc"
 
 /*
 oper	sum
-func	- ... -- BigInt
-func	- ... -- Decimal
-func	- ... -- Float
-func	- ... -- Rational
-func	- ... -- Complex
+func	- BigInt* -- BigInt
+func	- Decimal* -- Decimal
+func	- Float* -- Float
+func	- Rational* -- Rational
+func	- Complex* -- Complex
 macro	[add] fold
 title 	Summation
 
@@ -24,11 +24,11 @@ end
 
 /*
 oper 	average
-func	Average ... -- BigInt
-func	- ... -- Decimal
-func	- ... -- Float
-func	- ... -- Rational
-func	- ... -- Complex
+func	Average BigInt* -- BigInt
+func	- Decimal* -- Decimal
+func	- Float* -- Float
+func	- Rational* -- Rational
+func	- Complex* -- Complex
 alias	avg
 title	Average
 
