@@ -15,11 +15,11 @@ The average of all items on the stack.
 
 Alias: `avg`
 
-	(  -- BigInt )
-	(  -- Decimal )
-	(  -- Float )
-	(  -- Rational )
-	(  -- Complex )
+	( BigInt* -- BigInt )
+	( Decimal* -- Decimal )
+	( Float* -- Float )
+	( Rational* -- Rational )
+	( Complex* -- Complex )
 
 Example:
 
@@ -33,11 +33,11 @@ Example:
 
 The sum of all items on the stack.
 
-	(  -- BigInt )
-	(  -- Decimal )
-	(  -- Float )
-	(  -- Rational )
-	(  -- Complex )
+	( BigInt* -- BigInt )
+	( Decimal* -- Decimal )
+	( Float* -- Float )
+	( Rational* -- Rational )
+	( Complex* -- Complex )
 
 Example:
 
