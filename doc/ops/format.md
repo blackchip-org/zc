@@ -26,8 +26,8 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `2 3 div` | `0.6666666666666666666` 
-| `2 round` | `0.67` 
+| `2 3 div` | `0.6666666666666666666`
+| `2 round` | `0.67`
 
 ## rounding-mode
 
@@ -48,11 +48,11 @@ Example:
 
 | Input                | Stack
 |----------------------|---------------
-| `1.01 0.05 mul     ` | `0.0505` 
-| `2 round           ` | `0.05` 
-| `'up' rounding-mode` | *rounding-mode set to 'up'* 
-| `c 1.01 0.05 mul   ` | `0.0505` 
-| `2 round           ` | `0.06` 
+| `1.01 0.05 mul     ` | `0.0505`
+| `2 round           ` | `0.05`
+| `'up' rounding-mode` | *rounding-mode set to 'up'*
+| `c 1.01 0.05 mul   ` | `0.0505`
+| `2 round           ` | `0.06`
 
 ## rounding-mode=
 
@@ -66,7 +66,7 @@ Example:
 
 | Input            | Stack
 |------------------|---------------
-| `rounding-mode=` | `half-up` 
+| `rounding-mode=` | `half-up`
 
 ## scientific-notation
 
@@ -82,4 +82,4 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `1234 sn` | `1.234e03` 
+| `1234 sn` | `1.234e03`

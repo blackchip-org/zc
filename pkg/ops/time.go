@@ -154,6 +154,27 @@ func Hours(c zc.Calc) {
 }
 
 /*
+oper	is-datetime
+func	IsDateTime p0:Str -- Bool
+alias	is-dt
+title 	Checks value can be parsed as a `DateTime`
+
+desc
+Returns `true` if the value *p0* can be parsed as a `DateTime“.
+end
+
+example
+c [2 May 2023] is-datetime -- true
+c [2 Nay 2023] is-datetime -- false
+end
+*/
+func IsDateTime(c zc.Calc) {
+	p0 := zc.PopString(c)
+	r0 := zc.DateTime.Is(p0)
+	zc.PushBool(c, r0)
+}
+
+/*
 oper	local-zone
 func	LocalZone p0:Str --
 title	Sets the local time zone
@@ -311,6 +332,7 @@ func Seconds(c zc.Calc) {
 oper	sub
 func	SubDuration p0:Duration p1:Duration -- Duration
 func	SubDateTimeDuration p0:DateTime p1:Duration -- Duration
+func 	SubDateTime p0:DateTime p1:DateTime -- Duration
 alias	s
 alias	-
 title	Time or duration subtraction
@@ -321,12 +343,20 @@ end
 example
 c 3:30pm 2h sub -- Mon Jan 2 2006 1:30:00pm -0700 MST
 c 2h30m 45m sub -- 1h 45m
+c 3:30pm 1:30pm sub -- 2h
 end
 */
 func SubDuration(c zc.Calc) {
 	a1 := zc.PopDuration(c)
 	a0 := zc.PopDuration(c)
 	r0 := a0 - a1
+	zc.PushDuration(c, r0)
+}
+
+func SubDateTime(c zc.Calc) {
+	a1 := zc.PopDateTime(c)
+	a0 := zc.PopDateTime(c)
+	r0 := a0.Sub(a1)
 	zc.PushDuration(c, r0)
 }
 

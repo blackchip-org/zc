@@ -32,9 +32,9 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `[°]    ` | `°` 
-| `char-cp` | `176` 
-| `hex    ` | `0xb0` 
+| `[°]    ` | `°`
+| `char-cp` | `176`
+| `hex    ` | `0xb0`
 
 ## codepoint-char
 
@@ -50,8 +50,8 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `0xb0   ` | `0xb0` 
-| `cp-char` | `°` 
+| `0xb0   ` | `0xb0`
+| `cp-char` | `°`
 
 ## join
 
@@ -65,8 +65,8 @@ Example:
 
 | Input        | Stack
 |--------------|---------------
-| `128 8 74 2` | `128 \| 8 \| 74 \| 2` 
-| `'.' join  ` | `128.8.74.2` 
+| `128 8 74 2` | `128 \| 8 \| 74 \| 2`
+| `'.' join  ` | `128.8.74.2`
 
 ## left
 
@@ -87,9 +87,9 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `'abcdef` | `abcdef` 
-| `4 left ` | `abcd` 
-| `-1 left` | `abc` 
+| `'abcdef` | `abcdef`
+| `4 left ` | `abcd`
+| `-1 left` | `abc`
 
 ## len
 
@@ -103,8 +103,8 @@ Example:
 
 | Input   | Stack
 |---------|---------------
-| `'abcd` | `abcd` 
-| `len  ` | `4` 
+| `'abcd` | `abcd`
+| `len  ` | `4`
 
 ## lower
 
@@ -118,8 +118,8 @@ Example:
 
 | Input   | Stack
 |---------|---------------
-| `'AbCd` | `AbCd` 
-| `lower` | `abcd` 
+| `'AbCd` | `AbCd`
+| `lower` | `abcd`
 
 ## right
 
@@ -140,9 +140,9 @@ Example:
 
 | Input      | Stack
 |------------|---------------
-| `'abcdef ` | `abcdef` 
-| `4 right ` | `cdef` 
-| `-1 right` | `def` 
+| `'abcdef ` | `abcdef`
+| `4 right ` | `cdef`
+| `-1 right` | `def`
 
 ## split
 
@@ -156,8 +156,8 @@ Example:
 
 | Input        | Stack
 |--------------|---------------
-| `128.8.74.2` | `128.8.74.2` 
-| `'.' split ` | `128 \| 8 \| 74 \| 2` 
+| `128.8.74.2` | `128.8.74.2`
+| `'.' split ` | `128 \| 8 \| 74 \| 2`
 
 ## upper
 
@@ -171,8 +171,8 @@ Example:
 
 | Input   | Stack
 |---------|---------------
-| `'AbCd` | `AbCd` 
-| `upper` | `ABCD` 
+| `'AbCd` | `AbCd`
+| `upper` | `ABCD`
 
 ## utf8-decode
 
@@ -188,8 +188,8 @@ Example:
 
 | Input         | Stack
 |---------------|---------------
-| `0x3534c2b0 ` | `0x3534c2b0` 
-| `utf8-decode` | `54°` 
+| `0x3534c2b0 ` | `0x3534c2b0`
+| `utf8-decode` | `54°`
 
 ## utf8-encode
 
@@ -205,5 +205,5 @@ Example:
 
 | Input             | Stack
 |-------------------|---------------
-| `54°            ` | `54°` 
-| `utf8-encode hex` | `0x3534c2b0` 
+| `54°            ` | `54°`
+| `utf8-encode hex` | `0x3534c2b0`

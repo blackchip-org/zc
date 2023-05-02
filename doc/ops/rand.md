@@ -26,8 +26,8 @@ Example:
 
 | Input         | Stack
 |---------------|---------------
-| `0 rand-seed` | *seed set to 0* 
-| `rand       ` | `0.9451961492941164` 
+| `0 rand-seed` | *seed set to 0*
+| `rand       ` | `0.9451961492941164`
 
 ## rand-choice
 
@@ -41,9 +41,9 @@ Example:
 
 | Input         | Stack
 |---------------|---------------
-| `2 rand-seed` | *seed set to 2* 
-| `1 2 3 4 5 6` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` 
-| `rand-choice` | `5` 
+| `2 rand-seed` | *seed set to 2*
+| `1 2 3 4 5 6` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
+| `rand-choice` | `5`
 
 ## rand-int
 
@@ -57,8 +57,8 @@ Example:
 
 | Input         | Stack
 |---------------|---------------
-| `0 rand-seed` | *seed set to 0* 
-| `10 rand-int` | `5` 
+| `0 rand-seed` | *seed set to 0*
+| `10 rand-int` | `5`
 
 ## rand-seed
 
@@ -72,8 +72,8 @@ Example:
 
 | Input         | Stack
 |---------------|---------------
-| `1 rand-seed` | *seed set to 1* 
-| `10 rand-int` | `2` 
+| `1 rand-seed` | *seed set to 1*
+| `10 rand-int` | `2`
 
 ## rand-seed=
 
@@ -87,8 +87,8 @@ Example:
 
 | Input         | Stack
 |---------------|---------------
-| `3 rand-seed` | *seed set to 3* 
-| `rand-seed= ` | `3` 
+| `3 rand-seed` | *seed set to 3*
+| `rand-seed= ` | `3`
 
 ## roll
 
@@ -105,9 +105,9 @@ Example:
 
 | Input          | Stack
 |----------------|---------------
-| `99 rand-seed` | *seed set to 99* 
-| `3d6 roll    ` | `6 \| 2 \| 1` 
-| `sum         ` | ``9` 
+| `99 rand-seed` | *seed set to 99*
+| `3d6 roll    ` | `6 \| 2 \| 1`
+| `sum         ` | ``9`
 
 ## shuffle
 
@@ -121,6 +121,6 @@ Example:
 
 | Input         | Stack
 |---------------|---------------
-| `0 rand-seed` | *seed set to 0* 
-| `1 2 3 4 5 6` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` 
-| `shuffle    ` | `5 \| 4 \| 1 \| 3 \| 2 \| 6`` 
+| `0 rand-seed` | *seed set to 0*
+| `1 2 3 4 5 6` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
+| `shuffle    ` | `5 \| 4 \| 1 \| 3 \| 2 \| 6``

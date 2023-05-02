@@ -22,6 +22,6 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------
-| `'Behind the tree!` | `Behind the tree!` 
-| `rot13            ` | `Oruvaq gur gerr!` 
-| `rot13            ` | `Behind the tree!` 
+| `'Behind the tree!` | `Behind the tree!`
+| `rot13            ` | `Oruvaq gur gerr!`
+| `rot13            ` | `Behind the tree!`

@@ -24,7 +24,7 @@ Example:
 
 | Input          | Stack
 |----------------|---------------
-| `17n epsg.utm` | `EPSG:32617` 
+| `17n epsg.utm` | `EPSG:32617`
 
 ## epsg.web-mercator
 

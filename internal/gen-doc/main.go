@@ -138,7 +138,7 @@ func writeExample(out *strings.Builder, expected []doc.Expect) {
 		if strings.HasPrefix(escOut, "*") {
 			quotes = ""
 		}
-		fmt.Fprintf(out, "| `%-[1]*v` | %v%v%v \n", width, ex.In, quotes, escOut, quotes)
+		fmt.Fprintf(out, "| `%-[1]*v` | %v%v%v\n", width, ex.In, quotes, escOut, quotes)
 	}
 }
 

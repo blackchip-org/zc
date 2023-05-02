@@ -23,8 +23,8 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------
-| `42               ` | `42` 
-| `'the answer' anno` | `42 # the answer` 
+| `42               ` | `42`
+| `'the answer' anno` | `42 # the answer`
 
 ## no-anno
 
@@ -40,6 +40,6 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------
-| `42               ` | `42` 
-| `'the answer' anno` | `42 # the answer` 
-| `noa              ` | `42` 
+| `42               ` | `42`
+| `'the answer' anno` | `42 # the answer`
+| `noa              ` | `42`

@@ -24,7 +24,7 @@ Example:
 
 | Input       | Stack
 |-------------|---------------
-| `2/3 denom` | `3` 
+| `2/3 denom` | `3`
 
 ## inv
 
@@ -38,19 +38,22 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `1/2 inv` | `2` 
+| `1/2 inv` | `2`
 
 ## is-rational
 
-Returns `true` if the value *p08 can be parsed as a Rational.
-3nd
-
-example
-1/2 -- true
-1+2i -- false
+Returns `true` if the value *p0* can be parsed as a Rational.
 
 	( p0:Str -- Bool )
 
+Example:
+
+<!-- test: is-rational -->
+
+| Input                | Stack
+|----------------------|---------------
+| `c 1/2 is-rational ` | `true`
+| `c 1+2i is-rational` | `false`
 
 ## num
 
@@ -64,7 +67,7 @@ Example:
 
 | Input     | Stack
 |-----------|---------------
-| `2/3 num` | `2` 
+| `2/3 num` | `2`
 
 ## rational
 
@@ -82,5 +85,5 @@ Example:
 
 | Input       | Stack
 |-------------|---------------
-| `c 1 2 rat` | `1/2` 
-| `c 0.5 rat` | `1/2` 
+| `c 1 2 rat` | `1/2`
+| `c 0.5 rat` | `1/2`

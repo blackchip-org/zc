@@ -32,10 +32,10 @@ Example:
 
 | Input                     | Stack
 |---------------------------|---------------
-| `c 1234.56 1,234.56   eq` | `true` 
-| `c 1234.56 1234.56000 eq` | `true` 
-| `c 1234.56 $1,234.56  eq` | `true` 
-| `c 1234.56 +1,234.56  eq` | `true` 
+| `c 1234.56 1,234.56   eq` | `true`
+| `c 1234.56 1234.56000 eq` | `true`
+| `c 1234.56 $1,234.56  eq` | `true`
+| `c 1234.56 +1,234.56  eq` | `true`
 
 ## gt
 
@@ -55,9 +55,9 @@ Example:
 
 | Input       | Stack
 |-------------|---------------
-| `c 1  0 gt` | `true` 
-| `c 0  0 gt` | `false` 
-| `c -1 0 gt` | `false` 
+| `c 1  0 gt` | `true`
+| `c 0  0 gt` | `false`
+| `c -1 0 gt` | `false`
 
 ## gte
 
@@ -77,9 +77,9 @@ Example:
 
 | Input        | Stack
 |--------------|---------------
-| `c 1  0 gte` | `true` 
-| `c 0  0 gte` | `true` 
-| `c -1 0 gte` | `false` 
+| `c 1  0 gte` | `true`
+| `c 0  0 gte` | `true`
+| `c -1 0 gte` | `false`
 
 ## is
 
@@ -93,8 +93,8 @@ Example:
 
 | Input           | Stack
 |-----------------|---------------
-| `c 1.2 1.20 is` | `false` 
-| `c 1.2 1.2 is ` | `true` 
+| `c 1.2 1.20 is` | `false`
+| `c 1.2 1.2 is ` | `true`
 
 ## is-not
 
@@ -108,8 +108,8 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------
-| `c 1.2 1.20 is-not` | `true` 
-| `c 1.2 1.2 is-not ` | `false` 
+| `c 1.2 1.20 is-not` | `true`
+| `c 1.2 1.2 is-not ` | `false`
 
 ## lt
 
@@ -129,9 +129,9 @@ Example:
 
 | Input       | Stack
 |-------------|---------------
-| `c 1  0 lt` | `false` 
-| `c 0  0 lt` | `false` 
-| `c -1 0 lt` | `true` 
+| `c 1  0 lt` | `false`
+| `c 0  0 lt` | `false`
+| `c -1 0 lt` | `true`
 
 ## lte
 
@@ -151,9 +151,9 @@ Example:
 
 | Input        | Stack
 |--------------|---------------
-| `c 1  0 lte` | `false` 
-| `c 0  0 lte` | `true` 
-| `c -1 0 lte` | `true` 
+| `c 1  0 lte` | `false`
+| `c 0  0 lte` | `true`
+| `c -1 0 lte` | `true`
 
 ## neq
 
@@ -172,5 +172,5 @@ Example:
 
 | Input           | Stack
 |-----------------|---------------
-| `c 123 123 neq` | `false` 
-| `c 123 456 neq` | `true` 
+| `c 123 123 neq` | `false`
+| `c 123 456 neq` | `true`

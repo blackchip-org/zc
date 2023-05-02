@@ -24,9 +24,9 @@ Example:
 
 | Input                | Stack
 |----------------------|---------------
-| `c true  true   and` | `true` 
-| `c true  false  and` | `false` 
-| `c false false  and` | `false` 
+| `c true  true   and` | `true`
+| `c true  false  and` | `false`
+| `c false false  and` | `false`
 
 ## false
 
@@ -40,7 +40,7 @@ Example:
 
 | Input   | Stack
 |---------|---------------
-| `false` | `false` 
+| `false` | `false`
 
 ## not
 
@@ -54,8 +54,8 @@ Example:
 
 | Input      | Stack
 |------------|---------------
-| `true not` | `false` 
-| `not     ` | `true` 
+| `true not` | `false`
+| `not     ` | `true`
 
 ## or
 
@@ -69,9 +69,9 @@ Example:
 
 | Input              | Stack
 |--------------------|---------------
-| `c true  true  or` | `true` 
-| `c true  false or` | `true` 
-| `c false false or` | `false` 
+| `c true  true  or` | `true`
+| `c true  false or` | `true`
+| `c false false or` | `false`
 
 ## true
 
@@ -85,4 +85,4 @@ Example:
 
 | Input  | Stack
 |--------|---------------
-| `true` | `true` 
+| `true` | `true`

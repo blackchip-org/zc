@@ -143,8 +143,10 @@
 - [imag](ops/complex.md#imag): Imaginary number from complex
 - [inv](ops/rational.md#inv): Inverse
 - [is](ops/cmp.md#is): Byte equality
+- [is-datetime](ops/time.md#is-datetime): Checks value can be parsed as a `DateTime`
 - [is-dec-min-sec](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
 - [is-dms](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
+- [is-dt](ops/time.md#is-datetime): Checks value can be parsed as a `DateTime`
 - [is-not](ops/cmp.md#is-not): Byte inequality
 - [is-rational](ops/rational.md#is-rational): Checks value can be parsed as a rational
 

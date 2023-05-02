@@ -51,12 +51,12 @@ func	IsRational p0:Str -- Bool
 title 	Checks value can be parsed as a rational
 
 desc
-Returns `true` if the value *p08 can be parsed as a Rational.
-3nd
+Returns `true` if the value *p0* can be parsed as a Rational.
+end
 
 example
-1/2 -- true
-1+2i -- false
+c 1/2 is-rational -- true
+c 1+2i is-rational -- false
 end
 */
 func IsRational(c zc.Calc) {
