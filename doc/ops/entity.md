@@ -205,8 +205,6 @@ HTML entities.
 | `&Int;` | ∬
 | `&Integral;` | ∫
 | `&Intersection;` | ⋂
-| `&InvisibleComma;` | ⁣
-| `&InvisibleTimes;` | ⁢
 | `&Iogon;` | Į
 | `&Iopf;` | 𝕀
 | `&Iota;` | Ι
@@ -290,7 +288,6 @@ HTML entities.
 | `&Lt;` | ≪
 | `&Map;` | ⤅
 | `&Mcy;` | М
-| `&MediumSpace;` |  
 | `&Mellintrf;` | ℳ
 | `&Mfr;` | 𝔐
 | `&MinusPlus;` | ∓
@@ -302,15 +299,9 @@ HTML entities.
 | `&Ncaron;` | Ň
 | `&Ncedil;` | Ņ
 | `&Ncy;` | Н
-| `&NegativeMediumSpace;` | ​
-| `&NegativeThickSpace;` | ​
-| `&NegativeThinSpace;` | ​
-| `&NegativeVeryThinSpace;` | ​
 | `&NestedGreaterGreater;` | ≫
 | `&NestedLessLess;` | ≪
 | `&Nfr;` | 𝔑
-| `&NoBreak;` | ⁠
-| `&NonBreakingSpace;` |  
 | `&Nopf;` | ℕ
 | `&Not;` | ⫬
 | `&NotCongruent;` | ≢
@@ -501,7 +492,6 @@ HTML entities.
 | `&TRADE;` | ™
 | `&TSHcy;` | Ћ
 | `&TScy;` | Ц
-| `&Tab;` | 	
 | `&Tau;` | Τ
 | `&Tcaron;` | Ť
 | `&Tcedil;` | Ţ
@@ -509,8 +499,6 @@ HTML entities.
 | `&Tfr;` | 𝔗
 | `&Therefore;` | ∴
 | `&Theta;` | Θ
-| `&ThickSpace;` |   
-| `&ThinSpace;` |  
 | `&Tilde;` | ∼
 | `&TildeEqual;` | ≃
 | `&TildeFullEqual;` | ≅
@@ -564,10 +552,8 @@ HTML entities.
 | `&Verbar;` | ‖
 | `&Vert;` | ‖
 | `&VerticalBar;` | ∣
-| `&VerticalLine;` | |
 | `&VerticalSeparator;` | ❘
 | `&VerticalTilde;` | ≀
-| `&VeryThinSpace;` |  
 | `&Vfr;` | 𝔙
 | `&Vopf;` | 𝕍
 | `&Vscr;` | 𝒱
@@ -596,7 +582,6 @@ HTML entities.
 | `&Zcaron;` | Ž
 | `&Zcy;` | З
 | `&Zdot;` | Ż
-| `&ZeroWidthSpace;` | ​
 | `&Zeta;` | Ζ
 | `&Zfr;` | ℨ
 | `&Zopf;` | ℤ
@@ -610,7 +595,6 @@ HTML entities.
 | `&acute;` | ´
 | `&acy;` | а
 | `&aelig;` | æ
-| `&af;` | ⁡
 | `&afr;` | 𝔞
 | `&agrave;` | à
 | `&alefsym;` | ℵ
@@ -960,11 +944,7 @@ HTML entities.
 | `&empty;` | ∅
 | `&emptyset;` | ∅
 | `&emptyv;` | ∅
-| `&emsp13;` |  
-| `&emsp14;` |  
-| `&emsp;` |  
 | `&eng;` | ŋ
-| `&ensp;` |  
 | `&eogon;` | ę
 | `&eopf;` | 𝕖
 | `&epar;` | ⋕
@@ -1092,7 +1072,6 @@ HTML entities.
 | `&gvertneqq;` | ≩︀
 | `&gvnE;` | ≩︀
 | `&hArr;` | ⇔
-| `&hairsp;` |  
 | `&half;` | ½
 | `&hamilt;` | ℋ
 | `&hardcy;` | ъ
@@ -1120,7 +1099,6 @@ HTML entities.
 | `&hybull;` | ⁃
 | `&hyphen;` | ‐
 | `&iacute;` | í
-| `&ic;` | ⁣
 | `&icirc;` | î
 | `&icy;` | и
 | `&iecy;` | е
@@ -1165,7 +1143,6 @@ HTML entities.
 | `&isins;` | ⋴
 | `&isinsv;` | ⋳
 | `&isinv;` | ∈
-| `&it;` | ⁢
 | `&itilde;` | ĩ
 | `&iukcy;` | і
 | `&iuml;` | ï
@@ -1311,7 +1288,6 @@ HTML entities.
 | `&lrcorner;` | ⌟
 | `&lrhar;` | ⇋
 | `&lrhard;` | ⥭
-| `&lrm;` | ‎
 | `&lrtri;` | ⊿
 | `&lsaquo;` | ‹
 | `&lscr;` | 𝓁
@@ -1398,7 +1374,6 @@ HTML entities.
 | `&natur;` | ♮
 | `&natural;` | ♮
 | `&naturals;` | ℕ
-| `&nbsp;` |  
 | `&nbump;` | ≎̸
 | `&nbumpe;` | ≏̸
 | `&ncap;` | ⩃
@@ -1521,7 +1496,6 @@ HTML entities.
 | `&nu;` | ν
 | `&num;` | #
 | `&numero;` | №
-| `&numsp;` |  
 | `&nvDash;` | ⊭
 | `&nvHarr;` | ⤄
 | `&nvap;` | ≍⃒
@@ -1659,7 +1633,6 @@ HTML entities.
 | `&prurel;` | ⊰
 | `&pscr;` | 𝓅
 | `&psi;` | ψ
-| `&puncsp;` |  
 | `&qfr;` | 𝔮
 | `&qint;` | ⨌
 | `&qopf;` | 𝕢
@@ -1743,7 +1716,6 @@ HTML entities.
 | `&risingdotseq;` | ≓
 | `&rlarr;` | ⇄
 | `&rlhar;` | ⇌
-| `&rlm;` | ‏
 | `&rmoust;` | ⎱
 | `&rmoustache;` | ⎱
 | `&rnmid;` | ⫮
@@ -1808,7 +1780,6 @@ HTML entities.
 | `&shcy;` | ш
 | `&shortmid;` | ∣
 | `&shortparallel;` | ∥
-| `&shy;` | ­
 | `&sigma;` | σ
 | `&sigmaf;` | ς
 | `&sigmav;` | ς
@@ -1940,7 +1911,6 @@ HTML entities.
 | `&thetav;` | ϑ
 | `&thickapprox;` | ≈
 | `&thicksim;` | ∼
-| `&thinsp;` |  
 | `&thkap;` | ≈
 | `&thksim;` | ∼
 | `&thorn;` | þ
@@ -2054,8 +2024,6 @@ HTML entities.
 | `&veebar;` | ⊻
 | `&veeeq;` | ≚
 | `&vellip;` | ⋮
-| `&verbar;` | |
-| `&vert;` | |
 | `&vfr;` | 𝔳
 | `&vltri;` | ⊲
 | `&vnsub;` | ⊂⃒
@@ -2126,5 +2094,3 @@ HTML entities.
 | `&zigrarr;` | ⇝
 | `&zopf;` | 𝕫
 | `&zscr;` | 𝓏
-| `&zwj;` | ‍
-| `&zwnj;` | ‌

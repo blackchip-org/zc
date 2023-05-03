@@ -11,6 +11,45 @@ import (
 
 //go:generate go run main.go
 
+var ignore = map[string]struct{}{
+	"&ApplyFunction;":         {},
+	"&InvisibleComma;":        {},
+	"&InvisibleTimes;":        {},
+	"&NewLine;":               {},
+	"&MediumSpace;":           {},
+	"&NegativeMediumSpace;":   {},
+	"&NegativeThickSpace;":    {},
+	"&NegativeThinSpace;":     {},
+	"&NegativeVeryThinSpace;": {},
+	"&NoBreak;":               {},
+	"&NonBreakingSpace;":      {},
+	"&Tab;":                   {},
+	"&ThickSpace;":            {},
+	"&ThinSpace;":             {},
+	"&VerticalLine;":          {},
+	"&VeryThinSpace;":         {},
+	"&ZeroWidthSpace;":        {},
+	"&af;":                    {},
+	"&emsp13;":                {},
+	"&emsp14;":                {},
+	"&emsp;":                  {},
+	"&ensp;":                  {},
+	"&hairsp;":                {},
+	"&ic;":                    {},
+	"&it;":                    {},
+	"&lrm;":                   {},
+	"&nbsp;":                  {},
+	"&numsp;":                 {},
+	"&puncsp;":                {},
+	"&rlm;":                   {},
+	"&shy;":                   {},
+	"&thinsp;":                {},
+	"&verbar;":                {},
+	"&vert;":                  {},
+	"&zwj;":                   {},
+	"&zwnj;":                  {},
+}
+
 const (
 	EntityGo = "../../pkg/ops/entity.go"
 	EntityMd = "../../doc/ops/entity.md"
@@ -39,7 +78,7 @@ func main() {
 	fmt.Fprintf(fent, "package ops\n\n")
 	fmt.Fprintf(fent, "var Entities = map[string]string {")
 	for name, entity := range entities {
-		if name == "&NewLine;" || name == "&ApplyFunction;" {
+		if _, ok := ignore[name]; ok {
 			continue
 		}
 		if !strings.HasSuffix(name, ";") {
