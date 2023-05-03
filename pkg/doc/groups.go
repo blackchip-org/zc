@@ -10,6 +10,7 @@ var GroupTitles = map[string]string{
 	"cmp":      "Comparisons",
 	"crypto":   "Cryptographic ciphers",
 	"decimal":  "Decimal numbers",
+	"entity":   "HTML entity characters",
 	"epsg":     "EPSG Geodetic Parameter Dataset",
 	"format":   "Value formatting",
 	"geo":      "Geo-spatial calculations",

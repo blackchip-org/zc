@@ -53,6 +53,7 @@
 
 | Volume                    | Description
 |---------------------------|-----------
+| [entity](ops/entity.md)   | HTML entity characters 
 | [epsg](ops/epsg.md)       | EPSG Geodetic Parameter Dataset 
 | [si](ops/si.md)           | International System of Units 
 | [tz](ops/tz.md)           | Time zone database 

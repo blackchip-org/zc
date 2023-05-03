@@ -38,6 +38,7 @@ var Categories = []Category{
 		"time",
 	}},
 	{"Tables", []string{
+		"entity",
 		"epsg",
 		"si",
 		"tz",

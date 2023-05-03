@@ -1,0 +1,79 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"os"
+	"sort"
+	"strings"
+)
+
+//go:generate go run main.go
+
+const (
+	EntityGo = "../../pkg/ops/entity.go"
+	EntityMd = "../../doc/ops/entity.md"
+)
+
+type Entity struct {
+	Codepoints []int  `json:"codepoints"`
+	Characters string `json:"characters"`
+}
+
+func main() {
+	var names []string
+	entities := make(map[string]Entity)
+	data, err := os.ReadFile("entities.json")
+	if err != nil {
+		panic(err)
+	}
+	json.Unmarshal(data, &entities)
+
+	fent, err := os.Create(EntityGo)
+	if err != nil {
+		panic(err)
+	}
+	defer fent.Close()
+
+	fmt.Fprintf(fent, "package ops\n\n")
+	fmt.Fprintf(fent, "var Entities = map[string]string {")
+	for name, entity := range entities {
+		if name == "&NewLine;" || name == "&ApplyFunction;" {
+			continue
+		}
+		if !strings.HasSuffix(name, ";") {
+			continue
+		}
+		if entity.Characters == "\"" {
+			entity.Characters = "\\\"s"
+		}
+		if entity.Characters == "\\" {
+			entity.Characters = "\\\\"
+		}
+		fmt.Fprintf(fent, "\n\t\"%v\": \"[%v]\",", name, entity.Characters)
+		names = append(names, name)
+	}
+	fmt.Fprintf(fent, "\n}\n")
+
+	fdoc, err := os.Create(EntityMd)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer fdoc.Close()
+
+	fmt.Fprintf(fdoc, `
+# entity
+
+HTML entities.
+
+| Operation | Description
+|-----------|------------
+`)
+
+	sort.Strings(names)
+	for _, name := range names {
+		fmt.Fprintf(fdoc, "| `%v` | %v\n", name, entities[name].Characters)
+	}
+
+}

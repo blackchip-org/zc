@@ -25,4 +25,5 @@ func init() {
 		opsTable[k] = evalOp(v)
 	}
 	addMacros(ops.TimeZones)
+	addMacros(ops.Entities)
 }

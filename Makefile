@@ -19,6 +19,9 @@ release: clean gen
 doc: index
 	go generate internal/gen-doc/main.go
 
+entity:
+	go generate internal/gen-entity/main.go
+
 index:
 	go generate internal/gen-index/main.go
 
