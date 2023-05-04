@@ -11,6 +11,7 @@ var GroupTitles = map[string]string{
 	"crypto":   "Cryptographic ciphers",
 	"decimal":  "Decimal numbers",
 	"entity":   "HTML entity characters",
+	"emoji":    "Unicode emoji characters",
 	"epsg":     "EPSG Geodetic Parameter Dataset",
 	"format":   "Value formatting",
 	"geo":      "Geo-spatial calculations",

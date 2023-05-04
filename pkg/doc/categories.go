@@ -39,6 +39,7 @@ var Categories = []Category{
 	}},
 	{"Tables", []string{
 		"entity",
+		"emoji",
 		"epsg",
 		"si",
 		"tz",

@@ -22,6 +22,9 @@ doc: index
 entity:
 	go generate internal/gen-entity/main.go
 
+emoji:
+	go generate internal/gen-emoji/main.go
+
 index:
 	go generate internal/gen-index/main.go
 
