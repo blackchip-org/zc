@@ -17,15 +17,21 @@ const (
 )
 
 type Emoji struct {
-	Name            string `json:"name"`
-	Slug            string `json:"slug"`
-	Group           string `json:"group"`
-	EmojiVersion    string `json:"emoji_version"`
-	UnicodeVersion  string `json:"unicode_version"`
-	SkinToneSupport bool   `json:"skin_tone_support"`
+	Name                          string `json:"name"`
+	Slug                          string `json:"slug"`
+	Group                         string `json:"group"`
+	EmojiVersion                  string `json:"emoji_version"`
+	UnicodeVersion                string `json:"unicode_version"`
+	SkinToneSupport               bool   `json:"skin_tone_support"`
+	SkinToneSupportUnicodeVersion string `json:"skin_tone_support_unicode_version"`
 }
 
 func main() {
+	readit, err := os.ReadFile("/Users/mcgann/foo")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("*** RUNES: %v\n", []rune(string(readit)))
 	var names []string
 	nameToCh := make(map[string]string)
 
@@ -53,6 +59,9 @@ func main() {
 		if emoji.SkinToneSupport {
 			for i := 0; i < 5; i++ {
 				ch2 := ch + string(rune(0x1f3fb+i))
+				if emoji.SkinToneSupportUnicodeVersion == "12.0" {
+					ch2 += string(rune(0x200d)) + string(rune(0x1f9bc))
+				}
 				name2 := fmt.Sprintf("%v-%v", name, i+1)
 				fmt.Fprintf(fent, "\n\t\":%v:\": \"[%v]\",", name2, ch2)
 				names = append(names, name2)
@@ -80,7 +89,7 @@ Unicode emoji characters.
 	sort.Strings(names)
 	for _, name := range names {
 		ch := nameToCh[name]
-		fmt.Printf("NAME %v CH %v\n", name, ch)
+		//fmt.Printf("NAME %v CH %v\n", name, ch)
 		fmt.Fprintf(fdoc, "| `:%v:` | %v\n", name, ch)
 	}
 
