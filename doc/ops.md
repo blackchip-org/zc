@@ -9,7 +9,9 @@
 | [basic](ops/basic.md)     | Basic calculator 
 | [prog](ops/prog.md)       | Programmer's calculator 
 | [sci](ops/sci.md)         | Scientific calculator 
+| [stack](ops/stack.md)     | Stack manipulations 
 | [stat](ops/stat.md)       | Statistical calculations 
+| [zc](ops/zc.md)           | About this calculator 
 
 
 ## Units of Measure
@@ -20,32 +22,24 @@
 | [temp](ops/temp.md)       | Temperature 
 
 
-## Standard Operations
-
-| Volume                    | Description
-|---------------------------|-----------
-| [anno](ops/anno.md)       | Annotations 
-| [bool](ops/bool.md)       | Boolean operations 
-| [cmp](ops/cmp.md)         | Comparisons 
-| [decimal](ops/decimal.md) | Decimal numbers 
-| [format](ops/format.md)   | Value formatting 
-| [hof](ops/hof.md)         | Higher-order functions 
-| [stack](ops/stack.md)     | Stack manipulations 
-| [text](ops/text.md)       | Text operations 
-| [zc](ops/zc.md)           | About this calculator 
-
-
 ## Library
 
 | Volume                    | Description
 |---------------------------|-----------
 | [angle](ops/angle.md)     | Angular calculations 
+| [anno](ops/anno.md)       | Annotations 
+| [bool](ops/bool.md)       | Boolean operations 
 | [color](ops/color.md)     | Color conversions 
 | [complex](ops/complex.md) | Complex numbers 
+| [cmp](ops/cmp.md)         | Comparisons 
 | [crypto](ops/crypto.md)   | Cryptographic ciphers 
+| [decimal](ops/decimal.md) | Decimal numbers 
+| [format](ops/format.md)   | Value formatting 
 | [geo](ops/geo.md)         | Geo-spatial calculations 
+| [hof](ops/hof.md)         | Higher-order functions 
 | [rand](ops/rand.md)       | Random number generation 
 | [rational](ops/rational.md) | Rational numbers (fractions) 
+| [text](ops/text.md)       | Text operations 
 | [time](ops/time.md)       | Date, time, and duration operations 
 
 
