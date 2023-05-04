@@ -403,6 +403,7 @@ locally using `make`. See the credits below for more information.
 - Fixed point math provided by https://github.com/shopspring/decimal
 - CLI auto completion and history provided by https://github.com/peterh/liner
 - Geospatial transformations provided by https://github.com/twpayne/go-proj/
+- Emoji JSON file provided by https://github.com/muan/unicode-emoji-json
 - Terminal demo created with https://github.com/faressoft/terminalizer
 
 ## License
