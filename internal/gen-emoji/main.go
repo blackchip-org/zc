@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -27,11 +28,6 @@ type Emoji struct {
 }
 
 func main() {
-	readit, err := os.ReadFile("/Users/mcgann/foo")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("*** RUNES: %v\n", []rune(string(readit)))
 	var names []string
 	nameToCh := make(map[string]string)
 
@@ -58,10 +54,7 @@ func main() {
 
 		if emoji.SkinToneSupport {
 			for i := 0; i < 5; i++ {
-				ch2 := ch + string(rune(0x1f3fb+i))
-				if emoji.SkinToneSupportUnicodeVersion == "12.0" {
-					ch2 += string(rune(0x200d)) + string(rune(0x1f9bc))
-				}
+				ch2 := addTone(ch, i)
 				name2 := fmt.Sprintf("%v-%v", name, i+1)
 				fmt.Fprintf(fent, "\n\t\":%v:\": \"[%v]\",", name2, ch2)
 				names = append(names, name2)
@@ -97,4 +90,15 @@ Unicode emoji characters.
 
 func slugToName(slug string) string {
 	return fmt.Sprintf("%v", strings.ReplaceAll(slug, "_", "-"))
+}
+
+func addTone(s string, i int) string {
+	var out bytes.Buffer
+	runes := []rune(s)
+	out.WriteRune(runes[0])
+	out.WriteRune(rune(0x1f3fb + i))
+	for i := 1; i < len(runes); i++ {
+		out.WriteRune(runes[i])
+	}
+	return out.String()
 }
