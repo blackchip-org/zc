@@ -51,16 +51,6 @@ func main() {
 		fmt.Fprintf(fent, "\n\t\":%v:\": \"[%v]\",", name, ch)
 		names = append(names, name)
 		nameToCh[name] = ch
-
-		if emoji.SkinToneSupport {
-			for i := 0; i < 5; i++ {
-				ch2 := addTone(ch, i)
-				name2 := fmt.Sprintf("%v-%v", name, i+1)
-				fmt.Fprintf(fent, "\n\t\":%v:\": \"[%v]\",", name2, ch2)
-				names = append(names, name2)
-				nameToCh[name2] = ch2
-			}
-		}
 	}
 	fmt.Fprintf(fent, "\n}\n")
 

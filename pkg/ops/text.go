@@ -223,6 +223,42 @@ func Split(c zc.Calc) {
 }
 
 /*
+oper 	tone
+func	Tone p0:Str tone:Int -- Str
+title	Apply a skin tone to an emoji
+
+desc
+Apply a skin *tone*, an integer between 1 and 5 inclusive, to the first
+character in *p0* which should be an emoji that supports a skin tone.
+end
+
+example
+:waving-hand: -- 👋
+2 tone -- 👋🏽
+end
+*/
+func Tone(c zc.Calc) {
+	tone := zc.PopInt(c)
+	p0 := zc.PopString(c)
+
+	if tone < 1 || tone > 5 {
+		zc.ErrInvalidArgs(c, "for tone use [1-5]")
+		return
+	}
+
+	var out bytes.Buffer
+	runes := []rune(p0)
+	out.WriteRune(runes[0])
+	out.WriteRune(rune(0x1f3fb + tone))
+	for i := 1; i < len(runes); i++ {
+		out.WriteRune(runes[i])
+	}
+
+	r0 := out.String()
+	zc.PushString(c, r0)
+}
+
+/*
 oper	upper
 func	Upper p0:Str -- Str
 title	Uppercase

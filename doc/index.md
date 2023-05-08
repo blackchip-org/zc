@@ -302,6 +302,7 @@
 - [si.terra](ops/si.md#si.terra): SI prefix T, 1e12
 - [time](ops/time.md#time): Formats to a common time layout
 - [timezone](ops/time.md#timezone): Convert time to another time zone
+- [tone](ops/text.md#tone): Apply a skin tone to an emoji
 - [top](ops/stack.md#top): Take top element from the stack
 - [true](ops/bool.md#true): False
 - [tz](ops/time.md#timezone): Convert time to another time zone

@@ -403,6 +403,7 @@ var opsList = []zc.OpDecl{
 	),
 	zc.Op("time", ops.Time, zc.DateTime),
 	zc.Op("timezone", ops.TimeZone, zc.DateTime, zc.Str),
+	zc.Op("tone", ops.Tone, zc.Str, zc.Int),
 	zc.Macro("top", "1 take"),
 	zc.Macro("true", "[true]"),
 	zc.Macro("tz", "timezone"),

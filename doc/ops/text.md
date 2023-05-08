@@ -13,6 +13,7 @@ Text operations
 | [`lower`](#lower)                     | Lowercase
 | [`right`](#right)                     | Right substring
 | [`split`](#split)                     | Split string
+| [`tone`](#tone)                       | Apply a skin tone to an emoji
 | [`upper`](#upper)                     | Uppercase
 | [`utf8-decode, u8de`](#utf8-decode)   | Decode UTF-8 bytes
 | [`utf8-encode, u8en`](#utf8-encode)   | Encode UTF-8 bytes
@@ -158,6 +159,22 @@ Example:
 |--------------|---------------
 | `128.8.74.2` | `128.8.74.2`
 | `'.' split ` | `128 \| 8 \| 74 \| 2`
+
+## tone
+
+Apply a skin *tone*, an integer between 1 and 5 inclusive, to the first
+character in *p0* which should be an emoji that supports a skin tone.
+
+	( p0:Str tone:Int -- Str )
+
+Example:
+
+<!-- test: tone -->
+
+| Input           | Stack
+|-----------------|---------------
+| `:waving-hand:` | `👋`
+| `2 tone       ` | `👋🏽`
 
 ## upper
 
