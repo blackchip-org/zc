@@ -391,6 +391,7 @@ var opsList = []zc.OpDecl{
 		zc.Func(ops.SubDateTime, zc.DateTime, zc.DateTime),
 	),
 	zc.Macro("sum", "[add] fold"),
+	zc.Macro("sw", "swap"),
 	zc.Op("swap", ops.Swap, zc.Str, zc.Str),
 	zc.Op("take", ops.Take, zc.Int),
 	zc.GenOp("tan",

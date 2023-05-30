@@ -290,6 +290,7 @@
 - [sub](ops/basic.md#sub) (basic): Subtraction
 - [sub](ops/time.md#sub) (time): Time or duration subtraction
 - [sum](ops/stat.md#sum): Summation
+- [sw](ops/stack.md#swap): Swap top two items on the stack
 - [swap](ops/stack.md#swap): Swap top two items on the stack
 
 ## t

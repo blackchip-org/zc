@@ -11,7 +11,7 @@ Stack manipulations
 | [`dup`](#dup)       | Duplicate top stack item
 | [`n`](#n)           | Number of stack items
 | [`reverse, rev`](#reverse) | Reverse stack
-| [`swap`](#swap)     | Swap top two items on the stack
+| [`swap, sw`](#swap) | Swap top two items on the stack
 | [`take`](#take)     | Take elements from the stack
 | [`top`](#top)       | Take top element from the stack
 | [`up`](#up)         | Rotate items upward
@@ -123,6 +123,8 @@ Example:
 ## swap
 
 Swap the first two items on the stack.
+
+Alias: `sw`
 
 	( p0:Str p1:Str -- p1:Str p0:Str )
 

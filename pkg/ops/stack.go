@@ -134,6 +134,7 @@ func Reverse(c zc.Calc) {
 /*
 oper	swap
 func	Swap p0:Val p1:Val -- p1:Val p0:Val
+alias	sw
 title	Swap top two items on the stack
 
 desc
