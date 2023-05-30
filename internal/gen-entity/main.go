@@ -70,6 +70,12 @@ func main() {
 	json.Unmarshal(data, &entities)
 
 	for name := range entities {
+		if _, ok := ignore[name]; ok {
+			continue
+		}
+		if !strings.HasSuffix(name, ";") {
+			continue
+		}
 		names = append(names, name)
 	}
 	sort.Strings(names)
@@ -84,12 +90,6 @@ func main() {
 	fmt.Fprintf(fent, "var Entities = map[string]string {")
 	for _, name := range names {
 		entity := entities[name]
-		if _, ok := ignore[name]; ok {
-			continue
-		}
-		if !strings.HasSuffix(name, ";") {
-			continue
-		}
 		if entity.Characters == "\"" {
 			entity.Characters = "\\\"s"
 		}
@@ -114,8 +114,6 @@ HTML entities.
 | Operation | Description
 |-----------|------------
 `)
-
-	sort.Strings(names)
 	for _, name := range names {
 		fmt.Fprintf(fdoc, "| `%v` | %v\n", name, entities[name].Characters)
 	}
