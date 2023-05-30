@@ -69,6 +69,11 @@ func main() {
 	}
 	json.Unmarshal(data, &entities)
 
+	for name := range entities {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+
 	fent, err := os.Create(EntityGo)
 	if err != nil {
 		panic(err)
@@ -77,7 +82,8 @@ func main() {
 
 	fmt.Fprintf(fent, "package ops\n\n")
 	fmt.Fprintf(fent, "var Entities = map[string]string {")
-	for name, entity := range entities {
+	for _, name := range names {
+		entity := entities[name]
 		if _, ok := ignore[name]; ok {
 			continue
 		}
@@ -91,7 +97,6 @@ func main() {
 			entity.Characters = "\\\\"
 		}
 		fmt.Fprintf(fent, "\n\t\"%v\": \"[%v]\",", name, entity.Characters)
-		names = append(names, name)
 	}
 	fmt.Fprintf(fent, "\n}\n")
 

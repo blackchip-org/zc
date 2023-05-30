@@ -38,6 +38,12 @@ func main() {
 	}
 	json.Unmarshal(data, &emojii)
 
+	var keys []string
+	for k := range emojii {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
 	fent, err := os.Create(EmojiGo)
 	if err != nil {
 		panic(err)
@@ -46,7 +52,8 @@ func main() {
 
 	fmt.Fprintf(fent, "package ops\n\n")
 	fmt.Fprintf(fent, "var Emoji = map[string]string {")
-	for ch, emoji := range emojii {
+	for _, ch := range keys {
+		emoji := emojii[ch]
 		name := slugToName(emoji.Slug)
 		fmt.Fprintf(fent, "\n\t\":%v:\": \"[%v]\",", name, ch)
 		names = append(names, name)
