@@ -31,18 +31,21 @@ Scientific calculator
 
 ## abs
 
-If *p0* is less than zero, the negated value of *p0*,
-otherwise *p0*.
-
-example
--6 -- -6
-abs -- 6
+If *p0* is less than zero, the negated value of *p0*, otherwise *p0*.
 
 	( p0:BigInt -- BigInt )
 	( p0:Decimal -- Decimal )
 	( p0:Float -- Float )
 	( p0:Rational -- Rational )
 
+Example:
+
+<!-- test: abs -->
+
+| Input | Stack
+|-------|---------------
+| `-6 ` | `-6`
+| `abs` | `6`
 
 ## acos
 
@@ -60,7 +63,7 @@ Example:
 
 ## acosh
 
-Inverse cosine of *p0* in radians.
+Inverse hyperbolic cosine of *p0* in radians.
 
 	( p0:Float -- Float )
 
@@ -276,7 +279,7 @@ Example:
 
 ## pi
 
-Circumference to diameter ratio of a circle
+Circumference to diameter ratio of a circle.
 
 Alias: `π`
 

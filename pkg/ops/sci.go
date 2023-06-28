@@ -9,15 +9,15 @@ import (
 
 /*
 oper	abs
-func	AbsBigInt p0:BigInt -- BigInt
-func	AbsDecimal p0:Decimal -- Decimal
-func	AbsFloat p0:Float -- Float
+func	AbsBigInt   p0:BigInt   -- BigInt
+func	AbsDecimal  p0:Decimal  -- Decimal
+func	AbsFloat    p0:Float    -- Float
 func	AbsRational p0:Rational -- Rational
 title	Absolute value
 
 desc
-If *p0* is less than zero, the negated value of *p0*,
-otherwise *p0*.
+If *p0* is less than zero, the negated value of *p0*, otherwise *p0*.
+end
 
 example
 -6 -- -6
@@ -75,7 +75,7 @@ func	AcoshFloat p0:Float -- Float
 title	Inverse hyperbolic cosine
 
 desc
-Inverse cosine of *p0* in radians.
+Inverse hyperbolic cosine of *p0* in radians.
 end
 
 example
@@ -186,9 +186,9 @@ func AtanhFloat(c zc.Calc) {
 
 /*
 oper	ceil
-func	NoOp p0:BigInt -- BigInt
+func	NoOp        p0:BigInt  -- BigInt
 func	CeilDecimal p0:Decimal -- Decimal
-func	CeilFloat p0:Float -- Float
+func	CeilFloat   p0:Float   -- Float
 title	Ceiling
 
 desc
@@ -286,9 +286,9 @@ func ExpFloat(c zc.Calc) {
 
 /*
 oper	floor
-func	NoOp p0:BigInt -- BigInt
+func	NoOp         p0:BigInt  -- BigInt
 func	FloorDecimal p0:Decimal -- Decimal
-func	FloorFloat p0:Float -- Float
+func	FloorFloat   p0:Float   -- Float
 title	Floor
 
 desc
@@ -377,7 +377,7 @@ alias	π
 title	Circumference to diameter ratio
 
 desc
-Circumference to diameter ratio of a circle
+Circumference to diameter ratio of a circle.
 end
 
 example

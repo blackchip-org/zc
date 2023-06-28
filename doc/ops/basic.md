@@ -179,8 +179,8 @@ Example:
 
 ## sqrt
 
-The square root of `p0`. If *p0* is a positive or zero `Float` then a `Float` is
-returned. If *p0* is negative `Float`, a `Complex`is returned.
+The square root of *p0*. If *p0* is a positive or zero then a Float is
+returned. If *p0* is negative, a Complex is returned.
 
 Alias: `square-root`
 

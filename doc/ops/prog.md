@@ -162,7 +162,7 @@ Example:
 
 Convert the value of *p0* to an octal number.
 
-	( a:BigInt -- dec:BigInt )
+	( p0:BigInt -- BigInt )
 
 Example:
 
@@ -177,7 +177,7 @@ Example:
 
 The bitwise or of *p0* and *p1*.
 
-	( a:BigInt b:BigInt -- and:BigInt )
+	( p0:BigInt p1:BigInt -- BigInt )
 
 Example:
 
@@ -208,9 +208,9 @@ Example:
 
 ## xor
 
-The bitwise exclusive or of `a` and `b`.
+The bitwise exclusive or of `p0` and `p1`.
 
-	( a:BigInt b:BigInt -- and:BigInt )
+	( p0:BigInt p1:BigInt -- BigInt )
 
 Example:
 

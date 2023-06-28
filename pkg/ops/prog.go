@@ -218,7 +218,7 @@ func NotBigInt(c zc.Calc) {
 
 /*
 oper	oct
-func	Oct a:BigInt -- dec:BigInt
+func	Oct p0:BigInt -- BigInt
 title	Octal conversion
 
 desc
@@ -246,7 +246,7 @@ func Oct(c zc.Calc) {
 
 /*
 oper	or
-func	OrBigInt a:BigInt b:BigInt -- and:BigInt
+func	OrBigInt p0:BigInt p1:BigInt -- BigInt
 title	Bitwise or
 
 desc
@@ -292,13 +292,11 @@ func Rsh(c zc.Calc) {
 
 /*
 oper	xor
-func	Xor a:BigInt b:BigInt -- and:BigInt
+func	Xor p0:BigInt p1:BigInt -- BigInt
 title	Bitwise exclusive or
 
-	log.Panicf("the fields are: [%v]\n", fields[2])
-
 desc
-The bitwise exclusive or of `a` and `b`.
+The bitwise exclusive or of `p0` and `p1`.
 end
 
 example

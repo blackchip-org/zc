@@ -10,11 +10,11 @@ import (
 
 /*
 oper	add
-func	AddBigInt p0:BigInt p1:BigInt -- BigInt
-func	AddDecimal p0:Decimal p1:Decimal -- Decimal
-func	AddFloat p0:Float p1:Float -- Float
+func	AddBigInt   p0:BigInt   p1:BigInt   -- BigInt
+func	AddDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func	AddFloat    p0:Float    p1:Float    -- Float
 func    AddRational p0:Rational p1:Rational -- Rational
-func	AddComplex p0:Complex p1:Complex -- Complex
+func	AddComplex  p0:Complex  p1:Complex  -- Complex
 alias	a
 alias	+
 title 	Addition
@@ -68,10 +68,10 @@ func AddComplex(c zc.Calc) {
 
 /*
 oper	div
-func	DivDecimal p0:Decimal p1:Decimal -- Decimal
-func	DivFloat p0:Float p1:Float -- Float
+func	DivDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func	DivFloat    p0:Float    p1:Float    -- Float
 func    DivRational p0:Rational p1:Rational -- Rational
-func	DivComplex p0:Complex p1:Complex -- Complex
+func	DivComplex  p0:Complex  p1:Complex  -- Complex
 alias	d
 alias	/
 title 	Division
@@ -143,9 +143,9 @@ func DivComplex(c zc.Calc) {
 
 /*
 oper	mod
-func	ModBigInt p0:BigInt p1:BigInt -- BigInt
+func	ModBigInt  p0:BigInt  p1:BigInt  -- BigInt
 func	ModDecimal p0:Decimal p1:Decimal -- Decimal
-func	ModFloat p0:Float p1:Float -- Float
+func	ModFloat   p0:Float   p1:Float   -- Float
 title	Modulus
 
 desc
@@ -200,11 +200,11 @@ func ModFloat(c zc.Calc) {
 
 /*
 oper	mul
-func	MulBigInt p0:BigInt p1:BigInt -- BigInt
-func	MulDecimal p0:Decimal p1:Decimal -- Decimal
-func 	MulFloat p0:Float p1:Float -- Float
+func	MulBigInt   p0:BigInt   p1:BigInt   -- BigInt
+func	MulDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func 	MulFloat    p0:Float    p1:Float    -- Float
 func 	MulRational p0:Rational p1:Rational -- Rational
-func	MulComplex p0:Complex p1:Complex -- Complex
+func	MulComplex  p0:Complex  p1:Complex  -- Complex
 alias	m
 alias	*
 title	Multiplication
@@ -258,9 +258,9 @@ func MulComplex(c zc.Calc) {
 
 /*
 oper	neg
-func	NegBigInt p0:BigInt -- BigInt
-func	NegDecimal p0:Decimal -- Decimal
-func	NegFloat p0:Float -- Float
+func	NegBigInt   p0:BigInt   -- BigInt
+func	NegDecimal  p0:Decimal  -- Decimal
+func	NegFloat    p0:Float    -- Float
 func	NegRational p0:Rational -- Rational
 title	Negation
 
@@ -302,8 +302,8 @@ func NegRational(c zc.Calc) {
 
 /*
 oper	pow
-func	PowBigInt p0:BigInt p1:BigInt -- BigInt
-func	PowFloat p0:Float p1:Float -- Float
+func	PowBigInt  p0:BigInt  p1:BigInt  -- BigInt
+func	PowFloat   p0:Float   p1:Float   -- Float
 func	PowComplex p0:Complex p1:Complex -- Complex
 alias	**
 alias	^
@@ -344,7 +344,7 @@ func PowComplex(c zc.Calc) {
 /*
 oper	rem
 func	RemBigInt p0:BigInt p1:BigInt -- BigInt
-func	RemFloat p0:Float p1:Float -- Float
+func	RemFloat  p0:Float  p1:Float  -- Float
 title	Remainder
 
 desc
@@ -375,9 +375,9 @@ func RemFloat(c zc.Calc) {
 
 /*
 oper	sign
-func	SignBigInt p0:BigInt -- Int
-func	SignDecimal p0:Decimal -- Int
-func	SignFloat p0:Float -- Int
+func	SignBigInt   p0:BigInt   -- Int
+func	SignDecimal  p0:Decimal  -- Int
+func	SignFloat    p0:Float    -- Int
 func 	SignRational p0:Rational -- Int
 title	Sign
 
@@ -426,15 +426,15 @@ func SignRational(c zc.Calc) {
 
 /*
 oper	sqrt
-func	SqrtFloat p0:Float -- Float
-func	- p0:Float -- Complex
+func	SqrtFloat   p0:Float   -- Float
+func	-           p0:Float   -- Complex
 func 	SqrtComplex p0:Complex -- Complex
 alias	square-root
 title	Square root
 
 desc
-The square root of `p0`. If *p0* is a positive or zero `Float` then a `Float` is
-returned. If *p0* is negative `Float`, a `Complex`is returned.
+The square root of *p0*. If *p0* is a positive or zero then a Float is
+returned. If *p0* is negative, a Complex is returned.
 end
 
 example
@@ -461,11 +461,11 @@ func SqrtComplex(c zc.Calc) {
 
 /*
 oper	sub
-func	SubBigInt p0:BigInt p1:BigInt -- BigInt
-func 	SubDecimal p0:Decimal p1:Decimal -- Decimal
-func	SubFloat p0:Float p1:Float -- Float
+func	SubBigInt   p0:BigInt   p1:BigInt   -- BigInt
+func 	SubDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func	SubFloat    p0:Float    p1:Float    -- Float
 func	SubRational p0:Rational p1:Rational -- Rational
-func	SubComplex p0:Complex p1:Complex -- Complex
+func	SubComplex  p0:Complex  p1:Complex  -- Complex
 alias	s
 alias	-
 title	Subtraction
