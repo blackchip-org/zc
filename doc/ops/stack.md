@@ -23,7 +23,9 @@ Remove all items from the stack.
 
 Alias: `c`
 
-	(  --  )
+```
+( Val* --  )
+```
 
 Example:
 
@@ -33,7 +35,7 @@ Example:
 |---------|---------------
 | `1    ` | `1`
 | `2    ` | `1 \| 2`
-| `clear` | ``
+| `clear` | 
 
 ## down
 
@@ -45,7 +47,9 @@ top of the stack wraps around to be the bottom of the stack.
 
 Alias: `dn`
 
-	(  --  )
+```
+( Val* -- Val* )
+```
 
 Example:
 
@@ -61,7 +65,9 @@ Example:
 
 Remove the top item from the stack.
 
-	( Str --  )
+```
+( Val --  )
+```
 
 Example:
 
@@ -77,7 +83,9 @@ Example:
 
 Duplicate the top item on the stack.
 
-	( p0:Str -- p0:Str p0:Str )
+```
+( p0:Val -- p0:Val p0:Val )
+```
 
 Example:
 
@@ -92,7 +100,9 @@ Example:
 
 Number of items on the stack.
 
-	(  -- Int )
+```
+(  -- Int )
+```
 
 Example:
 
@@ -109,7 +119,9 @@ Reverses the elements on the stack.
 
 Alias: `rev`
 
-	(  --  )
+```
+( Val* -- Val* )
+```
 
 Example:
 
@@ -126,7 +138,9 @@ Swap the first two items on the stack.
 
 Alias: `sw`
 
-	( p0:Str p1:Str -- p1:Str p0:Str )
+```
+( p0:Val p1:Val -- p1:Val p0:Val )
+```
 
 Example:
 
@@ -142,7 +156,9 @@ Example:
 
 Take the top *n* elements from the stack and discard the rest.
 
-	( n:Int -- .... )
+```
+( Val* n:Int -- Val* )
+```
 
 Example:
 
@@ -157,7 +173,9 @@ Example:
 
 Keep the top of the stack and discard the rest.
 
-	(  -- Str )
+```
+( Val* -- Val )
+```
 
 Example:
 
@@ -176,7 +194,9 @@ In the interactive calculator, the top of the stack is towards the bottom of
 the terminal so upwards means seeing all items move toward the top. The
 bottom of the stack wraps around to be the top of the stack.
 
-	(  --  )
+```
+( Val* -- Val* )
+```
 
 Example:
 

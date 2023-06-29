@@ -10,7 +10,7 @@ import (
 
 /*
 oper 	abs
-func 	AbsComplex p0:Complex -- Complex
+func 	AbsComplex p0:Complex -- Float
 title	Distance from zero in complex plane
 
 desc
@@ -53,7 +53,7 @@ func	AcoshComplex p0:Complex -- Complex
 title	Inverse hyperbolic cosine
 
 desc
-Inverse cosine of *p0*
+Inverse hyperbolic cosine of *p0*
 end
 
 example
@@ -144,7 +144,7 @@ func AtanhComplex(c zc.Calc) {
 
 /*
 oper	complex
-func	Complex r:Float i:Float -- Float
+func	Complex r:Float i:Float -- Complex
 title	Complex from real and imaginary
 
 desc

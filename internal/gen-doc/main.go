@@ -98,8 +98,9 @@ func writeOp(out *strings.Builder, op *doc.Op) {
 		}
 		fmt.Fprintf(out, "%v\n\n", strings.Join(fmtAliases, ", "))
 	}
+	fmt.Fprintf(out, "```\n")
 	for _, fn := range op.Funcs {
-		fmt.Fprintf(out, "\t( ")
+		fmt.Fprintf(out, "( ")
 		var fmtParams []string
 		for _, p := range fn.Params {
 			fmtParams = append(fmtParams, p.String())
@@ -111,6 +112,7 @@ func writeOp(out *strings.Builder, op *doc.Op) {
 		}
 		fmt.Fprintf(out, "%v )\n", strings.Join(fmtParams, " "))
 	}
+	fmt.Fprintf(out, "```\n")
 	fmt.Fprintln(out, "")
 	if len(op.Example) > 0 {
 		fmt.Fprintf(out, "Example:\n\n<!-- test: %v -->\n\n", op.Name)
@@ -135,7 +137,7 @@ func writeExample(out *strings.Builder, expected []doc.Expect) {
 	for _, ex := range expected {
 		escOut := strings.ReplaceAll(ex.Out, "|", "\\|")
 		quotes := "`"
-		if strings.HasPrefix(escOut, "*") {
+		if strings.HasPrefix(escOut, "*") || escOut == "" {
 			quotes = ""
 		}
 		fmt.Fprintf(out, "| `%-[1]*v` | %v%v%v\n", width, ex.In, quotes, escOut, quotes)

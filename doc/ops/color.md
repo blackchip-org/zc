@@ -17,7 +17,9 @@ Color conversions
 Convert the CMYK color *c*, *m*, *y*, *k*, to the RGB color space as *r*, *b*,
 *g*.
 
-	( c:Uint8 m:Uint8 y:Uint8 k:Uint8 -- r:Uint8 g:Uint8 b:Uint8 )
+```
+( c:Uint8 m:Uint8 y:Uint8 k:Uint8 -- r:Uint8 g:Uint8 b:Uint8 )
+```
 
 Example:
 
@@ -33,14 +35,18 @@ Example:
 Render five spaces with a background color of *r*, *g*, and *b*. The
 terminal in use must be able to support 24-bit ANSI color codes.
 
-	( r:Uint8 g:Uint8 b:Uint8 -- Str )
+```
+( r:Uint8 g:Uint8 b:Uint8 -- Str )
+```
 
 
 ## hsl-rgb
 
 Convert the HSL color *h*, *s*, *l* to the RGB color space as *r*, *g*, *b*.
 
-	( h:Float s:Float l:Float -- r:Uint8 g:Uint8 b:Uint8 )
+```
+( h:Float s:Float l:Float -- r:Uint8 g:Uint8 b:Uint8 )
+```
 
 Example:
 
@@ -56,7 +62,9 @@ Example:
 Convert the RGB color *r*, *b*, *g* to the CMYK color space as *c*, *m*, *y*,
 *k*.
 
-	( r:Uint8 g:Uint8 b:Uint8 -- c:Uint8 m:Uint8 y:Uint8 k:Uint8 )
+```
+( r:Uint8 g:Uint8 b:Uint8 -- c:Uint8 m:Uint8 y:Uint8 k:Uint8 )
+```
 
 Example:
 
@@ -71,7 +79,9 @@ Example:
 
 Convert the RGB color *r*, *g*, *b* to the HSL color space as *h*, *s*, *l*.
 
-	( r:Uint8 g:Uint8 b:Uint8 -- h:Float s:Float l:Float )
+```
+( r:Uint8 g:Uint8 b:Uint8 -- h:Float s:Float l:Float )
+```
 
 Example:
 

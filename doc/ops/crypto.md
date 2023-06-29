@@ -14,7 +14,9 @@ Rotate all characters in string *p0* by 13.
 
 Alias: `rot13`
 
-	( p0:Str -- Str )
+```
+( p0:Str -- Str )
+```
 
 Example:
 

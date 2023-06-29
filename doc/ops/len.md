@@ -19,7 +19,9 @@ Length
 
 Convert *p0* in kilometers to miles.
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -33,7 +35,9 @@ Example:
 
 Convert *p0* in kilometers to nautical miles.
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -47,7 +51,9 @@ Example:
 
 Convert *p0* in meters to nautical miles.
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -61,7 +67,9 @@ Example:
 
 Convert *p0* in miles to kilometers
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -75,7 +83,9 @@ Example:
 
 Convert *p0* in miles to nautical miles
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -89,7 +99,9 @@ Example:
 
 Convert *p0* in nautical mlies to kilometers
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -103,7 +115,9 @@ Example:
 
 Convert *p0* in nautical miles to meters
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -117,7 +131,9 @@ Example:
 
 Conver *p0* in nautical miles to miles
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 

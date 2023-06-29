@@ -48,9 +48,7 @@ the stack. if any. For example, the stack notation for the `sum` operation for
 
     ( Decimal* -- Decimal )
 
-A `...` is a placeholder for all other items in the stack. Notation to clear
-the entire stack is:
+When a `*` suffix appears on a return type, that value can be found any number
+of times. For example, the stack notation for the `repeat` operation is:
 
-    ( ... -- )
-
-
+    ( expr:Val n:Int -- Val* )

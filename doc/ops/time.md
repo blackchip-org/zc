@@ -33,9 +33,11 @@ Adds a duration and time or adds two durations.
 
 Aliases: `a`, `+`
 
-	( p0:Duration p1:Duration -- Duration )
-	( p0:Duration p1:DateTime -- Duration )
-	( p0:DateTime p1:Duration -- Duration )
+```
+( p0:Duration p1:Duration -- Duration )
+( p0:Duration p1:DateTime -- Duration )
+( p0:DateTime p1:Duration -- Duration )
+```
 
 Example:
 
@@ -53,7 +55,9 @@ Example:
 Formats date/time *p0* to a common date layout. Time information, if any, is
 removed.
 
-	( p0:DateTime -- Date )
+```
+( p0:DateTime -- Date )
+```
 
 Example:
 
@@ -70,7 +74,9 @@ Formats a date/time to a common layout.
 
 Alias: `dt`
 
-	( p0:DateTime -- DateTime )
+```
+( p0:DateTime -- DateTime )
+```
 
 Example:
 
@@ -87,7 +93,9 @@ Day of year for a given date *p0*.
 
 Alias: `doy`
 
-	( p0:DateTime -- Int )
+```
+( p0:DateTime -- Int )
+```
 
 Example:
 
@@ -102,7 +110,9 @@ Example:
 
 Converts the duration *p0* into hours.
 
-	( p0:Duration -- Float )
+```
+( p0:Duration -- Float )
+```
 
 Example:
 
@@ -115,11 +125,13 @@ Example:
 
 ## is-datetime
 
-Returns `true` if the value *p0* can be parsed as a `DateTime“.
+Returns `true` if the value *p0* can be parsed as a DateTime.
 
 Alias: `is-dt`
 
-	( p0:Str -- Bool )
+```
+( p0:Str -- Bool )
+```
 
 Example:
 
@@ -134,14 +146,18 @@ Example:
 
 Sets the local time zone to *p0*.
 
-	( p0:Str --  )
+```
+( p0:Str --  )
+```
 
 
 ## local-zone=
 
 Gets the local time zone.
 
-	(  -- Str )
+```
+(  -- Str )
+```
 
 Example:
 
@@ -155,7 +171,9 @@ Example:
 
 Converts the duration *p0* into minutes.
 
-	( p0:Duration -- Float )
+```
+( p0:Duration -- Float )
+```
 
 Example:
 
@@ -171,7 +189,9 @@ Example:
 The current date and time. If `now-set` has been called, that date and
 time will be returned instead.
 
-	(  -- DateTime )
+```
+(  -- DateTime )
+```
 
 Example:
 
@@ -185,15 +205,19 @@ Example:
 
 Cancel override of the value returned by now.
 
-	(  --  )
+```
+(  --  )
+```
 
 
 ## now-set
 
-Override the value returned by `now`. Useful for to mock current time while
+Override the value returned by `now`. Useful for to mocking current time while
 testing.
 
-	( p0:DateTime --  )
+```
+( p0:DateTime --  )
+```
 
 Example:
 
@@ -209,7 +233,9 @@ Example:
 
 Converts the duration *p0* into seconds.
 
-	( p0:Duration -- Float )
+```
+( p0:Duration -- Float )
+```
 
 Example:
 
@@ -226,9 +252,11 @@ Subtracts a duration from a time or subtracts two durations.
 
 Aliases: `s`, `-`
 
-	( p0:Duration p1:Duration -- Duration )
-	( p0:DateTime p1:Duration -- Duration )
-	( p0:DateTime p1:DateTime -- Duration )
+```
+( p0:Duration p1:Duration -- Duration )
+( p0:DateTime p1:Duration -- Duration )
+( p0:DateTime p1:DateTime -- Duration )
+```
 
 Example:
 
@@ -245,7 +273,9 @@ Example:
 Formats a date/time with the common time layout. Date information, if any,
 is discarded.
 
-	( p0:DateTime -- Time )
+```
+( p0:DateTime -- Time )
+```
 
 Example:
 
@@ -262,7 +292,9 @@ Converts time *p0* to a given time *zone*.
 
 Alias: `tz`
 
-	( p0:DateTime zone:Str -- DateTime )
+```
+( p0:DateTime zone:Str -- DateTime )
+```
 
 Example:
 

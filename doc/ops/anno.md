@@ -15,7 +15,9 @@ Annotate the value of *p0* with *anno*.
 
 Alias: `annotate`
 
-	( p0:Str anno:Str -- Str )
+```
+( p0:Val anno:Str -- p0:Val )
+```
 
 Example:
 
@@ -32,7 +34,9 @@ Remove the annotation, if any, from *p0*.
 
 Aliases: `noa`, `no-annotation`
 
-	( p0:Str -- Str )
+```
+( p0:Val -- p0:Val )
+```
 
 Example:
 

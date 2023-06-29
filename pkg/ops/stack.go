@@ -4,7 +4,7 @@ import "github.com/blackchip-org/zc/pkg/zc"
 
 /*
 oper	clear
-func	Clear ... --
+func	Clear Val* --
 alias	c
 title	Clear the stack
 
@@ -24,7 +24,7 @@ func Clear(c zc.Calc) {
 
 /*
 oper	down
-func	Down ... -- ...
+func	Down Val* -- Val*
 alias	dn
 title	Rotate stack downward
 
@@ -109,7 +109,7 @@ func N(c zc.Calc) {
 
 /*
 oper	reverse
-func	Reverse ... -- ...
+func	Reverse Val* -- Val*
 alias	rev
 title	Reverse stack
 
@@ -156,7 +156,7 @@ func Swap(c zc.Calc) {
 
 /*
 oper	take
-func	Take ... n:Int -- ....
+func	Take Val* n:Int -- Val*
 title	Take elements from the stack
 
 desc
@@ -183,7 +183,7 @@ func Take(c zc.Calc) {
 
 /*
 oper	top
-func	Top ... -- Val
+func	Top Val* -- Val
 macro	1 take
 title	Take top element from the stack
 
@@ -199,7 +199,7 @@ end
 
 /*
 oper	up
-func	Up ... -- ...
+func	Up Val* -- Val*
 title 	Rotate items upward
 
 desc

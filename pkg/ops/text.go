@@ -118,20 +118,20 @@ func Left(c zc.Calc) {
 /*
 oper	len
 func	Len p0:Str -- Int
-title 	Length of string
+title 	Length of text in characters
 
 desc
-Length of string in bytes.
+Length of text in characters.
 end
 
 example
-'abcd -- abcd
-len -- 4
+c 'abcd' len -- 4
+c '🥇🥈🥉👏' len -- 4
 end
 */
 func Len(c zc.Calc) {
 	a0 := zc.PopString(c)
-	r0 := len(a0)
+	r0 := utf8.RuneCountInString(a0)
 	zc.PushInt(c, r0)
 }
 

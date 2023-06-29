@@ -19,7 +19,9 @@ The equatorial radius of the Earth in meters.
 Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 
-	(  -- Int )
+```
+(  -- Int )
+```
 
 Example:
 
@@ -36,7 +38,9 @@ The polar radius,of the Earth in meters.
 Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 
-	(  -- Int )
+```
+(  -- Int )
+```
 
 Example:
 
@@ -53,7 +57,9 @@ The globally-average value of the Earth in meters.
 Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 
-	(  -- Int )
+```
+(  -- Int )
+```
 
 Example:
 
@@ -71,7 +77,9 @@ Calculates the great circle distance between (*lat0*, *lon0*) and
 Source:
 https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128
 
-	( lat0:DMS lon0:DMS lat1:DMS lon1:DMS -- Float )
+```
+( lat0:DMS lon0:DMS lat1:DMS lon1:DMS -- Float )
+```
 
 Example:
 
@@ -85,11 +93,13 @@ Example:
 
 ## proj
 
-Transform coordinate (*p0*, *p01) in coordinate system *s* to a coordinate
-in coordinate system *t*. The order of the coordinates is defined by the
-coordinate system and it may be (lat, lon) or (x, y).
+Transform coordinate (*p0*, *p1*) in coordinate system *s* to a coordinate
+in system *t*. The order of the coordinates is defined by the coordinate system
+and it may be (lat, lon) or (x, y).
 
-	( p0:Float p1:Float s:Str t:Str -- Float Float )
+```
+( p0:Float p1:Float s:Str t:Str -- Float Float )
+```
 
 Example:
 

@@ -213,9 +213,6 @@ func parseParams(s *scanner.Scanner) ([]Param, error) {
 			))
 		}
 		pType = t
-		if pType == "Val" {
-			pType = "Str"
-		}
 		if s.Ch == '*' {
 			s.Next()
 			all = true

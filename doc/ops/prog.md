@@ -24,7 +24,9 @@ Programmer's calculator
 
 The bitwise and of `p0` and `p1`
 
-	( p0:BigInt p1:BigInt -- BigInt )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+```
 
 Example:
 
@@ -40,7 +42,9 @@ Example:
 
 Convert the value of *p0* to a binary number.
 
-	( p0:BigInt -- BigInt )
+```
+( p0:BigInt -- BigInt )
+```
 
 Example:
 
@@ -55,7 +59,9 @@ Example:
 
 The value of the *n*th bit of *p0*.
 
-	( p0:BigInt n:Int -- Uint )
+```
+( p0:BigInt n:Int -- Uint )
+```
 
 Example:
 
@@ -70,7 +76,9 @@ Example:
 
 The length of *p0* in bits.
 
-	( p0:BigInt -- Int )
+```
+( p0:BigInt -- Int )
+```
 
 Example:
 
@@ -85,7 +93,9 @@ Example:
 
 The length of *p0* in bytes.
 
-	( p0:BigInt -- Int )
+```
+( p0:BigInt -- Int )
+```
 
 Example:
 
@@ -100,7 +110,9 @@ Example:
 
 Convert the value of *p0* to a decimal number.
 
-	( p0:BigInt -- BigInt )
+```
+( p0:BigInt -- BigInt )
+```
 
 Example:
 
@@ -115,7 +127,9 @@ Example:
 
 Convert the value of *p0* to a hexadecimal number.
 
-	( p0:BigInt -- BigInt )
+```
+( p0:BigInt -- BigInt )
+```
 
 Example:
 
@@ -132,7 +146,9 @@ Shifts all bits in *p0* to the left by *n*.
 
 Alias: `left-shift`
 
-	( p0:BigInt n:Uint -- BigInt )
+```
+( p0:BigInt n:Uint -- BigInt )
+```
 
 Example:
 
@@ -147,7 +163,9 @@ Example:
 
 The bitwise not of *p0*.
 
-	( p0:BigInt -- BigInt )
+```
+( p0:BigInt -- BigInt )
+```
 
 Example:
 
@@ -162,7 +180,9 @@ Example:
 
 Convert the value of *p0* to an octal number.
 
-	( p0:BigInt -- BigInt )
+```
+( p0:BigInt -- BigInt )
+```
 
 Example:
 
@@ -177,7 +197,9 @@ Example:
 
 The bitwise or of *p0* and *p1*.
 
-	( p0:BigInt p1:BigInt -- BigInt )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+```
 
 Example:
 
@@ -195,7 +217,9 @@ Shifts all bits in *p0* to the right by *n*.
 
 Alias: `right-shift`
 
-	( p0:BigInt n:Uint -- BigInt )
+```
+( p0:BigInt n:Uint -- BigInt )
+```
 
 Example:
 
@@ -210,7 +234,9 @@ Example:
 
 The bitwise exclusive or of `p0` and `p1`.
 
-	( p0:BigInt p1:BigInt -- BigInt )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+```
 
 Example:
 

@@ -19,12 +19,14 @@ Comparisons
 
 `true` if *p0* and *p1* are equal, otherwise `false`.
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-	( p0:Str p1:Str -- Str )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Decimal p1:Decimal -- Decimal )
+( p0:Float p1:Float -- Float )
+( p0:Rational p1:Rational -- Rational )
+( p0:Complex p1:Complex -- Complex )
+( p0:Str p1:Str -- Str )
+```
 
 Example:
 
@@ -43,11 +45,13 @@ Example:
 
 Alias: `greater-than`
 
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
+```
+( p0:BigInt p1:BigInt -- Bool )
+( p0:Decimal p1:Decimal -- Bool )
+( p0:Rational p1:Rational -- Bool )
+( p0:Float p1:Float -- Bool )
+( p0:Str p1:Str -- Bool )
+```
 
 Example:
 
@@ -65,11 +69,13 @@ Example:
 
 Alias: `greater-than-or-equal`
 
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
+```
+( p0:BigInt p1:BigInt -- Bool )
+( p0:Decimal p1:Decimal -- Bool )
+( p0:Rational p1:Rational -- Bool )
+( p0:Float p1:Float -- Bool )
+( p0:Str p1:Str -- Bool )
+```
 
 Example:
 
@@ -85,7 +91,9 @@ Example:
 
 `true` if *p0* and *p1* are the same, byte by byte.
 
-	( p0:Str p1:Str -- Bool )
+```
+( p0:Str p1:Str -- Bool )
+```
 
 Example:
 
@@ -100,7 +108,9 @@ Example:
 
 `true` if *p0* and *p1* are not same, byte by byte.
 
-	( p0:Str p1:Str -- Bool )
+```
+( p0:Str p1:Str -- Bool )
+```
 
 Example:
 
@@ -117,11 +127,13 @@ Example:
 
 Alias: `less-than`
 
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
+```
+( p0:BigInt p1:BigInt -- Bool )
+( p0:Decimal p1:Decimal -- Bool )
+( p0:Rational p1:Rational -- Bool )
+( p0:Float p1:Float -- Bool )
+( p0:Str p1:Str -- Bool )
+```
 
 Example:
 
@@ -139,11 +151,13 @@ Example:
 
 Alias: `less-than-or-equal`
 
-	( p0:BigInt p1:BigInt -- Bool )
-	( p0:Decimal p1:Decimal -- Bool )
-	( p0:Rational p1:Rational -- Bool )
-	( p0:Float p1:Float -- Bool )
-	( p0:Str p1:Str -- Bool )
+```
+( p0:BigInt p1:BigInt -- Bool )
+( p0:Decimal p1:Decimal -- Bool )
+( p0:Rational p1:Rational -- Bool )
+( p0:Float p1:Float -- Bool )
+( p0:Str p1:Str -- Bool )
+```
 
 Example:
 
@@ -159,12 +173,14 @@ Example:
 
 `true` if *p0* and *p1* are not equal, otherwise `false`.
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
-	( p0:Str p1:Str -- Str )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Decimal p1:Decimal -- Decimal )
+( p0:Float p1:Float -- Float )
+( p0:Rational p1:Rational -- Rational )
+( p0:Complex p1:Complex -- Complex )
+( p0:Str p1:Str -- Str )
+```
 
 Example:
 

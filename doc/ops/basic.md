@@ -23,11 +23,13 @@ Adds the value of *p1* to *p0*.
 
 Aliases: `a`, `+`
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Decimal p1:Decimal -- Decimal )
+( p0:Float p1:Float -- Float )
+( p0:Rational p1:Rational -- Rational )
+( p0:Complex p1:Complex -- Complex )
+```
 
 Example:
 
@@ -46,10 +48,12 @@ is raised.
 
 Aliases: `d`, `/`
 
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
+```
+( p0:Decimal p1:Decimal -- Decimal )
+( p0:Float p1:Float -- Float )
+( p0:Rational p1:Rational -- Rational )
+( p0:Complex p1:Complex -- Complex )
+```
 
 Example:
 
@@ -66,9 +70,11 @@ Example:
 The modulus when *p0* is divided by *p1*. If *p1* is zero, a 'division by zero'
 error is raised.
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Decimal p1:Decimal -- Decimal )
+( p0:Float p1:Float -- Float )
+```
 
 Example:
 
@@ -84,11 +90,13 @@ Multiplies *p0* by *p1*.
 
 Aliases: `m`, `*`
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Decimal p1:Decimal -- Decimal )
+( p0:Float p1:Float -- Float )
+( p0:Rational p1:Rational -- Rational )
+( p0:Complex p1:Complex -- Complex )
+```
 
 Example:
 
@@ -104,10 +112,12 @@ Example:
 
 Changes the sign of `p0`.
 
-	( p0:BigInt -- BigInt )
-	( p0:Decimal -- Decimal )
-	( p0:Float -- Float )
-	( p0:Rational -- Rational )
+```
+( p0:BigInt -- BigInt )
+( p0:Decimal -- Decimal )
+( p0:Float -- Float )
+( p0:Rational -- Rational )
+```
 
 Example:
 
@@ -125,9 +135,11 @@ Raises *p0* to the power of *p1*.
 
 Aliases: `**`, `^`
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Float p1:Float -- Float )
-	( p0:Complex p1:Complex -- Complex )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Float p1:Float -- Float )
+( p0:Complex p1:Complex -- Complex )
+```
 
 Example:
 
@@ -144,8 +156,10 @@ Example:
 The remainder when *p0* is divided by *p1*. If *p1* is zero, a
 'division by zero' error is raised.
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Float p1:Float -- Float )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Float p1:Float -- Float )
+```
 
 Example:
 
@@ -162,10 +176,12 @@ Example:
 Returns `-1` if *p0* is negative, `1` if *p0* is positive, or `0` if *p0*
 is zero.
 
-	( p0:BigInt -- Int )
-	( p0:Decimal -- Int )
-	( p0:Float -- Int )
-	( p0:Rational -- Int )
+```
+( p0:BigInt -- Int )
+( p0:Decimal -- Int )
+( p0:Float -- Int )
+( p0:Rational -- Int )
+```
 
 Example:
 
@@ -184,9 +200,11 @@ returned. If *p0* is negative, a Complex is returned.
 
 Alias: `square-root`
 
-	( p0:Float -- Float )
-	( p0:Float -- Complex )
-	( p0:Complex -- Complex )
+```
+( p0:Float -- Float )
+( p0:Float -- Complex )
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -203,11 +221,13 @@ Subtract *p1* from *p0*.
 
 Aliases: `s`, `-`
 
-	( p0:BigInt p1:BigInt -- BigInt )
-	( p0:Decimal p1:Decimal -- Decimal )
-	( p0:Float p1:Float -- Float )
-	( p0:Rational p1:Rational -- Rational )
-	( p0:Complex p1:Complex -- Complex )
+```
+( p0:BigInt p1:BigInt -- BigInt )
+( p0:Decimal p1:Decimal -- Decimal )
+( p0:Float p1:Float -- Float )
+( p0:Rational p1:Rational -- Rational )
+( p0:Complex p1:Complex -- Complex )
+```
 
 Example:
 

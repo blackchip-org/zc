@@ -4,7 +4,7 @@ import "github.com/blackchip-org/zc/pkg/zc"
 
 /*
 oper	eval
-func	Eval Val* expr:Str -- Val*
+func	Eval expr:Str -- Val*
 title 	Evaluate top of stack
 
 desc
@@ -124,7 +124,7 @@ func Map(c zc.Calc) {
 
 /*
 oper	repeat
-func	Repeat Val* expr:Str n:Int -- Val*
+func	Repeat expr:Val n:Int -- Val*
 title	Repeat the execution of a function
 
 desc

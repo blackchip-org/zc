@@ -26,8 +26,8 @@ func Coeff(c zc.Calc) {
 
 /*
 oper	dec
-func	Dec p0:Decimal -- Decimal
-func	DecFloat p0:Float -- Decimal
+func	Dec         p0:Decimal  -- Decimal
+func	DecFloat    p0:Float    -- Decimal
 func	DecRational p0:Rational -- Decimal
 title	Decimal number
 

@@ -12,5 +12,7 @@ About this calculator
 
 Version number of the calculator.
 
-	(  --  )
+```
+(  --  )
+```
 

@@ -16,7 +16,9 @@ Higher-order functions
 
 Evaluate *expr* as if it was input to the calculator.
 
-	( Str* expr:Str -- Str* )
+```
+( expr:Str -- Val* )
+```
 
 Example:
 
@@ -32,7 +34,9 @@ Example:
 Filter the stack by keeping items that are true when evaluated by
 expression *expr*.
 
-	( Str* expr:Str -- Str* )
+```
+( Val* expr:Str -- Val* )
+```
 
 Example:
 
@@ -50,7 +54,9 @@ Reduce the stack to a single value using the expression *expr*. An
 
 Alias: `reduce`
 
-	( Str* expr:Str -- Str )
+```
+( Val* expr:Str -- Val )
+```
 
 Example:
 
@@ -65,7 +71,9 @@ Example:
 
 Apply expression *expr* to each value in the stack.
 
-	( Str* expr:Str -- Str* )
+```
+( Val* expr:Str -- Val* )
+```
 
 Example:
 
@@ -80,7 +88,9 @@ Example:
 
 Repeat execution of expression *expr* for *n* times.
 
-	( Str* expr:Str n:Int -- Str* )
+```
+( expr:Val n:Int -- Val* )
+```
 
 Example:
 

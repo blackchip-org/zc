@@ -18,7 +18,9 @@ Random number generation
 
 Random number between 0 and 1.
 
-	(  -- Float )
+```
+(  -- Float )
+```
 
 Example:
 
@@ -33,7 +35,9 @@ Example:
 
 Randomly select an item on the stack.
 
-	( a0:Str -- a0:Str )
+```
+( a0:Val -- a0:Val )
+```
 
 Example:
 
@@ -49,7 +53,9 @@ Example:
 
 Random integer between 1 and *n*.
 
-	( n:Int -- Int )
+```
+( n:Int -- Int )
+```
 
 Example:
 
@@ -62,9 +68,11 @@ Example:
 
 ## rand-seed
 
-Sets the random number seed to *seed*.
+Sets the random number *seed*.
 
-	( seed:Int64 --  )
+```
+( seed:Int64 --  )
+```
 
 Example:
 
@@ -79,7 +87,9 @@ Example:
 
 Gets the random number seed.
 
-	(  -- Int64 )
+```
+(  -- Int64 )
+```
 
 Example:
 
@@ -97,7 +107,9 @@ Rolls dice as specified by *dice* in standard dice notation. The argument
 character `d`, and then the number of faces found on each die. For example,
 use `3d6` to roll three six sided dice.
 
-	( dice:Str -- Int* )
+```
+( dice:Str -- Int* )
+```
 
 Example:
 
@@ -107,13 +119,15 @@ Example:
 |----------------|---------------
 | `99 rand-seed` | *seed set to 99*
 | `3d6 roll    ` | `6 \| 2 \| 1`
-| `sum         ` | ``9`
+| `sum         ` | `9`
 
 ## shuffle
 
 Shuffle the stack.
 
-	(  --  )
+```
+( Val* -- Val* )
+```
 
 Example:
 
@@ -123,4 +137,4 @@ Example:
 |---------------|---------------
 | `0 rand-seed` | *seed set to 0*
 | `1 2 3 4 5 6` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
-| `shuffle    ` | `5 \| 4 \| 1 \| 3 \| 2 \| 6``
+| `shuffle    ` | `5 \| 4 \| 1 \| 3 \| 2 \| 6`

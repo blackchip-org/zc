@@ -165,7 +165,7 @@
 
 - [left](ops/text.md#left): Left substring
 - [left-shift](ops/prog.md#lsh): Left shift bits
-- [len](ops/text.md#len): Length of string
+- [len](ops/text.md#len): Length of text in characters
 - [less-than](ops/cmp.md#lt): Less than
 - [less-than-or-equal](ops/cmp.md#lte): Less than or equal
 - [local-zone](ops/time.md#local-zone): Sets the local time zone

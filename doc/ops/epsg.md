@@ -16,7 +16,9 @@ The EPGS code for the given UTM zone *p0*. The zone should be a number
 between 1 and 60 inclusive and is followed by a hemisphere designator of
 'n' or 's'.
 
-	( p0:Str -- Str )
+```
+( p0:Str -- Str )
+```
 
 Example:
 
@@ -30,10 +32,14 @@ Example:
 
 Web Mercator, EPSG:3857
 
+```
+```
 
 
 ## epsg.wgs-84
 
 World Geodetic System of 1984, EPSG:4326
 
+```
+```
 

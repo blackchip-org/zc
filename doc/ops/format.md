@@ -17,8 +17,10 @@ Rounds the number *n* to *d* digits using the current rounding mode.
 
 Alias: `r`
 
-	( d:Decimal n:Int -- Decimal )
-	( d:Float n:Int -- Float )
+```
+( d:Decimal n:Int -- Decimal )
+( d:Float n:Int -- Float )
+```
 
 Example:
 
@@ -40,7 +42,10 @@ Sets the mode to be used when rounding. Valid modes are:
 - `half-even`
 - `up`
 
-	(  -- Str )
+
+```
+(  -- Str )
+```
 
 Example:
 
@@ -58,7 +63,9 @@ Example:
 
 Gets the current rounding mode
 
-	(  -- Str )
+```
+(  -- Str )
+```
 
 Example:
 
@@ -74,7 +81,9 @@ Formats the value *p0* using scientific notation.
 
 Alias: `sn`
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 

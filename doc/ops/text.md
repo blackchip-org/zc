@@ -9,7 +9,7 @@ Text operations
 | [`codepoint-char, cp-char`](#codepoint-char) | Code point to character
 | [`join`](#join)                       | Join stack elements
 | [`left`](#left)                       | Left substring
-| [`len`](#len)                         | Length of string
+| [`len`](#len)                         | Length of text in characters
 | [`lower`](#lower)                     | Lowercase
 | [`right`](#right)                     | Right substring
 | [`split`](#split)                     | Split string
@@ -25,7 +25,9 @@ Converts the character *p0* into an integer code point.
 
 Alias: `char-cp`
 
-	( p0:Char -- Int32 )
+```
+( p0:Char -- Int32 )
+```
 
 Example:
 
@@ -43,7 +45,9 @@ Coverts the code point *p0* to a character.
 
 Alias: `cp-char`
 
-	( p0:Int32 -- Char )
+```
+( p0:Int32 -- Char )
+```
 
 Example:
 
@@ -58,7 +62,9 @@ Example:
 
 Join all stack elements into a single string separated by *sep*.
 
-	( Str* sep:Str -- Str )
+```
+( Val* sep:Str -- Str )
+```
 
 Example:
 
@@ -80,7 +86,9 @@ characters are taken from the left until there are *n* characters remaining. If
 If the absolute value of *n* is greater then then length of *s*, an
 'illegal arguments' error is raised.
 
-	( p0:Str n:Int -- Str )
+```
+( p0:Str n:Int -- Str )
+```
 
 Example:
 
@@ -94,24 +102,28 @@ Example:
 
 ## len
 
-Length of string in bytes.
+Length of text in characters.
 
-	( p0:Str -- Int )
+```
+( p0:Str -- Int )
+```
 
 Example:
 
 <!-- test: len -->
 
-| Input   | Stack
-|---------|---------------
-| `'abcd` | `abcd`
-| `len  ` | `4`
+| Input                      | Stack
+|----------------------------|---------------
+| `c 'abcd' len            ` | `4`
+| `c '🥇🥈🥉👏' len            ` | `4`
 
 ## lower
 
 Converts the string *p0* to lowercase.
 
-	( p0:Str -- Str )
+```
+( p0:Str -- Str )
+```
 
 Example:
 
@@ -133,7 +145,9 @@ remaining. If *n* is zero, *s* is returned without change.
 If the absolute value of *n* is greater then then length of *s*, an
 'illegal arguments' error is raised.
 
-	( p0:Str n:Int -- Str )
+```
+( p0:Str n:Int -- Str )
+```
 
 Example:
 
@@ -149,7 +163,9 @@ Example:
 
 Split *p0* into multiple strings that are separated by *sep*.
 
-	( p0:Str sep:Str -- Str* )
+```
+( p0:Str sep:Str -- Str* )
+```
 
 Example:
 
@@ -165,7 +181,9 @@ Example:
 Apply a skin *tone*, an integer between 1 and 5 inclusive, to the first
 character in *p0* which should be an emoji that supports a skin tone.
 
-	( p0:Str tone:Int -- Str )
+```
+( p0:Str tone:Int -- Str )
+```
 
 Example:
 
@@ -180,7 +198,9 @@ Example:
 
 Convert string *p0* to uppercase.
 
-	( p0:Str -- Str )
+```
+( p0:Str -- Str )
+```
 
 Example:
 
@@ -197,7 +217,9 @@ Decode UTF-8 bytes in *p0* into to a string.
 
 Alias: `u8de`
 
-	( p0:BigInt -- Str )
+```
+( p0:BigInt -- Str )
+```
 
 Example:
 
@@ -214,7 +236,9 @@ Encode a string into UTF-8 bytes.
 
 Alias: `u8en`
 
-	( p0:Str -- BigInt )
+```
+( p0:Str -- BigInt )
+```
 
 Example:
 

@@ -21,7 +21,9 @@ Angular calculations
 
 Convert the DMS angle *p0* to decimal degrees.
 
-	( p0:DMS -- Decimal )
+```
+( p0:DMS -- Decimal )
+```
 
 Example:
 
@@ -37,7 +39,9 @@ Reformat the angle *p0* to degrees and minutes
 
 Alias: `dm`
 
-	( p0:DMS -- DMS )
+```
+( p0:DMS -- DMS )
+```
 
 Example:
 
@@ -54,7 +58,9 @@ Reformat the angle *p0* to degrees and minutes and round the minutes to
 
 Alias: `dmr`
 
-	( p0:DMS n:Int32 -- DMS )
+```
+( p0:DMS n:Int32 -- DMS )
+```
 
 Example:
 
@@ -70,7 +76,9 @@ Reformat the angle *p0* to degrees, minutes, and seconds.
 
 Alias: `dms`
 
-	( p0:DMS -- DMS )
+```
+( p0:DMS -- DMS )
+```
 
 Example:
 
@@ -87,7 +95,9 @@ seconds to *n* places.
 
 Alias: `dmsr`
 
-	( p0:DMS n:Int32 -- DMS )
+```
+( p0:DMS n:Int32 -- DMS )
+```
 
 Example:
 
@@ -101,7 +111,9 @@ Example:
 
 Converts the angle *p0* in degrees to radians
 
-	( p0:DMS -- Decimal )
+```
+( p0:DMS -- Decimal )
+```
 
 Example:
 
@@ -118,7 +130,9 @@ minutes, and seconds.
 
 Alias: `is-dec-min-sec`
 
-	( p0:Str -- Bool )
+```
+( p0:Str -- Bool )
+```
 
 Example:
 
@@ -133,7 +147,9 @@ Example:
 
 Converts the angle *p0* to minutes.
 
-	( p0:DMS -- Decimal )
+```
+( p0:DMS -- Decimal )
+```
 
 Example:
 
@@ -147,7 +163,9 @@ Example:
 
 Converts the angle *p0* in radians to degrees
 
-	( p0:Decimal -- DMS )
+```
+( p0:Decimal -- DMS )
+```
 
 Example:
 
@@ -161,7 +179,9 @@ Example:
 
 Converts the angle *p0* to seconds.
 
-	( p0:DMS -- Decimal )
+```
+( p0:DMS -- Decimal )
+```
 
 Example:
 

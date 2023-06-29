@@ -33,10 +33,12 @@ Scientific calculator
 
 If *p0* is less than zero, the negated value of *p0*, otherwise *p0*.
 
-	( p0:BigInt -- BigInt )
-	( p0:Decimal -- Decimal )
-	( p0:Float -- Float )
-	( p0:Rational -- Rational )
+```
+( p0:BigInt -- BigInt )
+( p0:Decimal -- Decimal )
+( p0:Float -- Float )
+( p0:Rational -- Rational )
+```
 
 Example:
 
@@ -51,7 +53,9 @@ Example:
 
 Inverse cosine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -65,7 +69,9 @@ Example:
 
 Inverse hyperbolic cosine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -79,7 +85,9 @@ Example:
 
 Inverse sine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -93,7 +101,9 @@ Example:
 
 Inverse hyperbolic sine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -107,7 +117,9 @@ Example:
 
 Inverse tangent of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -121,7 +133,9 @@ Example:
 
 Inverse tangent of *p0*\/*p1*.
 
-	( p0:Float p1:Float -- Float )
+```
+( p0:Float p1:Float -- Float )
+```
 
 Example:
 
@@ -135,7 +149,9 @@ Example:
 
 Inverse hyperbolic tangent of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -149,9 +165,11 @@ Example:
 
 The nearest integer value greater than or equal to *p0*.
 
-	( p0:BigInt -- BigInt )
-	( p0:Decimal -- Decimal )
-	( p0:Float -- Float )
+```
+( p0:BigInt -- BigInt )
+( p0:Decimal -- Decimal )
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -166,7 +184,9 @@ Example:
 
 Cosine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -180,7 +200,9 @@ Example:
 
 Hyperbolic cosine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -194,7 +216,9 @@ Example:
 
 Euler's number, the natural logarithm base.
 
-	(  -- Float )
+```
+(  -- Float )
+```
 
 Example:
 
@@ -208,7 +232,9 @@ Example:
 
 Natural exponential of *p0*.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -222,9 +248,11 @@ Example:
 
 The nearest integer value less than or equal to *p0*.
 
-	( p0:BigInt -- BigInt )
-	( p0:Decimal -- Decimal )
-	( p0:Float -- Float )
+```
+( p0:BigInt -- BigInt )
+( p0:Decimal -- Decimal )
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -239,7 +267,9 @@ Example:
 
 Natural logarithm of *p0*.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -253,7 +283,9 @@ Example:
 
 Decimal logarithm of *p0*.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -267,7 +299,9 @@ Example:
 
 Binary logarithm of *p0*.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -283,7 +317,9 @@ Circumference to diameter ratio of a circle.
 
 Alias: `π`
 
-	(  -- Float )
+```
+(  -- Float )
+```
 
 Example:
 
@@ -297,7 +333,9 @@ Example:
 
 Sine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -311,7 +349,9 @@ Example:
 
 Hyperbolic sine of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -325,7 +365,9 @@ Example:
 
 Tangent of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 
@@ -339,7 +381,9 @@ Example:
 
 Hyperbolic tangent of *p0* in radians.
 
-	( p0:Float -- Float )
+```
+( p0:Float -- Float )
+```
 
 Example:
 

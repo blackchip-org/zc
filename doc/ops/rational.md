@@ -16,7 +16,9 @@ Rational numbers (fractions)
 
 The denominator of rational number *p0*.
 
-	( p0:Rational -- BigInt )
+```
+( p0:Rational -- BigInt )
+```
 
 Example:
 
@@ -30,7 +32,9 @@ Example:
 
 Returns the inverse which is 1/*p0*.
 
-	( p0:Rational -- Rational )
+```
+( p0:Rational -- Rational )
+```
 
 Example:
 
@@ -44,7 +48,9 @@ Example:
 
 Returns `true` if the value *p0* can be parsed as a Rational.
 
-	( p0:Str -- Bool )
+```
+( p0:Str -- Bool )
+```
 
 Example:
 
@@ -59,7 +65,9 @@ Example:
 
 The numerator of rational number *p0*.
 
-	( p0:Rational -- BigInt )
+```
+( p0:Rational -- BigInt )
+```
 
 Example:
 
@@ -76,8 +84,10 @@ or using a floating point value *p0*.
 
 Alias: `rat`
 
-	( n:BigInt d:BigInt -- Rational )
-	( p0:Float -- Rational )
+```
+( n:BigInt d:BigInt -- Rational )
+( p0:Float -- Rational )
+```
 
 Example:
 

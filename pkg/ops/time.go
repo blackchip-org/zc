@@ -160,7 +160,7 @@ alias	is-dt
 title 	Checks value can be parsed as a `DateTime`
 
 desc
-Returns `true` if the value *p0* can be parsed as a `DateTime“.
+Returns `true` if the value *p0* can be parsed as a DateTime.
 end
 
 example
@@ -276,7 +276,7 @@ func	NowSet p0:DateTime --
 title 	Override now value
 
 desc
-Override the value returned by `now`. Useful for to mock current time while
+Override the value returned by `now`. Useful for to mocking current time while
 testing.
 end
 

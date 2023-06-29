@@ -6,7 +6,7 @@ import (
 
 /*
 oper	anno
-func	Anno p0:Str anno:Str -- Str
+func	Anno p0:Val anno:Str -- p0:Val
 alias	annotate
 title	Annotate value
 
@@ -28,7 +28,7 @@ func Anno(c zc.Calc) {
 
 /*
 oper	no-anno
-func	NoAnno p0:Str -- Str
+func	NoAnno p0:Val -- p0:Val
 alias	noa
 alias	no-annotation
 title 	Remove annotation

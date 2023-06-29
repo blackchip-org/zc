@@ -34,6 +34,7 @@ var (
 	Time     = TimeType{}
 	Uint     = UintType{}
 	Uint8    = Uint8Type{}
+	Val      = StrType{}
 )
 
 func Format(a any) string {

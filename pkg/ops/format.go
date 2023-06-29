@@ -51,7 +51,7 @@ func round(d types.Decimal, places int32, mode string) types.Decimal {
 /*
 oper	round
 func	RoundDecimal d:Decimal n:Int -- Decimal
-func	RoundFloat d:Float n:Int -- Float
+func	RoundFloat   d:Float   n:Int -- Float
 alias	r
 title	Round to a given precision
 
@@ -94,6 +94,7 @@ Sets the mode to be used when rounding. Valid modes are:
 - `floor`
 - `half-even`
 - `up`
+
 end
 
 example

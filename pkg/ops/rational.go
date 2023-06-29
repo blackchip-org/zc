@@ -87,7 +87,7 @@ func Num(c zc.Calc) {
 /*
 oper	rational
 func	RationalBigInt n:BigInt d:BigInt -- Rational
-func 	RationalFloat p0:Float -- Rational
+func 	RationalFloat  p0:Float          -- Rational
 alias	rat
 title	Convert to a Rational
 

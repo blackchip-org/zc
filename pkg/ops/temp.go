@@ -7,7 +7,7 @@ macro	9 5 div mul 32 add
 title	Celsius to Fahrenheit
 
 desc
-Convertss the temperatore *p0* in Celsius to Fahrenheit.
+Converts the temperature *p0* in Celsius to Fahrenheit.
 end
 
 example
@@ -22,7 +22,7 @@ macro	273.15 add
 title	Celsius to Kelvin
 
 desc
-Converts the temerature *p0* in Celsuis to Kelvin.
+Converts the temperature *p0* in Celsius to Kelvin.
 end
 
 example

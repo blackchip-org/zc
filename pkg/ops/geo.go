@@ -111,9 +111,9 @@ func	Proj p0:Float p1:Float s:Str t:Str -- Float Float
 title	Transform coordinate
 
 desc
-Transform coordinate (*p0*, *p01) in coordinate system *s* to a coordinate
-in coordinate system *t*. The order of the coordinates is defined by the
-coordinate system and it may be (lat, lon) or (x, y).
+Transform coordinate (*p0*, *p1*) in coordinate system *s* to a coordinate
+in system *t*. The order of the coordinates is defined by the coordinate system
+and it may be (lat, lon) or (x, y).
 end
 
 example

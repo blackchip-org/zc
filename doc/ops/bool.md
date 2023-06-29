@@ -16,7 +16,9 @@ Boolean operations
 
 The logical conjunction of *p0* and *p1*.
 
-	( p0:Bool p1:Bool -- Bool )
+```
+( p0:Bool p1:Bool -- Bool )
+```
 
 Example:
 
@@ -32,7 +34,9 @@ Example:
 
 Places `false` on the stack
 
-	(  -- Bool )
+```
+(  -- Bool )
+```
 
 Example:
 
@@ -46,7 +50,9 @@ Example:
 
 If `true`, returns `false`, otherwise returns `true`.
 
-	( Bool -- Bool )
+```
+( Bool -- Bool )
+```
 
 Example:
 
@@ -61,7 +67,9 @@ Example:
 
 The logical disjunction of *p0* and *p1*.
 
-	( p0:Bool p1:Bool -- Bool )
+```
+( p0:Bool p1:Bool -- Bool )
+```
 
 Example:
 
@@ -77,7 +85,9 @@ Example:
 
 Places `true` on the stack
 
-	(  -- Bool )
+```
+(  -- Bool )
+```
 
 Example:
 

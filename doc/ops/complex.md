@@ -36,7 +36,9 @@ Complex numbers
 
 The distance of *p0* from zero in the complex plane.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Float )
+```
 
 Example:
 
@@ -50,7 +52,9 @@ Example:
 
 Inverse cosine of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -62,9 +66,11 @@ Example:
 
 ## acosh
 
-Inverse cosine of *p0*
+Inverse hyperbolic cosine of *p0*
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -78,7 +84,9 @@ Example:
 
 Inverse sine of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -92,7 +100,9 @@ Example:
 
 Inverse hyperbolic sine of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -106,7 +116,9 @@ Example:
 
 Inverse tangent of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -120,7 +132,9 @@ Example:
 
 Inverse hyperbolic tangent of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -134,7 +148,9 @@ Example:
 
 A complex number from a real *r* and an imaginary *i* number.
 
-	( r:Float i:Float -- Float )
+```
+( r:Float i:Float -- Complex )
+```
 
 Example:
 
@@ -150,7 +166,9 @@ Example:
 
 The complex conjugate of *p0*
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -164,7 +182,9 @@ Example:
 
 Cosine of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -178,7 +198,9 @@ Example:
 
 Hyperbolic cosine of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -192,7 +214,9 @@ Example:
 
 Cotangent of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -206,7 +230,9 @@ Example:
 
 Natural exponential of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -220,7 +246,9 @@ Example:
 
 The imaginary number part of complex number *p0*
 
-	( p0:Complex -- Float )
+```
+( p0:Complex -- Float )
+```
 
 Example:
 
@@ -234,7 +262,9 @@ Example:
 
 Natural logarithm of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -248,7 +278,9 @@ Example:
 
 Decimal logarithm of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -262,7 +294,9 @@ Example:
 
 The phase, or argument, of *p0* in the range of [-π, π]
 
-	( p0:Complex -- Float )
+```
+( p0:Complex -- Float )
+```
 
 Example:
 
@@ -276,7 +310,9 @@ Example:
 
 The absolute value *r* and phase *θ* of *p0*.
 
-	( p0:Complex -- r:Float θ:Float )
+```
+( p0:Complex -- r:Float θ:Float )
+```
 
 Example:
 
@@ -290,7 +326,9 @@ Example:
 
 The real number part of complex number *p0*
 
-	( p0:Complex -- Float )
+```
+( p0:Complex -- Float )
+```
 
 Example:
 
@@ -304,7 +342,9 @@ Example:
 
 The complex number with polar coordinates *r* and *θ*.
 
-	( r:Float θ:Float -- Complex )
+```
+( r:Float θ:Float -- Complex )
+```
 
 Example:
 
@@ -321,7 +361,9 @@ up rounding mode.
 
 Alias: `r`
 
-	( p0:Complex n:Int -- Complex )
+```
+( p0:Complex n:Int -- Complex )
+```
 
 Example:
 
@@ -335,7 +377,9 @@ Example:
 
 Sine of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -349,7 +393,9 @@ Example:
 
 Hyperbolic sine of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -363,7 +409,9 @@ Example:
 
 Tangent of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 
@@ -377,7 +425,9 @@ Example:
 
 Hyperbolic tangent of *p0*.
 
-	( p0:Complex -- Complex )
+```
+( p0:Complex -- Complex )
+```
 
 Example:
 

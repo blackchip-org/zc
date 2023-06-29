@@ -4,12 +4,12 @@ import "github.com/blackchip-org/zc/pkg/zc"
 
 /*
 oper	eq
-func	EqBigInt p0:BigInt p1:BigInt -- BigInt
-func 	EqDecimal p0:Decimal p1:Decimal -- Decimal
-func	EqFloat p0:Float p1:Float -- Float
+func	EqBigInt   p0:BigInt   p1:BigInt   -- BigInt
+func 	EqDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func	EqFloat    p0:Float    p1:Float    -- Float
 func	EqRational p0:Rational p1:Rational -- Rational
-func	EqComplex p0:Complex p1:Complex -- Complex
-func	Is p0:Str p1:Str -- Str
+func	EqComplex  p0:Complex  p1:Complex  -- Complex
+func	Is         p0:Str      p1:Str      -- Str
 title	Equal
 
 desc
@@ -60,11 +60,11 @@ func EqComplex(c zc.Calc) {
 
 /*
 oper	gt
-func	GtBigInt p0:BigInt p1:BigInt -- Bool
-func	GtDecimal p0:Decimal p1:Decimal -- Bool
+func	GtBigInt   p0:BigInt   p1:BigInt   -- Bool
+func	GtDecimal  p0:Decimal  p1:Decimal  -- Bool
 func	GtRational p0:Rational p1:Rational -- Bool
-func	GtFloat p0:Float p1:Float -- Bool
-func 	GtStr p0:Str p1:Str -- Bool
+func	GtFloat    p0:Float    p1:Float    -- Bool
+func 	GtStr      p0:Str      p1:Str      -- Bool
 alias	greater-than
 title	Greater than
 
@@ -115,11 +115,11 @@ func GtStr(c zc.Calc) {
 
 /*
 oper	gte
-func	GteBigInt p0:BigInt p1:BigInt -- Bool
-func	GteDecimal p0:Decimal p1:Decimal -- Bool
+func	GteBigInt   p0:BigInt   p1:BigInt   -- Bool
+func	GteDecimal  p0:Decimal  p1:Decimal  -- Bool
 func	GteRational p0:Rational p1:Rational -- Bool
-func	GteFloat p0:Float p1:Float -- Bool
-func 	GteStr p0:Str p1:Str -- Bool
+func	GteFloat    p0:Float    p1:Float    -- Bool
+func 	GteStr      p0:Str      p1:Str      -- Bool
 alias	greater-than-or-equal
 title	Greater than or equal
 
@@ -212,11 +212,11 @@ func IsNot(c zc.Calc) {
 
 /*
 oper	lt
-func	LtBigInt p0:BigInt p1:BigInt -- Bool
-func	LtDecimal p0:Decimal p1:Decimal -- Bool
+func	LtBigInt   p0:BigInt   p1:BigInt   -- Bool
+func	LtDecimal  p0:Decimal  p1:Decimal  -- Bool
 func	LtRational p0:Rational p1:Rational -- Bool
-func	LtFloat p0:Float p1:Float -- Bool
-func 	LtStr p0:Str p1:Str -- Bool
+func	LtFloat    p0:Float    p1:Float    -- Bool
+func 	LtStr      p0:Str      p1:Str      -- Bool
 alias	less-than
 title	Less than
 
@@ -267,11 +267,11 @@ func LtStr(c zc.Calc) {
 
 /*
 oper	lte
-func	LteBigInt p0:BigInt p1:BigInt -- Bool
-func	LteDecimal p0:Decimal p1:Decimal -- Bool
+func	LteBigInt   p0:BigInt   p1:BigInt   -- Bool
+func	LteDecimal  p0:Decimal  p1:Decimal  -- Bool
 func	LteRational p0:Rational p1:Rational -- Bool
-func	LteFloat p0:Float p1:Float -- Bool
-func 	LteStr p0:Str p1:Str -- Bool
+func	LteFloat    p0:Float    p1:Float    -- Bool
+func 	LteStr      p0:Str      p1:Str      -- Bool
 alias	less-than-or-equal
 title	Less than or equal
 
@@ -322,12 +322,12 @@ func LteStr(c zc.Calc) {
 
 /*
 oper	neq
-func	NeqBigInt p0:BigInt p1:BigInt -- BigInt
-func 	NeqDecimal p0:Decimal p1:Decimal -- Decimal
-func	NeqFloat p0:Float p1:Float -- Float
+func	NeqBigInt   p0:BigInt   p1:BigInt   -- BigInt
+func 	NeqDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func	NeqFloat    p0:Float    p1:Float    -- Float
 func	NeqRational p0:Rational p1:Rational -- Rational
-func	NeqComplex p0:Complex p1:Complex -- Complex
-func	IsNot p0:Str p1:Str -- Str
+func	NeqComplex  p0:Complex  p1:Complex  -- Complex
+func	IsNot       p0:Str      p1:Str      -- Str
 title	Not equal
 
 desc

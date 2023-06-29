@@ -100,7 +100,7 @@ func	RandSeed seed:Int64 --
 title	Set the random number seed
 
 desc
-Sets the random number seed to *seed*.
+Sets the random number *seed*.
 end
 
 example
@@ -149,7 +149,7 @@ end
 example
 99 rand-seed -- *seed set to 99*
 3d6 roll -- 6 | 2 | 1
-sum -- `9
+sum -- 9
 end
 */
 func Roll(c zc.Calc) {
@@ -183,7 +183,7 @@ func Roll(c zc.Calc) {
 
 /*
 oper	shuffle
-func	Shuffle ... -- ...
+func	Shuffle Val* -- Val*
 title	Shuffle the stack
 
 desc
@@ -193,7 +193,7 @@ end
 example
 0 rand-seed -- *seed set to 0*
 1 2 3 4 5 6 -- 1 | 2 | 3 | 4 | 5 | 6
-shuffle -- 5 | 4 | 1 | 3 | 2 | 6`
+shuffle -- 5 | 4 | 1 | 3 | 2 | 6
 end
 */
 func Shuffle(c zc.Calc) {

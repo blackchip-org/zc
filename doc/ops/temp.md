@@ -13,9 +13,11 @@ Temperature
 
 ## c-f
 
-Convertss the temperatore *p0* in Celsius to Fahrenheit.
+Converts the temperature *p0* in Celsius to Fahrenheit.
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -27,9 +29,11 @@ Example:
 
 ## c-k
 
-Converts the temerature *p0* in Celsuis to Kelvin.
+Converts the temperature *p0* in Celsius to Kelvin.
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -43,7 +47,9 @@ Example:
 
 Converts the temperature *p0* in Fahrenheit to Celsius.
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
@@ -57,7 +63,9 @@ Example:
 
 Converts the temperature *p0* in Kelvin to Celsius.
 
-	( p0:Decimal -- Decimal )
+```
+( p0:Decimal -- Decimal )
+```
 
 Example:
 
