@@ -71,8 +71,11 @@ func Time(l *locale.Locale, p Parsed, now time.Time) (time.Time, error) {
 			if !ok {
 				return time.Time{}, fmt.Errorf("invalid period: %v", p.Period)
 			}
-			if num == int(locale.PM) || num == int(locale.Midnight) {
+			if hour != 12 && (num == int(locale.PM) || num == int(locale.Noon)) {
 				hour += 12
+			}
+			if hour == 12 && (num == int(locale.AM) || num == int(locale.Midnight)) {
+				hour = 0
 			}
 		}
 	}
