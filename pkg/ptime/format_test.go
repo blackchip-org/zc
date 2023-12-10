@@ -103,7 +103,11 @@ func TestFormatEnUS(t *testing.T) {
 			"[hour]:[minute]:[second] [offset-zone]",
 			"17:30:25 UTC",
 		},
-
+		{
+			"5:30PM",
+			"[hour/12]:[minute][period]",
+			"5:30PM",
+		},
 		{
 			"17:30:25",
 			"[hour/12]:[minute][period]",

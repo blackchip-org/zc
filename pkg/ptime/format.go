@@ -145,6 +145,9 @@ func formatHour(loc *locale.Locale, format string, t time.Time) string {
 		if h > 12 {
 			h = h - 12
 		}
+		if h == 0 {
+			h = 12
+		}
 		return strconv.Itoa(h)
 	}
 	return badFormat

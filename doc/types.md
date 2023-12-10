@@ -85,18 +85,18 @@ All of the following formats can be parsed:
 
 | Input                      | Stack
 |----------------------------|-------------
-| `c 2006-01 dt`             | `Sun Jan 1 2006 0:00:00am -0700 MST`
-| `c 2006-01-02 dt`          | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 2006-032 dt`            | `Wed Feb 1 2006 0:00:00am -0700 MST`
-| `c 1/2 dt`                 | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 1/2/2006 dt`            | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 1/2/06 dt`              | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 'Jan 2 2006' dt`        | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 'Jan 2 06' dt`          | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 'Fri Jan 2 2006' dt`    | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 'Friday Jan 2 2006' dt` | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 'Jan 2' dt`             | `Mon Jan 2 2006 0:00:00am -0700 MST`
-| `c 'Fri, Jan 2' dt`        | `Mon Jan 2 2006 0:00:00am -0700 MST`
+| `c 2006-01 dt`             | `Sun Jan 1 2006 12:00:00am -0700 MST`
+| `c 2006-01-02 dt`          | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 2006-032 dt`            | `Wed Feb 1 2006 12:00:00am -0700 MST`
+| `c 1/2 dt`                 | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 1/2/2006 dt`            | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 1/2/06 dt`              | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 'Jan 2 2006' dt`        | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 'Jan 2 06' dt`          | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 'Fri Jan 2 2006' dt`    | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 'Friday Jan 2 2006' dt` | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 'Jan 2' dt`             | `Mon Jan 2 2006 12:00:00am -0700 MST`
+| `c 'Fri, Jan 2' dt`        | `Mon Jan 2 2006 12:00:00am -0700 MST`
 | `c 15:04:05 dt`            | `Mon Jan 2 2006 3:04:05pm -0700 MST`
 | `c '15:04:05 PDT' dt`      | `Mon Jan 2 2006 3:04:05pm -0700 PDT`
 | `c 15:04 dt`               | `Mon Jan 2 2006 3:04:00pm -0700 MST`
