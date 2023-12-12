@@ -284,6 +284,8 @@
 - [sinh](ops/complex.md#sinh) (complex): Hyperbolic sine
 - [sinh](ops/sci.md#sinh) (sci): Hyperbolic sine
 - [sn](ops/format.md#scientific-notation): Scientific notatoin
+- [sort](ops/cmp.md#sort): Type-aware stack sort
+- [sort-str](ops/cmp.md#sort-str): String based stack sort
 - [split](ops/text.md#split): Split string
 - [sqrt](ops/basic.md#sqrt): Square root
 - [square-root](ops/basic.md#sqrt): Square root

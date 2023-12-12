@@ -3,7 +3,6 @@ package zc
 import (
 	"fmt"
 	"math/big"
-	"strconv"
 	"strings"
 	"unicode"
 
@@ -37,6 +36,43 @@ var (
 	Val      = StrType{}
 )
 
+type SortInterface []string
+
+func (s SortInterface) Len() int {
+	return len(s)
+}
+
+func (s SortInterface) Less(i, j int) bool {
+	x1 := s[i]
+	x2 := s[j]
+	if v, ok := BigInt.Compare(x1, x2); ok {
+		return v < 0
+	}
+	if v, ok := Decimal.Compare(x1, x2); ok {
+		return v < 0
+	}
+	if v, ok := Float.Compare(x1, x2); ok {
+		return v < 0
+	}
+	if v, ok := Rational.Compare(x1, x2); ok {
+		return v < 0
+	}
+	if v, ok := DateTime.Compare(x1, x2); ok {
+		return v < 0
+	}
+	if v, ok := Duration.Compare(x1, x2); ok {
+		return v < 0
+	}
+	if v, ok := Str.Compare(x1, x2); ok {
+		return v < 0
+	}
+	panic("unreachable -- Str.Compare should always be valid")
+}
+
+func (s SortInterface) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
 func Format(a any) string {
 	switch t := a.(type) {
 	case *big.Int:
@@ -62,88 +98,6 @@ func Format(a any) string {
 	}
 	return fmt.Sprintf("%v", a)
 }
-
-// ---
-
-type BoolType struct{}
-
-func (t BoolType) String() string { return "Bool" }
-
-func (t BoolType) Parse(s string) (bool, bool) {
-	ls := strings.TrimSpace(strings.ToLower(s))
-	switch ls {
-	case "true":
-		return true, true
-	case "false":
-		return false, true
-	}
-	return false, false
-}
-
-func (t BoolType) MustParse(s string) bool {
-	r, ok := t.Parse(s)
-	if !ok {
-		PanicExpectedType(t, s)
-	}
-	return r
-}
-
-func (t BoolType) Is(s string) bool {
-	_, ok := t.Parse(s)
-	return ok
-}
-
-func (t BoolType) Format(v bool) string {
-	if v {
-		return "true"
-	}
-	return "false"
-}
-
-func PopBool(c Calc) bool     { return Bool.MustParse(c.MustPop()) }
-func PushBool(c Calc, r bool) { c.Push(Bool.Format(r)) }
-
-// ---
-
-type ComplexType struct{}
-
-func (t ComplexType) String() string { return "Complex" }
-
-func (t ComplexType) Parse(s string) (complex128, bool) {
-	if !strings.HasSuffix(s, "i") {
-		return 0, false
-	}
-	c, err := strconv.ParseComplex(s, 128)
-	if err != nil {
-		return 0, false
-	}
-	return c, true
-}
-
-func (t ComplexType) MustParse(s string) complex128 {
-	r, ok := t.Parse(s)
-	if !ok {
-		PanicExpectedType(t, s)
-	}
-	return r
-}
-
-func (t ComplexType) Is(s string) bool {
-	_, ok := t.Parse(s)
-	return ok
-}
-
-func (t ComplexType) Format(v complex128) string {
-	s := strconv.FormatComplex(v, 'g', 16, 128)
-	// For some reason, the complex number is surrounded by parens.
-	// Remove them.
-	return s[1 : len(s)-1]
-}
-
-func PopComplex(c Calc) complex128     { return Complex.MustParse(c.MustPop()) }
-func PushComplex(c Calc, r complex128) { c.Push(Complex.Format(r)) }
-
-// ===
 
 func isFormatting(ch rune) bool {
 	if ch == ',' || ch == '_' || ch == ' ' {

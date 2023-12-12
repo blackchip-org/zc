@@ -13,6 +13,8 @@ Comparisons
 | [`lt, less-than`](#lt)                          | Less than
 | [`lte, less-than-or-equal`](#lte)               | Less than or equal
 | [`neq`](#neq)                                   | Not equal
+| [`sort`](#sort)                                 | Type-aware stack sort
+| [`sort-str`](#sort-str)                         | String based stack sort
 
 
 ## eq
@@ -190,3 +192,41 @@ Example:
 |-----------------|---------------
 | `c 123 123 neq` | `false`
 | `c 123 456 neq` | `true`
+
+## sort
+
+Sorts the stack in a type-aware way. When two elements on the stack are
+compared for their sort order, a common type between those values is found and
+the comparison operation uses that type. If a common type cannot be found,
+the comparison is performed as plain text. Use `sort-str` to treat all
+values on the stack as strings.
+
+```
+( Val* -- Val* )
+```
+
+Example:
+
+<!-- test: sort -->
+
+| Input               | Stack
+|---------------------|---------------
+| `c 3 1 2 sort     ` | `1 \| 2 \| 3`
+| `c 003 01.1 2 sort` | `01.1 \| 2 \| 003`
+
+## sort-str
+
+Sorts the stack by their values as strings. Use `sort` for a type-aware
+sort.
+
+```
+( Val* -- Val* )
+```
+
+Example:
+
+<!-- test: sort-str -->
+
+| Input                   | Stack
+|-------------------------|---------------
+| `c 003 01.1 2 sort-str` | `003 \| 01.1 \| 2`

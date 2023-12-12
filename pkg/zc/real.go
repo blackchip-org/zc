@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"cmp"
 	"fmt"
 	"math"
 	"math/big"
@@ -52,6 +53,18 @@ func (t DecimalType) Format(v types.Decimal) string {
 	return v.String()
 }
 
+func (t DecimalType) Compare(x1 string, x2 string) (int, bool) {
+	d1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	d2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return d1.Cmp(d2), true
+}
+
 func PopDecimal(c Calc) types.Decimal     { return Decimal.MustParse(c.MustPop()) }
 func PushDecimal(c Calc, r types.Decimal) { c.Push(Decimal.Format(r)) }
 
@@ -89,6 +102,18 @@ func (t FloatType) Is(s string) bool {
 func (t FloatType) Format(v float64) string {
 	s := fmt.Sprintf("%v", v)
 	return strings.Replace(s, "e+", "e", 1)
+}
+
+func (t FloatType) Compare(x1 string, x2 string) (int, bool) {
+	f1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	f2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(f1, f2), true
 }
 
 func PopFloat(c Calc) float64 { return Float.MustParse(c.MustPop()) }
@@ -178,6 +203,18 @@ func (t RationalType) MustParse(s string) *big.Rat {
 func (t RationalType) Is(s string) bool {
 	_, ok := t.Parse(s)
 	return ok
+}
+
+func (t RationalType) Compare(x1 string, x2 string) (int, bool) {
+	r1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	r2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return r1.Cmp(r2), true
 }
 
 func (t RationalType) Format(v *big.Rat) string {

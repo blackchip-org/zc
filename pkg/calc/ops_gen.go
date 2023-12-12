@@ -374,6 +374,8 @@ var opsList = []zc.OpDecl{
 		zc.Func(ops.SinhFloat, zc.Float),
 	),
 	zc.Macro("sn", "scientific-notation"),
+	zc.Op("sort", ops.Sort),
+	zc.Op("sort-str", ops.SortStr),
 	zc.Op("split", ops.Split, zc.Str, zc.Str),
 	zc.GenOp("sqrt",
 		zc.Func(ops.SqrtFloat, zc.Float),

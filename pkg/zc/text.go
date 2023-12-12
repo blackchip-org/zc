@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"cmp"
 	"fmt"
 	"unicode/utf8"
 )
@@ -55,6 +56,18 @@ func (t StrType) MustParse(s string) string {
 
 func (t StrType) Is(s string) bool {
 	return true
+}
+
+func (t StrType) Compare(x1 string, x2 string) (int, bool) {
+	s1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	s2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(s1, s2), true
 }
 
 func (t StrType) Format(v string) string {

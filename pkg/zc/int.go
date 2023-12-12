@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"cmp"
 	"fmt"
 	"math/big"
 	"strconv"
@@ -37,6 +38,18 @@ func (t BigIntType) Format(v *big.Int) string {
 	return v.String()
 }
 
+func (t BigIntType) Compare(x1 string, x2 string) (int, bool) {
+	i1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	i2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return i1.Cmp(i2), true
+}
+
 func PopBigInt(c Calc) *big.Int     { return BigInt.MustParse(c.MustPop()) }
 func PushBigInt(c Calc, r *big.Int) { c.Push(BigInt.Format(r)) }
 
@@ -69,6 +82,18 @@ func (t IntType) Is(s string) bool {
 
 func (t IntType) Format(v int) string {
 	return fmt.Sprintf("%v", v)
+}
+
+func (t IntType) Compare(x1 string, x2 string) (int, bool) {
+	i1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	i2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(i1, i2), true
 }
 
 func PopInt(c Calc) int     { return Int.MustParse(c.MustPop()) }
@@ -105,6 +130,18 @@ func (t Int64Type) Format(v int64) string {
 	return fmt.Sprintf("%v", v)
 }
 
+func (t Int64Type) Compare(x1 string, x2 string) (int, bool) {
+	i1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	i2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(i1, i2), true
+}
+
 func PopInt64(c Calc) int64     { return Int64.MustParse(c.MustPop()) }
 func PushInt64(c Calc, r int64) { c.Push(Int64.Format(r)) }
 
@@ -137,6 +174,18 @@ func (t Int32Type) Is(s string) bool {
 
 func (t Int32Type) Format(v int32) string {
 	return fmt.Sprintf("%v", v)
+}
+
+func (t Int32Type) Compare(x1 string, x2 string) (int, bool) {
+	i1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	i2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(i1, i2), true
 }
 
 func PopInt32(c Calc) int32     { return Int32.MustParse(c.MustPop()) }
@@ -173,6 +222,18 @@ func (t UintType) Format(v uint) string {
 	return fmt.Sprintf("%v", v)
 }
 
+func (t UintType) Compare(x1 string, x2 string) (int, bool) {
+	i1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	i2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(i1, i2), true
+}
+
 func PopUint(c Calc) uint     { return Uint.MustParse(c.MustPop()) }
 func PushUint(c Calc, r uint) { c.Push(Uint.Format(r)) }
 
@@ -205,6 +266,18 @@ func (t Uint8Type) Is(s string) bool {
 
 func (t Uint8Type) Format(v uint8) string {
 	return fmt.Sprintf("%v", v)
+}
+
+func (t Uint8Type) Compare(x1 string, x2 string) (int, bool) {
+	i1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	i2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(i1, i2), true
 }
 
 func PopUint8(c Calc) uint8     { return Uint8.MustParse(c.MustPop()) }

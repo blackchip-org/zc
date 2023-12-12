@@ -1,6 +1,10 @@
 package ops
 
-import "github.com/blackchip-org/zc/pkg/zc"
+import (
+	"sort"
+
+	"github.com/blackchip-org/zc/pkg/zc"
+)
 
 /*
 oper	eq
@@ -372,4 +376,48 @@ func NeqComplex(c zc.Calc) {
 	a0 := zc.PopComplex(c)
 	r0 := a0 != a1
 	zc.PushBool(c, r0)
+}
+
+/*
+oper	sort
+func	Sort        Val* -- Val*
+title	Type-aware stack sort
+
+desc
+Sorts the stack in a type-aware way. When two elements on the stack are
+compared for their sort order, a common type between those values is found and
+the comparison operation uses that type. If a common type cannot be found,
+the comparison is performed as plain text. Use `sort-str` to treat all
+values on the stack as strings.
+end
+
+example
+c 3 1 2 sort -- 1 | 2 | 3
+c 003 01.1 2 sort -- 01.1 | 2 | 003
+end
+*/
+func Sort(c zc.Calc) {
+	vals := c.Stack()
+	sort.Sort(zc.SortInterface(vals))
+	c.SetStack(vals)
+}
+
+/*
+oper	sort-str
+func	SortStr        Val* -- Val*
+title	String based stack sort
+
+desc
+Sorts the stack by their values as strings. Use `sort` for a type-aware
+sort.
+end
+
+example
+c 003 01.1 2 sort-str -- 003 | 01.1 | 2
+end
+*/
+func SortStr(c zc.Calc) {
+	vals := c.Stack()
+	sort.Strings(vals)
+	c.SetStack(vals)
 }

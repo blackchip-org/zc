@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"cmp"
 	"time"
 
 	"github.com/blackchip-org/zc/pkg/ptime"
@@ -48,6 +49,18 @@ func (t DateType) Is(s string) bool {
 	return ok
 }
 
+func (t DateType) Compare(x1 string, x2 string) (int, bool) {
+	t1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	t2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return t1.Compare(t2), true
+}
+
 func (t DateType) Format(tm time.Time) string {
 	return pt.Format(dateLayout, tm)
 }
@@ -86,6 +99,18 @@ func (t DateTimeType) Is(s string) bool {
 	return ok
 }
 
+func (t DateTimeType) Compare(x1 string, x2 string) (int, bool) {
+	t1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	t2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return t1.Compare(t2), true
+}
+
 func (t DateTimeType) Format(tm time.Time) string {
 	return pt.Format(dateTimeLayout, tm)
 }
@@ -114,6 +139,18 @@ func (t DurationType) MustParse(s string) time.Duration {
 func (t DurationType) Is(s string) bool {
 	_, ok := t.Parse(s)
 	return ok
+}
+
+func (t DurationType) Compare(x1 string, x2 string) (int, bool) {
+	d1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	d2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return cmp.Compare(d1, d2), true
 }
 
 func (t DurationType) Format(v time.Duration) string {
@@ -152,6 +189,18 @@ func (t TimeType) MustParse(s string) time.Time {
 func (t TimeType) Is(s string) bool {
 	_, ok := t.Parse(s)
 	return ok
+}
+
+func (t TimeType) Compare(x1 string, x2 string) (int, bool) {
+	t1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	t2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return t1.Compare(t2), true
 }
 
 func (t TimeType) Format(tm time.Time) string {
