@@ -8,7 +8,7 @@ Value formatting
 | [`round, r`](#round)                       | Round to a given precision
 | [`rounding-mode`](#rounding-mode)          | Set method to use in rounding
 | [`rounding-mode=`](#rounding-mode=)        | Method to use in rounding
-| [`scientific-notation, sn`](#scientific-notation) | Scientific notatoin
+| [`scientific-notation, sn`](#scientific-notation) | Scientific notation
 
 
 ## round
@@ -83,6 +83,7 @@ Alias: `sn`
 
 ```
 ( p0:Float -- Float )
+( p0:BigInt -- Float )
 ```
 
 Example:

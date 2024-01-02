@@ -3,10 +3,11 @@
 
 Statistical calculations
 
-| Operation           | Description
-|---------------------|---------------
+| Operation                | Description
+|--------------------------|---------------
 | [`average, avg`](#average) | Average
-| [`sum`](#sum)       | Summation
+| [`factorial, fact`](#factorial) | Factorial
+| [`sum`](#sum)            | Summation
 
 
 ## average
@@ -30,6 +31,26 @@ Example:
 | Input             | Stack
 |-------------------|---------------
 | `0 100 25 75 avg` | `50`
+
+## factorial
+
+The product of all positive integers less than or equal to *n*. If *n* is
+negative, an invalid argument error is displayed.
+
+Alias: `fact`
+
+```
+( n:BigInt -- BigInt )
+```
+
+Example:
+
+<!-- test: factorial -->
+
+| Input       | Stack
+|-------------|---------------
+| `c 3 fact ` | `6`
+| `c 10 fact` | `3628800`
 
 ## sum
 

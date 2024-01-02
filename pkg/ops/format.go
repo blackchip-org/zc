@@ -1,6 +1,7 @@
 package ops
 
 import (
+	"math/big"
 	"strconv"
 	"strings"
 
@@ -73,11 +74,11 @@ func RoundDecimal(c zc.Calc) {
 }
 
 func RoundFloat(c zc.Calc) {
-	s := getFormatState(c)
-	places := zc.PopInt32(c)
-	a0 := types.NewDecimalFromFloat(zc.PopFloat(c))
-	r0 := round(a0, places, s.roundingMode)
-	zc.PushFloat(c, r0.Float())
+	places := zc.PopInt(c)
+	a0 := zc.PopBigFloat(c)
+	r0 := a0.Text('e', places)
+	r0 = zc.CleanFloat(r0)
+	zc.PushString(c, r0)
 }
 
 /*
@@ -137,8 +138,9 @@ func RoundingModeGet(c zc.Calc) {
 /*
 oper	scientific-notation
 func	ScientificNotation p0:Float -- Float
+func 	ScientificNotationBigInt p0:BigInt -- Float
 alias	sn
-title	Scientific notatoin
+title	Scientific notation
 
 desc
 Formats the value *p0* using scientific notation.
@@ -153,4 +155,14 @@ func ScientificNotation(c zc.Calc) {
 	t0 := strconv.FormatFloat(a0, 'e', -1, 64)
 	r0 := strings.Replace(t0, "e+", "e", 1)
 	zc.PushString(c, r0)
+}
+
+func ScientificNotationBigInt(c zc.Calc) {
+	a0 := zc.PopBigInt(c)
+	f := new(big.Float).SetInt(a0)
+	// r0, acc := f.Float64()
+	zc.PushBigFloat(c, f)
+	// if acc != big.Exact {
+	// 	zc.Annotate(c, "inexact")
+	// }
 }

@@ -116,6 +116,8 @@
 ## f
 
 - [f-c](ops/temp.md#f-c): Fahrenheit to Celsius
+- [fact](ops/stat.md#factorial): Factorial
+- [factorial](ops/stat.md#factorial): Factorial
 - [false](ops/bool.md#false): False
 - [si.femto](ops/si.md#si.femto): SI prefix f, 1e-15
 - [filter](ops/hof.md#filter): Filter items in the stack
@@ -274,7 +276,7 @@
 
 - [s](ops/basic.md#sub) (basic): Subtraction
 - [s](ops/time.md#sub) (time): Time or duration subtraction
-- [scientific-notation](ops/format.md#scientific-notation): Scientific notatoin
+- [scientific-notation](ops/format.md#scientific-notation): Scientific notation
 - [seconds](ops/angle.md#seconds) (angle): Angle in seconds
 - [seconds](ops/time.md#seconds) (time): Seconds in duration
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
@@ -283,7 +285,7 @@
 - [sin](ops/sci.md#sin) (sci): Sine
 - [sinh](ops/complex.md#sinh) (complex): Hyperbolic sine
 - [sinh](ops/sci.md#sinh) (sci): Hyperbolic sine
-- [sn](ops/format.md#scientific-notation): Scientific notatoin
+- [sn](ops/format.md#scientific-notation): Scientific notation
 - [sort](ops/cmp.md#sort): Type-aware stack sort
 - [sort-str](ops/cmp.md#sort-str): String based stack sort
 - [split](ops/text.md#split): Split string

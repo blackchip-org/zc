@@ -234,3 +234,55 @@ func (t RationalType) Format(v *big.Rat) string {
 
 func PopRational(c Calc) *big.Rat     { return Rational.MustParse(c.MustPop()) }
 func PushRational(c Calc, r *big.Rat) { c.Push(Rational.Format(r)) }
+
+// ---
+
+type BigFloatType struct {
+	Precision    uint
+	RoundingMode big.RoundingMode
+}
+
+func (t BigFloatType) String() string { return "BigFloat" }
+
+func (t BigFloatType) Parse(s string) (*big.Float, bool) {
+	r, _, err := big.ParseFloat(s, 0, t.Precision, t.RoundingMode)
+	if err != nil {
+		return nil, false
+	}
+	return r, true
+}
+
+func (t BigFloatType) MustParse(s string) *big.Float {
+	r, ok := t.Parse(s)
+	if !ok {
+		PanicExpectedType(t, s)
+	}
+	return r
+}
+
+func (t BigFloatType) Is(s string) bool {
+	_, ok := t.Parse(s)
+	return ok
+}
+
+func (t BigFloatType) Format(v *big.Float) string {
+	s := v.String()
+	return CleanFloat(s)
+}
+
+func (t BigFloatType) Compare(x1 string, x2 string) (int, bool) {
+	f1, ok := t.Parse(x1)
+	if !ok {
+		return 0, false
+	}
+	f2, ok := t.Parse(x2)
+	if !ok {
+		return 0, false
+	}
+	return f1.Cmp(f2), true
+}
+
+func PopBigFloat(c Calc) *big.Float { return BigFloat.MustParse(c.MustPop()) }
+func PushBigFloat(c Calc, r *big.Float) {
+	c.Push(BigFloat.Format(r))
+}

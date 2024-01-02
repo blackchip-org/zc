@@ -16,7 +16,7 @@ const (
 )
 
 func Annotate(c Calc, format string, a ...any) {
-	if os.Getenv("ZC_NO_ANNO") != "" {
+	if os.Getenv("ZC_NO_ANNO") != "" || c.Error() != nil {
 		return
 	}
 	anno := fmt.Sprintf(format, a...)

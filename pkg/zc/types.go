@@ -15,6 +15,7 @@ type Type interface {
 }
 
 var (
+	BigFloat = BigFloatType{Precision: 53, RoundingMode: big.ToNearestEven}
 	BigInt   = BigIntType{}
 	Bool     = BoolType{}
 	Char     = CharType{}
@@ -117,4 +118,10 @@ func cleanNumber(str string) string {
 		}
 	}
 	return res.String()
+}
+
+func CleanFloat(str string) string {
+	str = strings.Replace(str, "e+", "e", 1)
+	str = strings.Replace(str, "e0", "e", 1)
+	return str
 }
