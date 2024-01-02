@@ -31,6 +31,7 @@ type REPL struct {
 	redoStack   [][]string
 	ops         map[string]struct{}
 	macros      map[string]string
+	quoteEnd    string
 }
 
 func New(calc zc.Calc) *REPL {
@@ -146,6 +147,15 @@ func (r *REPL) Eval(text string) bool {
 }
 
 func (r *REPL) eval(line string) error {
+	if r.quoteEnd != "" {
+		if line == r.quoteEnd {
+			r.quoteEnd = ""
+		} else {
+			r.Calc.Push(line)
+		}
+		return nil
+	}
+
 	var out []string
 	var s scanner.Scanner
 	s.SetString(line)
@@ -191,6 +201,9 @@ func (r *REPL) saveHistory() {
 }
 
 func (r *REPL) getPrompt() string {
+	if r.quoteEnd != "" {
+		return "...>"
+	}
 	return zc.ProgName + " > "
 }
 

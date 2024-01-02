@@ -2,6 +2,7 @@ package repl
 
 import (
 	"fmt"
+	"strings"
 	"unicode"
 
 	"github.com/blackchip-org/zc/pkg/scanner"
@@ -14,12 +15,13 @@ var cmds map[string]Cmd
 
 func init() {
 	cmds = map[string]Cmd{
-		"def":  def,
-		"":     pop,
-		"redo": redo,
-		"u":    undo,
-		"quit": quit,
-		"undo": undo,
+		"def":   def,
+		"":      pop,
+		"redo":  redo,
+		"u":     undo,
+		"quit":  quit,
+		"quote": quote,
+		"undo":  undo,
 	}
 }
 
@@ -77,6 +79,18 @@ func redo(r *REPL, _ *scanner.Scanner) error {
 
 func quit(_ *REPL, _ *scanner.Scanner) error {
 	return errQuit
+}
+
+func quote(r *REPL, s *scanner.Scanner) error {
+	s.ScanWhile(unicode.IsSpace)
+	if s.End() {
+		return fmt.Errorf("expected text to be used as a delimiter")
+	}
+	for !s.End() {
+		s.Keep()
+	}
+	r.quoteEnd = strings.TrimSpace(s.Token())
+	return nil
 }
 
 func undo(r *REPL, _ *scanner.Scanner) error {
