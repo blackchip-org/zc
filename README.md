@@ -229,6 +229,19 @@ computes the length, in characters, of the given text:
 | `[one thousand` | `one thousand`
 | `len`           | `12`
 
+To use multiple lines as values (for example, when pasting the contents of the
+clipboard), use `quote` with a delimiter that marks the end of the values.
+Each line is considered a separate value when using `quote`. For example:
+
+<!-- test: quote -->
+
+| Input           | Stack
+|-----------------|---------------
+| `1 2 add`       | `3`
+| `quote EOF`     | `3`
+| `2 3 add`       | `3 \| 2 3 add`
+| `EOF`           | `3 \| 2 3 add`
+
 ## Macros
 
 Let's say that you commonly have to compute a sales tax that is 5%. To
@@ -362,6 +375,7 @@ These commands are available when running the calculator interactively:
 | `def`        | Define a macro
 | `redo`       | Redo the last undo
 | `quit`       | Print the final stack and return to shell
+| `quote`      | Add each line to the stack until delimiter is found
 | `undo`, `u`  | Undo the last line entered
 
 ## Command line
