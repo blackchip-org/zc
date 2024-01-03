@@ -26,7 +26,9 @@ end
 */
 func Average(c zc.Calc) {
 	n := c.StackLen()
-	c.Eval("sum %v div", n)
+	if n > 0 {
+		c.Eval("sum %v div", n)
+	}
 }
 
 /*
