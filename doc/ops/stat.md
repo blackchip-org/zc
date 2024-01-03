@@ -7,6 +7,7 @@ Statistical calculations
 |--------------------------|---------------
 | [`average, avg`](#average) | Average
 | [`factorial, fact`](#factorial) | Factorial
+| [`prod`](#prod)          | Product
 | [`sum`](#sum)            | Summation
 
 
@@ -51,6 +52,27 @@ Example:
 |-------------|---------------
 | `c 3 fact ` | `6`
 | `c 10 fact` | `3628800`
+
+## prod
+
+The product of all items on the stack.
+
+```
+( BigInt* -- BigInt )
+( Decimal* -- Decimal )
+( Float* -- Float )
+( Rational* -- Rational )
+( Complex* -- Complex )
+```
+
+Example:
+
+<!-- test: prod -->
+
+| Input       | Stack
+|-------------|---------------
+| `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
+| `prod     ` | `120`
 
 ## sum
 

@@ -233,6 +233,7 @@
 - [si.pico](ops/si.md#si.pico): SI prefix p, 1e-12
 - [polar](ops/complex.md#polar): Complex to polar
 - [pow](ops/basic.md#pow): Exponentiation
+- [prod](ops/stat.md#prod): Product
 - [proj](ops/geo.md#proj): Transform coordinate
 
 ## q
@@ -295,7 +296,9 @@
 - [sort](ops/cmp.md#sort): Type-aware stack sort
 - [sort-str](ops/cmp.md#sort-str): String based stack sort
 - [split](ops/text.md#split): Split string
+- [sq](ops/basic.md#sq): Square
 - [sqrt](ops/basic.md#sqrt): Square root
+- [square](ops/basic.md#sq): Square
 - [square-root](ops/basic.md#sqrt): Square root
 - [st](ops/stack.md#store): Store stack to memory
 - [store](ops/stack.md#store): Store stack to memory

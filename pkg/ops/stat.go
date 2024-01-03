@@ -69,6 +69,26 @@ func Factorial(c zc.Calc) {
 }
 
 /*
+oper	prod
+func	- BigInt*   -- BigInt
+func	- Decimal*  -- Decimal
+func	- Float*    -- Float
+func	- Rational* -- Rational
+func	- Complex*  -- Complex
+macro	[mul] fold
+title 	Product
+
+desc
+The product of all items on the stack.
+end
+
+example
+1 2 3 4 5 -- 1 | 2 | 3 | 4 | 5
+prod -- 120
+end
+*/
+
+/*
 oper	sum
 func	- BigInt*   -- BigInt
 func	- Decimal*  -- Decimal

@@ -13,6 +13,7 @@ Basic calculator
 | [`pow, **, ^`](#pow)         | Exponentiation
 | [`rem`](#rem)                | Remainder
 | [`sign`](#sign)              | Sign
+| [`sq, square`](#sq)          | Square
 | [`sqrt, square-root`](#sqrt) | Square root
 | [`sub, s, -`](#sub)          | Subtraction
 
@@ -192,6 +193,25 @@ Example:
 | `c -6 sign` | `-1`
 | `c 6 sign ` | `1`
 | `c 0 sign ` | `0`
+
+## sq
+
+The square of *p0*.
+
+Alias: `square`
+
+```
+( p0:BigInt -- BigInt )
+( p0:Float -- Float )
+```
+
+Example:
+
+<!-- test: sq -->
+
+| Input  | Stack
+|--------|---------------
+| `8 sq` | `64`
 
 ## sqrt
 

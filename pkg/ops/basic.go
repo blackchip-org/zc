@@ -425,6 +425,23 @@ func SignRational(c zc.Calc) {
 }
 
 /*
+oper	sq
+func 	- p0:BigInt -- BigInt
+func 	- p0:Float -- Float
+alias	square
+macro	2 pow
+title	Square
+
+desc
+The square of *p0*.
+end
+
+example
+8 sq -- 64
+end
+*/
+
+/*
 oper	sqrt
 func	SqrtFloat   p0:Float   -- Float
 func	-           p0:Float   -- Complex
