@@ -2,6 +2,8 @@ package calc
 
 import (
 	"fmt"
+	"maps"
+	"slices"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -33,8 +35,8 @@ func (c *calc) StackLen() int {
 }
 
 func (c *calc) SetStack(s []string) {
-	c.stack = c.stack[:len(s)]
-	copy(c.stack, s)
+	c.info = ""
+	c.stack = slices.Clone(s)
 }
 
 func (c *calc) Info() string {
@@ -81,6 +83,7 @@ func (c *calc) Peek(i int) (string, bool) {
 }
 
 func (c *calc) Pop() (string, bool) {
+	c.info = ""
 	n := len(c.stack)
 	if n == 0 {
 		return "", false
@@ -99,12 +102,16 @@ func (c *calc) MustPop() string {
 }
 
 func (c *calc) Push(item string) {
+	c.info = ""
 	c.stack = append(c.stack, item)
 }
 
 func (c *calc) SetError(err error) {
 	if c.err == nil {
 		c.err = err
+	}
+	if err != nil {
+		c.info = ""
 	}
 }
 
@@ -113,7 +120,9 @@ func (c *calc) Error() error {
 }
 
 func (c *calc) Derive() zc.Calc {
-	return New()
+	sub := New().(*calc)
+	sub.state = maps.Clone(c.state)
+	return sub
 }
 
 func (c *calc) NewState(name string, s any) {
@@ -149,8 +158,9 @@ func (c *calc) parseWords(str string) []string {
 	var words []string
 	var word strings.Builder
 
-	var inWord, inQuote bool
-	var endQuote rune
+	var inQuote int
+	var inWord bool
+	var beginQuote, endQuote rune
 
 	for _, ch := range str {
 		if !inWord {
@@ -161,25 +171,39 @@ func (c *calc) parseWords(str string) []string {
 			inWord = true
 			switch ch {
 			case '"':
-				inQuote = true
+				inQuote++
+				beginQuote = '"'
 				endQuote = '"'
 				word.WriteRune('"')
 			case '\'':
-				inQuote = true
+				inQuote++
+				beginQuote = '\''
 				endQuote = '\''
 				word.WriteRune('"')
 			case '[':
-				inQuote = true
+				inQuote++
+				beginQuote = '['
 				endQuote = ']'
+				word.WriteRune('"')
+			case '/':
 				word.WriteRune('"')
 			default:
 				word.WriteRune(ch)
 			}
 		} else {
-			if (unicode.IsSpace(ch) && !inQuote) || ch == endQuote {
-				inWord = false
-				inQuote = false
-				words = append(words, word.String())
+			if (unicode.IsSpace(ch) && inQuote == 0) || ch == endQuote {
+				if inQuote > 0 {
+					inQuote--
+				}
+				if inQuote == 0 {
+					inWord = false
+					words = append(words, word.String())
+				} else {
+					word.WriteRune(ch)
+				}
+			} else if ch == beginQuote {
+				inQuote++
+				word.WriteRune(ch)
 			} else {
 				word.WriteRune(ch)
 			}

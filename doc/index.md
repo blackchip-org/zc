@@ -52,11 +52,13 @@
 - [c](ops/stack.md#clear): Clear the stack
 - [c-f](ops/temp.md#c-f): Celsius to Fahrenheit
 - [c-k](ops/temp.md#c-k): Celsius to Kelvin
+- [ca](ops/stack.md#clear-all): Clear stack and memory
 - [ceil](ops/sci.md#ceil): Ceiling
 - [si.centi](ops/si.md#si.centi): SI prefix c, 1e-02
 - [char-codepoint](ops/text.md#char-codepoint): Character to code point
 - [char-cp](ops/text.md#char-codepoint): Character to code point
 - [clear](ops/stack.md#clear): Clear the stack
+- [clear-all](ops/stack.md#clear-all): Clear stack and memory
 - [cmyk-rgb](ops/color.md#cmyk-rgb): CMYK to RGB color space
 - [codepoint-char](ops/text.md#codepoint-char): Code point to character
 - [coeff](ops/decimal.md#coeff): Coefficient
@@ -126,6 +128,7 @@
 
 ## g
 
+- [get](ops/stack.md#get): Get a named stack from memory
 - [si.giga](ops/si.md#si.giga): SI prefix G, 1e09
 - [greater-than](ops/cmp.md#gt): Greater than
 - [greater-than-or-equal](ops/cmp.md#gte): Greater than or equal
@@ -250,7 +253,9 @@
 - [rand-seed=](ops/rand.md#rand-seed=): Get the random number seed
 - [rat](ops/rational.md#rational): Convert to a Rational
 - [rational](ops/rational.md#rational): Convert to a Rational
+- [re](ops/stack.md#recall): Recall stack from memory
 - [real](ops/complex.md#real): Real number from complex
+- [recall](ops/stack.md#recall): Recall stack from memory
 - [rect](ops/complex.md#rect): Polar to complex
 - [reduce](ops/hof.md#fold): Reduce items to a single value
 - [rem](ops/basic.md#rem): Remainder
@@ -279,6 +284,7 @@
 - [scientific-notation](ops/format.md#scientific-notation): Scientific notation
 - [seconds](ops/angle.md#seconds) (angle): Angle in seconds
 - [seconds](ops/time.md#seconds) (time): Seconds in duration
+- [set](ops/stack.md#set): Place a named stack to memory
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
 - [sin](ops/complex.md#sin) (complex): Sine
@@ -291,6 +297,8 @@
 - [split](ops/text.md#split): Split string
 - [sqrt](ops/basic.md#sqrt): Square root
 - [square-root](ops/basic.md#sqrt): Square root
+- [st](ops/stack.md#store): Store stack to memory
+- [store](ops/stack.md#store): Store stack to memory
 - [sub](ops/basic.md#sub) (basic): Subtraction
 - [sub](ops/time.md#sub) (time): Time or duration subtraction
 - [sum](ops/stat.md#sum): Summation

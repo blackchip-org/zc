@@ -217,17 +217,39 @@ Enter complex numbers in `r+i` notation:
 
 ## Text
 
-To use text as a value, surround it with quotes. Single quotes, `' '`,
-double quotes, `" "` or square brackets, `[ ]` can be used. If the text value is
-the only item on the line, an ending quote is not required. The following
-computes the length, in characters, of the given text:
+Text can be used as a value by either one of two ways. If the text does not
+contain any whitespace, the text can be prefixed with a slash, `/`. For
+example:
 
-<!-- test: text -->
+<!-- test: text-slash -->
+
+| Input          | Stack
+|----------------|-------------------
+| `1 2`          | `1 \| 2`
+| `/add`         | `1 \| 2 \| add`
+
+Otherwise, surround text with quotes. Single quotes, `' '`, double quotes,
+`" "` or square brackets, `[ ]` can be used. If the text value is the only item
+on the line, an ending quote is not required. The following computes the
+length, in characters, of the given text:
+
+<!-- test: text-quote -->
 
 | Input           | Stack
 |-----------------|---------------
-| `[one thousand` | `one thousand`
+| `'one thousand` | `one thousand`
 | `len`           | `12`
+
+Using brackets is convenient when nesting quoted values:
+
+<!-- test: text-bracket -->
+
+| Input           | Stack
+|-----------------|---------------
+| `1 2 [[[add]]]` | `1 \| 2 \| [[add]]`
+| `eval`          | `1 \| 2 \| [add]`
+| `eval`          | `1 \| 2 \| add`
+| `eval`          | `3`
 
 To use multiple lines as values (for example, when pasting the contents of the
 clipboard), use `quote` with a delimiter that marks the end of the values.
@@ -278,17 +300,17 @@ The name of `=` is reserved for your macro use in bulk operations:
 | `68 =`                    | `20`
 | `100 =`                   | `37.78`
 
-No operations start with a `/` or a `.` character and can be used for
-macro names. Play a game of rock, paper, scissors:
+No operations start with a `.` character and can be used for macro names. Play
+a game of rock, paper, scissors:
 
 <!-- test: rps -->
 
 | Input                                            | Stack
 |--------------------------------------------------|-------------------
 | `0 rand-seed`                                    | *seed set to 0*
-| `def /rps 'rock' 'paper' 'scissors' rand-choice` | *macro '/rps' defined*
-| `/rps`                                           | `rock`
-| `/rps`                                           | `paper`
+| `def .rps 'rock' 'paper' 'scissors' rand-choice` | *macro '.rps' defined*
+| `.rps`                                           | `rock`
+| `.rps`                                           | `paper`
 
 Macros can also be used to override calculator operations. Undefine the
 macro by using `def` without an expression.
@@ -326,6 +348,49 @@ value. For example, to sum all the numbers on the stack:
 
 Additional higher-order functions can be found in the [hof](doc/ops/hof.md)
 reference.
+
+## Memory
+
+Sometimes it is convenient to store the contents of the stack to memory
+which can be recalled later. Let's manually compute the population standard
+deviation found in the example on the [Wikipedia](https://en.wikipedia.org/wiki/Standard_deviation) page.
+
+The average of the all the data points must first be computed and then
+deviations from that average are calculated. The data is first entered
+into the calculator and then the stack is saved with the name of `data`.
+The average is then computed and stored with the name of `av`. The
+data points are then recalled from memory and the deviations from the
+average are calculated for each value. The standard deviation is then
+simply the square root of the average deviation.
+
+<!-- test: stddev -->
+
+| Input                     | Stack
+|---------------------------|---------------------|
+| `2 4 4 4 5 5 7 9`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `/data set`               | *set*
+| `average`                 | `5`
+| `/av set`                 | *set*
+| `clear /data get`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `[/av get sub 2 pow] map` | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
+| `average sqrt`            | `2`
+
+Stacks can also be placed in a general memory location with no name by
+using `store` and `recall`. This location is also a stack itself with `store`
+pushing the current stack to the memory stack and `recall` popping off the
+top stack.
+
+<!-- test: stddev-general -->
+
+| Input                     | Stack
+|---------------------------|---------------------|
+| `2 4 4 4 5 5 7 9`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `store`                   | *stored*
+| `average`                 | `5`
+| `/av set`                 | *set*
+| `clear recall`            | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `[/av get sub 2 pow] map` | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
+| `average sqrt`            | `2`
 
 ## Annotations
 

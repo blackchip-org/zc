@@ -1,6 +1,8 @@
 package ops
 
-import "github.com/blackchip-org/zc/pkg/zc"
+import (
+	"github.com/blackchip-org/zc/pkg/zc"
+)
 
 /*
 oper	eval

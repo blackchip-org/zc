@@ -1,6 +1,27 @@
 package ops
 
-import "github.com/blackchip-org/zc/pkg/zc"
+import (
+	"errors"
+
+	"github.com/blackchip-org/zc/pkg/zc"
+)
+
+type memory struct {
+	stack [][]string
+	vars  map[string][]string
+}
+
+func getMemoryState(c zc.Calc) *memory {
+	mem, ok := c.State("memory")
+	if !ok {
+		mem = &memory{
+			stack: make([][]string, 0),
+			vars:  make(map[string][]string),
+		}
+		c.NewState("memory", mem)
+	}
+	return mem.(*memory)
+}
 
 /*
 oper	clear
@@ -20,6 +41,32 @@ end
 */
 func Clear(c zc.Calc) {
 	c.SetStack([]string{})
+}
+
+/*
+oper	clear-all
+func	ClearAll Val* --
+alias	ca
+title 	Clear stack and memory
+
+desc
+Remove all items from the stack and any stacks stored in memory.
+end
+
+example
+1 -- 1
+2 -- 1 | 2
+store -- *stored*
+clear-all -- *cleared*
+recall -- memory empty
+end
+*/
+func ClearAll(c zc.Calc) {
+	c.SetStack([]string{})
+	s := getMemoryState(c)
+	s.stack = [][]string{}
+	clear(s.vars)
+	c.SetInfo("cleared")
 }
 
 /*
@@ -89,6 +136,23 @@ func Dup(c zc.Calc) {
 }
 
 /*
+oper	get
+func	Get Val* name:Str -- Val* Val*
+title	Get a named stack from memory
+*/
+func Get(c zc.Calc) {
+	s := getMemoryState(c)
+	name := zc.PopString(c)
+	v, ok := s.vars[name]
+	if !ok || len(v) == 0 {
+		c.SetInfo("empty")
+		return
+	}
+	v = append(c.Stack(), v...)
+	c.SetStack(v)
+}
+
+/*
 oper	n
 func	N -- Int
 title	Number of stack items
@@ -99,12 +163,42 @@ end
 
 example
 1 1 1 1 -- 1 | 1 | 1 | 1
-n -- 1 | 1 | 1 | 1 | 4
+n -- 4
 end
 */
 func N(c zc.Calc) {
 	r0 := len(c.Stack())
+	c.SetStack([]string{})
 	zc.PushInt(c, r0)
+}
+
+/*
+oper 	recall
+func	Recall Val* -- Val* Val*
+alias	re
+title	Recall stack from memory
+
+desc
+Recall a stack from memory. The recalled stack is placed before an existing
+items on the current stack. Memory is also a stack so that multiple stacks can
+be stored at one time.
+end
+
+example
+1 1 1 1 1 store n -- 5
+recall -- 1 | 1 | 1 | 1 | 1 | 5
+end
+*/
+func Recall(c zc.Calc) {
+	s := getMemoryState(c)
+	if len(s.stack) == 0 {
+		c.SetError(errors.New("memory empty"))
+		return
+	}
+	var v []string
+	v, s.stack = s.stack[0], s.stack[1:]
+	v = append(v, c.Stack()...)
+	c.SetStack(v)
 }
 
 /*
@@ -129,6 +223,44 @@ func Reverse(c zc.Calc) {
 		rs = append(rs, a)
 	}
 	c.SetStack(rs)
+}
+
+/*
+oper	set
+func	Set Val* name:Str --
+title	Place a named stack to memory
+*/
+func Set(c zc.Calc) {
+	s := getMemoryState(c)
+	name := zc.PopString(c)
+	s.vars[name] = c.Stack()
+	c.SetInfo("set")
+}
+
+/*
+oper 	store
+func	Store Val* -- Val*
+alias	st
+title	Store stack to memory
+
+desc
+Store a copy of the current stack to memory for later recall. Memory is also
+a stack so that multiple stacks can be stored at one time.
+end
+
+example
+1 1 1 1 1 store n -- 5
+recall -- 1 | 1 | 1 | 1 | 1 | 5
+end
+*/
+func Store(c zc.Calc) {
+	if c.StackLen() == 0 {
+		c.SetError(errors.New("empty"))
+		return
+	}
+	s := getMemoryState(c)
+	s.stack = append([][]string{c.Stack()}, s.stack...)
+	c.SetInfo("stored")
 }
 
 /*

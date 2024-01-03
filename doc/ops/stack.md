@@ -3,18 +3,23 @@
 
 Stack manipulations
 
-| Operation           | Description
-|---------------------|---------------
-| [`clear, c`](#clear) | Clear the stack
-| [`down, dn`](#down) | Rotate stack downward
-| [`drop`](#drop)     | Drop top item from stack
-| [`dup`](#dup)       | Duplicate top stack item
-| [`n`](#n)           | Number of stack items
+| Operation              | Description
+|------------------------|---------------
+| [`clear, c`](#clear)   | Clear the stack
+| [`clear-all, ca`](#clear-all) | Clear stack and memory
+| [`down, dn`](#down)    | Rotate stack downward
+| [`drop`](#drop)        | Drop top item from stack
+| [`dup`](#dup)          | Duplicate top stack item
+| [`get`](#get)          | Get a named stack from memory
+| [`n`](#n)              | Number of stack items
+| [`recall, re`](#recall) | Recall stack from memory
 | [`reverse, rev`](#reverse) | Reverse stack
-| [`swap, sw`](#swap) | Swap top two items on the stack
-| [`take`](#take)     | Take elements from the stack
-| [`top`](#top)       | Take top element from the stack
-| [`up`](#up)         | Rotate items upward
+| [`set`](#set)          | Place a named stack to memory
+| [`store, st`](#store)  | Store stack to memory
+| [`swap, sw`](#swap)    | Swap top two items on the stack
+| [`take`](#take)        | Take elements from the stack
+| [`top`](#top)          | Take top element from the stack
+| [`up`](#up)            | Rotate items upward
 
 
 ## clear
@@ -36,6 +41,28 @@ Example:
 | `1    ` | `1`
 | `2    ` | `1 \| 2`
 | `clear` | 
+
+## clear-all
+
+Remove all items from the stack and any stacks stored in memory.
+
+Alias: `ca`
+
+```
+( Val* --  )
+```
+
+Example:
+
+<!-- test: clear-all -->
+
+| Input       | Stack
+|-------------|---------------
+| `1        ` | `1`
+| `2        ` | `1 \| 2`
+| `store    ` | *stored*
+| `clear-all` | *cleared*
+| `recall   ` | `memory empty`
 
 ## down
 
@@ -96,6 +123,15 @@ Example:
 | `1  ` | `1`
 | `dup` | `1 \| 1`
 
+## get
+
+
+
+```
+( Val* name:Str -- Val* Val* )
+```
+
+
 ## n
 
 Number of items on the stack.
@@ -111,7 +147,28 @@ Example:
 | Input     | Stack
 |-----------|---------------
 | `1 1 1 1` | `1 \| 1 \| 1 \| 1`
-| `n      ` | `1 \| 1 \| 1 \| 1 \| 4`
+| `n      ` | `4`
+
+## recall
+
+Recall a stack from memory. The recalled stack is placed before an existing
+items on the current stack. Memory is also a stack so that multiple stacks can
+be stored at one time.
+
+Alias: `re`
+
+```
+( Val* -- Val* Val* )
+```
+
+Example:
+
+<!-- test: recall -->
+
+| Input               | Stack
+|---------------------|---------------
+| `1 1 1 1 1 store n` | `5`
+| `recall           ` | `1 \| 1 \| 1 \| 1 \| 1 \| 5`
 
 ## reverse
 
@@ -131,6 +188,35 @@ Example:
 |-------------|---------------
 | `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
 | `reverse  ` | `5 \| 4 \| 3 \| 2 \| 1`
+
+## set
+
+
+
+```
+( Val* name:Str --  )
+```
+
+
+## store
+
+Store a copy of the current stack to memory for later recall. Memory is also
+a stack so that multiple stacks can be stored at one time.
+
+Alias: `st`
+
+```
+( Val* -- Val* )
+```
+
+Example:
+
+<!-- test: store -->
+
+| Input               | Stack
+|---------------------|---------------
+| `1 1 1 1 1 store n` | `5`
+| `recall           ` | `1 \| 1 \| 1 \| 1 \| 1 \| 5`
 
 ## swap
 
