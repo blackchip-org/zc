@@ -27,6 +27,7 @@ Aliases: `a`, `+`
 ```
 ( p0:BigInt p1:BigInt -- BigInt )
 ( p0:Decimal p1:Decimal -- Decimal )
+( p0:BigFloat p1:BigFloat -- BigFloat )
 ( p0:Float p1:Float -- Float )
 ( p0:Rational p1:Rational -- Rational )
 ( p0:Complex p1:Complex -- Complex )
@@ -51,6 +52,7 @@ Aliases: `d`, `/`
 
 ```
 ( p0:Decimal p1:Decimal -- Decimal )
+( p0:BigFloat p1:BigFloat -- BigFloat )
 ( p0:Float p1:Float -- Float )
 ( p0:Rational p1:Rational -- Rational )
 ( p0:Complex p1:Complex -- Complex )
@@ -94,6 +96,7 @@ Aliases: `m`, `*`
 ```
 ( p0:BigInt p1:BigInt -- BigInt )
 ( p0:Decimal p1:Decimal -- Decimal )
+( p0:BigFloat p1:BigFloat -- BigFloat )
 ( p0:Float p1:Float -- Float )
 ( p0:Rational p1:Rational -- Rational )
 ( p0:Complex p1:Complex -- Complex )
@@ -116,6 +119,7 @@ Changes the sign of `p0`.
 ```
 ( p0:BigInt -- BigInt )
 ( p0:Decimal -- Decimal )
+( p0:BigFloat -- BigFloat )
 ( p0:Float -- Float )
 ( p0:Rational -- Rational )
 ```
@@ -180,6 +184,7 @@ is zero.
 ```
 ( p0:BigInt -- Int )
 ( p0:Decimal -- Int )
+( p0:BigFloat -- Int )
 ( p0:Float -- Int )
 ( p0:Rational -- Int )
 ```
@@ -222,6 +227,7 @@ Alias: `square-root`
 
 ```
 ( p0:Float -- Float )
+( p0:BigFloat -- BigFloat )
 ( p0:Float -- Complex )
 ( p0:Complex -- Complex )
 ```
@@ -244,6 +250,7 @@ Aliases: `s`, `-`
 ```
 ( p0:BigInt p1:BigInt -- BigInt )
 ( p0:Decimal p1:Decimal -- Decimal )
+( p0:BigFloat p1:BigFloat -- BigFloat )
 ( p0:Float p1:Float -- Float )
 ( p0:Rational p1:Rational -- Rational )
 ( p0:Complex p1:Complex -- Complex )

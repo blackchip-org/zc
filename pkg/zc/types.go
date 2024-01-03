@@ -120,8 +120,17 @@ func cleanNumber(str string) string {
 	return res.String()
 }
 
-func CleanFloat(str string) string {
+func PostFormatFloat(str string) string {
 	str = strings.Replace(str, "e+", "e", 1)
 	str = strings.Replace(str, "e0", "e", 1)
+
 	return str
+}
+
+func PreParseFloat(s string, suffix string) string {
+	s = cleanNumber(s)
+	s = strings.TrimSuffix(s, suffix)
+	s = strings.Replace(s, "×10", "e", 1)
+	s = strings.Replace(s, "x10", "e", 1)
+	return s
 }

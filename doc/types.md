@@ -15,6 +15,7 @@ The parse function for a floating point number can parse values such as
 
 Table of contents:
 
+- [BigFloat](#float)
 - [BigInt](#integer)
 - [Bool](#bool)
 - [Complex](#complex)

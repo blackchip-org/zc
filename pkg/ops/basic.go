@@ -12,6 +12,7 @@ import (
 oper	add
 func	AddBigInt   p0:BigInt   p1:BigInt   -- BigInt
 func	AddDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func    AddBigFloat p0:BigFloat p1:BigFloat -- BigFloat
 func	AddFloat    p0:Float    p1:Float    -- Float
 func    AddRational p0:Rational p1:Rational -- Rational
 func	AddComplex  p0:Complex  p1:Complex  -- Complex
@@ -44,6 +45,14 @@ func AddDecimal(c zc.Calc) {
 	zc.PushDecimal(c, r0)
 }
 
+func AddBigFloat(c zc.Calc) {
+	var r0 big.Float
+	a1 := zc.PopBigFloat(c)
+	a0 := zc.PopBigFloat(c)
+	r0.Add(a0, a1)
+	zc.PushBigFloat(c, &r0)
+}
+
 func AddFloat(c zc.Calc) {
 	a1 := zc.PopFloat(c)
 	a0 := zc.PopFloat(c)
@@ -69,6 +78,7 @@ func AddComplex(c zc.Calc) {
 /*
 oper	div
 func	DivDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func    DivBigFloat p0:BigFloat p1:BigFloat -- BigFloat
 func	DivFloat    p0:Float    p1:Float    -- Float
 func    DivRational p0:Rational p1:Rational -- Rational
 func	DivComplex  p0:Complex  p1:Complex  -- Complex
@@ -98,6 +108,20 @@ func DivDecimal(c zc.Calc) {
 
 	r0 := a0.Div(a1).Truncate(19)
 	zc.PushDecimal(c, r0)
+}
+
+func DivBigFloat(c zc.Calc) {
+	var r0, zero big.Float
+
+	a1 := zc.PopBigFloat(c)
+	a0 := zc.PopBigFloat(c)
+
+	if a1.Cmp(&zero) == 0 {
+		zc.ErrDivisionByZero(c)
+		return
+	}
+	r0.Quo(a0, a1)
+	zc.PushBigFloat(c, &r0)
 }
 
 func DivFloat(c zc.Calc) {
@@ -202,6 +226,7 @@ func ModFloat(c zc.Calc) {
 oper	mul
 func	MulBigInt   p0:BigInt   p1:BigInt   -- BigInt
 func	MulDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func    MulBigFloat p0:BigFloat p1:BigFloat -- BigFloat
 func 	MulFloat    p0:Float    p1:Float    -- Float
 func 	MulRational p0:Rational p1:Rational -- Rational
 func	MulComplex  p0:Complex  p1:Complex  -- Complex
@@ -234,6 +259,14 @@ func MulDecimal(c zc.Calc) {
 	zc.PushDecimal(c, r0)
 }
 
+func MulBigFloat(c zc.Calc) {
+	var r0 big.Float
+	a1 := zc.PopBigFloat(c)
+	a0 := zc.PopBigFloat(c)
+	r0.Mul(a0, a1)
+	zc.PushBigFloat(c, &r0)
+}
+
 func MulFloat(c zc.Calc) {
 	a1 := zc.PopFloat(c)
 	a0 := zc.PopFloat(c)
@@ -260,6 +293,7 @@ func MulComplex(c zc.Calc) {
 oper	neg
 func	NegBigInt   p0:BigInt   -- BigInt
 func	NegDecimal  p0:Decimal  -- Decimal
+func    NegBigFloat p0:BigFloat -- BigFloat
 func	NegFloat    p0:Float    -- Float
 func	NegRational p0:Rational -- Rational
 title	Negation
@@ -285,6 +319,13 @@ func NegDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
 	r0 := a0.Neg()
 	zc.PushDecimal(c, r0)
+}
+
+func NegBigFloat(c zc.Calc) {
+	var r0 big.Float
+	a0 := zc.PopBigFloat(c)
+	r0.Neg(a0)
+	zc.PushBigFloat(c, &r0)
 }
 
 func NegFloat(c zc.Calc) {
@@ -377,6 +418,7 @@ func RemFloat(c zc.Calc) {
 oper	sign
 func	SignBigInt   p0:BigInt   -- Int
 func	SignDecimal  p0:Decimal  -- Int
+func    SignBigFloat p0:BigFloat -- Int
 func	SignFloat    p0:Float    -- Int
 func 	SignRational p0:Rational -- Int
 title	Sign
@@ -400,6 +442,12 @@ func SignBigInt(c zc.Calc) {
 
 func SignDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
+	r0 := a0.Sign()
+	zc.PushInt(c, r0)
+}
+
+func SignBigFloat(c zc.Calc) {
+	a0 := zc.PopBigFloat(c)
 	r0 := a0.Sign()
 	zc.PushInt(c, r0)
 }
@@ -443,9 +491,10 @@ end
 
 /*
 oper	sqrt
-func	SqrtFloat   p0:Float   -- Float
-func	-           p0:Float   -- Complex
-func 	SqrtComplex p0:Complex -- Complex
+func	SqrtFloat    p0:Float    -- Float
+func    SqrtBigFloat p0:BigFloat -- BigFloat
+func	-            p0:Float    -- Complex
+func 	SqrtComplex  p0:Complex  -- Complex
 alias	square-root
 title	Square root
 
@@ -459,6 +508,17 @@ example
 sqrt -- 16
 end
 */
+func SqrtBigFloat(c zc.Calc) {
+	var r0, zero big.Float
+	a0 := zc.PopBigFloat(c)
+	if a0.Cmp(&zero) < 0 {
+		zc.ErrInvalidArgs(c, "cannot be negative")
+		return
+	}
+	r0.Sqrt(a0)
+	zc.PushBigFloat(c, &r0)
+}
+
 func SqrtFloat(c zc.Calc) {
 	a0 := zc.PopFloat(c)
 	if a0 < 0 {
@@ -480,6 +540,7 @@ func SqrtComplex(c zc.Calc) {
 oper	sub
 func	SubBigInt   p0:BigInt   p1:BigInt   -- BigInt
 func 	SubDecimal  p0:Decimal  p1:Decimal  -- Decimal
+func    SubBigFloat p0:BigFloat p1:BigFloat -- BigFloat
 func	SubFloat    p0:Float    p1:Float    -- Float
 func	SubRational p0:Rational p1:Rational -- Rational
 func	SubComplex  p0:Complex  p1:Complex  -- Complex
@@ -510,6 +571,14 @@ func SubDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
 	r0 := a0.Sub(a1)
 	zc.PushDecimal(c, r0)
+}
+
+func SubBigFloat(c zc.Calc) {
+	var r0 big.Float
+	a1 := zc.PopBigFloat(c)
+	a0 := zc.PopBigFloat(c)
+	r0.Sub(a0, a1)
+	zc.PushBigFloat(c, &r0)
 }
 
 func SubFloat(c zc.Calc) {

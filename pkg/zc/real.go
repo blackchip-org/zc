@@ -75,10 +75,7 @@ type FloatType struct{}
 func (t FloatType) String() string { return "Float" }
 
 func (t FloatType) Parse(s string) (float64, bool) {
-	s = cleanNumber(s)
-	s = strings.TrimSuffix(s, "f")
-	s = strings.Replace(s, "×10", "e", 1)
-	s = strings.Replace(s, "x10", "e", 1)
+	s = PreParseFloat(s, "f")
 	f, err := strconv.ParseFloat(s, 64)
 	if err != nil {
 		return 0, false
@@ -245,6 +242,7 @@ type BigFloatType struct {
 func (t BigFloatType) String() string { return "BigFloat" }
 
 func (t BigFloatType) Parse(s string) (*big.Float, bool) {
+	s = PreParseFloat(s, "bf")
 	r, _, err := big.ParseFloat(s, 0, t.Precision, t.RoundingMode)
 	if err != nil {
 		return nil, false
@@ -267,7 +265,7 @@ func (t BigFloatType) Is(s string) bool {
 
 func (t BigFloatType) Format(v *big.Float) string {
 	s := v.String()
-	return CleanFloat(s)
+	return PostFormatFloat(s)
 }
 
 func (t BigFloatType) Compare(x1 string, x2 string) (int, bool) {

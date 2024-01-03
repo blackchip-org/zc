@@ -77,7 +77,7 @@ func RoundFloat(c zc.Calc) {
 	places := zc.PopInt(c)
 	a0 := zc.PopBigFloat(c)
 	r0 := a0.Text('e', places)
-	r0 = zc.CleanFloat(r0)
+	r0 = zc.PostFormatFloat(r0)
 	zc.PushString(c, r0)
 }
 
