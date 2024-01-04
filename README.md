@@ -44,7 +44,7 @@ https://github.com/blackchip-org/zc/releases
 
 or, install [go](https://go.dev/dl/) and then install the calculator with:
 
-    go install github.com/blackchip-org/zc/v5/cmd/zc@latest
+    go install github.com/blackchip-org/zc/cmd/zc@latest
 
 Run the calculator with:
 
