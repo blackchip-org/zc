@@ -1,6 +1,6 @@
 package ops
 
-import "github.com/blackchip-org/zc/pkg/zc"
+import "github.com/blackchip-org/zc/v5/pkg/zc"
 
 /*
 oper	and

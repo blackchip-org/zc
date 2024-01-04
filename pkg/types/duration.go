@@ -5,7 +5,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/blackchip-org/zc/pkg/scanner"
+	"github.com/blackchip-org/zc/v5/pkg/scanner"
 )
 
 func ParseDuration(str string) (time.Duration, bool) {

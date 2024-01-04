@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/pkg/types"
+	"github.com/blackchip-org/zc/v5/pkg/types"
 )
 
 type Type interface {

@@ -10,8 +10,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/blackchip-org/zc/pkg/doc"
-	"github.com/blackchip-org/zc/pkg/scanner"
+	"github.com/blackchip-org/zc/v5/pkg/doc"
+	"github.com/blackchip-org/zc/v5/pkg/scanner"
 )
 
 const (

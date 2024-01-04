@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/blackchip-org/zc/pkg/types"
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/types"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 type formatState struct {

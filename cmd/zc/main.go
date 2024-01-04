@@ -7,10 +7,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/blackchip-org/zc/pkg/ansi"
-	"github.com/blackchip-org/zc/pkg/calc"
-	"github.com/blackchip-org/zc/pkg/repl"
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/ansi"
+	"github.com/blackchip-org/zc/v5/pkg/calc"
+	"github.com/blackchip-org/zc/v5/pkg/repl"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 func main() {

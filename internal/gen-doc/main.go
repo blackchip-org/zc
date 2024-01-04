@@ -7,7 +7,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/blackchip-org/zc/pkg/doc"
+	"github.com/blackchip-org/zc/v5/pkg/doc"
 )
 
 //go:generate go run main.go

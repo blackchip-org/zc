@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/blackchip-org/zc/pkg/ansi"
-	"github.com/blackchip-org/zc/pkg/calc"
+	"github.com/blackchip-org/zc/v5/pkg/ansi"
+	"github.com/blackchip-org/zc/v5/pkg/calc"
 )
 
 func TestUndo(t *testing.T) {

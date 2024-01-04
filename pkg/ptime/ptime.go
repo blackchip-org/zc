@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/blackchip-org/zc/pkg/ptime/locale"
+	"github.com/blackchip-org/zc/v5/pkg/ptime/locale"
 )
 
 type P struct {

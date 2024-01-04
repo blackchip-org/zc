@@ -9,7 +9,7 @@ Documentation:
 - [Type Documentation](doc/types.md)
 - [Stack Notation](doc/stack.md)
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/pkg/zc.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/pkg/zc)
+[![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v5/pkg/zc.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v5/pkg/zc)
 
 ![ZC Demo](demo.gif)
 
@@ -44,7 +44,7 @@ https://github.com/blackchip-org/zc/releases
 
 or, install [go](https://go.dev/dl/) and then install the calculator with:
 
-    go install github.com/blackchip-org/zc/cmd/zc@latest
+    go install github.com/blackchip-org/zc/v5/cmd/zc@latest
 
 Run the calculator with:
 

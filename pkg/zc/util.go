@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/pkg/scanner"
+	"github.com/blackchip-org/zc/v5/pkg/scanner"
 	"golang.org/x/exp/constraints"
 )
 

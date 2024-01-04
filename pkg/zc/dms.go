@@ -1,7 +1,7 @@
 package zc
 
 import (
-	"github.com/blackchip-org/zc/pkg/types"
+	"github.com/blackchip-org/zc/v5/pkg/types"
 )
 
 // --

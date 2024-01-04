@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/blackchip-org/zc/pkg/doc"
+	"github.com/blackchip-org/zc/v5/pkg/doc"
 )
 
 var prelude = strings.TrimSpace(`
@@ -16,8 +16,8 @@ var prelude = strings.TrimSpace(`
 package calc
 
 import (
-	"github.com/blackchip-org/zc/pkg/ops"
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/ops"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 var opsList = []zc.OpDecl{

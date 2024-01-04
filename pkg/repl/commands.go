@@ -5,8 +5,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/pkg/scanner"
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 type Cmd func(*REPL, *scanner.Scanner) error

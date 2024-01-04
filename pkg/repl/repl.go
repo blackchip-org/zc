@@ -11,9 +11,9 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/pkg/ansi"
-	"github.com/blackchip-org/zc/pkg/scanner"
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/ansi"
+	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 	"github.com/peterh/liner"
 )
 

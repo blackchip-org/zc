@@ -3,7 +3,7 @@ package ops
 import (
 	"sort"
 
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 /*

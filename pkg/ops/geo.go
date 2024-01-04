@@ -3,8 +3,8 @@ package ops
 import (
 	"math"
 
-	"github.com/blackchip-org/zc/pkg/ext"
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/ext"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 const EarthRadius = 6371000

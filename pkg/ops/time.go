@@ -3,8 +3,8 @@ package ops
 import (
 	"time"
 
-	"github.com/blackchip-org/zc/pkg/ptime/locale"
-	"github.com/blackchip-org/zc/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/ptime/locale"
+	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 type timeState struct {
