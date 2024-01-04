@@ -129,6 +129,7 @@
 
 ## g
 
+- [g-oz](ops/mass.md#g-oz): Grams to ounces
 - [get](ops/stack.md#get): Get a named stack from memory
 - [si.giga](ops/si.md#si.giga): SI prefix G, 1e09
 - [greater-than](ops/cmp.md#gt): Greater than
@@ -163,12 +164,14 @@
 ## k
 
 - [k-c](ops/temp.md#k-c): Kelvin to Celsius
+- [kg-lb](ops/mass.md#kg-lb): Kilograms to pounds
 - [si.kilo](ops/si.md#si.kilo): SI prefix k, 1e03
 - [km-mi](ops/len.md#km-mi): Kilometers to miles
 - [km-nmi](ops/len.md#km-nmi): Kilometers to nautical miles
 
 ## l
 
+- [lb-kg](ops/mass.md#lb-kg): Pounds to kilograms
 - [left](ops/text.md#left): Left substring
 - [left-shift](ops/prog.md#lsh): Left shift bits
 - [len](ops/text.md#len): Length of text in characters
@@ -225,6 +228,7 @@
 - [oct](ops/prog.md#oct): Octal conversion
 - [or](ops/bool.md#or) (bool): Logical disjunction
 - [or](ops/prog.md#or) (prog): Bitwise or
+- [oz-g](ops/mass.md#oz-g): Ounces to grams
 
 ## p
 

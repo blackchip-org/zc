@@ -16,6 +16,7 @@ var Categories = []Category{
 	}},
 	{"Units of Measure", []string{
 		"len",
+		"mass",
 		"temp",
 	}},
 	{"Library", []string{

@@ -3,7 +3,7 @@ package ops
 /*
 oper	km-mi
 func	- p0:Decimal -- Decimal
-macro	0.62137119 mul
+macro	0.62137119 mul /mi anno
 title	Kilometers to miles
 
 desc
@@ -18,7 +18,7 @@ end
 /*
 oper	km-nmi
 func	- p0:Decimal -- Decimal
-macro	0.539957 mul
+macro	0.539957 mul /nmi anno
 title	Kilometers to nautical miles
 
 desc
@@ -33,7 +33,7 @@ end
 /*
 oper	m-nmi
 func	- p0:Decimal -- Decimal
-macro	0.000539957 mul
+macro	0.000539957 mul /nmi anno
 title	Meters to nautical miles
 
 desc
@@ -48,7 +48,7 @@ end
 /*
 oper	mi-km
 func	- p0:Decimal -- Decimal
-macro	1.609344 mul
+macro	1.609344 mul /km anno
 title	Miles to kilomters
 
 desc
@@ -63,7 +63,7 @@ end
 /*
 oper	mi-nmi
 func	- p0:Decimal -- Decimal
-macro	0.868976 mul
+macro	0.868976 mul /nmi anno
 title	Miles to nautical miles
 
 desc
@@ -78,7 +78,7 @@ end
 /*
 oper	nmi-km
 func	- p0:Decimal -- Decimal
-macro	1.852 mul
+macro	1.852 mul /km anno
 title 	Nautical miles to kiometers
 
 desc
@@ -93,7 +93,7 @@ end
 /*
 oper	nmi-m
 func	- p0:Decimal -- Decimal
-macro	1852 mul
+macro	1852 mul /m anno
 title	Nautical miles to meters
 
 desc
@@ -101,14 +101,14 @@ Convert *p0* in nautical miles to meters
 end
 
 example
-100 nmi-m -- 185200
+100 nmi-m -- 185200 # m
 end
 */
 
 /*
 oper	nmi-mi
 func	- p0:Decimal -- Decimal
-macro	1.15078 mul
+macro	1.15078 mul /mi anno
 title	Nautical miles to miles
 
 desc

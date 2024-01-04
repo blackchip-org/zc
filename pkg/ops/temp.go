@@ -3,7 +3,7 @@ package ops
 /*
 oper 	c-f
 func	- p0:Decimal -- Decimal
-macro	9 5 div mul 32 add
+macro	9 5 div mul 32 add /°F anno
 title	Celsius to Fahrenheit
 
 desc
@@ -18,7 +18,7 @@ end
 /*
 oper	c-k
 func	- p0:Decimal -- Decimal
-macro	273.15 add
+macro	273.15 add /K anno
 title	Celsius to Kelvin
 
 desc
@@ -33,7 +33,7 @@ end
 /*
 oper	f-c
 func	- p0:Decimal -- Decimal
-macro	32 sub 5 9 div mul
+macro	32 sub 5 9 div mul /°C anno
 title	Fahrenheit to Celsius
 
 desc
@@ -48,7 +48,7 @@ end
 /*
 oper 	k-c
 func	- p0:Decimal -- Decimal
-macro	273.15 sub
+macro	273.15 sub /°C anno
 title	Kelvin to Celsius
 
 desc
