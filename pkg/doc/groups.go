@@ -16,6 +16,7 @@ var GroupTitles = map[string]string{
 	"format":   "Value formatting",
 	"geo":      "Geo-spatial calculations",
 	"hof":      "Higher-order functions",
+	"iec":      "IEC binary prefixes",
 	"len":      "Length conversions",
 	"mass":     "Mass conversions",
 	"prog":     "Programmer's calculator",

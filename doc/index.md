@@ -66,6 +66,8 @@
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
+- [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
+- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
 - [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
@@ -113,6 +115,7 @@
 - [eq](ops/cmp.md#eq): Equal
 - [eval](ops/hof.md#eval): Evaluate top of stack
 - [si.exa](ops/si.md#si.exa): SI prefix E, 1e18
+- [iec.exbi](ops/iec.md#iec.exbi): IEC prefix EI, 2^60
 - [exp](ops/complex.md#exp) (complex): Natural exponential
 - [exp](ops/sci.md#exp) (sci): Natural exponential
 
@@ -131,6 +134,7 @@
 
 - [g-oz](ops/mass.md#g-oz): Grams to ounces
 - [get](ops/stack.md#get): Get a named stack from memory
+- [iec.gibi](ops/iec.md#iec.gibi): IEC prefix Gi, 2^30
 - [si.giga](ops/si.md#si.giga): SI prefix G, 1e09
 - [greater-than](ops/cmp.md#gt): Greater than
 - [greater-than-or-equal](ops/cmp.md#gte): Greater than or equal
@@ -165,6 +169,7 @@
 
 - [k-c](ops/temp.md#k-c): Kelvin to Celsius
 - [kg-lb](ops/mass.md#kg-lb): Kilograms to pounds
+- [iec.kibi](ops/iec.md#iec.kibi): IEC prefix Ki, 2^10
 - [si.kilo](ops/si.md#si.kilo): SI prefix k, 1e03
 - [km-mi](ops/len.md#km-mi): Kilometers to miles
 - [km-nmi](ops/len.md#km-nmi): Kilometers to nautical miles
@@ -194,6 +199,7 @@
 - [m](ops/basic.md#mul): Multiplication
 - [m-nmi](ops/len.md#m-nmi): Meters to nautical miles
 - [map](ops/hof.md#map): Apply a function to each item on the stack
+- [iec.mebi](ops/iec.md#iec.mebi): IEC prefix Mi, 2^20
 - [si.mega](ops/si.md#si.mega): SI prefix M, 1e06
 - [mi-km](ops/len.md#mi-km): Miles to kilomters
 - [mi-nmi](ops/len.md#mi-nmi): Miles to nautical miles
@@ -232,6 +238,7 @@
 
 ## p
 
+- [iec.pebi](ops/iec.md#iec.pebi): IEC prefix Pi, 2^50
 - [si.peta](ops/si.md#si.peta): SI prefix P, 1e15
 - [phase](ops/complex.md#phase): Phase (argument)
 - [pi](ops/sci.md#pi): Circumference to diameter ratio
@@ -325,6 +332,7 @@
 - [tan](ops/sci.md#tan) (sci): Tangent
 - [tanh](ops/complex.md#tanh) (complex): Hyperbolic tangent
 - [tanh](ops/sci.md#tanh) (sci): Hyperbolic tangent
+- [iec.tebi](ops/iec.md#iec.tebi): IEC prefix Ti, 2^40
 - [si.terra](ops/si.md#si.terra): SI prefix T, 1e12
 - [time](ops/time.md#time): Formats to a common time layout
 - [timezone](ops/time.md#timezone): Convert time to another time zone
@@ -337,6 +345,8 @@
 
 - [u8de](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [u8en](ops/text.md#utf8-encode): Encode UTF-8 bytes
+- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
+- [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
 - [up](ops/stack.md#up): Rotate items upward
 - [upper](ops/text.md#upper): Uppercase
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes

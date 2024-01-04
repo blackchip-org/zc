@@ -1,5 +1,32 @@
 package ops
 
+/*
+oper	si.convert
+func	- p0:Val u0:BigInt u1:BigInt -- Val
+macro   div mul
+title	Converts between SI units
+
+desc
+Convert *p0* in *u0* SI units to *u1* SI units.
+end
+
+example
+123456 -- 123456
+si.nano si.milli si.convert -- 0.123456
+end
+*/
+
+/*
+oper	si.unit
+func    - -- BigInt
+macro 	1
+title   SI unit value, 1e0
+
+desc
+SI unit value, 1e0
+end
+*/
+
 //tab si.quetta 	-- 1e30 	-- SI prefix Q, 1e30
 //tab si.ronna		-- 1e27		-- SI prefix R, 1e27
 //tab si.yotta		-- 1e24		-- SI prefix Y, 1e24

@@ -3,13 +3,14 @@
 
 International System of Units
 
-| Operation          | Description
-|--------------------|---------------
+| Operation            | Description
+|----------------------|---------------
 | [`si.atto`](#si.atto) | SI prefix a, 1e-18
 | [`si.centi`](#si.centi) | SI prefix c, 1e-02
+| [`si.convert`](#si.convert) | Converts between SI units
 | [`si.deca`](#si.deca) | SI prefix da, 1e01
 | [`si.deci`](#si.deci) | SI prefix d, 1e-01
-| [`si.exa`](#si.exa) | SI prefix E, 1e18
+| [`si.exa`](#si.exa)  | SI prefix E, 1e18
 | [`si.femto`](#si.femto) | SI prefix f, 1e-15
 | [`si.giga`](#si.giga) | SI prefix G, 1e09
 | [`si.hecto`](#si.hecto) | SI prefix h, 1e02
@@ -25,6 +26,7 @@ International System of Units
 | [`si.ronna`](#si.ronna) | SI prefix R, 1e27
 | [`si.ronto`](#si.ronto) | SI prefix r, 1e-27
 | [`si.terra`](#si.terra) | SI prefix T, 1e12
+| [`si.unit`](#si.unit) | SI unit value, 1e0
 | [`si.yocto`](#si.yocto) | SI prefix y, 1e-24
 | [`si.yotta`](#si.yotta) | SI prefix Y, 1e24
 | [`si.zepto`](#si.zepto) | SI prefix z, 1e-21
@@ -35,159 +37,125 @@ International System of Units
 
 SI prefix a, 1e-18
 
-```
-```
-
 
 ## si.centi
 
 SI prefix c, 1e-02
 
+
+## si.convert
+
+Convert *p0* in *u0* SI units to *u1* SI units.
+
 ```
+( p0:Val u0:BigInt u1:BigInt -- Val )
 ```
 
+Example:
+
+<!-- test: si.convert -->
+
+| Input                         | Stack
+|-------------------------------|---------------
+| `123456                     ` | `123456`
+| `si.nano si.milli si.convert` | `0.123456`
 
 ## si.deca
 
 SI prefix da, 1e01
-
-```
-```
 
 
 ## si.deci
 
 SI prefix d, 1e-01
 
-```
-```
-
 
 ## si.exa
 
 SI prefix E, 1e18
-
-```
-```
 
 
 ## si.femto
 
 SI prefix f, 1e-15
 
-```
-```
-
 
 ## si.giga
 
 SI prefix G, 1e09
-
-```
-```
 
 
 ## si.hecto
 
 SI prefix h, 1e02
 
-```
-```
-
 
 ## si.kilo
 
 SI prefix k, 1e03
-
-```
-```
 
 
 ## si.mega
 
 SI prefix M, 1e06
 
-```
-```
-
 
 ## si.micro
 
 SI prefix μ, 1e-06
-
-```
-```
 
 
 ## si.milli
 
 SI prefix m, 1e-03
 
-```
-```
-
 
 ## si.nano
 
 SI prefix n, 1e-09
-
-```
-```
 
 
 ## si.peta
 
 SI prefix P, 1e15
 
-```
-```
-
 
 ## si.pico
 
 SI prefix p, 1e-12
-
-```
-```
 
 
 ## si.quecto
 
 SI prefix q, 1e-30
 
-```
-```
-
 
 ## si.quetta
 
 SI prefix Q, 1e30
-
-```
-```
 
 
 ## si.ronna
 
 SI prefix R, 1e27
 
-```
-```
-
 
 ## si.ronto
 
 SI prefix r, 1e-27
-
-```
-```
 
 
 ## si.terra
 
 SI prefix T, 1e12
 
+
+## si.unit
+
+SI unit value, 1e0
+
 ```
+(  -- BigInt )
 ```
 
 
@@ -195,30 +163,18 @@ SI prefix T, 1e12
 
 SI prefix y, 1e-24
 
-```
-```
-
 
 ## si.yotta
 
 SI prefix Y, 1e24
-
-```
-```
 
 
 ## si.zepto
 
 SI prefix z, 1e-21
 
-```
-```
-
 
 ## si.zetta
 
 SI prefix Z, 1e21
-
-```
-```
 

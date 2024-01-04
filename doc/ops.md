@@ -51,6 +51,7 @@
 | [entity](ops/entity.md)   | HTML entity characters 
 | [emoji](ops/emoji.md)     | Unicode emoji characters 
 | [epsg](ops/epsg.md)       | EPSG Geodetic Parameter Dataset 
+| [iec](ops/iec.md)         | IEC binary prefixes 
 | [si](ops/si.md)           | International System of Units 
 | [tz](ops/tz.md)           | Time zone database 
 

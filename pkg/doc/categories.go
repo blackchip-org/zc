@@ -40,6 +40,7 @@ var Categories = []Category{
 		"entity",
 		"emoji",
 		"epsg",
+		"iec",
 		"si",
 		"tz",
 	}},

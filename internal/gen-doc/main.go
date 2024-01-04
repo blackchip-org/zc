@@ -98,22 +98,26 @@ func writeOp(out *strings.Builder, op *doc.Op) {
 		}
 		fmt.Fprintf(out, "%v\n\n", strings.Join(fmtAliases, ", "))
 	}
-	fmt.Fprintf(out, "```\n")
-	for _, fn := range op.Funcs {
-		fmt.Fprintf(out, "( ")
-		var fmtParams []string
-		for _, p := range fn.Params {
-			fmtParams = append(fmtParams, p.String())
+
+	if len(op.Funcs) > 0 {
+		fmt.Fprintf(out, "```\n")
+		for _, fn := range op.Funcs {
+			fmt.Fprintf(out, "( ")
+			var fmtParams []string
+			for _, p := range fn.Params {
+				fmtParams = append(fmtParams, p.String())
+			}
+			fmt.Fprintf(out, "%v -- ", strings.Join(fmtParams, " "))
+			fmtParams = nil
+			for _, p := range fn.Returns {
+				fmtParams = append(fmtParams, p.String())
+			}
+			fmt.Fprintf(out, "%v )\n", strings.Join(fmtParams, " "))
 		}
-		fmt.Fprintf(out, "%v -- ", strings.Join(fmtParams, " "))
-		fmtParams = nil
-		for _, p := range fn.Returns {
-			fmtParams = append(fmtParams, p.String())
-		}
-		fmt.Fprintf(out, "%v )\n", strings.Join(fmtParams, " "))
+		fmt.Fprintf(out, "```\n")
+		fmt.Fprintln(out, "")
 	}
-	fmt.Fprintf(out, "```\n")
-	fmt.Fprintln(out, "")
+
 	if len(op.Example) > 0 {
 		fmt.Fprintf(out, "Example:\n\n<!-- test: %v -->\n\n", op.Name)
 		writeExample(out, op.Example)

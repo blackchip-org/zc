@@ -11,7 +11,7 @@ Converts the temperature *p0* in Celsius to Fahrenheit.
 end
 
 example
-20 c-f -- 68
+20 c-f -- 68 # °F
 end
 */
 
@@ -26,7 +26,7 @@ Converts the temperature *p0* in Celsius to Kelvin.
 end
 
 example
-100 c-k -- 373.15
+100 c-k -- 373.15 # K
 end
 */
 
@@ -56,6 +56,6 @@ Converts the temperature *p0* in Kelvin to Celsius.
 end
 
 example
-373.15 k-c -- 100
+373.15 k-c -- 100 # °C
 end
 */

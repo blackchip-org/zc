@@ -32,14 +32,8 @@ Example:
 
 Web Mercator, EPSG:3857
 
-```
-```
-
 
 ## epsg.wgs-84
 
 World Geodetic System of 1984, EPSG:4326
-
-```
-```
 
