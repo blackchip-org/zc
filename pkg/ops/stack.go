@@ -153,9 +153,10 @@ func Get(c zc.Calc) {
 }
 
 /*
-oper	n
-func	N -- Int
-title	Number of stack items
+oper	size
+func	Size Val* -- Val* n:Int
+title	Size of the current stack
+alias	n
 
 desc
 Number of items on the stack.
@@ -163,13 +164,13 @@ end
 
 example
 1 1 1 1 -- 1 | 1 | 1 | 1
-n -- 4
+n -- 1 | 1 | 1 | 1 | 4 # size
 end
 */
-func N(c zc.Calc) {
+func Size(c zc.Calc) {
 	r0 := len(c.Stack())
-	c.SetStack([]string{})
 	zc.PushInt(c, r0)
+	zc.Annotate(c, "size")
 }
 
 /*
@@ -185,8 +186,8 @@ be stored at one time.
 end
 
 example
-1 1 1 1 1 store n -- 5
-recall -- 1 | 1 | 1 | 1 | 1 | 5
+1 2 3 4 store average -- 2.5
+recall -- 1 | 2 | 3 | 4 | 2.5
 end
 */
 func Recall(c zc.Calc) {
@@ -249,8 +250,8 @@ a stack so that multiple stacks can be stored at one time.
 end
 
 example
-1 1 1 1 1 store n -- 5
-recall -- 1 | 1 | 1 | 1 | 1 | 5
+1 2 3 4 store average -- 2.5
+recall -- 1 | 2 | 3 | 4 | 2.5
 end
 */
 func Store(c zc.Calc) {

@@ -89,6 +89,46 @@ end
 */
 
 /*
+oper standard-deviation-pop
+func StandardDeviationPop BigInt*   -- BigInt
+func -                    Decimal*  -- Decimal
+func -                    Float*    -- Float
+func -                    Rational* -- Rational
+alias stdev-p
+macro var-p sqrt
+title Population standard deviation
+
+desc
+Standard deviation of the stack where it contains the entire population
+end
+
+example
+2 4 4 4 5 5 7 9 -- 2 | 4 | 4 | 4 | 5 | 5 | 7 | 9
+stdev-p -- 2
+end
+*/
+
+/*
+oper standard-deviation-samp
+func StandardDeviationSamp BigInt*   -- BigInt
+func -                     Decimal*  -- Decimal
+func -                     Float*    -- Float
+func -                     Rational* -- Rational
+alias stdev-s
+macro var-s sqrt
+title Sample standard deviation
+
+desc
+Standard deviation of the stack where it contains a sample of the population
+end
+
+example
+2 4 4 4 5 5 7 9 -- 2 | 4 | 4 | 4 | 5 | 5 | 7 | 9
+stdev-s 2 round -- 2.14
+end
+*/
+
+/*
 oper	sum
 func	- BigInt*   -- BigInt
 func	- Decimal*  -- Decimal
@@ -107,3 +147,64 @@ example
 sum -- 15
 end
 */
+
+/*
+oper variance-pop
+func VariancePop BigInt*   -- BigInt
+func -           Decimal*  -- Decimal
+func -           Float*    -- Float
+func -           Rational* -- Rational
+alias var-p
+title Population variance
+
+desc
+Variance of the stack where it contains the entire population
+end
+
+example
+2 4 4 4 5 5 7 9 -- 2 | 4 | 4 | 4 | 5 | 5 | 7 | 9
+var-p -- 4
+end
+*/
+func VariancePop(c zc.Calc) {
+	Variance(c, 0)
+}
+
+/*
+oper variance-samp
+func VarianceSamp BigInt*   -- BigInt
+func -            Decimal*  -- Decimal
+func -            Float*    -- Float
+func -            Rational* -- Rational
+alias var-s
+title Sample variance
+
+desc
+Variance of the stack where it contains a sample of the population
+end
+
+example
+2 4 4 4 5 5 7 9 -- 2 | 4 | 4 | 4 | 5 | 5 | 7 | 9
+var-s 2 round -- 4.57
+end
+*/
+func VarianceSamp(c zc.Calc) {
+	Variance(c, -1)
+}
+
+func Variance(c zc.Calc, nadj int) {
+	n := c.StackLen()
+	if n == 0 {
+		return
+	}
+	data := c.Stack()
+	if err := c.Eval("average"); err != nil {
+		return
+	}
+	mean := zc.PopInt(c)
+	c.SetStack(data)
+	zc.PushInt(c, mean)
+	c.Eval("[sub square] [map] 2 apply sum")
+	zc.PushInt(c, n+nadj)
+	c.Eval("div")
+}

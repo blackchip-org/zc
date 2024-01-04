@@ -27,6 +27,7 @@
 - [and](ops/prog.md#and) (prog): Bitwise and
 - [anno](ops/anno.md#anno): Annotate value
 - [annotate](ops/anno.md#anno): Annotate value
+- [apply](ops/hof.md#apply): Apply a function using arguments on stack
 - [asin](ops/complex.md#asin) (complex): Inverse sine
 - [asin](ops/sci.md#asin) (sci): Inverse sine
 - [asinh](ops/complex.md#asinh) (complex): Inverse hyperbolic sine
@@ -202,7 +203,7 @@
 
 ## n
 
-- [n](ops/stack.md#n): Number of stack items
+- [n](ops/stack.md#size): Size of the current stack
 - [si.nano](ops/si.md#si.nano): SI prefix n, 1e-09
 - [neg](ops/basic.md#neg): Negation
 - [neq](ops/cmp.md#neq): Not equal
@@ -292,6 +293,7 @@
 - [sin](ops/sci.md#sin) (sci): Sine
 - [sinh](ops/complex.md#sinh) (complex): Hyperbolic sine
 - [sinh](ops/sci.md#sinh) (sci): Hyperbolic sine
+- [size](ops/stack.md#size): Size of the current stack
 - [sn](ops/format.md#scientific-notation): Scientific notation
 - [sort](ops/cmp.md#sort): Type-aware stack sort
 - [sort-str](ops/cmp.md#sort-str): String based stack sort
@@ -301,6 +303,10 @@
 - [square](ops/basic.md#sq): Square
 - [square-root](ops/basic.md#sqrt): Square root
 - [st](ops/stack.md#store): Store stack to memory
+- [standard-deviation-pop](ops/stat.md#standard-deviation-pop): Population standard deviation
+- [standard-deviation-samp](ops/stat.md#standard-deviation-samp): Sample standard deviation
+- [stdev-p](ops/stat.md#standard-deviation-pop): Population standard deviation
+- [stdev-s](ops/stat.md#standard-deviation-samp): Sample standard deviation
 - [store](ops/stack.md#store): Store stack to memory
 - [sub](ops/basic.md#sub) (basic): Subtraction
 - [sub](ops/time.md#sub) (time): Time or duration subtraction
@@ -335,6 +341,10 @@
 
 ## v
 
+- [var-p](ops/stat.md#variance-pop): Population variance
+- [var-s](ops/stat.md#variance-samp): Sample variance
+- [variance-pop](ops/stat.md#variance-pop): Population variance
+- [variance-samp](ops/stat.md#variance-samp): Sample variance
 - [version](ops/zc.md#version): Version number
 
 ## w

@@ -3,12 +3,16 @@
 
 Statistical calculations
 
-| Operation                | Description
-|--------------------------|---------------
-| [`average, avg`](#average) | Average
-| [`factorial, fact`](#factorial) | Factorial
-| [`prod`](#prod)          | Product
-| [`sum`](#sum)            | Summation
+| Operation                                               | Description
+|---------------------------------------------------------|---------------
+| [`average, avg`](#average)                              | Average
+| [`factorial, fact`](#factorial)                         | Factorial
+| [`prod`](#prod)                                         | Product
+| [`standard-deviation-pop, stdev-p`](#standard-deviation-pop) | Population standard deviation
+| [`standard-deviation-samp, stdev-s`](#standard-deviation-samp) | Sample standard deviation
+| [`sum`](#sum)                                           | Summation
+| [`variance-pop, var-p`](#variance-pop)                  | Population variance
+| [`variance-samp, var-s`](#variance-samp)                | Sample variance
 
 
 ## average
@@ -74,6 +78,50 @@ Example:
 | `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
 | `prod     ` | `120`
 
+## standard-deviation-pop
+
+Standard deviation of the stack where it contains the entire population
+
+Alias: `stdev-p`
+
+```
+( BigInt* -- BigInt )
+( Decimal* -- Decimal )
+( Float* -- Float )
+( Rational* -- Rational )
+```
+
+Example:
+
+<!-- test: standard-deviation-pop -->
+
+| Input             | Stack
+|-------------------|---------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `stdev-p        ` | `2`
+
+## standard-deviation-samp
+
+Standard deviation of the stack where it contains a sample of the population
+
+Alias: `stdev-s`
+
+```
+( BigInt* -- BigInt )
+( Decimal* -- Decimal )
+( Float* -- Float )
+( Rational* -- Rational )
+```
+
+Example:
+
+<!-- test: standard-deviation-samp -->
+
+| Input             | Stack
+|-------------------|---------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `stdev-s 2 round` | `2.14`
+
 ## sum
 
 The sum of all items on the stack.
@@ -94,3 +142,47 @@ Example:
 |-------------|---------------
 | `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
 | `sum      ` | `15`
+
+## variance-pop
+
+Variance of the stack where it contains the entire population
+
+Alias: `var-p`
+
+```
+( BigInt* -- BigInt )
+( Decimal* -- Decimal )
+( Float* -- Float )
+( Rational* -- Rational )
+```
+
+Example:
+
+<!-- test: variance-pop -->
+
+| Input             | Stack
+|-------------------|---------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `var-p          ` | `4`
+
+## variance-samp
+
+Variance of the stack where it contains a sample of the population
+
+Alias: `var-s`
+
+```
+( BigInt* -- BigInt )
+( Decimal* -- Decimal )
+( Float* -- Float )
+( Rational* -- Rational )
+```
+
+Example:
+
+<!-- test: variance-samp -->
+
+| Input             | Stack
+|-------------------|---------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `var-s 2 round  ` | `4.57`

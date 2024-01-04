@@ -1,8 +1,44 @@
 package ops
 
 import (
+	"slices"
+	"strings"
+
 	"github.com/blackchip-org/zc/pkg/zc"
 )
+
+/*
+oper    apply
+func    Apply args:Val* fn:Str nargs:Int -- Val*
+title 	Apply a function using arguments on stack
+
+desc
+Evaluates the expression in *fn* by first popping *nargs* off the stack and
+pushing them back as a single argument. This is useful for higher order
+functions, like map, where some of the arguments are from existing results
+found on the stack.
+end
+
+example
+1 2 3 4 -- 1 | 2 | 3 | 4
+n -- 1 | 2 | 3 | 4 | 4 # size
+[swap sub] [map] 2 apply -- 3 | 2 | 1 | 0
+end
+*/
+func Apply(c zc.Calc) {
+	nArgs := zc.PopInt(c)
+	fnName := zc.PopString(c)
+	if c.StackLen() < nArgs {
+		zc.ErrNotEnoughArgs(c, "apply", nArgs)
+		return
+	}
+	var args []string
+	for i := 0; i < nArgs; i++ {
+		args = slices.Insert(args, 0, zc.PopString(c))
+	}
+	c.Push(strings.Join(args, " "))
+	c.Eval(fnName)
+}
 
 /*
 oper	eval

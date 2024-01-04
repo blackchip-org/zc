@@ -5,12 +5,34 @@ Higher-order functions
 
 | Operation          | Description
 |--------------------|---------------
+| [`apply`](#apply)  | Apply a function using arguments on stack
 | [`eval`](#eval)    | Evaluate top of stack
 | [`filter`](#filter) | Filter items in the stack
 | [`fold, reduce`](#fold) | Reduce items to a single value
 | [`map`](#map)      | Apply a function to each item on the stack
 | [`repeat`](#repeat) | Repeat the execution of a function
 
+
+## apply
+
+Evaluates the expression in *fn* by first popping *nargs* off the stack and
+pushing them back as a single argument. This is useful for higher order
+functions, like map, where some of the arguments are from existing results
+found on the stack.
+
+```
+( args:Val* fn:Str nargs:Int -- Val* )
+```
+
+Example:
+
+<!-- test: apply -->
+
+| Input                      | Stack
+|----------------------------|---------------
+| `1 2 3 4                 ` | `1 \| 2 \| 3 \| 4`
+| `n                       ` | `1 \| 2 \| 3 \| 4 \| 4 # size`
+| `[swap sub] [map] 2 apply` | `3 \| 2 \| 1 \| 0`
 
 ## eval
 

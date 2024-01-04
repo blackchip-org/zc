@@ -26,6 +26,11 @@ func main() {
 		return
 	}
 
+	if os.Getenv("ZC_TRACE") != "" {
+		c.Trace = true
+		ansi.Enabled = false
+	}
+
 	var source string
 	if len(os.Args) == 2 && os.Args[1] == "-" {
 		in, err := io.ReadAll(os.Stdin)

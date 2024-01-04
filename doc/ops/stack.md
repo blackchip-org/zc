@@ -11,10 +11,10 @@ Stack manipulations
 | [`drop`](#drop)        | Drop top item from stack
 | [`dup`](#dup)          | Duplicate top stack item
 | [`get`](#get)          | Get a named stack from memory
-| [`n`](#n)              | Number of stack items
 | [`recall, re`](#recall) | Recall stack from memory
 | [`reverse, rev`](#reverse) | Reverse stack
 | [`set`](#set)          | Place a named stack to memory
+| [`size, n`](#size)     | Size of the current stack
 | [`store, st`](#store)  | Store stack to memory
 | [`swap, sw`](#swap)    | Swap top two items on the stack
 | [`take`](#take)        | Take elements from the stack
@@ -132,23 +132,6 @@ Example:
 ```
 
 
-## n
-
-Number of items on the stack.
-
-```
-(  -- Int )
-```
-
-Example:
-
-<!-- test: n -->
-
-| Input     | Stack
-|-----------|---------------
-| `1 1 1 1` | `1 \| 1 \| 1 \| 1`
-| `n      ` | `4`
-
 ## recall
 
 Recall a stack from memory. The recalled stack is placed before an existing
@@ -165,10 +148,10 @@ Example:
 
 <!-- test: recall -->
 
-| Input               | Stack
-|---------------------|---------------
-| `1 1 1 1 1 store n` | `5`
-| `recall           ` | `1 \| 1 \| 1 \| 1 \| 1 \| 5`
+| Input                   | Stack
+|-------------------------|---------------
+| `1 2 3 4 store average` | `2.5`
+| `recall               ` | `1 \| 2 \| 3 \| 4 \| 2.5`
 
 ## reverse
 
@@ -198,6 +181,25 @@ Example:
 ```
 
 
+## size
+
+Number of items on the stack.
+
+Alias: `n`
+
+```
+( Val* -- Val* n:Int )
+```
+
+Example:
+
+<!-- test: size -->
+
+| Input     | Stack
+|-----------|---------------
+| `1 1 1 1` | `1 \| 1 \| 1 \| 1`
+| `n      ` | `1 \| 1 \| 1 \| 1 \| 4 # size`
+
 ## store
 
 Store a copy of the current stack to memory for later recall. Memory is also
@@ -213,10 +215,10 @@ Example:
 
 <!-- test: store -->
 
-| Input               | Stack
-|---------------------|---------------
-| `1 1 1 1 1 store n` | `5`
-| `recall           ` | `1 \| 1 \| 1 \| 1 \| 1 \| 5`
+| Input                   | Stack
+|-------------------------|---------------
+| `1 2 3 4 store average` | `2.5`
+| `recall               ` | `1 \| 2 \| 3 \| 4 \| 2.5`
 
 ## swap
 

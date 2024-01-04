@@ -11,7 +11,8 @@ import (
 	"github.com/blackchip-org/zc/pkg/zc"
 )
 
-type calc struct {
+type Calc struct {
+	Trace bool
 	stack []string
 	err   error
 	info  string
@@ -20,34 +21,35 @@ type calc struct {
 	args  []string
 }
 
-func New() zc.Calc {
-	return &calc{state: make(map[string]any)}
+func New() *Calc {
+	return &Calc{state: make(map[string]any)}
 }
 
-func (c *calc) Stack() []string {
+func (c *Calc) Stack() []string {
 	s := make([]string, len(c.stack))
 	copy(s, c.stack)
 	return s
 }
 
-func (c *calc) StackLen() int {
+func (c *Calc) StackLen() int {
 	return len(c.stack)
 }
 
-func (c *calc) SetStack(s []string) {
+func (c *Calc) SetStack(s []string) {
 	c.info = ""
 	c.stack = slices.Clone(s)
+	c.ptrace("set : %v", zc.StackString(c))
 }
 
-func (c *calc) Info() string {
+func (c *Calc) Info() string {
 	return c.info
 }
 
-func (c *calc) SetInfo(format string, args ...any) {
+func (c *Calc) SetInfo(format string, args ...any) {
 	c.info = fmt.Sprintf(format, args...)
 }
 
-func (c *calc) Eval(s string, args ...any) error {
+func (c *Calc) Eval(s string, args ...any) error {
 	c.err = nil
 	c.info = ""
 	c.op = ""
@@ -61,8 +63,9 @@ func (c *calc) Eval(s string, args ...any) error {
 		for _, word := range words {
 			ch, _ := utf8.DecodeRuneInString(word)
 			if isValue(ch) {
-				c.stack = append(c.stack, strings.TrimPrefix(word, "\""))
+				c.Push(strings.TrimPrefix(word, "\""))
 			} else {
+				c.ptrace("oper: %v", word)
 				c.evalOp(word)
 			}
 			if c.err != nil {
@@ -73,7 +76,7 @@ func (c *calc) Eval(s string, args ...any) error {
 	return nil
 }
 
-func (c *calc) Peek(i int) (string, bool) {
+func (c *Calc) Peek(i int) (string, bool) {
 	n := len(c.stack)
 	stackI := n - 1 - i
 	if stackI < 0 || stackI >= n {
@@ -82,18 +85,24 @@ func (c *calc) Peek(i int) (string, bool) {
 	return zc.RemoveAnnotation(c.stack[stackI]), true
 }
 
-func (c *calc) Pop() (string, bool) {
+func (c *Calc) Pop() (string, bool) {
 	c.info = ""
 	n := len(c.stack)
 	if n == 0 {
+		c.ptrace("pop: <stack empty?")
 		return "", false
 	}
 	var item string
 	c.stack, item = c.stack[:n-1], c.stack[n-1]
+	if len(c.stack) != 0 {
+		c.ptrace("pop : %v => %v", zc.StackString(c), item)
+	} else {
+		c.ptrace("pop : => %v", item)
+	}
 	return zc.RemoveAnnotation(item), true
 }
 
-func (c *calc) MustPop() string {
+func (c *Calc) MustPop() string {
 	item, ok := c.Pop()
 	if !ok {
 		panic("stack empty")
@@ -101,12 +110,17 @@ func (c *calc) MustPop() string {
 	return item
 }
 
-func (c *calc) Push(item string) {
+func (c *Calc) Push(item string) {
 	c.info = ""
+	if len(c.stack) != 0 {
+		c.ptrace("push: %v <= %v", zc.StackString(c), item)
+	} else {
+		c.ptrace("push: <= %v", item)
+	}
 	c.stack = append(c.stack, item)
 }
 
-func (c *calc) SetError(err error) {
+func (c *Calc) SetError(err error) {
 	if c.err == nil {
 		c.err = err
 	}
@@ -115,38 +129,38 @@ func (c *calc) SetError(err error) {
 	}
 }
 
-func (c *calc) Error() error {
+func (c *Calc) Error() error {
 	return c.err
 }
 
-func (c *calc) Derive() zc.Calc {
-	sub := New().(*calc)
+func (c *Calc) Derive() zc.Calc {
+	sub := New()
 	sub.state = maps.Clone(c.state)
 	return sub
 }
 
-func (c *calc) NewState(name string, s any) {
+func (c *Calc) NewState(name string, s any) {
 	c.state[name] = s
 }
 
-func (c *calc) State(name string) (any, bool) {
+func (c *Calc) State(name string) (any, bool) {
 	s, ok := c.state[name]
 	return s, ok
 }
 
-func (c *calc) SetOp(op string) {
+func (c *Calc) SetOp(op string) {
 	c.op = op
 }
 
-func (c *calc) SetArgs(args []string) {
+func (c *Calc) SetArgs(args []string) {
 	c.args = args
 }
 
-func (c *calc) Op() zc.OpCall {
+func (c *Calc) Op() zc.OpCall {
 	return zc.OpCall{Name: c.op, Args: c.args}
 }
 
-func (c *calc) OpNames() []string {
+func (c *Calc) OpNames() []string {
 	var os []string
 	for name := range opsTable {
 		os = append(os, name)
@@ -154,7 +168,7 @@ func (c *calc) OpNames() []string {
 	return os
 }
 
-func (c *calc) parseWords(str string) []string {
+func (c *Calc) parseWords(str string) []string {
 	var words []string
 	var word strings.Builder
 
@@ -215,13 +229,20 @@ func (c *calc) parseWords(str string) []string {
 	return words
 }
 
-func (c *calc) evalOp(name string) {
+func (c *Calc) evalOp(name string) {
 	op, ok := opsTable[name]
 	if !ok {
 		c.err = zc.ErrUnknownOp(name)
 		return
 	}
 	op(c)
+}
+
+func (c *Calc) ptrace(format string, args ...any) {
+	if c.Trace {
+		fmt.Printf(format, args...)
+		fmt.Println()
+	}
 }
 
 func isValue(ch rune) bool {
