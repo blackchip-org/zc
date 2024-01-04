@@ -76,6 +76,12 @@ func (c *Calc) Eval(s string, args ...any) error {
 	return nil
 }
 
+func (c *Calc) MustEval(s string, args ...any) {
+	if err := c.Eval(s, args...); err != nil {
+		panic(err)
+	}
+}
+
 func (c *Calc) Peek(i int) (string, bool) {
 	n := len(c.stack)
 	stackI := n - 1 - i

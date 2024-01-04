@@ -8,6 +8,7 @@ const ProgName = "zc"
 
 type Calc interface {
 	Eval(string, ...any) error
+	MustEval(string, ...any)
 	Stack() []string
 	StackLen() int
 	SetStack([]string)

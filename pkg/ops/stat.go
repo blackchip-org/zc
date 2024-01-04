@@ -204,7 +204,7 @@ func Variance(c zc.Calc, nadj int) {
 	mean := zc.PopInt(c)
 	c.SetStack(data)
 	zc.PushInt(c, mean)
-	c.Eval("[sub square] [map] 2 apply sum")
+	c.MustEval("[sub square] [map] 2 apply sum")
 	zc.PushInt(c, n+nadj)
-	c.Eval("div")
+	c.MustEval("div")
 }
