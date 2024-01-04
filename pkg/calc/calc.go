@@ -61,8 +61,9 @@ func (c *Calc) Eval(s string, args ...any) error {
 		line = strings.TrimSpace(line)
 		words := c.parseWords(line)
 		for _, word := range words {
-			ch, _ := utf8.DecodeRuneInString(word)
-			if isValue(ch) {
+			ch, size := utf8.DecodeRuneInString(word)
+			next, _ := utf8.DecodeRuneInString(word[size:])
+			if isValue(ch, next) {
 				c.Push(strings.TrimPrefix(word, "\""))
 			} else {
 				c.ptrace("oper: %v", word)
@@ -182,30 +183,35 @@ func (c *Calc) parseWords(str string) []string {
 	var inWord bool
 	var beginQuote, endQuote rune
 
-	for _, ch := range str {
+	runes := []rune(str)
+	for i, ch := range runes {
+		var next rune
+		if i < len(runes)-1 {
+			next = runes[i+1]
+		}
 		if !inWord {
 			if unicode.IsSpace(ch) {
 				continue
 			}
 			word.Reset()
 			inWord = true
-			switch ch {
-			case '"':
+			switch {
+			case ch == '"':
 				inQuote++
 				beginQuote = '"'
 				endQuote = '"'
 				word.WriteRune('"')
-			case '\'':
+			case ch == '\'':
 				inQuote++
 				beginQuote = '\''
 				endQuote = '\''
 				word.WriteRune('"')
-			case '[':
+			case ch == '[':
 				inQuote++
 				beginQuote = '['
 				endQuote = ']'
 				word.WriteRune('"')
-			case '/':
+			case ch == '/' && !unicode.IsSpace(next) && next != 0:
 				word.WriteRune('"')
 			default:
 				word.WriteRune(ch)
@@ -251,13 +257,13 @@ func (c *Calc) ptrace(format string, args ...any) {
 	}
 }
 
-func isValue(ch rune) bool {
+func isValue(ch rune, next rune) bool {
 	switch {
 	case unicode.IsNumber(ch):
 		return true
 	case unicode.Is(unicode.Sc, ch):
 		return true
-	case ch == '+' || ch == '-':
+	case (ch == '+' || ch == '-') && unicode.IsNumber(next):
 		return true
 	case ch == '.':
 		return true
