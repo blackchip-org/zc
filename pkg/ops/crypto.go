@@ -1,6 +1,7 @@
 package ops
 
 import (
+	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
@@ -29,7 +30,7 @@ func evalHash(c zc.Calc, h hash.Hash) {
 /*
 oper	md5
 func	Md5 p0:Str -- Str
-title	Hash *p0* with the MD5 function
+title	MD5 hash function
 
 desc
 Hash *p0* with the MD5 function.
@@ -47,7 +48,7 @@ func Md5(c zc.Calc) {
 /*
 oper	sha1
 func	Sha1 p0:Str -- Str
-title	Hash *p0* with the SHA-1 function
+title	SHA-1 hash function
 
 desc
 Hash *p0* with the SHA-1 function.
@@ -63,9 +64,28 @@ func Sha1(c zc.Calc) {
 }
 
 /*
+oper	sha1hmac
+func	Sha1Hmac p0:Str key:Str -- Str
+title	SHA-1 keyed hash function
+
+desc
+Hash *p0* with *key* using the SHA-1 function
+end
+
+example
+'Behind the tree!' /swordfish -- Behind the tree! | swordfish
+sha1hmac                      -- 0x75859001097e8ad6907a879d340170ef571c8e5c
+end
+*/
+func Sha1Hmac(c zc.Calc) {
+	key := zc.PopString(c)
+	evalHash(c, hmac.New(sha1.New, []byte(key)))
+}
+
+/*
 oper	sha224
 func	Sha224 p0:Str -- Str
-title	Hash *p0* with the SHA-224 function
+title	SHA-224 hash function
 
 desc
 Hash *p0* with the SHA-224 function.
@@ -81,9 +101,28 @@ func Sha224(c zc.Calc) {
 }
 
 /*
+oper	sha224hmac
+func	Sha224Hmac p0:Str key:Str -- Str
+title	SHA-224 keyed hash function
+
+desc
+Hash *p0* with *key* using the SHA-224 function
+end
+
+example
+'Behind the tree!' /swordfish -- Behind the tree! | swordfish
+sha224hmac                    -- 0x30ecbacd9aedf890b796eb79032105382ce323f18835f9bbb3867c4a
+end
+*/
+func Sha224Hmac(c zc.Calc) {
+	key := zc.PopString(c)
+	evalHash(c, hmac.New(sha256.New224, []byte(key)))
+}
+
+/*
 oper	sha256
 func	Sha256 p0:Str -- Str
-title	Hash *p0* with the SHA-256 function
+title	SHA-256 hash function
 
 desc
 Hash *p0* with the SHA-256 function.
@@ -99,9 +138,28 @@ func Sha256(c zc.Calc) {
 }
 
 /*
+oper	sha256hmac
+func	Sha256Hmac p0:Str key:Str -- Str
+title	SHA-256 keyed hash function
+
+desc
+Hash *p0* with *key* using the SHA-256 function
+end
+
+example
+'Behind the tree!' /swordfish -- Behind the tree! | swordfish
+sha256hmac                    -- 0x0155d56d7485e9db843792ff48b97a1a96ae0655a92ad7c2324d71ed0410b907
+end
+*/
+func Sha256Hmac(c zc.Calc) {
+	key := zc.PopString(c)
+	evalHash(c, hmac.New(sha256.New, []byte(key)))
+}
+
+/*
 oper	sha384
 func	Sha384 p0:Str -- Str
-title	Hash *p0* with the SHA-384 function
+title	SHA-384 hash function
 
 desc
 Hash *p0* with the SHA-384 function.
@@ -117,9 +175,28 @@ func Sha384(c zc.Calc) {
 }
 
 /*
+oper	sha384hmac
+func	Sha384Hmac p0:Str key:Str -- Str
+title	SHA-384 keyed hash function
+
+desc
+Hash *p0* with *key* using the SHA-384 function
+end
+
+example
+'Behind the tree!' /swordfish -- Behind the tree! | swordfish
+sha384hmac                    -- 0x401d0de7dd5cdf1ed82002cc1a696ec8d3d636b0388b89cc6f33ec4b237382a16b976f4773c3b0a3979392289a0ceaf9
+end
+*/
+func Sha384Hmac(c zc.Calc) {
+	key := zc.PopString(c)
+	evalHash(c, hmac.New(sha512.New384, []byte(key)))
+}
+
+/*
 oper	sha512
 func	Sha512 p0:Str -- Str
-title	Hash *p0* with the SHA-512 function
+title   SHA-512 hash function
 
 desc
 Hash *p0* with the SHA-512 function.
@@ -132,6 +209,25 @@ end
 */
 func Sha512(c zc.Calc) {
 	evalHash(c, sha512.New())
+}
+
+/*
+oper	sha512hmac
+func	Sha512Hmac p0:Str key:Str -- Str
+title	SHA-512 keyed hash function
+
+desc
+Hash *p0* with *key* using the SHA-512 function
+end
+
+example
+'Behind the tree!' /swordfish -- Behind the tree! | swordfish
+sha512hmac                    -- 0x8e4074cf371bc7e83cd508e9a3d4c0ecd9e014aa808f3234b05de26ddad9895ad6d375651b3ac8231806ccd0b9cd477f3df024c1ecd75032a0e827e7f2f98fcf
+end
+*/
+func Sha512Hmac(c zc.Calc) {
+	key := zc.PopString(c)
+	evalHash(c, hmac.New(sha512.New, []byte(key)))
 }
 
 /*

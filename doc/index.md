@@ -199,7 +199,7 @@
 - [m](ops/basic.md#mul): Multiplication
 - [m-nmi](ops/len.md#m-nmi): Meters to nautical miles
 - [map](ops/hof.md#map): Apply a function to each item on the stack
-- [md5](ops/crypto.md#md5): Hash *p0* with the MD5 function
+- [md5](ops/crypto.md#md5): MD5 hash function
 - [iec.mebi](ops/iec.md#iec.mebi): IEC prefix Mi, 2^20
 - [si.mega](ops/si.md#si.mega): SI prefix M, 1e06
 - [mi-km](ops/len.md#mi-km): Miles to kilomters
@@ -299,11 +299,16 @@
 - [seconds](ops/angle.md#seconds) (angle): Angle in seconds
 - [seconds](ops/time.md#seconds) (time): Seconds in duration
 - [set](ops/stack.md#set): Place a named stack to memory
-- [sha1](ops/crypto.md#sha1): Hash *p0* with the SHA-1 function
-- [sha224](ops/crypto.md#sha224): Hash *p0* with the SHA-224 function
-- [sha256](ops/crypto.md#sha256): Hash *p0* with the SHA-256 function
-- [sha384](ops/crypto.md#sha384): Hash *p0* with the SHA-384 function
-- [sha512](ops/crypto.md#sha512): Hash *p0* with the SHA-512 function
+- [sha1](ops/crypto.md#sha1): SHA-1 hash function
+- [sha1hmac](ops/crypto.md#sha1hmac): SHA-1 keyed hash function
+- [sha224](ops/crypto.md#sha224): SHA-224 hash function
+- [sha224hmac](ops/crypto.md#sha224hmac): SHA-224 keyed hash function
+- [sha256](ops/crypto.md#sha256): SHA-256 hash function
+- [sha256hmac](ops/crypto.md#sha256hmac): SHA-256 keyed hash function
+- [sha384](ops/crypto.md#sha384): SHA-384 hash function
+- [sha384hmac](ops/crypto.md#sha384hmac): SHA-384 keyed hash function
+- [sha512](ops/crypto.md#sha512): SHA-512 hash function
+- [sha512hmac](ops/crypto.md#sha512hmac): SHA-512 keyed hash function
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
 - [sin](ops/complex.md#sin) (complex): Sine
