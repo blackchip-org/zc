@@ -5,8 +5,31 @@ Cryptographic ciphers
 
 | Operation                 | Description
 |---------------------------|---------------
+| [`md5`](#md5)             | Hash *p0* with the MD5 function
 | [`rotate-13, rot13`](#rotate-13) | Rotate characters by 13
+| [`sha1`](#sha1)           | Hash *p0* with the SHA-1 function
+| [`sha224`](#sha224)       | Hash *p0* with the SHA-224 function
+| [`sha256`](#sha256)       | Hash *p0* with the SHA-256 function
+| [`sha384`](#sha384)       | Hash *p0* with the SHA-384 function
+| [`sha512`](#sha512)       | Hash *p0* with the SHA-512 function
 
+
+## md5
+
+Hash *p0* with the MD5 function.
+
+```
+( p0:Str -- Str )
+```
+
+Example:
+
+<!-- test: md5 -->
+
+| Input               | Stack
+|---------------------|---------------
+| `'Behind the tree!` | `Behind the tree!`
+| `md5              ` | `0xbbce0fb98a6a1b308e589d1408968ac2`
 
 ## rotate-13
 
@@ -27,3 +50,88 @@ Example:
 | `'Behind the tree!` | `Behind the tree!`
 | `rot13            ` | `Oruvaq gur gerr!`
 | `rot13            ` | `Behind the tree!`
+
+## sha1
+
+Hash *p0* with the SHA-1 function.
+
+```
+( p0:Str -- Str )
+```
+
+Example:
+
+<!-- test: sha1 -->
+
+| Input               | Stack
+|---------------------|---------------
+| `'Behind the tree!` | `Behind the tree!`
+| `sha1             ` | `0xda6e7f530a9b42a679944f0c9fc0f86ae5534450`
+
+## sha224
+
+Hash *p0* with the SHA-224 function.
+
+```
+( p0:Str -- Str )
+```
+
+Example:
+
+<!-- test: sha224 -->
+
+| Input               | Stack
+|---------------------|---------------
+| `'Behind the tree!` | `Behind the tree!`
+| `sha224           ` | `0x15eac2f886e0e09a44ce08da58f3386b707885150d6142d1a6e7c608`
+
+## sha256
+
+Hash *p0* with the SHA-256 function.
+
+```
+( p0:Str -- Str )
+```
+
+Example:
+
+<!-- test: sha256 -->
+
+| Input               | Stack
+|---------------------|---------------
+| `'Behind the tree!` | `Behind the tree!`
+| `sha256           ` | `0x5e19fc5f8ec2aabccef7970385bb9151a421f398d048ced2b2c86757aafebfc3`
+
+## sha384
+
+Hash *p0* with the SHA-384 function.
+
+```
+( p0:Str -- Str )
+```
+
+Example:
+
+<!-- test: sha384 -->
+
+| Input               | Stack
+|---------------------|---------------
+| `'Behind the tree!` | `Behind the tree!`
+| `sha384           ` | `0x54489c547782d201bb0c8c2c81e77e034695067c98087bd949d13de752dd3843323c7244c1d15776ad52093598420dca`
+
+## sha512
+
+Hash *p0* with the SHA-512 function.
+
+```
+( p0:Str -- Str )
+```
+
+Example:
+
+<!-- test: sha512 -->
+
+| Input               | Stack
+|---------------------|---------------
+| `'Behind the tree!` | `Behind the tree!`
+| `sha512           ` | `0x431777a80ed22c45b4fe0dc8c7e3a07d8d20df3b796a39068f2fc6f57cd69b6c60f4a6e3151189b97a1ad2fe5888c255e93f28c1e6c9b6f0241b10c34f8f9e86`

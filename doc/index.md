@@ -66,8 +66,8 @@
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
-- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
+- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
 - [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
@@ -199,6 +199,7 @@
 - [m](ops/basic.md#mul): Multiplication
 - [m-nmi](ops/len.md#m-nmi): Meters to nautical miles
 - [map](ops/hof.md#map): Apply a function to each item on the stack
+- [md5](ops/crypto.md#md5): Hash *p0* with the MD5 function
 - [iec.mebi](ops/iec.md#iec.mebi): IEC prefix Mi, 2^20
 - [si.mega](ops/si.md#si.mega): SI prefix M, 1e06
 - [mi-km](ops/len.md#mi-km): Miles to kilomters
@@ -298,6 +299,11 @@
 - [seconds](ops/angle.md#seconds) (angle): Angle in seconds
 - [seconds](ops/time.md#seconds) (time): Seconds in duration
 - [set](ops/stack.md#set): Place a named stack to memory
+- [sha1](ops/crypto.md#sha1): Hash *p0* with the SHA-1 function
+- [sha224](ops/crypto.md#sha224): Hash *p0* with the SHA-224 function
+- [sha256](ops/crypto.md#sha256): Hash *p0* with the SHA-256 function
+- [sha384](ops/crypto.md#sha384): Hash *p0* with the SHA-384 function
+- [sha512](ops/crypto.md#sha512): Hash *p0* with the SHA-512 function
 - [shuffle](ops/rand.md#shuffle): Shuffle the stack
 - [sign](ops/basic.md#sign): Sign
 - [sin](ops/complex.md#sin) (complex): Sine
@@ -345,8 +351,8 @@
 
 - [u8de](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [u8en](ops/text.md#utf8-encode): Encode UTF-8 bytes
-- [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
 - [si.unit](ops/si.md#si.unit): SI unit value, 1e0
+- [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
 - [up](ops/stack.md#up): Rotate items upward
 - [upper](ops/text.md#upper): Uppercase
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes
