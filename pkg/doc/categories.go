@@ -33,6 +33,7 @@ var Categories = []Category{
 		"hof",
 		"rand",
 		"rational",
+		"seq",
 		"text",
 		"time",
 	}},

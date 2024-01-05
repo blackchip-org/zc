@@ -23,6 +23,7 @@ var GroupTitles = map[string]string{
 	"rand":     "Random number generation",
 	"rational": "Rational numbers (fractions)",
 	"sci":      "Scientific calculator",
+	"seq":      "Integer sequences",
 	"si":       "International System of Units",
 	"stack":    "Stack manipulations",
 	"stat":     "Statistical calculations",

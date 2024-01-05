@@ -66,8 +66,8 @@
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
-- [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
 - [si.convert](ops/si.md#si.convert): Converts between SI units
+- [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
 - [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
@@ -126,6 +126,8 @@
 - [factorial](ops/stat.md#factorial): Factorial
 - [false](ops/bool.md#false): False
 - [si.femto](ops/si.md#si.femto): SI prefix f, 1e-15
+- [fib](ops/seq.md#fibonacci): Fibonacci sequence
+- [fibonacci](ops/seq.md#fibonacci): Fibonacci sequence
 - [filter](ops/hof.md#filter): Filter items in the stack
 - [floor](ops/sci.md#floor): Floor
 - [fold](ops/hof.md#fold): Reduce items to a single value
@@ -298,6 +300,8 @@
 - [scientific-notation](ops/format.md#scientific-notation): Scientific notation
 - [seconds](ops/angle.md#seconds) (angle): Angle in seconds
 - [seconds](ops/time.md#seconds) (time): Seconds in duration
+- [seq](ops/seq.md#sequence): Sequence of integers
+- [sequence](ops/seq.md#sequence): Sequence of integers
 - [set](ops/stack.md#set): Place a named stack to memory
 - [sha1](ops/crypto.md#sha1): SHA-1 hash function
 - [sha1hmac](ops/crypto.md#sha1hmac): SHA-1 keyed hash function

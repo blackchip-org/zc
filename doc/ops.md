@@ -40,6 +40,7 @@
 | [hof](ops/hof.md)         | Higher-order functions 
 | [rand](ops/rand.md)       | Random number generation 
 | [rational](ops/rational.md) | Rational numbers (fractions) 
+| [seq](ops/seq.md)         | Integer sequences 
 | [text](ops/text.md)       | Text operations 
 | [time](ops/time.md)       | Date, time, and duration operations 
 
