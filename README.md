@@ -9,7 +9,7 @@ Documentation:
 - [Type Documentation](doc/types.md)
 - [Stack Notation](doc/stack.md)
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc.svg)](https://pkg.go.dev/github.com/blackchip-org/zc)
+[![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v5.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v5)
 
 ![ZC Demo](demo.gif)
 
