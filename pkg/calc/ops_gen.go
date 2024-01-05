@@ -162,7 +162,7 @@ var opsList = []zc.OpDecl{
 	zc.Op("factorial", ops.Factorial, zc.BigInt),
 	zc.Macro("false", "[false]"),
 	zc.Macro("fib", "fibonacci"),
-	zc.Op("fibonacci", ops.Fibonacci, zc.BigInt),
+	zc.Op("fibonacci", ops.Fibonacci, zc.Int),
 	zc.Op("filter", ops.Filter),
 	zc.GenOp("floor",
 		zc.Func(zc.NoOp, zc.BigInt),

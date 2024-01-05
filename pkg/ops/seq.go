@@ -8,7 +8,7 @@ import (
 
 /*
 oper 	fibonacci
-func 	Fibonacci n:BigInt -- BigInt*
+func 	Fibonacci n:Int -- BigInt*
 alias	fib
 title	Fibonacci sequence
 
@@ -22,36 +22,22 @@ example
 end
 */
 func Fibonacci(c zc.Calc) {
-	var zero big.Int
-	one := big.NewInt(1)
-
-	n := zc.PopBigInt(c)
-	if n.Cmp(&zero) < 0 {
+	n := zc.PopInt(c)
+	switch {
+	case n < 0:
 		zc.ErrInvalidArgs(c, "element index cannot be negative")
-		return
+	case n == 0:
+		zc.PushInt(c, 0)
+	case n == 1:
+		zc.PushInt(c, 1)
+	default:
+		dc := c.Derive()
+		dc.Eval("0 1")
+		for i := 2; i <= n; i++ {
+			dc.Eval("dup down add")
+		}
+		zc.PushBigInt(c, zc.PopBigInt(dc))
 	}
-
-	if n.Cmp(&zero) == 0 {
-		zc.PushBigInt(c, &zero)
-		return
-	}
-	if n.Cmp(one) == 0 {
-		zc.PushBigInt(c, one)
-		return
-	}
-
-	var acc big.Int
-	f0 := big.NewInt(0)
-	f1 := big.NewInt(1)
-	i := big.NewInt(1)
-
-	for i.Cmp(n) < 0 {
-		i.Add(i, one)
-		acc.Add(f0, f1)
-		f0.Set(f1)
-		f1.Set(&acc)
-	}
-	zc.PushBigInt(c, f1)
 }
 
 /*

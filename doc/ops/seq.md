@@ -17,7 +17,7 @@ must be equal to or greater than zero.
 Alias: `fib`
 
 ```
-( n:BigInt -- BigInt* )
+( n:Int -- BigInt* )
 ```
 
 Example:
