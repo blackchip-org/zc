@@ -22,6 +22,7 @@ var Categories = []Category{
 	{"Library", []string{
 		"angle",
 		"anno",
+		"bin",
 		"bool",
 		"color",
 		"complex",

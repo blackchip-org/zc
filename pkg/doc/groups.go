@@ -4,6 +4,7 @@ var GroupTitles = map[string]string{
 	"angle":    "Angular calculations",
 	"anno":     "Annotations",
 	"basic":    "Basic calculator",
+	"bin":      "Binary data",
 	"bool":     "Boolean operations",
 	"color":    "Color conversions",
 	"complex":  "Complex numbers",

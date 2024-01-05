@@ -29,6 +29,7 @@
 |---------------------------|-----------
 | [angle](ops/angle.md)     | Angular calculations 
 | [anno](ops/anno.md)       | Annotations 
+| [bin](ops/bin.md)         | Binary data 
 | [bool](ops/bool.md)       | Boolean operations 
 | [color](ops/color.md)     | Color conversions 
 | [complex](ops/complex.md) | Complex numbers 

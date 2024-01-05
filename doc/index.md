@@ -66,8 +66,8 @@
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
-- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
+- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
 - [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
@@ -166,6 +166,8 @@
 ## j
 
 - [join](ops/text.md#join): Join stack elements
+- [join-bits](ops/bin.md#join-bits): Join a binary number by bit width
+- [joinb](ops/bin.md#join-bits): Join a binary number by bit width
 
 ## k
 
@@ -324,6 +326,8 @@
 - [sort](ops/cmp.md#sort): Type-aware stack sort
 - [sort-str](ops/cmp.md#sort-str): String based stack sort
 - [split](ops/text.md#split): Split string
+- [split-bits](ops/bin.md#split-bits): Split a binary number by bit width
+- [splitb](ops/bin.md#split-bits): Split a binary number by bit width
 - [sq](ops/basic.md#sq): Square
 - [sqrt](ops/basic.md#sqrt): Square root
 - [square](ops/basic.md#sq): Square
@@ -360,8 +364,8 @@
 
 - [u8de](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [u8en](ops/text.md#utf8-encode): Encode UTF-8 bytes
-- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
 - [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
+- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
 - [up](ops/stack.md#up): Rotate items upward
 - [upper](ops/text.md#upper): Uppercase
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes
