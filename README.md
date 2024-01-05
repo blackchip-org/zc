@@ -40,7 +40,7 @@ entertainment. Things may change in backwards incompatible ways with no notice.
 
 Install [go](https://go.dev/dl/) and then install the calculator with:
 
-    go install github.com/blackchip-org/zc/cmd/zc@latest
+    go install github.com/blackchip-org/zc/v5/cmd/zc@latest
 
 Run the calculator with:
 
