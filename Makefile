@@ -10,6 +10,9 @@ install: gen
 test: ops doc
 	go test $(GOFLAGS) ./...
 
+wasm:
+	GOOS=js GOARCH=wasm go build -o assets/zc.wasm cmd/wasm/main.go 
+	
 test-release: clean
 	goreleaser release --skip-publish
 

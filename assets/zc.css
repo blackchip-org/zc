@@ -1,0 +1,53 @@
+@font-face {
+    font-family: "Inconsolata";
+    src: url("Inconsolata-Regular.ttf")
+}
+
+html, body {
+    height: 100%; 
+    margin: 0;
+    background-color: black;
+    color: white; 
+    font-size: 32pt;
+    font-family: "Inconsolata";
+}
+
+#main {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#output {
+    display: flex;
+    flex-flow: row;
+    height: 100%;
+    align-items: flex-end;
+}
+
+#output-container {
+    flex: 1 1 auto;
+}
+
+#prompt {
+    padding: 25px;
+}
+
+#prompt input {
+    font-family: "Inconsolata";
+    font-size: 32pt;
+    color: white;
+    background-color: #333;
+    border: 0px;
+    padding-left: 10px;
+}
+
+#prompt input:focus {
+    background-color: #555;
+    border: 0px;
+    outline: none;
+}
+
+ul {
+    list-style-type: none;
+}
