@@ -30,8 +30,26 @@ func zcEval() js.Func {
 	})
 }
 
+func zcStackLen() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		return c.StackLen()
+	})
+}
+
+func zcStack() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		var stack []interface{}
+		for _, item := range c.Stack() {
+			stack = append(stack, item)
+		}
+		return stack
+	})
+}
+
 func main() {
 	c = calc.New()
 	js.Global().Set("zcEval", zcEval())
+	js.Global().Set("zcStack", zcStack())
+	js.Global().Set("zcStackLen", zcStackLen())
 	<-make(chan struct{})
 }

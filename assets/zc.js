@@ -1,12 +1,49 @@
-
+var hist = []
 
 function submit() {
     let line = document.querySelector("#input").value
-    let result = line.trim() === "" ? zcEval("drop") : zcEval(line) 
-    let output = []
-    for (let item of result.stack) {
-        output.push(`<li>${item}</li>`)
+    let result = '' 
+    if (line.trim() === "") {
+        if (zcStackLen() === 0) {
+            return 
+        }
+        hist.push(zcStack())
+        result = zcEval("drop") 
+    } else {
+        hist.push(zcStack())
+        result = zcEval(line) 
     }
+
+    let output = []
+    if (result.error != '') {
+        result.stack = hist.pop() || []
+    }
+    let prev = []
+    if (hist.length != 0) {
+        prev = hist[hist.length - 1]
+    }
+
+    // print out previous stack 
+    if (prev.length > 0) {
+        for (let item of prev) {
+            output.push(`<li class='history'>${item}</li>`)
+        }
+        output.push(`<li class='history'>&nbsp;</li>`)
+    }
+
+    for (let i = 0; i < result.stack.length; i++) {
+        let item = result.stack[i]
+        let kind = (i === result.stack.length - 1) ? 'top-item' : 'stack-item'
+        output.push(`<li class='${kind}'>${item}</li>`)
+    }
+    if (result.error !== '') {
+        output.push(`<li class='error'>(!) ${result.error}</li>`)
+    } else if (result.info !== '') {
+        output.push(`<li class='info'>${result.info}</li>`)
+    } else {
+        output.push('<li>&nbsp;</li>')
+    }
+
     document.querySelector("#output").innerHTML = `<ul>${output.join('\n')}</ul>`
     document.querySelector("#input").value = ""
 }

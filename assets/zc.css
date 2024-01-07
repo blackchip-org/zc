@@ -1,3 +1,24 @@
+.stack-item {
+    color: rgb(0,205,205); 
+}
+
+.top-item {
+    color: white; 
+}
+
+.error {
+    color: rgb(255,255,0);
+}
+
+.info {
+    color: rgb(0,205,0); 
+}
+
+.history {
+    color: rgb(127,127,127);
+    font-size: 16pt;
+}
+
 @font-face {
     font-family: "Inconsolata";
     src: url("Inconsolata-Regular.ttf")
@@ -21,28 +42,37 @@ html, body {
 #output {
     display: flex;
     flex-flow: row;
-    height: 100%;
     align-items: flex-end;
+    height: 100%;
 }
 
-#output-container {
+#output-panel {
     flex: 1 1 auto;
+    height: 100%;
 }
 
-#prompt {
+#footer-panel {
+    flex: 1 1 auto; 
+}
+
+#footer {
     padding: 25px;
+    display: flex; 
+    flex-flow: row;
 }
 
-#prompt input {
+#footer input {
     font-family: "Inconsolata";
     font-size: 32pt;
     color: white;
     background-color: #333;
     border: 0px;
     padding-left: 10px;
+    width: 100%;
+    margin-left: 20px;
 }
 
-#prompt input:focus {
+#footer input:focus {
     background-color: #555;
     border: 0px;
     outline: none;
@@ -50,4 +80,5 @@ html, body {
 
 ul {
     list-style-type: none;
+    margin: 0;
 }
