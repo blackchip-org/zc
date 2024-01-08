@@ -371,9 +371,23 @@ func TestParserEnUS(t *testing.T) {
 			TimeSep:     ":",
 			DateTimeSep: "T",
 		}},
+		{"parse", "Mon Jan 8 2024 9:14:03am -0500 UTC-5", Parsed{
+			Weekday: "Mon",
+			Year:    "2024",
+			Month:   "Jan",
+			Day:     "8",
+			Hour:    "9",
+			Minute:  "14",
+			Second:  "03",
+			Period:  "AM",
+			Offset:  "-0500",
+			DateSep: " ",
+			TimeSep: ":",
+		}},
 	}
 
 	p := NewParser(locale.EnUS)
+	p.Trace = true
 	for _, test := range tests {
 		t.Run(test.fn+":"+test.text, func(t *testing.T) {
 			testValid(t, p, test.fn, test.text, test.parsed)

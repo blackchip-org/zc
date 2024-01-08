@@ -199,6 +199,32 @@ func (p *Parser) parseText() error {
 		}
 	}
 	if p.state == parsingZone {
+		if p.tok.Val == "UTC" && p.lookahead(1).Val == "-" {
+			p.trace("is UTC offset")
+			p.next()
+			sign := p.tok.Val
+			if sign != "+" && sign != "-" {
+				p.trace("invalid sign in UTC offset: %v", p.tok.Val)
+				return nil
+			}
+			p.next()
+			offset, err := strconv.ParseInt(p.tok.Val, 0, 64)
+			if err != nil {
+				p.trace("invalid offset: %v", p.tok.Val)
+				return nil
+			}
+			fmtOffset := fmt.Sprintf("%v%04d", sign, offset*100)
+			if p.parsed.Offset == "" {
+				p.parsed.Offset = fmtOffset
+			} else {
+				if p.parsed.Offset != fmtOffset {
+					p.trace("offset mismatch: %v != %v", p.parsed.Offset, fmtOffset)
+					return nil
+				}
+			}
+			return nil
+		}
+
 		p.trace("is zone")
 		var offset string
 		var ok bool

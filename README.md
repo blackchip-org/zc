@@ -301,12 +301,12 @@ a game of rock, paper, scissors:
 
 <!-- test: rps -->
 
-| Input                                            | Stack
-|--------------------------------------------------|-------------------
-| `0 rand-seed`                                    | *seed set to 0*
-| `def .rps 'rock' 'paper' 'scissors' rand-choice` | *macro '.rps' defined*
-| `.rps`                                           | `rock`
-| `.rps`                                           | `paper`
+| Input                                              | Stack
+|----------------------------------------------------|-------------------
+| `1 rand-seed`                                      | *seed set to 1*
+| `def .rps c 'rock' 'paper' 'scissors' rand-choice` | *macro '.rps' defined*
+| `.rps`                                             | `scissors`
+| `.rps`                                             | `rock`
 
 Macros can also be used to override calculator operations. Undefine the
 macro by using `def` without an expression.
@@ -365,11 +365,11 @@ simply the square root of the average deviation.
 |---------------------------|---------------------|
 | `2 4 4 4 5 5 7 9`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
 | `/data set`               | *set*
-| `average`                 | `5`
+| `avg`                     | `5`
 | `/av set`                 | *set*
-| `clear /data get`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
-| `[/av get sub 2 pow] map` | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
-| `average sqrt`            | `2`
+| `c /data get`             | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `[/av get sub sq] map`    | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
+| `avg sqrt`                | `2`
 
 Stacks can also be placed in a general memory location with no name by
 using `store` and `recall`. This location is also a stack itself with `store`
@@ -382,11 +382,10 @@ top stack.
 |---------------------------|---------------------|
 | `2 4 4 4 5 5 7 9`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
 | `store`                   | *stored*
-| `average`                 | `5`
-| `/av set`                 | *set*
-| `clear recall`            | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
-| `[/av get sub 2 pow] map` | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
-| `average sqrt`            | `2`
+| `avg`                     | `5`
+| `recall`                  | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9 \| 5`
+| `[sub sq] /map 2 apply`   | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
+| `avg sqrt`                | `2`
 
 ## Annotations
 
