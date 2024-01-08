@@ -162,6 +162,7 @@ loop:
 }
 
 func parseFn(s *scanner.Scanner) (FuncDecl, error) {
+	s.ScanWhile(unicode.IsSpace)
 	fn := FuncDecl{
 		Name: s.Scan(scanner.Word),
 	}
@@ -180,7 +181,7 @@ func parseFn(s *scanner.Scanner) (FuncDecl, error) {
 func parseParams(s *scanner.Scanner) ([]Param, error) {
 	var params []Param
 	for s.Ok() {
-		s.ScanWhile(scanner.Rune(' '))
+		s.ScanWhile(scanner.Rune2(' ', '\t'))
 		if s.Ch == '\n' {
 			s.Next()
 			return params, nil

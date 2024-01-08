@@ -343,9 +343,9 @@ func NegRational(c zc.Calc) {
 
 /*
 oper	pow
-func	PowBigInt  p0:BigInt  p1:BigInt  -- BigInt
-func	PowFloat   p0:Float   p1:Float   -- Float
-func	PowComplex p0:Complex p1:Complex -- Complex
+func    PowBigInt   p0:BigInt    p1:BigInt   -- BigInt
+func    PowFloat    p0:Float     p1:Float    -- Float
+func    PowComplex  p0:Complex   p1:Complex  -- Complex
 alias	**
 alias	^
 title	Exponentiation
@@ -477,7 +477,7 @@ oper	sq
 func 	- p0:BigInt -- BigInt
 func 	- p0:Float -- Float
 alias	square
-macro	2 pow
+macro	dup mul
 title	Square
 
 desc

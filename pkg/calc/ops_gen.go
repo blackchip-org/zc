@@ -433,7 +433,7 @@ var opsList = []zc.OpDecl{
 	zc.Op("split", ops.Split, zc.Str, zc.Str),
 	zc.Op("split-bits", ops.SplitBits, zc.BigInt, zc.Int),
 	zc.Macro("splitb", "split-bits"),
-	zc.Macro("sq", "2 pow"),
+	zc.Macro("sq", "dup mul"),
 	zc.GenOp("sqrt",
 		zc.Func(ops.SqrtFloat, zc.Float),
 		zc.Func(ops.SqrtBigFloat, zc.BigFloat),
