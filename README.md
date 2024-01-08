@@ -288,7 +288,7 @@ Annotations are also used to indicate the units for a result.
 |-----------------------|---------------------|
 | `1 1 2 2`             | `1 \| 1 \| 2 \| 2`
 | `haversine`           | `157225.4320380729 # m`
-| `si.kilo div 2 round` | `157.23`
+| `m-km 2 round`        | `157.23 # km`
 
 Note that annotations are lost when values are popped off the stack.
 
