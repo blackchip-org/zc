@@ -17,9 +17,8 @@ function submit() {
     } else {
         stackHist.push(zcStack())
         result = zcEval(line)
+        commandHist.unshift(line)
     }
-    commandHist.unshift(line)
-    console.log('eval', line)
 
     let output = []
     if (result.error != '') {
