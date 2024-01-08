@@ -7,6 +7,8 @@ function submit() {
     let result = ''
     if (line.trim() === "") {
         if (zcStackLen() === 0) {
+            stackHist = []
+            document.querySelector("#output").innerHTML = ''
             return
         }
         stackHist.push(zcStack())
