@@ -16,7 +16,7 @@ func zcEval() js.Func {
 		in := args[0].String()
 		c.Eval(in)
 		var err string
-		var stack []interface{}
+		var stack []any
 
 		if c.Error() != nil {
 			err = c.Error().Error()
@@ -40,11 +40,21 @@ func zcStackLen() js.Func {
 
 func zcStack() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) any {
-		var stack []interface{}
+		var stack []any
 		for _, item := range c.Stack() {
 			stack = append(stack, item)
 		}
 		return stack
+	})
+}
+
+func zcOpNames() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		var ops []any
+		for _, item := range c.OpNames() {
+			ops = append(ops, item)
+		}
+		return ops
 	})
 }
 
@@ -53,5 +63,6 @@ func main() {
 	js.Global().Set("zcEval", zcEval())
 	js.Global().Set("zcStack", zcStack())
 	js.Global().Set("zcStackLen", zcStackLen())
+	js.Global().Set("zcOpNames", zcOpNames())
 	<-make(chan struct{})
 }

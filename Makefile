@@ -11,7 +11,7 @@ test: ops doc
 	go test $(GOFLAGS) ./...
 
 wasm:
-	GOOS=js GOARCH=wasm go build -o assets/zc.wasm cmd/wasm/main.go
+	GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
 
 serve:
 	go run cmd/server/main.go

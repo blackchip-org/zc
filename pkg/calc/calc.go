@@ -184,6 +184,7 @@ func (c *Calc) OpNames() []string {
 	for name := range opsTable {
 		os = append(os, name)
 	}
+	slices.Sort(os)
 	return os
 }
 
