@@ -2,14 +2,18 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"net/http"
 )
 
+var addr = ":9090"
+
 func main() {
-	err := http.ListenAndServe(":9090", http.FileServer(http.Dir("../../assets")))
+	fmt.Printf("listening on %v\n", addr)
+	err := http.ListenAndServe(addr, http.FileServer(http.Dir("assets")))
 	if err != nil {
-		fmt.Println("Failed to start server", err)
-		return
+		fmt.Fprintf(os.Stderr, "error: unable to start server: %v\n", err)
+		os.Exit(1)
 	}
 }

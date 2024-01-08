@@ -2,7 +2,7 @@
 
 GOFLAGS=-tags proj
 
-all: doc install
+all: doc install wasm
 
 install: gen
 	go install $(GOFLAGS) ./...
@@ -11,8 +11,11 @@ test: ops doc
 	go test $(GOFLAGS) ./...
 
 wasm:
-	GOOS=js GOARCH=wasm go build -o assets/zc.wasm cmd/wasm/main.go 
-	
+	GOOS=js GOARCH=wasm go build -o assets/zc.wasm cmd/wasm/main.go
+
+serve:
+	go run cmd/server/main.go
+
 test-release: clean
 	goreleaser release --skip-publish
 
