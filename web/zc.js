@@ -129,7 +129,7 @@ function autoComplete() {
     } else if (!showCandidates) {
         showCandidates = true
     } else {
-        console.log('candidates', candidates)
+        candidates = candidates.map((e) => e.replace("&", "&amp;"))
         document.querySelector("#popup").innerHTML = candidates.join(' ')
     }
 }
