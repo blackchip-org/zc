@@ -63,6 +63,9 @@ Time zone database.
 }
 
 func processDir(zones map[string]string, parent []string, dir string) {
+	if strings.HasSuffix(dir, "/posix") || strings.HasSuffix(dir, "/right") {
+		return
+	}
 	entries, err := os.ReadDir(dir)
 	if err != nil {
 		log.Panic(err)
