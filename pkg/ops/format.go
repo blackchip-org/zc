@@ -68,17 +68,21 @@ end
 func RoundDecimal(c zc.Calc) {
 	s := getFormatState(c)
 	places := zc.PopInt32(c)
+	anno := c.TopAnnotation()
 	a0 := zc.PopDecimal(c)
 	r0 := round(a0, places, s.roundingMode)
 	zc.PushDecimal(c, r0)
+	zc.Annotate(c, anno)
 }
 
 func RoundFloat(c zc.Calc) {
 	places := zc.PopInt(c)
+	anno := c.TopAnnotation()
 	a0 := zc.PopBigFloat(c)
 	r0 := a0.Text('e', places)
 	r0 = zc.PostFormatFloat(r0)
 	zc.PushString(c, r0)
+	zc.Annotate(c, anno)
 }
 
 /*
@@ -151,18 +155,18 @@ example
 end
 */
 func ScientificNotation(c zc.Calc) {
+	anno := c.TopAnnotation()
 	a0 := zc.PopFloat(c)
 	t0 := strconv.FormatFloat(a0, 'e', -1, 64)
 	r0 := strings.Replace(t0, "e+", "e", 1)
 	zc.PushString(c, r0)
+	zc.Annotate(c, anno)
 }
 
 func ScientificNotationBigInt(c zc.Calc) {
+	anno := c.TopAnnotation()
 	a0 := zc.PopBigInt(c)
 	f := new(big.Float).SetInt(a0)
-	// r0, acc := f.Float64()
 	zc.PushBigFloat(c, f)
-	// if acc != big.Exact {
-	// 	zc.Annotate(c, "inexact")
-	// }
+	zc.Annotate(c, anno)
 }

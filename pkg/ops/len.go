@@ -1,6 +1,21 @@
 package ops
 
 /*
+oper	km-m
+func	- p0:Decimal -- Decimal
+macro	1000 mul /m anno
+title   Kilometers to meters
+
+desc
+Convert *p0* in kilometers to meters.
+end
+
+example
+6378.137 km-m -- 6378137 # m
+end
+*/
+
+/*
 oper	km-mi
 func	- p0:Decimal -- Decimal
 macro	0.62137119 mul /mi anno
@@ -11,7 +26,7 @@ Convert *p0* in kilometers to miles.
 end
 
 example
-100 km-mi 2 round -- 62.14
+100 km-mi 2 round -- 62.14 # mi
 end
 */
 
@@ -26,7 +41,23 @@ Convert *p0* in kilometers to nautical miles.
 end
 
 example
-100 km-nmi 2 round -- 54
+100 km-nmi 2 round -- 54 # nmi
+end
+*/
+
+/*
+oper	m-km
+func	- p0:Decimal -- Decimal
+macro	1000 div /km anno
+title   Meters to kilometers
+
+desc
+Convert *p0* in meters to kilometers.
+end
+
+example
+earth-equatorial-radius -- 6378137 # m
+m-km -- 6378.137 # km
 end
 */
 
@@ -41,7 +72,7 @@ Convert *p0* in meters to nautical miles.
 end
 
 example
-100,000 m-nmi 2 round -- 54
+100,000 m-nmi 2 round -- 54 # nmi
 end
 */
 
@@ -49,14 +80,14 @@ end
 oper	mi-km
 func	- p0:Decimal -- Decimal
 macro	1.609344 mul /km anno
-title	Miles to kilomters
+title	Miles to kilometers
 
 desc
 Convert *p0* in miles to kilometers
 end
 
 example
-100 mi-km 2 round -- 160.93
+100 mi-km 2 round -- 160.93 # km
 end
 */
 
@@ -71,7 +102,7 @@ Convert *p0* in miles to nautical miles
 end
 
 example
-100 mi-nmi 2 round -- 86.9
+100 mi-nmi 2 round -- 86.9 # nmi
 end
 */
 
@@ -79,14 +110,14 @@ end
 oper	nmi-km
 func	- p0:Decimal -- Decimal
 macro	1.852 mul /km anno
-title 	Nautical miles to kiometers
+title 	Nautical miles to kilometers
 
 desc
-Convert *p0* in nautical mlies to kilometers
+Convert *p0* in nautical miles to kilometers
 end
 
 example
-100 nmi-km 2 round -- 185.2
+100 nmi-km 2 round -- 185.2 # km
 end
 */
 
@@ -112,10 +143,10 @@ macro	1.15078 mul /mi anno
 title	Nautical miles to miles
 
 desc
-Conver *p0* in nautical miles to miles
+Convert *p0* in nautical miles to miles
 end
 
 example
-100 nmi-mi 2 round -- 115.08
+100 nmi-mi 2 round -- 115.08 # mi
 end
 */

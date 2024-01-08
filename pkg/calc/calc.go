@@ -127,6 +127,18 @@ func (c *Calc) Push(item string) {
 	c.stack = append(c.stack, item)
 }
 
+func (c *Calc) TopAnnotation() string {
+	var anno string
+	if len(c.stack) == 0 {
+		return anno
+	}
+	v := c.stack[0]
+	if i := strings.Index(v, zc.AnnotationMarker); i > 0 {
+		anno = v[i+len(zc.AnnotationMarker)+1:]
+	}
+	return anno
+}
+
 func (c *Calc) SetError(err error) {
 	if c.err == nil {
 		c.err = err

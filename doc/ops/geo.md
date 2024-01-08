@@ -29,11 +29,11 @@ Example:
 
 | Input                     | Stack
 |---------------------------|---------------
-| `earth-equatorial-radius` | `6378137 # meters`
+| `earth-equatorial-radius` | `6378137 # m`
 
 ## earth-polar-radius
 
-The polar radius,of the Earth in meters.
+The polar radius of the Earth in meters.
 
 Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
@@ -48,11 +48,11 @@ Example:
 
 | Input                     | Stack
 |---------------------------|---------------
-| `earth-equatorial-radius` | `6378137 # meters`
+| `earth-equatorial-radius` | `6378137 # m`
 
 ## earth-radius
 
-The globally-average value of the Earth in meters.
+The volumetric mean radius of the Earth in meters.
 
 Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
@@ -67,7 +67,7 @@ Example:
 
 | Input          | Stack
 |----------------|---------------
-| `earth-radius` | `6371000 # meters`
+| `earth-radius` | `6371000 # m`
 
 ## haversine
 

@@ -5,15 +5,33 @@ Length conversions
 
 | Operation    | Description
 |--------------|---------------
+| [`km-m`](#km-m) | Kilometers to meters
 | [`km-mi`](#km-mi) | Kilometers to miles
 | [`km-nmi`](#km-nmi) | Kilometers to nautical miles
+| [`m-km`](#m-km) | Meters to kilometers
 | [`m-nmi`](#m-nmi) | Meters to nautical miles
-| [`mi-km`](#mi-km) | Miles to kilomters
+| [`mi-km`](#mi-km) | Miles to kilometers
 | [`mi-nmi`](#mi-nmi) | Miles to nautical miles
-| [`nmi-km`](#nmi-km) | Nautical miles to kiometers
+| [`nmi-km`](#nmi-km) | Nautical miles to kilometers
 | [`nmi-m`](#nmi-m) | Nautical miles to meters
 | [`nmi-mi`](#nmi-mi) | Nautical miles to miles
 
+
+## km-m
+
+Convert *p0* in kilometers to meters.
+
+```
+( p0:Decimal -- Decimal )
+```
+
+Example:
+
+<!-- test: km-m -->
+
+| Input           | Stack
+|-----------------|---------------
+| `6378.137 km-m` | `6378137 # m`
 
 ## km-mi
 
@@ -29,7 +47,7 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------
-| `100 km-mi 2 round` | `62.14`
+| `100 km-mi 2 round` | `62.14 # mi`
 
 ## km-nmi
 
@@ -45,7 +63,24 @@ Example:
 
 | Input                | Stack
 |----------------------|---------------
-| `100 km-nmi 2 round` | `54`
+| `100 km-nmi 2 round` | `54 # nmi`
+
+## m-km
+
+Convert *p0* in meters to kilometers.
+
+```
+( p0:Decimal -- Decimal )
+```
+
+Example:
+
+<!-- test: m-km -->
+
+| Input                     | Stack
+|---------------------------|---------------
+| `earth-equatorial-radius` | `6378137 # m`
+| `m-km                   ` | `6378.137 # km`
 
 ## m-nmi
 
@@ -61,7 +96,7 @@ Example:
 
 | Input                   | Stack
 |-------------------------|---------------
-| `100,000 m-nmi 2 round` | `54`
+| `100,000 m-nmi 2 round` | `54 # nmi`
 
 ## mi-km
 
@@ -77,7 +112,7 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------
-| `100 mi-km 2 round` | `160.93`
+| `100 mi-km 2 round` | `160.93 # km`
 
 ## mi-nmi
 
@@ -93,11 +128,11 @@ Example:
 
 | Input                | Stack
 |----------------------|---------------
-| `100 mi-nmi 2 round` | `86.9`
+| `100 mi-nmi 2 round` | `86.9 # nmi`
 
 ## nmi-km
 
-Convert *p0* in nautical mlies to kilometers
+Convert *p0* in nautical miles to kilometers
 
 ```
 ( p0:Decimal -- Decimal )
@@ -109,7 +144,7 @@ Example:
 
 | Input                | Stack
 |----------------------|---------------
-| `100 nmi-km 2 round` | `185.2`
+| `100 nmi-km 2 round` | `185.2 # km`
 
 ## nmi-m
 
@@ -129,7 +164,7 @@ Example:
 
 ## nmi-mi
 
-Conver *p0* in nautical miles to miles
+Convert *p0* in nautical miles to miles
 
 ```
 ( p0:Decimal -- Decimal )
@@ -141,4 +176,4 @@ Example:
 
 | Input                | Stack
 |----------------------|---------------
-| `100 nmi-mi 2 round` | `115.08`
+| `100 nmi-mi 2 round` | `115.08 # mi`

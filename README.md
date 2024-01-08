@@ -260,6 +260,44 @@ Each line is considered a separate value when using `quote`. For example:
 | `2 3 add`       | `3 \| 2 3 add`
 | `EOF`           | `3 \| 2 3 add`
 
+## Annotations
+
+Values on the stack may have annotations to provide some additional
+metadata. An annotated value ends with a hash mark `#` and the annotation
+text. For example, values are given an 'inexact' annotation when a
+`Rational` value cannot be exactly converted to a `Decimal`. Example:
+
+<!-- test: anno -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `2/3 dec`           | `0.6666666666666666 # inexact`
+
+Annotations are also used to indicate the units for a result.
+
+<!-- test: anno-haversine -->
+
+| Input                 | Stack
+|-----------------------|---------------------|
+| `1 1 2 2`             | `1 \| 1 \| 2 \| 2`
+| `haversine`           | `157225.4320380729 # m`
+| `si.kilo div 2 round` | `157.23`
+
+Note that annotations are lost when values are popped off the stack.
+
+Use the `anno` operation to annotate a value and the `no-anno` or `noa`
+operation to remove an annotation:
+
+<!-- test: add-rm-anno -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `42`                | `42`
+| `[the answer] anno` | `42 # the answer`
+| `noa`               | `42`
+
+To disable annotations, set the `ZC_NO_ANNO` environment variable to any value.
+
 ## Macros
 
 Let's say that you commonly have to compute a sales tax that is 5%. To
@@ -292,9 +330,9 @@ The name of `=` is reserved for your macro use in bulk operations:
 | Input                     | Stack
 |---------------------------|-------------------
 | `def = top f-c 2 round`   | *macro '=' defined*
-| `32 =`                    | `0`
-| `68 =`                    | `20`
-| `100 =`                   | `37.78`
+| `32 =`                    | `0 # °C`
+| `68 =`                    | `20 # °C`
+| `100 =`                   | `37.78 # °C`
 
 No operations start with a `.` character and can be used for macro names. Play
 a game of rock, paper, scissors:
@@ -386,44 +424,6 @@ top stack.
 | `recall`                  | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9 \| 5`
 | `[sub sq] /map 2 apply`   | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
 | `avg sqrt`                | `2`
-
-## Annotations
-
-Values on the stack may have annotations to provide some additional
-metadata. An annotated value ends with a hash mark `#` and the annotation
-text. For example, values are given an 'inexact' annotation when a
-`Rational` value cannot be exactly converted to a `Decimal`. Example:
-
-<!-- test: anno -->
-
-| Input               | Stack
-|---------------------|---------------------|
-| `2/3 dec`           | `0.6666666666666666 # inexact`
-
-Annotations are also used to indicate the units for a result.
-
-<!-- test: anno-haversine -->
-
-| Input                 | Stack
-|-----------------------|---------------------|
-| `1 1 2 2`             | `1 \| 1 \| 2 \| 2`
-| `haversine`           | `157225.4320380729 # meters`
-| `si.kilo div 2 round` | `157.23`
-
-Note that annotations are lost when values are popped off the stack.
-
-Use the `anno` operation to annotate a value and the `no-anno` or `noa`
-operation to remove an annotation:
-
-<!-- test: add-rm-anno -->
-
-| Input               | Stack
-|---------------------|---------------------|
-| `42`                | `42`
-| `[the answer] anno` | `42 # the answer`
-| `noa`               | `42`
-
-To disable annotations, set the `ZC_NO_ANNO` environment variable to any value.
 
 ## Commands
 

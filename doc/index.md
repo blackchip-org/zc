@@ -135,6 +135,7 @@
 ## g
 
 - [g-oz](ops/mass.md#g-oz): Grams to ounces
+- [g-ozt](ops/mass.md#g-ozt): Grams to troy ounces
 - [get](ops/stack.md#get): Get a named stack from memory
 - [iec.gibi](ops/iec.md#iec.gibi): IEC prefix Gi, 2^30
 - [si.giga](ops/si.md#si.giga): SI prefix G, 1e09
@@ -175,6 +176,7 @@
 - [kg-lb](ops/mass.md#kg-lb): Kilograms to pounds
 - [iec.kibi](ops/iec.md#iec.kibi): IEC prefix Ki, 2^10
 - [si.kilo](ops/si.md#si.kilo): SI prefix k, 1e03
+- [km-m](ops/len.md#km-m): Kilometers to meters
 - [km-mi](ops/len.md#km-mi): Kilometers to miles
 - [km-nmi](ops/len.md#km-nmi): Kilometers to nautical miles
 
@@ -201,12 +203,13 @@
 ## m
 
 - [m](ops/basic.md#mul): Multiplication
+- [m-km](ops/len.md#m-km): Meters to kilometers
 - [m-nmi](ops/len.md#m-nmi): Meters to nautical miles
 - [map](ops/hof.md#map): Apply a function to each item on the stack
 - [md5](ops/crypto.md#md5): MD5 hash function
 - [iec.mebi](ops/iec.md#iec.mebi): IEC prefix Mi, 2^20
 - [si.mega](ops/si.md#si.mega): SI prefix M, 1e06
-- [mi-km](ops/len.md#mi-km): Miles to kilomters
+- [mi-km](ops/len.md#mi-km): Miles to kilometers
 - [mi-nmi](ops/len.md#mi-nmi): Miles to nautical miles
 - [si.micro](ops/si.md#si.micro): SI prefix μ, 1e-06
 - [si.milli](ops/si.md#si.milli): SI prefix m, 1e-03
@@ -221,7 +224,7 @@
 - [si.nano](ops/si.md#si.nano): SI prefix n, 1e-09
 - [neg](ops/basic.md#neg): Negation
 - [neq](ops/cmp.md#neq): Not equal
-- [nmi-km](ops/len.md#nmi-km): Nautical miles to kiometers
+- [nmi-km](ops/len.md#nmi-km): Nautical miles to kilometers
 - [nmi-m](ops/len.md#nmi-m): Nautical miles to meters
 - [nmi-mi](ops/len.md#nmi-mi): Nautical miles to miles
 - [no-anno](ops/anno.md#no-anno): Remove annotation
@@ -240,6 +243,7 @@
 - [or](ops/bool.md#or) (bool): Logical disjunction
 - [or](ops/prog.md#or) (prog): Bitwise or
 - [oz-g](ops/mass.md#oz-g): Ounces to grams
+- [ozt-g](ops/mass.md#ozt-g): Troy ounces to grams
 
 ## p
 
@@ -364,8 +368,8 @@
 
 - [u8de](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [u8en](ops/text.md#utf8-encode): Encode UTF-8 bytes
-- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
 - [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
+- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
 - [up](ops/stack.md#up): Rotate items upward
 - [upper](ops/text.md#upper): Uppercase
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes

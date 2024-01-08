@@ -6,9 +6,11 @@ Mass conversions
 | Operation  | Description
 |------------|---------------
 | [`g-oz`](#g-oz) | Grams to ounces
+| [`g-ozt`](#g-ozt) | Grams to troy ounces
 | [`kg-lb`](#kg-lb) | Kilograms to pounds
 | [`lb-kg`](#lb-kg) | Pounds to kilograms
 | [`oz-g`](#oz-g) | Ounces to grams
+| [`ozt-g`](#ozt-g) | Troy ounces to grams
 
 
 ## g-oz
@@ -25,7 +27,23 @@ Example:
 
 | Input                  | Stack
 |------------------------|---------------
-| `2834.95 g-oz 2 round` | `100`
+| `2834.95 g-oz 2 round` | `100 # oz`
+
+## g-ozt
+
+Convert *p0* in grams to troy ounces.
+
+```
+( p0:Decimal -- Decimal )
+```
+
+Example:
+
+<!-- test: g-ozt -->
+
+| Input                  | Stack
+|------------------------|---------------
+| `326.59 g-ozt 2 round` | `10.5 # oz t`
 
 ## kg-lb
 
@@ -41,7 +59,7 @@ Example:
 
 | Input                 | Stack
 |-----------------------|---------------
-| `45.36 kg-lb 2 round` | `100`
+| `45.36 kg-lb 2 round` | `100 # lb`
 
 ## lb-kg
 
@@ -57,7 +75,7 @@ Example:
 
 | Input               | Stack
 |---------------------|---------------
-| `100 lb-kg 2 round` | `45.36`
+| `100 lb-kg 2 round` | `45.36 # kg`
 
 ## oz-g
 
@@ -73,4 +91,20 @@ Example:
 
 | Input              | Stack
 |--------------------|---------------
-| `100 oz-g 2 round` | `2834.95`
+| `100 oz-g 2 round` | `2834.95 # g`
+
+## ozt-g
+
+Convert *p0* in troy ounces to grams.
+
+```
+( p0:Decimal -- Decimal )
+```
+
+Example:
+
+<!-- test: ozt-g -->
+
+| Input                | Stack
+|----------------------|---------------
+| `10.5 ozt-g 2 round` | `326.59 # g`

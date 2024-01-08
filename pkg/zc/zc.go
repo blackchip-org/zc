@@ -15,6 +15,7 @@ type Calc interface {
 	Peek(int) (string, bool)
 	Pop() (string, bool)
 	MustPop() string
+	TopAnnotation() string
 	Push(string)
 	Info() string
 	SetInfo(string, ...any)

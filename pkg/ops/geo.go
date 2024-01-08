@@ -12,7 +12,7 @@ const EarthRadius = 6371000
 /*
 oper	earth-equatorial-radius
 func	- -- Int
-macro	6378137 'meters' anno
+macro	6378137 /m anno
 title	Equatorial radius of the Earth
 
 desc
@@ -23,25 +23,25 @@ https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 end
 
 example
-earth-equatorial-radius -- 6378137 # meters
+earth-equatorial-radius -- 6378137 # m
 end
 */
 
 /*
 oper	earth-polar-radius
 func	- -- Int
-macro	6356752 'meters' anno
+macro	6356752 /m anno
 title	Polar radius of the Earth
 
 desc
-The polar radius,of the Earth in meters.
+The polar radius of the Earth in meters.
 
 Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 end
 
 example
-earth-equatorial-radius -- 6378137 # meters
+earth-equatorial-radius -- 6378137 # m
 end
 */
 
@@ -51,19 +51,19 @@ func	EarthRadiusFn -- Int
 title	Average radius of the Earth
 
 desc
-The globally-average value of the Earth in meters.
+The volumetric mean radius of the Earth in meters.
 
 Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 end
 
 example
-earth-radius -- 6371000 # meters
+earth-radius -- 6371000 # m
 end
 */
 func EarthRadiusFn(c zc.Calc) {
 	zc.PushInt(c, EarthRadius)
-	zc.Annotate(c, "meters")
+	zc.Annotate(c, "m")
 }
 
 /*
@@ -102,7 +102,7 @@ func Haversine(c zc.Calc) {
 	r0 := EarthRadius * c0
 
 	zc.PushFloat(c, r0)
-	zc.Annotate(c, "meters")
+	zc.Annotate(c, "m")
 }
 
 /*

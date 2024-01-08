@@ -41,7 +41,7 @@ Converts the temperature *p0* in Fahrenheit to Celsius.
 end
 
 example
-68 f-c 2 round -- 20
+68 f-c 2 round -- 20 # °C
 end
 */
 
