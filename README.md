@@ -38,7 +38,14 @@ entertainment. Things may change in backwards incompatible ways with no notice.
 
 ## Installation
 
-Install [go](https://go.dev/dl/) and then install the calculator with:
+Use the browser version here:
+
+    https://blackchip.org/zc
+
+The browser version does not yet have support for auto-complete. 
+
+For the command-line version, install [go](https://go.dev/dl/) and then install 
+the calculator with:
 
     go install github.com/blackchip-org/zc/v5/cmd/zc@latest
 
