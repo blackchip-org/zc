@@ -58,11 +58,27 @@ func zcOpNames() js.Func {
 	})
 }
 
+func zcSetStack() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		if len(args) != 1 {
+			panic("zcSetStack: invalid number of arguments")
+		}
+		jsStack := args[0]
+		var outStack []string
+		for i := 0; i < jsStack.Length(); i++ {
+			outStack = append(outStack, jsStack.Index(i).String())
+		}
+		c.SetStack(outStack)
+		return nil
+	})
+}
+
 func main() {
 	c = calc.New()
 	js.Global().Set("zcEval", zcEval())
 	js.Global().Set("zcStack", zcStack())
 	js.Global().Set("zcStackLen", zcStackLen())
 	js.Global().Set("zcOpNames", zcOpNames())
+	js.Global().Set("zcSetStack", zcSetStack())
 	<-make(chan struct{})
 }

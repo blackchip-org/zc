@@ -89,3 +89,10 @@ ul {
     list-style-type: none;
     margin: 0;
 }
+
+#popup {
+    flex: 1 1 auto;
+    color: #aaa;
+    font-size: 24pt;
+    margin: 10px;
+}

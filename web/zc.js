@@ -1,6 +1,7 @@
 var stackHist = []
 var commandHist = []
 var histPos = -1
+var showCandidates = false
 
 function submit() {
     let line = document.querySelector("#input").value
@@ -18,10 +19,12 @@ function submit() {
         result = zcEval(line)
     }
     commandHist.unshift(line)
+    console.log('eval', line)
 
     let output = []
     if (result.error != '') {
         result.stack = stackHist.pop() || []
+        zcSetStack(result.stack)
     }
     let prev = []
     if (stackHist.length != 0) {
@@ -92,6 +95,49 @@ function moveToEnd() {
     setTimeout(() => { e.selectionStart = e.selectionEnd = e.value.length }, 0)
 }
 
+function autoComplete() {
+    let e = document.querySelector('#input')
+    let pos = e.selectionEnd - 1
+    if (pos <= 0) {
+        pos = 0
+    }
+    let searchFor = ''
+    for (let i = pos; i >= 0; i--) {
+        if (e.value[i] === ' ') {
+            break
+        }
+        searchFor = e.value[i] + searchFor
+    }
+    if (searchFor === '') {
+        return
+    }
+
+    let candidates = zcOpNames().filter((e) => e.startsWith(searchFor))
+    if (candidates.length > 50) {
+        candidates = candidates.slice(0, 50)
+        candidates.push("...")
+    }
+
+    if (candidates.length === 0) {
+        showCandidates = false
+    } else if (candidates.length === 1) {
+        let toAdd = candidates[0].slice(searchFor.length)
+        let head = e.value.slice(0, pos + 1)
+        let tail = e.value.slice(pos + 1)
+        e.value = head + toAdd + tail
+        e.selectionStart = e.selectionEnd = pos + toAdd.length + 1
+    } else if (!showCandidates) {
+        showCandidates = true
+    } else {
+        console.log('candidates', candidates)
+        document.querySelector("#popup").innerHTML = candidates.join(' ')
+    }
+}
+
+function clearPopup() {
+    document.querySelector("#popup").innerHTML = ''
+}
+
 window.onload = function() {
     document.querySelector("#input").onkeypress = function(evt) {
         let keyCode = evt.code || evt.key
@@ -101,11 +147,21 @@ window.onload = function() {
     }
 
     document.querySelector('#input').onkeydown = function(evt) {
+        clearPopup();
         let keyCode = evt.code || evt.key
         if (keyCode === 'ArrowUp') {
             up()
+            clearPopup();
+            showCandidates = false
         } else if (keyCode === 'ArrowDown') {
             down()
+            clearPopup();
+            showCandidates = false
+        } else if (keyCode === 'Tab') {
+            autoComplete();
+            evt.preventDefault()
+        } else {
+            clearPopup();
         }
     }
 }
