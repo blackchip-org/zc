@@ -209,20 +209,25 @@ func (r *REPL) getPrompt() string {
 
 func (r *REPL) wordCompleter(line string, pos int) (string, []string, string) {
 	endPos := pos
-	for ; endPos < len(line); endPos++ {
+	for endPos < len(line) {
 		if line[endPos] == ' ' {
 			break
 		}
+		endPos++
 	}
-	startPos := pos
+	startPos := pos - 1
+	if startPos < 0 {
+		startPos = 0
+	}
 	if startPos >= len(line) && len(line) > 0 {
 		startPos = len(line) - 1
 	}
-	for ; startPos > 0; startPos-- {
+	for startPos > 0 {
 		if line[startPos] == ' ' {
 			startPos++
 			break
 		}
+		startPos--
 	}
 	prefix := line[:startPos]
 	word := line[startPos:endPos]
