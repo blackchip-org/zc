@@ -40,7 +40,7 @@ entertainment. Things may change in backwards incompatible ways with no notice.
 
 Use the browser version here:
 
-    https://blackchip.org/zc
+https://blackchip.org/zc
 
 The browser version does not yet have support for auto-complete. 
 
