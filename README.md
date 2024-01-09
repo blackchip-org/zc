@@ -8,7 +8,6 @@ Documentation:
 - [Operations Index](doc/index.md)
 - [Type Documentation](doc/types.md)
 - [Stack Notation](doc/stack.md)
-- [Examples](doc/examples.md)
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v5.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v5)
 
@@ -43,9 +42,9 @@ Use the browser version here:
 
 https://blackchip.org/zc
 
-The browser version does not yet have support for auto-complete. 
+The browser version does not yet have support for auto-complete.
 
-For the command-line version, install [go](https://go.dev/dl/) and then install 
+For the command-line version, install [go](https://go.dev/dl/) and then install
 the calculator with:
 
     go install github.com/blackchip-org/zc/v5/cmd/zc@latest
