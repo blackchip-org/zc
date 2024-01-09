@@ -2,7 +2,11 @@
 
 A fun stack based calculator.
 
-Documentation:
+Use the browser version here:
+
+https://blackchip.org/zc
+
+## Documentation
 
 - [Operation Reference](doc/ops.md)
 - [Operations Index](doc/index.md)
@@ -12,6 +16,8 @@ Documentation:
 [![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v5.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v5)
 
 ![ZC Demo](demo.gif)
+
+## About
 
 When I'm at a terminal prompt and I need to use a calculator, `bc` has always
 been my tool of choice. I thought it would be fun to write a calculator myself
@@ -37,12 +43,6 @@ or ignored as I see them. There is no grand plan beyond tinkering around for
 entertainment. Things may change in backwards incompatible ways with no notice.
 
 ## Installation
-
-Use the browser version here:
-
-https://blackchip.org/zc
-
-The browser version does not yet have support for auto-complete.
 
 For the command-line version, install [go](https://go.dev/dl/) and then install
 the calculator with:
