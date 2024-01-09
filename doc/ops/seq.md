@@ -3,6 +3,8 @@
 
 Integer sequences
 
+[Examples](../examples/seq.md)
+
 | Operation               | Description
 |-------------------------|---------------
 | [`fibonacci, fib`](#fibonacci) | Fibonacci sequence

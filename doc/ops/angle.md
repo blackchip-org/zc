@@ -3,6 +3,8 @@
 
 Angular calculations
 
+[Examples](../examples/angle.md)
+
 | Operation                                | Description
 |------------------------------------------|---------------
 | [`dec`](#dec)                            | DMS angle to decimal degrees

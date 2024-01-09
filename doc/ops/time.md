@@ -7,6 +7,8 @@
 
 Date, time, and duration operations
 
+[Examples](../examples/time.md)
+
 | Operation                     | Description
 |-------------------------------|---------------
 | [`add, a, +`](#add)           | Time or duration addition

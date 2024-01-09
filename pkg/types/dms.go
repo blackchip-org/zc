@@ -77,6 +77,14 @@ func ParseDMS(str string) (DMS, bool) {
 	s.SetString(str)
 	s.TrimText = true
 
+	sign := 1
+	if s.Ch == '-' {
+		sign = -1
+		s.Next()
+	} else if s.Ch == '+' {
+		s.Next()
+	}
+
 	sDeg := s.ScanUntil(scanner.Runes('°', 'd'))
 	s.Next()
 	sMin := s.ScanUntil(scanner.Runes('m', '\'', '′'))
@@ -90,21 +98,21 @@ func ParseDMS(str string) (DMS, bool) {
 
 	if sDeg != "" {
 		deg, err = NewDecimalFromString(sDeg)
-		if err != nil {
+		if err != nil || deg.IsNegative() {
 			return DMS{}, false
 		}
 		v = v.Add(deg)
 	}
 	if sMin != "" {
 		min, err = NewDecimalFromString(sMin)
-		if err != nil {
+		if err != nil || deg.IsNegative() {
 			return DMS{}, false
 		}
 		v = v.Add(min.Div(d60))
 	}
 	if sSec != "" {
 		sec, err = NewDecimalFromString(sSec)
-		if err != nil {
+		if err != nil || deg.IsNegative() {
 			return DMS{}, false
 		}
 		v = v.Add(sec.Div(d3600))
@@ -129,6 +137,10 @@ func ParseDMS(str string) (DMS, bool) {
 		if min.IsNegative() {
 			return DMS{}, false
 		}
+	}
+
+	if sign < 0 {
+		v = v.Neg()
 	}
 
 	s.ScanWhile(unicode.IsSpace)

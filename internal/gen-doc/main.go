@@ -48,6 +48,11 @@ func writeGroup(group string, ops []*doc.Op) {
 		log.Fatalf("no group title for %v\n", group)
 	}
 
+	exampleFile := path.Join("../../doc/examples", group+".md")
+	if _, err := os.Stat(exampleFile); err == nil {
+		fmt.Fprintf(out, "[Examples](../examples/%v.md)\n\n", group)
+	}
+
 	width := 0
 	for _, name := range names {
 		op := table[name]
