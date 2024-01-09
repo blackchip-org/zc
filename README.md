@@ -42,8 +42,6 @@ Use the browser version here:
 
 https://blackchip.org/zc
 
-The browser version does not yet have support for auto-complete. 
-
 For the command-line version, install [go](https://go.dev/dl/) and then install 
 the calculator with:
 
