@@ -2,6 +2,10 @@
 
 A fun stack based calculator.
 
+Use the browser version here:
+
+https://blackchip.org/zc
+
 Documentation:
 
 - [Operation Reference](doc/ops.md)
@@ -37,10 +41,6 @@ or ignored as I see them. There is no grand plan beyond tinkering around for
 entertainment. Things may change in backwards incompatible ways with no notice.
 
 ## Installation
-
-Use the browser version here:
-
-https://blackchip.org/zc
 
 For the command-line version, install [go](https://go.dev/dl/) and then install 
 the calculator with:
