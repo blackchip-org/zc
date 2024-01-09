@@ -17,7 +17,7 @@ https://blackchip.org/zc
 
 ![ZC Demo](demo.gif)
 
-## Introduction 
+## About
 
 When I'm at a terminal prompt and I need to use a calculator, `bc` has always
 been my tool of choice. I thought it would be fun to write a calculator myself
