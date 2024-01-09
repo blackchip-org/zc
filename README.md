@@ -6,7 +6,7 @@ Use the browser version here:
 
 https://blackchip.org/zc
 
-Documentation:
+## Documentation
 
 - [Operation Reference](doc/ops.md)
 - [Operations Index](doc/index.md)
@@ -16,6 +16,8 @@ Documentation:
 [![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v5.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v5)
 
 ![ZC Demo](demo.gif)
+
+## Introduction 
 
 When I'm at a terminal prompt and I need to use a calculator, `bc` has always
 been my tool of choice. I thought it would be fun to write a calculator myself
