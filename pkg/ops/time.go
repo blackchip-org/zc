@@ -1,6 +1,8 @@
 package ops
 
 import (
+	"fmt"
+	"runtime"
 	"time"
 
 	"github.com/blackchip-org/zc/v5/pkg/ptime/locale"
@@ -404,6 +406,11 @@ now -- Mon Jan 2 2006 3:04:05pm -0700 MST
 end
 */
 func TimeZone(c zc.Calc) {
+	if runtime.GOARCH == "wasm" {
+		c.SetError(zc.ErrFeatureNotSupported("tz"))
+		return
+	}
+
 	s := getTimeState(c)
 	zone := zc.PopString(c)
 	dt := zc.PopDateTime(c)
@@ -416,7 +423,7 @@ func TimeZone(c zc.Calc) {
 	} else {
 		loc, err = time.LoadLocation(zone)
 		if err != nil {
-			zc.ErrInvalidArgs(c, "unknown time zone")
+			c.SetError(fmt.Errorf("unknown time zone: '%v'", zone))
 			return
 		}
 	}
