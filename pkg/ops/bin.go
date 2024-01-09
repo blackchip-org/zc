@@ -27,6 +27,7 @@ func JoinBits(c zc.Calc) {
 	n := zc.PopInt(c)
 	if n < 0 {
 		zc.ErrInvalidArgs(c, "bit count cannot be negative")
+		return
 	}
 
 	var b big.Int
@@ -69,6 +70,7 @@ func SplitBits(c zc.Calc) {
 	n := zc.PopInt(c)
 	if n < 0 {
 		zc.ErrInvalidArgs(c, "bit count cannot be negative")
+		return
 	}
 
 	var results []*big.Int

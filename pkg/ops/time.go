@@ -271,7 +271,7 @@ func Now(c zc.Calc) {
 }
 
 /*
-oper	now-set
+oper	now=
 func	NowSet p0:DateTime --
 title 	Override now value
 
@@ -282,7 +282,7 @@ end
 
 example
 'Nov 5 1955 01:22 -- Nov 5 1955 01:22
-now-set -- *now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'*
+now= -- *now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'*
 now -- Sat Nov 5 1955 1:22:00am -0700 MST
 end
 */
@@ -294,7 +294,7 @@ func NowSet(c zc.Calc) {
 }
 
 /*
-oper	now-restore
+oper	now-
 func	NowRestore --
 title	Cancel now override
 

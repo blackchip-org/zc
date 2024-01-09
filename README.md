@@ -8,6 +8,7 @@ Documentation:
 - [Operations Index](doc/index.md)
 - [Type Documentation](doc/types.md)
 - [Stack Notation](doc/stack.md)
+- [Examples](doc/examples.md)
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v5.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v5)
 

@@ -66,8 +66,8 @@
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
-- [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
 - [si.convert](ops/si.md#si.convert): Converts between SI units
+- [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
 - [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
@@ -134,6 +134,7 @@
 
 ## g
 
+- [g-kg](ops/mass.md#g-kg): Grams to kilograms
 - [g-oz](ops/mass.md#g-oz): Grams to ounces
 - [g-ozt](ops/mass.md#g-ozt): Grams to troy ounces
 - [get](ops/stack.md#get): Get a named stack from memory
@@ -173,6 +174,7 @@
 ## k
 
 - [k-c](ops/temp.md#k-c): Kelvin to Celsius
+- [kg-g](ops/mass.md#kg-g): Kilograms to grams
 - [kg-lb](ops/mass.md#kg-lb): Kilograms to pounds
 - [iec.kibi](ops/iec.md#iec.kibi): IEC prefix Ki, 2^10
 - [si.kilo](ops/si.md#si.kilo): SI prefix k, 1e03
@@ -233,8 +235,8 @@
 - [not](ops/bool.md#not) (bool): Negation
 - [not](ops/prog.md#not) (prog): Bitwise not
 - [now](ops/time.md#now): Current date and time
-- [now-restore](ops/time.md#now-restore): Cancel now override
-- [now-set](ops/time.md#now-set): Override now value
+- [now-](ops/time.md#now-): Cancel now override
+- [now=](ops/time.md#now=): Override now value
 - [num](ops/rational.md#num): Numerator
 
 ## o

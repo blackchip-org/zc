@@ -1,6 +1,21 @@
 package ops
 
 /*
+oper	g-kg
+func 	- p0:Decimal -- Decimal
+macro	1000 div /kg anno
+title	Grams to kilograms
+
+desc
+Convert *p0* in grams to kilograms.
+end
+
+example
+52124 g-kg -- 52.124 # kg
+end
+*/
+
+/*
 oper	g-oz
 func    - p0:Decimal -- Decimal
 macro   1 28.349523125 div mul /oz anno
@@ -27,6 +42,21 @@ end
 
 example
 326.59 g-ozt 2 round -- 10.5 # oz t
+end
+*/
+
+/*
+oper	kg-g
+func 	- p0:Decimal -- Decimal
+macro	1000 mul /kg anno
+title	Kilograms to grams
+
+desc
+Convert *p0* in kilograms to grams.
+end
+
+example
+52.124 kg-g -- 52124 # kg
 end
 */
 

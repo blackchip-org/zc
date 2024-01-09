@@ -1,6 +1,6 @@
 # Types
 
-<!-- eval: 'Jan 2 2006 15:04:05 -0700 MST' now-set -->
+<!-- eval: 'Jan 2 2006 15:04:05 -0700 MST' now= -->
 <!-- eval: 'MST' local-zone -->
 
 Each value on the calculator stack is a string of bytes. When an operation

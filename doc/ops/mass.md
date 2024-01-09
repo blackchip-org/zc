@@ -5,13 +5,31 @@ Mass conversions
 
 | Operation  | Description
 |------------|---------------
+| [`g-kg`](#g-kg) | Grams to kilograms
 | [`g-oz`](#g-oz) | Grams to ounces
 | [`g-ozt`](#g-ozt) | Grams to troy ounces
+| [`kg-g`](#kg-g) | Kilograms to grams
 | [`kg-lb`](#kg-lb) | Kilograms to pounds
 | [`lb-kg`](#lb-kg) | Pounds to kilograms
 | [`oz-g`](#oz-g) | Ounces to grams
 | [`ozt-g`](#ozt-g) | Troy ounces to grams
 
+
+## g-kg
+
+Convert *p0* in grams to kilograms.
+
+```
+( p0:Decimal -- Decimal )
+```
+
+Example:
+
+<!-- test: g-kg -->
+
+| Input        | Stack
+|--------------|---------------
+| `52124 g-kg` | `52.124 # kg`
 
 ## g-oz
 
@@ -44,6 +62,22 @@ Example:
 | Input                  | Stack
 |------------------------|---------------
 | `326.59 g-ozt 2 round` | `10.5 # oz t`
+
+## kg-g
+
+Convert *p0* in kilograms to grams.
+
+```
+( p0:Decimal -- Decimal )
+```
+
+Example:
+
+<!-- test: kg-g -->
+
+| Input         | Stack
+|---------------|---------------
+| `52.124 kg-g` | `52124 # kg`
 
 ## kg-lb
 
