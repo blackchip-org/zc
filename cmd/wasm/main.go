@@ -6,27 +6,31 @@ import (
 	"syscall/js"
 
 	"github.com/blackchip-org/zc/v5/pkg/calc"
+	"github.com/blackchip-org/zc/v5/pkg/repl"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
-var c zc.Calc
+var (
+	c zc.Calc
+	r *repl.REPL
+)
 
 func zcEval() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) any {
 		in := args[0].String()
-		c.Eval(in)
+		r.Eval(in)
 		var err string
 		var stack []any
 
-		if c.Error() != nil {
-			err = c.Error().Error()
+		if r.Error() != nil {
+			err = r.Error().Error()
 		}
 		for i := 0; i < c.StackLen(); i++ {
 			stack = append(stack, c.Stack()[i])
 		}
 		return map[string]any{
 			"stack": stack,
-			"info":  c.Info(),
+			"info":  r.Info(),
 			"error": err,
 		}
 	})
@@ -75,6 +79,8 @@ func zcSetStack() js.Func {
 
 func main() {
 	c = calc.New()
+	r = repl.New(c)
+
 	js.Global().Set("zcEval", zcEval())
 	js.Global().Set("zcStack", zcStack())
 	js.Global().Set("zcStackLen", zcStackLen())

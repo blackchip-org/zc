@@ -102,8 +102,8 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 	ansi.Enabled = false
 
 	for _, l := range setup {
-		if r.Eval(l); c.Error() != nil {
-			t.Fatal(c.Error())
+		if r.Eval(l); r.Error() != nil {
+			t.Fatal(r.Error())
 		}
 	}
 
@@ -132,15 +132,15 @@ func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
 		t.Log(in)
 
 		r.Eval(in)
-		if c.Error() != nil {
-			actualOut := c.Error().Error()
+		if r.Error() != nil {
+			actualOut := r.Error().Error()
 			if actualOut != out {
 				t.Fatalf("\n have error: %v \n want error: %v", actualOut, out)
 			}
 			return
 		}
-		if c.Info() != "" || info != "" {
-			have := "*" + c.Info() + "*"
+		if r.Info() != "" || info != "" {
+			have := "*" + r.Info() + "*"
 			if have != info {
 				t.Fatalf("\n have info: %v \n want info: %v", have, info)
 			}

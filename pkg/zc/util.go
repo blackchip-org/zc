@@ -51,6 +51,8 @@ func IsValuePrefix(ch rune, next rune) bool {
 		return true
 	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
 		return true
+	case ch == '/':
+		return true
 	}
 	return false
 }

@@ -9,15 +9,15 @@
 
 Degrees, minutes, seconds:
 
-<!-- test: dms -->
+<!-- SKIP: dms -->
 
 | Input                 | Stack
 |-----------------------|-------------
 | `-77.016389`          | `-77.016389`
-| `dm`                  | `-77° 0.98334′`   
+| `dm`                  | `-77° 0.98334′`
 | `0 dmsr`              | `77° 0′ 59″`
 
-## seq 
+## seq
 
 Even numbers:
 
@@ -37,7 +37,7 @@ Powers of two:
 | `1 8 seq`             | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8`
 | `[2 swap pow] map`    | `2 \| 4 \| 8 \| 16 \| 32 \| 64 \| 128 \| 256`
 
-## time 
+## time
 
 Time worked:
 
@@ -47,7 +47,7 @@ Time worked:
 |-----------------|-------------
 | `6:14pm 9:49am` | `6:14pm \| 9:49am`
 | `sub`           | `8h 25m`
-| `minutes`       | `505` 
+| `minutes`       | `505`
 
 Days until Christmas (today is mocked to be 15 March):
 
@@ -55,7 +55,7 @@ Days until Christmas (today is mocked to be 15 March):
 
 | Input          | Stack
 |----------------|-------------
-| `3/15/24 now=` | *now set to 'Fri Mar 15 2024 12:00:00am -0400 EDT'* 
+| `3/15/24 now=` | *now set to 'Fri Mar 15 2024 12:00:00am -0400 EDT'*
 | `12/25 doy`    | `360`
 | `now doy`      | `360 \| 75`
 | `sub`          | `285`

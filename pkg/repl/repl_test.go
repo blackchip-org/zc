@@ -28,7 +28,7 @@ func TestUndo(t *testing.T) {
 	repl.Eval("undo")
 	// empty
 	repl.Eval("undo")
-	if repl.Calc.Error() == nil {
+	if repl.Error() == nil {
 		t.Fatalf("expected error")
 	}
 	repl.Eval("redo")
@@ -46,7 +46,7 @@ func TestUndo(t *testing.T) {
 		t.Fatalf("\n have: %v \n want: 3", top)
 	}
 	repl.Eval("redo")
-	if repl.Calc.Error() == nil {
+	if repl.Error() == nil {
 		t.Fatalf("expected error")
 	}
 }

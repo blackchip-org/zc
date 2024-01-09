@@ -370,8 +370,8 @@
 
 - [u8de](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [u8en](ops/text.md#utf8-encode): Encode UTF-8 bytes
-- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
 - [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
+- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
 - [up](ops/stack.md#up): Rotate items upward
 - [upper](ops/text.md#upper): Uppercase
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes

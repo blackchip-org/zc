@@ -27,7 +27,7 @@ func Test(r *REPL, test string) bool {
 	}
 	output := s.Scan(scanner.LineTrimSpace)
 	r.Eval(input)
-	err := r.Calc.Error()
+	err := r.Error()
 	if errorTest {
 		if err == nil {
 			return false

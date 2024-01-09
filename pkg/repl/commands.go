@@ -47,16 +47,16 @@ func def(r *REPL, s *scanner.Scanner) error {
 			return fmt.Errorf("macro not defined: %v", name)
 		}
 		delete(r.macros, name)
-		r.Calc.SetInfo("macro %v undefined", zc.Quote(name))
+		r.info = fmt.Sprintf("macro %v undefined", zc.Quote(name))
 		return nil
 	}
 
 	if _, exists := r.macros[name]; exists {
-		r.Calc.SetInfo("macro %v redefined", zc.Quote(name))
+		r.info = fmt.Sprintf("macro %v redefined", zc.Quote(name))
 	} else if _, exists := r.ops[name]; exists {
-		r.Calc.SetInfo("macro %v overrides", zc.Quote(name))
+		r.info = fmt.Sprintf("macro %v overrides", zc.Quote(name))
 	} else {
-		r.Calc.SetInfo("macro %v defined", zc.Quote(name))
+		r.info = fmt.Sprintf("macro %v defined", zc.Quote(name))
 	}
 	r.macros[name] = expr
 	return nil

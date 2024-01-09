@@ -32,6 +32,8 @@ type REPL struct {
 	ops         map[string]struct{}
 	macros      map[string]string
 	quoteEnd    string
+	info        string
+	err         error
 }
 
 func New(calc zc.Calc) *REPL {
@@ -80,73 +82,7 @@ func (r *REPL) ReadLine() (string, error) {
 	return text, err
 }
 
-func (r *REPL) Eval(text string) bool {
-	var execError error
-	var s scanner.Scanner
-
-	prev := r.Calc.Stack()
-
-	s.SetString(text)
-	s.ScanWhile(unicode.IsSpace)
-	cmdName := s.Scan(scanner.Word)
-	cmd, ok := cmds[cmdName]
-	// FIXME: should these errors always be set in the calculator?
-	if ok {
-		execError = cmd(r, &s)
-		r.Calc.SetError(execError)
-	} else {
-		execError = r.eval(text)
-		if execError == nil {
-			r.undoStack = append([][]string{prev}, r.undoStack...)
-			r.redoStack = nil
-		}
-	}
-	if execError == errQuit {
-		return false
-	}
-
-	// Print out previous stack in dark gray
-	ansi.Write(ansi.DarkGray)
-	if execError == nil {
-		if ansi.Enabled {
-			for _, val := range prev {
-				fmt.Fprintln(r.Out, raw(val))
-			}
-			fmt.Fprintln(r.Out)
-		}
-	} else {
-		r.Calc.SetStack(prev)
-	}
-	ansi.Write(ansi.Reset)
-
-	for i, val := range r.Calc.Stack() {
-		color := ansi.LightBlue
-		if i == len(r.Calc.Stack())-1 {
-			color = ansi.Bold
-		}
-		fmt.Fprint(r.Out, colorize(color, val))
-		fmt.Fprintln(r.Out)
-	}
-	if execError != nil {
-		ansi.Write(ansi.BrightYellow)
-		fmt.Fprintf(r.Out, "(!) %v\n", execError)
-		ansi.Fprint(r.Out, ansi.Reset)
-	} else if r.Calc.Info() != "" {
-		ansi.Fprint(r.Out, ansi.LightGreen)
-		fmt.Fprintln(r.Out, r.Calc.Info())
-		ansi.Write(ansi.Reset)
-	} else {
-		fmt.Fprintln(r.Out)
-	}
-	if strings.TrimSpace(text) != "" {
-		if r.cli != nil {
-			r.cli.AppendHistory(text)
-		}
-	}
-	return true
-}
-
-func (r *REPL) eval(line string) error {
+func (r *REPL) evalLine(line string) error {
 	if r.quoteEnd != "" {
 		if line == r.quoteEnd {
 			r.quoteEnd = ""
@@ -156,8 +92,8 @@ func (r *REPL) eval(line string) error {
 		return nil
 	}
 
-	var out []string
 	var s scanner.Scanner
+	var out []string
 	s.SetString(line)
 
 	for s.Ok() {
@@ -170,6 +106,44 @@ func (r *REPL) eval(line string) error {
 	}
 	outLine := strings.Join(out, " ")
 	return r.Calc.Eval(outLine)
+}
+
+func (r *REPL) Eval(line string) error {
+	var s scanner.Scanner
+
+	r.info = ""
+	r.err = nil
+	prev := r.Calc.Stack()
+
+	s.SetString(line)
+	s.ScanWhile(unicode.IsSpace)
+	cmdName := s.Scan(scanner.Word)
+	cmd, ok := cmds[cmdName]
+
+	var err error
+	if ok {
+		err = cmd(r, &s)
+	} else {
+		err = r.evalLine(line)
+	}
+
+	if err == nil && cmdName != "undo" && cmdName != "u" && cmdName != "redo" {
+		r.undoStack = append([][]string{prev}, r.undoStack...)
+		r.redoStack = nil
+	}
+	r.err = err
+	if r.Calc.Info() != "" && r.info == "" {
+		r.info = r.Calc.Info()
+	}
+	return err
+}
+
+func (r *REPL) Info() string {
+	return r.info
+}
+
+func (r *REPL) Error() error {
+	return r.err
 }
 
 func (r *REPL) loadHistory() {
@@ -274,11 +248,11 @@ func raw(text string) string {
 }
 
 func Run(c zc.Calc) {
-	repl := New(c)
-	repl.Init()
-	defer repl.Close()
+	r := New(c)
+	r.Init()
+	defer r.Close()
 	for {
-		line, err := repl.ReadLine()
+		line, err := r.ReadLine()
 		if err != nil {
 			if err.Error() != "prompt aborted" {
 				log.Println(err)
@@ -286,8 +260,50 @@ func Run(c zc.Calc) {
 			return
 		}
 		ansi.Write(ansi.ClearScreen)
-		if ok := repl.Eval(line); !ok {
+
+		prev := c.Stack()
+		err = r.Eval(line)
+		if err == errQuit {
 			break
+		}
+
+		// Print out previous stack in dark gray
+		ansi.Write(ansi.DarkGray)
+		if err == nil {
+			if ansi.Enabled {
+				for _, val := range prev {
+					fmt.Fprintln(r.Out, raw(val))
+				}
+				fmt.Fprintln(r.Out)
+			}
+		} else {
+			r.Calc.SetStack(prev)
+		}
+		ansi.Write(ansi.Reset)
+
+		for i, val := range r.Calc.Stack() {
+			color := ansi.LightBlue
+			if i == len(r.Calc.Stack())-1 {
+				color = ansi.Bold
+			}
+			fmt.Fprint(r.Out, colorize(color, val))
+			fmt.Fprintln(r.Out)
+		}
+		if err != nil {
+			ansi.Write(ansi.BrightYellow)
+			fmt.Fprintf(r.Out, "(!) %v\n", err)
+			ansi.Fprint(r.Out, ansi.Reset)
+		} else if r.Info() != "" {
+			ansi.Fprint(r.Out, ansi.LightGreen)
+			fmt.Fprintln(r.Out, r.Info())
+			ansi.Write(ansi.Reset)
+		} else {
+			fmt.Fprintln(r.Out)
+		}
+		if strings.TrimSpace(line) != "" {
+			if r.cli != nil {
+				r.cli.AppendHistory(line)
+			}
 		}
 	}
 	for _, item := range c.Stack() {
