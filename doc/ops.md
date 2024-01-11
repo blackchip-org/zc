@@ -7,6 +7,8 @@
 | Volume                    | Description
 |---------------------------|-----------
 | [basic](ops/basic.md)     | Basic calculator 
+| [decimal](ops/decimal.md) | Decimal numbers 
+| [int](ops/int.md)         | Integral numbers 
 | [prog](ops/prog.md)       | Programmer's calculator 
 | [sci](ops/sci.md)         | Scientific calculator 
 | [stack](ops/stack.md)     | Stack manipulations 
@@ -35,7 +37,6 @@
 | [complex](ops/complex.md) | Complex numbers 
 | [cmp](ops/cmp.md)         | Comparisons 
 | [crypto](ops/crypto.md)   | Cryptographic ciphers 
-| [decimal](ops/decimal.md) | Decimal numbers 
 | [format](ops/format.md)   | Value formatting 
 | [geo](ops/geo.md)         | Geo-spatial calculations 
 | [hof](ops/hof.md)         | Higher-order functions 

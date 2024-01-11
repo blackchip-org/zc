@@ -8,7 +8,6 @@ Decimal numbers
 | [`coeff`](#coeff)  | Coefficient
 | [`dec`](#dec)      | Decimal number
 | [`div-rem, dr`](#div-rem) | Division with remainder
-| [`quo-rem`](#quo-rem) | Division with remainder at a precision
 
 
 ## coeff
@@ -47,12 +46,14 @@ Example:
 
 ## div-rem
 
-Divides *p0* by *p1* and returns the quotient *q* and remainder *r*.
+Divides *p0* by *p1* with the precision *p* and returns the quotient *q* and
+remainder *r*. The following shows how to divide one dollar with three people
+which gives a quotient of $0.33 and a remainder of one cent.
 
 Alias: `dr`
 
 ```
-( p0:Decimal p1:Decimal -- r:Decimal q:Decimal )
+( p0:Decimal p1:Decimal p:Int32 -- r:Decimal q:Decimal )
 ```
 
 Example:
@@ -61,23 +62,4 @@ Example:
 
 | Input              | Stack
 |--------------------|---------------
-| `1234 100 div-rem` | `34 \| 12`
-
-## quo-rem
-
-Divides *p0* by *p1* and returns the quotient *q* and remainder *r* at a
-certain precision. The following shows how to divide one dollar
-with three people which gives a quotient of $0.33 and a remainder of one
-cent.
-
-```
-( p0:Decimal p1:Decimal prec:Int32 -- r:Decimal q:Decimal )
-```
-
-Example:
-
-<!-- test: quo-rem -->
-
-| Input               | Stack
-|---------------------|---------------
-| `$1.00 3 2 quo-rem` | `0.01 \| 0.33`
+| `1.00 3 2 div-rem` | `0.01 # remainder \| 0.33`

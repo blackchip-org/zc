@@ -93,7 +93,8 @@
 - [deg-rad](ops/angle.md#deg-rad): Degrees to radians
 - [denom](ops/rational.md#denom): Denominator
 - [div](ops/basic.md#div): Division
-- [div-rem](ops/decimal.md#div-rem): Division with remainder
+- [div-rem](ops/decimal.md#div-rem) (decimal): Division with remainder
+- [div-rem](ops/int.md#div-rem) (int): Division with remainder
 - [dm](ops/angle.md#deg-min): Angle in degrees and minutes
 - [dmr](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
 - [dms](ops/angle.md#deg-min-sec): Angle in degrees and minutes
@@ -101,7 +102,8 @@
 - [dn](ops/stack.md#down): Rotate stack downward
 - [down](ops/stack.md#down): Rotate stack downward
 - [doy](ops/time.md#day-year): Day of year
-- [dr](ops/decimal.md#div-rem): Division with remainder
+- [dr](ops/decimal.md#div-rem) (decimal): Division with remainder
+- [dr](ops/int.md#div-rem) (int): Division with remainder
 - [drop](ops/stack.md#drop): Drop top item from stack
 - [dt](ops/time.md#datetime): Formats to a common date/time layout
 - [dup](ops/stack.md#dup): Duplicate top stack item
@@ -263,7 +265,6 @@
 
 - [si.quecto](ops/si.md#si.quecto): SI prefix q, 1e-30
 - [si.quetta](ops/si.md#si.quetta): SI prefix Q, 1e30
-- [quo-rem](ops/decimal.md#quo-rem): Division with remainder at a precision
 
 ## r
 

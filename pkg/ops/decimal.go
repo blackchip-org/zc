@@ -61,47 +61,26 @@ func DecRational(c zc.Calc) {
 
 /*
 oper 	div-rem
-func	DivRem p0:Decimal p1:Decimal -- r:Decimal q:Decimal
+func	DivRemDec p0:Decimal p1:Decimal p:Int32 -- r:Decimal q:Decimal
 alias	dr
 title	Division with remainder
 
 desc
-Divides *p0* by *p1* and returns the quotient *q* and remainder *r*.
+Divides *p0* by *p1* with the precision *p* and returns the quotient *q* and
+remainder *r*. The following shows how to divide one dollar with three people
+which gives a quotient of $0.33 and a remainder of one cent.
 end
 
 example
-1234 100 div-rem -- 34 | 12
+1.00 3 2 div-rem -- 0.01 # remainder | 0.33
 end
 */
-func DivRem(c zc.Calc) {
-	a1 := zc.PopDecimal(c)
-	a0 := zc.PopDecimal(c)
-	q, r := a0.QuoRem(a1, 0)
-	zc.PushDecimal(c, r)
-	zc.PushDecimal(c, q)
-}
-
-/*
-oper	quo-rem
-func	QuoRem p0:Decimal p1:Decimal prec:Int32 -- r:Decimal q:Decimal
-title	Division with remainder at a precision
-
-desc
-Divides *p0* by *p1* and returns the quotient *q* and remainder *r* at a
-certain precision. The following shows how to divide one dollar
-with three people which gives a quotient of $0.33 and a remainder of one
-cent.
-end
-
-example
-$1.00 3 2 quo-rem -- 0.01 | 0.33
-end
-*/
-func QuoRem(c zc.Calc) {
+func DivRemDec(c zc.Calc) {
 	prec := zc.PopInt32(c)
 	a1 := zc.PopDecimal(c)
 	a0 := zc.PopDecimal(c)
 	q, r := a0.QuoRem(a1, prec)
 	zc.PushDecimal(c, r)
+	zc.Annotate(c, "remainder")
 	zc.PushDecimal(c, q)
 }

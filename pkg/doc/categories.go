@@ -8,6 +8,8 @@ type Category struct {
 var Categories = []Category{
 	{"Calculator Operations", []string{
 		"basic",
+		"decimal",
+		"int",
 		"prog",
 		"sci",
 		"stack",
@@ -28,7 +30,6 @@ var Categories = []Category{
 		"complex",
 		"cmp",
 		"crypto",
-		"decimal",
 		"format",
 		"geo",
 		"hof",
