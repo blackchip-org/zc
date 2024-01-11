@@ -5,12 +5,29 @@ Rational numbers (fractions)
 
 | Operation              | Description
 |------------------------|---------------
+| [`dec`](#dec)          | Decimal number
 | [`denom`](#denom)      | Denominator
 | [`inv`](#inv)          | Inverse
 | [`is-rational`](#is-rational) | Checks value can be parsed as a rational
 | [`num`](#num)          | Numerator
 | [`rational, rat`](#rational) | Convert to a Rational
 
+
+## dec
+
+Pops *p0* from the stack and formats it as a `Decimal`.
+
+```
+( p0:Rational -- Decimal )
+```
+
+Example:
+
+<!-- test: dec -->
+
+| Input     | Stack
+|-----------|---------------
+| `1/2 dec` | `0.5`
 
 ## denom
 

@@ -7,8 +7,6 @@
 | Volume                    | Description
 |---------------------------|-----------
 | [basic](ops/basic.md)     | Basic calculator 
-| [decimal](ops/decimal.md) | Decimal numbers 
-| [int](ops/int.md)         | Integral numbers 
 | [prog](ops/prog.md)       | Programmer's calculator 
 | [sci](ops/sci.md)         | Scientific calculator 
 | [stack](ops/stack.md)     | Stack manipulations 

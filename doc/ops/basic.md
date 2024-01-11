@@ -6,7 +6,10 @@ Basic calculator
 | Operation                    | Description
 |------------------------------|---------------
 | [`add, a, +`](#add)          | Addition
+| [`coeff`](#coeff)            | Coefficient
+| [`dec`](#dec)                | Decimal number
 | [`div, d, /`](#div)          | Division
+| [`div-rem, dr`](#div-rem)    | Division with remainder
 | [`mod`](#mod)                | Modulus
 | [`mul, m, *`](#mul)          | Multiplication
 | [`neg`](#neg)                | Negation
@@ -43,6 +46,39 @@ Example:
 | `2  ` | `6 \| 2`
 | `a  ` | `8`
 
+## coeff
+
+The value of *p0* without the decimal point.
+
+```
+( p0:Decimal -- BigInt )
+```
+
+Example:
+
+<!-- test: coeff -->
+
+| Input          | Stack
+|----------------|---------------
+| `12.345 coeff` | `12345`
+
+## dec
+
+Pops *p0* from the stack and formats it as a `Decimal`.
+
+```
+( p0:Decimal -- Decimal )
+( p0:Float -- Decimal )
+```
+
+Example:
+
+<!-- test: dec -->
+
+| Input     | Stack
+|-----------|---------------
+| `1e3 dec` | `1000`
+
 ## div
 
 Divides the value of *p0* by *p1*. If *p1* is zero, a 'division by zero' error
@@ -67,6 +103,27 @@ Example:
 | `6  ` | `6`
 | `2  ` | `6 \| 2`
 | `d  ` | `3`
+
+## div-rem
+
+Divides *p0* by *p1* with the precision *p* and returns the quotient *q* and
+remainder *r*. The following shows how to divide one dollar with three people
+which gives a quotient of $0.33 and a remainder of one cent.
+
+Alias: `dr`
+
+```
+( p0:Decimal p1:Decimal p:Int32 -- r:Decimal q:Decimal )
+( p0:BigInt p1:BigInt -- r:Decimal q:Decimal )
+```
+
+Example:
+
+<!-- test: div-rem -->
+
+| Input              | Stack
+|--------------------|---------------
+| `1.00 3 2 div-rem` | `0.01 # remainder \| 0.33`
 
 ## mod
 

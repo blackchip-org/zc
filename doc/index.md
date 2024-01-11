@@ -62,12 +62,12 @@
 - [clear-all](ops/stack.md#clear-all): Clear stack and memory
 - [cmyk-rgb](ops/color.md#cmyk-rgb): CMYK to RGB color space
 - [codepoint-char](ops/text.md#codepoint-char): Code point to character
-- [coeff](ops/decimal.md#coeff): Coefficient
+- [coeff](ops/basic.md#coeff): Coefficient
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
-- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
+- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
 - [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
@@ -82,8 +82,9 @@
 - [datetime](ops/time.md#datetime): Formats to a common date/time layout
 - [day-year](ops/time.md#day-year): Day of year
 - [dec](ops/angle.md#dec) (angle): DMS angle to decimal degrees
-- [dec](ops/decimal.md#dec) (decimal): Decimal number
+- [dec](ops/basic.md#dec) (basic): Decimal number
 - [dec](ops/prog.md#dec) (prog): Decimal conversion
+- [dec](ops/rational.md#dec) (rational): Decimal number
 - [si.deca](ops/si.md#si.deca): SI prefix da, 1e01
 - [si.deci](ops/si.md#si.deci): SI prefix d, 1e-01
 - [deg-min](ops/angle.md#deg-min): Angle in degrees and minutes
@@ -93,8 +94,7 @@
 - [deg-rad](ops/angle.md#deg-rad): Degrees to radians
 - [denom](ops/rational.md#denom): Denominator
 - [div](ops/basic.md#div): Division
-- [div-rem](ops/decimal.md#div-rem) (decimal): Division with remainder
-- [div-rem](ops/int.md#div-rem) (int): Division with remainder
+- [div-rem](ops/basic.md#div-rem): Division with remainder
 - [dm](ops/angle.md#deg-min): Angle in degrees and minutes
 - [dmr](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
 - [dms](ops/angle.md#deg-min-sec): Angle in degrees and minutes
@@ -102,8 +102,7 @@
 - [dn](ops/stack.md#down): Rotate stack downward
 - [down](ops/stack.md#down): Rotate stack downward
 - [doy](ops/time.md#day-year): Day of year
-- [dr](ops/decimal.md#div-rem) (decimal): Division with remainder
-- [dr](ops/int.md#div-rem) (int): Division with remainder
+- [dr](ops/basic.md#div-rem): Division with remainder
 - [drop](ops/stack.md#drop): Drop top item from stack
 - [dt](ops/time.md#datetime): Formats to a common date/time layout
 - [dup](ops/stack.md#dup): Duplicate top stack item
@@ -371,8 +370,8 @@
 
 - [u8de](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [u8en](ops/text.md#utf8-encode): Encode UTF-8 bytes
-- [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
 - [si.unit](ops/si.md#si.unit): SI unit value, 1e0
+- [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
 - [up](ops/stack.md#up): Rotate items upward
 - [upper](ops/text.md#upper): Uppercase
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes

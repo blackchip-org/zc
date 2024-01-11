@@ -7,6 +7,28 @@ import (
 )
 
 /*
+oper	dec
+func	DecRational    p0:Rational    -- Decimal
+title	Decimal number
+
+desc
+Pops *p0* from the stack and formats it as a `Decimal`.
+end
+
+example
+1/2 dec -- 0.5
+end
+*/
+func DecRational(c zc.Calc) {
+	a0 := zc.PopRational(c)
+	r0, exact := a0.Float64()
+	zc.PushFloat(c, r0)
+	if !exact {
+		zc.Annotate(c, "inexact")
+	}
+}
+
+/*
 oper	denom
 func	Denom p0:Rational -- BigInt
 title	Denominator
