@@ -132,6 +132,9 @@
 - [filter](ops/hof.md#filter): Filter items in the stack
 - [floor](ops/sci.md#floor): Floor
 - [fold](ops/hof.md#fold): Reduce items to a single value
+- [ft-m](ops/len.md#ft-m): Feet to meters
+- [ft-mi](ops/len.md#ft-mi): Miles to feet
+- [ft-yd](ops/len.md#ft-yd): Feet to yards
 
 ## g
 
@@ -157,6 +160,7 @@
 ## i
 
 - [imag](ops/complex.md#imag): Imaginary number from complex
+- [in-mm](ops/len.md#in-mm): Inches to millimeters
 - [inv](ops/rational.md#inv): Inverse
 - [is](ops/cmp.md#is): Byte equality
 - [is-datetime](ops/time.md#is-datetime): Checks value can be parsed as a `DateTime`
@@ -206,18 +210,22 @@
 ## m
 
 - [m](ops/basic.md#mul): Multiplication
+- [m-ft](ops/len.md#m-ft): Meters to feet
 - [m-km](ops/len.md#m-km): Meters to kilometers
 - [m-nmi](ops/len.md#m-nmi): Meters to nautical miles
+- [m-yd](ops/len.md#m-yd): Meters to yards
 - [map](ops/hof.md#map): Apply a function to each item on the stack
 - [md5](ops/crypto.md#md5): MD5 hash function
 - [iec.mebi](ops/iec.md#iec.mebi): IEC prefix Mi, 2^20
 - [si.mega](ops/si.md#si.mega): SI prefix M, 1e06
+- [mi-ft](ops/len.md#mi-ft): Miles to feet
 - [mi-km](ops/len.md#mi-km): Miles to kilometers
 - [mi-nmi](ops/len.md#mi-nmi): Miles to nautical miles
 - [si.micro](ops/si.md#si.micro): SI prefix μ, 1e-06
 - [si.milli](ops/si.md#si.milli): SI prefix m, 1e-03
 - [minutes](ops/angle.md#minutes) (angle): Angle in minutes
 - [minutes](ops/time.md#minutes) (time): Minutes in duration
+- [mm-in](ops/len.md#mm-in): Millimeters to inches
 - [mod](ops/basic.md#mod): Modulus
 - [mul](ops/basic.md#mul): Multiplication
 
@@ -397,6 +405,8 @@
 
 ## y
 
+- [yd-ft](ops/len.md#yd-ft): Yards to feet
+- [yd-m](ops/len.md#yd-m): Yards to meters
 - [si.yocto](ops/si.md#si.yocto): SI prefix y, 1e-24
 - [si.yotta](ops/si.md#si.yotta): SI prefix Y, 1e24
 

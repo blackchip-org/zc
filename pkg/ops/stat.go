@@ -167,7 +167,7 @@ var-p -- 4
 end
 */
 func VariancePop(c zc.Calc) {
-	Variance(c, 0)
+	variance(c, 0)
 }
 
 /*
@@ -189,10 +189,10 @@ var-s 2 round -- 4.57
 end
 */
 func VarianceSamp(c zc.Calc) {
-	Variance(c, -1)
+	variance(c, -1)
 }
 
-func Variance(c zc.Calc, nadj int) {
+func variance(c zc.Calc, nadj int) {
 	n := c.StackLen()
 	if n == 0 {
 		return
