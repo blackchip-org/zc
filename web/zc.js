@@ -180,5 +180,6 @@ window.onload = function() {
     document.querySelector('#auto').onclick = function(evt) {
         showCandidates = true
         autoComplete()
+        document.querySelector('#input').focus()
     }
 }
