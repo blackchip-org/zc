@@ -96,3 +96,18 @@ ul {
     font-size: 24pt;
     margin: 10px;
 }
+
+#auto {
+    margin-left: 10px;
+    font-size: 24pt;
+    background-color: #ddd;
+    border: none;
+}
+
+#auto:hover {
+    background-color: #ff0;
+}
+
+#auto:active {
+    background-color: #aa0;
+}

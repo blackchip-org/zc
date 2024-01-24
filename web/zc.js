@@ -159,21 +159,26 @@ window.onload = function() {
     }
 
     document.querySelector('#input').onkeydown = function(evt) {
-        clearPopup();
+        clearPopup()
         let keyCode = evt.code || evt.key
         if (keyCode === 'ArrowUp') {
             up()
-            clearPopup();
+            clearPopup()
             showCandidates = false
         } else if (keyCode === 'ArrowDown') {
             down()
             clearPopup();
             showCandidates = false
         } else if (keyCode === 'Tab') {
-            autoComplete();
+            autoComplete()
             evt.preventDefault()
         } else {
-            clearPopup();
+            clearPopup()
         }
+    }
+
+    document.querySelector('#auto').onclick = function(evt) {
+        showCandidates = true
+        autoComplete()
     }
 }
