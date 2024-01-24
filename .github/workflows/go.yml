@@ -22,7 +22,7 @@ jobs:
         go-version: '1.21'
 
     - name: Install Dependencies
-      run: sudo apt install proj-dev
+      run: sudo apt install libproj-dev
       
     - name: Build
       run: go build ./...
