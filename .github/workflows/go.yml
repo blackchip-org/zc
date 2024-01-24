@@ -31,5 +31,13 @@ jobs:
       run: go test -tags proj ./...
  
     - name: WASM
-      run: 	GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
-
+      run: GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
+      
+    - name: Upload Artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: 'web'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
