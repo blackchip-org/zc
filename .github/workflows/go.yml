@@ -21,11 +21,14 @@ jobs:
       with:
         go-version: '1.21'
 
+    - name: Install Dependencies
+      run: apt install proj-dev
+      
     - name: Build
-      run: go build -v ./...
+      run: go build ./...
 
     - name: Test
-      run: go test -v ./...
+      run: go test ./...
  
     - name: WASM
       run: 	GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
