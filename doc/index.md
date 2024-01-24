@@ -37,7 +37,7 @@
 - [atan2](ops/sci.md#atan2): Inverse tangent
 - [atanh](ops/complex.md#atanh) (complex): Inverse hyperbolic tangent
 - [atanh](ops/sci.md#atanh) (sci): Inverse hyperbolic tangent
-- [si.atto](ops/si.md#si.atto): SI prefix a, 1e-18
+- [atto](ops/si.md#atto): SI prefix a, 1e-18
 - [average](ops/stat.md#average): Average
 - [avg](ops/stat.md#average): Average
 
@@ -55,7 +55,7 @@
 - [c-k](ops/temp.md#c-k): Celsius to Kelvin
 - [ca](ops/stack.md#clear-all): Clear stack and memory
 - [ceil](ops/sci.md#ceil): Ceiling
-- [si.centi](ops/si.md#si.centi): SI prefix c, 1e-02
+- [centi](ops/si.md#centi): SI prefix c, 1e-02
 - [char-codepoint](ops/text.md#char-codepoint): Character to code point
 - [char-cp](ops/text.md#char-codepoint): Character to code point
 - [clear](ops/stack.md#clear): Clear the stack
@@ -66,8 +66,6 @@
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate
-- [iec.convert](ops/iec.md#iec.convert): Converts between IEC units
-- [si.convert](ops/si.md#si.convert): Converts between SI units
 - [cos](ops/complex.md#cos) (complex): Cosine
 - [cos](ops/sci.md#cos) (sci): Cosine
 - [cosh](ops/complex.md#cosh) (complex): Hyperbolic cosine
@@ -85,8 +83,8 @@
 - [dec](ops/basic.md#dec) (basic): Decimal number
 - [dec](ops/prog.md#dec) (prog): Decimal conversion
 - [dec](ops/rational.md#dec) (rational): Decimal number
-- [si.deca](ops/si.md#si.deca): SI prefix da, 1e01
-- [si.deci](ops/si.md#si.deci): SI prefix d, 1e-01
+- [deca](ops/si.md#deca): SI prefix da, 1e01
+- [deci](ops/si.md#deci): SI prefix d, 1e-01
 - [deg-min](ops/angle.md#deg-min): Angle in degrees and minutes
 - [deg-min-round](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
 - [deg-min-sec](ops/angle.md#deg-min-sec): Angle in degrees and minutes
@@ -115,8 +113,8 @@
 - [earth-radius](ops/geo.md#earth-radius): Average radius of the Earth
 - [eq](ops/cmp.md#eq): Equal
 - [eval](ops/hof.md#eval): Evaluate top of stack
-- [si.exa](ops/si.md#si.exa): SI prefix E, 1e18
-- [iec.exbi](ops/iec.md#iec.exbi): IEC prefix EI, 2^60
+- [exa](ops/si.md#exa): SI prefix E, 1e18
+- [exbi](ops/iec.md#exbi): IEC prefix EI, 2^60
 - [exp](ops/complex.md#exp) (complex): Natural exponential
 - [exp](ops/sci.md#exp) (sci): Natural exponential
 
@@ -126,7 +124,7 @@
 - [fact](ops/stat.md#factorial): Factorial
 - [factorial](ops/stat.md#factorial): Factorial
 - [false](ops/bool.md#false): False
-- [si.femto](ops/si.md#si.femto): SI prefix f, 1e-15
+- [femto](ops/si.md#femto): SI prefix f, 1e-15
 - [fib](ops/seq.md#fibonacci): Fibonacci sequence
 - [fibonacci](ops/seq.md#fibonacci): Fibonacci sequence
 - [filter](ops/hof.md#filter): Filter items in the stack
@@ -142,8 +140,8 @@
 - [g-oz](ops/mass.md#g-oz): Grams to ounces
 - [g-ozt](ops/mass.md#g-ozt): Grams to troy ounces
 - [get](ops/stack.md#get): Get a named stack from memory
-- [iec.gibi](ops/iec.md#iec.gibi): IEC prefix Gi, 2^30
-- [si.giga](ops/si.md#si.giga): SI prefix G, 1e09
+- [gibi](ops/iec.md#gibi): IEC prefix Gi, 2^30
+- [giga](ops/si.md#giga): SI prefix G, 1e09
 - [greater-than](ops/cmp.md#gt): Greater than
 - [greater-than-or-equal](ops/cmp.md#gte): Greater than or equal
 - [gt](ops/cmp.md#gt): Greater than
@@ -152,7 +150,7 @@
 ## h
 
 - [haversine](ops/geo.md#haversine): Great circle distance between two points
-- [si.hecto](ops/si.md#si.hecto): SI prefix h, 1e02
+- [hecto](ops/si.md#hecto): SI prefix h, 1e02
 - [hex](ops/prog.md#hex): Hexadecimal conversion
 - [hours](ops/time.md#hours): Hours in duration
 - [hsl-rgb](ops/color.md#hsl-rgb): HSL to RGB color space
@@ -181,8 +179,8 @@
 - [k-c](ops/temp.md#k-c): Kelvin to Celsius
 - [kg-g](ops/mass.md#kg-g): Kilograms to grams
 - [kg-lb](ops/mass.md#kg-lb): Kilograms to pounds
-- [iec.kibi](ops/iec.md#iec.kibi): IEC prefix Ki, 2^10
-- [si.kilo](ops/si.md#si.kilo): SI prefix k, 1e03
+- [kibi](ops/iec.md#kibi): IEC prefix Ki, 2^10
+- [kilo](ops/si.md#kilo): SI prefix k, 1e03
 - [km-m](ops/len.md#km-m): Kilometers to meters
 - [km-mi](ops/len.md#km-mi): Kilometers to miles
 - [km-nmi](ops/len.md#km-nmi): Kilometers to nautical miles
@@ -216,13 +214,13 @@
 - [m-yd](ops/len.md#m-yd): Meters to yards
 - [map](ops/hof.md#map): Apply a function to each item on the stack
 - [md5](ops/crypto.md#md5): MD5 hash function
-- [iec.mebi](ops/iec.md#iec.mebi): IEC prefix Mi, 2^20
-- [si.mega](ops/si.md#si.mega): SI prefix M, 1e06
+- [mebi](ops/iec.md#mebi): IEC prefix Mi, 2^20
+- [mega](ops/si.md#mega): SI prefix M, 1e06
 - [mi-ft](ops/len.md#mi-ft): Miles to feet
 - [mi-km](ops/len.md#mi-km): Miles to kilometers
 - [mi-nmi](ops/len.md#mi-nmi): Miles to nautical miles
-- [si.micro](ops/si.md#si.micro): SI prefix μ, 1e-06
-- [si.milli](ops/si.md#si.milli): SI prefix m, 1e-03
+- [micro](ops/si.md#micro): SI prefix μ, 1e-06
+- [milli](ops/si.md#milli): SI prefix m, 1e-03
 - [minutes](ops/angle.md#minutes) (angle): Angle in minutes
 - [minutes](ops/time.md#minutes) (time): Minutes in duration
 - [mm-in](ops/len.md#mm-in): Millimeters to inches
@@ -232,7 +230,7 @@
 ## n
 
 - [n](ops/stack.md#size): Size of the current stack
-- [si.nano](ops/si.md#si.nano): SI prefix n, 1e-09
+- [nano](ops/si.md#nano): SI prefix n, 1e-09
 - [neg](ops/basic.md#neg): Negation
 - [neq](ops/cmp.md#neq): Not equal
 - [nmi-km](ops/len.md#nmi-km): Nautical miles to kilometers
@@ -258,11 +256,11 @@
 
 ## p
 
-- [iec.pebi](ops/iec.md#iec.pebi): IEC prefix Pi, 2^50
-- [si.peta](ops/si.md#si.peta): SI prefix P, 1e15
+- [pebi](ops/iec.md#pebi): IEC prefix Pi, 2^50
+- [peta](ops/si.md#peta): SI prefix P, 1e15
 - [phase](ops/complex.md#phase): Phase (argument)
 - [pi](ops/sci.md#pi): Circumference to diameter ratio
-- [si.pico](ops/si.md#si.pico): SI prefix p, 1e-12
+- [pico](ops/si.md#pico): SI prefix p, 1e-12
 - [polar](ops/complex.md#polar): Complex to polar
 - [pow](ops/basic.md#pow): Exponentiation
 - [prod](ops/stat.md#prod): Product
@@ -270,8 +268,8 @@
 
 ## q
 
-- [si.quecto](ops/si.md#si.quecto): SI prefix q, 1e-30
-- [si.quetta](ops/si.md#si.quetta): SI prefix Q, 1e30
+- [quecto](ops/si.md#quecto): SI prefix q, 1e-30
+- [quetta](ops/si.md#quetta): SI prefix Q, 1e30
 
 ## r
 
@@ -299,8 +297,8 @@
 - [right](ops/text.md#right): Right substring
 - [right-shift](ops/prog.md#rsh): Right shift bits
 - [roll](ops/rand.md#roll): Dice roller
-- [si.ronna](ops/si.md#si.ronna): SI prefix R, 1e27
-- [si.ronto](ops/si.md#si.ronto): SI prefix r, 1e-27
+- [ronna](ops/si.md#ronna): SI prefix R, 1e27
+- [ronto](ops/si.md#ronto): SI prefix r, 1e-27
 - [rot13](ops/crypto.md#rotate-13): Rotate characters by 13
 - [rotate-13](ops/crypto.md#rotate-13): Rotate characters by 13
 - [round](ops/complex.md#round) (complex): Round to a given precision
@@ -365,8 +363,8 @@
 - [tan](ops/sci.md#tan) (sci): Tangent
 - [tanh](ops/complex.md#tanh) (complex): Hyperbolic tangent
 - [tanh](ops/sci.md#tanh) (sci): Hyperbolic tangent
-- [iec.tebi](ops/iec.md#iec.tebi): IEC prefix Ti, 2^40
-- [si.terra](ops/si.md#si.terra): SI prefix T, 1e12
+- [tebi](ops/iec.md#tebi): IEC prefix Ti, 2^40
+- [terra](ops/si.md#terra): SI prefix T, 1e12
 - [time](ops/time.md#time): Formats to a common time layout
 - [timezone](ops/time.md#timezone): Convert time to another time zone
 - [tone](ops/text.md#tone): Apply a skin tone to an emoji
@@ -378,8 +376,6 @@
 
 - [u8de](ops/text.md#utf8-decode): Decode UTF-8 bytes
 - [u8en](ops/text.md#utf8-encode): Encode UTF-8 bytes
-- [si.unit](ops/si.md#si.unit): SI unit value, 1e0
-- [iec.unit](ops/iec.md#iec.unit): IEC unit value, 2^0
 - [up](ops/stack.md#up): Rotate items upward
 - [upper](ops/text.md#upper): Uppercase
 - [utf8-decode](ops/text.md#utf8-decode): Decode UTF-8 bytes
@@ -407,11 +403,11 @@
 
 - [yd-ft](ops/len.md#yd-ft): Yards to feet
 - [yd-m](ops/len.md#yd-m): Yards to meters
-- [si.yocto](ops/si.md#si.yocto): SI prefix y, 1e-24
-- [si.yotta](ops/si.md#si.yotta): SI prefix Y, 1e24
+- [yocto](ops/si.md#yocto): SI prefix y, 1e-24
+- [yotta](ops/si.md#yotta): SI prefix Y, 1e24
 
 ## z
 
-- [si.zepto](ops/si.md#si.zepto): SI prefix z, 1e-21
-- [si.zetta](ops/si.md#si.zetta): SI prefix Z, 1e21
+- [zepto](ops/si.md#zepto): SI prefix z, 1e-21
+- [zetta](ops/si.md#zetta): SI prefix Z, 1e21
 - [π](ops/sci.md#pi): Circumference to diameter ratio

@@ -3,70 +3,44 @@
 
 IEC binary prefixes
 
-| Operation              | Description
-|------------------------|---------------
-| [`iec.convert`](#iec.convert) | Converts between IEC units
-| [`iec.exbi`](#iec.exbi) | IEC prefix EI, 2^60
-| [`iec.gibi`](#iec.gibi) | IEC prefix Gi, 2^30
-| [`iec.kibi`](#iec.kibi) | IEC prefix Ki, 2^10
-| [`iec.mebi`](#iec.mebi) | IEC prefix Mi, 2^20
-| [`iec.pebi`](#iec.pebi) | IEC prefix Pi, 2^50
-| [`iec.tebi`](#iec.tebi) | IEC prefix Ti, 2^40
-| [`iec.unit`](#iec.unit) | IEC unit value, 2^0
+[Examples](../examples/iec.md)
+
+| Operation | Description
+|----------|---------------
+| [`exbi`](#exbi) | IEC prefix EI, 2^60
+| [`gibi`](#gibi) | IEC prefix Gi, 2^30
+| [`kibi`](#kibi) | IEC prefix Ki, 2^10
+| [`mebi`](#mebi) | IEC prefix Mi, 2^20
+| [`pebi`](#pebi) | IEC prefix Pi, 2^50
+| [`tebi`](#tebi) | IEC prefix Ti, 2^40
 
 
-## iec.convert
-
-Convert *p0* in *u0* IEC units to *u1* IEC units.
-
-```
-( p0:Val u0:BigInt u1:BigInt -- Val )
-```
-
-Example:
-
-<!-- test: iec.convert -->
-
-| Input                           | Stack
-|---------------------------------|---------------
-| `145                          ` | `145`
-| `iec.mebi iec.kibi iec.convert` | `148480`
-
-## iec.exbi
+## exbi
 
 IEC prefix EI, 2^60
 
 
-## iec.gibi
+## gibi
 
 IEC prefix Gi, 2^30
 
 
-## iec.kibi
+## kibi
 
 IEC prefix Ki, 2^10
 
 
-## iec.mebi
+## mebi
 
 IEC prefix Mi, 2^20
 
 
-## iec.pebi
+## pebi
 
 IEC prefix Pi, 2^50
 
 
-## iec.tebi
+## tebi
 
 IEC prefix Ti, 2^40
-
-
-## iec.unit
-
-IEC unit value, 2^0
-
-```
-(  -- BigInt )
-```
 
