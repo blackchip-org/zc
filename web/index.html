@@ -9,6 +9,7 @@
 			const go = new Go();
 			WebAssembly.instantiateStreaming(fetch("zc.wasm"), go.importObject).then((result) => {
 				go.run(result.instance);
+        init();
 			});
 		</script>
 	</head>
@@ -21,7 +22,8 @@
       <div id="footer-panel">
         <div id="footer">
           <label for="input">zc&nbsp;&gt;</label>
-          <input id="input" type="text" autocorrect="off" autocapitalize="none">
+          <input id="input" type="text" autocorrect="off" autocapitalize="off">
+          <button id="auto">?</button>
         </div>
       </div>
     </div>

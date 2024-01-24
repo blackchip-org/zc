@@ -137,6 +137,19 @@ function clearPopup() {
     document.querySelector("#popup").innerHTML = ''
 }
 
+function init() {
+    let params = new URLSearchParams(window.location.search)
+    let expr = params.get('eval')
+    if (expr) {
+        let e = document.querySelector("#input")
+        e.value = expr
+        submit()
+        e.value = expr
+        e.selectionStart = e.selectionEnd = expr.length
+        e.focus()
+    }
+}
+
 window.onload = function() {
     document.querySelector("#input").onkeypress = function(evt) {
         let keyCode = evt.code || evt.key
@@ -146,21 +159,26 @@ window.onload = function() {
     }
 
     document.querySelector('#input').onkeydown = function(evt) {
-        clearPopup();
+        clearPopup()
         let keyCode = evt.code || evt.key
         if (keyCode === 'ArrowUp') {
             up()
-            clearPopup();
+            clearPopup()
             showCandidates = false
         } else if (keyCode === 'ArrowDown') {
             down()
             clearPopup();
             showCandidates = false
         } else if (keyCode === 'Tab') {
-            autoComplete();
+            autoComplete()
             evt.preventDefault()
         } else {
-            clearPopup();
+            clearPopup()
         }
+    }
+
+    document.querySelector('#auto').onclick = function(evt) {
+        showCandidates = true
+        autoComplete()
     }
 }
