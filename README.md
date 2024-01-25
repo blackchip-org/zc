@@ -6,7 +6,11 @@ Use the browser version here:
 
 https://blackchip-org.github.io/zc
 
-On mobile devices, click on the "?" button to auto-complete.
+On mobile devices, click on the "?" button to auto-complete. Otherwise use the tab button.
+
+Example use:
+
+https://blackchip-org.github.io/zc/?eval=1+8+seq+[2+sw+pow]+map
 
 ## Documentation
 
