@@ -182,4 +182,7 @@ window.onload = function() {
         autoComplete()
         document.querySelector('#input').focus()
     }
+
+    let e = document.querySelector('#input')
+    e.focus()
 }

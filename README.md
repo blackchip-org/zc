@@ -4,7 +4,9 @@ A fun stack based calculator.
 
 Use the browser version here:
 
-https://blackchip.org/zc
+https://blackchip-org.github.io/zc
+
+On mobile devices, click on the "?" button to auto-complete.
 
 ## Documentation
 
