@@ -79,10 +79,15 @@ Source:
 https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128
 end
 
+The following shows the great circle distance between Washington, DC
+and New York, NY:
+
 example
-51.510357 -0.116773 -- 51.510357 | -0.116773
-38.889931 -77.009003 -- 51.510357 | -0.116773 | 38.889931 | -77.009003
-haversine dec 3 round -- 5897658.289
+38°54′17″N 77°00′59″W -- 38°54′17″N | 77°00′59″W
+40°42′46″N 74°00′22″W -- 38°54′17″N | 77°00′59″W | 40°42′46″N | 74°00′22″W
+haversine 2 round -- 326364.76 # m
+m-km 2 round -- 326.36 # km
+km-mi 2 round -- 202.79 # mi
 end
 */
 func Haversine(c zc.Calc) {
