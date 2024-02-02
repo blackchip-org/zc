@@ -14,6 +14,7 @@ Text operations
 | [`right`](#right)                     | Right substring
 | [`split`](#split)                     | Split string
 | [`tone`](#tone)                       | Apply a skin tone to an emoji
+| [`unescape, unesc`](#unescape)        | Unescape
 | [`upper`](#upper)                     | Uppercase
 | [`utf8-decode, u8de`](#utf8-decode)   | Decode UTF-8 bytes
 | [`utf8-encode, u8en`](#utf8-encode)   | Encode UTF-8 bytes
@@ -193,6 +194,32 @@ Example:
 |-----------------|---------------
 | `:waving-hand:` | `👋`
 | `2 tone       ` | `👋🏽`
+
+## unescape
+
+Unescapes characters in a string value that are prefixed by a backslash. The
+escape sequences as defined for Go strings are used. A value such as
+`\n` is converted to a new line. Values such as `\x7f`, `\u007f`, '\U0000007f`,
+and `\077` are converted to the characters of that code point.
+
+Alias: `unesc`
+
+```
+( p0:Str -- Str )
+```
+
+Example:
+
+<!-- test: unescape -->
+
+| Input                                      | Stack
+|--------------------------------------------|---------------
+| `"\u65e5\u672c\u8a9e"                    ` | `\u65e5\u672c\u8a9e`
+| `unescape                                ` | `日本語`
+| `c "\U000065e5\U0000672c\U00008a9e"      ` | `\U000065e5\U0000672c\U00008a9e`
+| `unescape                                ` | `日本語`
+| `c "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e"` | `\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e`
+| `unescape                                ` | `日本語`
 
 ## upper
 

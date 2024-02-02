@@ -1,3 +1,7 @@
+github.com/blackchip-org/scan v0.0.0 h1:oHUBMbMF45e7MYOr5xx09qG6wD8zaLNaG8KovweHehA=
+github.com/blackchip-org/scan v0.0.0/go.mod h1:fnJGAutu4OH6z0z8jmmdDl89lt+bvOz89cZWq4swkYU=
+github.com/blackchip-org/scan v0.0.1 h1:C+Yjgc2BnciwuRHP+nrWqV2gh3X3iqo76ZZ3Q2+1LdM=
+github.com/blackchip-org/scan v0.0.1/go.mod h1:fnJGAutu4OH6z0z8jmmdDl89lt+bvOz89cZWq4swkYU=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/mattn/go-runewidth v0.0.3 h1:a+kO+98RDGEfo6asOGMmpodZq4FNtnGP54yps8BzLR4=

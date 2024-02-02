@@ -482,6 +482,8 @@ var opsList = []zc.OpDecl{
 	zc.Macro("tz", "timezone"),
 	zc.Macro("u8de", "utf8-decode"),
 	zc.Macro("u8en", "utf8-encode"),
+	zc.Macro("unesc", "unescape"),
+	zc.Op("unescape", ops.Unescape, zc.Str),
 	zc.Op("up", ops.Up),
 	zc.Op("upper", ops.Upper, zc.Str),
 	zc.Op("utf8-decode", ops.UTF8Decode, zc.BigInt),
