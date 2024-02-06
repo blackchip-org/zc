@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v5/pkg/types"
 )
 
@@ -142,16 +142,17 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 		return new(big.Rat).SetFloat64(f), true
 	}
 
-	sc := scanner.NewString(s)
+	sc := scan.NewScannerFromString("", s)
 
 	var w, n, d int64
 
-	s1 := sc.Scan(scanner.Int)
+	scan.SignedInt.Eval(sc)
+	s1 := sc.Emit().Val
 	i1, err := strconv.ParseInt(s1, 10, 64)
 	if err != nil {
 		return nil, false
 	}
-	switch sc.Ch {
+	switch sc.This {
 	case '_', '-', ' ':
 		w = i1
 	case '/':
@@ -159,20 +160,22 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 	default:
 		return nil, false
 	}
-	sc.Next()
+	sc.Skip()
 
-	s2 := sc.Scan(scanner.UInt)
+	scan.Int.Eval(sc)
+	s2 := sc.Emit().Val
 	i2, err := strconv.ParseInt(s2, 10, 64)
 	if err != nil {
 		return nil, false
 	}
 	if w != 0 {
 		n = i2
-		if sc.Ch != '/' {
+		if sc.This != '/' {
 			return nil, false
 		}
-		sc.Next()
-		s3 := sc.Scan(scanner.UInt)
+		sc.Skip()
+		scan.Int.Eval(sc)
+		s3 := sc.Emit().Val
 		i3, err := strconv.ParseInt(s3, 10, 64)
 		if err != nil {
 			return nil, false

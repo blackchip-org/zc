@@ -33,8 +33,7 @@ func def(r *REPL, s *scan.Scanner) error {
 		return fmt.Errorf("invalid name")
 	}
 
-	scan.Word.Eval(s)
-	name := s.Emit().Val
+	name := scan.Word(s)
 	if _, exists := cmds[name]; exists {
 		return fmt.Errorf("invalid name")
 	}

@@ -96,8 +96,7 @@ func (r *REPL) evalLine(line string) error {
 	s.InitFromString("", line)
 
 	for s.HasMore() {
-		scan.Word.Eval(&s)
-		word := s.Emit().Val
+		word := scan.Word(&s)
 		if mac, ok := r.macros[word]; ok {
 			out = append(out, mac)
 		} else {
@@ -117,10 +116,8 @@ func (r *REPL) Eval(line string) error {
 	prev := r.Calc.Stack()
 
 	s.InitFromString("", line)
-	scan.While(&s, scan.Whitespace, s.Discard)
-	scan.Word.Eval(&s)
 
-	cmdName := s.Emit().Val
+	cmdName := scan.Word(&s)
 	cmd, ok := cmds[cmdName]
 
 	var err error
