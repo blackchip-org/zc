@@ -2,30 +2,32 @@ package repl
 
 import (
 	"reflect"
+	"strings"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 func Test(r *REPL, test string) bool {
-	var s scanner.Scanner
-	s.SetString(test)
+	var s scan.Scanner
+	s.InitFromString("", test)
 
 	var input string
 	errorTest := false
-	for s.Ok() {
-		if (s.Ch == '-' || s.Ch == '!') && s.Lookahead == '-' {
-			if s.Ch == '!' {
+	for s.HasMore() {
+		if (s.This == '-' || s.This == '!') && s.Next == '-' {
+			if s.This == '!' {
 				errorTest = true
 			}
-			input = s.Token()
-			s.Next()
-			s.Next()
+			input = s.Emit().Val
+			s.Discard()
+			s.Discard()
 			break
 		}
 		s.Keep()
 	}
-	output := s.Scan(scanner.LineTrimSpace)
+	scan.Until(&s, scan.Rune('\n'), s.Keep)
+	output := strings.TrimSpace(s.Emit().Val)
 	r.Eval(input)
 	err := r.Error()
 	if errorTest {
