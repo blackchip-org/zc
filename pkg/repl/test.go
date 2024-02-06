@@ -26,8 +26,8 @@ func Test(r *REPL, test string) bool {
 		}
 		s.Keep()
 	}
-	scan.Until(&s, scan.Rune('\n'), s.Keep)
-	output := strings.TrimSpace(s.Emit().Val)
+
+	output := strings.TrimSpace(scan.Line(&s))
 	r.Eval(input)
 	err := r.Error()
 	if errorTest {

@@ -10,7 +10,7 @@ import (
 func ParseDuration(str string) (time.Duration, bool) {
 	s := scan.NewScannerFromString("", str)
 	for s.HasMore() {
-		if s.Is(scan.Whitespace) {
+		if scan.IsSpace(s.This) {
 			s.Skip()
 		} else {
 			s.Keep()

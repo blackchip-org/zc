@@ -162,10 +162,10 @@ func Roll(c zc.Calc) {
 	var num, sides int64
 	var err error
 
-	if !scan.Int.Eval(&s) {
+	tok, ok := s.Eval(scan.IntRule)
+	if !ok {
 		num = 1
 	} else {
-		tok := s.Emit()
 		num, err = strconv.ParseInt(tok.Val, 10, 64)
 		if err != nil {
 			zc.ErrInvalidArgs(c, "dice count")
@@ -179,11 +179,11 @@ func Roll(c zc.Calc) {
 	}
 	s.Discard()
 
-	if !scan.Int.Eval(&s) {
+	tok, ok = s.Eval(scan.IntRule)
+	if !ok {
 		zc.ErrInvalidArgs(c, "sides")
 		return
 	}
-	tok := s.Emit()
 	sides, err = strconv.ParseInt(tok.Val, 10, 64)
 	if err != nil {
 		zc.ErrInvalidArgs(c, "sides")

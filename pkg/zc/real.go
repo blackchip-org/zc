@@ -146,7 +146,7 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 
 	var w, n, d int64
 
-	scan.SignedInt.Eval(sc)
+	scan.SignedIntRule.Eval(sc)
 	s1 := sc.Emit().Val
 	i1, err := strconv.ParseInt(s1, 10, 64)
 	if err != nil {
@@ -162,7 +162,7 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 	}
 	sc.Skip()
 
-	scan.Int.Eval(sc)
+	scan.IntRule.Eval(sc)
 	s2 := sc.Emit().Val
 	i2, err := strconv.ParseInt(s2, 10, 64)
 	if err != nil {
@@ -174,7 +174,7 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 			return nil, false
 		}
 		sc.Skip()
-		scan.Int.Eval(sc)
+		scan.IntRule.Eval(sc)
 		s3 := sc.Emit().Val
 		i3, err := strconv.ParseInt(s3, 10, 64)
 		if err != nil {

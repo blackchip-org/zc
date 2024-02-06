@@ -294,9 +294,9 @@ func Unescape(c zc.Calc) {
 			scan.HorizontalTabEnc,
 			scan.VerticalTabEnc,
 		),
-		scan.Hex2Enc.AsByte(true),
-		scan.Hex4Enc,
-		scan.Hex8Enc,
+		scan.Hex2EncRule.AsByte(true),
+		scan.Hex4EncRule,
+		scan.Hex8EncRule,
 		scan.OctEnc)
 	for s.HasMore() {
 		if s.This == '\\' {

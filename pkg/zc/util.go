@@ -73,7 +73,7 @@ func Quote(v string) string {
 	if !IsValuePrefix(s.This, s.Next) {
 		needsQuotes = true
 	} else {
-		scan.Until(&s, scan.Whitespace, s.Discard)
+		scan.Until(&s, scan.IsSpace, s.Discard)
 		if s.HasMore() {
 			needsQuotes = true
 		}

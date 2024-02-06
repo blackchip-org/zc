@@ -102,7 +102,7 @@ func (r *REPL) evalLine(line string) error {
 		} else {
 			out = append(out, word)
 		}
-		scan.While(&s, scan.Whitespace, s.Discard)
+		scan.Space(&s)
 	}
 	outLine := strings.Join(out, " ")
 	return r.Calc.Eval(outLine)

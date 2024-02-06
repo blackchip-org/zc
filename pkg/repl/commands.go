@@ -25,7 +25,7 @@ func init() {
 }
 
 func def(r *REPL, s *scan.Scanner) error {
-	scan.While(s, scan.Whitespace, s.Discard)
+	scan.Space(s)
 	if !s.HasMore() {
 		return fmt.Errorf("expected macro name")
 	}
@@ -38,9 +38,8 @@ func def(r *REPL, s *scan.Scanner) error {
 		return fmt.Errorf("invalid name")
 	}
 
-	scan.While(s, scan.Whitespace, s.Discard)
-	scan.While(s, scan.Any, s.Keep)
-	expr := s.Emit().Val
+	scan.Space(s)
+	expr := scan.All(s)
 
 	if expr == "" {
 		if _, exists := r.macros[name]; !exists {
@@ -82,12 +81,11 @@ func quit(_ *REPL, _ *scan.Scanner) error {
 }
 
 func quote(r *REPL, s *scan.Scanner) error {
-	scan.While(s, scan.Whitespace, s.Discard)
+	scan.Space(s)
 	if !s.HasMore() {
 		return fmt.Errorf("expected text to be used as a delimiter")
 	}
-	scan.While(s, scan.Any, s.Keep)
-	r.quoteEnd = strings.TrimSpace(s.Emit().Val)
+	r.quoteEnd = strings.TrimSpace(scan.All(s))
 	return nil
 }
 

@@ -92,12 +92,10 @@ func ParseSourceFile(name string) ([]*Op, error) {
 				}
 				ops = append(ops, op)
 			} else {
-				scan.Until(s, scan.Rune('\n'), s.Discard)
-				s.Discard()
+				scan.Line(s)
 			}
 		} else {
-			scan.Until(s, scan.Rune('\n'), s.Discard)
-			s.Discard()
+			scan.Line(s)
 		}
 	}
 	if len(s.Errs) > 0 {

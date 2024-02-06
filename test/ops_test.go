@@ -54,8 +54,7 @@ func testFile(t *testing.T, file string) {
 		if s.This == '#' && s.Next == '#' {
 			s.Discard()
 			s.Discard()
-			scan.Until(s, scan.Rune('\n'), s.Keep)
-			blockName = strings.TrimSpace(s.Emit().Val)
+			blockName = strings.TrimSpace(scan.Line(s))
 			s.Discard()
 		} else {
 			scan.While(s, scan.Rune(' '), s.Keep)
