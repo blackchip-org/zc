@@ -3,13 +3,12 @@ package repl
 import (
 	"fmt"
 	"strings"
-	"unicode"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
-type Cmd func(*REPL, *scanner.Scanner) error
+type Cmd func(*REPL, *scan.Scanner) error
 
 var cmds map[string]Cmd
 
@@ -25,22 +24,24 @@ func init() {
 	}
 }
 
-func def(r *REPL, s *scanner.Scanner) error {
-	s.ScanWhile(unicode.IsSpace)
-	if s.End() {
+func def(r *REPL, s *scan.Scanner) error {
+	scan.While(s, scan.Whitespace, s.Discard)
+	if !s.HasMore() {
 		return fmt.Errorf("expected macro name")
 	}
-	if zc.IsValuePrefix(s.Ch, s.Lookahead) {
+	if zc.IsValuePrefix(s.This, s.Next) {
 		return fmt.Errorf("invalid name")
 	}
 
-	name := s.Scan(scanner.Word)
+	scan.Word.Eval(s)
+	name := s.Emit().Val
 	if _, exists := cmds[name]; exists {
 		return fmt.Errorf("invalid name")
 	}
 
-	s.ScanWhile(unicode.IsSpace)
-	expr := s.Scan(scanner.Remaining)
+	scan.While(s, scan.Whitespace, s.Discard)
+	scan.While(s, scan.Any, s.Keep)
+	expr := s.Emit().Val
 
 	if expr == "" {
 		if _, exists := r.macros[name]; !exists {
@@ -62,12 +63,12 @@ func def(r *REPL, s *scanner.Scanner) error {
 	return nil
 }
 
-func pop(r *REPL, _ *scanner.Scanner) error {
+func pop(r *REPL, _ *scan.Scanner) error {
 	r.Calc.Pop()
 	return nil
 }
 
-func redo(r *REPL, _ *scanner.Scanner) error {
+func redo(r *REPL, _ *scan.Scanner) error {
 	if len(r.redoStack) == 0 {
 		return fmt.Errorf("redo stack is empty")
 	}
@@ -77,23 +78,21 @@ func redo(r *REPL, _ *scanner.Scanner) error {
 	return nil
 }
 
-func quit(_ *REPL, _ *scanner.Scanner) error {
+func quit(_ *REPL, _ *scan.Scanner) error {
 	return errQuit
 }
 
-func quote(r *REPL, s *scanner.Scanner) error {
-	s.ScanWhile(unicode.IsSpace)
-	if s.End() {
+func quote(r *REPL, s *scan.Scanner) error {
+	scan.While(s, scan.Whitespace, s.Discard)
+	if !s.HasMore() {
 		return fmt.Errorf("expected text to be used as a delimiter")
 	}
-	for !s.End() {
-		s.Keep()
-	}
-	r.quoteEnd = strings.TrimSpace(s.Token())
+	scan.While(s, scan.Any, s.Keep)
+	r.quoteEnd = strings.TrimSpace(s.Emit().Val)
 	return nil
 }
 
-func undo(r *REPL, _ *scanner.Scanner) error {
+func undo(r *REPL, _ *scan.Scanner) error {
 	if len(r.undoStack) == 0 {
 		return fmt.Errorf("undo stack is empty")
 	}

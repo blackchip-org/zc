@@ -9,10 +9,9 @@ import (
 	"path"
 	"sort"
 	"strings"
-	"unicode"
 
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v5/pkg/ansi"
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 	"github.com/peterh/liner"
 )
@@ -92,32 +91,36 @@ func (r *REPL) evalLine(line string) error {
 		return nil
 	}
 
-	var s scanner.Scanner
+	var s scan.Scanner
 	var out []string
-	s.SetString(line)
+	s.InitFromString("", line)
 
-	for s.Ok() {
-		word := s.Scan(scanner.Word)
+	for s.HasMore() {
+		scan.Word.Eval(&s)
+		word := s.Emit().Val
 		if mac, ok := r.macros[word]; ok {
 			out = append(out, mac)
 		} else {
 			out = append(out, word)
 		}
+		scan.While(&s, scan.Whitespace, s.Discard)
 	}
 	outLine := strings.Join(out, " ")
 	return r.Calc.Eval(outLine)
 }
 
 func (r *REPL) Eval(line string) error {
-	var s scanner.Scanner
+	var s scan.Scanner
 
 	r.info = ""
 	r.err = nil
 	prev := r.Calc.Stack()
 
-	s.SetString(line)
-	s.ScanWhile(unicode.IsSpace)
-	cmdName := s.Scan(scanner.Word)
+	s.InitFromString("", line)
+	scan.While(&s, scan.Whitespace, s.Discard)
+	scan.Word.Eval(&s)
+
+	cmdName := s.Emit().Val
 	cmd, ok := cmds[cmdName]
 
 	var err error
