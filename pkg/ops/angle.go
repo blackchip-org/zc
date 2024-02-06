@@ -1,12 +1,13 @@
 package ops
 
 import (
+	"github.com/blackchip-org/dms"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
 /*
 oper	dec
-func	DecDMS p0:DMS -- Decimal
+func	DecDMS p0:DMS -- Float
 title	DMS angle to decimal degrees
 
 desc
@@ -20,7 +21,7 @@ end
 func DecDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
 	r0 := p0.Degrees()
-	zc.PushDecimal(c, r0)
+	zc.PushFloat(c, r0)
 }
 
 /*
@@ -34,18 +35,19 @@ Reformat the angle *p0* to degrees and minutes
 end
 
 example
-10.1234 dm -- 10° 7.404′
+10.1234 dm -- 10° 7.404000000000011′
 end
 */
 func DM(c zc.Calc) {
+	f := dms.NewFormatter(dms.MinType, -1)
 	p0 := zc.PopDMS(c)
-	r0 := p0.FormatDM(-1)
+	r0 := f.Format(p0)
 	zc.PushString(c, r0)
 }
 
 /*
 oper	deg-min-round
-func	DMRound p0:DMS n:Int32 -- DMS
+func	DMRound p0:DMS n:Int -- DMS
 alias	dmr
 title	Rounded angle in degrees and minutes
 
@@ -59,9 +61,10 @@ example
 end
 */
 func DMRound(c zc.Calc) {
-	places := zc.PopInt32(c)
+	places := zc.PopInt(c)
+	f := dms.NewFormatter(dms.MinType, places)
 	p0 := zc.PopDMS(c)
-	r0 := p0.FormatDM(places)
+	r0 := f.Format(p0)
 	zc.PushString(c, r0)
 }
 
@@ -76,7 +79,7 @@ Reformat the angle *p0* to degrees, minutes, and seconds.
 end
 
 example
--76.856944 dms -- -76° 51′ 24.9984″
+-76.856944 dms -- -76° 51′ 24.998399999994945″
 end
 */
 func DMS(c zc.Calc) {
@@ -86,7 +89,7 @@ func DMS(c zc.Calc) {
 
 /*
 oper	deg-min-sec-round
-func	DMSRound p0:DMS n:Int32 -- DMS
+func	DMSRound p0:DMS n:Int -- DMS
 alias	dmsr
 title	Rounded angle in degrees, minutes, seconds
 
@@ -100,9 +103,10 @@ example
 end
 */
 func DMSRound(c zc.Calc) {
-	places := zc.PopInt32(c)
+	places := zc.PopInt(c)
+	f := dms.NewFormatter(dms.SecType, places)
 	p0 := zc.PopDMS(c)
-	r0 := p0.FormatDMS(places)
+	r0 := f.Format(p0)
 	zc.PushString(c, r0)
 }
 
@@ -145,7 +149,7 @@ func IsDMS(c zc.Calc) {
 
 /*
 oper	minutes
-func	MinutesDMS p0:DMS -- Decimal
+func	MinutesDMS p0:DMS -- Float
 title	Angle in minutes
 
 desc
@@ -159,7 +163,7 @@ end
 func MinutesDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
 	r0 := p0.Minutes()
-	zc.PushDecimal(c, r0)
+	zc.PushFloat(c, r0)
 }
 
 /*
@@ -179,7 +183,7 @@ end
 
 /*
 oper	seconds
-func	SecondsDMS p0:DMS -- Decimal
+func	SecondsDMS p0:DMS -- Float
 title	Angle in seconds
 
 desc
@@ -193,5 +197,5 @@ end
 func SecondsDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
 	r0 := p0.Seconds()
-	zc.PushDecimal(c, r0)
+	zc.PushFloat(c, r0)
 }
