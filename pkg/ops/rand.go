@@ -2,10 +2,11 @@ package ops
 
 import (
 	"math/rand"
+	"strconv"
 	"time"
 	"unicode"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
@@ -154,29 +155,43 @@ end
 */
 func Roll(c zc.Calc) {
 	state := getRandState(c)
-	var s scanner.Scanner
+	var s scan.Scanner
 	a0 := zc.PopString(c)
-	s.SetString(a0)
+	s.InitFromString("", a0)
 
-	nTok := s.Scan(scanner.UInt)
-	if unicode.ToLower(s.Ch) != 'd' {
+	var num, sides int64
+	var err error
+
+	tok, ok := s.Eval(scan.IntRule)
+	if !ok {
+		num = 1
+	} else {
+		num, err = strconv.ParseInt(tok.Val, 10, 64)
+		if err != nil {
+			zc.ErrInvalidArgs(c, "dice count")
+			return
+		}
+	}
+
+	if unicode.ToLower(s.This) != 'd' {
 		zc.ErrInvalidArgs(c, "missing 'd'")
 		return
 	}
-	s.Next()
-	sidesTok := s.Scan(scanner.UInt)
-	if sidesTok == "" || !s.End() {
+	s.Discard()
+
+	tok, ok = s.Eval(scan.IntRule)
+	if !ok {
 		zc.ErrInvalidArgs(c, "sides")
 		return
 	}
-	if nTok == "" {
-		nTok = "1"
+	sides, err = strconv.ParseInt(tok.Val, 10, 64)
+	if err != nil {
+		zc.ErrInvalidArgs(c, "sides")
+		return
 	}
-	n := zc.Int.MustParse(nTok)
-	sides := zc.Int.MustParse(sidesTok)
 
-	for i := 0; i < n; i++ {
-		r := state.rand.Intn(sides) + 1
+	for i := int64(0); i < num; i++ {
+		r := state.rand.Intn(int(sides)) + 1
 		zc.PushInt(c, r)
 	}
 }

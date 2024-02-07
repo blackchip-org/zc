@@ -11,7 +11,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/blackchip-org/zc/v5/pkg/doc"
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
 )
 
 const (
@@ -79,7 +78,7 @@ func main() {
 	for _, q := range names {
 		name := q.String()
 		heading, _ := utf8.DecodeRuneInString(q.name)
-		if scanner.IsCharAZ(heading) && heading != thisHeading {
+		if ((heading >= 'a' && heading <= 'z') || (heading >= 'A' && heading <= 'Z')) && heading != thisHeading {
 			fmt.Fprintf(out, "\n## %v\n\n", string(heading))
 			thisHeading = heading
 		}

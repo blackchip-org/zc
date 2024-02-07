@@ -3,17 +3,20 @@ package types
 import (
 	"strings"
 	"time"
-	"unicode"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/scan"
 )
 
 func ParseDuration(str string) (time.Duration, bool) {
-	s := scanner.NewString(str)
-	for s.Ok() {
-		s.SkipIf(unicode.IsSpace)
+	s := scan.NewScannerFromString("", str)
+	for s.HasMore() {
+		if scan.IsSpace(s.This) {
+			s.Skip()
+		} else {
+			s.Keep()
+		}
 	}
-	d, err := time.ParseDuration(s.Token())
+	d, err := time.ParseDuration(s.Emit().Val)
 	if err != nil {
 		return time.Duration(0), false
 	}
@@ -21,19 +24,19 @@ func ParseDuration(str string) (time.Duration, bool) {
 }
 
 func FormatDuration(d time.Duration) string {
-	s := scanner.NewString(d.String())
+	s := scan.NewScannerFromString("", d.String())
 	var hrs, min, sec string
-	for s.Ok() {
-		switch s.Ch {
+	for s.HasMore() {
+		switch s.This {
 		case 'h':
-			hrs = s.TrimToken()
-			s.Next()
+			hrs = strings.TrimSpace(s.Emit().Val)
+			s.Discard()
 		case 'm':
-			min = s.TrimToken()
-			s.Next()
+			min = strings.TrimSpace(s.Emit().Val)
+			s.Discard()
 		case 's':
-			sec = s.TrimToken()
-			s.Next()
+			sec = strings.TrimSpace(s.Emit().Val)
+			s.Discard()
 		default:
 			s.Keep()
 		}

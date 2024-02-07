@@ -10,7 +10,6 @@ import (
 	"hash"
 	"strings"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
@@ -251,10 +250,10 @@ func Rot13(c zc.Calc) {
 	var r0 strings.Builder
 	for _, ch := range a0 {
 		var lower, upper rune
-		if scanner.IsLowerCharAZ(ch) {
+		if ch >= 'a' && ch <= 'z' {
 			lower, upper = 'a', 'z'
 		}
-		if scanner.IsUpperCharAZ(ch) {
+		if ch >= 'A' && ch <= 'Z' {
 			lower, upper = 'A', 'Z'
 		}
 		if lower != 0 {

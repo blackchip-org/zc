@@ -8,7 +8,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/scan"
 )
 
 type Param struct {
@@ -71,21 +71,20 @@ func ParseSourceFile(name string) ([]*Op, error) {
 	defer f.Close()
 
 	group := strings.TrimSuffix(path.Base(name), ".go")
-	s := scanner.New(f)
-	s.SetName(name)
+	s := scan.NewScanner(name, f)
 	//s.Debug = true
-	for s.Ok() {
-		if s.Ch == '/' && s.Lookahead == '*' {
-			s.Scan(scanner.Line)
+	for s.HasMore() {
+		if s.This == '/' && s.Next == '*' {
+			scan.Line(s)
 			op, err := parseOp(s, group)
 			if err != nil {
 				return nil, err
 			}
 			ops = append(ops, op)
-		} else if s.Ch == '/' && s.Lookahead == '/' {
-			s.Next()
-			s.Next()
-			word := s.Scan(scanner.Word)
+		} else if s.This == '/' && s.Next == '/' {
+			s.Discard()
+			s.Discard()
+			word := scan.Word(s)
 			if word == "tab" {
 				op, err := parseTableOp(s, group)
 				if err != nil {
@@ -93,13 +92,16 @@ func ParseSourceFile(name string) ([]*Op, error) {
 				}
 				ops = append(ops, op)
 			} else {
-				s.Scan(scanner.Line)
+				scan.Line(s)
 			}
 		} else {
-			s.Scan(scanner.Line)
+			scan.Line(s)
 		}
 	}
-	return ops, s.Error
+	if len(s.Errs) > 0 {
+		return ops, s.Errs
+	}
+	return ops, nil
 }
 
 func ParseSourceFiles(dir string) ([]*Op, error) {
@@ -122,25 +124,25 @@ func ParseSourceFiles(dir string) ([]*Op, error) {
 	return ops, nil
 }
 
-func parseOp(s *scanner.Scanner, group string) (*Op, error) {
+func parseOp(s *scan.Scanner, group string) (*Op, error) {
 	op := &Op{Group: group}
 loop:
-	for s.Ok() {
+	for s.HasMore() {
 		var err error
-		word := s.Scan(scanner.Word)
+		word := scan.Word(s)
 		switch word {
 		case "oper":
-			op.Name = s.Scan(scanner.LineTrimSpace)
+			op.Name = scan.Line(s)
 		case "func":
 			var fn FuncDecl
 			fn, err = parseFn(s)
 			op.Funcs = append(op.Funcs, fn)
 		case "macro":
-			op.Macro = s.Scan(scanner.LineTrimSpace)
+			op.Macro = scan.Line(s)
 		case "alias":
-			op.Aliases = append(op.Aliases, s.Scan(scanner.LineTrimSpace))
+			op.Aliases = append(op.Aliases, scan.Line(s))
 		case "title":
-			op.Title = s.Scan(scanner.LineTrimSpace)
+			op.Title = scan.Line(s)
 		case "desc":
 			op.Desc = parseDesc(s)
 		case "example":
@@ -161,10 +163,9 @@ loop:
 	return op, nil
 }
 
-func parseFn(s *scanner.Scanner) (FuncDecl, error) {
-	s.ScanWhile(unicode.IsSpace)
+func parseFn(s *scan.Scanner) (FuncDecl, error) {
 	fn := FuncDecl{
-		Name: s.Scan(scanner.Word),
+		Name: scan.Word(s),
 	}
 	var err error
 	fn.Params, err = parseParams(s)
@@ -178,44 +179,48 @@ func parseFn(s *scanner.Scanner) (FuncDecl, error) {
 	return fn, nil
 }
 
-func parseParams(s *scanner.Scanner) ([]Param, error) {
+func parseParams(s *scan.Scanner) ([]Param, error) {
 	var params []Param
-	for s.Ok() {
-		s.ScanWhile(scanner.Rune2(' ', '\t'))
-		if s.Ch == '\n' {
-			s.Next()
+	for s.HasMore() {
+		scan.While(s, scan.Rune(' ', '\t'), s.Discard)
+		if s.This == '\n' {
+			s.Discard()
 			return params, nil
 		}
-		if s.Ch == '-' && s.Lookahead == '-' {
-			s.Next()
-			s.Next()
+		if s.This == '-' && s.Next == '-' {
+			s.Discard()
+			s.Discard()
 			return params, nil
 		}
 		var all bool
 		var name, pType string
-		t := s.ScanWhile(scanner.Or(
-			unicode.IsLetter,
-			unicode.IsDigit,
-			scanner.Rune('.'),
-		))
+		scan.While(s,
+			scan.Or(
+				unicode.IsLetter,
+				unicode.IsDigit,
+				scan.Rune('.'),
+			),
+			s.Keep)
+		t := s.Emit().Val
 		if t == "" {
 			return nil, scanErr(s, "did not find a parameter name or type")
 		}
 		if t == "..." {
 			continue
 		}
-		if s.Ch == ':' {
+		if s.This == ':' {
 			name = t
-			s.Next()
-			t = s.ScanWhile(scanner.Or(
+			s.Discard()
+			scan.While(s, scan.Or(
 				unicode.IsLetter,
 				unicode.IsDigit,
-				scanner.Rune('.'),
-			))
+				scan.Rune('.'),
+			), s.Keep)
+			t = s.Emit().Val
 		}
 		pType = t
-		if s.Ch == '*' {
-			s.Next()
+		if s.This == '*' {
+			s.Discard()
 			all = true
 		}
 		params = append(params, Param{
@@ -227,11 +232,11 @@ func parseParams(s *scanner.Scanner) ([]Param, error) {
 	return params, nil
 }
 
-func parseDesc(s *scanner.Scanner) string {
+func parseDesc(s *scan.Scanner) string {
 	var desc []string
-	s.Scan(scanner.Line)
-	for s.Ok() {
-		line := s.Scan(scanner.LineTrimSpace)
+	scan.Line(s)
+	for s.HasMore() {
+		line := scan.Line(s)
 		if line == "end" {
 			break
 		}
@@ -240,11 +245,11 @@ func parseDesc(s *scanner.Scanner) string {
 	return strings.Join(desc, "\n")
 }
 
-func parseExample(s *scanner.Scanner) ([]Expect, error) {
+func parseExample(s *scan.Scanner) ([]Expect, error) {
 	var example []Expect
-	s.Scan(scanner.Line)
-	for s.Ok() {
-		line := s.Scan(scanner.LineTrimSpace)
+	scan.Line(s)
+	for s.HasMore() {
+		line := scan.Line(s)
 		if line == "end" {
 			break
 		}
@@ -262,8 +267,8 @@ func parseExample(s *scanner.Scanner) ([]Expect, error) {
 	return example, nil
 }
 
-func parseTableOp(s *scanner.Scanner, group string) (*Op, error) {
-	line := s.Scan(scanner.LineTrimSpace)
+func parseTableOp(s *scan.Scanner, group string) (*Op, error) {
+	line := scan.Line(s)
 	parts := strings.Split(line, "--")
 	if len(parts) != 3 {
 		return nil, scanErr(s, "invalid table line: %v", line)
@@ -332,7 +337,7 @@ func Group(ops []*Op) map[string][]*Op {
 	return table
 }
 
-func scanErr(s *scanner.Scanner, format string, a ...any) error {
+func scanErr(s *scan.Scanner, format string, a ...any) error {
 	msg := fmt.Sprintf(format, a...)
-	return fmt.Errorf("[%v] %v", s.TokenPos, msg)
+	return fmt.Errorf("[%v] %v", s.Pos, msg)
 }

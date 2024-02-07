@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/blackchip-org/zc/v5/pkg/scanner"
+	"github.com/blackchip-org/scan"
 	"golang.org/x/exp/constraints"
 )
 
@@ -66,15 +66,15 @@ func StackString(c Calc) string {
 }
 
 func Quote(v string) string {
-	var s scanner.Scanner
-	s.SetString(v)
+	var s scan.Scanner
+	s.InitFromString("", v)
 
 	needsQuotes := false
-	if !IsValuePrefix(s.Ch, s.Lookahead) {
+	if !IsValuePrefix(s.This, s.Next) {
 		needsQuotes = true
 	} else {
-		s.ScanUntil(unicode.IsSpace)
-		if !s.End() {
+		scan.Until(&s, scan.IsSpace, s.Discard)
+		if s.HasMore() {
 			needsQuotes = true
 		}
 	}
@@ -83,16 +83,16 @@ func Quote(v string) string {
 		return v
 	}
 
-	s.SetString(v)
-	s.Text.WriteRune('\'')
-	for s.Ok() {
-		if s.Ch == '\'' {
-			s.Text.WriteString("\\'")
-			s.Next()
+	s.InitFromString("", v)
+	s.Val.WriteRune('\'')
+	for s.HasMore() {
+		if s.This == '\'' {
+			s.Val.WriteString("\\'")
+			s.Skip()
 		} else {
 			s.Keep()
 		}
 	}
-	s.Text.WriteRune('\'')
-	return s.Token()
+	s.Val.WriteRune('\'')
+	return s.Emit().Val
 }

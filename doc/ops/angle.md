@@ -24,7 +24,7 @@ Angular calculations
 Convert the DMS angle *p0* to decimal degrees.
 
 ```
-( p0:DMS -- Decimal )
+( p0:DMS -- Float )
 ```
 
 Example:
@@ -51,7 +51,7 @@ Example:
 
 | Input        | Stack
 |--------------|---------------
-| `10.1234 dm` | `10° 7.404′`
+| `10.1234 dm` | `10° 7.404000000000011′`
 
 ## deg-min-round
 
@@ -61,7 +61,7 @@ Reformat the angle *p0* to degrees and minutes and round the minutes to
 Alias: `dmr`
 
 ```
-( p0:DMS n:Int32 -- DMS )
+( p0:DMS n:Int -- DMS )
 ```
 
 Example:
@@ -88,7 +88,7 @@ Example:
 
 | Input            | Stack
 |------------------|---------------
-| `-76.856944 dms` | `-76° 51′ 24.9984″`
+| `-76.856944 dms` | `-76° 51′ 24.998399999994945″`
 
 ## deg-min-sec-round
 
@@ -98,7 +98,7 @@ seconds to *n* places.
 Alias: `dmsr`
 
 ```
-( p0:DMS n:Int32 -- DMS )
+( p0:DMS n:Int -- DMS )
 ```
 
 Example:
@@ -150,7 +150,7 @@ Example:
 Converts the angle *p0* to minutes.
 
 ```
-( p0:DMS -- Decimal )
+( p0:DMS -- Float )
 ```
 
 Example:
@@ -182,7 +182,7 @@ Example:
 Converts the angle *p0* to seconds.
 
 ```
-( p0:DMS -- Decimal )
+( p0:DMS -- Float )
 ```
 
 Example:

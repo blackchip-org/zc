@@ -6,6 +6,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
@@ -256,6 +257,63 @@ func Tone(c zc.Calc) {
 
 	r0 := out.String()
 	zc.PushString(c, r0)
+}
+
+/*
+oper	unescape
+func	Unescape p0:Str -- Str
+alias	unesc
+title 	Unescape
+
+desc
+Unescapes characters in a string value that are prefixed by a backslash. The
+escape sequences as defined for Go strings are used. A value such as
+`\n` is converted to a new line. Values such as `\x7f`, `\u007f`, '\U0000007f`,
+and `\077` are converted to the characters of that code point.
+end
+
+example
+"\u65e5\u672c\u8a9e" -- \u65e5\u672c\u8a9e
+unescape -- 日本語
+c "\U000065e5\U0000672c\U00008a9e" -- \U000065e5\U0000672c\U00008a9e
+unescape -- 日本語
+c "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e" -- \xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e
+unescape -- 日本語
+end
+*/
+func Unescape(c zc.Calc) {
+	a0 := zc.PopString(c)
+	s := scan.NewScannerFromString("", a0)
+	rule := scan.NewRuleSet(
+		scan.NewCharEncRule(
+			scan.AlertEnc,
+			scan.BackspaceEnc,
+			scan.FormFeedEnc,
+			scan.LineFeedEnc,
+			scan.CarriageReturnEnc,
+			scan.HorizontalTabEnc,
+			scan.VerticalTabEnc,
+		),
+		scan.Hex2EncRule.AsByte(true),
+		scan.Hex4EncRule,
+		scan.Hex8EncRule,
+		scan.OctEnc)
+	for s.HasMore() {
+		if s.This == '\\' {
+			s.Skip()
+			if !rule.Eval(s) {
+				s.Keep()
+			}
+		} else {
+			s.Keep()
+		}
+	}
+	tok := s.Emit()
+	if tok.Type == scan.IllegalType {
+		c.SetError(tok.Errs[0])
+	} else {
+		zc.PushString(c, tok.Val)
+	}
 }
 
 /*

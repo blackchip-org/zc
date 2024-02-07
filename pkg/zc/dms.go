@@ -1,20 +1,29 @@
 package zc
 
 import (
-	"github.com/blackchip-org/zc/v5/pkg/types"
+	"github.com/blackchip-org/dms"
 )
 
 // --
+
+var (
+	dmsParser    = dms.NewDefaultParser()
+	dmsFormatter = dms.NewFormatter(dms.SecType, -1)
+)
 
 type DMSType struct{}
 
 func (t DMSType) String() string { return "DMS" }
 
-func (t DMSType) Parse(str string) (types.DMS, bool) {
-	return types.ParseDMS(str)
+func (t DMSType) Parse(str string) (dms.Angle, bool) {
+	a, err := dmsParser.Parse(str)
+	if err != nil {
+		return dms.Angle{}, false
+	}
+	return a, true
 }
 
-func (t DMSType) MustParse(s string) types.DMS {
+func (t DMSType) MustParse(s string) dms.Angle {
 	r, ok := t.Parse(s)
 	if !ok {
 		PanicExpectedType(t, s)
@@ -27,11 +36,11 @@ func (t DMSType) Is(s string) bool {
 	return ok
 }
 
-func (t DMSType) Format(v types.DMS) string {
-	return v.String()
+func (t DMSType) Format(v dms.Angle) string {
+	return dmsFormatter.Format(v)
 }
 
-func PopDMS(c Calc) types.DMS     { return DMS.MustParse(c.MustPop()) }
-func PushDMS(c Calc, r types.DMS) { c.Push(DMS.Format(r)) }
+func PopDMS(c Calc) dms.Angle     { return DMS.MustParse(c.MustPop()) }
+func PushDMS(c Calc, r dms.Angle) { c.Push(DMS.Format(r)) }
 
 // --

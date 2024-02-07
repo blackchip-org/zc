@@ -3,6 +3,8 @@ module github.com/blackchip-org/zc/v5
 go 1.21
 
 require (
+	github.com/blackchip-org/dms v0.0.0-20240206010456-abead6bdc48f
+	github.com/blackchip-org/scan v0.1.0
 	github.com/peterh/liner v1.2.2
 	github.com/shopspring/decimal v1.3.1
 	github.com/twpayne/go-proj/v10 v10.1.1
