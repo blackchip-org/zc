@@ -6,6 +6,7 @@ var showCandidates = false
 function submit() {
     let line = document.querySelector("#input").value
     let result = ''
+    histPos = -1
     if (line.trim() === "") {
         if (zcStackLen() === 0) {
             stackHist = []
