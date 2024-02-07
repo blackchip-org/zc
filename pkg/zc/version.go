@@ -1,6 +1,6 @@
 package zc
 
 const (
-	Version   = "v5.9.0"
-	BuildDate = "24 Jan 2024"
+	Version   = "v5.10.1"
+	BuildDate = "7 Feb 2024"
 )
