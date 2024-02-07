@@ -3,13 +3,16 @@ module github.com/blackchip-org/zc/v5
 go 1.21
 
 require (
-	github.com/blackchip-org/dms v0.0.0-20240206010456-abead6bdc48f
-	github.com/blackchip-org/scan v0.1.0
+	github.com/blackchip-org/dms v0.0.0-20240206183642-88deafff9290
+	github.com/blackchip-org/scan v0.2.0
 	github.com/peterh/liner v1.2.2
 	github.com/shopspring/decimal v1.3.1
 	github.com/twpayne/go-proj/v10 v10.1.1
-	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53
-	golang.org/x/sys v0.7.0
+	golang.org/x/exp v0.0.0-20240205201215-2c58cdc269a3
+	golang.org/x/sys v0.16.0
 )
 
-require github.com/mattn/go-runewidth v0.0.3 // indirect
+require (
+	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/rivo/uniseg v0.4.6 // indirect
+)
