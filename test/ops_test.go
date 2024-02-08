@@ -8,9 +8,9 @@ import (
 
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v5/pkg/ansi"
-	"github.com/blackchip-org/zc/v5/pkg/calc"
 	"github.com/blackchip-org/zc/v5/pkg/repl"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/zcalc"
 )
 
 const space4 = "    "
@@ -72,7 +72,7 @@ func testFile(t *testing.T, file string) {
 }
 
 func testBlock(t *testing.T, s *scan.Scanner) {
-	c := calc.New()
+	c := zcalc.New()
 	r := repl.New(c)
 	out := &strings.Builder{}
 	r.Out = out

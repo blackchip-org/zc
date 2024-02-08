@@ -5,12 +5,12 @@ import (
 	"testing"
 
 	"github.com/blackchip-org/zc/v5/pkg/ansi"
-	"github.com/blackchip-org/zc/v5/pkg/calc"
+	"github.com/blackchip-org/zc/v5/pkg/zcalc"
 )
 
 func TestUndo(t *testing.T) {
 	ansi.Enabled = false
-	c := calc.New()
+	c := zcalc.New()
 	repl := New(c)
 
 	repl.Eval("1")
@@ -53,7 +53,7 @@ func TestUndo(t *testing.T) {
 
 func TestQuote(t *testing.T) {
 	ansi.Enabled = false
-	c := calc.New()
+	c := zcalc.New()
 	repl := New(c)
 
 	repl.Eval("quote EOF")

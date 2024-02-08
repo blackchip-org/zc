@@ -5,9 +5,9 @@ package main
 import (
 	"syscall/js"
 
-	"github.com/blackchip-org/zc/v5/pkg/calc"
 	"github.com/blackchip-org/zc/v5/pkg/repl"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v5/pkg/zcalc"
 )
 
 var (
@@ -78,7 +78,7 @@ func zcSetStack() js.Func {
 }
 
 func main() {
-	c = calc.New()
+	c = zcalc.New()
 	r = repl.New(c)
 
 	js.Global().Set("zcEval", zcEval())
