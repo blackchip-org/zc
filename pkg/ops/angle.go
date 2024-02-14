@@ -2,6 +2,7 @@ package ops
 
 import (
 	"github.com/blackchip-org/dms"
+	"github.com/blackchip-org/zc/v5/pkg/types"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
@@ -20,8 +21,13 @@ end
 */
 func DecDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
-	r0 := p0.Degrees()
-	zc.PushFloat(c, r0)
+	d, err := types.NewDMS(p0)
+	if err != nil {
+		zc.ErrInvalidArgs(c, err.Error())
+		return
+	}
+	r0 := d.Degrees()
+	zc.PushDecimal(c, r0)
 }
 
 /*

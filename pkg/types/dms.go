@@ -3,120 +3,88 @@ package types
 import (
 	"fmt"
 
-	"github.com/blackchip-org/calc"
+	"github.com/blackchip-org/dms"
 )
 
 type DMS struct {
-	sign int
-	deg  calc.Decimal
-	min  calc.Decimal
-	sec  calc.Decimal
+	deg Decimal
+	min Decimal
+	sec Decimal
 }
 
-var zeroDMS = DMS{
-	sign: 1,
-	deg:  calc.DecimalZero(),
-	min:  calc.DecimalZero(),
-	sec:  calc.DecimalZero(),
-}
+var (
+	dec60   = NewDecimalFromInt(60)
+	dec3600 = NewDecimalFromInt(3600)
+)
 
-func NewDMS(deg any, min any, sec any) (DMS, error) {
-	c := calc.NewDecimalCalc()
-
-	sign := 1
-	c.Push(deg)
-	if c.Err() != nil {
-		return DMS{}, fmt.Errorf("invalid degrees: %v", deg)
+func NewDMS(f dms.Fields) (DMS, error) {
+	deg, err := NewDecimalFromString(f.Deg)
+	if err != nil {
+		return DMS{}, fmt.Errorf("invalid degrees: %v", f.Deg)
 	}
-	if c.Sign() < 0 {
-		sign = 1
+	min, err := NewDecimalFromString(f.Min)
+	if err != nil {
+		return DMS{}, fmt.Errorf("invalid minutes: %v", f.Min)
 	}
-	deg = c.Abs().Pop()
-
-	min = c.Push(min).Abs().Pop()
-	if c.Err() != nil {
-		return DMS{}, fmt.Errorf("invalid minutes: %v", min)
-	}
-	sec = c.Push(sec).Abs().Pop()
-	if c.Err() != nil {
-		return DMS{}, fmt.Errorf("invalid seconds: %v", sec)
+	sec, err := NewDecimalFromString(f.Sec)
+	if err != nil {
+		return DMS{}, fmt.Errorf("invalid seconds: %v", f.Sec)
 	}
 
-	c.Push(deg)
-	iDeg := c.Dup().Int().Dup().Pop()
-	c.Sub()
-	if !c.Eqz() {
-		c.Push(60).Mul()
-		c.Push(min).Add()
-		deg, min = iDeg, c.Pop()
+	sign := NewDecimalFromInt(int64(f.Sign()))
+	deg, min, sec = deg.Abs(), min.Abs(), sec.Abs()
+
+	// Normalize floats
+	ideg := deg.Int()
+	if !deg.Sub(ideg).IsZero() {
+		fdeg := deg.Sub(ideg)
+		deg = ideg
+		min = min.Add(fdeg.Mul(dec60))
+	}
+	imin := min.Int()
+	if !min.Sub(imin).IsZero() {
+		fmin := min.Sub(imin)
+		min = imin
+		sec = sec.Add(fmin.Mul(dec60))
 	}
 
-	c.Clear()
-	c.Push(min)
-	iMin := c.Dup().Int().Dup().Pop()
-	c.Sub()
-	if !c.Eqz() {
-		c.Push(60).Mul()
-		c.Push(sec).Add()
-		min, sec = iMin, c.Pop()
-	}
-
-	c.Clear()
-	return zeroDMS.Add(DMS{
-		sign: sign,
-		deg:  deg,
-		min:  min,
-		sec:  sec,
+	return DMS{}.Add(DMS{
+		deg: deg.Mul(sign),
+		min: min.Mul(sign),
+		sec: sec.Mul(sign),
 	}), nil
 }
 
 func (d DMS) Add(d2 DMS) DMS {
-	c := calc.NewDecimalCalc()
-	var carry calc.Decimal
+	var carry Decimal
 
-	c.Push(d.sec, d2.sec).Add()
-	c.Dup()
-	carry = c.Push(60).Div().Int().Pop()
-	d.sec = c.Push(60).Mod().Pop()
+	sec := d.sec.Add(d2.sec)
+	carry = sec.Div(dec60).Int()
+	d.sec = sec.Mod(dec60)
 
-	c.Push(d.min, d2.min, carry).Add().Add()
-	c.Dup()
-	carry = c.Push(60).Div().Int().Pop()
-	d.min = c.Push(60).Mod().Pop()
+	min := d.min.Add(d2.min).Add(carry)
+	carry = min.Div(dec60).Int()
+	d.min = min.Mod(dec60)
 
-	d.deg = c.Push(d.deg, d2.deg, carry).Add().Add().Pop()
+	d.deg = d.deg.Add(d2.deg).Add(carry)
 	return d
 }
 
-func (d DMS) Degrees() calc.Decimal {
-	c := calc.NewDecimalCalc()
-	c.Push(d.deg)
-	c.Push(d.min, 60).Div().Add()
-	c.Push(d.sec, 3600).Div().Add()
-	return c.Pop()
+func (d DMS) Degrees() Decimal {
+	return d.deg.Add(d.min.Div(dec60)).Add(d.sec.Div(dec3600))
 }
 
-func (d DMS) Minutes() calc.Decimal {
-	c := calc.NewDecimalCalc()
-	c.Push(d.deg, 60).Mul()
-	c.Push(d.min).Add()
-	c.Push(d.sec, 60).Div().Add()
-	return c.Pop()
+func (d DMS) Minutes() Decimal {
+	return d.deg.Mul(dec60).Add(d.min).Add(d.sec.Div(dec60))
 }
 
-func (d DMS) Seconds() calc.Decimal {
-	c := calc.NewDecimalCalc()
-	c.Push(d.deg, 3600).Mul()
-	c.Push(d.min, 60).Mul().Add()
-	c.Push(d.sec).Add()
-	return c.Pop()
+func (d DMS) Seconds() Decimal {
+	return d.deg.Mul(dec3600).Add(d.min.Mul(dec60)).Add(d.sec)
 }
 
-func (d DMS) DMS() (deg, min, sec calc.Decimal) {
-	c := calc.NewDecimalCalc()
-
+func (d DMS) DMS() (deg, min, sec Decimal) {
 	deg = d.deg
-	min = c.Push(d.min).Abs().Pop()
-	sec = c.Push(d.sec).Abs().Pop()
+	min = d.min.Abs()
+	sec = d.sec.Abs()
 	return
 }

@@ -7,23 +7,22 @@ import (
 // --
 
 var (
-	dmsParser    = dms.NewDefaultParser()
-	dmsFormatter = dms.NewFormatter(dms.SecType, -1)
+	dmsParser = dms.NewDefaultParser()
 )
 
 type DMSType struct{}
 
 func (t DMSType) String() string { return "DMS" }
 
-func (t DMSType) Parse(str string) (dms.Angle, bool) {
-	a, err := dmsParser.Parse(str)
+func (t DMSType) Parse(str string) (dms.Fields, bool) {
+	f, err := dmsParser.ParseFields(str)
 	if err != nil {
-		return dms.Angle{}, false
+		return f, false
 	}
-	return a, true
+	return f, true
 }
 
-func (t DMSType) MustParse(s string) dms.Angle {
+func (t DMSType) MustParse(s string) dms.Fields {
 	r, ok := t.Parse(s)
 	if !ok {
 		PanicExpectedType(t, s)
@@ -36,11 +35,11 @@ func (t DMSType) Is(s string) bool {
 	return ok
 }
 
-func (t DMSType) Format(v dms.Angle) string {
-	return dmsFormatter.Format(v)
+func (t DMSType) Format(v dms.Fields) string {
+	return v.String()
 }
 
-func PopDMS(c Calc) dms.Angle     { return DMS.MustParse(c.MustPop()) }
-func PushDMS(c Calc, r dms.Angle) { c.Push(DMS.Format(r)) }
+func PopDMS(c Calc) dms.Fields     { return DMS.MustParse(c.MustPop()) }
+func PushDMS(c Calc, r dms.Fields) { c.Push(DMS.Format(r)) }
 
 // --

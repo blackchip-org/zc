@@ -77,6 +77,10 @@ func (d Decimal) GreaterThanOrEqual(d2 Decimal) bool {
 	return d.v.GreaterThanOrEqual(d2.v)
 }
 
+func (d Decimal) Int() Decimal {
+	return NewDecimalFromInt(d.v.IntPart())
+}
+
 func (d Decimal) IsInteger() bool {
 	return d.v.IsInteger()
 }

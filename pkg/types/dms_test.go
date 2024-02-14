@@ -1,28 +1,28 @@
 package types
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/blackchip-org/dms"
 )
 
 func TestDMS(t *testing.T) {
 	tests := []struct {
-		inDeg, inMin, inSec    any
+		fields                 dms.Fields
 		outDeg, outMin, outSec string
 	}{
-		{1, 0, 0, "1", "0", "0"},
-		{1.5, 0, 0, "1", "30", "0"},
-		{1.5, 1.5, 0, "1", "31", "30"},
-		{1.5, 1.5, 1.5, "1", "31", "31.5"},
-		{0, 0, 3600, "1", "0", "0"},
-		{0, 0, 3665, "1", "1", "5"},
-		{0, 65, 0, "1", "5", "0"},
+		{dms.Fields{Deg: "1", Min: "0", Sec: "0"}, "1", "0", "0"},
+		{dms.Fields{Deg: "1.5", Min: "0", Sec: "0"}, "1", "30", "0"},
+		{dms.Fields{Deg: "1.5", Min: "1.5", Sec: "0"}, "1", "31", "30"},
+		{dms.Fields{Deg: "1.5", Min: "1.5", Sec: "1.5"}, "1", "31", "31.5"},
+		{dms.Fields{Deg: "0", Min: "0", Sec: "3600"}, "1", "0", "0"},
+		{dms.Fields{Deg: "0", Min: "0", Sec: "3665"}, "1", "1", "5"},
+		{dms.Fields{Deg: "0", Min: "65", Sec: "0"}, "1", "5", "0"},
 	}
 
 	for _, test := range tests {
-		name := fmt.Sprintf("%v:%v:%v", test.inDeg, test.inMin, test.inSec)
-		t.Run(name, func(t *testing.T) {
-			dms, err := NewDMS(test.inDeg, test.inMin, test.inSec)
+		t.Run(test.fields.String(), func(t *testing.T) {
+			dms, err := NewDMS(test.fields)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -36,21 +36,21 @@ func TestDMS(t *testing.T) {
 
 func TestDegrees(t *testing.T) {
 	tests := []struct {
-		d, m, s string
-		deg     string
+		fields dms.Fields
+		deg    string
 	}{
-		{"1", "0", "0", "1"},
-		{"1", "3", "0", "1.05"},
-		{"1", "3", "9", "1.0525"},
-		{"0", "3", "0", "0.05"},
-		{"0", "3", "9", "0.0525"},
-		{"0", "0", "9", "0.0025"},
-		{"-1", "3", "9", "-1.0525"},
+		{dms.Fields{Deg: "1", Min: "0", Sec: "0"}, "1"},
+		{dms.Fields{Deg: "1", Min: "3", Sec: "0"}, "1.05"},
+		{dms.Fields{Deg: "1", Min: "3", Sec: "9"}, "1.0525"},
+		{dms.Fields{Deg: "0", Min: "3", Sec: "0"}, "0.05"},
+		{dms.Fields{Deg: "0", Min: "3", Sec: "9"}, "0.0525"},
+		{dms.Fields{Deg: "0", Min: "0", Sec: "9"}, "0.0025"},
+		{dms.Fields{Hemi: "-", Deg: "1", Min: "3", Sec: "9"}, "-1.0525"},
 	}
 
 	for _, test := range tests {
-		t.Run(test.deg, func(t *testing.T) {
-			dms, err := NewDMS(test.d, test.m, test.s)
+		t.Run(test.fields.String(), func(t *testing.T) {
+			dms, err := NewDMS(test.fields)
 			if err != nil {
 				t.Fatal(err)
 			}
