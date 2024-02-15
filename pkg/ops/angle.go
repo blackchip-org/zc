@@ -21,11 +21,7 @@ end
 */
 func DecDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
-	d, err := types.NewDMS(p0)
-	if err != nil {
-		zc.ErrInvalidArgs(c, err.Error())
-		return
-	}
+	d, _ := types.NewDMS(p0)
 	r0 := d.Degrees()
 	zc.PushDecimal(c, r0)
 }
@@ -38,8 +34,6 @@ title	Angle in degrees and minutes
 
 desc
 Reformat the angle *p0* to degrees and minutes
-end
-
 example
 10.1234 dm -- 10° 7.404000000000011′
 end
@@ -47,6 +41,8 @@ end
 func DM(c zc.Calc) {
 	f := dms.NewFormatter(dms.MinType, -1)
 	p0 := zc.PopDMS(c)
+	d, _ := types.NewDMS(p0)
+
 	r0 := f.Format(p0)
 	zc.PushString(c, r0)
 }
