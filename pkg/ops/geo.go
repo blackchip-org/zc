@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/blackchip-org/zc/v5/pkg/ext"
+	"github.com/blackchip-org/zc/v5/pkg/types"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
@@ -91,16 +92,18 @@ km-mi 2 round -- 202.79 # mi
 end
 */
 func Haversine(c zc.Calc) {
-	lon2 := zc.PopDMS(c)
-	lat2 := zc.PopDMS(c)
-	lon1 := zc.PopDMS(c)
-	lat1 := zc.PopDMS(c)
+	lon2 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
+	lat2 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
+	lon1 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
+	lat1 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
 
-	phi1 := lat1.Radians()
-	phi2 := lat2.Radians()
+	piOver180 := math.Pi / 180
 
-	deltaPhi := lat2.Sub(lat1).Radians()
-	deltaLambda := lon2.Sub(lon1).Radians()
+	phi1 := lat1 * piOver180
+	phi2 := lat2 * piOver180
+
+	deltaPhi := (lat2 - lat1) * piOver180
+	deltaLambda := (lon2 - lon1) * piOver180
 
 	a := math.Pow(math.Sin(deltaPhi/2), 2) + math.Cos(phi1)*math.Cos(phi2)*math.Pow(math.Sin(deltaLambda/2.0), 2)
 	c0 := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))

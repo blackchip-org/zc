@@ -158,6 +158,13 @@ func (d Decimal) String() string {
 	return d.v.String()
 }
 
+func (d Decimal) StringRound(places int) string {
+	if places < 0 {
+		return d.String()
+	}
+	return d.v.StringFixed(int32(places))
+}
+
 func (d Decimal) Sub(d2 Decimal) Decimal {
 	return Decimal{v: d.v.Sub(d2.v)}
 }

@@ -38,6 +38,8 @@ Example:
 ## deg-min
 
 Reformat the angle *p0* to degrees and minutes
+example
+10.1234 dm -- 10° 7.404000000000011′
 
 Alias: `dm`
 
@@ -45,13 +47,6 @@ Alias: `dm`
 ( p0:DMS -- DMS )
 ```
 
-Example:
-
-<!-- test: deg-min -->
-
-| Input        | Stack
-|--------------|---------------
-| `10.1234 dm` | `10° 7.404000000000011′`
 
 ## deg-min-round
 

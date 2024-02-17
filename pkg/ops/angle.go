@@ -21,8 +21,7 @@ end
 */
 func DecDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
-	d, _ := types.NewDMS(p0)
-	r0 := d.Degrees()
+	r0 := p0.Degrees()
 	zc.PushDecimal(c, r0)
 }
 
@@ -41,9 +40,7 @@ end
 func DM(c zc.Calc) {
 	f := dms.NewFormatter(dms.MinType, -1)
 	p0 := zc.PopDMS(c)
-	d, _ := types.NewDMS(p0)
-
-	r0 := f.Format(p0)
+	r0 := types.FormatDMS(p0, dms.MinType, -1, a)
 	zc.PushString(c, r0)
 }
 
@@ -66,7 +63,7 @@ func DMRound(c zc.Calc) {
 	places := zc.PopInt(c)
 	f := dms.NewFormatter(dms.MinType, places)
 	p0 := zc.PopDMS(c)
-	r0 := f.Format(p0)
+	r0 := f.FormatFields(p0)
 	zc.PushString(c, r0)
 }
 
@@ -108,7 +105,7 @@ func DMSRound(c zc.Calc) {
 	places := zc.PopInt(c)
 	f := dms.NewFormatter(dms.SecType, places)
 	p0 := zc.PopDMS(c)
-	r0 := f.Format(p0)
+	r0 := f.FormatFields(p0)
 	zc.PushString(c, r0)
 }
 
@@ -164,8 +161,9 @@ end
 */
 func MinutesDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
-	r0 := p0.Minutes()
-	zc.PushFloat(c, r0)
+	d, _ := types.NewDMS(p0)
+	r0 := d.Minutes()
+	zc.PushDecimal(c, r0)
 }
 
 /*
@@ -198,6 +196,7 @@ end
 */
 func SecondsDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
-	r0 := p0.Seconds()
-	zc.PushFloat(c, r0)
+	d, _ := types.NewDMS(p0)
+	r0 := d.Seconds()
+	zc.PushDecimal(c, r0)
 }
