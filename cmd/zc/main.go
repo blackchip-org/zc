@@ -8,15 +8,15 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc/v5/pkg/ansi"
+	"github.com/blackchip-org/zc/v5/pkg/calc"
 	"github.com/blackchip-org/zc/v5/pkg/repl"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
-	"github.com/blackchip-org/zc/v5/pkg/zcalc"
 )
 
 func main() {
 	log.SetFlags(0)
 
-	c := zcalc.New()
+	c := calc.New()
 
 	if len(os.Args) == 1 {
 		if os.Getenv("ZC_NO_ANSI") != "" {

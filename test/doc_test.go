@@ -10,9 +10,9 @@ import (
 	"testing"
 
 	"github.com/blackchip-org/zc/v5/pkg/ansi"
+	"github.com/blackchip-org/zc/v5/pkg/calc"
 	"github.com/blackchip-org/zc/v5/pkg/repl"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
-	"github.com/blackchip-org/zc/v5/pkg/zcalc"
 )
 
 var (
@@ -96,7 +96,7 @@ func testDocFile(t *testing.T, file fs.File) {
 }
 
 func testTable(t *testing.T, setup []string, scanner *bufio.Scanner) {
-	c := zcalc.New()
+	c := calc.New()
 	r := repl.New(c)
 	r.Out = &strings.Builder{}
 	ansi.Enabled = false

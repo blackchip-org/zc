@@ -1,4 +1,4 @@
-package zcalc
+package calc
 
 import (
 	"fmt"
