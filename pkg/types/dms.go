@@ -18,7 +18,43 @@ var (
 	d3600 = NewDecimalFromInt(3600)
 )
 
-func NewDMS(f dms.Fields) (DMS, error) {
+func NewDMS(deg, min, sec float64) DMS {
+	return NewDMSFromDecimal(
+		NewDecimalFromFloat(deg),
+		NewDecimalFromFloat(min),
+		NewDecimalFromFloat(sec),
+	)
+}
+
+func NewDMSFromDecimal(deg, min, sec Decimal) DMS {
+	sign := NewDecimalFromInt(int64(deg.Sign()))
+	if sign.IsZero() {
+		sign = NewDecimalFromInt(1)
+	}
+	deg, min, sec = deg.Abs(), min.Abs(), sec.Abs()
+
+	// Normalize floats
+	ideg := deg.Int()
+	if !deg.Sub(ideg).IsZero() {
+		fdeg := deg.Sub(ideg)
+		deg = ideg
+		min = min.Add(fdeg.Mul(d60))
+	}
+	imin := min.Int()
+	if !min.Sub(imin).IsZero() {
+		fmin := min.Sub(imin)
+		min = imin
+		sec = sec.Add(fmin.Mul(d60))
+	}
+
+	return DMS{}.Add(DMS{
+		deg: deg.Mul(sign),
+		min: min.Mul(sign),
+		sec: sec.Mul(sign),
+	})
+}
+
+func NewDMSFromFields(f dms.Fields) (DMS, error) {
 	if f.Deg == "" {
 		f.Deg = "0"
 	}
@@ -41,36 +77,10 @@ func NewDMS(f dms.Fields) (DMS, error) {
 		return DMS{}, fmt.Errorf("invalid seconds: %v", f.Sec)
 	}
 
-	sign := NewDecimalFromInt(int64(dms.Sign(f.Hemi)))
-	deg, min, sec = deg.Abs(), min.Abs(), sec.Abs()
-
-	// Normalize floats
-	ideg := deg.Int()
-	if !deg.Sub(ideg).IsZero() {
-		fdeg := deg.Sub(ideg)
-		deg = ideg
-		min = min.Add(fdeg.Mul(d60))
+	if dms.Sign(f.Hemi) < 0 {
+		deg = deg.Neg()
 	}
-	imin := min.Int()
-	if !min.Sub(imin).IsZero() {
-		fmin := min.Sub(imin)
-		min = imin
-		sec = sec.Add(fmin.Mul(d60))
-	}
-
-	return DMS{}.Add(DMS{
-		deg: deg.Mul(sign),
-		min: min.Mul(sign),
-		sec: sec.Mul(sign),
-	}), nil
-}
-
-func MustNewDMS(f dms.Fields) DMS {
-	d, err := NewDMS(f)
-	if err != nil {
-		panic(err)
-	}
-	return d
+	return NewDMSFromDecimal(deg, min, sec), nil
 }
 
 func (d DMS) String() string {
@@ -111,20 +121,12 @@ func (d DMS) DMS() (deg, min, sec Decimal) {
 	return
 }
 
-func FormatDMS(d DMS, to string, places int, axis dms.Axis) string {
+func FormatDMS(d DMS, to dms.Unit, places int) string {
 	deg, min, sec := d.DMS()
-	sign := deg.Sign()
-	if sign >= 0 {
-		sign = 1
-	}
-
 	var buf strings.Builder
-	if axis != dms.NoAxis {
-		deg = deg.Abs()
-	}
 
 	func() {
-		if to == dms.DegType {
+		if to == dms.DegUnit {
 			degs := deg.Add(min.Div(d60)).Add(sec.Div(d3600))
 			buf.WriteString(degs.StringRound(places))
 			buf.WriteRune('°')
@@ -132,7 +134,7 @@ func FormatDMS(d DMS, to string, places int, axis dms.Axis) string {
 		}
 		buf.WriteString(deg.String())
 		buf.WriteString("° ")
-		if to == dms.MinType {
+		if to == dms.MinUnit {
 			mins := min.Add(sec.Div(d60))
 			buf.WriteString(mins.StringRound(places))
 			buf.WriteRune('′')
@@ -143,10 +145,5 @@ func FormatDMS(d DMS, to string, places int, axis dms.Axis) string {
 		buf.WriteString(sec.StringRound(places))
 		buf.WriteRune('″')
 	}()
-	if axis != dms.NoAxis {
-		hemi := dms.Hemi(axis, sign)
-		buf.WriteRune(' ')
-		buf.WriteString(hemi)
-	}
 	return buf.String()
 }

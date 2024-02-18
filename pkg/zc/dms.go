@@ -20,7 +20,7 @@ func (t DMSType) Parse(str string) (types.DMS, bool) {
 	if err != nil {
 		return types.DMS{}, false
 	}
-	d, err := types.NewDMS(f)
+	d, err := types.NewDMSFromFields(f)
 	if err != nil {
 		return types.DMS{}, false
 	}
@@ -41,7 +41,7 @@ func (t DMSType) Is(s string) bool {
 }
 
 func (t DMSType) Format(v types.DMS) string {
-	return v.String()
+	return types.FormatDMS(v, dms.SecUnit, -1)
 }
 
 func PopDMS(c Calc) types.DMS     { return DMS.MustParse(c.MustPop()) }

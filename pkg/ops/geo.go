@@ -4,7 +4,6 @@ import (
 	"math"
 
 	"github.com/blackchip-org/zc/v5/pkg/ext"
-	"github.com/blackchip-org/zc/v5/pkg/types"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
@@ -92,10 +91,10 @@ km-mi 2 round -- 202.79 # mi
 end
 */
 func Haversine(c zc.Calc) {
-	lon2 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
-	lat2 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
-	lon1 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
-	lat1 := types.MustNewDMS(zc.PopDMS(c)).Degrees().Float()
+	lon2 := zc.PopDMS(c).Degrees().Float()
+	lat2 := zc.PopDMS(c).Degrees().Float()
+	lon1 := zc.PopDMS(c).Degrees().Float()
+	lat1 := zc.PopDMS(c).Degrees().Float()
 
 	piOver180 := math.Pi / 180
 

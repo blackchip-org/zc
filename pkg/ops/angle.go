@@ -38,9 +38,8 @@ example
 end
 */
 func DM(c zc.Calc) {
-	f := dms.NewFormatter(dms.MinType, -1)
 	p0 := zc.PopDMS(c)
-	r0 := types.FormatDMS(p0, dms.MinType, -1, a)
+	r0 := types.FormatDMS(p0, dms.MinUnit, -1)
 	zc.PushString(c, r0)
 }
 
@@ -61,9 +60,8 @@ end
 */
 func DMRound(c zc.Calc) {
 	places := zc.PopInt(c)
-	f := dms.NewFormatter(dms.MinType, places)
 	p0 := zc.PopDMS(c)
-	r0 := f.FormatFields(p0)
+	r0 := types.FormatDMS(p0, dms.MinUnit, places)
 	zc.PushString(c, r0)
 }
 
@@ -78,7 +76,7 @@ Reformat the angle *p0* to degrees, minutes, and seconds.
 end
 
 example
--76.856944 dms -- -76° 51′ 24.998399999994945″
+-76.856944 dms -- -76° 51′ 24.9984″
 end
 */
 func DMS(c zc.Calc) {
@@ -103,9 +101,8 @@ end
 */
 func DMSRound(c zc.Calc) {
 	places := zc.PopInt(c)
-	f := dms.NewFormatter(dms.SecType, places)
 	p0 := zc.PopDMS(c)
-	r0 := f.FormatFields(p0)
+	r0 := types.FormatDMS(p0, dms.SecUnit, places)
 	zc.PushString(c, r0)
 }
 
@@ -161,8 +158,7 @@ end
 */
 func MinutesDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
-	d, _ := types.NewDMS(p0)
-	r0 := d.Minutes()
+	r0 := p0.Minutes()
 	zc.PushDecimal(c, r0)
 }
 
@@ -196,7 +192,6 @@ end
 */
 func SecondsDMS(c zc.Calc) {
 	p0 := zc.PopDMS(c)
-	d, _ := types.NewDMS(p0)
-	r0 := d.Seconds()
+	r0 := p0.Seconds()
 	zc.PushDecimal(c, r0)
 }
