@@ -2,7 +2,6 @@ var stackHist = []
 var commandHist = []
 var histPos = -1
 
-// var showCandidates = false
 var tabs = 0
 
 function submit() {
