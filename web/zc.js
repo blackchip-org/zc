@@ -103,15 +103,13 @@ function autoComplete() {
         return
     }
 
-    console.log('value', e.value, 'pos', e.selectionEnd)
     let r = zcWordCompleter(e.value, e.selectionEnd)
-    console.log(r)
     let common = zcCommonPrefix(r.candidates)
-    console.log(common)
 
     var middle = ''
     if (r.candidates.length === 0) {
         tabs = 0
+        return
     } else if (r.candidates.length == 1) {
         middle = r.candidates[0]
         tabs = 0
