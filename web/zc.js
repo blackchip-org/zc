@@ -176,6 +176,8 @@ window.onload = function() {
     document.querySelector('#auto').onclick = function(evt) {
         tabs++
         autoComplete()
+        tabs++
+        autoComplete()
         document.querySelector('#input').focus()
     }
 
