@@ -6,7 +6,9 @@ Use the browser version here:
 
 https://blackchip-org.github.io/zc
 
-On mobile devices, click on the "?" button to auto-complete. Otherwise use the tab button.
+Use tab to auto-complete. First tab completes an operation name as much as
+possible. Next tab shows matching candidates. When using on a mobile device,
+use the "?" button to emulate pressing the tab button twice.
 
 Example use:
 
