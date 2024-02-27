@@ -15,6 +15,21 @@ var (
 	r *repl.REPL
 )
 
+func zcCommonPrefix() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		if len(args) != 1 {
+			panic("zcCommonPrefix: invalid number of arguments")
+		}
+		jsValues := args[0]
+		var outValues []string
+		for i := 0; i < jsValues.Length(); i++ {
+			outValues = append(outValues, jsValues.Index(i).String())
+		}
+		common := repl.CommonPrefix(outValues)
+		return common
+	})
+}
+
 func zcEval() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) any {
 		in := args[0].String()
@@ -77,14 +92,36 @@ func zcSetStack() js.Func {
 	})
 }
 
+func zcWordCompleter() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		if len(args) != 2 {
+			panic("zcWordCompleter: invalid number of arguments")
+		}
+		line := args[0].String()
+		pos := args[1].Int()
+		prefix, candidates, suffix := r.WordCompleter(line, pos)
+		var jsCandidates []any
+		for _, c := range candidates {
+			jsCandidates = append(jsCandidates, c)
+		}
+		return map[string]any{
+			"prefix":     prefix,
+			"candidates": jsCandidates,
+			"suffix":     suffix,
+		}
+	})
+}
+
 func main() {
 	c = calc.New()
 	r = repl.New(c)
 
+	js.Global().Set("zcCommonPrefix", zcCommonPrefix())
 	js.Global().Set("zcEval", zcEval())
 	js.Global().Set("zcStack", zcStack())
 	js.Global().Set("zcStackLen", zcStackLen())
 	js.Global().Set("zcOpNames", zcOpNames())
 	js.Global().Set("zcSetStack", zcSetStack())
+	js.Global().Set("zcWordCompleter", zcWordCompleter())
 	<-make(chan struct{})
 }

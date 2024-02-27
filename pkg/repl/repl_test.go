@@ -69,3 +69,26 @@ func TestQuote(t *testing.T) {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 }
+
+func TestCommonPrefix(t *testing.T) {
+	tests := []struct {
+		common string
+		vals   []string
+	}{
+		{"abc", []string{"abc", "abc", "abc"}},
+		{"a", []string{"abc", "ab", "a"}},
+		{"a", []string{"a", "ab", "abc"}},
+		{"", []string{"a", "b", "c"}},
+		{"abc", []string{"abcde", "abcfg", "abch"}},
+		{"char-c", []string{"char-codepoint", "char-cp"}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.common, func(t *testing.T) {
+			common := CommonPrefix(test.vals)
+			if common != test.common {
+				t.Errorf("\n have: %v \n want: %v", common, test.common)
+			}
+		})
+	}
+}

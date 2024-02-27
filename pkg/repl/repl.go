@@ -63,7 +63,7 @@ func (r *REPL) Init() {
 	r.cli = liner.NewLiner()
 	r.cli.SetCtrlCAborts(true)
 	r.cli.SetTabCompletionStyle(liner.TabPrints)
-	r.cli.SetWordCompleter(r.wordCompleter)
+	r.cli.SetWordCompleter(r.WordCompleter)
 
 	r.loadHistory()
 
@@ -181,13 +181,12 @@ func (r *REPL) getPrompt() string {
 	return zc.ProgName + " > "
 }
 
-func (r *REPL) wordCompleter(line string, pos int) (string, []string, string) {
+func (r *REPL) WordCompleter(line string, pos int) (string, []string, string) {
 	endPos := pos
 	for endPos < len(line) {
 		if line[endPos] == ' ' {
 			break
 		}
-		endPos++
 	}
 	startPos := pos - 1
 	if startPos < 0 {
@@ -214,8 +213,36 @@ func (r *REPL) wordCompleter(line string, pos int) (string, []string, string) {
 		}
 	}
 	sort.Strings(candidates)
-	//fmt.Printf("\n[%v] (%v)[%v] [%v]\n", prefix, word, candidates, suffix)
 	return prefix, candidates, suffix
+}
+
+func CommonPrefix(vals []string) string {
+	if len(vals) == 0 {
+		return ""
+	}
+	var result []rune
+	for i, sval := range vals {
+		val := []rune(sval)
+		if i == 0 {
+			result = val
+			continue
+		}
+		if len(result) == 0 {
+			return ""
+		}
+		for j, a := range result {
+			if j >= len(val) {
+				result = result[:j]
+				break
+			}
+			b := val[j]
+			if a != b {
+				result = result[:j]
+				break
+			}
+		}
+	}
+	return string(result)
 }
 
 func colorize(color string, text string) string {

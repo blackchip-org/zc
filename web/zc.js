@@ -1,7 +1,9 @@
 var stackHist = []
 var commandHist = []
 var histPos = -1
-var showCandidates = false
+
+// var showCandidates = false
+var tabs = 0
 
 function submit() {
     let line = document.querySelector("#input").value
@@ -97,41 +99,32 @@ function moveToEnd() {
 
 function autoComplete() {
     let e = document.querySelector('#input')
-    let pos = e.selectionEnd - 1
-    if (pos <= 0) {
-        pos = 0
-    }
-    let searchFor = ''
-    for (let i = pos; i >= 0; i--) {
-        if (e.value[i] === ' ') {
-            break
-        }
-        searchFor = e.value[i] + searchFor
-    }
-    if (searchFor === '') {
+
+    if (e.value.trim().length === 0) {
         return
     }
 
-    let candidates = zcOpNames().filter((e) => e.startsWith(searchFor))
-    if (candidates.length > 50) {
-        candidates = candidates.slice(0, 50)
-        candidates.push("...")
-    }
+    console.log('value', e.value, 'pos', e.selectionEnd)
+    let r = zcWordCompleter(e.value, e.selectionEnd)
+    console.log(r)
+    let common = zcCommonPrefix(r.candidates)
+    console.log(common)
 
-    if (candidates.length === 0) {
-        showCandidates = false
-    } else if (candidates.length === 1) {
-        let toAdd = candidates[0].slice(searchFor.length)
-        let head = e.value.slice(0, pos + 1)
-        let tail = e.value.slice(pos + 1)
-        e.value = head + toAdd + tail
-        e.selectionStart = e.selectionEnd = pos + toAdd.length + 1
-    } else if (!showCandidates) {
-        showCandidates = true
+    var middle = ''
+    if (r.candidates.length === 0) {
+        tabs = 0
+    } else if (r.candidates.length == 1) {
+        middle = r.candidates[0]
+        tabs = 0
     } else {
-        candidates = candidates.map((e) => e.replace("&", "&amp;"))
-        document.querySelector("#popup").innerHTML = candidates.join(' ')
+        middle = common
+        if (tabs >= 2) {
+            let candidates = r.candidates.map((e) => e.replace("&", "&amp;"))
+            document.querySelector("#popup").innerHTML = candidates.join(' ')
+        }
     }
+    e.value = r.prefix + middle + r.suffix
+    e.selectionStart = e.selectionEnd = r.prefix.length + middle.length
 }
 
 function clearPopup() {
@@ -162,14 +155,19 @@ window.onload = function() {
     document.querySelector('#input').onkeydown = function(evt) {
         clearPopup()
         let keyCode = evt.code || evt.key
+
+        if (keyCode === 'Tab') {
+            tabs++
+        } else {
+            tabs = 0
+        }
+
         if (keyCode === 'ArrowUp') {
             up()
             clearPopup()
-            showCandidates = false
         } else if (keyCode === 'ArrowDown') {
             down()
-            clearPopup();
-            showCandidates = false
+            clearPopup()
         } else if (keyCode === 'Tab') {
             autoComplete()
             evt.preventDefault()
@@ -179,7 +177,7 @@ window.onload = function() {
     }
 
     document.querySelector('#auto').onclick = function(evt) {
-        showCandidates = true
+        tabs++
         autoComplete()
         document.querySelector('#input').focus()
     }
