@@ -62,7 +62,9 @@ func def(r *REPL, s *scan.Scanner) error {
 }
 
 func pop(r *REPL, _ *scan.Scanner) error {
-	r.Calc.Pop()
+	if r.quoteEnd == "" {
+		r.Calc.Pop()
+	}
 	return nil
 }
 
