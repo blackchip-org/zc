@@ -31,6 +31,9 @@ var (
 		"west.australia":              "australia.west",
 		"west.brazil":                 "brazil.west",
 	}
+	ignores = map[string]struct{}{
+		"factory": {},
+	}
 )
 
 func main() {
@@ -106,6 +109,9 @@ func processDir(zones map[string]string, parent []string, dir string) {
 			parts = append(parts, part)
 		}
 		word := strings.Join(parts, ".")
+		if _, ok := ignores[word]; ok {
+			continue
+		}
 		if strings.HasSuffix(word, ".etc") {
 			if strings.HasPrefix(word, "gmt") {
 				word = strings.Replace(word, ".etc", "", 1)
