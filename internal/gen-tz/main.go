@@ -107,7 +107,11 @@ func processDir(zones map[string]string, parent []string, dir string) {
 		}
 		word := strings.Join(parts, ".")
 		if strings.HasSuffix(word, ".etc") {
-			continue
+			if strings.HasPrefix(word, "gmt") {
+				word = strings.Replace(word, ".etc", "", 1)
+			} else {
+				continue
+			}
 		}
 		zones[word] = zone
 		alias, ok := aliases[word]
