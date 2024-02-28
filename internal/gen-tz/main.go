@@ -17,6 +17,22 @@ const (
 	TzMd = "../../doc/ops/tz.md"
 )
 
+var (
+	aliases = map[string]string{
+		"atlantic.canada":             "canada.atlantic",
+		"center.north-dakota.america": "north-dakota.center.america",
+		"east.brazil":                 "brazil.east",
+		"eastern.canada":              "canada.eastern",
+		"eastern.us":                  "us.eastern",
+		"general.mexico":              "mexico.general",
+		"north.australia":             "australia.north",
+		"pacific.canada":              "canada.pacific",
+		"pacific.us":                  "us.pacific",
+		"west.australia":              "australia.west",
+		"west.brazil":                 "brazil.west",
+	}
+)
+
 func main() {
 	log.SetFlags(0)
 
@@ -90,6 +106,13 @@ func processDir(zones map[string]string, parent []string, dir string) {
 			parts = append(parts, part)
 		}
 		word := strings.Join(parts, ".")
+		if strings.HasSuffix(word, ".etc") {
+			continue
+		}
 		zones[word] = zone
+		alias, ok := aliases[word]
+		if ok {
+			zones[alias] = zone
+		}
 	}
 }
