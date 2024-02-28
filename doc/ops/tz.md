@@ -181,7 +181,6 @@ Time zone database.
 | `tz.est` | EST
 | `tz.est5edt` | EST5EDT
 | `tz.eucla.australia` | Australia/Eucla
-| `tz.factory` | Factory
 | `tz.faeroe.atlantic` | Atlantic/Faeroe
 | `tz.fakaofo.pacific` | Pacific/Fakaofo
 | `tz.famagusta.asia` | Asia/Famagusta
