@@ -70,6 +70,25 @@ func TestQuote(t *testing.T) {
 	}
 }
 
+func TestQuoteBlanks(t *testing.T) {
+	ansi.Enabled = false
+	c := calc.New()
+	repl := New(c)
+
+	repl.Eval("quote EOF")
+	repl.Eval("1 2 add")
+	repl.Eval("2 3 sub")
+	repl.Eval("")
+	repl.Eval("")
+	repl.Eval("EOF")
+
+	have := c.Stack()
+	want := []string{"1 2 add", "2 3 sub"}
+	if !reflect.DeepEqual(have, want) {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
 func TestCommonPrefix(t *testing.T) {
 	tests := []struct {
 		common string
