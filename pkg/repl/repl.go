@@ -176,7 +176,7 @@ func (r *REPL) saveHistory() {
 
 func (r *REPL) getPrompt() string {
 	if r.quoteEnd != "" {
-		return "...>"
+		return fmt.Sprintf("... %s> ", r.quoteEnd)
 	}
 	return zc.ProgName + " > "
 }
