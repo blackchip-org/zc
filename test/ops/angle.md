@@ -18,10 +18,10 @@
     c 10d30m45.18sW dec     -- -10.51255
     c [10d30m45.18s W] dec  -- -10.51255
 
-    c 10.5d10.5m is-dms     -- false
-    c 10d-10.5m is-dms      -- false
-    c 10.5d10.5s is-dms     -- false
-    c 10.5m10.5s is-dms     -- false
-    c 10d20m30sfoo is-dms   -- false
-    c -10d20m30sW is-dms    -- false
+    c 10.5d10.5m dms?       -- false
+    c 10d-10.5m dms?        -- false
+    c 10.5d10.5s dms?       -- false
+    c 10.5m10.5s dms?       -- false
+    c 10d20m30sfoo dms?     -- false
+    c -10d20m30sW dms?      -- false
 

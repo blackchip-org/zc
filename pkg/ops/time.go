@@ -115,6 +115,27 @@ func DateTime(c zc.Calc) {
 }
 
 /*
+oper	datetime?
+func	DateTimeIs p0:Str -- Bool
+alias	dt?
+title 	Checks value can be parsed as a `DateTime`
+
+desc
+Returns `true` if the value *p0* can be parsed as a DateTime.
+end
+
+example
+c [2 May 2023] datetime? -- true
+c [2 Nay 2023] datetime? -- false
+end
+*/
+func DateTimeIs(c zc.Calc) {
+	p0 := zc.PopString(c)
+	r0 := zc.DateTime.Is(p0)
+	zc.PushBool(c, r0)
+}
+
+/*
 oper	day-year
 func	DayYear p0:DateTime -- Int
 alias	doy
@@ -153,27 +174,6 @@ func Hours(c zc.Calc) {
 	a0 := zc.PopDuration(c)
 	r0 := a0.Hours()
 	zc.PushFloat(c, r0)
-}
-
-/*
-oper	is-datetime
-func	IsDateTime p0:Str -- Bool
-alias	is-dt
-title 	Checks value can be parsed as a `DateTime`
-
-desc
-Returns `true` if the value *p0* can be parsed as a DateTime.
-end
-
-example
-c [2 May 2023] is-datetime -- true
-c [2 Nay 2023] is-datetime -- false
-end
-*/
-func IsDateTime(c zc.Calc) {
-	p0 := zc.PopString(c)
-	r0 := zc.DateTime.Is(p0)
-	zc.PushBool(c, r0)
 }
 
 /*

@@ -9,24 +9,24 @@ Date, time, and duration operations
 
 [Examples](../examples/time.md)
 
-| Operation                     | Description
-|-------------------------------|---------------
-| [`add, a, +`](#add)           | Time or duration addition
-| [`date`](#date)               | Formats to a common date layout
-| [`datetime, dt`](#datetime)   | Formats to a common date/time layout
-| [`day-year, doy`](#day-year)  | Day of year
-| [`hours`](#hours)             | Hours in duration
-| [`is-datetime, is-dt`](#is-datetime) | Checks value can be parsed as a `DateTime`
-| [`local-zone`](#local-zone)   | Sets the local time zone
+| Operation               | Description
+|-------------------------|---------------
+| [`add, a, +`](#add)     | Time or duration addition
+| [`date`](#date)         | Formats to a common date layout
+| [`datetime, dt`](#datetime) | Formats to a common date/time layout
+| [`datetime?, dt?`](#datetime?) | Checks value can be parsed as a `DateTime`
+| [`day-year, doy`](#day-year) | Day of year
+| [`hours`](#hours)       | Hours in duration
+| [`local-zone`](#local-zone) | Sets the local time zone
 | [`local-zone=`](#local-zone=) | Gets the local time zone
-| [`minutes`](#minutes)         | Minutes in duration
-| [`now`](#now)                 | Current date and time
-| [`now-`](#now-)               | Cancel now override
-| [`now=`](#now=)               | Override now value
-| [`seconds`](#seconds)         | Seconds in duration
-| [`sub, s, -`](#sub)           | Time or duration subtraction
-| [`time`](#time)               | Formats to a common time layout
-| [`timezone, tz`](#timezone)   | Convert time to another time zone
+| [`minutes`](#minutes)   | Minutes in duration
+| [`now`](#now)           | Current date and time
+| [`now-`](#now-)         | Cancel now override
+| [`now=`](#now=)         | Override now value
+| [`seconds`](#seconds)   | Seconds in duration
+| [`sub, s, -`](#sub)     | Time or duration subtraction
+| [`time`](#time)         | Formats to a common time layout
+| [`timezone, tz`](#timezone) | Convert time to another time zone
 
 
 ## add
@@ -89,6 +89,25 @@ Example:
 | `'2006-01-02T15:04:05 UTC` | `2006-01-02T15:04:05 UTC`
 | `datetime                ` | `Mon Jan 2 2006 3:04:05pm UTC`
 
+## datetime?
+
+Returns `true` if the value *p0* can be parsed as a DateTime.
+
+Alias: `dt?`
+
+```
+( p0:Str -- Bool )
+```
+
+Example:
+
+<!-- test: datetime? -->
+
+| Input                      | Stack
+|----------------------------|---------------
+| `c [2 May 2023] datetime?` | `true`
+| `c [2 Nay 2023] datetime?` | `false`
+
 ## day-year
 
 Day of year for a given date *p0*.
@@ -124,25 +143,6 @@ Example:
 |-----------------|---------------
 | `10h20m30s    ` | `10h20m30s`
 | `hours 2 round` | `10.34`
-
-## is-datetime
-
-Returns `true` if the value *p0* can be parsed as a DateTime.
-
-Alias: `is-dt`
-
-```
-( p0:Str -- Bool )
-```
-
-Example:
-
-<!-- test: is-datetime -->
-
-| Input                        | Stack
-|------------------------------|---------------
-| `c [2 May 2023] is-datetime` | `true`
-| `c [2 Nay 2023] is-datetime` | `false`
 
 ## local-zone
 

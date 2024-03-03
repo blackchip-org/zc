@@ -9,10 +9,8 @@ Comparisons
 | [`gt, greater-than`](#gt)                       | Greater than
 | [`gte, greater-than-or-equal`](#gte)            | Greater than or equal
 | [`is`](#is)                                     | Byte equality
-| [`is-not`](#is-not)                             | Byte inequality
 | [`lt, less-than`](#lt)                          | Less than
 | [`lte, less-than-or-equal`](#lte)               | Less than or equal
-| [`neq`](#neq)                                   | Not equal
 | [`sort`](#sort)                                 | Type-aware stack sort
 | [`sort-str`](#sort-str)                         | String based stack sort
 
@@ -106,23 +104,6 @@ Example:
 | `c 1.2 1.20 is` | `false`
 | `c 1.2 1.2 is ` | `true`
 
-## is-not
-
-`true` if *p0* and *p1* are not same, byte by byte.
-
-```
-( p0:Str p1:Str -- Bool )
-```
-
-Example:
-
-<!-- test: is-not -->
-
-| Input               | Stack
-|---------------------|---------------
-| `c 1.2 1.20 is-not` | `true`
-| `c 1.2 1.2 is-not ` | `false`
-
 ## lt
 
 `true` if *p0* is less than *p1*, otherwise `false`.
@@ -170,28 +151,6 @@ Example:
 | `c 1  0 lte` | `false`
 | `c 0  0 lte` | `true`
 | `c -1 0 lte` | `true`
-
-## neq
-
-`true` if *p0* and *p1* are not equal, otherwise `false`.
-
-```
-( p0:BigInt p1:BigInt -- BigInt )
-( p0:Decimal p1:Decimal -- Decimal )
-( p0:Float p1:Float -- Float )
-( p0:Rational p1:Rational -- Rational )
-( p0:Complex p1:Complex -- Complex )
-( p0:Str p1:Str -- Str )
-```
-
-Example:
-
-<!-- test: neq -->
-
-| Input           | Stack
-|-----------------|---------------
-| `c 123 123 neq` | `false`
-| `c 123 456 neq` | `true`
 
 ## sort
 
