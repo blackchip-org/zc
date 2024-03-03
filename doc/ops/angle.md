@@ -13,7 +13,7 @@ Angular calculations
 | [`deg-min-sec, dms`](#deg-min-sec)       | Angle in degrees and minutes
 | [`deg-min-sec-round, dmsr`](#deg-min-sec-round) | Rounded angle in degrees, minutes, seconds
 | [`deg-rad`](#deg-rad)                    | Degrees to radians
-| [`is-dms, is-dec-min-sec`](#is-dms)      | Checks value can be parsed as degree, minutes, seconds
+| [`dms?, dec-min-sec?`](#dms?)            | Checks value can be parsed as degree, minutes, seconds
 | [`minutes`](#minutes)                    | Angle in minutes
 | [`rad-deg`](#rad-deg)                    | Degrees to radians
 | [`seconds`](#seconds)                    | Angle in seconds
@@ -120,12 +120,12 @@ Example:
 |--------------|---------------
 | `90 deg-rad` | `1.5707963267948966`
 
-## is-dms
+## dms?
 
 Returns `true` if the value *p0* can be parsed as an angle with degrees,
 minutes, and seconds.
 
-Alias: `is-dec-min-sec`
+Alias: `dec-min-sec?`
 
 ```
 ( p0:Str -- Bool )
@@ -133,12 +133,12 @@ Alias: `is-dec-min-sec`
 
 Example:
 
-<!-- test: is-dms -->
+<!-- test: dms? -->
 
-| Input                         | Stack
-|-------------------------------|---------------
-| `c [10° 30′ 45″] is-dms     ` | `true`
-| `c [10  30  45 ] is-dms     ` | `false`
+| Input                       | Stack
+|-----------------------------|---------------
+| `c [10° 30′ 45″] dms?     ` | `true`
+| `c [10  30  45 ] dms?     ` | `false`
 
 ## minutes
 

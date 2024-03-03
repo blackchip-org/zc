@@ -85,6 +85,28 @@ func DMS(c zc.Calc) {
 }
 
 /*
+oper	dms?
+func 	DMSIs p0:Str -- Bool
+alias	dec-min-sec?
+title	Checks value can be parsed as degree, minutes, seconds
+
+desc
+Returns `true` if the value *p0* can be parsed as an angle with degrees,
+minutes, and seconds.
+end
+
+example
+c [10° 30′ 45″] dms? -- true
+c [10  30  45 ] dms? -- false
+end
+*/
+func DMSIs(c zc.Calc) {
+	p0 := zc.PopString(c)
+	r0 := zc.DMS.Is(p0)
+	zc.PushBool(c, r0)
+}
+
+/*
 oper	deg-min-sec-round
 func	DMSRound p0:DMS n:Int -- DMS
 alias	dmsr
@@ -120,28 +142,6 @@ example
 90 deg-rad -- 1.5707963267948966
 end
 */
-
-/*
-oper	is-dms
-func 	IsDMS p0:Str -- Bool
-alias	is-dec-min-sec
-title	Checks value can be parsed as degree, minutes, seconds
-
-desc
-Returns `true` if the value *p0* can be parsed as an angle with degrees,
-minutes, and seconds.
-end
-
-example
-c [10° 30′ 45″] is-dms -- true
-c [10  30  45 ] is-dms -- false
-end
-*/
-func IsDMS(c zc.Calc) {
-	p0 := zc.PopString(c)
-	r0 := zc.DMS.Is(p0)
-	zc.PushBool(c, r0)
-}
 
 /*
 oper	minutes

@@ -78,11 +78,13 @@
 - [d](ops/basic.md#div): Division
 - [date](ops/time.md#date): Formats to a common date layout
 - [datetime](ops/time.md#datetime): Formats to a common date/time layout
+- [datetime?](ops/time.md#datetime?): Checks value can be parsed as a `DateTime`
 - [day-year](ops/time.md#day-year): Day of year
 - [dec](ops/angle.md#dec) (angle): DMS angle to decimal degrees
 - [dec](ops/basic.md#dec) (basic): Decimal number
 - [dec](ops/prog.md#dec) (prog): Decimal conversion
 - [dec](ops/rational.md#dec) (rational): Decimal number
+- [dec-min-sec?](ops/angle.md#dms?): Checks value can be parsed as degree, minutes, seconds
 - [deca](ops/si.md#deca): SI prefix da, 1e01
 - [deci](ops/si.md#deci): SI prefix d, 1e-01
 - [deg-min](ops/angle.md#deg-min): Angle in degrees and minutes
@@ -96,6 +98,7 @@
 - [dm](ops/angle.md#deg-min): Angle in degrees and minutes
 - [dmr](ops/angle.md#deg-min-round): Rounded angle in degrees and minutes
 - [dms](ops/angle.md#deg-min-sec): Angle in degrees and minutes
+- [dms?](ops/angle.md#dms?): Checks value can be parsed as degree, minutes, seconds
 - [dmsr](ops/angle.md#deg-min-sec-round): Rounded angle in degrees, minutes, seconds
 - [dn](ops/stack.md#down): Rotate stack downward
 - [down](ops/stack.md#down): Rotate stack downward
@@ -103,6 +106,7 @@
 - [dr](ops/basic.md#div-rem): Division with remainder
 - [drop](ops/stack.md#drop): Drop top item from stack
 - [dt](ops/time.md#datetime): Formats to a common date/time layout
+- [dt?](ops/time.md#datetime?): Checks value can be parsed as a `DateTime`
 - [dup](ops/stack.md#dup): Duplicate top stack item
 
 ## e
@@ -161,12 +165,6 @@
 - [in-mm](ops/len.md#in-mm): Inches to millimeters
 - [inv](ops/rational.md#inv): Inverse
 - [is](ops/cmp.md#is): Byte equality
-- [is-datetime](ops/time.md#is-datetime): Checks value can be parsed as a `DateTime`
-- [is-dec-min-sec](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
-- [is-dms](ops/angle.md#is-dms): Checks value can be parsed as degree, minutes, seconds
-- [is-dt](ops/time.md#is-datetime): Checks value can be parsed as a `DateTime`
-- [is-not](ops/cmp.md#is-not): Byte inequality
-- [is-rational](ops/rational.md#is-rational): Checks value can be parsed as a rational
 
 ## j
 
@@ -232,7 +230,6 @@
 - [n](ops/stack.md#size): Size of the current stack
 - [nano](ops/si.md#nano): SI prefix n, 1e-09
 - [neg](ops/basic.md#neg): Negation
-- [neq](ops/cmp.md#neq): Not equal
 - [nmi-km](ops/len.md#nmi-km): Nautical miles to kilometers
 - [nmi-m](ops/len.md#nmi-m): Nautical miles to meters
 - [nmi-mi](ops/len.md#nmi-mi): Nautical miles to miles
@@ -283,6 +280,7 @@
 - [rand-seed=](ops/rand.md#rand-seed=): Get the random number seed
 - [rat](ops/rational.md#rational): Convert to a Rational
 - [rational](ops/rational.md#rational): Convert to a Rational
+- [rational?](ops/rational.md#rational?): Checks value can be parsed as a rational
 - [re](ops/stack.md#recall): Recall stack from memory
 - [real](ops/complex.md#real): Real number from complex
 - [recall](ops/stack.md#recall): Recall stack from memory

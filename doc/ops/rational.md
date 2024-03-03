@@ -3,14 +3,14 @@
 
 Rational numbers (fractions)
 
-| Operation              | Description
-|------------------------|---------------
-| [`dec`](#dec)          | Decimal number
-| [`denom`](#denom)      | Denominator
-| [`inv`](#inv)          | Inverse
-| [`is-rational`](#is-rational) | Checks value can be parsed as a rational
-| [`num`](#num)          | Numerator
+| Operation             | Description
+|-----------------------|---------------
+| [`dec`](#dec)         | Decimal number
+| [`denom`](#denom)     | Denominator
+| [`inv`](#inv)         | Inverse
+| [`num`](#num)         | Numerator
 | [`rational, rat`](#rational) | Convert to a Rational
+| [`rational?`](#rational?) | Checks value can be parsed as a rational
 
 
 ## dec
@@ -61,23 +61,6 @@ Example:
 |-----------|---------------
 | `1/2 inv` | `2`
 
-## is-rational
-
-Returns `true` if the value *p0* can be parsed as a Rational.
-
-```
-( p0:Str -- Bool )
-```
-
-Example:
-
-<!-- test: is-rational -->
-
-| Input                | Stack
-|----------------------|---------------
-| `c 1/2 is-rational ` | `true`
-| `c 1+2i is-rational` | `false`
-
 ## num
 
 The numerator of rational number *p0*.
@@ -114,3 +97,20 @@ Example:
 |-------------|---------------
 | `c 1 2 rat` | `1/2`
 | `c 0.5 rat` | `1/2`
+
+## rational?
+
+Returns `true` if the value *p0* can be parsed as a Rational.
+
+```
+( p0:Str -- Bool )
+```
+
+Example:
+
+<!-- test: rational? -->
+
+| Input              | Stack
+|--------------------|---------------
+| `c 1/2 rational? ` | `true`
+| `c 1+2i rational?` | `false`

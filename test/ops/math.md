@@ -126,13 +126,13 @@
 
 ## neq
 
-    c 2 2 neq       -- false
-    c 2 3 neq       -- true
-    c 2.2 2.2 neq   -- false
-    c 2.2f 2.2f neq -- false
-    c 2.3 2.2 neq   -- true
-    c 8+8i 8+8i neq -- false
-    c 1/2 1/2 neq   -- false
+    c 2 2 eq not       -- false
+    c 2 3 eq not       -- true
+    c 2.2 2.2 eq not   -- false
+    c 2.2f 2.2f eq not -- false
+    c 2.3 2.2 eq not   -- true
+    c 8+8i 8+8i eq not -- false
+    c 1/2 1/2 eq not   -- false
 
 ## sign
 

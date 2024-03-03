@@ -194,27 +194,6 @@ func Is(c zc.Calc) {
 }
 
 /*
-oper	is-not
-func	IsNot p0:Str p1:Str -- Bool
-title	Byte inequality
-
-desc
-`true` if *p0* and *p1* are not same, byte by byte.
-end
-
-example
-c 1.2 1.20 is-not -- true
-c 1.2 1.2 is-not  -- false
-end
-*/
-func IsNot(c zc.Calc) {
-	a1 := zc.PopString(c)
-	a0 := zc.PopString(c)
-	r0 := a0 != a1
-	zc.PushBool(c, r0)
-}
-
-/*
 oper	lt
 func	LtBigInt   p0:BigInt   p1:BigInt   -- Bool
 func	LtDecimal  p0:Decimal  p1:Decimal  -- Bool
@@ -321,60 +300,6 @@ func LteStr(c zc.Calc) {
 	a1 := zc.PopString(c)
 	a0 := zc.PopString(c)
 	r0 := a0 <= a1
-	zc.PushBool(c, r0)
-}
-
-/*
-oper	neq
-func	NeqBigInt   p0:BigInt   p1:BigInt   -- BigInt
-func 	NeqDecimal  p0:Decimal  p1:Decimal  -- Decimal
-func	NeqFloat    p0:Float    p1:Float    -- Float
-func	NeqRational p0:Rational p1:Rational -- Rational
-func	NeqComplex  p0:Complex  p1:Complex  -- Complex
-func	IsNot       p0:Str      p1:Str      -- Str
-title	Not equal
-
-desc
-`true` if *p0* and *p1* are not equal, otherwise `false`.
-end
-
-example
-c 123 123 neq -- false
-c 123 456 neq -- true
-end
-*/
-func NeqBigInt(c zc.Calc) {
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-	r0 := a0.Cmp(a1) != 0
-	zc.PushBool(c, r0)
-}
-
-func NeqDecimal(c zc.Calc) {
-	a1 := zc.PopDecimal(c)
-	a0 := zc.PopDecimal(c)
-	r0 := a0.Cmp(a1) != 0
-	zc.PushBool(c, r0)
-}
-
-func NeqFloat(c zc.Calc) {
-	a1 := zc.PopFloat(c)
-	a0 := zc.PopFloat(c)
-	r0 := a0 != a1
-	zc.PushBool(c, r0)
-}
-
-func NeqRational(c zc.Calc) {
-	a1 := zc.PopRational(c)
-	a0 := zc.PopRational(c)
-	r0 := a0.Cmp(a1) != 0
-	zc.PushBool(c, r0)
-}
-
-func NeqComplex(c zc.Calc) {
-	a1 := zc.PopComplex(c)
-	a0 := zc.PopComplex(c)
-	r0 := a0 != a1
 	zc.PushBool(c, r0)
 }
 

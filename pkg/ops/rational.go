@@ -68,26 +68,6 @@ func Inv(c zc.Calc) {
 }
 
 /*
-oper	is-rational
-func	IsRational p0:Str -- Bool
-title 	Checks value can be parsed as a rational
-
-desc
-Returns `true` if the value *p0* can be parsed as a Rational.
-end
-
-example
-c 1/2 is-rational -- true
-c 1+2i is-rational -- false
-end
-*/
-func IsRational(c zc.Calc) {
-	a0 := zc.PopString(c)
-	r0 := zc.Rational.Is(a0)
-	zc.PushBool(c, r0)
-}
-
-/*
 oper	num
 func	Num p0:Rational -- BigInt
 title	Numerator
@@ -141,4 +121,24 @@ func RationalFloat(c zc.Calc) {
 		return
 	}
 	zc.PushRational(c, &r0)
+}
+
+/*
+oper	rational?
+func	RationalIs p0:Str -- Bool
+title 	Checks value can be parsed as a rational
+
+desc
+Returns `true` if the value *p0* can be parsed as a Rational.
+end
+
+example
+c 1/2 rational? -- true
+c 1+2i rational? -- false
+end
+*/
+func RationalIs(c zc.Calc) {
+	a0 := zc.PopString(c)
+	r0 := zc.Rational.Is(a0)
+	zc.PushBool(c, r0)
 }
