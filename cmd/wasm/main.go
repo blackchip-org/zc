@@ -92,6 +92,12 @@ func zcSetStack() js.Func {
 	})
 }
 
+func zcQuoteEnd() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		return r.EndQuote
+	})
+}
+
 func zcWordCompleter() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) any {
 		if len(args) != 2 {
@@ -122,6 +128,8 @@ func main() {
 	js.Global().Set("zcStackLen", zcStackLen())
 	js.Global().Set("zcOpNames", zcOpNames())
 	js.Global().Set("zcSetStack", zcSetStack())
+	js.Global().Set("zcQuoteEnd", zcQuoteEnd())
 	js.Global().Set("zcWordCompleter", zcWordCompleter())
+
 	<-make(chan struct{})
 }

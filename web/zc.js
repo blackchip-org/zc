@@ -18,8 +18,13 @@ function submit() {
         result = zcEval("drop")
     } else {
         stackHist.push(zcStack())
-        result = zcEval(line)
-        commandHist.unshift(line)
+        for (let l of line.split("\n")) {
+            result = zcEval(l)
+            commandHist.unshift(line)
+            if (result.error != '') {
+                break
+            }
+        }
     }
 
     let output = []
@@ -56,6 +61,14 @@ function submit() {
 
     document.querySelector("#output").innerHTML = `<ul>${output.join('\n')}</ul>`
     document.querySelector("#input").value = ""
+
+    let qEnd = zcQuoteEnd()
+    let prompt = document.querySelector("#prompt")
+    if (qEnd !== "") {
+        prompt.innerHTML = "…&nbsp;" + qEnd + "&gt;"
+    } else {
+        prompt.innerHTML = "zc&nbsp;&gt;"
+    }
 }
 
 function annotate(l) {
@@ -117,6 +130,10 @@ function autoComplete() {
         middle = common
         if (tabs >= 2) {
             let candidates = r.candidates.map((e) => e.replace("&", "&amp;"))
+            if (candidates.length > 25) {
+                candidates = candidates.slice(0, 50)
+                candidates.push("…")
+            }
             document.querySelector("#popup").innerHTML = candidates.join(' ')
         }
     }

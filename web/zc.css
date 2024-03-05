@@ -68,7 +68,7 @@ html, body {
     flex-flow: row;
 }
 
-#footer input {
+#input {
     font-family: "Inconsolata";
     font-size: 32pt;
     color: white;
@@ -79,7 +79,7 @@ html, body {
     margin-left: 20px;
 }
 
-#footer input:focus {
+#input:focus {
     background-color: #555;
     border: 0px;
     outline: none;

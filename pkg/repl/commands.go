@@ -62,7 +62,7 @@ func def(r *REPL, s *scan.Scanner) error {
 }
 
 func pop(r *REPL, _ *scan.Scanner) error {
-	if r.quoteEnd == "" {
+	if r.EndQuote == "" {
 		r.Calc.Pop()
 	}
 	return nil
@@ -87,7 +87,7 @@ func quote(r *REPL, s *scan.Scanner) error {
 	if !s.HasMore() {
 		return fmt.Errorf("expected text to be used as a delimiter")
 	}
-	r.quoteEnd = strings.TrimSpace(scan.All(s))
+	r.EndQuote = strings.TrimSpace(scan.All(s))
 	return nil
 }
 

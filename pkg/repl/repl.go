@@ -22,6 +22,7 @@ type REPL struct {
 	MaxUndo     int
 	Calc        zc.Calc
 	Out         io.Writer
+	EndQuote    string
 	cli         *liner.State
 	homeDir     string
 	localDir    string
@@ -30,7 +31,6 @@ type REPL struct {
 	redoStack   [][]string
 	ops         map[string]struct{}
 	macros      map[string]string
-	quoteEnd    string
 	info        string
 	err         error
 }
@@ -82,15 +82,6 @@ func (r *REPL) ReadLine() (string, error) {
 }
 
 func (r *REPL) evalLine(line string) error {
-	if r.quoteEnd != "" {
-		if line == r.quoteEnd {
-			r.quoteEnd = ""
-		} else {
-			r.Calc.Push(line)
-		}
-		return nil
-	}
-
 	var s scan.Scanner
 	var out []string
 	s.InitFromString("", line)
@@ -114,6 +105,16 @@ func (r *REPL) Eval(line string) error {
 	r.info = ""
 	r.err = nil
 	prev := r.Calc.Stack()
+
+	line = strings.TrimSpace(line)
+	if r.EndQuote != "" {
+		if line == r.EndQuote {
+			r.EndQuote = ""
+		} else {
+			r.Calc.Push(line)
+		}
+		return nil
+	}
 
 	s.InitFromString("", line)
 
@@ -175,8 +176,8 @@ func (r *REPL) saveHistory() {
 }
 
 func (r *REPL) getPrompt() string {
-	if r.quoteEnd != "" {
-		return fmt.Sprintf("... %s> ", r.quoteEnd)
+	if r.EndQuote != "" {
+		return fmt.Sprintf("… %s> ", r.EndQuote)
 	}
 	return zc.ProgName + " > "
 }
