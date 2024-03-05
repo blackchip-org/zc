@@ -19,6 +19,10 @@ function submit() {
     } else {
         stackHist.push(zcStack())
         for (let l of line.split("\n")) {
+            l = l.trim()
+            if (l === "" ) {
+                continue
+            }
             result = zcEval(l)
             commandHist.unshift(line)
             if (result.error != '') {
