@@ -121,11 +121,9 @@ function autoComplete() {
 
     var middle = ''
     if (r.candidates.length === 0) {
-        tabs = 0
         return
     } else if (r.candidates.length == 1) {
         middle = r.candidates[0]
-        tabs = 0
     } else {
         middle = common
         if (tabs >= 2) {
