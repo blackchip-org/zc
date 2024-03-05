@@ -106,9 +106,8 @@ func (r *REPL) Eval(line string) error {
 	r.err = nil
 	prev := r.Calc.Stack()
 
-	line = strings.TrimSpace(line)
 	if r.EndQuote != "" {
-		if line == r.EndQuote {
+		if strings.TrimSpace(line) == r.EndQuote {
 			r.EndQuote = ""
 		} else {
 			r.Calc.Push(line)

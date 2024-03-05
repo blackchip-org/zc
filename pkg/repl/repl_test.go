@@ -83,7 +83,7 @@ func TestQuoteBlanks(t *testing.T) {
 	repl.Eval("EOF")
 
 	have := c.Stack()
-	want := []string{"1 2 add", "2 3 sub"}
+	want := []string{"1 2 add", "2 3 sub", "", ""}
 	if !reflect.DeepEqual(have, want) {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
