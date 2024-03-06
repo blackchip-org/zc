@@ -165,6 +165,7 @@ window.onload = function() {
         let keyCode = evt.code || evt.key
         if (keyCode === 'Enter') {
             submit()
+            evt.preventDefault()
         }
     }
 
