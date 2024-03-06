@@ -31,7 +31,7 @@ When I'm at a terminal prompt and I need to use a calculator, `bc` has always
 been my tool of choice. I thought it would be fun to write a calculator myself
 but with some items from my wish list built in. Those items are:
 
-- A Stack based calculator. Typing in a value places it on the stack. An
+- A stack -based calculator. Typing in a value places it on the stack. An
 operation consumes values on the stack and places its results back on the
 stack.
 - To minimize the use of the shift key. Instead of using `+` for addition,
