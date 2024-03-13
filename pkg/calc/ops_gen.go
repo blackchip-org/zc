@@ -148,7 +148,7 @@ var opsList = []zc.OpDecl{
 	zc.Macro("dt", "datetime"),
 	zc.Macro("dt?", "datetime?"),
 	zc.Op("dup", ops.Dup, zc.Val),
-	zc.Macro("e", "2.718281828459045"),
+	zc.Macro("e", "2.71828182845904523536028747135266249775724709369995957496696763"),
 	zc.Macro("earth-equatorial-radius", "6378137 /m anno"),
 	zc.Macro("earth-polar-radius", "6356752 /m anno"),
 	zc.Op("earth-radius", ops.EarthRadiusFn),

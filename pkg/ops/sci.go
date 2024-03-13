@@ -252,8 +252,8 @@ func CoshFloat(c zc.Calc) {
 
 /*
 oper	e
-func	- -- Float
-macro	2.718281828459045
+func	- -- Decimal
+macro	2.71828182845904523536028747135266249775724709369995957496696763
 title	Euler's number
 
 desc
@@ -261,7 +261,7 @@ Euler's number, the natural logarithm base.
 end
 
 example
-e -- 2.718281828459045
+e -- 2.71828182845904523536028747135266249775724709369995957496696763
 end
 */
 

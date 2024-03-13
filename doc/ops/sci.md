@@ -217,7 +217,7 @@ Example:
 Euler's number, the natural logarithm base.
 
 ```
-(  -- Float )
+(  -- Decimal )
 ```
 
 Example:
@@ -226,7 +226,7 @@ Example:
 
 | Input | Stack
 |-------|---------------
-| `e  ` | `2.718281828459045`
+| `e  ` | `2.71828182845904523536028747135266249775724709369995957496696763`
 
 ## exp
 
