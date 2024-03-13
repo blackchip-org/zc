@@ -144,7 +144,7 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 
 	sc := scan.NewScannerFromString("", s)
 
-	var w, n, d int64
+	var sign, whole, num, denom int64
 
 	scan.SignedIntRule.Eval(sc)
 	s1 := sc.Emit().Val
@@ -152,11 +152,17 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 	if err != nil {
 		return nil, false
 	}
+	if i1 < 0 {
+		sign = -1
+		i1 = i1 * -1
+	} else {
+		sign = 1
+	}
 	switch sc.This {
 	case '_', '-', ' ':
-		w = i1
+		whole = i1
 	case '/':
-		n = i1
+		num = i1
 	default:
 		return nil, false
 	}
@@ -168,8 +174,8 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 	if err != nil {
 		return nil, false
 	}
-	if w != 0 {
-		n = i2
+	if whole != 0 {
+		num = i2
 		if sc.This != '/' {
 			return nil, false
 		}
@@ -180,16 +186,16 @@ func (t RationalType) Parse(s string) (*big.Rat, bool) {
 		if err != nil {
 			return nil, false
 		}
-		d = i3
+		denom = i3
 	} else {
-		d = i2
+		denom = i2
 	}
 
-	if w != 0 {
-		n = n + (d * w)
+	if whole != 0 {
+		num = num + (denom * whole)
 	}
-
-	return big.NewRat(n, d), true
+	num = num * sign
+	return big.NewRat(num, denom), true
 }
 
 func (t RationalType) MustParse(s string) *big.Rat {
