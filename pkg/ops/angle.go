@@ -8,7 +8,7 @@ import (
 
 /*
 oper	dec
-func	DecDMS p0:DMS -- Float
+func	DecDMS p0:DMS -- Decimal
 title	DMS angle to decimal degrees
 
 desc
@@ -145,7 +145,7 @@ end
 
 /*
 oper	minutes
-func	MinutesDMS p0:DMS -- Float
+func	MinutesDMS p0:DMS -- Decimal
 title	Angle in minutes
 
 desc
@@ -164,7 +164,7 @@ func MinutesDMS(c zc.Calc) {
 
 /*
 oper	rad-deg
-func 	- p0:Decimal -- DMS
+func 	- p0:Decimal -- Decimal
 macro	180 pi div mul
 title	Degrees to radians
 
@@ -179,7 +179,7 @@ end
 
 /*
 oper	seconds
-func	SecondsDMS p0:DMS -- Float
+func	SecondsDMS p0:DMS -- Decimal
 title	Angle in seconds
 
 desc

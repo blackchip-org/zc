@@ -24,7 +24,7 @@ Angular calculations
 Convert the DMS angle *p0* to decimal degrees.
 
 ```
-( p0:DMS -- Float )
+( p0:DMS -- Decimal )
 ```
 
 Example:
@@ -145,7 +145,7 @@ Example:
 Converts the angle *p0* to minutes.
 
 ```
-( p0:DMS -- Float )
+( p0:DMS -- Decimal )
 ```
 
 Example:
@@ -161,7 +161,7 @@ Example:
 Converts the angle *p0* in radians to degrees
 
 ```
-( p0:Decimal -- DMS )
+( p0:Decimal -- Decimal )
 ```
 
 Example:
@@ -177,7 +177,7 @@ Example:
 Converts the angle *p0* to seconds.
 
 ```
-( p0:DMS -- Float )
+( p0:DMS -- Decimal )
 ```
 
 Example:
