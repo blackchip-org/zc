@@ -327,7 +327,7 @@ var opsList = []zc.OpDecl{
 	zc.Macro("pebi", "2 50 pow"),
 	zc.Macro("peta", "1e15"),
 	zc.Op("phase", ops.PhaseComplex, zc.Complex),
-	zc.Macro("pi", "3.14159265358979323"),
+	zc.Macro("pi", "3.14159265358979323846264338327950288419716939937510582097494459"),
 	zc.Macro("pico", "1e-12"),
 	zc.Op("polar", ops.PolarComplex, zc.Complex),
 	zc.GenOp("pow",

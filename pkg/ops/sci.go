@@ -371,8 +371,8 @@ func Log2Float(c zc.Calc) {
 
 /*
 oper	pi
-func	- -- Float
-macro	3.14159265358979323
+func	- -- Decimal
+macro	3.14159265358979323846264338327950288419716939937510582097494459
 alias	π
 title	Circumference to diameter ratio
 
@@ -381,7 +381,7 @@ Circumference to diameter ratio of a circle.
 end
 
 example
-pi -- 3.14159265358979323
+pi -- 3.14159265358979323846264338327950288419716939937510582097494459
 end
 */
 

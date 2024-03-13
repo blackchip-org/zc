@@ -371,7 +371,7 @@ macro by using `def` without an expression.
 | `def pi 'Yum`  | *macro 'pi' overrides*
 | `pi`           | `Yum`
 | `def pi`       | *macro 'pi' undefined*
-| `pi`           | `Yum \| 3.14159265358979323`
+| `pi 5 r`       | `Yum \| 3.14159`
 
 ## Higher order functions
 
