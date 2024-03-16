@@ -60,6 +60,7 @@ type IntType struct{}
 func (t IntType) String() string { return "Int" }
 
 func (t IntType) Parse(s string) (int, bool) {
+	s = cleanNumber(s)
 	r, err := strconv.ParseInt(s, 0, 64)
 	if err != nil {
 		return 0, false
@@ -106,6 +107,7 @@ type Int64Type struct{}
 func (t Int64Type) String() string { return "Int64" }
 
 func (t Int64Type) Parse(s string) (int64, bool) {
+	s = cleanNumber(s)
 	r, err := strconv.ParseInt(s, 0, 64)
 	if err != nil {
 		return 0, false
@@ -152,7 +154,8 @@ type Int32Type struct{}
 func (t Int32Type) String() string { return "Int32" }
 
 func (t Int32Type) Parse(s string) (int32, bool) {
-	r, err := strconv.ParseInt(s, 0, 64)
+	s = cleanNumber(s)
+	r, err := strconv.ParseInt(s, 0, 32)
 	if err != nil {
 		return 0, false
 	}
@@ -198,6 +201,7 @@ type UintType struct{}
 func (t UintType) String() string { return "Uint" }
 
 func (t UintType) Parse(s string) (uint, bool) {
+	s = cleanNumber(s)
 	r, err := strconv.ParseUint(s, 0, 64)
 	if err != nil {
 		return 0, false
@@ -244,6 +248,7 @@ type Uint8Type struct{}
 func (t Uint8Type) String() string { return "Uint8" }
 
 func (t Uint8Type) Parse(s string) (uint8, bool) {
+	s = cleanNumber(s)
 	r, err := strconv.ParseUint(s, 0, 8)
 	if err != nil {
 		return 0, false
