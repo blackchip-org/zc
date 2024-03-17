@@ -10,3 +10,28 @@
 ## D
 
 - [div](ops/basic.md#div): Division
+- [div-rem](ops/basic.md#div-rem): Division with remainder
+
+## M
+
+- [mod](ops/basic.md#mod): Modulus
+- [mul](ops/basic.md#mul): Multiplication
+
+## N
+
+- [neg](ops/basic.md#neg): Negation
+
+## P
+
+- [pow](ops/basic.md#pow): Exponentiation
+
+## R
+
+- [rem](ops/basic.md#rem): Remainder
+
+## S
+
+- [sign](ops/basic.md#sign): Sign
+- [sq](ops/basic.md#sq): Square
+- [sqrt](ops/basic.md#sqrt): Square root
+- [sub](ops/basic.md#sub): Subtraction

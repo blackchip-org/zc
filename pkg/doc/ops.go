@@ -1,6 +1,7 @@
 package doc
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"sort"
@@ -112,14 +113,15 @@ func LoadDir(dir string) ([]Vol, error) {
 		if !strings.HasSuffix(f.Name(), ".yaml") {
 			continue
 		}
-		data, err := os.ReadFile(path.Join(dir, f.Name()))
+		filename := path.Join(dir, f.Name())
+		data, err := os.ReadFile(filename)
 		if err != nil {
 			return vols, err
 		}
 		var vol Vol
 		err = yaml.Unmarshal(data, &vol)
 		if err != nil {
-			return vols, err
+			return vols, fmt.Errorf("%v: %v", filename, err)
 		}
 		vols = append(vols, vol)
 	}

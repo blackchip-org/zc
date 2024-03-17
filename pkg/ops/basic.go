@@ -76,6 +76,7 @@ func AddComplex(c zc.Calc) {
 	zc.PushComplex(c, r0)
 }
 
+// FIXME: move to decimal module
 /*
 oper	dec
 func	Dec         p0:Decimal  -- Decimal
@@ -213,9 +214,9 @@ func DivRemDec(c zc.Calc) {
 	a1 := zc.PopDecimal(c)
 	a0 := zc.PopDecimal(c)
 	q, r := a0.QuoRem(a1, prec)
+	zc.PushDecimal(c, q)
 	zc.PushDecimal(c, r)
 	zc.Annotate(c, "remainder")
-	zc.PushDecimal(c, q)
 }
 
 func DivRemBigInt(c zc.Calc) {
@@ -223,9 +224,9 @@ func DivRemBigInt(c zc.Calc) {
 	a1 := zc.PopBigInt(c)
 	a0 := zc.PopBigInt(c)
 	q.QuoRem(a0, a1, &r)
+	zc.PushBigInt(c, &q)
 	zc.PushBigInt(c, &r)
 	zc.Annotate(c, "remainder")
-	zc.PushBigInt(c, &q)
 }
 
 /*

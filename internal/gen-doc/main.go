@@ -87,6 +87,12 @@ func writeOp(out *strings.Builder, op doc.Op) {
 		fmt.Fprintf(out, "```\n")
 		fmt.Fprintln(out, "")
 	}
+	if op.Macro != "" {
+		fmt.Fprintf(out, "```\n")
+		fmt.Fprintf(out, "def %v %v\n", op.Name, op.Macro)
+		fmt.Fprintf(out, "```\n")
+		fmt.Fprintln(out, "")
+	}
 
 	if len(op.Example) > 0 {
 		fmt.Fprintf(out, "Example:\n\n<!-- test: %v -->\n\n", op.Name)

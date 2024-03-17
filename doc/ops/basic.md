@@ -8,17 +8,28 @@ Basic calculator
 |-----------|------------
 | [`add, a, +`](#add) | Addition
 | [`div, d, /`](#div) | Division
+| [`div-rem, dr`](#div-rem) | Division with remainder
+| [`mod`](#mod) | Modulus
+| [`mul, m, *`](#mul) | Multiplication
+| [`neg`](#neg) | Negation
+| [`pow, **`](#pow) | Exponentiation
+| [`rem`](#rem) | Remainder
+| [`sign`](#sign) | Sign
+| [`sq`](#sq) | Square
+| [`sqrt, square-root`](#sqrt) | Square root
+| [`sub, a, +`](#sub) | Subtraction
 
 
 ## add
 
-Adds the value of *a* to *b*.
+Adds the value of *x* to *y*.
 
 Aliases: `a`, `+`
 
 ```
-( a:BigInt b:BigInt -- a:BigInt )
-( a:Decimal b:Decimal -- a:Decimal )
+( x:BigInt y:BigInt -- x:BigInt )
+( x:Decimal y:Decimal -- x:Decimal )
+( x:BigFloat y:BigFloat -- x:BigFloat )
 ```
 
 Example:
@@ -33,13 +44,14 @@ Example:
 
 ## div
 
-Divides the value of *a* by *b*. If *b* is zero, a 'division by zero'
+Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
 Aliases: `d`, `/`
 
 ```
-( a:Decimal b:Decimal -- a:Decimal )
+( x:Decimal y:Decimal -- x:Decimal )
+( x:BigFloat y:BigFloat -- x:BigFloat )
 ```
 
 Example:
@@ -51,3 +63,201 @@ Example:
 | `6` | `6`
 | `2` | `6 \| 2`
 | `d` | `3`
+
+## div-rem
+
+Divides *x* by *y* with the precision *p* and returns the quotient *q* and
+remainder *r*. The following shows how to divide one dollar with three
+people which gives a quotient of $0.33 and a remainder of one cent.
+
+Alias: `dr`
+
+```
+( x:Decimal y:Decimal p:Int32 -- x:Decimal y:Decimal )
+( x:BigInt y:BigInt -- x:BigInt y:BigInt )
+```
+
+Example:
+
+<!-- test: div-rem -->
+
+| Input | Stack
+|-------|------
+| `1.00 3 2 div-rem` | `0.33 \| 0.01 # remainder`
+
+## mod
+
+The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+zero' error is raised.
+
+Example:
+
+<!-- test: mod -->
+
+| Input | Stack
+|-------|------
+| `-7 2 mod` | `1`
+
+## mul
+
+Multiplies the value of *x* to *y*.
+
+Aliases: `m`, `*`
+
+```
+( x:BigInt y:BigInt -- x:BigInt )
+( x:Decimal y:Decimal -- x:Decimal )
+( x:BigFloat y:BigFloat -- x:BigFloat )
+```
+
+Example:
+
+<!-- test: mul -->
+
+| Input | Stack
+|-------|------
+| `6` | `6`
+| `2` | `6 \| 2`
+| `m` | `12`
+
+## neg
+
+Changes the sign of *x*.
+
+```
+( BigInt -- BigInt )
+( Decimal -- Decimal )
+( Decimal -- Decimal )
+```
+
+Example:
+
+<!-- test: neg -->
+
+| Input | Stack
+|-------|------
+| `-6` | `-6`
+| `neg` | `6`
+| `neg` | `-6`
+
+## pow
+
+Raises *x* to the power of *y*.
+
+Alias: `**`
+
+```
+( x:BigInt y:BigInt -- x:BigInt )
+( x:Float y:Float -- x:Float )
+```
+
+Example:
+
+<!-- test: pow -->
+
+| Input | Stack
+|-------|------
+| `6` | `6`
+| `2` | `6 \| 2`
+| `pow` | `36`
+
+## rem
+
+The remainder when *x* is divided by *y*. If *y* is zero, a 'division by
+zero' error is raised.
+
+```
+( BigInt BigInt -- BigInt )
+( Float Float -- Float )
+```
+
+Example:
+
+<!-- test: rem -->
+
+| Input | Stack
+|-------|------
+| `-7` | `-7`
+| `2` | `-7 \| 2`
+| `rem` | `-1`
+
+## sign
+
+Returns `-1` if *x* is negative, `1` if *x* is positive, or `0` if *x*
+is zero.
+
+```
+( x:BigInt -- x:Int )
+( x:Decimal -- x:Int )
+( x:BigFloat -- x:Int )
+```
+
+Example:
+
+<!-- test: sign -->
+
+| Input | Stack
+|-------|------
+| `c -6 sign` | `-1`
+| `c 7 sign` | `1`
+| `c 0 sign` | `0`
+
+## sq
+
+The square of the top value on the stack.
+
+```
+def sq dup mul
+```
+
+Example:
+
+<!-- test: sq -->
+
+| Input | Stack
+|-------|------
+| `8` | `8`
+| `sq` | `64`
+
+## sqrt
+
+The square root of *x*. If *x* is a positive number or zero then a Float is
+returned. If *x* is negative, a Complex is returned.
+
+Alias: `square-root`
+
+```
+( Float -- Float )
+( Float -- Complex )
+```
+
+Example:
+
+<!-- test: sqrt -->
+
+| Input | Stack
+|-------|------
+| `256` | `256`
+| `sqrt` | `16`
+
+## sub
+
+Subtract the value of *x* from *y*.
+
+Aliases: `a`, `+`
+
+```
+( x:BigInt y:BigInt -- x:BigInt )
+( x:Decimal y:Decimal -- x:Decimal )
+( x:BigFloat y:BigFloat -- x:BigFloat )
+```
+
+Example:
+
+<!-- test: sub -->
+
+| Input | Stack
+|-------|------
+| `6` | `6`
+| `2` | `6 \| 2`
+| `s` | `4`

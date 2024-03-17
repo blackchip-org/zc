@@ -1,20 +1,24 @@
 name: basic
 title: Basic calculator
-ops:
 
+ops:
 - name: add
   title: Addition
   funcs:
   - name: AddBigInt
     i: [BigInt, BigInt]
     o: [BigInt]
-    id: [a, b]
+    id: [x, y]
   - name: AddDecimal
     i: [Decimal, Decimal]
     o: [Decimal]
-    id: [a, b]
+    id: [x, y]
+  - name: AddBigFloat
+    i: [BigFloat, BigFloat]
+    o: [BigFloat]
+    id: [x, y]
   aliases: [a, "+"]
-  desc: Adds the value of *a* to *b*.
+  desc: Adds the value of *x* to *y*.
   example:
   - i: 6
     o: [6]
@@ -29,10 +33,14 @@ ops:
   - name: DivDecimal
     i: [Decimal, Decimal]
     o: [Decimal]
-    id: [a, b]
+    id: [x, y]
+  - name: AddBigFloat
+    i: [BigFloat, BigFloat]
+    o: [BigFloat]
+    id: [x, y]
   aliases: [d, "/"]
   desc: |-
-    Divides the value of *a* by *b*. If *b* is zero, a 'division by zero'
+    Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
     error is raised.
   example:
   - i: 6
@@ -41,3 +49,227 @@ ops:
     o: [6, 2]
   - i: d
     o: [3]
+
+- name: div-rem
+  title: Division with remainder
+  funcs:
+  - name: DivRemDec
+    i: [Decimal, Decimal, Int32]
+    o: [Decimal, Decimal]
+    id: [x, y, p, q, r]
+  - name: DivRemBigInt
+    i: [BigInt, BigInt]
+    o: [BigInt, BigInt]
+    id: [x, y, q, r]
+  aliases: [dr]
+  desc: |-
+    Divides *x* by *y* with the precision *p* and returns the quotient *q* and
+    remainder *r*. The following shows how to divide one dollar with three
+    people which gives a quotient of $0.33 and a remainder of one cent.
+  example:
+  - i: 1.00 3 2 div-rem
+    o: [0.33, "0.01 # remainder"]
+
+- name: mod
+  title: Modulus
+  func:
+  - name: ModBigInt
+    i: [BigInt, BigInt]
+    o: [BigInt]
+    id: [x, y]
+  - name: ModDecimal
+    i: [Decimal, Decimal]
+    o: [Decimal]
+    id: [x, y]
+  - name: ModFloat
+    i: [Float, Float]
+    o: [Float]
+    id: [x, y]
+  desc: |-
+    The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+    zero' error is raised.
+  example:
+  - i: -7 2 mod
+    o: [1]
+
+- name: mul
+  title: Multiplication
+  funcs:
+  - name: MulBigInt
+    i: [BigInt, BigInt]
+    o: [BigInt]
+    id: [x, y]
+  - name: MulDecimal
+    i: [Decimal, Decimal]
+    o: [Decimal]
+    id: [x, y]
+  - name: MulBigFloat
+    i: [BigFloat, BigFloat]
+    o: [BigFloat]
+    id: [x, y]
+  aliases: [m, "*"]
+  desc: |-
+    Multiplies the value of *x* to *y*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: m
+    o: [12]
+
+- name: neg
+  title: Negation
+  funcs:
+  - name: NegBigInt
+    i: [BigInt]
+    o: [BigInt]
+    ids: [x]
+  - name: NegDecimal
+    i: [Decimal]
+    o: [Decimal]
+    ids: [x]
+  - name: NegBigFloat
+    i: [Decimal]
+    o: [Decimal]
+    ids: [x]
+  desc: |-
+    Changes the sign of *x*.
+  example:
+  - i: -6
+    o: [-6]
+  - i: neg
+    o: [6]
+  - i: neg
+    o: [-6]
+
+- name: pow
+  title: Exponentiation
+  funcs:
+  - name: PowBigInt
+    i: [BigInt, BigInt]
+    o: [BigInt]
+    id: [x, y]
+  - name:
+    i: [Float, Float]
+    o: [Float]
+    id: [x, y]
+  aliases: ["**"]
+  desc: |-
+    Raises *x* to the power of *y*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: pow
+    o: [36]
+
+- name: rem
+  title: Remainder
+  funcs:
+  - name: RemBigInt
+    i: [BigInt, BigInt]
+    o: [BigInt]
+    ids: [x, y]
+  - name: RemFloat
+    i: [Float, Float]
+    o: [Float]
+    ids: [x, y]
+  desc: |-
+    The remainder when *x* is divided by *y*. If *y* is zero, a 'division by
+    zero' error is raised.
+  example:
+  - i: -7
+    o: [-7]
+  - i: 2
+    o: [-7, 2]
+  - i: rem
+    o: [-1]
+
+- name: sign
+  title: Sign
+  funcs:
+  - name: SignBigInt
+    i: [BigInt]
+    o: [Int]
+    id: [x]
+  - name: SignDecimal
+    i: [Decimal]
+    o: [Int]
+    id: [x]
+  - name: SignBigFloat
+    i: [BigFloat]
+    o: [Int]
+    id: [x]
+  desc: |-
+    Returns `-1` if *x* is negative, `1` if *x* is positive, or `0` if *x*
+    is zero.
+  example:
+  - i: c -6 sign
+    o: [-1]
+  - i: c 7 sign
+    o: [1]
+  - i: c 0 sign
+    o: [0]
+
+- name: sq
+  title: Square
+  macro: dup mul
+  desc: |-
+    The square of the top value on the stack.
+  example:
+  - i: 8
+    o: [8]
+  - i: sq
+    o: [64]
+
+- name: sqrt
+  title: Square root
+  funcs:
+  - name: SqrtFloat
+    i: [Float]
+    o: [Float]
+    ids: [x]
+  - i: [Float]
+    o: [Complex]
+    ids: [x]
+  aliases: [square-root]
+  desc: |-
+    The square root of *x*. If *x* is a positive number or zero then a Float is
+    returned. If *x* is negative, a Complex is returned.
+  example:
+  - i: 256
+    o: [256]
+  - i: sqrt
+    o: [16]
+
+- name: sub
+  title: Subtraction
+  funcs:
+  - name: SubBigInt
+    i: [BigInt, BigInt]
+    o: [BigInt]
+    id: [x, y]
+  - name: SubDecimal
+    i: [Decimal, Decimal]
+    o: [Decimal]
+    id: [x, y]
+  - name: SubBigFloat
+    i: [BigFloat, BigFloat]
+    o: [BigFloat]
+    id: [x, y]
+  aliases: [a, "+"]
+  desc: Subtract the value of *x* from *y*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: s
+    o: [4]
+
+
+
+
+
