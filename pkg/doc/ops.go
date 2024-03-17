@@ -3,7 +3,10 @@ package doc
 import (
 	"os"
 	"path"
+	"sort"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 
 	"gopkg.in/yaml.v3"
 )
@@ -16,6 +19,7 @@ type Vol struct {
 }
 
 type Op struct {
+	Prefix  string   `yaml:"prefix"`
 	Name    string   `yaml:"name"`
 	Title   string   `yaml:"title"`
 	Funcs   []Func   `yaml:"funcs,omitempty"`
@@ -27,6 +31,37 @@ type Op struct {
 
 func (o Op) AllNames() []string {
 	return append([]string{o.Name}, o.Aliases...)
+}
+
+func QName(prefix string, name string) string {
+	if prefix != "" {
+		return prefix + "." + name
+	}
+	return name
+}
+
+type opByName []Op
+
+func (b opByName) Len() int      { return len(b) }
+func (b opByName) Swap(i, j int) { b[i], b[j] = b[j], b[i] }
+
+// Anything that isn't a letter is sorted before anything else
+func (b opByName) Less(i, j int) bool {
+	ni, nj := b[i].Name, b[j].Name
+	ci, _ := utf8.DecodeRuneInString(ni)
+	cj, _ := utf8.DecodeRuneInString(nj)
+	switch {
+	case unicode.IsLetter(ci) && !unicode.IsLetter(cj):
+		return false
+	case !unicode.IsLetter(ci) && unicode.IsLetter(cj):
+		return true
+	default:
+		return ni < nj
+	}
+}
+
+func SortOps(ops []Op) {
+	sort.Sort(opByName(ops))
 }
 
 type Func struct {
@@ -66,13 +101,13 @@ type Expect struct {
 	O []string `yaml:"o"`
 }
 
-func LoadDir(dir string) ([]*Vol, error) {
+func LoadDir(dir string) ([]Vol, error) {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, err
 	}
 
-	var vols []*Vol
+	var vols []Vol
 	for _, f := range files {
 		if !strings.HasSuffix(f.Name(), ".yaml") {
 			continue
@@ -86,7 +121,7 @@ func LoadDir(dir string) ([]*Vol, error) {
 		if err != nil {
 			return vols, err
 		}
-		vols = append(vols, &vol)
+		vols = append(vols, vol)
 	}
 	return vols, err
 }
