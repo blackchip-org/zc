@@ -62,7 +62,6 @@
 - [clear-all](ops/stack.md#clear-all): Clear stack and memory
 - [cmyk-rgb](ops/color.md#cmyk-rgb): CMYK to RGB color space
 - [codepoint-char](ops/text.md#codepoint-char): Code point to character
-- [coeff](ops/basic.md#coeff): Coefficient
 - [color-sample](ops/color.md#color-sample): Render a sample of a color
 - [complex](ops/complex.md#complex): Complex from real and imaginary
 - [conj](ops/complex.md#conj): Complex conjugate

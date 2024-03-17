@@ -77,25 +77,6 @@ func AddComplex(c zc.Calc) {
 }
 
 /*
-oper	coeff
-func	Coeff p0:Decimal -- BigInt
-title 	Coefficient
-
-desc
-The value of *p0* without the decimal point.
-end
-
-example
-12.345 coeff -- 12345
-end
-*/
-func Coeff(c zc.Calc) {
-	a0 := zc.PopDecimal(c)
-	r0 := a0.Coefficient()
-	zc.PushBigInt(c, r0)
-}
-
-/*
 oper	dec
 func	Dec         p0:Decimal  -- Decimal
 func	DecFloat    p0:Float    -- Decimal

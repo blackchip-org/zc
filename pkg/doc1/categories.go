@@ -1,10 +1,8 @@
-package doc
-
-import "slices"
+package doc1
 
 type Category struct {
-	Name string
-	Vols []string
+	Name   string
+	Groups []string
 }
 
 var Categories = []Category{
@@ -47,14 +45,4 @@ var Categories = []Category{
 		"si",
 		"tz",
 	}},
-}
-
-func FilterByCategory(src []*Vol, members []string) []*Vol {
-	var target []*Vol
-	for _, o := range src {
-		if slices.Contains(members, o.Name) {
-			target = append(target, o)
-		}
-	}
-	return target
 }

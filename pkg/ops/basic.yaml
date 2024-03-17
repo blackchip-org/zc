@@ -1,0 +1,43 @@
+name: basic
+title: Basic calculator
+ops:
+
+- name: add
+  title: Addition
+  funcs:
+  - name: AddBigInt
+    i: [BigInt, BigInt]
+    o: [BigInt]
+    id: [a, b]
+  - name: AddDecimal
+    i: [Decimal, Decimal]
+    o: [Decimal]
+    id: [a, b]
+  aliases: [a, "+"]
+  desc: Adds the value of *a* to *b*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: a
+    o: [8]
+
+- name: div
+  title: Division
+  funcs:
+  - name: DivDecimal
+    i: [Decimal, Decimal]
+    o: [Decimal]
+    id: [a, b]
+  aliases: [d, "/"]
+  desc: |-
+    Divides the value of *a* by *b*. If *b* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: d
+    o: [3]

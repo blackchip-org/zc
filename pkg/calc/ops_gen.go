@@ -89,7 +89,6 @@ var opsList = []zc.OpDecl{
 	zc.Op("clear-all", ops.ClearAll),
 	zc.Op("cmyk-rgb", ops.CMYKToRGB, zc.Uint8, zc.Uint8, zc.Uint8, zc.Uint8),
 	zc.Op("codepoint-char", ops.CodePointToChar, zc.Int32),
-	zc.Op("coeff", ops.Coeff, zc.Decimal),
 	zc.Op("color-sample", ops.ColorSample, zc.Uint8, zc.Uint8, zc.Uint8),
 	zc.Op("complex", ops.Complex, zc.Float, zc.Float),
 	zc.Op("conj", ops.Conj, zc.Complex),

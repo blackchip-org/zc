@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/blackchip-org/zc/v5/pkg/doc"
+	"github.com/blackchip-org/zc/v5/pkg/doc1"
 )
 
 var prelude = strings.TrimSpace(`
@@ -30,13 +30,13 @@ var epilog = strings.TrimSpace(`
 func main() {
 	log.SetFlags(0)
 
-	ops, err := doc.ParseSourceFiles("../../pkg/ops")
+	ops, err := doc1.ParseSourceFiles("../../pkg/ops")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	table := doc.Table(ops)
-	names := doc.SortedNames(table)
+	table := doc1.Table(ops)
+	names := doc1.SortedNames(table)
 
 	out := &strings.Builder{}
 	fmt.Fprintf(out, "%v\n", prelude)
@@ -71,7 +71,7 @@ func main() {
 	}
 }
 
-func paramTypes(params []doc.Param) string {
+func paramTypes(params []doc1.Param) string {
 	if len(params) == 0 {
 		return ""
 	}

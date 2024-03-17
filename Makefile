@@ -23,6 +23,7 @@ release: clean gen
 	goreleaser release
 
 doc: index
+	rm -rf doc/ops/*
 	go generate internal/gen-doc/main.go
 
 entity:

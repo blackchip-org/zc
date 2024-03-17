@@ -10,7 +10,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/blackchip-org/zc/v5/pkg/doc"
+	"github.com/blackchip-org/zc/v5/pkg/doc1"
 )
 
 const (
@@ -54,11 +54,11 @@ func (s sortByName) Less(i, j int) bool { return s[i].name < s[j].name }
 func main() {
 	log.SetFlags(0)
 
-	ops, err := doc.ParseSourceFiles("../../pkg/ops")
+	ops, err := doc1.ParseSourceFiles("../../pkg/ops")
 	if err != nil {
 		log.Fatal(err)
 	}
-	table := doc.Group(ops)
+	table := doc1.Group(ops)
 	var names []qname
 	for name := range table {
 		parts := strings.SplitN(name, ".", 2)

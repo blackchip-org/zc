@@ -1,4 +1,4 @@
-package doc
+package doc1
 
 var GroupTitles = map[string]string{
 	"angle":    "Angular calculations",
