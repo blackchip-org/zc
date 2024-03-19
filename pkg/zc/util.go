@@ -96,3 +96,41 @@ func Quote(v string) string {
 	s.Val.WriteRune('\'')
 	return s.Emit().Val
 }
+
+func RemoveTrailingZeros(s string) string {
+	chs := []rune(s)
+	end := len(chs)
+	zerosDone := false
+	for i := len(chs) - 1; i >= 0; i-- {
+		ch := chs[i]
+
+		// Done when a decimal separator is found
+		if ch == '.' {
+			return string(chs[:end])
+		}
+		// If we have already found all trailing zeros and just waiting
+		// for the decimal separator
+		if zerosDone {
+			continue
+		}
+
+		// Are we still seeing zeros?
+		if ch != '0' {
+			zerosDone = true
+			continue
+		}
+		end--
+
+		// If we do see a zero, check to see if the next is a decimal point.
+		// Gobble that up too and we are now done.
+		next := rune(0)
+		if i-1 > 0 {
+			next = chs[i-1]
+		}
+		if next == '.' {
+			end--
+			return string(chs[:end])
+		}
+	}
+	return s
+}

@@ -279,16 +279,7 @@ Each line is considered a separate value when using `quote`. For example:
 
 Values on the stack may have annotations to provide some additional
 metadata. An annotated value ends with a hash mark `#` and the annotation
-text. For example, values are given an 'inexact' annotation when a
-`Rational` value cannot be exactly converted to a `Decimal`. Example:
-
-<!-- test: anno -->
-
-| Input               | Stack
-|---------------------|---------------------|
-| `2/3 dec`           | `0.6666666666666666 # inexact`
-
-Annotations are also used to indicate the units for a result.
+text. For example, annotations are used to indicate the units for a result.
 
 <!-- test: anno-haversine -->
 

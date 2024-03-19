@@ -16,7 +16,7 @@ import (
 func main() {
 	log.SetFlags(0)
 
-	vols, err := doc.LoadDir("../../pkg/ops")
+	vols, err := doc.LoadDir("../../docsrc/ops")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,7 +37,12 @@ func writeVol(vol doc.Vol) {
 	fmt.Fprintf(out, "\n")
 	fmt.Fprintf(out, "# %v\n\n", vol.Name)
 	fmt.Fprintf(out, "%v\n\n", vol.Title)
-
+	if vol.Overview != "" {
+		fmt.Fprintf(out, "## Overview\n\n")
+		fmt.Fprintf(out, vol.Overview)
+		fmt.Fprintf(out, "\n")
+	}
+	fmt.Fprintf(out, "## Index\n\n")
 	fmt.Fprintf(out, "| Operation | Description\n")
 	fmt.Fprintf(out, "|-----------|------------\n")
 
@@ -49,7 +54,7 @@ func writeVol(vol doc.Vol) {
 		entry := fmt.Sprintf("[`%v`](#%v)", strings.Join(op.AllNames(), ", "), op.Name)
 		fmt.Fprintf(out, "| %v | %v\n", entry, op.Title)
 	}
-	fmt.Fprintln(out, "")
+	fmt.Fprintf(out, "\n## Operations\n")
 
 	for _, op := range vol.Ops {
 		writeOp(out, op)
@@ -62,7 +67,7 @@ func writeVol(vol doc.Vol) {
 }
 
 func writeOp(out *strings.Builder, op doc.Op) {
-	fmt.Fprintf(out, "\n## %v\n\n", op.Name)
+	fmt.Fprintf(out, "\n### %v\n\n", op.Name)
 	fmt.Fprintf(out, "%v\n\n", op.Desc)
 	if len(op.Aliases) > 0 {
 		if len(op.Aliases) == 1 {

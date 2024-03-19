@@ -4,6 +4,8 @@
 
 Basic calculator
 
+## Index
+
 | Operation | Description
 |-----------|------------
 | [`add, a, +`](#add) | Addition
@@ -19,8 +21,9 @@ Basic calculator
 | [`sqrt, square-root`](#sqrt) | Square root
 | [`sub, a, +`](#sub) | Subtraction
 
+## Operations
 
-## add
+### add
 
 Adds the value of *x* to *y*.
 
@@ -42,7 +45,7 @@ Example:
 | `2` | `6 \| 2`
 | `a` | `8`
 
-## div
+### div
 
 Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
@@ -64,7 +67,7 @@ Example:
 | `2` | `6 \| 2`
 | `d` | `3`
 
-## div-rem
+### div-rem
 
 Divides *x* by *y* with the precision *p* and returns the quotient *q* and
 remainder *r*. The following shows how to divide one dollar with three
@@ -85,7 +88,7 @@ Example:
 |-------|------
 | `1.00 3 2 div-rem` | `0.33 \| 0.01 # remainder`
 
-## mod
+### mod
 
 The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
 zero' error is raised.
@@ -98,7 +101,7 @@ Example:
 |-------|------
 | `-7 2 mod` | `1`
 
-## mul
+### mul
 
 Multiplies the value of *x* to *y*.
 
@@ -120,7 +123,7 @@ Example:
 | `2` | `6 \| 2`
 | `m` | `12`
 
-## neg
+### neg
 
 Changes the sign of *x*.
 
@@ -140,7 +143,7 @@ Example:
 | `neg` | `6`
 | `neg` | `-6`
 
-## pow
+### pow
 
 Raises *x* to the power of *y*.
 
@@ -161,7 +164,7 @@ Example:
 | `2` | `6 \| 2`
 | `pow` | `36`
 
-## rem
+### rem
 
 The remainder when *x* is divided by *y*. If *y* is zero, a 'division by
 zero' error is raised.
@@ -181,7 +184,7 @@ Example:
 | `2` | `-7 \| 2`
 | `rem` | `-1`
 
-## sign
+### sign
 
 Returns `-1` if *x* is negative, `1` if *x* is positive, or `0` if *x*
 is zero.
@@ -202,7 +205,7 @@ Example:
 | `c 7 sign` | `1`
 | `c 0 sign` | `0`
 
-## sq
+### sq
 
 The square of the top value on the stack.
 
@@ -219,7 +222,7 @@ Example:
 | `8` | `8`
 | `sq` | `64`
 
-## sqrt
+### sqrt
 
 The square root of *x*. If *x* is a positive number or zero then a Float is
 returned. If *x* is negative, a Complex is returned.
@@ -240,7 +243,7 @@ Example:
 | `256` | `256`
 | `sqrt` | `16`
 
-## sub
+### sub
 
 Subtract the value of *x* from *y*.
 

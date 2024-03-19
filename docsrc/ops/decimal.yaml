@@ -1,0 +1,80 @@
+name: dec
+title: Decimal numbers
+
+ops:
+- name: dec
+  title: Decimal number
+  funcs:
+  - name: Dec
+    i: [Decimal]
+    o: [Decimal]
+    id: [x]
+  - name: DecFloat
+    i: [Float]
+    o: [Decimal]
+    id: [x]
+  - name: DecRational
+    i: [Rational]
+    o: [Decimal]
+    id: [a]
+  aliases: ["decimal"]
+  desc: |-
+    Converts *x* into a decimal number.
+  example:
+  - i: c 1e3 dec
+    o: [1000]
+  - i: c 1/2 dec
+    o: [0.5]
+  - i: c 0xff dec
+    o: [255]
+
+- name: dec?
+  title: Checks value can be parsed as a decimal number.
+  funcs:
+  - name: DecimalIs
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    Places `true` on the stack if *x* can be parsed as a decimal number,
+    otherwise places `false`. A value with an exponent, such as *1e1*, is
+    not parsed as a Decimal by default. Add a suffix of `d` to parse as
+    a Decimal
+  example:
+  - i: "c 1 dec?"
+    o: [true]
+  - i: "c 1.1 dec?"
+    o: [true]
+  - i: "c 1e1 dec?"
+    o: [false]
+  - i: "c 1e1d dec?"
+    o: [true]
+
+- name: dec.prec
+  title: Gets the precision setting
+  funcs:
+  - name: DecPrecGet
+    o: [Int]
+  aliases: [decimal.prec]
+  desc: |-
+    Places the current precision setting on the stack. This is the number
+    of digits after the decimal point that will be used in inexact or
+    rounding operations when an explicit precision is not specified.
+  example:
+  - i: dec.prec
+    o: [16]
+
+- name: dec.prec=
+  title: Sets the precision setting
+  funcs:
+  - name: DecPrecSet
+    i: [Int]
+    id: [x]
+  desc: |-
+    Sets the current precision setting to *x*. This is the number of digits
+    after the decimal point that will be used in inexact or rounding operations
+    when an explicit precision is not specified. If *x* is less than zero,
+    an 'invalid argument' error will be raised.
+  example:
+  - i: 8 dec.prec=
+    o: ["*decimal precision set to 8*"]

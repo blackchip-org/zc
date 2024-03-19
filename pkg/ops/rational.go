@@ -19,14 +19,6 @@ example
 1/2 dec -- 0.5
 end
 */
-func DecRational(c zc.Calc) {
-	a0 := zc.PopRational(c)
-	r0, exact := a0.Float64()
-	zc.PushFloat(c, r0)
-	if !exact {
-		zc.Annotate(c, "inexact")
-	}
-}
 
 /*
 oper	denom

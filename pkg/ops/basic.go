@@ -5,7 +5,6 @@ import (
 	"math/big"
 	"math/cmplx"
 
-	"github.com/blackchip-org/zc/v5/pkg/types"
 	"github.com/blackchip-org/zc/v5/pkg/zc"
 )
 
@@ -39,13 +38,6 @@ func AddBigInt(c zc.Calc) {
 	zc.PushBigInt(c, &r0)
 }
 
-func AddDecimal(c zc.Calc) {
-	a1 := zc.PopDecimal(c)
-	a0 := zc.PopDecimal(c)
-	r0 := a0.Add(a1)
-	zc.PushDecimal(c, r0)
-}
-
 func AddBigFloat(c zc.Calc) {
 	var r0 big.Float
 	a1 := zc.PopBigFloat(c)
@@ -74,32 +66,6 @@ func AddComplex(c zc.Calc) {
 	a0 := zc.PopComplex(c)
 	r0 := a0 + a1
 	zc.PushComplex(c, r0)
-}
-
-// FIXME: move to decimal module
-/*
-oper	dec
-func	Dec         p0:Decimal  -- Decimal
-func	DecFloat    p0:Float    -- Decimal
-title	Decimal number
-
-desc
-Pops *p0* from the stack and formats it as a `Decimal`.
-end
-
-example
-1e3 dec -- 1000
-end
-*/
-func Dec(c zc.Calc) {
-	a0 := zc.PopDecimal(c)
-	zc.PushDecimal(c, a0)
-}
-
-func DecFloat(c zc.Calc) {
-	a0 := zc.PopFloat(c)
-	r0 := types.NewDecimalFromFloat(a0)
-	zc.PushDecimal(c, r0)
 }
 
 /*

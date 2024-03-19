@@ -2,6 +2,7 @@ package doc
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"sort"
@@ -13,10 +14,10 @@ import (
 )
 
 type Vol struct {
-	Name     string
-	Title    string
+	Name     string `yaml:"name"`
+	Title    string `yaml:"title"`
 	Overview string
-	Ops      []Op
+	Ops      []Op `yaml:"ops"`
 }
 
 type Op struct {
@@ -122,6 +123,18 @@ func LoadDir(dir string) ([]Vol, error) {
 		err = yaml.Unmarshal(data, &vol)
 		if err != nil {
 			return vols, fmt.Errorf("%v: %v", filename, err)
+		}
+
+		overview := strings.TrimSuffix(f.Name(), ".yaml") + ".md"
+		overviewFile := path.Join(dir, overview)
+		data, err = os.ReadFile(overviewFile)
+		if err != nil {
+			return vols, err
+		}
+		vol.Overview = string(data)
+
+		if vol.Name == "" {
+			log.Panicf("no volume name in %v", filename)
 		}
 		vols = append(vols, vol)
 	}
