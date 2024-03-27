@@ -177,8 +177,8 @@ ops:
     o: [Float]
     ids: [x, y]
   desc: |-
-    The remainder when *x* is divided by *y*. If *y* is zero, a 'division by
-    zero' error is raised.
+    The remainder when *x* is divided by *y* using truncated division. If *y* 
+    is zero, a 'division by zero' error is raised.
   example:
   - i: -7
     o: [-7]
@@ -259,7 +259,7 @@ ops:
     i: [BigFloat, BigFloat]
     o: [BigFloat]
     id: [x, y]
-  aliases: [a, "+"]
+  aliases: [s, "-"]
   desc: Subtract the value of *x* from *y*.
   example:
   - i: 6

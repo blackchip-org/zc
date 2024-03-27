@@ -14,7 +14,7 @@ import (
 func main() {
 	log.SetFlags(0)
 
-	vols, err := doc.LoadDir("../../pkg/ops")
+	vols, err := doc.LoadDir("../../docsrc/ops")
 	if err != nil {
 		log.Fatal(err)
 	}

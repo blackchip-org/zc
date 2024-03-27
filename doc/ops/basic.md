@@ -19,7 +19,7 @@ Basic calculator
 | [`sign`](#sign) | Sign
 | [`sq`](#sq) | Square
 | [`sqrt, square-root`](#sqrt) | Square root
-| [`sub, a, +`](#sub) | Subtraction
+| [`sub, s, -`](#sub) | Subtraction
 
 ## Operations
 
@@ -166,8 +166,8 @@ Example:
 
 ### rem
 
-The remainder when *x* is divided by *y*. If *y* is zero, a 'division by
-zero' error is raised.
+The remainder when *x* is divided by *y* using truncated division. If *y* 
+is zero, a 'division by zero' error is raised.
 
 ```
 ( BigInt BigInt -- BigInt )
@@ -247,7 +247,7 @@ Example:
 
 Subtract the value of *x* from *y*.
 
-Aliases: `a`, `+`
+Aliases: `s`, `-`
 
 ```
 ( x:BigInt y:BigInt -- x:BigInt )

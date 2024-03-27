@@ -71,9 +71,9 @@ func DecimalIs(c zc.Calc) {
 }
 
 /*
-oper	dec.prec
+oper	dec-prec
 title	x
-aliases	decimal.prec
+aliases	decimal-prec
 func	DecPrecGet -- Int
 */
 func DecPrecGet(c zc.Calc) {
@@ -82,9 +82,9 @@ func DecPrecGet(c zc.Calc) {
 }
 
 /*
-oper 	dec.prec=
+oper 	dec-prec=
 title	x
-aliases	decimal.prec=
+aliases	decimal-prec=
 func 	DecPrecSet x:Int --
 */
 func DecPrecSet(c zc.Calc) {

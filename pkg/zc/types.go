@@ -29,10 +29,15 @@ var (
 	Int      = IntType{}
 	Int64    = Int64Type{}
 	Int32    = Int32Type{}
+	Int16    = Int16Type{}
+	Int8     = Int8Type{}
 	Rational = RationalType{}
 	Str      = StrType{}
 	Time     = TimeType{}
 	Uint     = UintType{}
+	Uint64   = Uint64Type{}
+	Uint32   = Uint32Type{}
+	Uint16   = Uint16Type{}
 	Uint8    = Uint8Type{}
 	Val      = StrType{}
 )

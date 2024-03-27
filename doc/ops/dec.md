@@ -55,8 +55,8 @@ To parse as a decimal, add a `d` suffix to the number. Example:
 |-----------|------------
 | [`dec, decimal`](#dec) | Decimal number
 | [`dec?`](#dec?) | Checks value can be parsed as a decimal number.
-| [`dec.prec, decimal.prec`](#dec.prec) | Gets the precision setting
-| [`dec.prec=`](#dec.prec=) | Sets the precision setting
+| [`dec-prec, decimal-prec`](#dec-prec) | Gets the precision setting
+| [`dec-prec=, decimal-prec=`](#dec-prec=) | Sets the precision setting
 
 ## Operations
 
@@ -104,13 +104,13 @@ Example:
 | `c 1e1 dec?` | `false`
 | `c 1e1d dec?` | `true`
 
-### dec.prec
+### dec-prec
 
 Places the current precision setting on the stack. This is the number
 of digits after the decimal point that will be used in inexact or
 rounding operations when an explicit precision is not specified.
 
-Alias: `decimal.prec`
+Alias: `decimal-prec`
 
 ```
 (  -- Int )
@@ -118,18 +118,20 @@ Alias: `decimal.prec`
 
 Example:
 
-<!-- test: dec.prec -->
+<!-- test: dec-prec -->
 
 | Input | Stack
 |-------|------
-| `dec.prec` | `16`
+| `dec-prec` | `16`
 
-### dec.prec=
+### dec-prec=
 
 Sets the current precision setting to *x*. This is the number of digits
 after the decimal point that will be used in inexact or rounding operations
 when an explicit precision is not specified. If *x* is less than zero,
 an 'invalid argument' error will be raised.
+
+Alias: `decimal-prec=`
 
 ```
 ( x:Int --  )
@@ -137,8 +139,8 @@ an 'invalid argument' error will be raised.
 
 Example:
 
-<!-- test: dec.prec= -->
+<!-- test: dec-prec= -->
 
 | Input | Stack
 |-------|------
-| `8 dec.prec=` | *decimal precision set to 8*
+| `8 dec-prec=` | *decimal precision set to 8*

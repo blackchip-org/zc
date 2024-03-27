@@ -2,3 +2,132 @@
 
 # index
 
+- [*](ops/basic.md#mul) (basic): Multiplication
+- [*](ops/int.md#mul) (int): Multiplication
+- [**](ops/basic.md#pow) (basic): Exponentiation
+- [**](ops/int.md#pow) (int): Exponentiation
+- [\+](ops/basic.md#add) (basic): Addition
+- [\+](ops/int.md#add) (int): Addition
+- [\-](ops/basic.md#sub) (basic): Subtraction
+- [\-](ops/int.md#sub) (int): Subtraction
+- [/](ops/basic.md#div): Division
+
+## A
+
+- [a](ops/basic.md#add) (basic): Addition
+- [a](ops/int.md#add) (int): Addition
+- [add](ops/basic.md#add) (basic): Addition
+- [add](ops/int.md#add) (int): Addition
+- [add-i16](ops/int.md#add-i16): Addition, 16-bit integer
+- [add-i32](ops/int.md#add-i32): Addition, 32-bit integer
+- [add-i64](ops/int.md#add-i64): Addition, 64-bit integer
+- [add-i8](ops/int.md#add-i8): Addition, 8-bit integer
+- [add-ia](ops/int.md#add-ia): Addition, architecture-dependent integer
+- [add-u16](ops/int.md#add-u16): Addition, 16-bit unsigned integer
+- [add-u32](ops/int.md#add-u32): Addition, 32-bit unsigned integer
+- [add-u64](ops/int.md#add-u64): Addition, 64-bit unsigned integer
+- [add-u8](ops/int.md#add-u8): Addition, 8-bit unsigned integer
+- [add-ua](ops/int.md#add-ua): Addition, architecture-dependent unsigned integer
+
+## D
+
+- [d](ops/basic.md#div): Division
+- [d-int](ops/int.md#div-int): Euclidean division
+- [dec](ops/dec.md#dec): Decimal number
+- [dec-prec](ops/dec.md#dec-prec): Gets the precision setting
+- [dec-prec=](ops/dec.md#dec-prec=): Sets the precision setting
+- [dec?](ops/dec.md#dec?): Checks value can be parsed as a decimal number.
+- [decimal](ops/dec.md#dec): Decimal number
+- [decimal-prec](ops/dec.md#dec-prec): Gets the precision setting
+- [decimal-prec=](ops/dec.md#dec-prec=): Sets the precision setting
+- [div](ops/basic.md#div): Division
+- [div-int](ops/int.md#div-int): Euclidean division
+- [div-mod-int](ops/int.md#div-mod-int): Euclidean division with modulus
+- [div-rem](ops/basic.md#div-rem): Division with remainder
+- [dm-int](ops/int.md#div-mod-int): Euclidean division with modulus
+- [dr](ops/basic.md#div-rem): Division with remainder
+
+## I
+
+- [i16-max](ops/int.md#i16-max): Maximum 16-bit integer
+- [i16-min](ops/int.md#i16-min): Minimum 16-bit integer
+- [i32-max](ops/int.md#i32-max) (int): Maximum 32-bit integer
+- [i32-max](ops/int.md#i32-max) (int): Minimum 32-bit integer
+- [i64-max](ops/int.md#i64-max): Maximum 64-bit integer
+- [i64-min](ops/int.md#i64-min): Minimum 64-bit integer
+- [i8-max](ops/int.md#i8-max): Maximum 8-bit integer
+- [i8-min](ops/int.md#i8-min): Minimum 8-bit integer
+- [ia-max](ops/int.md#ia-max): Maximum architecture-dependant integer
+- [ia-min](ops/int.md#ia-min): Minimum architecture-dependant integer
+
+## M
+
+- [m](ops/basic.md#mul) (basic): Multiplication
+- [m](ops/int.md#mul) (int): Multiplication
+- [mod](ops/basic.md#mod) (basic): Modulus
+- [mod](ops/int.md#mod) (int): Modulus
+- [mul](ops/basic.md#mul) (basic): Multiplication
+- [mul](ops/int.md#mul) (int): Multiplication
+- [mul-i16](ops/int.md#mul-i16): Multiplication, 16-bit integer
+- [mul-i32](ops/int.md#mul-i32): Multiplication, 32-bit integer
+- [mul-i64](ops/int.md#mul-i64): Multiplication, 64-bit integer
+- [mul-i8](ops/int.md#mul-i8): Multiplication, 8-bit integer
+- [mul-ia](ops/int.md#mul-ia): Multiplication, architecture-dependent integer
+- [mul-u16](ops/int.md#mul-u16): Multiplication, 16-bit unsigned integer
+- [mul-u32](ops/int.md#mul-u32): Multiplication, 32-bit unsigned integer
+- [mul-u64](ops/int.md#mul-u64): Multiplication, 64-bit unsigned integer
+- [mul-u8](ops/int.md#mul-u8): Multiplication, 8-bit unsigned integer
+- [mul-ua](ops/int.md#mul-ua): Multiplication, architecture-dependent unsigned integer
+
+## N
+
+- [neg](ops/basic.md#neg) (basic): Negation
+- [neg](ops/int.md#neg) (int): Negation
+
+## P
+
+- [pow](ops/basic.md#pow) (basic): Exponentiation
+- [pow](ops/int.md#pow) (int): Exponentiation
+
+## Q
+
+- [q-int](ops/int.md#quo-int): Truncated division
+- [qr-int](ops/int.md#quo-rem-int): Truncated division with remainder
+- [quo-int](ops/int.md#quo-int): Truncated division
+- [quo-rem-int](ops/int.md#quo-rem-int): Truncated division with remainder
+
+## R
+
+- [rem](ops/basic.md#rem) (basic): Remainder
+- [rem](ops/int.md#rem) (int): Remainder
+
+## S
+
+- [s](ops/basic.md#sub) (basic): Subtraction
+- [s](ops/int.md#sub) (int): Subtraction
+- [sign](ops/basic.md#sign) (basic): Sign
+- [sign](ops/int.md#sign) (int): Sign
+- [sq](ops/basic.md#sq): Square
+- [sqrt](ops/basic.md#sqrt): Square root
+- [sqrt-int](ops/int.md#sqrt-int): Square root
+- [square-root](ops/basic.md#sqrt): Square root
+- [sub](ops/basic.md#sub) (basic): Subtraction
+- [sub](ops/int.md#sub) (int): Subtraction
+- [sub-i16](ops/int.md#sub-i16): Subtraction, 16-bit integer
+- [sub-i32](ops/int.md#sub-i32): Subtraction, 32-bit integer
+- [sub-i64](ops/int.md#sub-i64): Subtraction, 64-bit integer
+- [sub-i8](ops/int.md#sub-i8): Subtraction, 8-bit integer
+- [sub-ia](ops/int.md#sub-ia): Subtraction, architecture-dependent integer
+- [sub-u16](ops/int.md#sub-u16): Subtraction, 16-bit unsigned integer
+- [sub-u32](ops/int.md#sub-u32): Subtraction, 32-bit unsigned integer
+- [sub-u64](ops/int.md#sub-u64): Subtraction, 64-bit unsigned integer
+- [sub-u8](ops/int.md#sub-u8): Subtraction, 8-bit unsigned integer
+- [sub-ua](ops/int.md#sub-ua): Subtraction, architecture-dependent unsigned integer
+
+## U
+
+- [u16-max](ops/int.md#u16-max): Maximum 16-bit unsigned integer
+- [u32-max](ops/int.md#u32-max): Maximum 32-bit unsigned integer
+- [u64-max](ops/int.md#u64-max): Maximum 64-bit unsigned integer
+- [u8-max](ops/int.md#u8-max): Maximum 8-bit unsigned integer
+- [ua-max](ops/int.md#ua-max): Maximum architecture-dependant unsigned integer

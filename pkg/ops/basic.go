@@ -30,13 +30,6 @@ example
 a -- 8
 end
 */
-func AddBigInt(c zc.Calc) {
-	var r0 big.Int
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-	r0.Add(a0, a1)
-	zc.PushBigInt(c, &r0)
-}
 
 func AddBigFloat(c zc.Calc) {
 	var r0 big.Float
@@ -161,7 +154,6 @@ func DivComplex(c zc.Calc) {
 /*
 oper 	div-rem
 func	DivRemDec p0:Decimal p1:Decimal p:Int32 -- r:Decimal q:Decimal
-func 	DivRemBigInt p0:BigInt p1:BigInt -- r:Decimal q:Decimal
 alias	dr
 title	Division with remainder
 
@@ -185,16 +177,6 @@ func DivRemDec(c zc.Calc) {
 	zc.Annotate(c, "remainder")
 }
 
-func DivRemBigInt(c zc.Calc) {
-	var q, r big.Int
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-	q.QuoRem(a0, a1, &r)
-	zc.PushBigInt(c, &q)
-	zc.PushBigInt(c, &r)
-	zc.Annotate(c, "remainder")
-}
-
 /*
 oper	mod
 func	ModBigInt  p0:BigInt  p1:BigInt  -- BigInt
@@ -211,20 +193,6 @@ example
 -7 2 mod -- 1
 end
 */
-func ModBigInt(c zc.Calc) {
-	var r0 big.Int
-	var zero big.Int
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-
-	if a1.Cmp(&zero) == 0 {
-		zc.ErrDivisionByZero(c)
-		return
-	}
-
-	r0.Mod(a0, a1)
-	zc.PushBigInt(c, &r0)
-}
 
 func ModDecimal(c zc.Calc) {
 	a1 := zc.PopDecimal(c)
@@ -274,13 +242,6 @@ example
 m -- 12
 end
 */
-func MulBigInt(c zc.Calc) {
-	var r0 big.Int
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-	r0.Mul(a0, a1)
-	zc.PushBigInt(c, &r0)
-}
 
 func MulDecimal(c zc.Calc) {
 	a1 := zc.PopDecimal(c)
@@ -338,12 +299,6 @@ neg -- 6
 neg -- -6
 end
 */
-func NegBigInt(c zc.Calc) {
-	var r0 big.Int
-	a0 := zc.PopBigInt(c)
-	r0.Neg(a0)
-	zc.PushBigInt(c, &r0)
-}
 
 func NegDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
@@ -390,13 +345,6 @@ example
 pow -- 36
 end
 */
-func PowBigInt(c zc.Calc) {
-	var r0 big.Int
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-	r0.Exp(a0, a1, nil)
-	zc.PushBigInt(c, &r0)
-}
 
 func PowFloat(c zc.Calc) {
 	a1 := zc.PopFloat(c)
@@ -429,13 +377,6 @@ example
 rem -- -1
 end
 */
-func RemBigInt(c zc.Calc) {
-	var r0 big.Int
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-	r0.Rem(a0, a1)
-	zc.PushBigInt(c, &r0)
-}
 
 func RemFloat(c zc.Calc) {
 	a1 := zc.PopFloat(c)
@@ -464,11 +405,6 @@ c 6 sign -- 1
 c 0 sign -- 0
 end
 */
-func SignBigInt(c zc.Calc) {
-	a0 := zc.PopBigInt(c)
-	r0 := a0.Sign()
-	zc.PushInt(c, r0)
-}
 
 func SignDecimal(c zc.Calc) {
 	a0 := zc.PopDecimal(c)
@@ -588,13 +524,6 @@ example
 s -- 4
 end
 */
-func SubBigInt(c zc.Calc) {
-	var r0 big.Int
-	a1 := zc.PopBigInt(c)
-	a0 := zc.PopBigInt(c)
-	r0.Sub(a0, a1)
-	zc.PushBigInt(c, &r0)
-}
 
 func SubDecimal(c zc.Calc) {
 	a1 := zc.PopDecimal(c)

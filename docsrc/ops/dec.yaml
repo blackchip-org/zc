@@ -50,31 +50,32 @@ ops:
   - i: "c 1e1d dec?"
     o: [true]
 
-- name: dec.prec
+- name: dec-prec
   title: Gets the precision setting
   funcs:
   - name: DecPrecGet
     o: [Int]
-  aliases: [decimal.prec]
+  aliases: [decimal-prec]
   desc: |-
     Places the current precision setting on the stack. This is the number
     of digits after the decimal point that will be used in inexact or
     rounding operations when an explicit precision is not specified.
   example:
-  - i: dec.prec
+  - i: dec-prec
     o: [16]
 
-- name: dec.prec=
+- name: dec-prec=
   title: Sets the precision setting
   funcs:
   - name: DecPrecSet
     i: [Int]
     id: [x]
+  aliases: [decimal-prec=]
   desc: |-
     Sets the current precision setting to *x*. This is the number of digits
     after the decimal point that will be used in inexact or rounding operations
     when an explicit precision is not specified. If *x* is less than zero,
     an 'invalid argument' error will be raised.
   example:
-  - i: 8 dec.prec=
+  - i: 8 dec-prec=
     o: ["*decimal precision set to 8*"]

@@ -43,14 +43,17 @@ func Index(vols []Vol) []IndexEntry {
 	index := make(map[string]IndexEntry)
 	for _, vol := range vols {
 		for _, op := range vol.Ops {
-			e, ok := index[op.Name]
-			if !ok {
-				e.Name = op.Name
+			names := append([]string{op.Name}, op.Aliases...)
+			for _, name := range names {
+				e, ok := index[name]
+				if !ok {
+					e.Name = name
+				}
+				iop := IndexOp{vol.Name, op}
+				e.Ops = append(e.Ops, iop)
+				SortIndexOps(e.Ops)
+				index[name] = e
 			}
-			iop := IndexOp{vol.Name, op}
-			e.Ops = append(e.Ops, iop)
-			SortIndexOps(e.Ops)
-			index[op.Name] = e
 		}
 	}
 	entries := maps.Values(index)
