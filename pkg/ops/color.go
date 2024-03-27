@@ -4,8 +4,8 @@ import (
 	"image/color"
 	"math"
 
-	"github.com/blackchip-org/zc/v5/pkg/ansi"
-	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v6/pkg/ansi"
+	"github.com/blackchip-org/zc/v6/pkg/zc"
 )
 
 /*

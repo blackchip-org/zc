@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/scan"
-	"github.com/blackchip-org/zc/v5/pkg/types"
+	"github.com/blackchip-org/zc/v6/pkg/types"
 )
 
 // ---

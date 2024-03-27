@@ -9,8 +9,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/blackchip-org/zc/v5/pkg/doc"
-	"github.com/blackchip-org/zc/v5/pkg/doc1"
+	"github.com/blackchip-org/zc/v6/pkg/doc"
+	"github.com/blackchip-org/zc/v6/pkg/doc1"
 )
 
 //go:generate go run main.go

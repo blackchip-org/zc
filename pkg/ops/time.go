@@ -5,8 +5,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/blackchip-org/zc/v5/pkg/ptime/locale"
-	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v6/pkg/ptime/locale"
+	"github.com/blackchip-org/zc/v6/pkg/zc"
 )
 
 type timeState struct {

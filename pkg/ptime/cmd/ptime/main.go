@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/blackchip-org/zc/v5/pkg/ptime"
+	"github.com/blackchip-org/zc/v6/pkg/ptime"
 )
 
 var (

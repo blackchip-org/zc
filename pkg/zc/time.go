@@ -4,9 +4,9 @@ import (
 	"cmp"
 	"time"
 
-	"github.com/blackchip-org/zc/v5/pkg/ptime"
-	"github.com/blackchip-org/zc/v5/pkg/ptime/locale"
-	"github.com/blackchip-org/zc/v5/pkg/types"
+	"github.com/blackchip-org/zc/v6/pkg/ptime"
+	"github.com/blackchip-org/zc/v6/pkg/ptime/locale"
+	"github.com/blackchip-org/zc/v6/pkg/types"
 )
 
 const (

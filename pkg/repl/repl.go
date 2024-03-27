@@ -11,8 +11,8 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/scan"
-	"github.com/blackchip-org/zc/v5/pkg/ansi"
-	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v6/pkg/ansi"
+	"github.com/blackchip-org/zc/v6/pkg/zc"
 	"github.com/peterh/liner"
 )
 

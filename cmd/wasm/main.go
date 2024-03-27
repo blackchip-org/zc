@@ -5,9 +5,9 @@ package main
 import (
 	"syscall/js"
 
-	"github.com/blackchip-org/zc/v5/pkg/calc"
-	"github.com/blackchip-org/zc/v5/pkg/repl"
-	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v6/pkg/calc"
+	"github.com/blackchip-org/zc/v6/pkg/repl"
+	"github.com/blackchip-org/zc/v6/pkg/zc"
 )
 
 var (

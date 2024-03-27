@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v6/pkg/zc"
 )
 
 //tab epsg.web-mercator	-- 'EPSG:3857' -- Web Mercator, EPSG:3857

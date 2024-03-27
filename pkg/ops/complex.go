@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math/cmplx"
 
-	"github.com/blackchip-org/zc/v5/pkg/types"
-	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v6/pkg/types"
+	"github.com/blackchip-org/zc/v6/pkg/zc"
 )
 
 /*

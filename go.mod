@@ -1,4 +1,4 @@
-module github.com/blackchip-org/zc/v5
+module github.com/blackchip-org/zc/v6
 
 go 1.21
 

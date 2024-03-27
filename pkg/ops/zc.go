@@ -1,7 +1,7 @@
 package ops
 
 import (
-	"github.com/blackchip-org/zc/v5/pkg/zc"
+	"github.com/blackchip-org/zc/v6/pkg/zc"
 )
 
 /*

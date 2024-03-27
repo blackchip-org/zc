@@ -21,7 +21,7 @@ https://blackchip-org.github.io/zc/?eval=1+8+seq+[2+sw+pow]+map
 - [Type Documentation](doc/types.md)
 - [Stack Notation](doc/stack.md)
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v5.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v5)
+[![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v6.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v6)
 
 ![ZC Demo](demo.gif)
 
@@ -55,7 +55,7 @@ entertainment. Things may change in backwards incompatible ways with no notice.
 For the command-line version, install [go](https://go.dev/dl/) and then install
 the calculator with:
 
-    go install github.com/blackchip-org/zc/v5/cmd/zc@latest
+    go install github.com/blackchip-org/zc/v6/cmd/zc@latest
 
 Run the calculator with:
 

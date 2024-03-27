@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/blackchip-org/zc/v5/pkg/doc"
+	"github.com/blackchip-org/zc/v6/pkg/doc"
 )
 
 func main() {
