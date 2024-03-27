@@ -51,14 +51,20 @@
 
 - [i16-max](ops/int.md#i16-max): Maximum 16-bit integer
 - [i16-min](ops/int.md#i16-min): Minimum 16-bit integer
-- [i32-max](ops/int.md#i32-max) (int): Maximum 32-bit integer
-- [i32-max](ops/int.md#i32-max) (int): Minimum 32-bit integer
+- [i16?](ops/int.md#i16?): Is value a 16-bit integer?
+- [i32-max](ops/int.md#i32-max): Maximum 32-bit integer
+- [i32-min](ops/int.md#i32-min): Minimum 32-bit integer
+- [i32?](ops/int.md#i32?): Is value a 32-bit integer?
 - [i64-max](ops/int.md#i64-max): Maximum 64-bit integer
 - [i64-min](ops/int.md#i64-min): Minimum 64-bit integer
+- [i64?](ops/int.md#i64?): Is value an 64-bit integer?
 - [i8-max](ops/int.md#i8-max): Maximum 8-bit integer
 - [i8-min](ops/int.md#i8-min): Minimum 8-bit integer
+- [i8?](ops/int.md#i8?): Is value an 8-bit integer?
 - [ia-max](ops/int.md#ia-max): Maximum architecture-dependant integer
 - [ia-min](ops/int.md#ia-min): Minimum architecture-dependant integer
+- [ia?](ops/int.md#ia?): Is value an architecture-independent integer?
+- [int](ops/int.md#int): Convert to integer
 
 ## M
 
@@ -127,7 +133,12 @@
 ## U
 
 - [u16-max](ops/int.md#u16-max): Maximum 16-bit unsigned integer
+- [u16?](ops/int.md#u16?): Is value a 16-bit unsigned integer?
 - [u32-max](ops/int.md#u32-max): Maximum 32-bit unsigned integer
+- [u32?](ops/int.md#u32?): Is value a 32-bit unsigned integer?
 - [u64-max](ops/int.md#u64-max): Maximum 64-bit unsigned integer
+- [u64?](ops/int.md#u64?): Is value a 64-bit unsigned integer?
 - [u8-max](ops/int.md#u8-max): Maximum 8-bit unsigned integer
+- [u8?](ops/int.md#u8?): Is value an 8-bit unsigned integer?
 - [ua-max](ops/int.md#ua-max): Maximum architecture-dependant unsigned integer
+- [ua?](ops/int.md#ua?): Is value an architecture-independent unsigned integer?

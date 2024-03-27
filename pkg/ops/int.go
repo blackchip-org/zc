@@ -165,6 +165,116 @@ func DivModBigInt(c zc.Calc) {
 }
 
 /*
+oper	int?
+func	IsInt		Val -- Bool
+title 	int?
+*/
+func IsInt(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.BigInt.Is(x))
+}
+
+/*
+oper	ia?
+func	IsIntArch	Val -- Bool
+title 	ia?
+*/
+func IsIntArch(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Int.Is(x))
+}
+
+/*
+oper	i64?
+func	IsInt64		Val -- Bool
+title 	i64?
+*/
+func IsInt64(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Int64.Is(x))
+}
+
+/*
+oper	i32?
+func	IsInt32		Val -- Bool
+title 	i32?
+*/
+func IsInt32(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Int32.Is(x))
+}
+
+/*
+oper	i16?
+func	IsInt16		Val -- Bool
+title 	i16?
+*/
+func IsInt16(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Int16.Is(x))
+}
+
+/*
+oper	i8?
+func	IsInt8		Val -- Bool
+title 	i8?
+*/
+func IsInt8(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Int8.Is(x))
+}
+
+/*
+oper	ua?
+func	IsUintArch	Val -- Bool
+title 	ia?
+*/
+func IsUintArch(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Uint.Is(x))
+}
+
+/*
+oper	u64?
+func	IsUint64		Val -- Bool
+title 	u64?
+*/
+func IsUint64(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Uint64.Is(x))
+}
+
+/*
+oper	u32?
+func	IsUint32		Val -- Bool
+title 	u32?
+*/
+func IsUint32(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Uint32.Is(x))
+}
+
+/*
+oper	u16?
+func	IsUint16		Val -- Bool
+title 	u16?
+*/
+func IsUint16(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Uint16.Is(x))
+}
+
+/*
+oper	u8?
+func	IsUint8		Val -- Bool
+title 	u8?
+*/
+func IsUint8(c zc.Calc) {
+	x := zc.PopString(c)
+	zc.PushBool(c, zc.Uint8.Is(x))
+}
+
+/*
 oper	ia-max
 func	MaxIntArch -- Int
 title	ia-max
@@ -262,6 +372,40 @@ oper	u8-max
 macro	255
 title	u8-max
 */
+
+/*
+oper	int
+func	IntBigInt	BigInt -- BigInt
+func	IntBigFloat	BigFloat -- BigInt
+func	IntDecimal	Decimal -- BigInt
+func 	IntRational Rational -- BigInt
+title	 int
+*/
+func IntBigInt(c zc.Calc) {
+	x := zc.PopBigInt(c)
+	zc.PushBigInt(c, x)
+}
+
+func IntBigFloat(c zc.Calc) {
+	var r big.Int
+	x := zc.PopBigFloat(c)
+	x.Int(&r)
+	zc.PushBigInt(c, &r)
+
+}
+
+func IntDecimal(c zc.Calc) {
+	x := zc.PopDecimal(c)
+	zc.PushBigInt(c, x.BigInt())
+}
+
+func IntRational(c zc.Calc) {
+	x := zc.PopRational(c)
+	n := x.Num()
+	d := x.Denom()
+	n.Quo(n, d)
+	zc.PushBigInt(c, n)
+}
 
 func ModBigInt(c zc.Calc) {
 	var zero big.Int

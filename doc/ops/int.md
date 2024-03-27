@@ -4,50 +4,95 @@
 
 Integer numbers
 
+## Overview
+
+For integer operations, the calculator prefers using arbitrary-precision
+functions provided by the [math/big](https://pkg.go.dev/math/big) library.
+This type is simply called `BigInt` in the documentation.
+
+Formatting characters are first removed when parsing an integer value. Those
+characters are:
+
+- Thousand separators (`','`, `'_'`, `' '`)
+- Currency symbols ('`$'`, `'€'`, `'¥'`)
+
+The following values all parse to the same number:
+
+<!-- test: parse-formatting-int -->
+
+| Input            | Stack
+|------------------|-------------
+| `c 12,345 int`   | `12345`
+| `c 12_345 int`   | `12345`
+| `c '12_345' int` | `12345`
+| `c $12,345 int`  | `12345`
+| `c 12,345$ int`  | `12345`
+
+Certain operations may call functions that rely on using native integer types
+defined by the implementing language.
+
+- Signed integers of various bit sizes: `Int64`, `Int32`, `Int16`, and `Int8`
+- Unsigned integers of various bit sizes: `Uint64`, `Unt32`, `Uint16`, and `Uint8`
+- Integers of a size that is architecture-dependent: `Int` and `Uint`
+
+For the `add`, `mul`, and `sub` operations, there is a corresponding
+operation specifically for each native type (e.g., `add-i64` or
+`mul-u16`). These can be useful to see if an calculation would cause an
+overflow condition and to see what the result is in that case.
+
+Use `int?` to see if a value can be parsed as an integer or use one of the
+more specific types such as `i64?`
+
+Integer division can either use Euclidean division with `div` and `div-mod`
+or truncated division with `quo` and `quo-rem`.
+
+
+
 ## Index
 
 | Operation | Description
 |-----------|------------
 | [`add, a, +`](#add) | Addition
-| [`add-ia`](#add-ia) | Addition, architecture-dependent integer
-| [`add-i64`](#add-i64) | Addition, 64-bit integer
-| [`add-i32`](#add-i32) | Addition, 32-bit integer
 | [`add-i16`](#add-i16) | Addition, 16-bit integer
+| [`add-i32`](#add-i32) | Addition, 32-bit integer
+| [`add-i64`](#add-i64) | Addition, 64-bit integer
 | [`add-i8`](#add-i8) | Addition, 8-bit integer
-| [`add-ua`](#add-ua) | Addition, architecture-dependent unsigned integer
-| [`add-u64`](#add-u64) | Addition, 64-bit unsigned integer
-| [`add-u32`](#add-u32) | Addition, 32-bit unsigned integer
+| [`add-ia`](#add-ia) | Addition, architecture-dependent integer
 | [`add-u16`](#add-u16) | Addition, 16-bit unsigned integer
+| [`add-u32`](#add-u32) | Addition, 32-bit unsigned integer
+| [`add-u64`](#add-u64) | Addition, 64-bit unsigned integer
 | [`add-u8`](#add-u8) | Addition, 8-bit unsigned integer
+| [`add-ua`](#add-ua) | Addition, architecture-dependent unsigned integer
 | [`div-int, d-int`](#div-int) | Euclidean division
 | [`div-mod-int, dm-int`](#div-mod-int) | Euclidean division with modulus
-| [`ia-max`](#ia-max) | Maximum architecture-dependant integer
-| [`i64-max`](#i64-max) | Maximum 64-bit integer
-| [`i32-max`](#i32-max) | Maximum 32-bit integer
 | [`i16-max`](#i16-max) | Maximum 16-bit integer
-| [`i8-max`](#i8-max) | Maximum 8-bit integer
-| [`ia-min`](#ia-min) | Minimum architecture-dependant integer
-| [`i64-min`](#i64-min) | Minimum 64-bit integer
-| [`i32-max`](#i32-max) | Minimum 32-bit integer
 | [`i16-min`](#i16-min) | Minimum 16-bit integer
+| [`i16?`](#i16?) | Is value a 16-bit integer?
+| [`i32-max`](#i32-max) | Maximum 32-bit integer
+| [`i32-min`](#i32-min) | Minimum 32-bit integer
+| [`i32?`](#i32?) | Is value a 32-bit integer?
+| [`i64-max`](#i64-max) | Maximum 64-bit integer
+| [`i64-min`](#i64-min) | Minimum 64-bit integer
+| [`i64?`](#i64?) | Is value an 64-bit integer?
+| [`i8-max`](#i8-max) | Maximum 8-bit integer
 | [`i8-min`](#i8-min) | Minimum 8-bit integer
-| [`ua-max`](#ua-max) | Maximum architecture-dependant unsigned integer
-| [`u64-max`](#u64-max) | Maximum 64-bit unsigned integer
-| [`u32-max`](#u32-max) | Maximum 32-bit unsigned integer
-| [`u16-max`](#u16-max) | Maximum 16-bit unsigned integer
-| [`u8-max`](#u8-max) | Maximum 8-bit unsigned integer
+| [`i8?`](#i8?) | Is value an 8-bit integer?
+| [`ia-max`](#ia-max) | Maximum architecture-dependant integer
+| [`ia-min`](#ia-min) | Minimum architecture-dependant integer
+| [`ia?`](#ia?) | Is value an architecture-independent integer?
+| [`int`](#int) | Convert to integer
 | [`mod`](#mod) | Modulus
 | [`mul, m, *`](#mul) | Multiplication
-| [`mul-ia`](#mul-ia) | Multiplication, architecture-dependent integer
-| [`mul-i64`](#mul-i64) | Multiplication, 64-bit integer
-| [`mul-i32`](#mul-i32) | Multiplication, 32-bit integer
 | [`mul-i16`](#mul-i16) | Multiplication, 16-bit integer
+| [`mul-i32`](#mul-i32) | Multiplication, 32-bit integer
+| [`mul-i64`](#mul-i64) | Multiplication, 64-bit integer
 | [`mul-i8`](#mul-i8) | Multiplication, 8-bit integer
-| [`mul-ua`](#mul-ua) | Multiplication, architecture-dependent unsigned integer
-| [`mul-u64`](#mul-u64) | Multiplication, 64-bit unsigned integer
-| [`mul-u32`](#mul-u32) | Multiplication, 32-bit unsigned integer
+| [`mul-ia`](#mul-ia) | Multiplication, architecture-dependent integer
 | [`mul-u16`](#mul-u16) | Multiplication, 16-bit unsigned integer
+| [`mul-u32`](#mul-u32) | Multiplication, 32-bit unsigned integer
+| [`mul-u64`](#mul-u64) | Multiplication, 64-bit unsigned integer
 | [`mul-u8`](#mul-u8) | Multiplication, 8-bit unsigned integer
+| [`mul-ua`](#mul-ua) | Multiplication, architecture-dependent unsigned integer
 | [`neg`](#neg) | Negation
 | [`pow, **`](#pow) | Exponentiation
 | [`quo-int, q-int`](#quo-int) | Truncated division
@@ -56,16 +101,26 @@ Integer numbers
 | [`sign`](#sign) | Sign
 | [`sqrt-int`](#sqrt-int) | Square root
 | [`sub, s, -`](#sub) | Subtraction
-| [`sub-ia`](#sub-ia) | Subtraction, architecture-dependent integer
-| [`sub-i64`](#sub-i64) | Subtraction, 64-bit integer
-| [`sub-i32`](#sub-i32) | Subtraction, 32-bit integer
 | [`sub-i16`](#sub-i16) | Subtraction, 16-bit integer
+| [`sub-i32`](#sub-i32) | Subtraction, 32-bit integer
+| [`sub-i64`](#sub-i64) | Subtraction, 64-bit integer
 | [`sub-i8`](#sub-i8) | Subtraction, 8-bit integer
-| [`sub-ua`](#sub-ua) | Subtraction, architecture-dependent unsigned integer
-| [`sub-u64`](#sub-u64) | Subtraction, 64-bit unsigned integer
-| [`sub-u32`](#sub-u32) | Subtraction, 32-bit unsigned integer
+| [`sub-ia`](#sub-ia) | Subtraction, architecture-dependent integer
 | [`sub-u16`](#sub-u16) | Subtraction, 16-bit unsigned integer
+| [`sub-u32`](#sub-u32) | Subtraction, 32-bit unsigned integer
+| [`sub-u64`](#sub-u64) | Subtraction, 64-bit unsigned integer
 | [`sub-u8`](#sub-u8) | Subtraction, 8-bit unsigned integer
+| [`sub-ua`](#sub-ua) | Subtraction, architecture-dependent unsigned integer
+| [`u16-max`](#u16-max) | Maximum 16-bit unsigned integer
+| [`u16?`](#u16?) | Is value a 16-bit unsigned integer?
+| [`u32-max`](#u32-max) | Maximum 32-bit unsigned integer
+| [`u32?`](#u32?) | Is value a 32-bit unsigned integer?
+| [`u64-max`](#u64-max) | Maximum 64-bit unsigned integer
+| [`u64?`](#u64?) | Is value a 64-bit unsigned integer?
+| [`u8-max`](#u8-max) | Maximum 8-bit unsigned integer
+| [`u8?`](#u8?) | Is value an 8-bit unsigned integer?
+| [`ua-max`](#ua-max) | Maximum architecture-dependant unsigned integer
+| [`ua?`](#ua?) | Is value an architecture-independent unsigned integer?
 
 ## Operations
 
@@ -85,65 +140,10 @@ Example:
 | `2` | `6 \| 2`
 | `a` | `8`
 
-### add-ia
-
-Adds the value of *x* to *y*. If the result does not fit into an 
-architecture-dependent integer, the value rolls over. 
-
-```
-( x:Int y:Int -- x:Int )
-```
-
-Example:
-
-<!-- test: add-ia -->
-
-| Input | Stack
-|-------|------
-| `ia-max 1 add-ia ia-min eq` | `true`
-
-### add-i64
-
-Adds the value of *x* to *y*. If the result does not fit into a
-64-bit integer, the value rolls over. 
-
-```
-( x:Int64 y:Int64 -- x:Int64 )
-```
-
-Example:
-
-<!-- test: add-i64 -->
-
-| Input | Stack
-|-------|------
-| `0x7fffffffffffffff` | `0x7fffffffffffffff`
-| `1` | `0x7fffffffffffffff \| 1`
-| `add-i64` | `-9223372036854775808`
-
-### add-i32
-
-Adds the value of *x* to *y*. If the result does not fit into a
-32-bit integer, the value rolls over. 
-
-```
-( x:Int32 y:Int32 -- x:Int32 )
-```
-
-Example:
-
-<!-- test: add-i32 -->
-
-| Input | Stack
-|-------|------
-| `0x7fffffff` | `0x7fffffff`
-| `1` | `0x7fffffff \| 1`
-| `add-i32` | `-2147483648`
-
 ### add-i16
 
 Adds the value of *x* to *y*. If the result does not fit into a
-64-bit integer, the value rolls over. 
+64-bit integer, the value rolls over.
 
 ```
 ( x:Int16 y:Int16 -- x:Int16 )
@@ -159,10 +159,48 @@ Example:
 | `1` | `0x7fff \| 1`
 | `add-i16` | `-32768`
 
+### add-i32
+
+Adds the value of *x* to *y*. If the result does not fit into a
+32-bit integer, the value rolls over.
+
+```
+( x:Int32 y:Int32 -- x:Int32 )
+```
+
+Example:
+
+<!-- test: add-i32 -->
+
+| Input | Stack
+|-------|------
+| `0x7fffffff` | `0x7fffffff`
+| `1` | `0x7fffffff \| 1`
+| `add-i32` | `-2147483648`
+
+### add-i64
+
+Adds the value of *x* to *y*. If the result does not fit into a
+64-bit integer, the value rolls over.
+
+```
+( x:Int64 y:Int64 -- x:Int64 )
+```
+
+Example:
+
+<!-- test: add-i64 -->
+
+| Input | Stack
+|-------|------
+| `0x7fffffffffffffff` | `0x7fffffffffffffff`
+| `1` | `0x7fffffffffffffff \| 1`
+| `add-i64` | `-9223372036854775808`
+
 ### add-i8
 
 Adds the value of *x* to *y*. If the result does not fit into a
-8-bit integer, the value rolls over. 
+8-bit integer, the value rolls over.
 
 ```
 ( x:Int8 y:Int8 -- x:Int8 )
@@ -178,65 +216,27 @@ Example:
 | `1` | `0x7f \| 1`
 | `add-i8` | `-128`
 
-### add-ua
+### add-ia
 
-Adds the value of *x* to *y*. If the result does not fit into an 
-architecture-dependent unsigned integer, the value rolls over. 
-
-```
-( x:Uint y:Uint -- x:Uint )
-```
-
-Example:
-
-<!-- test: add-ua -->
-
-| Input | Stack
-|-------|------
-| `ua-max 1 add-ua` | `0`
-
-### add-u64
-
-Adds the value of *x* to *y*. If the result does not fit into a
-64-bit unsigned integer, the value rolls over. 
+Adds the value of *x* to *y*. If the result does not fit into an
+architecture-dependent integer, the value rolls over.
 
 ```
-( x:Uint64 y:Uint64 -- x:Uint64 )
+( x:Int y:Int -- x:Int )
 ```
 
 Example:
 
-<!-- test: add-u64 -->
+<!-- test: add-ia -->
 
 | Input | Stack
 |-------|------
-| `0xffffffffffffffff` | `0xffffffffffffffff`
-| `1` | `0xffffffffffffffff \| 1`
-| `add-u64` | `0`
-
-### add-u32
-
-Adds the value of *x* to *y*. If the result does not fit into a
-32-bit unsigned integer, the value rolls over. 
-
-```
-( x:Uint32 y:Uint32 -- x:Uint32 )
-```
-
-Example:
-
-<!-- test: add-u32 -->
-
-| Input | Stack
-|-------|------
-| `0xffffffff` | `0xffffffff`
-| `1` | `0xffffffff \| 1`
-| `add-u32` | `0`
+| `ia-max 1 add-ia ia-min eq` | `true`
 
 ### add-u16
 
 Adds the value of *x* to *y*. If the result does not fit into a
-64-bit unsigned integer, the value rolls over. 
+64-bit unsigned integer, the value rolls over.
 
 ```
 ( x:Uint16 y:Uint16 -- x:Uint16 )
@@ -252,10 +252,48 @@ Example:
 | `1` | `0xffff \| 1`
 | `add-u16` | `0`
 
+### add-u32
+
+Adds the value of *x* to *y*. If the result does not fit into a
+32-bit unsigned integer, the value rolls over.
+
+```
+( x:Uint32 y:Uint32 -- x:Uint32 )
+```
+
+Example:
+
+<!-- test: add-u32 -->
+
+| Input | Stack
+|-------|------
+| `0xffffffff` | `0xffffffff`
+| `1` | `0xffffffff \| 1`
+| `add-u32` | `0`
+
+### add-u64
+
+Adds the value of *x* to *y*. If the result does not fit into a
+64-bit unsigned integer, the value rolls over.
+
+```
+( x:Uint64 y:Uint64 -- x:Uint64 )
+```
+
+Example:
+
+<!-- test: add-u64 -->
+
+| Input | Stack
+|-------|------
+| `0xffffffffffffffff` | `0xffffffffffffffff`
+| `1` | `0xffffffffffffffff \| 1`
+| `add-u64` | `0`
+
 ### add-u8
 
 Adds the value of *x* to *y*. If the result does not fit into a
-8-bit unsigned integer, the value rolls over. 
+8-bit unsigned integer, the value rolls over.
 
 ```
 ( x:Uint8 y:Uint8 -- x:Uint8 )
@@ -271,10 +309,27 @@ Example:
 | `1` | `0xff \| 1`
 | `add-u8` | `0`
 
+### add-ua
+
+Adds the value of *x* to *y*. If the result does not fit into an
+architecture-dependent unsigned integer, the value rolls over.
+
+```
+( x:Uint y:Uint -- x:Uint )
+```
+
+Example:
+
+<!-- test: add-ua -->
+
+| Input | Stack
+|-------|------
+| `ua-max 1 add-ua` | `0`
+
 ### div-int
 
-Divides the value of *x* by *y* using Euclidean division. If *y* is zero, a 
-division by zero error is raised. 
+Divides the value of *x* by *y* using Euclidean division. If *y* is zero, a
+division by zero error is raised.
 
 Alias: `d-int`
 
@@ -295,8 +350,8 @@ Example:
 ### div-mod-int
 
 Divides the value of *x* by *y* using Euclidean division and returns the
-quotient *q* and the modulus *m*. If *y* is zero, a division by zero 
-error is raised. 
+quotient *q* and the modulus *m*. If *y* is zero, a division by zero
+error is raised.
 
 Alias: `dm-int`
 
@@ -314,54 +369,6 @@ Example:
 | `3` | `-20 \| 3`
 | `div-mod-int` | `-7 \| 1 # modulus`
 
-### ia-max
-
-Maximum architecture-dependant integer.
-
-```
-(  -- Int )
-```
-
-Example:
-
-<!-- test: ia-max -->
-
-| Input | Stack
-|-------|------
-| `ia-max 1 add-ia ia-min eq` | `true`
-
-### i64-max
-
-Maximum 64-bit integer.
-
-```
-def i64-max 9223372036854775807
-```
-
-Example:
-
-<!-- test: i64-max -->
-
-| Input | Stack
-|-------|------
-| `i64-max` | `9223372036854775807`
-
-### i32-max
-
-Maximum 32-bit integer.
-
-```
-def i32-max 2147483647
-```
-
-Example:
-
-<!-- test: i32-max -->
-
-| Input | Stack
-|-------|------
-| `i32-max` | `2147483647`
-
 ### i16-max
 
 Maximum 16-bit integer.
@@ -377,70 +384,6 @@ Example:
 | Input | Stack
 |-------|------
 | `i16-max` | `32767`
-
-### i8-max
-
-Maximum 8-bit integer.
-
-```
-def i8-max 127
-```
-
-Example:
-
-<!-- test: i8-max -->
-
-| Input | Stack
-|-------|------
-| `i8-max` | `127`
-
-### ia-min
-
-Minimum architecture-dependant integer.
-
-```
-(  -- Int )
-```
-
-Example:
-
-<!-- test: ia-min -->
-
-| Input | Stack
-|-------|------
-| `ia-min -1 add-ia ia-max eq` | `true`
-
-### i64-min
-
-Minimum 64-bit integer.
-
-```
-def i64-min -9223372036854775808
-```
-
-Example:
-
-<!-- test: i64-min -->
-
-| Input | Stack
-|-------|------
-| `i64-min` | `-9223372036854775808`
-
-### i32-max
-
-Minimum 32-bit integer.
-
-```
-def i32-max -2147483648
-```
-
-Example:
-
-<!-- test: i32-max -->
-
-| Input | Stack
-|-------|------
-| `i32-min` | `-2147483648`
 
 ### i16-min
 
@@ -458,6 +401,143 @@ Example:
 |-------|------
 | `i16-min` | `-32768`
 
+### i16?
+
+'true' if *x* can be parsed as a 16-bit integer, otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: i16? -->
+
+| Input | Stack
+|-------|------
+| `c 12 i16?` | `true`
+| `c -12 i16?` | `true`
+| `c 1.2 i16?` | `false`
+| `c 2 32 pow i16?` | `false`
+
+### i32-max
+
+Maximum 32-bit integer.
+
+```
+def i32-max 2147483647
+```
+
+Example:
+
+<!-- test: i32-max -->
+
+| Input | Stack
+|-------|------
+| `i32-max` | `2147483647`
+
+### i32-min
+
+Minimum 32-bit integer.
+
+```
+def i32-min -2147483648
+```
+
+Example:
+
+<!-- test: i32-min -->
+
+| Input | Stack
+|-------|------
+| `i32-min` | `-2147483648`
+
+### i32?
+
+'true' if *x* can be parsed as a 32-bit integer, otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: i32? -->
+
+| Input | Stack
+|-------|------
+| `c 12 i32?` | `true`
+| `c -12 i32?` | `true`
+| `c 1.2 i32?` | `false`
+| `c 2 64 pow i32?` | `false`
+
+### i64-max
+
+Maximum 64-bit integer.
+
+```
+def i64-max 9223372036854775807
+```
+
+Example:
+
+<!-- test: i64-max -->
+
+| Input | Stack
+|-------|------
+| `i64-max` | `9223372036854775807`
+
+### i64-min
+
+Minimum 64-bit integer.
+
+```
+def i64-min -9223372036854775808
+```
+
+Example:
+
+<!-- test: i64-min -->
+
+| Input | Stack
+|-------|------
+| `i64-min` | `-9223372036854775808`
+
+### i64?
+
+'true' if *x* can be parsed as a 64-bit integer, otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: i64? -->
+
+| Input | Stack
+|-------|------
+| `c 12 i64?` | `true`
+| `c -12 i64?` | `true`
+| `c 1.2 i64?` | `false`
+| `c 2 128 pow i64?` | `false`
+
+### i8-max
+
+Maximum 8-bit integer.
+
+```
+def i8-max 127
+```
+
+Example:
+
+<!-- test: i8-max -->
+
+| Input | Stack
+|-------|------
+| `i8-max` | `127`
+
 ### i8-min
 
 Minimum 8-bit integer.
@@ -474,85 +554,96 @@ Example:
 |-------|------
 | `i8-min` | `-128`
 
-### ua-max
+### i8?
 
-Maximum architecture-dependant unsigned integer
-
-```
-(  -- UInt )
-```
-
-Example:
-
-<!-- test: ua-max -->
-
-| Input | Stack
-|-------|------
-| `ua-max 1 add-ua` | `0`
-
-### u64-max
-
-Maximum 64-bit unsigned integer.
+'true' if *x* can be parsed as an 8-bit integer, otherwise 'false'
 
 ```
-def u64-max 18446744073709551615
+( x:Val -- x:Bool )
 ```
 
 Example:
 
-<!-- test: u64-max -->
+<!-- test: i8? -->
 
 | Input | Stack
 |-------|------
-| `u64-max` | `18446744073709551615`
+| `c 12 i8?` | `true`
+| `c -12 i8?` | `true`
+| `c 1.2 i8?` | `false`
+| `c 2 16 pow i8?` | `false`
 
-### u32-max
+### ia-max
 
-Maximum 32-bit unsigned integer.
+Maximum architecture-dependant integer.
 
 ```
-def u32-max 4294967295
+(  -- Int )
 ```
 
 Example:
 
-<!-- test: u32-max -->
+<!-- test: ia-max -->
 
 | Input | Stack
 |-------|------
-| `u32-max` | `4294967295`
+| `ia-max 1 add-ia ia-min eq` | `true`
 
-### u16-max
+### ia-min
 
-Maximum 16-bit unsigned integer.
+Minimum architecture-dependant integer.
 
 ```
-def u16-max 65535
+(  -- Int )
 ```
 
 Example:
 
-<!-- test: u16-max -->
+<!-- test: ia-min -->
 
 | Input | Stack
 |-------|------
-| `u16-max` | `65535`
+| `ia-min -1 add-ia ia-max eq` | `true`
 
-### u8-max
+### ia?
 
-Maximum 8-bit unsigned integer.
+'true' if *x* can be parsed as an architecture-independent integer,
+otherwise 'false'
 
 ```
-def u8-max 255
+( x:Val -- x:Bool )
 ```
 
 Example:
 
-<!-- test: u8-max -->
+<!-- test: ia? -->
 
 | Input | Stack
 |-------|------
-| `u8-max` | `255`
+| `c 12 ia?` | `true`
+| `c -12 ia?` | `true`
+| `c 1.2 ia?` | `false`
+| `c 2 128 pow ia?` | `false`
+
+### int
+
+Converts *x* to an integer using truncation when necessary.
+
+```
+( BigInt -- BigInt )
+( Decimal -- BigInt )
+( Rational -- BigInt )
+```
+
+Example:
+
+<!-- test: int -->
+
+| Input | Stack
+|-------|------
+| `c 1,234.56 int` | `1234`
+| `c 1e4 int` | `10000`
+| `c 9/2 int` | `4`
 
 ### mod
 
@@ -583,65 +674,10 @@ Example:
 | `2` | `6 \| 2`
 | `m` | `12`
 
-### mul-ia
-
-Multiplies the value of *x* to *y*. If the result does not fit into an
-architecture-independent integer, the value rolls over. 
-
-```
-( x:Int y:Int -- x:Int )
-```
-
-Example:
-
-<!-- test: mul-ia -->
-
-| Input | Stack
-|-------|------
-| `ia-max 2 mul-ia` | `-2`
-
-### mul-i64
-
-Multiplies the value of *x* to *y*. If the result does not fit into a
-64-bit integer, the value rolls over. 
-
-```
-( x:Int64 y:Int64 -- x:Int64 )
-```
-
-Example:
-
-<!-- test: mul-i64 -->
-
-| Input | Stack
-|-------|------
-| `9,223,372,036,854,775,807` | `9,223,372,036,854,775,807`
-| `2` | `9,223,372,036,854,775,807 \| 2`
-| `mul-i64` | `-2`
-
-### mul-i32
-
-Multiplies the value of *x* to *y*. If the result does not fit into a
-32-bit integer, the value rolls over. 
-
-```
-( x:Int32 y:Int32 -- x:Int32 )
-```
-
-Example:
-
-<!-- test: mul-i32 -->
-
-| Input | Stack
-|-------|------
-| `2,147,483,647` | `2,147,483,647`
-| `2` | `2,147,483,647 \| 2`
-| `mul-i32` | `-2`
-
 ### mul-i16
 
 Multiplies the value of *x* to *y*. If the result does not fit into a
-16-bit integer, the value rolls over. 
+16-bit integer, the value rolls over.
 
 ```
 ( x:Int16 y:Int16 -- x:Int16 )
@@ -657,10 +693,48 @@ Example:
 | `2` | `32,767 \| 2`
 | `mul-i16` | `-2`
 
+### mul-i32
+
+Multiplies the value of *x* to *y*. If the result does not fit into a
+32-bit integer, the value rolls over.
+
+```
+( x:Int32 y:Int32 -- x:Int32 )
+```
+
+Example:
+
+<!-- test: mul-i32 -->
+
+| Input | Stack
+|-------|------
+| `2,147,483,647` | `2,147,483,647`
+| `2` | `2,147,483,647 \| 2`
+| `mul-i32` | `-2`
+
+### mul-i64
+
+Multiplies the value of *x* to *y*. If the result does not fit into a
+64-bit integer, the value rolls over.
+
+```
+( x:Int64 y:Int64 -- x:Int64 )
+```
+
+Example:
+
+<!-- test: mul-i64 -->
+
+| Input | Stack
+|-------|------
+| `9,223,372,036,854,775,807` | `9,223,372,036,854,775,807`
+| `2` | `9,223,372,036,854,775,807 \| 2`
+| `mul-i64` | `-2`
+
 ### mul-i8
 
 Multiplies the value of *x* to *y*. If the result does not fit into an
-8-bit integer, the value rolls over. 
+8-bit integer, the value rolls over.
 
 ```
 ( x:Int8 y:Int8 -- x:Int8 )
@@ -676,65 +750,27 @@ Example:
 | `2` | `127 \| 2`
 | `mul-i8` | `-2`
 
-### mul-ua
+### mul-ia
 
 Multiplies the value of *x* to *y*. If the result does not fit into an
-architecture-independent unsigned integer, the value rolls over. 
+architecture-independent integer, the value rolls over.
 
 ```
-( x:Uint y:Uint -- x:Uint )
-```
-
-Example:
-
-<!-- test: mul-ua -->
-
-| Input | Stack
-|-------|------
-| `ua-max 2 mul-ua 1 add ua-max eq` | `true`
-
-### mul-u64
-
-Multiplies the value of *x* to *y*. If the result does not fit into a
-64-bit unsigned integer, the value rolls over. 
-
-```
-( x:Uint64 y:Uint64 -- x:Uint64 )
+( x:Int y:Int -- x:Int )
 ```
 
 Example:
 
-<!-- test: mul-u64 -->
+<!-- test: mul-ia -->
 
 | Input | Stack
 |-------|------
-| `0xfedcba9876543210` | `0xfedcba9876543210`
-| `0x10` | `0xfedcba9876543210 \| 0x10`
-| `mul-u64 hex` | `0xedcba98765432100`
-
-### mul-u32
-
-Multiplies the value of *x* to *y*. If the result does not fit into a
-32-bit unsigned integer, the value rolls over. 
-
-```
-( x:Uint32 y:Uint32 -- x:Uint32 )
-```
-
-Example:
-
-<!-- test: mul-u32 -->
-
-| Input | Stack
-|-------|------
-| `0xfedcba98` | `0xfedcba98`
-| `0x10` | `0xfedcba98 \| 0x10`
-| `mul-u32 hex` | `0xedcba980`
+| `ia-max 2 mul-ia` | `-2`
 
 ### mul-u16
 
 Multiplies the value of *x* to *y*. If the result does not fit into a
-16-bit unsigned integer, the value rolls over. 
+16-bit unsigned integer, the value rolls over.
 
 ```
 ( x:Uint16 y:Uint16 -- x:Uint16 )
@@ -750,10 +786,48 @@ Example:
 | `0x10` | `0xfedc \| 0x10`
 | `mul-u16 hex` | `0xedc0`
 
+### mul-u32
+
+Multiplies the value of *x* to *y*. If the result does not fit into a
+32-bit unsigned integer, the value rolls over.
+
+```
+( x:Uint32 y:Uint32 -- x:Uint32 )
+```
+
+Example:
+
+<!-- test: mul-u32 -->
+
+| Input | Stack
+|-------|------
+| `0xfedcba98` | `0xfedcba98`
+| `0x10` | `0xfedcba98 \| 0x10`
+| `mul-u32 hex` | `0xedcba980`
+
+### mul-u64
+
+Multiplies the value of *x* to *y*. If the result does not fit into a
+64-bit unsigned integer, the value rolls over.
+
+```
+( x:Uint64 y:Uint64 -- x:Uint64 )
+```
+
+Example:
+
+<!-- test: mul-u64 -->
+
+| Input | Stack
+|-------|------
+| `0xfedcba9876543210` | `0xfedcba9876543210`
+| `0x10` | `0xfedcba9876543210 \| 0x10`
+| `mul-u64 hex` | `0xedcba98765432100`
+
 ### mul-u8
 
 Multiplies the value of *x* to *y*. If the result does not fit into an
-8-bit unsigned integer, the value rolls over. 
+8-bit unsigned integer, the value rolls over.
 
 ```
 ( x:Uint8 y:Uint8 -- x:Uint8 )
@@ -768,6 +842,23 @@ Example:
 | `0xfe` | `0xfe`
 | `0x10` | `0xfe \| 0x10`
 | `mul-u8 hex` | `0xe0`
+
+### mul-ua
+
+Multiplies the value of *x* to *y*. If the result does not fit into an
+architecture-independent unsigned integer, the value rolls over.
+
+```
+( x:Uint y:Uint -- x:Uint )
+```
+
+Example:
+
+<!-- test: mul-ua -->
+
+| Input | Stack
+|-------|------
+| `ua-max 2 mul-ua 1 add ua-max eq` | `true`
 
 ### neg
 
@@ -801,8 +892,8 @@ Example:
 
 ### quo-int
 
-Divides the value of *x* by *y* using trunated division. If *y* is zero, a 
-division by zero error is raised. 
+Divides the value of *x* by *y* using trunated division. If *y* is zero, a
+division by zero error is raised.
 
 Alias: `q-int`
 
@@ -823,8 +914,8 @@ Example:
 ### quo-rem-int
 
 Divides the value of *x* by *y* using truncated division and returns the
-quotent *q* and the remainder *r*. If *y* is zero, a division by zero 
-error is raised. 
+quotent *q* and the remainder *r*. If *y* is zero, a division by zero
+error is raised.
 
 Alias: `qr-int`
 
@@ -844,7 +935,7 @@ Example:
 
 ### rem
 
-The remainder when *x* is divided by *y* using truncated division. If *y* 
+The remainder when *x* is divided by *y* using truncated division. If *y*
 is zero, a 'division by zero' error is raised.
 
 Example:
@@ -874,7 +965,7 @@ Example:
 
 ### sqrt-int
 
-The floor of the square root of *x*. 
+The floor of the square root of *x*.
 
 ```
 ( x:BigInt -- x:BigInt )
@@ -905,65 +996,10 @@ Example:
 | `2` | `6 \| 2`
 | `s` | `4`
 
-### sub-ia
-
-Subtracts the value of *y* from *x*. If the result does not fit into an 
-architecture-dependent integer, the value rolls over. 
-
-```
-( x:Int y:Int -- x:Int )
-```
-
-Example:
-
-<!-- test: sub-ia -->
-
-| Input | Stack
-|-------|------
-| `ia-min 1 sub-ia ia-max eq` | `true`
-
-### sub-i64
-
-Subtracts the value of *y* from *x*. If the result does not fit into a
-64-bit integer, the value rolls over. 
-
-```
-( x:Int64 y:Int64 -- x:Int64 )
-```
-
-Example:
-
-<!-- test: sub-i64 -->
-
-| Input | Stack
-|-------|------
-| `-9223372036854775808` | `-9223372036854775808`
-| `1` | `-9223372036854775808 \| 1`
-| `sub-i64` | `9223372036854775807`
-
-### sub-i32
-
-Subtracts the value of *y* from *x*. If the result does not fit into a
-32-bit integer, the value rolls over. 
-
-```
-( x:Int32 y:Int32 -- x:Int32 )
-```
-
-Example:
-
-<!-- test: sub-i32 -->
-
-| Input | Stack
-|-------|------
-| `-2147483648` | `-2147483648`
-| `1` | `-2147483648 \| 1`
-| `sub-i32` | `2147483647`
-
 ### sub-i16
 
 Subtracts the value of *y* from *x*. If the result does not fit into a
-16-bit integer, the value rolls over. 
+16-bit integer, the value rolls over.
 
 ```
 ( x:Int16 y:Int16 -- x:Int16 )
@@ -979,10 +1015,48 @@ Example:
 | `1` | `-32768 \| 1`
 | `sub-i16` | `32767`
 
+### sub-i32
+
+Subtracts the value of *y* from *x*. If the result does not fit into a
+32-bit integer, the value rolls over.
+
+```
+( x:Int32 y:Int32 -- x:Int32 )
+```
+
+Example:
+
+<!-- test: sub-i32 -->
+
+| Input | Stack
+|-------|------
+| `-2147483648` | `-2147483648`
+| `1` | `-2147483648 \| 1`
+| `sub-i32` | `2147483647`
+
+### sub-i64
+
+Subtracts the value of *y* from *x*. If the result does not fit into a
+64-bit integer, the value rolls over.
+
+```
+( x:Int64 y:Int64 -- x:Int64 )
+```
+
+Example:
+
+<!-- test: sub-i64 -->
+
+| Input | Stack
+|-------|------
+| `-9223372036854775808` | `-9223372036854775808`
+| `1` | `-9223372036854775808 \| 1`
+| `sub-i64` | `9223372036854775807`
+
 ### sub-i8
 
 Subtracts the value of *y* from *x*. If the result does not fit into an
-8-bit integer, the value rolls over. 
+8-bit integer, the value rolls over.
 
 ```
 ( x:Int8 y:Int8 -- x:Int8 )
@@ -998,65 +1072,27 @@ Example:
 | `1` | `-128 \| 1`
 | `sub-i8` | `127`
 
-### sub-ua
+### sub-ia
 
-Subtracts the value of *y* from *x*. If the result does not fit into an 
-architecture-dependent unsigned integer, the value rolls over. 
-
-```
-( x:Uint y:Uint -- x:Uint )
-```
-
-Example:
-
-<!-- test: sub-ua -->
-
-| Input | Stack
-|-------|------
-| `0 1 sub-ua ua-max eq` | `true`
-
-### sub-u64
-
-Subtracts the value of *y* from *x*. If the result does not fit into a
-64-bit unsigned integer, the value rolls over. 
+Subtracts the value of *y* from *x*. If the result does not fit into an
+architecture-dependent integer, the value rolls over.
 
 ```
-( x:Uint64 y:Uint64 -- x:Uint64 )
+( x:Int y:Int -- x:Int )
 ```
 
 Example:
 
-<!-- test: sub-u64 -->
+<!-- test: sub-ia -->
 
 | Input | Stack
 |-------|------
-| `0` | `0`
-| `1` | `0 \| 1`
-| `sub-u64` | `18446744073709551615`
-
-### sub-u32
-
-Subtracts the value of *y* from *x*. If the result does not fit into a
-32-bit unsigned integer, the value rolls over. 
-
-```
-( x:Uint32 y:Uint32 -- x:Uint32 )
-```
-
-Example:
-
-<!-- test: sub-u32 -->
-
-| Input | Stack
-|-------|------
-| `0` | `0`
-| `1` | `0 \| 1`
-| `sub-u32` | `4294967295`
+| `ia-min 1 sub-ia ia-max eq` | `true`
 
 ### sub-u16
 
 Subtracts the value of *y* from *x*. If the result does not fit into a
-16-bit unsigned integer, the value rolls over. 
+16-bit unsigned integer, the value rolls over.
 
 ```
 ( x:Uint16 y:Uint16 -- x:Uint16 )
@@ -1072,10 +1108,48 @@ Example:
 | `1` | `0 \| 1`
 | `sub-u16` | `65535`
 
+### sub-u32
+
+Subtracts the value of *y* from *x*. If the result does not fit into a
+32-bit unsigned integer, the value rolls over.
+
+```
+( x:Uint32 y:Uint32 -- x:Uint32 )
+```
+
+Example:
+
+<!-- test: sub-u32 -->
+
+| Input | Stack
+|-------|------
+| `0` | `0`
+| `1` | `0 \| 1`
+| `sub-u32` | `4294967295`
+
+### sub-u64
+
+Subtracts the value of *y* from *x*. If the result does not fit into a
+64-bit unsigned integer, the value rolls over.
+
+```
+( x:Uint64 y:Uint64 -- x:Uint64 )
+```
+
+Example:
+
+<!-- test: sub-u64 -->
+
+| Input | Stack
+|-------|------
+| `0` | `0`
+| `1` | `0 \| 1`
+| `sub-u64` | `18446744073709551615`
+
 ### sub-u8
 
 Subtracts the value of *x* to *y*. If the result does not fit into an
-8-bit unsigned integer, the value rolls over. 
+8-bit unsigned integer, the value rolls over.
 
 ```
 ( x:Uint8 y:Uint8 -- x:Uint8 )
@@ -1090,3 +1164,200 @@ Example:
 | `0` | `0`
 | `1` | `0 \| 1`
 | `sub-u8` | `255`
+
+### sub-ua
+
+Subtracts the value of *y* from *x*. If the result does not fit into an
+architecture-dependent unsigned integer, the value rolls over.
+
+```
+( x:Uint y:Uint -- x:Uint )
+```
+
+Example:
+
+<!-- test: sub-ua -->
+
+| Input | Stack
+|-------|------
+| `0 1 sub-ua ua-max eq` | `true`
+
+### u16-max
+
+Maximum 16-bit unsigned integer.
+
+```
+def u16-max 65535
+```
+
+Example:
+
+<!-- test: u16-max -->
+
+| Input | Stack
+|-------|------
+| `u16-max` | `65535`
+
+### u16?
+
+'true' if *x* can be parsed as a 16-bit unsigned integer,
+otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: u16? -->
+
+| Input | Stack
+|-------|------
+| `c 12 u16?` | `true`
+| `c -12 u16?` | `false`
+| `c 1.2 u16?` | `false`
+| `c 2 32 pow u16?` | `false`
+
+### u32-max
+
+Maximum 32-bit unsigned integer.
+
+```
+def u32-max 4294967295
+```
+
+Example:
+
+<!-- test: u32-max -->
+
+| Input | Stack
+|-------|------
+| `u32-max` | `4294967295`
+
+### u32?
+
+'true' if *x* can be parsed as a 32-bit unsigned integer,
+otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: u32? -->
+
+| Input | Stack
+|-------|------
+| `c 12 u32?` | `true`
+| `c -12 u32?` | `false`
+| `c 1.2 u32?` | `false`
+| `c 2 64 pow u32?` | `false`
+
+### u64-max
+
+Maximum 64-bit unsigned integer.
+
+```
+def u64-max 18446744073709551615
+```
+
+Example:
+
+<!-- test: u64-max -->
+
+| Input | Stack
+|-------|------
+| `u64-max` | `18446744073709551615`
+
+### u64?
+
+'true' if *x* can be parsed as a 64-bit unsigned integer,
+otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: u64? -->
+
+| Input | Stack
+|-------|------
+| `c 12 u64?` | `true`
+| `c -12 u64?` | `false`
+| `c 1.2 u64?` | `false`
+| `c 2 128 pow u64?` | `false`
+
+### u8-max
+
+Maximum 8-bit unsigned integer.
+
+```
+def u8-max 255
+```
+
+Example:
+
+<!-- test: u8-max -->
+
+| Input | Stack
+|-------|------
+| `u8-max` | `255`
+
+### u8?
+
+'true' if *x* can be parsed as an 8-bit unsigned integer,
+otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: u8? -->
+
+| Input | Stack
+|-------|------
+| `c 12 u8?` | `true`
+| `c -12 u8?` | `false`
+| `c 1.2 u8?` | `false`
+| `c 2 16 pow u8?` | `false`
+
+### ua-max
+
+Maximum architecture-dependant unsigned integer
+
+```
+(  -- UInt )
+```
+
+Example:
+
+<!-- test: ua-max -->
+
+| Input | Stack
+|-------|------
+| `ua-max 1 add-ua` | `0`
+
+### ua?
+
+'true' if *x* can be parsed as an architecture-independent unsigned
+integer, otherwise 'false'
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: ua? -->
+
+| Input | Stack
+|-------|------
+| `c 12 ua?` | `true`
+| `c -12 ua?` | `false`
+| `c 1.2 ua?` | `false`
+| `c 2 128 pow ua?` | `false`

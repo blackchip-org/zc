@@ -1,10 +1,12 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
 	"log"
 	"os"
 	"path"
+	"slices"
 	"strings"
 
 	"github.com/blackchip-org/zc/v5/pkg/doc"
@@ -46,6 +48,9 @@ func writeVol(vol doc.Vol) {
 	fmt.Fprintf(out, "| Operation | Description\n")
 	fmt.Fprintf(out, "|-----------|------------\n")
 
+	slices.SortFunc(vol.Ops, func(a doc.Op, b doc.Op) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
 	for _, op := range vol.Ops {
 		allNames := op.Name
 		if len(op.Aliases) > 0 {

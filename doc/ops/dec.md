@@ -54,9 +54,9 @@ To parse as a decimal, add a `d` suffix to the number. Example:
 | Operation | Description
 |-----------|------------
 | [`dec, decimal`](#dec) | Decimal number
-| [`dec?`](#dec?) | Checks value can be parsed as a decimal number.
 | [`dec-prec, decimal-prec`](#dec-prec) | Gets the precision setting
 | [`dec-prec=, decimal-prec=`](#dec-prec=) | Sets the precision setting
+| [`dec?`](#dec?) | Checks value can be parsed as a decimal number.
 
 ## Operations
 
@@ -81,28 +81,6 @@ Example:
 | `c 1e3 dec` | `1000`
 | `c 1/2 dec` | `0.5`
 | `c 0xff dec` | `255`
-
-### dec?
-
-Places `true` on the stack if *x* can be parsed as a decimal number,
-otherwise places `false`. A value with an exponent, such as *1e1*, is
-not parsed as a Decimal by default. Add a suffix of `d` to parse as
-a Decimal
-
-```
-( x:Val -- x:Bool )
-```
-
-Example:
-
-<!-- test: dec? -->
-
-| Input | Stack
-|-------|------
-| `c 1 dec?` | `true`
-| `c 1.1 dec?` | `true`
-| `c 1e1 dec?` | `false`
-| `c 1e1d dec?` | `true`
 
 ### dec-prec
 
@@ -144,3 +122,25 @@ Example:
 | Input | Stack
 |-------|------
 | `8 dec-prec=` | *decimal precision set to 8*
+
+### dec?
+
+Places `true` on the stack if *x* can be parsed as a decimal number,
+otherwise places `false`. A value with an exponent, such as *1e1*, is
+not parsed as a Decimal by default. Add a suffix of `d` to parse as
+a Decimal
+
+```
+( x:Val -- x:Bool )
+```
+
+Example:
+
+<!-- test: dec? -->
+
+| Input | Stack
+|-------|------
+| `c 1 dec?` | `true`
+| `c 1.1 dec?` | `true`
+| `c 1e1 dec?` | `false`
+| `c 1e1d dec?` | `true`

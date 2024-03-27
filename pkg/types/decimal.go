@@ -40,6 +40,10 @@ func (d Decimal) Add(d2 Decimal) Decimal {
 	return Decimal{v: d.v.Add(d2.v)}
 }
 
+func (d Decimal) BigInt() *big.Int {
+	return d.v.BigInt()
+}
+
 func (d Decimal) Ceil() Decimal {
 	return Decimal{v: d.v.Ceil()}
 }
@@ -77,6 +81,7 @@ func (d Decimal) GreaterThanOrEqual(d2 Decimal) bool {
 	return d.v.GreaterThanOrEqual(d2.v)
 }
 
+// FIXME: Note that IntPart maxes out at a int64
 func (d Decimal) Int() Decimal {
 	return NewDecimalFromInt(d.v.IntPart())
 }

@@ -17,13 +17,13 @@ ops:
 - name: add-ia
   title: Addition, architecture-dependent integer
   funcs:
-  - name: AddIntArch 
+  - name: AddIntArch
     i: [Int, Int]
     o: [Int]
     id: [x, y]
   desc: |-
-    Adds the value of *x* to *y*. If the result does not fit into an 
-    architecture-dependent integer, the value rolls over. 
+    Adds the value of *x* to *y*. If the result does not fit into an
+    architecture-dependent integer, the value rolls over.
   example:
   - i: ia-max 1 add-ia ia-min eq
     o: [true]
@@ -31,13 +31,13 @@ ops:
 - name: add-i64
   title: Addition, 64-bit integer
   funcs:
-  - name: AddInt64 
+  - name: AddInt64
     i: [Int64, Int64]
     o: [Int64]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    64-bit integer, the value rolls over. 
+    64-bit integer, the value rolls over.
   example:
   - i: 0x7fffffffffffffff
     o: [0x7fffffffffffffff]
@@ -49,13 +49,13 @@ ops:
 - name: add-i32
   title: Addition, 32-bit integer
   funcs:
-  - name: AddInt32 
+  - name: AddInt32
     i: [Int32, Int32]
     o: [Int32]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    32-bit integer, the value rolls over. 
+    32-bit integer, the value rolls over.
   example:
   - i: 0x7fffffff
     o: [0x7fffffff]
@@ -67,13 +67,13 @@ ops:
 - name: add-i16
   title: Addition, 16-bit integer
   funcs:
-  - name: AddInt16 
+  - name: AddInt16
     i: [Int16, Int16]
     o: [Int16]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    64-bit integer, the value rolls over. 
+    64-bit integer, the value rolls over.
   example:
   - i: 0x7fff
     o: [0x7fff]
@@ -85,13 +85,13 @@ ops:
 - name: add-i8
   title: Addition, 8-bit integer
   funcs:
-  - name: AddInt8 
+  - name: AddInt8
     i: [Int8, Int8]
     o: [Int8]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    8-bit integer, the value rolls over. 
+    8-bit integer, the value rolls over.
   example:
   - i: 0x7f
     o: [0x7f]
@@ -103,13 +103,13 @@ ops:
 - name: add-ua
   title: Addition, architecture-dependent unsigned integer
   funcs:
-  - name: AddUintArch 
+  - name: AddUintArch
     i: [Uint, Uint]
     o: [Uint]
     id: [x, y]
   desc: |-
-    Adds the value of *x* to *y*. If the result does not fit into an 
-    architecture-dependent unsigned integer, the value rolls over. 
+    Adds the value of *x* to *y*. If the result does not fit into an
+    architecture-dependent unsigned integer, the value rolls over.
   example:
   - i: ua-max 1 add-ua
     o: [0]
@@ -117,13 +117,13 @@ ops:
 - name: add-u64
   title: Addition, 64-bit unsigned integer
   funcs:
-  - name: AddUint64 
+  - name: AddUint64
     i: [Uint64, Uint64]
     o: [Uint64]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    64-bit unsigned integer, the value rolls over. 
+    64-bit unsigned integer, the value rolls over.
   example:
   - i: 0xffffffffffffffff
     o: [0xffffffffffffffff]
@@ -135,13 +135,13 @@ ops:
 - name: add-u32
   title: Addition, 32-bit unsigned integer
   funcs:
-  - name: AddUint32 
+  - name: AddUint32
     i: [Uint32, Uint32]
     o: [Uint32]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    32-bit unsigned integer, the value rolls over. 
+    32-bit unsigned integer, the value rolls over.
   example:
   - i: 0xffffffff
     o: [0xffffffff]
@@ -153,13 +153,13 @@ ops:
 - name: add-u16
   title: Addition, 16-bit unsigned integer
   funcs:
-  - name: AddUint16 
+  - name: AddUint16
     i: [Uint16, Uint16]
     o: [Uint16]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    64-bit unsigned integer, the value rolls over. 
+    64-bit unsigned integer, the value rolls over.
   example:
   - i: 0xffff
     o: [0xffff]
@@ -171,13 +171,13 @@ ops:
 - name: add-u8
   title: Addition, 8-bit unsigned integer
   funcs:
-  - name: AddUint8 
+  - name: AddUint8
     i: [Uint8, Uint8]
     o: [Uint8]
     id: [x, y]
   desc: |-
     Adds the value of *x* to *y*. If the result does not fit into a
-    8-bit unsigned integer, the value rolls over. 
+    8-bit unsigned integer, the value rolls over.
   example:
   - i: 0xff
     o: [0xff]
@@ -186,7 +186,7 @@ ops:
   - i: add-u8
     o: [0]
 
-- name: div-int 
+- name: div-int
   title: Euclidean division
   funcs:
   - name: DivBigInt
@@ -194,38 +194,58 @@ ops:
     o: [BigInt]
     id: [x, y]
   aliases: [d-int]
-  desc: |- 
-    Divides the value of *x* by *y* using Euclidean division. If *y* is zero, a 
-    division by zero error is raised. 
+  desc: |-
+    Divides the value of *x* by *y* using Euclidean division. If *y* is zero, a
+    division by zero error is raised.
   example:
-  - i: -20 
+  - i: -20
     o: [-20]
   - i: 3
     o: [-20, 3]
   - i: div-int
     o: [-7]
 
-- name: div-mod-int 
-  title: Euclidean division with modulus 
+- name: div-mod-int
+  title: Euclidean division with modulus
   funcs:
-  - name: DivModBigInt 
+  - name: DivModBigInt
     i: [BigInt, BigInt]
     o: [BigInt, BigInt]
     id: [x, y, q, m]
   aliases: [dm-int]
   desc: |-
     Divides the value of *x* by *y* using Euclidean division and returns the
-    quotient *q* and the modulus *m*. If *y* is zero, a division by zero 
-    error is raised. 
+    quotient *q* and the modulus *m*. If *y* is zero, a division by zero
+    error is raised.
   example:
-  - i: -20 
+  - i: -20
     o: [-20]
   - i: 3
     o: [-20, 3]
   - i: div-mod-int
     o: [-7, "1 # modulus"]
 
-- name: ia-max 
+- name: ia?
+  title: Is value an architecture-independent integer?
+  funcs:
+  - name: IsIntArch
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as an architecture-independent integer,
+    otherwise 'false'
+  example:
+  - i: c 12 ia?
+    o: [true]
+  - i: c -12 ia?
+    o: [true]
+  - i: c 1.2 ia?
+    o: [false]
+  - i: c 2 128 pow ia?
+    o: [false]
+
+- name: ia-max
   title: Maximum architecture-dependant integer
   funcs:
   - name: MaxIntArch
@@ -235,116 +255,316 @@ ops:
   - i: ia-max 1 add-ia ia-min eq
     o: [true]
 
-- name: i64-max 
-  title: Maximum 64-bit integer 
-  macro: 9223372036854775807
-  desc: Maximum 64-bit integer.
-  example:
-  - i: i64-max
-    o: [9223372036854775807]
-
-- name: i32-max 
-  title: Maximum 32-bit integer 
-  macro: 2147483647
-  desc: Maximum 32-bit integer.
-  example:
-  - i: i32-max
-    o: [2147483647]
-
-- name: i16-max 
-  title: Maximum 16-bit integer 
-  macro: 32767
-  desc: Maximum 16-bit integer.
-  example:
-  - i: i16-max
-    o: [32767]
-
-- name: i8-max 
-  title: Maximum 8-bit integer 
-  macro: 127
-  desc: Maximum 8-bit integer.
-  example:
-  - i: i8-max
-    o: [127]
-
-- name: ia-min 
+- name: ia-min
   title: Minimum architecture-dependant integer
   funcs:
   - name: MinIntArch
     o: [Int]
   desc: Minimum architecture-dependant integer.
   example:
-  - i: ia-min -1 add-ia ia-max eq 
+  - i: ia-min -1 add-ia ia-max eq
     o: [true]
 
-- name: i64-min 
-  title: Minimum 64-bit integer 
+- name: i64?
+  title: Is value an 64-bit integer?
+  funcs:
+  - name: IsIntArch
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as a 64-bit integer, otherwise 'false'
+  example:
+  - i: c 12 i64?
+    o: [true]
+  - i: c -12 i64?
+    o: [true]
+  - i: c 1.2 i64?
+    o: [false]
+  - i: c 2 128 pow i64?
+    o: [false]
+
+- name: i64-max
+  title: Maximum 64-bit integer
+  macro: 9223372036854775807
+  desc: Maximum 64-bit integer.
+  example:
+  - i: i64-max
+    o: [9223372036854775807]
+
+- name: i64-min
+  title: Minimum 64-bit integer
   macro: -9223372036854775808
   desc: Minimum 64-bit integer.
   example:
   - i: i64-min
     o: [-9223372036854775808]
 
-- name: i32-max 
-  title: Minimum 32-bit integer 
+- name: i32?
+  title: Is value a 32-bit integer?
+  funcs:
+  - name: IsInt32
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as a 32-bit integer, otherwise 'false'
+  example:
+  - i: c 12 i32?
+    o: [true]
+  - i: c -12 i32?
+    o: [true]
+  - i: c 1.2 i32?
+    o: [false]
+  - i: c 2 64 pow i32?
+    o: [false]
+
+- name: i32-max
+  title: Maximum 32-bit integer
+  macro: 2147483647
+  desc: Maximum 32-bit integer.
+  example:
+  - i: i32-max
+    o: [2147483647]
+
+- name: i32-min
+  title: Minimum 32-bit integer
   macro: -2147483648
   desc: Minimum 32-bit integer.
   example:
   - i: i32-min
     o: [-2147483648]
 
+- name: i16?
+  title: Is value a 16-bit integer?
+  funcs:
+  - name: IsInt16
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as a 16-bit integer, otherwise 'false'
+  example:
+  - i: c 12 i16?
+    o: [true]
+  - i: c -12 i16?
+    o: [true]
+  - i: c 1.2 i16?
+    o: [false]
+  - i: c 2 32 pow i16?
+    o: [false]
+
+- name: i16-max
+  title: Maximum 16-bit integer
+  macro: 32767
+  desc: Maximum 16-bit integer.
+  example:
+  - i: i16-max
+    o: [32767]
+
 - name: i16-min
-  title: Minimum 16-bit integer 
+  title: Minimum 16-bit integer
   macro: -32768
   desc: Minimum 16-bit integer.
   example:
   - i: i16-min
     o: [-32768]
 
-- name: i8-min 
-  title: Minimum 8-bit integer 
+- name: i8?
+  title: Is value an 8-bit integer?
+  funcs:
+  - name: IsInt8
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as an 8-bit integer, otherwise 'false'
+  example:
+  - i: c 12 i8?
+    o: [true]
+  - i: c -12 i8?
+    o: [true]
+  - i: c 1.2 i8?
+    o: [false]
+  - i: c 2 16 pow i8?
+    o: [false]
+
+- name: i8-max
+  title: Maximum 8-bit integer
+  macro: 127
+  desc: Maximum 8-bit integer.
+  example:
+  - i: i8-max
+    o: [127]
+
+- name: i8-min
+  title: Minimum 8-bit integer
   macro: -128
   desc: Minimum 8-bit integer.
   example:
   - i: i8-min
     o: [-128]
 
-- name: ua-max 
+- name: int
+  title: Convert to integer
+  funcs:
+  - name: IntBigInt
+    i: [BigInt]
+    o: [BigInt]
+    ids: [x]
+  - name: IntDecimal
+    i: [Decimal]
+    o: [BigInt]
+    ids: [x]
+  - name: IntRational
+    i: [Rational]
+    o: [BigInt]
+  desc: |-
+    Converts *x* to an integer using truncation when necessary.
+  example:
+  - i: c 1,234.56 int
+    o: [1234]
+  - i: c 1e4 int
+    o: [10000]
+  - i: c 9/2 int
+    o: [4]
+
+- name: ua?
+  title: Is value an architecture-independent unsigned integer?
+  funcs:
+  - name: IsUintArch
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as an architecture-independent unsigned
+    integer, otherwise 'false'
+  example:
+  - i: c 12 ua?
+    o: [true]
+  - i: c -12 ua?
+    o: [false]
+  - i: c 1.2 ua?
+    o: [false]
+  - i: c 2 128 pow ua?
+    o: [false]
+
+- name: ua-max
   title: Maximum architecture-dependant unsigned integer
   funcs:
   - name: MaxUIntArch
     o: [UInt]
   desc: Maximum architecture-dependant unsigned integer
   example:
-  - i: ua-max 1 add-ua 
+  - i: ua-max 1 add-ua
     o: [0]
 
-- name: u64-max 
-  title: Maximum 64-bit unsigned integer 
+- name: u64?
+  title: Is value a 64-bit unsigned integer?
+  funcs:
+  - name: IsUint64
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as a 64-bit unsigned integer,
+    otherwise 'false'
+  example:
+  - i: c 12 u64?
+    o: [true]
+  - i: c -12 u64?
+    o: [false]
+  - i: c 1.2 u64?
+    o: [false]
+  - i: c 2 128 pow u64?
+    o: [false]
+
+- name: u64-max
+  title: Maximum 64-bit unsigned integer
   macro: 18446744073709551615
   desc: Maximum 64-bit unsigned integer.
   example:
   - i: u64-max
     o: [18446744073709551615]
 
-- name: u32-max 
-  title: Maximum 32-bit unsigned integer 
+- name: u32?
+  title: Is value a 32-bit unsigned integer?
+  funcs:
+  - name: IsUint32
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as a 32-bit unsigned integer,
+    otherwise 'false'
+  example:
+  - i: c 12 u32?
+    o: [true]
+  - i: c -12 u32?
+    o: [false]
+  - i: c 1.2 u32?
+    o: [false]
+  - i: c 2 64 pow u32?
+    o: [false]
+
+- name: u32-max
+  title: Maximum 32-bit unsigned integer
   macro: 4294967295
   desc: Maximum 32-bit unsigned integer.
   example:
   - i: u32-max
     o: [4294967295]
 
-- name: u16-max 
-  title: Maximum 16-bit unsigned integer 
+- name: u16?
+  title: Is value a 16-bit unsigned integer?
+  funcs:
+  - name: IsUint16
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as a 16-bit unsigned integer,
+    otherwise 'false'
+  example:
+  - i: c 12 u16?
+    o: [true]
+  - i: c -12 u16?
+    o: [false]
+  - i: c 1.2 u16?
+    o: [false]
+  - i: c 2 32 pow u16?
+    o: [false]
+
+- name: u16-max
+  title: Maximum 16-bit unsigned integer
   macro: 65535
   desc: Maximum 16-bit unsigned integer.
   example:
   - i: u16-max
     o: [65535]
 
-- name: u8-max 
-  title: Maximum 8-bit unsigned integer 
+- name: u8?
+  title: Is value an 8-bit unsigned integer?
+  funcs:
+  - name: IsUint8
+    i: [Val]
+    o: [Bool]
+    id: [x]
+  desc: |-
+    'true' if *x* can be parsed as an 8-bit unsigned integer,
+    otherwise 'false'
+  example:
+  - i: c 12 u8?
+    o: [true]
+  - i: c -12 u8?
+    o: [false]
+  - i: c 1.2 u8?
+    o: [false]
+  - i: c 2 16 pow u8?
+    o: [false]
+
+- name: u8-max
+  title: Maximum 8-bit unsigned integer
   macro: 255
   desc: Maximum 8-bit unsigned integer.
   example:
@@ -382,9 +602,9 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into an
-    architecture-independent integer, the value rolls over. 
+    architecture-independent integer, the value rolls over.
   example:
-  - i: ia-max 2 mul-ia 
+  - i: ia-max 2 mul-ia
     o: [-2]
 
 - name: mul-i64
@@ -396,7 +616,7 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into a
-    64-bit integer, the value rolls over. 
+    64-bit integer, the value rolls over.
   example:
   - i: 9,223,372,036,854,775,807
     o: ["9,223,372,036,854,775,807"]
@@ -414,7 +634,7 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into a
-    32-bit integer, the value rolls over. 
+    32-bit integer, the value rolls over.
   example:
   - i: 2,147,483,647
     o: ["2,147,483,647"]
@@ -432,31 +652,31 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into a
-    16-bit integer, the value rolls over. 
+    16-bit integer, the value rolls over.
   example:
   - i: 32,767
     o: ["32,767"]
   - i: 2
     o: ["32,767", 2]
-  - i: mul-i16 
+  - i: mul-i16
     o: [-2]
 
 - name: mul-i8
   title: Multiplication, 8-bit integer
   funcs:
-  - name: MulInt8 
+  - name: MulInt8
     i: [Int8, Int8]
     o: [Int8]
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into an
-    8-bit integer, the value rolls over. 
+    8-bit integer, the value rolls over.
   example:
   - i: 127
     o: [127]
   - i: 2
     o: [127, 2]
-  - i: mul-i8 
+  - i: mul-i8
     o: [-2]
 
 - name: mul-ua
@@ -468,7 +688,7 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into an
-    architecture-independent unsigned integer, the value rolls over. 
+    architecture-independent unsigned integer, the value rolls over.
   example:
   - i: ua-max 2 mul-ua 1 add ua-max eq
     o: [true]
@@ -482,7 +702,7 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into a
-    64-bit unsigned integer, the value rolls over. 
+    64-bit unsigned integer, the value rolls over.
   example:
   - i: 0xfedcba9876543210
     o: [0xfedcba9876543210]
@@ -500,7 +720,7 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into a
-    32-bit unsigned integer, the value rolls over. 
+    32-bit unsigned integer, the value rolls over.
   example:
   - i: 0xfedcba98
     o: [0xfedcba98]
@@ -518,7 +738,7 @@ ops:
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into a
-    16-bit unsigned integer, the value rolls over. 
+    16-bit unsigned integer, the value rolls over.
   example:
   - i: 0xfedc
     o: [0xfedc]
@@ -530,13 +750,13 @@ ops:
 - name: mul-u8
   title: Multiplication, 8-bit unsigned integer
   funcs:
-  - name: MulUint8 
+  - name: MulUint8
     i: [Uint8, Uint8]
     o: [Uint8]
     id: [x, y]
   desc: |-
     Multiplies the value of *x* to *y*. If the result does not fit into an
-    8-bit unsigned integer, the value rolls over. 
+    8-bit unsigned integer, the value rolls over.
   example:
   - i: 0xfe
     o: [0xfe]
@@ -578,11 +798,11 @@ ops:
     o: [BigInt]
     id: [x, y]
   aliases: [q-int]
-  desc: |- 
-    Divides the value of *x* by *y* using trunated division. If *y* is zero, a 
-    division by zero error is raised. 
+  desc: |-
+    Divides the value of *x* by *y* using trunated division. If *y* is zero, a
+    division by zero error is raised.
   example:
-  - i: -20 
+  - i: -20
     o: [-20]
   - i: 3
     o: [-20, 3]
@@ -599,20 +819,20 @@ ops:
   aliases: [qr-int]
   desc: |-
     Divides the value of *x* by *y* using truncated division and returns the
-    quotent *q* and the remainder *r*. If *y* is zero, a division by zero 
-    error is raised. 
+    quotent *q* and the remainder *r*. If *y* is zero, a division by zero
+    error is raised.
   example:
-  - i: -20 
+  - i: -20
     o: [-20]
   - i: 3
     o: [-20, 3]
   - i: quo-rem-int
     o: [-6, "-2 # remainder"]
-  
+
 - name: rem
   title: Remainder
   desc: |-
-    The remainder when *x* is divided by *y* using truncated division. If *y* 
+    The remainder when *x* is divided by *y* using truncated division. If *y*
     is zero, a 'division by zero' error is raised.
   example:
   - i: -7
@@ -643,9 +863,9 @@ ops:
     o: [BigInt]
     id: [x]
   desc: |-
-    The floor of the square root of *x*. 
+    The floor of the square root of *x*.
   example:
-  - i: 256 
+  - i: 256
     o: [256]
   - i: sqrt-int
     o: [16]
@@ -665,13 +885,13 @@ ops:
 - name: sub-ia
   title: Subtraction, architecture-dependent integer
   funcs:
-  - name: SubIntArch 
+  - name: SubIntArch
     i: [Int, Int]
     o: [Int]
     id: [x, y]
   desc: |-
-    Subtracts the value of *y* from *x*. If the result does not fit into an 
-    architecture-dependent integer, the value rolls over. 
+    Subtracts the value of *y* from *x*. If the result does not fit into an
+    architecture-dependent integer, the value rolls over.
   example:
   - i: ia-min 1 sub-ia ia-max eq
     o: [true]
@@ -679,13 +899,13 @@ ops:
 - name: sub-i64
   title: Subtraction, 64-bit integer
   funcs:
-  - name: SubInt64 
+  - name: SubInt64
     i: [Int64, Int64]
     o: [Int64]
     id: [x, y]
   desc: |-
     Subtracts the value of *y* from *x*. If the result does not fit into a
-    64-bit integer, the value rolls over. 
+    64-bit integer, the value rolls over.
   example:
   - i: -9223372036854775808
     o: [-9223372036854775808]
@@ -697,13 +917,13 @@ ops:
 - name: sub-i32
   title: Subtraction, 32-bit integer
   funcs:
-  - name: SubInt32 
+  - name: SubInt32
     i: [Int32, Int32]
     o: [Int32]
     id: [x, y]
   desc: |-
     Subtracts the value of *y* from *x*. If the result does not fit into a
-    32-bit integer, the value rolls over. 
+    32-bit integer, the value rolls over.
   example:
   - i: -2147483648
     o: [-2147483648]
@@ -715,13 +935,13 @@ ops:
 - name: sub-i16
   title: Subtraction, 16-bit integer
   funcs:
-  - name: SubInt16 
+  - name: SubInt16
     i: [Int16, Int16]
     o: [Int16]
     id: [x, y]
   desc: |-
     Subtracts the value of *y* from *x*. If the result does not fit into a
-    16-bit integer, the value rolls over. 
+    16-bit integer, the value rolls over.
   example:
   - i: -32768
     o: [-32768]
@@ -733,13 +953,13 @@ ops:
 - name: sub-i8
   title: Subtraction, 8-bit integer
   funcs:
-  - name: SubInt8 
+  - name: SubInt8
     i: [Int8, Int8]
     o: [Int8]
     id: [x, y]
   desc: |-
     Subtracts the value of *y* from *x*. If the result does not fit into an
-    8-bit integer, the value rolls over. 
+    8-bit integer, the value rolls over.
   example:
   - i: -128
     o: [-128]
@@ -751,13 +971,13 @@ ops:
 - name: sub-ua
   title: Subtraction, architecture-dependent unsigned integer
   funcs:
-  - name: SubUintArch 
+  - name: SubUintArch
     i: [Uint, Uint]
     o: [Uint]
     id: [x, y]
   desc: |-
-    Subtracts the value of *y* from *x*. If the result does not fit into an 
-    architecture-dependent unsigned integer, the value rolls over. 
+    Subtracts the value of *y* from *x*. If the result does not fit into an
+    architecture-dependent unsigned integer, the value rolls over.
   example:
   - i: 0 1 sub-ua ua-max eq
     o: [true]
@@ -765,13 +985,13 @@ ops:
 - name: sub-u64
   title: Subtraction, 64-bit unsigned integer
   funcs:
-  - name: SubUint64 
+  - name: SubUint64
     i: [Uint64, Uint64]
     o: [Uint64]
     id: [x, y]
   desc: |-
     Subtracts the value of *y* from *x*. If the result does not fit into a
-    64-bit unsigned integer, the value rolls over. 
+    64-bit unsigned integer, the value rolls over.
   example:
   - i: 0
     o: [0]
@@ -783,13 +1003,13 @@ ops:
 - name: sub-u32
   title: Subtraction, 32-bit unsigned integer
   funcs:
-  - name: SubUint32 
+  - name: SubUint32
     i: [Uint32, Uint32]
     o: [Uint32]
     id: [x, y]
   desc: |-
     Subtracts the value of *y* from *x*. If the result does not fit into a
-    32-bit unsigned integer, the value rolls over. 
+    32-bit unsigned integer, the value rolls over.
   example:
   - i: 0
     o: [0]
@@ -801,13 +1021,13 @@ ops:
 - name: sub-u16
   title: Subtraction, 16-bit unsigned integer
   funcs:
-  - name: AddUint16 
+  - name: AddUint16
     i: [Uint16, Uint16]
     o: [Uint16]
     id: [x, y]
   desc: |-
     Subtracts the value of *y* from *x*. If the result does not fit into a
-    16-bit unsigned integer, the value rolls over. 
+    16-bit unsigned integer, the value rolls over.
   example:
   - i: 0
     o: [0]
@@ -819,13 +1039,13 @@ ops:
 - name: sub-u8
   title: Subtraction, 8-bit unsigned integer
   funcs:
-  - name: SubUint8 
+  - name: SubUint8
     i: [Uint8, Uint8]
     o: [Uint8]
     id: [x, y]
   desc: |-
     Subtracts the value of *x* to *y*. If the result does not fit into an
-    8-bit unsigned integer, the value rolls over. 
+    8-bit unsigned integer, the value rolls over.
   example:
   - i: 0
     o: [0]
