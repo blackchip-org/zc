@@ -8,7 +8,7 @@ import (
 )
 
 func TestIntAdd(t *testing.T) {
-	c := calc.NewStandard()
+	c := calc.New()
 
 	c.Push(2)
 	c.Push(3)
@@ -41,7 +41,7 @@ func TestFib(t *testing.T) {
 }
 
 func fib(n int) *zc.Calc {
-	c := calc.NewStandard()
+	c := calc.New()
 
 	c.Push(1)
 	c.Push(1)

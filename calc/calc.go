@@ -8,13 +8,27 @@ import (
 	"github.com/blackchip-org/zc/v6/volumes/zcalc"
 )
 
-func NewStandard() *zc.Calc {
-	cat := zc.NewCatalog()
-	cat.AddVolume(
-		intb.Volume,
+var (
+	Min   *zc.Catalog
+	Basic *zc.Catalog
+	All   *zc.Catalog
+)
+
+func init() {
+	b := zc.NewCatalogBuilder()
+	b.AddVolume(
 		ints.Volume,
 		text.Volume,
 		zcalc.Volume,
 	)
-	return zc.NewCalc(cat)
+	Min = b.Build()
+
+	b.AddVolume(
+		intb.Volume,
+	)
+	Basic = b.Build()
+
+	All = b.Build()
 }
+
+func New() *zc.Calc { return zc.NewCalc(All) }
