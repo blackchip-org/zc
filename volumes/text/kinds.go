@@ -1,4 +1,4 @@
-package kinds
+package text
 
 import (
 	"fmt"
@@ -6,17 +6,15 @@ import (
 	"github.com/blackchip-org/zc/v6/errors"
 )
 
-var (
-	Text = TextKind{}
-)
+var TextKind = textKind{}
 
-type TextKind struct{}
+type textKind struct{}
 
-func (k TextKind) String() string {
+func (k textKind) Name() string {
 	return "Text"
 }
 
-func (k TextKind) Is(a any) bool {
+func (k textKind) Is(a any) bool {
 	switch a.(type) {
 	case string:
 		return true
@@ -26,7 +24,7 @@ func (k TextKind) Is(a any) bool {
 	return false
 }
 
-func (k TextKind) As(a any) string {
+func (k textKind) As(a any) string {
 	v, ok := a.(string)
 	if !ok {
 		panic(errors.NewUnexpectedType("string", a))
@@ -34,11 +32,11 @@ func (k TextKind) As(a any) string {
 	return v
 }
 
-func (k TextKind) Dup(a any) any {
+func (k textKind) Dup(a any) any {
 	return a
 }
 
-func (k TextKind) Copy(src any, dest any) {
+func (k textKind) Copy(src any, dest any) {
 	d, ok := dest.(*string)
 	if !ok {
 		panic(errors.NewUnexpectedType("*string", dest))
@@ -46,6 +44,6 @@ func (k TextKind) Copy(src any, dest any) {
 	*d = k.As(src)
 }
 
-func (k TextKind) To(a any) (any, bool) {
+func (k textKind) To(a any) (any, bool) {
 	return fmt.Sprintf("%v", a), true
 }

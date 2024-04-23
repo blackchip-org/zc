@@ -5,7 +5,6 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/calc"
-	"github.com/blackchip-org/zc/v6/ops"
 )
 
 func TestIntAdd(t *testing.T) {
@@ -13,7 +12,7 @@ func TestIntAdd(t *testing.T) {
 
 	c.Push(2)
 	c.Push(3)
-	c.Do(ops.AddInt)
+	c.Do("addi")
 
 	if c.Err != nil {
 		t.Fatalf("unexpected error: %v", c.Err)
@@ -47,9 +46,9 @@ func fib(n int) *zc.Calc {
 	c.Push(1)
 	c.Push(1)
 	for i := 3; i <= n; i++ {
-		c.Do(ops.Dup)
-		c.Do(ops.Down)
-		c.Do(ops.AddInt)
+		c.Do("dup")
+		c.Do("down")
+		c.Do("addi")
 	}
 	return c
 }

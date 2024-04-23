@@ -106,6 +106,41 @@ func testDup(t *testing.T, s Stack[int]) {
 	}
 }
 
+func testPopN(t *testing.T, s Stack[int]) {
+	s.Push(1)
+	s.Push(2)
+	s.Push(3)
+
+	have, ok := PopN(s, 2)
+	if !ok {
+		t.Fatalf("unexpected empty stack")
+	}
+	want := []int{2, 3}
+
+	if !reflect.DeepEqual(have, want) {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+
+	have = s.Items()
+	want = []int{1}
+
+	if !reflect.DeepEqual(have, want) {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func testPushN(t *testing.T, s Stack[int]) {
+	s.Push(1)
+	PushN(s, []int{2, 3})
+
+	have := s.Items()
+	want := []int{1, 2, 3}
+
+	if !reflect.DeepEqual(have, want) {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
 func testTop(t *testing.T, s Stack[int]) {
 	s.Push(1)
 	s.Push(2)

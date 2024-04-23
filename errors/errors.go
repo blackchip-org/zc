@@ -8,7 +8,28 @@ import (
 
 var (
 	StackEmpty = errors.New("stack empty")
+	IllegalNil = errors.New("illegal nil value")
 )
+
+func DuplicateKind(name string) error {
+	return fmt.Errorf("duplicate kind: %v", name)
+}
+
+func DuplicateOp(name string) error {
+	return fmt.Errorf("duplicate op: %v", name)
+}
+
+func NoFuncForOp(name string) error {
+	return fmt.Errorf("no function for op: %v", name)
+}
+
+func UnknownKind(name string) error {
+	return fmt.Errorf("unknown kind: %v", name)
+}
+
+func UnknownOp(name string) error {
+	return fmt.Errorf("unknown operation: %v", name)
+}
 
 type InvalidConversion struct {
 	Val  any

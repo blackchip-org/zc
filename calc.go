@@ -5,61 +5,70 @@ import (
 	"slices"
 
 	"github.com/blackchip-org/zc/v6/errors"
+	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
 
 type Kind interface {
-	String() string
+	Name() string
 	Is(any) bool
 	Dup(any) any
 	Copy(any, any)
 	To(any) (any, bool)
 }
 
-type OpContext struct {
+type OpEnv struct {
 	Catalog *Catalog
 	Args    []any
 	Returns []any
 	Err     error
 }
 
-type OpDecl struct {
+type Op struct {
 	Name       string
-	Params     []Kind
+	Aliases    []string
+	Params     []string
 	VarParams  bool
-	Returns    []Kind
+	Returns    []string
 	VarReturns bool
-	Func       func(*OpContext)
+	Func       func(*OpEnv)
 }
 
-type meta struct {
+type Volume struct {
+	Name  string
+	Kinds []Kind
+	Ops   []Op
+}
+
+type Item struct {
+	Val  any
 	Kind Kind
 	Anno string
 }
 
 type Calc struct {
-	Err  error
-	cat  *Catalog
-	vals []any
-	meta []meta
+	Err   error
+	cat   *Catalog
+	stack stack.Stack[Item]
 }
 
 func NewCalc(cat *Catalog) *Calc {
 	c := &Calc{
-		cat: cat,
+		cat:   cat,
+		stack: stack.NewSlice[Item](),
 	}
 	return c
 }
 
 func (c *Calc) push(a any, k Kind) {
-	c.vals = append(c.vals, a)
-	c.meta = append(c.meta, meta{Kind: k})
+	c.stack.Push(Item{Val: a, Kind: k})
 }
 
-func (c *Calc) pop() (v any, m meta) {
-	top := len(c.vals) - 1
-	v, c.vals = c.vals[top], c.vals[:top]
-	m, c.meta = c.meta[top], c.meta[:top]
-	return
+func (c *Calc) pop() (Item, error) {
+	item, ok := c.stack.Pop()
+	if !ok {
+		return item, errors.StackEmpty
+	}
+	return item, nil
 }
 
 func (c *Calc) Push(a any) {
@@ -67,7 +76,7 @@ func (c *Calc) Push(a any) {
 		return
 	}
 	if a == nil {
-		panic("attempt to push a nil value")
+		panic(errors.IllegalNil)
 	}
 	k, ok := c.cat.KindOf(a)
 	if !ok {
@@ -80,24 +89,25 @@ func (c *Calc) Pop(dest any) error {
 	if c.Err != nil {
 		panic(c.Err)
 	}
-	if len(c.vals) == 0 {
-		return errors.StackEmpty
+	item, err := c.pop()
+	if err != nil {
+		return err
 	}
 
 	destKind, ok := c.cat.KindOf(dest)
 	if !ok {
 		panic(errors.NewUnregisteredType(dest))
 	}
-	v, m := c.pop()
-	if !destKind.Is(v) {
-		cv, ok := destKind.To(v)
+	if !destKind.Is(item.Val) {
+		valConv, ok := destKind.To(item.Val)
 		if !ok {
-			vt := reflect.TypeOf(v).Name()
-			return errors.NewInvalidConversion(m.Kind.String(), vt, v)
+			vt := reflect.TypeOf(item.Val).Name()
+			return errors.NewInvalidConversion(item.Kind.Name(), vt, valConv)
 		}
-		v = cv
+		destKind.Copy(valConv, dest)
+	} else {
+		destKind.Copy(item.Val, dest)
 	}
-	destKind.Copy(v, dest)
 	return nil
 }
 
@@ -109,58 +119,65 @@ func (c *Calc) PopString() string {
 	return r
 }
 
-func (c *Calc) Stack() []any {
-	return slices.Clone(c.vals)
+func (c *Calc) Stack() []Item {
+	return slices.Clone(c.stack.Items())
 }
 
-func (c *Calc) Do(op OpDecl) {
+func (c *Calc) Do(name string) {
 	if c.Err != nil {
 		return
 	}
-	stackLen := len(c.vals)
+
+	op, ok := c.cat.OpFor(name)
+	if !ok {
+		c.Err = errors.UnknownOp(name)
+		return
+	}
+
+	stackLen := c.stack.Len()
 	if len(op.Params) > stackLen {
 		c.Err = errors.StackEmpty
 		return
 	}
 
-	var ctx OpContext
-	ctx.Catalog = c.cat
+	var env OpEnv
+	env.Catalog = c.cat
 	argStart := stackLen - len(op.Params)
 	if op.VarParams {
 		argStart = 0
 	}
-	for i, k := range op.Params {
-		c.assembleArg(k, &ctx, argStart+i)
-		if ctx.Err != nil {
+	for i, kindName := range op.Params {
+		c.assembleArg(kindName, &env, argStart+i)
+		if env.Err != nil {
 			return
 		}
 	}
 	if op.VarParams {
-		for i := len(op.Params); i < len(c.vals); i++ {
-			k := op.Params[len(op.Params)-1]
-			c.assembleArg(k, &ctx, argStart+i)
-			if ctx.Err != nil {
+		for i := len(op.Params); i < stackLen; i++ {
+			kindName := op.Params[len(op.Params)-1]
+			c.assembleArg(kindName, &env, argStart+i)
+			if env.Err != nil {
 				return
 			}
 		}
 	}
-	op.Func(&ctx)
-	if ctx.Err != nil {
-		c.Err = ctx.Err
+	op.Func(&env)
+	if env.Err != nil {
+		c.Err = env.Err
 		return
 	}
-	c.vals, c.meta = c.vals[:argStart], c.meta[:argStart]
+	stack.PopN(c.stack, c.stack.Len()-argStart)
 
-	for i, k := range op.Returns {
-		c.assembleRet(k, ctx, i)
+	for i, kindName := range op.Returns {
+		c.assembleRet(kindName, env, i)
 		if c.Err != nil {
 			return
 		}
 	}
 	if op.VarReturns {
-		for i := len(op.Returns); i < len(ctx.Returns); i++ {
+		for i := len(op.Returns); i < len(env.Returns); i++ {
 			k := op.Returns[len(op.Returns)-1]
-			c.assembleRet(k, ctx, i)
+			c.assembleRet(k, env, i)
 		}
 		if c.Err != nil {
 			return
@@ -168,13 +185,18 @@ func (c *Calc) Do(op OpDecl) {
 	}
 }
 
-func (c *Calc) assembleArg(paramKind Kind, ctx *OpContext, idx int) {
-	arg := c.vals[idx]
-	argKind := c.meta[idx].Kind
+func (c *Calc) assembleArg(kindName string, ctx *OpEnv, idx int) {
+	paramKind, ok := c.cat.KindFor(kindName)
+	if !ok {
+		panic(errors.UnknownKind(kindName))
+	}
+	item := stack.At(c.stack, idx)
+	arg := item.Val
+	argKind := item.Kind
 	if !paramKind.Is(arg) {
 		convArg, ok := paramKind.To(arg)
 		if !ok {
-			c.Err = errors.NewUnexpectedArgKind(paramKind.String(), argKind.String(), arg, idx)
+			c.Err = errors.NewUnexpectedArgKind(paramKind.Name(), argKind.Name(), arg, idx)
 			return
 		}
 		ctx.Args = append(ctx.Args, convArg)
@@ -183,10 +205,14 @@ func (c *Calc) assembleArg(paramKind Kind, ctx *OpContext, idx int) {
 	}
 }
 
-func (c *Calc) assembleRet(retKind Kind, ctx OpContext, idx int) {
+func (c *Calc) assembleRet(kindName string, ctx OpEnv, idx int) {
+	retKind, ok := c.cat.KindFor(kindName)
+	if !ok {
+		panic(errors.UnknownKind(kindName))
+	}
 	ret := ctx.Returns[idx]
 	if !retKind.Is(ret) {
-		c.Err = errors.NewUnexpectedRetKind(retKind.String(), ret, idx)
+		c.Err = errors.NewUnexpectedRetKind(retKind.Name(), ret, idx)
 		return
 	}
 	c.push(ret, retKind)
