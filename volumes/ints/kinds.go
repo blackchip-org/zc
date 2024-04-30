@@ -10,7 +10,7 @@ func (k intArchKind) Name() string { return "IntArch" }
 
 func (k intArchKind) Is(a any) bool {
 	switch a.(type) {
-	case int:
+	case int, *int:
 		return true
 	}
 	return false
@@ -19,7 +19,7 @@ func (k intArchKind) Is(a any) bool {
 func (k intArchKind) As(a any) int {
 	v, ok := a.(int)
 	if !ok {
-		panic(errors.NewUnexpectedType("int", a))
+		panic(errors.UnexpectedType("int", a))
 	}
 	return v
 }
@@ -31,7 +31,7 @@ func (k intArchKind) Dup(a any) any {
 func (k intArchKind) Copy(src, dest any) {
 	d, ok := dest.(*int)
 	if !ok {
-		panic(errors.NewUnexpectedType("*int", dest))
+		panic(errors.UnexpectedType("*int", dest))
 	}
 	s := k.As(src)
 	*d = s

@@ -23,7 +23,7 @@ func (k intKind) Is(a any) bool {
 func (k intKind) As(a any) *big.Int {
 	v, ok := a.(*big.Int)
 	if !ok {
-		panic(errors.NewUnexpectedType("*big.Int", a))
+		panic(errors.UnexpectedType("*big.Int", a))
 	}
 	return v
 }
@@ -38,7 +38,7 @@ func (k intKind) Dup(a any) any {
 func (k intKind) Copy(src, dest any) {
 	d, ok := dest.(*big.Int)
 	if !ok {
-		panic(errors.NewUnexpectedType("*big.Int", dest))
+		panic(errors.UnexpectedType("*big.Int", dest))
 	}
 	s := k.As(src)
 	d.Set(s)

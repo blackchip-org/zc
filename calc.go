@@ -1,7 +1,6 @@
 package zc
 
 import (
-	"reflect"
 	"slices"
 
 	"github.com/blackchip-org/zc/v6/errors"
@@ -40,9 +39,17 @@ type Volume struct {
 }
 
 type Item struct {
-	Val  any
-	Kind Kind
-	Anno string
+	Value any
+	Kind  Kind
+	Anno  string
+}
+
+func Values(items []Item) []any {
+	var vals []any
+	for _, item := range items {
+		vals = append(vals, item.Value)
+	}
+	return vals
 }
 
 type Calc struct {
@@ -60,7 +67,7 @@ func NewCalc(cat *Catalog) *Calc {
 }
 
 func (c *Calc) push(a any, k Kind) {
-	c.stack.Push(Item{Val: a, Kind: k})
+	c.stack.Push(Item{Value: a, Kind: k})
 }
 
 func (c *Calc) pop() (Item, error) {
@@ -75,12 +82,9 @@ func (c *Calc) Push(a any) {
 	if c.Err != nil {
 		return
 	}
-	if a == nil {
-		panic(errors.IllegalNil)
-	}
-	k, ok := c.cat.KindOf(a)
+	k, ok := c.cat.KindByType(a)
 	if !ok {
-		panic(errors.NewUnregisteredType(a))
+		panic(errors.UnregisteredType(a))
 	}
 	c.push(a, k)
 }
@@ -94,19 +98,19 @@ func (c *Calc) Pop(dest any) error {
 		return err
 	}
 
-	destKind, ok := c.cat.KindOf(dest)
+	destKind, ok := c.cat.KindByType(dest)
 	if !ok {
-		panic(errors.NewUnregisteredType(dest))
+		panic(errors.UnregisteredType(dest))
 	}
-	if !destKind.Is(item.Val) {
-		valConv, ok := destKind.To(item.Val)
+	if !destKind.Is(item.Value) {
+		valConv, ok := destKind.To(item.Value)
 		if !ok {
-			vt := reflect.TypeOf(item.Val).Name()
-			return errors.NewInvalidConversion(item.Kind.Name(), vt, valConv)
+			c.Err = errors.CannotConvert(item.Kind.Name(), dest, item.Value)
+			return c.Err
 		}
 		destKind.Copy(valConv, dest)
 	} else {
-		destKind.Copy(item.Val, dest)
+		destKind.Copy(item.Value, dest)
 	}
 	return nil
 }
@@ -123,12 +127,12 @@ func (c *Calc) Stack() []Item {
 	return slices.Clone(c.stack.Items())
 }
 
-func (c *Calc) Do(name string) {
+func (c *Calc) do(name string) {
 	if c.Err != nil {
 		return
 	}
 
-	op, ok := c.cat.OpFor(name)
+	op, ok := c.cat.OpByName(name)
 	if !ok {
 		c.Err = errors.UnknownOp(name)
 		return
@@ -136,7 +140,7 @@ func (c *Calc) Do(name string) {
 
 	stackLen := c.stack.Len()
 	if len(op.Params) > stackLen {
-		c.Err = errors.StackEmpty
+		c.Err = errors.InvalidArgCount(len(op.Params))
 		return
 	}
 
@@ -146,12 +150,14 @@ func (c *Calc) Do(name string) {
 	if op.VarParams {
 		argStart = 0
 	}
+
 	for i, kindName := range op.Params {
-		c.assembleArg(kindName, &env, argStart+i)
-		if env.Err != nil {
+		if !c.assembleArg(kindName, &env, argStart+i) {
+			c.Err = errors.InvalidArgKinds(op.Params, op.VarParams)
 			return
 		}
 	}
+
 	if op.VarParams {
 		for i := len(op.Params); i < stackLen; i++ {
 			kindName := op.Params[len(op.Params)-1]
@@ -169,9 +175,8 @@ func (c *Calc) Do(name string) {
 	stack.PopN(c.stack, c.stack.Len()-argStart)
 
 	for i, kindName := range op.Returns {
-		c.assembleRet(kindName, env, i)
-		if c.Err != nil {
-			return
+		if !c.assembleRet(kindName, env, i) {
+			panic(errors.InvalidRetKinds(op.Returns, op.VarReturns))
 		}
 	}
 	if op.VarReturns {
@@ -185,35 +190,43 @@ func (c *Calc) Do(name string) {
 	}
 }
 
-func (c *Calc) assembleArg(kindName string, ctx *OpEnv, idx int) {
-	paramKind, ok := c.cat.KindFor(kindName)
+func (c *Calc) Do(names ...string) {
+	for _, name := range names {
+		if c.Err != nil {
+			return
+		}
+		c.do(name)
+	}
+}
+
+func (c *Calc) assembleArg(kindName string, env *OpEnv, idx int) bool {
+	paramKind, ok := c.cat.KindByName(kindName)
 	if !ok {
 		panic(errors.UnknownKind(kindName))
 	}
 	item := stack.At(c.stack, idx)
-	arg := item.Val
-	argKind := item.Kind
+	arg := item.Value
 	if !paramKind.Is(arg) {
 		convArg, ok := paramKind.To(arg)
 		if !ok {
-			c.Err = errors.NewUnexpectedArgKind(paramKind.Name(), argKind.Name(), arg, idx)
-			return
+			return false
 		}
-		ctx.Args = append(ctx.Args, convArg)
+		env.Args = append(env.Args, convArg)
 	} else {
-		ctx.Args = append(ctx.Args, arg)
+		env.Args = append(env.Args, arg)
 	}
+	return true
 }
 
-func (c *Calc) assembleRet(kindName string, ctx OpEnv, idx int) {
-	retKind, ok := c.cat.KindFor(kindName)
+func (c *Calc) assembleRet(kindName string, ctx OpEnv, idx int) bool {
+	retKind, ok := c.cat.KindByName(kindName)
 	if !ok {
 		panic(errors.UnknownKind(kindName))
 	}
 	ret := ctx.Returns[idx]
 	if !retKind.Is(ret) {
-		c.Err = errors.NewUnexpectedRetKind(retKind.Name(), ret, idx)
-		return
+		return false
 	}
 	c.push(ret, retKind)
+	return true
 }

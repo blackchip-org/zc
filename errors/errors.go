@@ -4,12 +4,17 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 var (
 	StackEmpty = errors.New("stack empty")
-	IllegalNil = errors.New("illegal nil value")
 )
+
+func CannotConvert(fromKind string, dest any, val any) error {
+	toType := nameOf(dest)
+	return fmt.Errorf("cannot convert %v from %v to %v", val, fromKind, toType)
+}
 
 func DuplicateKind(name string) error {
 	return fmt.Errorf("duplicate kind: %v", name)
@@ -17,6 +22,26 @@ func DuplicateKind(name string) error {
 
 func DuplicateOp(name string) error {
 	return fmt.Errorf("duplicate op: %v", name)
+}
+
+func InvalidArgKinds(kindNames []string, varArgs bool) error {
+	kinds := strings.Join(kindNames, " | ")
+	if varArgs {
+		kinds += "*"
+	}
+	return fmt.Errorf("invalid arguments, expected: %v", kinds)
+}
+
+func InvalidArgCount(expected int) error {
+	return fmt.Errorf("expected %v arguments", expected)
+}
+
+func InvalidRetKinds(kindNames []string, varRets bool) error {
+	kinds := strings.Join(kindNames, " | ")
+	if varRets {
+		kinds += "*"
+	}
+	return fmt.Errorf("invalid returns, expected: %v", kinds)
 }
 
 func NoFuncForOp(name string) error {
@@ -27,96 +52,26 @@ func UnknownKind(name string) error {
 	return fmt.Errorf("unknown kind: %v", name)
 }
 
+func UnexpectedType(expected string, val any) error {
+	actual := nameOf(val)
+	return fmt.Errorf("expected type %v but got %v with value %v", expected, actual, val)
+}
+
 func UnknownOp(name string) error {
 	return fmt.Errorf("unknown operation: %v", name)
 }
 
-type InvalidConversion struct {
-	Val  any
-	From string
-	To   string
+func UnregisteredType(v any) error {
+	return fmt.Errorf("unregistered type: %v", nameOf(v))
 }
 
-func (e InvalidConversion) Error() string {
-	return fmt.Sprintf("cannot convert %v from %v to %v", e.Val, e.From, e.To)
-}
-
-func NewInvalidConversion(from string, to string, a any) error {
-	return InvalidConversion{
-		Val:  a,
-		From: from,
-		To:   to,
+func nameOf(v any) string {
+	var name strings.Builder
+	t := reflect.TypeOf(v)
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+		name.WriteRune('*')
 	}
-}
-
-type UnexpectedType struct {
-	Expected string
-	Actual   reflect.Type
-	Val      any
-}
-
-func (e UnexpectedType) Error() string {
-	return fmt.Sprintf("expected type %v but got %v with value %v", e.Expected, e.Actual, e.Val)
-}
-
-func NewUnexpectedType(expected string, v any) error {
-	return UnexpectedType{
-		Expected: expected,
-		Actual:   reflect.TypeOf(v),
-		Val:      v,
-	}
-}
-
-type UnexpectedArgKind struct {
-	Have  string
-	Want  string
-	Val   any
-	Index int
-}
-
-func (e UnexpectedArgKind) Error() string {
-	return fmt.Sprintf("expected %v as argument #%v but got %v with value %v", e.Have, e.Index, e.Want, e.Val)
-}
-
-func NewUnexpectedArgKind(have, want string, val any, idx int) error {
-	return UnexpectedArgKind{
-		Have:  have,
-		Want:  want,
-		Val:   val,
-		Index: idx,
-	}
-}
-
-type UnexpectedRetKind struct {
-	Expected string
-	Actual   reflect.Type
-	Val      any
-	Index    int
-}
-
-func (e UnexpectedRetKind) Error() string {
-	return fmt.Sprintf("expected %v as return #%v but got %v with value %v", e.Expected, e.Index, e.Actual, e.Val)
-}
-
-func NewUnexpectedRetKind(expected string, v any, i int) error {
-	return UnexpectedRetKind{
-		Expected: expected,
-		Actual:   reflect.TypeOf(v),
-		Val:      v,
-		Index:    i,
-	}
-}
-
-type UnregisteredType struct {
-	Type reflect.Type
-}
-
-func (e UnregisteredType) Error() string {
-	return fmt.Sprintf("unregistered type %v", e.Type)
-}
-
-func NewUnregisteredType(v any) error {
-	return UnregisteredType{
-		Type: reflect.TypeOf(v),
-	}
+	name.WriteString(t.Name())
+	return name.String()
 }

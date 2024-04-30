@@ -11,6 +11,7 @@ type CatalogBuilder struct {
 	kinds    map[string]Kind
 	ordKinds []Kind
 	ops      map[string]Op
+	ordOps   []Op
 }
 
 func NewCatalogBuilder() *CatalogBuilder {
@@ -47,6 +48,7 @@ func (c *CatalogBuilder) AddOp(ops ...Op) {
 		for _, alias := range op.Aliases {
 			c.addOp(alias, op)
 		}
+		c.ordOps = append(c.ordOps, op)
 	}
 }
 
@@ -62,6 +64,7 @@ func (c *CatalogBuilder) Build() *Catalog {
 		kinds:    maps.Clone(c.kinds),
 		ordKinds: slices.Clone(c.ordKinds),
 		ops:      maps.Clone(c.ops),
+		ordOps:   slices.Clone(c.ordOps),
 	}
 	val := valKind{}
 	cat.kinds[val.Name()] = val
@@ -72,14 +75,15 @@ type Catalog struct {
 	kinds    map[string]Kind
 	ordKinds []Kind
 	ops      map[string]Op
+	ordOps   []Op
 }
 
-func (c *Catalog) KindFor(name string) (Kind, bool) {
+func (c *Catalog) KindByName(name string) (Kind, bool) {
 	k, ok := c.kinds[name]
 	return k, ok
 }
 
-func (c *Catalog) KindOf(v any) (Kind, bool) {
+func (c *Catalog) KindByType(v any) (Kind, bool) {
 	for _, t := range c.ordKinds {
 		if t.Is(v) {
 			return t, true
@@ -88,15 +92,19 @@ func (c *Catalog) KindOf(v any) (Kind, bool) {
 	return nil, false
 }
 
-func (c *Catalog) OpFor(name string) (Op, bool) {
+func (c *Catalog) OpByName(name string) (Op, bool) {
 	op, ok := c.ops[name]
 	return op, ok
 }
 
+func (c *Catalog) Ops() []Op {
+	return slices.Clone(c.ordOps)
+}
+
 func (c *Catalog) Copy(v any) any {
-	k, ok := c.KindOf(v)
+	k, ok := c.KindByType(v)
 	if !ok {
-		panic(errors.NewUnregisteredType(v))
+		panic(errors.UnregisteredType(v))
 	}
 	return k.Dup(v)
 }

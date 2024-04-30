@@ -27,7 +27,7 @@ func (k textKind) Is(a any) bool {
 func (k textKind) As(a any) string {
 	v, ok := a.(string)
 	if !ok {
-		panic(errors.NewUnexpectedType("string", a))
+		panic(errors.UnexpectedType("string", a))
 	}
 	return v
 }
@@ -39,7 +39,7 @@ func (k textKind) Dup(a any) any {
 func (k textKind) Copy(src any, dest any) {
 	d, ok := dest.(*string)
 	if !ok {
-		panic(errors.NewUnexpectedType("*string", dest))
+		panic(errors.UnexpectedType("*string", dest))
 	}
 	*d = k.As(src)
 }
