@@ -67,7 +67,7 @@ func TestNotEnoughArgs(t *testing.T) {
 		t.Fatal("expected error")
 	}
 	have := c.Err.Error()
-	want := "expected 2 arguments"
+	want := "not enough arguments, expected 2"
 
 	if have != want {
 		t.Errorf("\n have: %v \n want: %v", have, want)
@@ -84,7 +84,7 @@ func TestArgsWrongKind(t *testing.T) {
 		t.Fatal("expected error")
 	}
 	have := c.Err.Error()
-	want := "invalid arguments, expected: Int | Int"
+	want := "invalid arguments, expected Int | Int"
 
 	if have != want {
 		t.Errorf("\n have: %v \n want: %v", have, want)

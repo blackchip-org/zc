@@ -73,7 +73,7 @@ func (c *Calc) push(a any, k Kind) {
 func (c *Calc) pop() (Item, error) {
 	item, ok := c.stack.Pop()
 	if !ok {
-		return item, errors.StackEmpty
+		return item, errors.StackEmpty()
 	}
 	return item, nil
 }

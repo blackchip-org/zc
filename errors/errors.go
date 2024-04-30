@@ -7,10 +7,6 @@ import (
 	"strings"
 )
 
-var (
-	StackEmpty = errors.New("stack empty")
-)
-
 func CannotConvert(fromKind string, dest any, val any) error {
 	toType := nameOf(dest)
 	return fmt.Errorf("cannot convert %v from %v to %v", val, fromKind, toType)
@@ -29,11 +25,11 @@ func InvalidArgKinds(kindNames []string, varArgs bool) error {
 	if varArgs {
 		kinds += "*"
 	}
-	return fmt.Errorf("invalid arguments, expected: %v", kinds)
+	return fmt.Errorf("invalid arguments, expected %v", kinds)
 }
 
 func InvalidArgCount(expected int) error {
-	return fmt.Errorf("expected %v arguments", expected)
+	return fmt.Errorf("not enough arguments, expected %v", expected)
 }
 
 func InvalidRetKinds(kindNames []string, varRets bool) error {
@@ -41,11 +37,15 @@ func InvalidRetKinds(kindNames []string, varRets bool) error {
 	if varRets {
 		kinds += "*"
 	}
-	return fmt.Errorf("invalid returns, expected: %v", kinds)
+	return fmt.Errorf("invalid returns, expected %v", kinds)
 }
 
 func NoFuncForOp(name string) error {
 	return fmt.Errorf("no function for op: %v", name)
+}
+
+func StackEmpty() error {
+	return errors.New("stack empty")
 }
 
 func UnknownKind(name string) error {
