@@ -3,9 +3,7 @@ package zc
 import (
 	"fmt"
 	"slices"
-	"unicode"
 
-	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/errors"
 	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
@@ -26,20 +24,6 @@ type OpEnv struct {
 	Err     error
 }
 
-type Op1 struct {
-	Name        string
-	Aliases     []string
-	Params      []string
-	VarParams   bool
-	Returns     []string
-	VarReturns  bool
-	Priority    int
-	Func        func(*OpEnv)
-	Labels      []string
-	Title       string
-	Description string
-}
-
 type Op struct {
 	Name       string
 	Aliases    []string
@@ -49,12 +33,6 @@ type Op struct {
 	VarReturns bool
 	Prec       int
 	Func       func(*OpEnv)
-}
-
-type Volume1 struct {
-	Name  string
-	Kinds []Kind
-	Ops   []Op1
 }
 
 type Vol struct {
@@ -326,28 +304,4 @@ func (c *Calc) assembleRet(kindName string, env *OpEnv, idx int) bool {
 	}
 	c.push(Item{Value: ret, Kind: retKind})
 	return true
-}
-
-func OpIdent(name string) (string, bool) {
-	var s scan.Scanner
-	s.InitFromString("", name)
-
-	// Skip any names that are only symbols
-	if !scan.IsLetter(s.This) {
-		return "", false
-	}
-	s.Val.WriteRune(unicode.ToUpper(s.This))
-	s.Skip()
-
-	for s.HasMore() {
-		if s.Next == '.' || s.Next == '-' {
-			s.Keep()
-			s.Skip()
-			s.Val.WriteRune(unicode.ToUpper(s.This))
-			s.Skip()
-		} else {
-			s.Keep()
-		}
-	}
-	return s.Emit().Val, true
 }

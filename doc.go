@@ -26,9 +26,3 @@ type VolDoc struct {
 	Kinds    []string `yaml:"kinds"`
 	Ops      []OpDoc  `yaml:"ops"`
 }
-
-type ValDoc struct {
-	Label string
-	Kind  string
-	Var   bool
-}
