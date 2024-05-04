@@ -33,3 +33,7 @@ func (s *sliceStack[T]) Items() []T {
 func (s *sliceStack[T]) SetItems(items []T) {
 	s.items = items
 }
+
+func (s *sliceStack[T]) Clear() {
+	s.items = nil
+}

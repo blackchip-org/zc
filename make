@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 
-gen-ops() {
+ops() {
     set -x
     go generate internal/gen-ops/gen-ops.go
+    gofmt -w     ops/ops.go kinds/kinds.go volumes/*/{ops,volume}.go
 }
 
 test() {
@@ -11,8 +12,8 @@ test() {
 }
 
 case "$1" in
-    gen-ops)
-        (gen-ops)
+    ops)
+        (ops)
         ;;
     test)
         (test)

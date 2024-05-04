@@ -1,0 +1,38 @@
+name: int
+title: Integer numbers
+package: intb
+
+kinds:
+  - Int
+
+ops:
+- name: add
+  title: Addition
+  aliases: [add.int, addi, "+"]
+  func: add
+  params: [x:Int, y:Int]
+  returns: [Int]
+  prec: Int
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: a
+    o: [8]
+
+- name: sub
+  title: Subtraction
+  aliases: [sub.int, subi, "-"]
+  func: sub
+  params: [x:Int, y:Int]
+  returns: [Int]
+  desc: Subtracts the value of *y* from *x*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: s
+    o: [4]

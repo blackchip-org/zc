@@ -8,6 +8,7 @@ type Stack[T any] interface {
 	Len() int
 	Items() []T
 	SetItems([]T)
+	Clear()
 }
 
 func At[T any](s Stack[T], index int) T {

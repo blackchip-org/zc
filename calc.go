@@ -1,8 +1,11 @@
 package zc
 
 import (
+	"fmt"
 	"slices"
+	"unicode"
 
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/errors"
 	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
@@ -17,9 +20,24 @@ type Kind interface {
 
 type OpEnv struct {
 	Catalog *Catalog
+	Op      Op
 	Args    []any
 	Returns []any
 	Err     error
+}
+
+type Op1 struct {
+	Name        string
+	Aliases     []string
+	Params      []string
+	VarParams   bool
+	Returns     []string
+	VarReturns  bool
+	Priority    int
+	Func        func(*OpEnv)
+	Labels      []string
+	Title       string
+	Description string
 }
 
 type Op struct {
@@ -29,10 +47,17 @@ type Op struct {
 	VarParams  bool
 	Returns    []string
 	VarReturns bool
+	Prec       int
 	Func       func(*OpEnv)
 }
 
-type Volume struct {
+type Volume1 struct {
+	Name  string
+	Kinds []Kind
+	Ops   []Op1
+}
+
+type Vol struct {
 	Name  string
 	Kinds []Kind
 	Ops   []Op
@@ -44,6 +69,10 @@ type Item struct {
 	Anno  string
 }
 
+func (i Item) String() string {
+	return fmt.Sprintf("%v", i.Value)
+}
+
 func Values(items []Item) []any {
 	var vals []any
 	for _, item := range items {
@@ -53,9 +82,10 @@ func Values(items []Item) []any {
 }
 
 type Calc struct {
-	Err   error
-	cat   *Catalog
-	stack stack.Stack[Item]
+	Err      error
+	Listener Listener
+	cat      *Catalog
+	stack    stack.Stack[Item]
 }
 
 func NewCalc(cat *Catalog) *Calc {
@@ -66,8 +96,8 @@ func NewCalc(cat *Catalog) *Calc {
 	return c
 }
 
-func (c *Calc) push(a any, k Kind) {
-	c.stack.Push(Item{Value: a, Kind: k})
+func (c *Calc) push(item Item) {
+	c.stack.Push(item)
 }
 
 func (c *Calc) pop() (Item, error) {
@@ -86,7 +116,10 @@ func (c *Calc) Push(a any) {
 	if !ok {
 		panic(errors.UnregisteredType(a))
 	}
-	c.push(a, k)
+	c.push(Item{Value: a, Kind: k})
+	if c.Listener != nil {
+		c.Listener(NewStackEvent("push", c.stack.Items()))
+	}
 }
 
 func (c *Calc) Pop(dest any) error {
@@ -112,6 +145,10 @@ func (c *Calc) Pop(dest any) error {
 	} else {
 		destKind.Copy(item.Value, dest)
 	}
+
+	if c.Listener != nil {
+		c.Listener(NewStackEvent("pop", c.stack.Items()))
+	}
 	return nil
 }
 
@@ -132,18 +169,95 @@ func (c *Calc) do(name string) {
 		return
 	}
 
-	op, ok := c.cat.OpByName(name)
+	// An name may have more than one operation mapped to it. If there is
+	// nothing at all matching by this name, set an error and return
+	ops, ok := c.cat.OpByName(name)
 	if !ok {
-		c.Err = errors.UnknownOp(name)
+		c.Err = errors.NoSuchOp(name)
 		return
 	}
 
+	// Check each op to see if the kinds of the arguments match up with
+	// the kinds of the parameters
+	var op Op
+	var err error
+	var env *OpEnv
+	for _, op = range ops {
+		env, err = c.checkOp(op)
+		if err == nil {
+			break
+		}
+	}
+
+	// No match found. When there is a single operation, return the actual
+	// error that was returned. Otherwise, indicate that no matches were found
+	if err != nil {
+		if len(ops) > 1 {
+			err = errors.NoMatchOp(name)
+		}
+		c.Err = err
+		return
+	}
+
+	// Execute the operation and return now if there was an error
+	env.Op = op
+	if c.Listener != nil {
+		c.Listener(NewOpEvent(env))
+	}
+	op.Func(env)
+
+	if env.Err != nil {
+		c.Err = env.Err
+		return
+	}
+
+	// Arguments that were used for the operation now have to be removed
+	// from the stack. If there are variable returns, remove all items.
+	if op.VarReturns {
+		c.stack.Clear()
+	} else {
+		stack.PopN(c.stack, len(env.Args))
+	}
+
+	// Check the return values from the operation and ensure the match
+	// up with the expected kinds. If there is a mismatch here, this is
+	// an implementation bug with the operation and a panic is raised.
+	for i, kindName := range op.Returns {
+		if !c.assembleRet(kindName, env, i) {
+			panic(errors.InvalidRetKinds(op.Returns, op.VarReturns))
+		}
+	}
+
+	// If the return can contain a variable number of values, then each
+	// additional value must be the same kind as the last found in the
+	// return signature.
+	if op.VarReturns {
+		for i := len(op.Returns); i < len(env.Returns); i++ {
+			k := op.Returns[len(op.Returns)-1]
+			if !c.assembleRet(k, env, i) {
+				panic(errors.InvalidRetKinds(op.Returns, op.VarReturns))
+			}
+		}
+		if c.Err != nil {
+			return
+		}
+	}
+
+	if c.Listener != nil {
+		c.Listener(NewStackEvent("eval", c.stack.Items()))
+	}
+}
+
+func (c *Calc) checkOp(op Op) (*OpEnv, error) {
+	// First, make sure there are enough arguments for this operation
 	stackLen := c.stack.Len()
 	if len(op.Params) > stackLen {
-		c.Err = errors.InvalidArgCount(len(op.Params))
-		return
+		return nil, errors.InvalidArgCount(len(op.Params))
 	}
 
+	// Create a call environment and find which value on the stack is the
+	// first argument. If the operation is defined to take a variable
+	// number of arguments, then the whole stack is the argument set.
 	var env OpEnv
 	env.Catalog = c.cat
 	argStart := stackLen - len(op.Params)
@@ -151,43 +265,26 @@ func (c *Calc) do(name string) {
 		argStart = 0
 	}
 
+	// Check that the kind of each argument matches up with the expected
+	// parameter kind.
 	for i, kindName := range op.Params {
 		if !c.assembleArg(kindName, &env, argStart+i) {
-			c.Err = errors.InvalidArgKinds(op.Params, op.VarParams)
-			return
+			return nil, errors.InvalidArgKinds(op.Params, op.VarParams)
 		}
 	}
 
+	// If the arguments can contain a variable number of values, then each
+	// additional value must be the same kind as the last found in the
+	// parameter signature.
 	if op.VarParams {
 		for i := len(op.Params); i < stackLen; i++ {
 			kindName := op.Params[len(op.Params)-1]
-			c.assembleArg(kindName, &env, argStart+i)
-			if env.Err != nil {
-				return
+			if !c.assembleArg(kindName, &env, argStart+i) {
+				return nil, errors.InvalidArgKinds(op.Params, op.VarParams)
 			}
 		}
 	}
-	op.Func(&env)
-	if env.Err != nil {
-		c.Err = env.Err
-		return
-	}
-	stack.PopN(c.stack, c.stack.Len()-argStart)
-
-	for i, kindName := range op.Returns {
-		if !c.assembleRet(kindName, env, i) {
-			panic(errors.InvalidRetKinds(op.Returns, op.VarReturns))
-		}
-	}
-	if op.VarReturns {
-		for i := len(op.Returns); i < len(env.Returns); i++ {
-			k := op.Returns[len(op.Returns)-1]
-			c.assembleRet(k, env, i)
-		}
-		if c.Err != nil {
-			return
-		}
-	}
+	return &env, nil
 }
 
 func (c *Calc) Do(names ...string) {
@@ -218,15 +315,39 @@ func (c *Calc) assembleArg(kindName string, env *OpEnv, idx int) bool {
 	return true
 }
 
-func (c *Calc) assembleRet(kindName string, ctx OpEnv, idx int) bool {
+func (c *Calc) assembleRet(kindName string, env *OpEnv, idx int) bool {
 	retKind, ok := c.cat.KindByName(kindName)
 	if !ok {
 		panic(errors.UnknownKind(kindName))
 	}
-	ret := ctx.Returns[idx]
+	ret := env.Returns[idx]
 	if !retKind.Is(ret) {
 		return false
 	}
-	c.push(ret, retKind)
+	c.push(Item{Value: ret, Kind: retKind})
 	return true
+}
+
+func OpIdent(name string) (string, bool) {
+	var s scan.Scanner
+	s.InitFromString("", name)
+
+	// Skip any names that are only symbols
+	if !scan.IsLetter(s.This) {
+		return "", false
+	}
+	s.Val.WriteRune(unicode.ToUpper(s.This))
+	s.Skip()
+
+	for s.HasMore() {
+		if s.Next == '.' || s.Next == '-' {
+			s.Keep()
+			s.Skip()
+			s.Val.WriteRune(unicode.ToUpper(s.This))
+			s.Skip()
+		} else {
+			s.Keep()
+		}
+	}
+	return s.Emit().Val, true
 }

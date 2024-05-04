@@ -1,0 +1,23 @@
+name: float
+title: Floating-point numbers
+package: floatb
+
+kinds:
+  - Float
+
+ops:
+- name: add
+  title: Addition
+  aliases: [add.float, addf, "+"]
+  func: add
+  params: [x:Float, y:Float]
+  returns: [Float]
+  prec: Float
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 1.1
+    o: [1.1]
+  - i: 2.2
+    o: [1.1, 2.2]
+  - i: a
+    o: [3.3001]

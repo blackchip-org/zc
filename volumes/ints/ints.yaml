@@ -1,0 +1,21 @@
+name: ints
+title: Sized integer numbers
+
+kinds:
+  - IntArch
+
+ops:
+- name: add.intarch
+  title: Addition, architecture sized integer
+  alias: [addia]
+  func: add
+  params: [x:IntArch, y:IntArch]
+  returns: [IntArch]
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: a
+    o: [8]

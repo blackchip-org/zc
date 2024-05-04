@@ -1,7 +1,9 @@
 package zc
 
 import (
+	"cmp"
 	"maps"
+	"reflect"
 	"slices"
 
 	"github.com/blackchip-org/zc/v6/errors"
@@ -10,14 +12,14 @@ import (
 type CatalogBuilder struct {
 	kinds    map[string]Kind
 	ordKinds []Kind
-	ops      map[string]Op
+	ops      map[string][]Op
 	ordOps   []Op
 }
 
 func NewCatalogBuilder() *CatalogBuilder {
 	return &CatalogBuilder{
 		kinds: make(map[string]Kind),
-		ops:   make(map[string]Op),
+		ops:   make(map[string][]Op),
 	}
 }
 
@@ -33,13 +35,32 @@ func (c *CatalogBuilder) AddKind(ks ...Kind) {
 }
 
 func (c *CatalogBuilder) addOp(name string, op Op) {
-	if _, ok := c.ops[name]; ok {
-		panic(errors.DuplicateOp(name))
+	var ops []Op
+	var ok bool
+
+	if ops, ok = c.ops[name]; ok {
+		// An operation of this name already exists. Make sure that there
+		// isn't already an operation with the same parameter signature
+		for _, other := range ops {
+			if reflect.DeepEqual(other.Params, op.Params) {
+				stack := append(op.Params, op.Name)
+				panic(errors.DuplicateOp(FormatStackValues(stack)))
+			}
+		}
+		// Sort operations by precedence
+		ops = append(ops, op)
+		slices.SortStableFunc(ops, func(a, b Op) int {
+			return cmp.Compare(a.Prec, b.Prec)
+		})
+	} else {
+		// No operation with this name has been defined yet.
+		ops = []Op{op}
 	}
+
 	if op.Func == nil {
 		panic(errors.NoFuncForOp(name))
 	}
-	c.ops[name] = op
+	c.ops[name] = ops
 }
 
 func (c *CatalogBuilder) AddOp(ops ...Op) {
@@ -52,7 +73,7 @@ func (c *CatalogBuilder) AddOp(ops ...Op) {
 	}
 }
 
-func (c *CatalogBuilder) AddVolume(vols ...Volume) {
+func (c *CatalogBuilder) AddVolume(vols ...Vol) {
 	for _, vol := range vols {
 		c.AddKind(vol.Kinds...)
 		c.AddOp(vol.Ops...)
@@ -63,8 +84,11 @@ func (c *CatalogBuilder) Build() *Catalog {
 	cat := &Catalog{
 		kinds:    maps.Clone(c.kinds),
 		ordKinds: slices.Clone(c.ordKinds),
-		ops:      maps.Clone(c.ops),
+		ops:      make(map[string][]Op),
 		ordOps:   slices.Clone(c.ordOps),
+	}
+	for k, v := range c.ops {
+		cat.ops[k] = slices.Clone(v)
 	}
 	val := valKind{}
 	cat.kinds[val.Name()] = val
@@ -74,7 +98,7 @@ func (c *CatalogBuilder) Build() *Catalog {
 type Catalog struct {
 	kinds    map[string]Kind
 	ordKinds []Kind
-	ops      map[string]Op
+	ops      map[string][]Op
 	ordOps   []Op
 }
 
@@ -92,7 +116,7 @@ func (c *Catalog) KindByType(v any) (Kind, bool) {
 	return nil, false
 }
 
-func (c *Catalog) OpByName(name string) (Op, bool) {
+func (c *Catalog) OpByName(name string) ([]Op, bool) {
 	op, ok := c.ops[name]
 	return op, ok
 }
@@ -101,7 +125,7 @@ func (c *Catalog) Ops() []Op {
 	return slices.Clone(c.ordOps)
 }
 
-func (c *Catalog) Copy(v any) any {
+func (c *Catalog) Dup(v any) any {
 	k, ok := c.KindByType(v)
 	if !ok {
 		panic(errors.UnregisteredType(v))

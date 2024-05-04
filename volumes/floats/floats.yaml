@@ -1,0 +1,22 @@
+name: floats
+title: Sized floating-point numbers
+
+kinds:
+  - Float64
+
+ops:
+- name: add
+  title: Addition
+  aliases: [add.float64, addf64]
+  func: add
+  params: [x:Float64, y:Float64]
+  returns: [Float64]
+  prec: Float
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 1.1
+    o: [1.1]
+  - i: 2.2
+    o: [1.1, 2.2]
+  - i: a
+    o: [3.3001]

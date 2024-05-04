@@ -27,6 +27,82 @@ func TestIntAdd(t *testing.T) {
 	}
 }
 
+func TestIntAddGen(t *testing.T) {
+	c := calc.New()
+
+	c.Push(2)
+	c.Push(3)
+	c.Do(ops.Add)
+
+	if c.Err != nil {
+		t.Fatalf("unexpected error: %v", c.Err)
+	}
+
+	have := c.PopString()
+	want := "5"
+
+	if have != want {
+		t.Errorf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestSubAdd(t *testing.T) {
+	c := calc.New()
+
+	c.Push(2)
+	c.Push(3)
+	c.Do(ops.Sub)
+
+	if c.Err != nil {
+		t.Fatalf("unexpected error: %v", c.Err)
+	}
+
+	have := c.PopString()
+	want := "-1"
+
+	if have != want {
+		t.Errorf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestIntFloat(t *testing.T) {
+	c := calc.New()
+
+	c.Push(2.2)
+	c.Push(3.3)
+	c.Do(ops.AddFloat)
+
+	if c.Err != nil {
+		t.Fatalf("unexpected error: %v", c.Err)
+	}
+
+	have := c.PopString()
+	want := "5.5"
+
+	if have != want {
+		t.Errorf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestIntFloatGen(t *testing.T) {
+	c := calc.New()
+
+	c.Push(2.2)
+	c.Push(3.3)
+	c.Do(ops.Add)
+
+	if c.Err != nil {
+		t.Fatalf("unexpected error: %v", c.Err)
+	}
+
+	have := c.PopString()
+	want := "5.5"
+
+	if have != want {
+		t.Errorf("\n have: %v \n want: %v", have, want)
+	}
+}
+
 func TestFib(t *testing.T) {
 	c := fib(10)
 	if c.Err != nil {

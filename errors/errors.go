@@ -44,6 +44,14 @@ func NoFuncForOp(name string) error {
 	return fmt.Errorf("no function for op: %v", name)
 }
 
+func NoSuchOp(name string) error {
+	return fmt.Errorf("no such operation: %v", name)
+}
+
+func NoMatchOp(name string) error {
+	return fmt.Errorf("no match for operation: %v", name)
+}
+
 func StackEmpty() error {
 	return errors.New("stack empty")
 }
@@ -55,10 +63,6 @@ func UnknownKind(name string) error {
 func UnexpectedType(expected string, val any) error {
 	actual := nameOf(val)
 	return fmt.Errorf("expected type %v but got %v with value %v", expected, actual, val)
-}
-
-func UnknownOp(name string) error {
-	return fmt.Errorf("unknown operation: %v", name)
 }
 
 func UnregisteredType(v any) error {
