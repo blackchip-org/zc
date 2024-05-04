@@ -3,7 +3,7 @@
 ops() {
     set -x
     go generate internal/gen-ops/gen-ops.go
-    gofmt -w     ops/ops.go kinds/kinds.go volumes/*/{ops,volume}.go
+    gofmt -w     ops/ops.go kinds/kinds.go volumes/*/{ops,volume}.go test/docs/*
 }
 
 test() {

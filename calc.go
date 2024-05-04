@@ -2,8 +2,12 @@ package zc
 
 import (
 	"fmt"
+	"reflect"
 	"slices"
+	"testing"
+	"unicode"
 
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/errors"
 	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
@@ -140,6 +144,14 @@ func (c *Calc) PopString() string {
 
 func (c *Calc) Stack() []Item {
 	return slices.Clone(c.stack.Items())
+}
+
+func (c *Calc) StackStrings() []string {
+	var items []string
+	for _, i := range c.stack.Items() {
+		items = append(items, fmt.Sprintf("%v", i.Value))
+	}
+	return items
 }
 
 func (c *Calc) do(name string) {
@@ -304,4 +316,69 @@ func (c *Calc) assembleRet(kindName string, env *OpEnv, idx int) bool {
 	}
 	c.push(Item{Value: ret, Kind: retKind})
 	return true
+}
+
+var isBeginQuote = scan.Rune('\'', '"', '[')
+
+func (c *Calc) Eval(line string) {
+	s := scan.NewScannerFromString("", line)
+	var inQuote rune
+	for s.HasMore() {
+		if c.Err != nil {
+			return
+		}
+		scan.While(s, scan.IsSpace, s.Skip)
+		switch {
+		case inQuote == 0 && isBeginQuote(s.This):
+			inQuote = s.This
+			s.Skip()
+		case inQuote == '\'' && s.This == '\'':
+			inQuote = 0
+			s.Skip()
+		case inQuote == '"' && s.This == '"':
+			inQuote = 0
+			s.Skip()
+		case inQuote == '[' && s.This == ']':
+			inQuote = 0
+			s.Skip()
+		case scan.IsSpace(s.This):
+			item := s.Emit().Val
+			if IsValue(item) {
+				c.Push(item)
+			} else {
+				c.Do(item)
+			}
+			s.Skip()
+		default:
+			s.Keep()
+		}
+	}
+}
+
+func IsValue(item string) bool {
+	runes := []rune(item)
+	var ch, next rune
+	if len(runes) > 0 {
+		ch = runes[0]
+	}
+	if len(runes) > 1 {
+		next = runes[1]
+	}
+
+	switch {
+	case unicode.IsDigit(ch), unicode.Is(unicode.Sc, ch):
+		return true
+	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
+		return true
+	case ch == '/':
+		return true
+	}
+	return false
+}
+
+func TestCalc(t *testing.T, c *Calc, want ...string) {
+	have := c.StackStrings()
+	if reflect.DeepEqual(have, want) {
+		t.Fatalf("\n have: %v \n want: %v", FormatStackValues(have), FormatStackValues(want))
+	}
 }
