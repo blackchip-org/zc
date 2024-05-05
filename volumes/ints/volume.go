@@ -12,6 +12,6 @@ var Volume = zc.Vol{
 		IntArchKind,
 	},
 	Ops: []zc.Op{
-		AddIntarch,
+		AddIntArch,
 	},
 }

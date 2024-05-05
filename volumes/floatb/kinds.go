@@ -48,6 +48,10 @@ func (k floatKind) To(a any) (any, bool) {
 	switch v := a.(type) {
 	case float64:
 		return big.NewFloat(v), true
+	case string:
+		var f big.Float
+		_, ok := f.SetString(v)
+		return &f, ok
 	}
 	return nil, false
 }

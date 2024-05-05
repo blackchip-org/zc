@@ -8,11 +8,13 @@ import (
 )
 
 var (
-	AddIntarch = zc.Op{
-		Name:    "add.intarch",
-		Aliases: []string{},
+	AddIntArch = zc.Op{
+		Name: "add.intarch",
+		Aliases: []string{
+			"addia",
+		},
 		Params:  []string{kinds.IntArch, kinds.IntArch},
 		Returns: []string{kinds.IntArch},
-		Func:    add,
+		Func:    addIntArch,
 	}
 )

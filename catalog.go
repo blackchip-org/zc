@@ -39,11 +39,16 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 	var ok bool
 
 	if ops, ok = c.ops[name]; ok {
-		// An operation of this name already exists. Make sure that there
-		// isn't already an operation with the same parameter signature
+		// An operation of this name already exists. Is it defined to be
+		// overloaded?
+		if name != op.Overloads {
+			panic(errors.NotOverloaded(name))
+		}
+		// Make sure that there isn't already an operation with the same
+		// parameter signature
 		for _, other := range ops {
 			if reflect.DeepEqual(other.Params, op.Params) {
-				stack := append(op.Params, op.Name)
+				stack := append(op.Params, name)
 				panic(errors.DuplicateOp(FormatStackValues(stack)))
 			}
 		}
@@ -63,11 +68,27 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 	c.ops[name] = ops
 }
 
+func (c *CatalogBuilder) AddMacro(name string, mac string) {
+	if _, ok := c.ops[name]; ok {
+		panic(errors.DuplicateOp(name))
+	}
+	op := Op{
+		Name:  name,
+		Macro: mac,
+	}
+	c.ops[name] = []Op{op}
+}
+
 func (c *CatalogBuilder) AddOp(ops ...Op) {
 	for _, op := range ops {
-		c.addOp(op.Name, op)
+		if op.Func != nil {
+			c.addOp(op.Name, op)
+		}
+		if op.Overloads != "" {
+			c.addOp(op.Overloads, op)
+		}
 		for _, alias := range op.Aliases {
-			c.addOp(alias, op)
+			c.AddMacro(alias, op.Name)
 		}
 		c.ordOps = append(c.ordOps, op)
 	}

@@ -8,27 +8,26 @@ import (
 )
 
 var (
-	Add = zc.Op{
-		Name: "add",
+	AddInt = zc.Op{
+		Name:      "add.int",
+		Overloads: "add",
 		Aliases: []string{
-			"add.int",
 			"addi",
-			"+",
 		},
 		Params:  []string{kinds.Int, kinds.Int},
 		Returns: []string{kinds.Int},
 		Prec:    kinds.PrecInt,
 		Func:    add,
 	}
-	Sub = zc.Op{
-		Name: "sub",
+	SubInt = zc.Op{
+		Name:      "sub.int",
+		Overloads: "sub",
 		Aliases: []string{
-			"sub.int",
 			"subi",
-			"-",
 		},
 		Params:  []string{kinds.Int, kinds.Int},
 		Returns: []string{kinds.Int},
+		Prec:    kinds.PrecInt,
 		Func:    sub,
 	}
 )

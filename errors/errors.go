@@ -52,6 +52,10 @@ func NoMatchOp(name string) error {
 	return fmt.Errorf("no match for operation: %v", name)
 }
 
+func NotOverloaded(name string) error {
+	return fmt.Errorf("operation cannot be overloaded: %v", name)
+}
+
 func StackEmpty() error {
 	return errors.New("stack empty")
 }

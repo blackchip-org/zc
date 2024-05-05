@@ -8,12 +8,11 @@ import (
 )
 
 var (
-	Add = zc.Op{
-		Name: "add",
+	AddFloat = zc.Op{
+		Name:      "add.float",
+		Overloads: "add",
 		Aliases: []string{
-			"add.float",
 			"addf",
-			"+",
 		},
 		Params:  []string{kinds.Float, kinds.Float},
 		Returns: []string{kinds.Float},

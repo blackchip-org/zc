@@ -30,6 +30,7 @@ type OpEnv struct {
 
 type Op struct {
 	Name       string
+	Overloads  string
 	Aliases    []string
 	Params     []string
 	VarParams  bool
@@ -37,6 +38,7 @@ type Op struct {
 	VarReturns bool
 	Prec       int
 	Func       func(*OpEnv)
+	Macro      string
 }
 
 type Vol struct {
@@ -164,6 +166,12 @@ func (c *Calc) do(name string) {
 	ops, ok := c.cat.OpByName(name)
 	if !ok {
 		c.Err = errors.NoSuchOp(name)
+		return
+	}
+
+	// If this is a macro, simply evaluate it and return
+	if len(ops) == 1 && ops[0].Macro != "" {
+		c.Eval(ops[0].Macro)
 		return
 	}
 
@@ -320,14 +328,9 @@ func (c *Calc) assembleRet(kindName string, env *OpEnv, idx int) bool {
 
 var isBeginQuote = scan.Rune('\'', '"', '[')
 
-func (c *Calc) Eval(line string) {
-	s := scan.NewScannerFromString("", line)
+func scanWord(s *scan.Scanner) string {
 	var inQuote rune
 	for s.HasMore() {
-		if c.Err != nil {
-			return
-		}
-		scan.While(s, scan.IsSpace, s.Skip)
 		switch {
 		case inQuote == 0 && isBeginQuote(s.This):
 			inQuote = s.This
@@ -342,15 +345,35 @@ func (c *Calc) Eval(line string) {
 			inQuote = 0
 			s.Skip()
 		case scan.IsSpace(s.This):
-			item := s.Emit().Val
-			if IsValue(item) {
-				c.Push(item)
-			} else {
-				c.Do(item)
-			}
-			s.Skip()
+			return s.Emit().Val
 		default:
 			s.Keep()
+		}
+	}
+	return s.Emit().Val
+}
+
+func (c *Calc) Eval(line string) {
+	if c.Err != nil {
+		return
+	}
+	s := scan.NewScannerFromString("", line)
+	var words []string
+	for s.HasMore() {
+		scan.While(s, scan.IsSpace, s.Skip)
+		word := scanWord(s)
+		if word != "" {
+			words = append(words, word)
+		}
+	}
+	for _, w := range words {
+		if c.Err != nil {
+			return
+		}
+		if IsValue(w) {
+			c.Push(w)
+		} else {
+			c.Do(w)
 		}
 	}
 }
@@ -377,8 +400,11 @@ func IsValue(item string) bool {
 }
 
 func TestCalc(t *testing.T, c *Calc, want ...string) {
+	if c.Err != nil {
+		t.Fatalf("unexpected error: %v\nstack: %v", c.Err, FormatStack(c.Stack()))
+	}
 	have := c.StackStrings()
-	if reflect.DeepEqual(have, want) {
+	if !reflect.DeepEqual(have, want) {
 		t.Fatalf("\n have: %v \n want: %v", FormatStackValues(have), FormatStackValues(want))
 	}
 }

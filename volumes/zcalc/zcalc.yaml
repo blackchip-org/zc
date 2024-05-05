@@ -3,11 +3,12 @@ title: Stack operations and calculator info
 
 ops:
 - name: down
-  title: Rotate down
   aliases: [dn]
-  func: down
-  params: [Val*]
-  returns: [Val*]
+  title: Rotate down
+  funcs:
+  - name: down
+    params: [Val*]
+    returns: [Val*]
   desc: |-
     Rotates all items on the stack downwards. The direction is based on how
     the stack is visualized -- the top item on the stack is displayed at
@@ -22,9 +23,10 @@ ops:
 
 - name: dup
   title: Duplicate
-  func: dup
-  params: [x:Val]
-  returns: [x:Val, x:Val]
+  funcs:
+  - name: dup
+    params: [x:Val]
+    returns: [x:Val, x:Val]
   desc: Duplicates the top value on the stack
   example:
   - i: 10

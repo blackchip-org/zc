@@ -8,15 +8,13 @@ import (
 )
 
 var (
-	Add = zc.Op{
-		Name: "add",
+	AddFloat64 = zc.Op{
+		Name: "add.float64",
 		Aliases: []string{
-			"add.float64",
 			"addf64",
 		},
 		Params:  []string{kinds.Float64, kinds.Float64},
 		Returns: []string{kinds.Float64},
-		Prec:    kinds.PrecFloat,
-		Func:    add,
+		Func:    addFloat64,
 	}
 )

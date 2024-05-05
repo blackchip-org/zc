@@ -6,11 +6,13 @@ kinds:
 
 ops:
 - name: add.intarch
+  aliases: [addia]
+  ident: AddIntArch
   title: Addition, architecture sized integer
-  alias: [addia]
-  func: add
-  params: [x:IntArch, y:IntArch]
-  returns: [IntArch]
+  funcs:
+  - name: addIntArch
+    params: [x:IntArch, y:IntArch]
+    returns: [IntArch]
   desc: Adds the value of *x* to *y*.
   example:
   - i: 6

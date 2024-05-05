@@ -12,7 +12,7 @@ var Volume = zc.Vol{
 		IntKind,
 	},
 	Ops: []zc.Op{
-		Add,
-		Sub,
+		AddInt,
+		SubInt,
 	},
 }

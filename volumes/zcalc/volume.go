@@ -7,8 +7,7 @@ import (
 )
 
 var Volume = zc.Vol{
-	Name:  "zcalc",
-	Kinds: []zc.Kind{},
+	Name: "zcalc",
 	Ops: []zc.Op{
 		Down,
 		Dup,

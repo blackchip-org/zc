@@ -8,7 +8,9 @@ import (
 	"path"
 	"slices"
 	"strings"
+	"unicode"
 
+	"github.com/blackchip-org/scan"
 	"gopkg.in/yaml.v3"
 )
 
@@ -46,7 +48,6 @@ func loadDoc(dir string) (VolDoc, error) {
 			continue
 		}
 		filename := path.Join(dir, f.Name())
-		fmt.Println(filename)
 		data, err := Docs.ReadFile(filename)
 		if err != nil {
 			return doc, err
@@ -71,11 +72,73 @@ func loadDoc(dir string) (VolDoc, error) {
 		if doc.Package == "" {
 			doc.Package = doc.Name
 		}
+		if doc.Ident == "" {
+			doc.Ident = identFor(doc.Name)
+			if doc.Ident == "" {
+				panic("no identifier for: " + doc.Name)
+			}
+		}
+		for _, op := range doc.Ops {
+			if op.Ident == "" {
+				op.Ident = identFor(op.Name)
+				if op.Ident == "" {
+					panic("no identifier for: " + op.Name)
+				}
+			}
+		}
 
-		slices.SortFunc(doc.Ops, func(a OpDoc, b OpDoc) int {
+		slices.SortFunc(doc.Ops, func(a *OpDoc, b *OpDoc) int {
 			return cmp.Compare(a.Name, b.Name)
 		})
 		return doc, err
 	}
 	return doc, fmt.Errorf("no yaml in %v", dir)
+}
+
+func opIdent(name string) (string, bool) {
+	var s scan.Scanner
+	s.InitFromString("", name)
+
+	// Skip any names that are only symbols
+	if !scan.IsLetter(s.This) {
+		return "", false
+	}
+	s.Val.WriteRune(unicode.ToUpper(s.This))
+	s.Skip()
+
+	for s.HasMore() {
+		if s.Next == '.' || s.Next == '-' {
+			s.Keep()
+			s.Skip()
+			s.Val.WriteRune(unicode.ToUpper(s.This))
+			s.Skip()
+		} else {
+			s.Keep()
+		}
+	}
+	return s.Emit().Val, true
+}
+
+func identFor(v string) string {
+	if v == "" {
+		return ""
+	}
+
+	s := scan.NewScannerFromString("", v)
+	if !scan.IsLetter(s.This) {
+		return ""
+	}
+	s.Val.WriteRune(unicode.ToUpper(s.This))
+	s.Skip()
+
+	for s.HasMore() {
+		if s.This == '.' && unicode.IsLetter(s.Next) {
+			s.Skip()
+			s.Val.WriteRune(unicode.ToUpper(s.This))
+			s.Skip()
+		} else {
+			s.Keep()
+		}
+	}
+	return s.Emit().Val
 }

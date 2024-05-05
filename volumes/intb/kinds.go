@@ -48,6 +48,10 @@ func (k intKind) To(a any) (any, bool) {
 	switch v := a.(type) {
 	case int:
 		return big.NewInt(int64(v)), true
+	case string:
+		var i big.Int
+		_, ok := i.SetString(v, 0)
+		return &i, ok
 	}
 	return nil, false
 }

@@ -5,13 +5,13 @@ kinds:
   - Float64
 
 ops:
-- name: add
+- name: add.float64
+  aliases: [addf64]
   title: Addition
-  aliases: [add.float64, addf64]
-  func: add
-  params: [x:Float64, y:Float64]
-  returns: [Float64]
-  prec: Float
+  funcs:
+  - name: addFloat64
+    params: [x:Float64, y:Float64]
+    returns: [Float64]
   desc: Adds the value of *x* to *y*.
   example:
   - i: 1.1
@@ -19,4 +19,4 @@ ops:
   - i: 2.2
     o: [1.1, 2.2]
   - i: a
-    o: [3.3001]
+    o: [3.3000000000000000002]

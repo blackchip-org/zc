@@ -1,20 +1,16 @@
-name: int
-title: Integer numbers
-package: intb
-
-kinds:
-  - Int
+name: basic
+title: Basic Calculator
 
 ops:
-- name: add.int
-  overloads: add
-  aliases: [addi]
+- name: add
+  aliases: [a, "+"]
+  ident: Add
   title: Addition
   funcs:
-  - name: add
-    params: [x:Int, y:Int]
+  - params: [x:Int, y:Int]
     returns: [Int]
-    prec: Int
+  - params: [x:Float, y:Float]
+    returns: [Float]
   desc: Adds the value of *x* to *y*.
   example:
   - i: 6
@@ -24,15 +20,15 @@ ops:
   - i: a
     o: [8]
 
-- name: sub.int
-  overloads: sub
-  aliases: [subi]
+- name: sub
+  aliases: [s, "-"]
+  ident: Sub
   title: Subtraction
   funcs:
-  - name: sub
-    params: [x:Int, y:Int]
+  - params: [x:Int, y:Int]
     returns: [Int]
-    prec: Int
+  - params: [x:Float, y:Float]
+    returns: [Float]
   desc: Subtracts the value of *y* from *x*.
   example:
   - i: 6

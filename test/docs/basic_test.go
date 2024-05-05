@@ -9,7 +9,7 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestIntsAddIntArch(t *testing.T) {
+func TestBasicAdd(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6")
@@ -20,4 +20,17 @@ func TestIntsAddIntArch(t *testing.T) {
 
 	c.Eval("a")
 	zc.TestCalc(t, c, "8")
+}
+
+func TestBasicSub(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("6")
+	zc.TestCalc(t, c, "6")
+
+	c.Eval("2")
+	zc.TestCalc(t, c, "6", "2")
+
+	c.Eval("s")
+	zc.TestCalc(t, c, "4")
 }
