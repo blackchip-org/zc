@@ -4,11 +4,14 @@ import (
 	"github.com/blackchip-org/zc/v6"
 )
 
+func clear(e *zc.OpEnv) {
+}
+
 func down(e *zc.OpEnv) {
-	top := len(e.Args) - 1
+	n := len(e.Args)
 	e.Returns = append(
-		[]any{e.Args[top]},
-		e.Args[:top]...,
+		[]any{e.Args[n-1]},
+		e.Args[:n-1]...,
 	)
 }
 

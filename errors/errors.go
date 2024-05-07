@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"slices"
 	"strings"
 )
 
@@ -20,24 +21,24 @@ func DuplicateOp(name string) error {
 	return fmt.Errorf("duplicate op: %v", name)
 }
 
-func InvalidArgKinds(kindNames []string, varArgs bool) error {
-	kinds := strings.Join(kindNames, " | ")
-	if varArgs {
-		kinds += "*"
+func InvalidArgKinds(kindNames []string, varArgs string) error {
+	ks := slices.Clone(kindNames)
+	if varArgs != "" {
+		ks = append(ks, varArgs+"*")
 	}
-	return fmt.Errorf("invalid arguments, expected %v", kinds)
+	return fmt.Errorf("invalid arguments, expected %v", strings.Join(ks, " | "))
 }
 
 func InvalidArgCount(expected int) error {
 	return fmt.Errorf("not enough arguments, expected %v", expected)
 }
 
-func InvalidRetKinds(kindNames []string, varRets bool) error {
-	kinds := strings.Join(kindNames, " | ")
-	if varRets {
-		kinds += "*"
+func InvalidRetKinds(kindNames []string, varRets string) error {
+	ks := slices.Clone(kindNames)
+	if varRets != "" {
+		ks = append(ks, varRets+"*")
 	}
-	return fmt.Errorf("invalid returns, expected %v", kinds)
+	return fmt.Errorf("invalid returns, expected %v", strings.Join(ks, " | "))
 }
 
 func NoFuncForOp(name string) error {

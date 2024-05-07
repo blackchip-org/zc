@@ -9,15 +9,15 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestFloatAddFloat(t *testing.T) {
+func TestOpDocsFloatAddFloat(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("1.1")
-	zc.TestCalc(t, c, "1.1")
+	zc.AssertStack(t, c, "1.1")
 
 	c.Eval("2.2")
-	zc.TestCalc(t, c, "1.1", "2.2")
+	zc.AssertStack(t, c, "1.1", "2.2")
 
 	c.Eval("a")
-	zc.TestCalc(t, c, "3.3000000000000000002")
+	zc.AssertStack(t, c, "3.3000000000000000002")
 }

@@ -17,4 +17,11 @@ var (
 		Returns: []string{kinds.IntArch},
 		Func:    addIntArch,
 	}
+	Int8 = zc.Op{
+		Name:    "int8",
+		Aliases: []string{},
+		Params:  []string{kinds.Int64},
+		Returns: []string{kinds.Int8},
+		Func:    int8_,
+	}
 )

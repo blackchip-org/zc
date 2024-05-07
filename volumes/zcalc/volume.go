@@ -9,6 +9,7 @@ import (
 var Volume = zc.Vol{
 	Name: "zcalc",
 	Ops: []zc.Op{
+		Clear,
 		Down,
 		Dup,
 	},

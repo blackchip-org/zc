@@ -3,6 +3,15 @@ title: Sized integer numbers
 
 kinds:
   - IntArch
+  - Int8
+  - Int16
+  - Int32
+  - Int64
+  - IntArchU
+  - Int8U
+  - Int16U
+  - Int32U
+  - Int64U
 
 ops:
 - name: add.intarch
@@ -21,3 +30,16 @@ ops:
     o: [6, 2]
   - i: a
     o: [8]
+
+- name: int8
+  title: 8-bit signed integer
+  funcs:
+  - name: int8_
+    params: [x:Int64]
+    returns: [Int8]
+  desc: Converts the value *x* to an 8-bit integer.
+  example:
+  - i: c 127 int8
+    o: [127]
+  - i: c 128 int8
+    o: [-128]

@@ -2,9 +2,7 @@ package zc
 
 import (
 	"fmt"
-	"reflect"
 	"slices"
-	"testing"
 	"unicode"
 
 	"github.com/blackchip-org/scan"
@@ -29,16 +27,16 @@ type OpEnv struct {
 }
 
 type Op struct {
-	Name       string
-	Overloads  string
-	Aliases    []string
-	Params     []string
-	VarParams  bool
-	Returns    []string
-	VarReturns bool
-	Prec       int
-	Func       func(*OpEnv)
-	Macro      string
+	Name      string
+	Overloads string
+	Aliases   []string
+	Params    []string
+	VarParam  string
+	Returns   []string
+	VarReturn string
+	Prec      int
+	Func      func(*OpEnv)
+	Macro     string
 }
 
 type Vol struct {
@@ -211,7 +209,7 @@ func (c *Calc) do(name string) {
 
 	// Arguments that were used for the operation now have to be removed
 	// from the stack. If there are variable returns, remove all items.
-	if op.VarReturns {
+	if op.VarReturn != "" {
 		c.stack.Clear()
 	} else {
 		stack.PopN(c.stack, len(env.Args))
@@ -220,21 +218,23 @@ func (c *Calc) do(name string) {
 	// Check the return values from the operation and ensure the match
 	// up with the expected kinds. If there is a mismatch here, this is
 	// an implementation bug with the operation and a panic is raised.
-	for i, kindName := range op.Returns {
-		if !c.assembleRet(kindName, env, i) {
-			panic(errors.InvalidRetKinds(op.Returns, op.VarReturns))
+	idx := 0
+	for _, kindName := range op.Returns {
+		if !c.assembleRet(kindName, env, idx) {
+			panic(errors.InvalidRetKinds(op.Returns, op.VarReturn))
 		}
+		idx++
 	}
 
 	// If the return can contain a variable number of values, then each
 	// additional value must be the same kind as the last found in the
 	// return signature.
-	if op.VarReturns {
-		for i := len(op.Returns); i < len(env.Returns); i++ {
-			k := op.Returns[len(op.Returns)-1]
-			if !c.assembleRet(k, env, i) {
-				panic(errors.InvalidRetKinds(op.Returns, op.VarReturns))
+	if op.VarReturn != "" {
+		for idx < len(env.Returns) {
+			if !c.assembleRet(env.Op.VarReturn, env, idx) {
+				panic(errors.InvalidRetKinds(op.Returns, op.VarReturn))
 			}
+			idx++
 		}
 		if c.Err != nil {
 			return
@@ -253,33 +253,35 @@ func (c *Calc) checkOp(op Op) (*OpEnv, error) {
 		return nil, errors.InvalidArgCount(len(op.Params))
 	}
 
-	// Create a call environment and find which value on the stack is the
-	// first argument. If the operation is defined to take a variable
-	// number of arguments, then the whole stack is the argument set.
+	// Create a call environment. Arguments are processed by starting
+	// at the top of the stack and working towards index 0.
 	var env OpEnv
 	env.Catalog = c.cat
-	argStart := stackLen - len(op.Params)
-	if op.VarParams {
-		argStart = 0
+
+	// If there are a variable number of parameters, then consume
+	// the entire stack.
+	idx := stackLen - len(op.Params)
+	if op.VarParam != "" {
+		idx = 0
 	}
 
 	// Check that the kind of each argument matches up with the expected
 	// parameter kind.
-	for i, kindName := range op.Params {
-		if !c.assembleArg(kindName, &env, argStart+i) {
-			return nil, errors.InvalidArgKinds(op.Params, op.VarParams)
+	for _, kindName := range op.Params {
+		if !c.assembleArg(kindName, &env, idx) {
+			return nil, errors.InvalidArgKinds(op.Params, op.VarParam)
 		}
+		idx++
 	}
 
 	// If the arguments can contain a variable number of values, then each
-	// additional value must be the same kind as the last found in the
-	// parameter signature.
-	if op.VarParams {
-		for i := len(op.Params); i < stackLen; i++ {
-			kindName := op.Params[len(op.Params)-1]
-			if !c.assembleArg(kindName, &env, argStart+i) {
-				return nil, errors.InvalidArgKinds(op.Params, op.VarParams)
+	// additional value must be the same kind
+	if op.VarParam != "" {
+		for idx < stackLen {
+			if !c.assembleArg(op.VarParam, &env, idx) {
+				return nil, errors.InvalidArgKinds(op.Params, op.VarParam)
 			}
+			idx++
 		}
 	}
 	return &env, nil
@@ -397,14 +399,4 @@ func IsValue(item string) bool {
 		return true
 	}
 	return false
-}
-
-func TestCalc(t *testing.T, c *Calc, want ...string) {
-	if c.Err != nil {
-		t.Fatalf("unexpected error: %v\nstack: %v", c.Err, FormatStack(c.Stack()))
-	}
-	have := c.StackStrings()
-	if !reflect.DeepEqual(have, want) {
-		t.Fatalf("\n have: %v \n want: %v", FormatStackValues(have), FormatStackValues(want))
-	}
 }

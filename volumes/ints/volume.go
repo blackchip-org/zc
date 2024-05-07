@@ -10,8 +10,18 @@ var Volume = zc.Vol{
 	Name: "ints",
 	Kinds: []zc.Kind{
 		IntArchKind,
+		Int8Kind,
+		Int16Kind,
+		Int32Kind,
+		Int64Kind,
+		IntArchUKind,
+		Int8UKind,
+		Int16UKind,
+		Int32UKind,
+		Int64UKind,
 	},
 	Ops: []zc.Op{
 		AddIntArch,
+		Int8,
 	},
 }

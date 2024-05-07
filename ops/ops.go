@@ -8,8 +8,10 @@ var (
 	AddFloat64 = "add.float64"
 	AddInt     = "add.int"
 	AddIntArch = "add.intarch"
+	Clear      = "clear"
 	Down       = "down"
 	Dup        = "dup"
+	Int8       = "int8"
 	Sub        = "sub"
 	SubInt     = "sub.int"
 )

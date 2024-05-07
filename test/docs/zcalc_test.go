@@ -9,22 +9,32 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestZcalcDown(t *testing.T) {
+func TestOpDocsZcalcClear(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("1 2 3")
-	zc.TestCalc(t, c, "1", "2", "3")
+	zc.AssertStack(t, c, "1", "2", "3")
 
-	c.Eval("down")
-	zc.TestCalc(t, c, "3", "1", "2")
+	c.Eval("c")
+	zc.AssertStack(t, c)
 }
 
-func TestZcalcDup(t *testing.T) {
+func TestOpDocsZcalcDown(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("1 2 3")
+	zc.AssertStack(t, c, "1", "2", "3")
+
+	c.Eval("down")
+	zc.AssertStack(t, c, "3", "1", "2")
+}
+
+func TestOpDocsZcalcDup(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("10")
-	zc.TestCalc(t, c, "10")
+	zc.AssertStack(t, c, "10")
 
 	c.Eval("dup")
-	zc.TestCalc(t, c, "10", "10")
+	zc.AssertStack(t, c, "10", "10")
 }

@@ -18,6 +18,7 @@ case "$1" in
         ;;
     test)
         shift
+        (ops)
         (test $@)
         ;;
     *)

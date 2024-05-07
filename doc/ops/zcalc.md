@@ -6,12 +6,30 @@ Stack operations and calculator info
 
 ## Index
 
-| Operation           | Description
-|---------------------|------------
-| [`down, dn`](#down) | Rotate down
-| [`dup`](#dup)       | Duplicate  
+| Operation            | Description
+|----------------------|------------
+| [`clear, c`](#clear) | Clear      
+| [`down, dn`](#down)  | Rotate down
+| [`dup`](#dup)        | Duplicate  
 
 ## Operations
+
+### clear
+
+Clears all items from the stack.
+
+Alias: 
+
+```
+( Val* --  )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `c`     |              
 
 ### down
 

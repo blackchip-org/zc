@@ -2,6 +2,20 @@ name: zcalc
 title: Stack operations and calculator info
 
 ops:
+- name: clear
+  aliases: [c]
+  title: Clear
+  funcs:
+  - name: clear
+    params: [Val*]
+  desc: |-
+    Clears all items from the stack.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: c
+    o: []
+
 - name: down
   aliases: [dn]
   title: Rotate down

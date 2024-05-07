@@ -8,16 +8,26 @@ import (
 )
 
 var (
+	Clear = zc.Op{
+		Name: "clear",
+		Aliases: []string{
+			"c",
+		},
+		Params:   []string{},
+		VarParam: "Val",
+		Returns:  []string{},
+		Func:     clear,
+	}
 	Down = zc.Op{
 		Name: "down",
 		Aliases: []string{
 			"dn",
 		},
-		Params:     []string{kinds.Val},
-		VarParams:  true,
-		Returns:    []string{kinds.Val},
-		VarReturns: true,
-		Func:       down,
+		Params:    []string{},
+		VarParam:  "Val",
+		Returns:   []string{},
+		VarReturn: "Val",
+		Func:      down,
 	}
 	Dup = zc.Op{
 		Name:    "dup",

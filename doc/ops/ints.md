@@ -9,6 +9,7 @@ Sized integer numbers
 | Operation                            | Description                         
 |--------------------------------------|-------------------------------------
 | [`add.intarch, addia`](#add.intarch) | Addition, architecture sized integer
+| [`int8`](#int8)                      | 8-bit signed integer                
 
 ## Operations
 
@@ -29,3 +30,18 @@ Example:
 | `6`   | `6`     
 | `2`   | `6 \| 2`
 | `a`   | `8`     
+
+### int8
+
+Converts the value *x* to an 8-bit integer.
+
+```
+( x:Int64 -- Int8 )
+```
+
+Example:
+
+| Input        | Stack 
+|--------------|-------
+| `c 127 int8` | `127` 
+| `c 128 int8` | `-128`

@@ -110,8 +110,8 @@ func genOps(vols []zc.VolDoc) {
 				}
 				fmt.Fprintf(f, "},\n")
 				if fn.Name != "" {
-					genValList(f, "Params", "VarParams", fn.Params)
-					genValList(f, "Returns", "VarReturns", fn.Returns)
+					genValList(f, "Params", "VarParam", fn.Params)
+					genValList(f, "Returns", "VarReturn", fn.Returns)
 					if fn.Prec != "" {
 						fmt.Fprintf(f, "Prec: kinds.Prec%v,\n", fn.Prec)
 					}
@@ -200,15 +200,19 @@ func genTests(vols []zc.VolDoc) {
 		fmt.Fprintf(f, ")\n")
 
 		for _, op := range vol.Ops {
-			fmt.Fprintf(f, "func Test%v%v(t *testing.T) {\n", vol.Ident, op.Ident)
+			fmt.Fprintf(f, "func TestOpDocs%v%v(t *testing.T) {\n", vol.Ident, op.Ident)
 			fmt.Fprintf(f, "c := calc.New()\n")
 			for _, e := range op.Example {
 				fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
-				fmt.Fprintf(f, "zc.TestCalc(t, c")
-				for _, out := range e.Output {
-					fmt.Fprintf(f, ", \"%v\"", out)
+				if e.Error != "" {
+					fmt.Fprintf(f, "zc.AssertError(t, c, \"%v\")\n", e.Error)
+				} else {
+					fmt.Fprintf(f, "zc.AssertStack(t, c")
+					for _, out := range e.Output {
+						fmt.Fprintf(f, ", \"%v\"", out)
+					}
+					fmt.Fprintf(f, ")\n")
 				}
-				fmt.Fprintf(f, ")\n")
 			}
 			fmt.Fprintf(f, "}\n\n")
 		}
@@ -325,18 +329,19 @@ func parseValDoc(v string) ValDoc {
 func genValList(f *os.File, name string, varName string, vals []string) {
 	fmt.Fprintf(f, "%v: []string{", name)
 
-	var variable bool
+	var var_ string
 	var list []string
 	for _, v := range vals {
 		valDoc := parseValDoc(v)
-		list = append(list, fmt.Sprintf("kinds.%v", valDoc.Kind))
 		if valDoc.Var {
-			variable = true
+			var_ = valDoc.Kind
+		} else {
+			list = append(list, fmt.Sprintf("kinds.%v", valDoc.Kind))
 		}
 	}
 	fmt.Fprintf(f, "%v},\n", strings.Join(list, ", "))
-	if variable {
-		fmt.Fprintf(f, "%v: true,\n", varName)
+	if var_ != "" {
+		fmt.Fprintf(f, "%v: \"%v\",\n", varName, var_)
 	}
 }
 
