@@ -3,7 +3,7 @@ package text
 import (
 	"fmt"
 
-	"github.com/blackchip-org/zc/v6/errors"
+	"github.com/blackchip-org/zc/v6"
 )
 
 var TextKind = textKind{}
@@ -27,7 +27,7 @@ func (k textKind) Is(a any) bool {
 func (k textKind) As(a any) string {
 	v, ok := a.(string)
 	if !ok {
-		panic(errors.UnexpectedType("string", a))
+		panic(fmt.Errorf("expected string but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -39,7 +39,7 @@ func (k textKind) Dup(a any) any {
 func (k textKind) Copy(src any, dest any) {
 	d, ok := dest.(*string)
 	if !ok {
-		panic(errors.UnexpectedType("*string", dest))
+		panic(fmt.Errorf("expected *string but got: %v", zc.TypeName(dest)))
 	}
 	*d = k.As(src)
 }

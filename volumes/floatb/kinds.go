@@ -1,9 +1,10 @@
 package floatb
 
 import (
+	"fmt"
 	"math/big"
 
-	"github.com/blackchip-org/zc/v6/errors"
+	"github.com/blackchip-org/zc/v6"
 )
 
 var FloatKind = floatKind{}
@@ -23,7 +24,7 @@ func (k floatKind) Is(a any) bool {
 func (k floatKind) As(a any) *big.Float {
 	v, ok := a.(*big.Float)
 	if !ok {
-		panic(errors.UnexpectedType("*big.Float", a))
+		panic(fmt.Errorf("expected *big.Float but got %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -38,7 +39,7 @@ func (k floatKind) Dup(a any) any {
 func (k floatKind) Copy(src, dest any) {
 	d, ok := dest.(*big.Float)
 	if !ok {
-		panic(errors.UnexpectedType("*big.Float", dest))
+		panic(fmt.Errorf("expected *big.Float but got %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	d.Set(s)

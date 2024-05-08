@@ -1,8 +1,11 @@
 package zc
 
 import (
+	"fmt"
+	"slices"
+	"strings"
+
 	"github.com/blackchip-org/scan"
-	"github.com/blackchip-org/zc/v6/errors"
 	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
 
@@ -29,7 +32,7 @@ func (c *Calc) push(item Item) {
 func (c *Calc) pop() (Item, error) {
 	item, ok := c.Stack.Pop()
 	if !ok {
-		return item, errors.StackEmpty()
+		return item, fmt.Errorf("stack empty")
 	}
 	return item, nil
 }
@@ -40,7 +43,7 @@ func (c *Calc) Push(a any) {
 	}
 	k, ok := c.Catalog.KindByType(a)
 	if !ok {
-		panic(errors.UnregisteredType(a))
+		panic(fmt.Errorf("unregistered type: %v", TypeName(a)))
 	}
 	c.push(Item{Value: a, Kind: k})
 	if c.Listener != nil {
@@ -59,12 +62,12 @@ func (c *Calc) Pop(dest any) error {
 
 	destKind, ok := c.Catalog.KindByType(dest)
 	if !ok {
-		panic(errors.UnregisteredType(dest))
+		panic(fmt.Errorf("unregistered type: %v", TypeName(dest)))
 	}
 	if !destKind.Is(item.Value) {
 		valConv, ok := destKind.To(item.Value)
 		if !ok {
-			c.Err = errors.CannotConvert(item.Kind.Name(), dest, item.Value)
+			c.Err = fmt.Errorf("cannot convert %v from %v to %v", item.Value, item.Kind.Name(), TypeName(dest))
 			return c.Err
 		}
 		destKind.Copy(valConv, dest)
@@ -96,7 +99,7 @@ func (c *Calc) do(name string) {
 	// nothing at all matching by this name, set an error and return
 	ops, ok := c.Catalog.OpByName(name)
 	if !ok {
-		c.Err = errors.NoSuchOp(name)
+		c.Err = fmt.Errorf("no such operation: %v", name)
 		return
 	}
 
@@ -112,7 +115,7 @@ func (c *Calc) do(name string) {
 	var err error
 	var env *OpEnv
 	for _, op = range ops {
-		env, err = c.checkOp(op)
+		env, err = c.checkOp(name, op)
 		if err == nil {
 			break
 		}
@@ -122,7 +125,7 @@ func (c *Calc) do(name string) {
 	// error that was returned. Otherwise, indicate that no matches were found
 	if err != nil {
 		if len(ops) > 1 {
-			err = errors.NoMatchOp(name)
+			err = fmt.Errorf("no match for operation: %v", name)
 		}
 		c.Err = err
 		return
@@ -154,7 +157,7 @@ func (c *Calc) do(name string) {
 	idx := 0
 	for _, kindName := range op.Returns {
 		if !c.assembleRet(kindName, env, idx) {
-			panic(errors.InvalidRetKinds(op.Returns, op.VarReturn))
+			panic(invalidRetKinds(name, op.Returns, op.VarReturn))
 		}
 		idx++
 	}
@@ -165,7 +168,7 @@ func (c *Calc) do(name string) {
 	if op.VarReturn != "" {
 		for idx < len(env.Returns) {
 			if !c.assembleRet(env.Op.VarReturn, env, idx) {
-				panic(errors.InvalidRetKinds(op.Returns, op.VarReturn))
+				panic(invalidRetKinds(name, op.Returns, op.VarReturn))
 			}
 			idx++
 		}
@@ -179,11 +182,11 @@ func (c *Calc) do(name string) {
 	}
 }
 
-func (c *Calc) checkOp(op Op) (*OpEnv, error) {
+func (c *Calc) checkOp(name string, op Op) (*OpEnv, error) {
 	// First, make sure there are enough arguments for this operation
 	stackLen := c.Stack.Len()
 	if len(op.Params) > stackLen {
-		return nil, errors.InvalidArgCount(len(op.Params))
+		return nil, fmt.Errorf("%v: not enough arguments, expected %v", name, len(op.Params))
 	}
 
 	// Create a call environment. Arguments are processed by starting
@@ -202,7 +205,7 @@ func (c *Calc) checkOp(op Op) (*OpEnv, error) {
 	// parameter kind.
 	for _, kindName := range op.Params {
 		if !c.assembleArg(kindName, &env, idx) {
-			return nil, errors.InvalidArgKinds(op.Params, op.VarParam)
+			return nil, invalidArgKinds(name, op.Params, op.VarParam)
 		}
 		idx++
 	}
@@ -212,7 +215,7 @@ func (c *Calc) checkOp(op Op) (*OpEnv, error) {
 	if op.VarParam != "" {
 		for idx < stackLen {
 			if !c.assembleArg(op.VarParam, &env, idx) {
-				return nil, errors.InvalidArgKinds(op.Params, op.VarParam)
+				return nil, invalidArgKinds(name, op.Params, op.VarParam)
 			}
 			idx++
 		}
@@ -232,7 +235,7 @@ func (c *Calc) Do(names ...string) {
 func (c *Calc) assembleArg(kindName string, env *OpEnv, idx int) bool {
 	paramKind, ok := c.Catalog.KindByName(kindName)
 	if !ok {
-		panic(errors.UnknownKind(kindName))
+		panic(fmt.Errorf("unknown kind: %v", kindName))
 	}
 	item := stack.At(c.Stack, idx)
 	arg := item.Value
@@ -251,7 +254,7 @@ func (c *Calc) assembleArg(kindName string, env *OpEnv, idx int) bool {
 func (c *Calc) assembleRet(kindName string, env *OpEnv, idx int) bool {
 	retKind, ok := c.Catalog.KindByName(kindName)
 	if !ok {
-		panic(errors.UnknownKind(kindName))
+		panic(fmt.Errorf("unknown kind: %v", kindName))
 	}
 	ret := env.Returns[idx]
 	if !retKind.Is(ret) {
@@ -312,4 +315,20 @@ func (c *Calc) Eval(line string) error {
 		}
 	}
 	return c.Err
+}
+
+func invalidArgKinds(opName string, kindNames []string, varArgs string) error {
+	ks := slices.Clone(kindNames)
+	if varArgs != "" {
+		ks = append(ks, varArgs+"*")
+	}
+	return fmt.Errorf("%v: invalid arguments, expected %v", opName, strings.Join(ks, " | "))
+}
+
+func invalidRetKinds(opName string, kindNames []string, varRets string) error {
+	ks := slices.Clone(kindNames)
+	if varRets != "" {
+		ks = append(ks, varRets+"*")
+	}
+	return fmt.Errorf("%v: invalid returns, expected %v", opName, strings.Join(ks, " | "))
 }

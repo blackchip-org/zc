@@ -2,11 +2,10 @@ package zc
 
 import (
 	"cmp"
+	"fmt"
 	"maps"
 	"reflect"
 	"slices"
-
-	"github.com/blackchip-org/zc/v6/errors"
 )
 
 type CatalogBuilder struct {
@@ -27,7 +26,7 @@ func (c *CatalogBuilder) AddKind(ks ...Kind) {
 	for _, k := range ks {
 		name := k.Name()
 		if _, ok := c.kinds[name]; ok {
-			panic(errors.DuplicateKind(name))
+			panic(fmt.Errorf("duplicate kind: %v", name))
 		}
 		c.kinds[name] = k
 		c.ordKinds = append(c.ordKinds, k)
@@ -42,14 +41,14 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 		// An operation of this name already exists. Is it defined to be
 		// overloaded?
 		if name != op.Overloads {
-			panic(errors.NotOverloaded(name))
+			panic(fmt.Errorf("operation cannot be overloaded: %v", name))
 		}
 		// Make sure that there isn't already an operation with the same
 		// parameter signature
 		for _, other := range ops {
 			if reflect.DeepEqual(other.Params, op.Params) {
 				stack := append(op.Params, name)
-				panic(errors.DuplicateOp(FormatList(stack)))
+				panic(fmt.Errorf("duplicate op: %v", FormatList(stack)))
 			}
 		}
 		// Sort operations by precedence
@@ -63,14 +62,14 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 	}
 
 	if op.Func == nil {
-		panic(errors.NoFuncForOp(name))
+		panic(fmt.Errorf("no function for op: %v", op.Name))
 	}
 	c.ops[name] = ops
 }
 
 func (c *CatalogBuilder) AddMacro(name string, mac string) {
 	if _, ok := c.ops[name]; ok {
-		panic(errors.DuplicateOp(name))
+		panic(fmt.Errorf("duplicate op: %v", name))
 	}
 	op := Op{
 		Name:  name,
@@ -159,7 +158,7 @@ func (c *Catalog) OpNames() []string {
 func (c *Catalog) Dup(v any) any {
 	k, ok := c.KindByType(v)
 	if !ok {
-		panic(errors.UnregisteredType(v))
+		panic(fmt.Errorf("unregistered type: %v", TypeName(v)))
 	}
 	return k.Dup(v)
 }

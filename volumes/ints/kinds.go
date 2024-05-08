@@ -1,10 +1,11 @@
 package ints
 
 import (
+	"fmt"
 	"math"
 	"strconv"
 
-	"github.com/blackchip-org/zc/v6/errors"
+	"github.com/blackchip-org/zc/v6"
 )
 
 var (
@@ -35,7 +36,7 @@ func (k intArchKind) Is(a any) bool {
 func (k intArchKind) As(a any) int {
 	v, ok := a.(int)
 	if !ok {
-		panic(errors.UnexpectedType("int", a))
+		panic(fmt.Errorf("expected int but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -47,7 +48,7 @@ func (k intArchKind) Dup(a any) any {
 func (k intArchKind) Copy(src, dest any) {
 	d, ok := dest.(*int)
 	if !ok {
-		panic(errors.UnexpectedType("*int", dest))
+		panic(fmt.Errorf("expected *int but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -117,7 +118,7 @@ func (k int8Kind) Is(a any) bool {
 func (k int8Kind) As(a any) int8 {
 	v, ok := a.(int8)
 	if !ok {
-		panic(errors.UnexpectedType("int8", a))
+		panic(fmt.Errorf("expected int8 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -129,7 +130,7 @@ func (k int8Kind) Dup(a any) any {
 func (k int8Kind) Copy(src, dest any) {
 	d, ok := dest.(*int8)
 	if !ok {
-		panic(errors.UnexpectedType("*int8", dest))
+		panic(fmt.Errorf("expected *int8 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -160,7 +161,7 @@ func (k int16Kind) Is(a any) bool {
 func (k int16Kind) As(a any) int16 {
 	v, ok := a.(int16)
 	if !ok {
-		panic(errors.UnexpectedType("int16", a))
+		panic(fmt.Errorf("expected int16 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -172,7 +173,7 @@ func (k int16Kind) Dup(a any) any {
 func (k int16Kind) Copy(src, dest any) {
 	d, ok := dest.(*int16)
 	if !ok {
-		panic(errors.UnexpectedType("*int16", dest))
+		panic(fmt.Errorf("expected *int16 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -203,7 +204,7 @@ func (k int32Kind) Is(a any) bool {
 func (k int32Kind) As(a any) int32 {
 	v, ok := a.(int32)
 	if !ok {
-		panic(errors.UnexpectedType("int32", a))
+		panic(fmt.Errorf("expected int32 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -215,7 +216,7 @@ func (k int32Kind) Dup(a any) any {
 func (k int32Kind) Copy(src, dest any) {
 	d, ok := dest.(*int32)
 	if !ok {
-		panic(errors.UnexpectedType("*int32", dest))
+		panic(fmt.Errorf("expected *int32 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -246,7 +247,7 @@ func (k int64Kind) Is(a any) bool {
 func (k int64Kind) As(a any) int64 {
 	v, ok := a.(int64)
 	if !ok {
-		panic(errors.UnexpectedType("int64", a))
+		panic(fmt.Errorf("expected int64 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -258,7 +259,7 @@ func (k int64Kind) Dup(a any) any {
 func (k int64Kind) Copy(src, dest any) {
 	d, ok := dest.(*int64)
 	if !ok {
-		panic(errors.UnexpectedType("*int64", dest))
+		panic(fmt.Errorf("expected *int64 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -290,7 +291,7 @@ func (k intArchUKind) Is(a any) bool {
 func (k intArchUKind) As(a any) uint {
 	v, ok := a.(uint)
 	if !ok {
-		panic(errors.UnexpectedType("uint", a))
+		panic(fmt.Errorf("expected uint but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -302,7 +303,7 @@ func (k intArchUKind) Dup(a any) any {
 func (k intArchUKind) Copy(src, dest any) {
 	d, ok := dest.(*uint)
 	if !ok {
-		panic(errors.UnexpectedType("*int", dest))
+		panic(fmt.Errorf("expected *uint but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -328,7 +329,7 @@ func (k int8UKind) Is(a any) bool {
 func (k int8UKind) As(a any) uint8 {
 	v, ok := a.(uint8)
 	if !ok {
-		panic(errors.UnexpectedType("int8", a))
+		panic(fmt.Errorf("expected uint8 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -340,7 +341,7 @@ func (k int8UKind) Dup(a any) any {
 func (k int8UKind) Copy(src, dest any) {
 	d, ok := dest.(*uint8)
 	if !ok {
-		panic(errors.UnexpectedType("*uint8", dest))
+		panic(fmt.Errorf("expected *uint8 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -366,7 +367,7 @@ func (k int16UKind) Is(a any) bool {
 func (k int16UKind) As(a any) uint16 {
 	v, ok := a.(uint16)
 	if !ok {
-		panic(errors.UnexpectedType("uint16", a))
+		panic(fmt.Errorf("expected uint16 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -378,7 +379,7 @@ func (k int16UKind) Dup(a any) any {
 func (k int16UKind) Copy(src, dest any) {
 	d, ok := dest.(*uint16)
 	if !ok {
-		panic(errors.UnexpectedType("*uint16", dest))
+		panic(fmt.Errorf("expected *uint16 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -404,7 +405,7 @@ func (k int32UKind) Is(a any) bool {
 func (k int32UKind) As(a any) uint32 {
 	v, ok := a.(uint32)
 	if !ok {
-		panic(errors.UnexpectedType("uint32", a))
+		panic(fmt.Errorf("expected uint32 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -416,7 +417,7 @@ func (k int32UKind) Dup(a any) any {
 func (k int32UKind) Copy(src, dest any) {
 	d, ok := dest.(*uint32)
 	if !ok {
-		panic(errors.UnexpectedType("*uint32", dest))
+		panic(fmt.Errorf("expected *uint32 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
@@ -442,7 +443,7 @@ func (k int64UKind) Is(a any) bool {
 func (k int64UKind) As(a any) uint64 {
 	v, ok := a.(uint64)
 	if !ok {
-		panic(errors.UnexpectedType("uint64", a))
+		panic(fmt.Errorf("expected uint64 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -454,7 +455,7 @@ func (k int64UKind) Dup(a any) any {
 func (k int64UKind) Copy(src, dest any) {
 	d, ok := dest.(*uint64)
 	if !ok {
-		panic(errors.UnexpectedType("*uint64", dest))
+		panic(fmt.Errorf("expected *uint64 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s

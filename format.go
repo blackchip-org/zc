@@ -2,6 +2,7 @@ package zc
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 
 	"github.com/blackchip-org/scan"
@@ -60,4 +61,15 @@ func Quote(v string) string {
 	}
 	s.Val.WriteRune('\'')
 	return s.Emit().Val
+}
+
+func TypeName(v any) string {
+	var name strings.Builder
+	t := reflect.TypeOf(v)
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+		name.WriteRune('*')
+	}
+	name.WriteString(t.Name())
+	return name.String()
 }

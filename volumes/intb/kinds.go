@@ -1,9 +1,10 @@
 package intb
 
 import (
+	"fmt"
 	"math/big"
 
-	"github.com/blackchip-org/zc/v6/errors"
+	"github.com/blackchip-org/zc/v6"
 )
 
 var IntKind = intKind{}
@@ -23,7 +24,7 @@ func (k intKind) Is(a any) bool {
 func (k intKind) As(a any) *big.Int {
 	v, ok := a.(*big.Int)
 	if !ok {
-		panic(errors.UnexpectedType("*big.Int", a))
+		panic(fmt.Errorf("expected *big.Int but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -38,7 +39,7 @@ func (k intKind) Dup(a any) any {
 func (k intKind) Copy(src, dest any) {
 	d, ok := dest.(*big.Int)
 	if !ok {
-		panic(errors.UnexpectedType("*big.Int", dest))
+		panic(fmt.Errorf("expected *big.Int but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	d.Set(s)

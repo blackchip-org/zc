@@ -1,6 +1,10 @@
 package floats
 
-import "github.com/blackchip-org/zc/v6/errors"
+import (
+	"fmt"
+
+	"github.com/blackchip-org/zc/v6"
+)
 
 var Float64Kind = float64Kind{}
 
@@ -19,7 +23,7 @@ func (k float64Kind) Is(a any) bool {
 func (k float64Kind) As(a any) float64 {
 	v, ok := a.(float64)
 	if !ok {
-		panic(errors.UnexpectedType("float64", a))
+		panic(fmt.Errorf("expected float64 but got: %v", zc.TypeName(a)))
 	}
 	return v
 }
@@ -31,7 +35,7 @@ func (k float64Kind) Dup(a any) any {
 func (k float64Kind) Copy(src, dest any) {
 	d, ok := dest.(*float64)
 	if !ok {
-		panic(errors.UnexpectedType("*float64", dest))
+		panic(fmt.Errorf("expected *float64 but got: %v", zc.TypeName(dest)))
 	}
 	s := k.As(src)
 	*d = s
