@@ -13,6 +13,7 @@ var Volume = zc.Vol{
 	},
 	Ops: []zc.Op{
 		AddInt,
+		PowInt,
 		SubInt,
 	},
 }

@@ -24,6 +24,24 @@ ops:
   - i: a
     o: [8]
 
+- name: pow.int
+  overloads: pow
+  aliases: [powi]
+  title: Exponentiation
+  funcs:
+  - name: pow
+    params: [x:Int, y:Int]
+    returns: [Int]
+    prec: Int
+  desc: Raises *x* to the power of *y*.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: powi
+    o: [36]
+
 - name: sub.int
   overloads: sub
   aliases: [subi]

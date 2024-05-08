@@ -12,6 +12,7 @@ var (
 	Down       = "down"
 	Dup        = "dup"
 	Int8       = "int8"
+	PowInt     = "pow.int"
 	Sub        = "sub"
 	SubInt     = "sub.int"
 )

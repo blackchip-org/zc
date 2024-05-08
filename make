@@ -12,14 +12,29 @@ test() {
     go test $@ ./...
 }
 
+wasm() {
+    set -x
+    GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
+}
+
 case "$1" in
     ops)
         (ops)
+        ;;
+    run)
+        go run cmd/zc/main.go
+        ;;
+    serve)
+    	go run cmd/server/main.go
         ;;
     test)
         shift
         (ops)
         (test $@)
+        ;;
+    wasm)
+        (ops)
+        (wasm)
         ;;
     *)
         echo "error: invalid command: $1"

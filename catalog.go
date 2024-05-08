@@ -49,7 +49,7 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 		for _, other := range ops {
 			if reflect.DeepEqual(other.Params, op.Params) {
 				stack := append(op.Params, name)
-				panic(errors.DuplicateOp(FormatStackValues(stack)))
+				panic(errors.DuplicateOp(FormatList(stack)))
 			}
 		}
 		// Sort operations by precedence
@@ -144,6 +144,16 @@ func (c *Catalog) OpByName(name string) ([]Op, bool) {
 
 func (c *Catalog) Ops() []Op {
 	return slices.Clone(c.ordOps)
+}
+
+func (c *Catalog) OpNames() []string {
+	var names []string
+	for _, op := range c.ordOps {
+		names = append(names, op.Name)
+		names = append(names, op.Aliases...)
+	}
+	slices.Sort(names)
+	return slices.Compact(names)
 }
 
 func (c *Catalog) Dup(v any) any {

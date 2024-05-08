@@ -13,6 +13,13 @@ func add(e *zc.OpEnv) {
 	e.Returns = []any{x}
 }
 
+func pow(e *zc.OpEnv) {
+	x := e.Args[0].(*big.Int)
+	y := e.Args[1].(*big.Int)
+	x.Exp(x, y, nil)
+	e.Returns = []any{x}
+}
+
 func sub(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)
 	y := e.Args[1].(*big.Int)

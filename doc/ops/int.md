@@ -6,10 +6,11 @@ Integer numbers
 
 ## Index
 
-| Operation                   | Description
-|-----------------------------|------------
-| [`add.int, addi`](#add.int) | Addition   
-| [`sub.int, subi`](#sub.int) | Subtraction
+| Operation                   | Description   
+|-----------------------------|---------------
+| [`add.int, addi`](#add.int) | Addition      
+| [`pow.int, powi`](#pow.int) | Exponentiation
+| [`sub.int, subi`](#sub.int) | Subtraction   
 
 ## Operations
 
@@ -30,6 +31,24 @@ Example:
 | `6`   | `6`     
 | `2`   | `6 \| 2`
 | `a`   | `8`     
+
+### pow.int
+
+Raises *x* to the power of *y*.
+
+Alias: 
+
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input  | Stack   
+|--------|---------
+| `6`    | `6`     
+| `2`    | `6 \| 2`
+| `powi` | `36`    
 
 ### sub.int
 

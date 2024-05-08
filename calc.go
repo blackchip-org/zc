@@ -1,89 +1,33 @@
 package zc
 
 import (
-	"fmt"
-	"slices"
-	"unicode"
-
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/errors"
 	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
 
-type Kind interface {
-	Name() string
-	Is(any) bool
-	Dup(any) any
-	Copy(any, any)
-	To(any) (any, bool)
-}
-
-type OpEnv struct {
-	Catalog *Catalog
-	Op      Op
-	Args    []any
-	Returns []any
-	Err     error
-}
-
-type Op struct {
-	Name      string
-	Overloads string
-	Aliases   []string
-	Params    []string
-	VarParam  string
-	Returns   []string
-	VarReturn string
-	Prec      int
-	Func      func(*OpEnv)
-	Macro     string
-}
-
-type Vol struct {
-	Name  string
-	Kinds []Kind
-	Ops   []Op
-}
-
-type Item struct {
-	Value any
-	Kind  Kind
-	Anno  string
-}
-
-func (i Item) String() string {
-	return fmt.Sprintf("%v", i.Value)
-}
-
-func Values(items []Item) []any {
-	var vals []any
-	for _, item := range items {
-		vals = append(vals, item.Value)
-	}
-	return vals
-}
-
 type Calc struct {
+	Stack    stack.Stack[Item]
 	Err      error
+	Info     string
 	Listener Listener
-	cat      *Catalog
-	stack    stack.Stack[Item]
+	Catalog  *Catalog
 }
 
 func NewCalc(cat *Catalog) *Calc {
 	c := &Calc{
-		cat:   cat,
-		stack: stack.NewSlice[Item](),
+		Catalog: cat,
+		Stack:   stack.NewSlice[Item](),
 	}
 	return c
 }
 
 func (c *Calc) push(item Item) {
-	c.stack.Push(item)
+	c.Stack.Push(item)
 }
 
 func (c *Calc) pop() (Item, error) {
-	item, ok := c.stack.Pop()
+	item, ok := c.Stack.Pop()
 	if !ok {
 		return item, errors.StackEmpty()
 	}
@@ -94,13 +38,13 @@ func (c *Calc) Push(a any) {
 	if c.Err != nil {
 		return
 	}
-	k, ok := c.cat.KindByType(a)
+	k, ok := c.Catalog.KindByType(a)
 	if !ok {
 		panic(errors.UnregisteredType(a))
 	}
 	c.push(Item{Value: a, Kind: k})
 	if c.Listener != nil {
-		c.Listener(NewStackEvent("push", c.stack.Items()))
+		c.Listener(NewStackEvent("push", c.Stack))
 	}
 }
 
@@ -113,7 +57,7 @@ func (c *Calc) Pop(dest any) error {
 		return err
 	}
 
-	destKind, ok := c.cat.KindByType(dest)
+	destKind, ok := c.Catalog.KindByType(dest)
 	if !ok {
 		panic(errors.UnregisteredType(dest))
 	}
@@ -129,7 +73,7 @@ func (c *Calc) Pop(dest any) error {
 	}
 
 	if c.Listener != nil {
-		c.Listener(NewStackEvent("pop", c.stack.Items()))
+		c.Listener(NewStackEvent("pop", c.Stack))
 	}
 	return nil
 }
@@ -142,26 +86,15 @@ func (c *Calc) PopString() string {
 	return r
 }
 
-func (c *Calc) Stack() []Item {
-	return slices.Clone(c.stack.Items())
-}
-
-func (c *Calc) StackStrings() []string {
-	var items []string
-	for _, i := range c.stack.Items() {
-		items = append(items, fmt.Sprintf("%v", i.Value))
-	}
-	return items
-}
-
 func (c *Calc) do(name string) {
 	if c.Err != nil {
 		return
 	}
+	c.Info = ""
 
 	// An name may have more than one operation mapped to it. If there is
 	// nothing at all matching by this name, set an error and return
-	ops, ok := c.cat.OpByName(name)
+	ops, ok := c.Catalog.OpByName(name)
 	if !ok {
 		c.Err = errors.NoSuchOp(name)
 		return
@@ -210,9 +143,9 @@ func (c *Calc) do(name string) {
 	// Arguments that were used for the operation now have to be removed
 	// from the stack. If there are variable returns, remove all items.
 	if op.VarReturn != "" {
-		c.stack.Clear()
+		c.Stack.Clear()
 	} else {
-		stack.PopN(c.stack, len(env.Args))
+		stack.PopN(c.Stack, len(env.Args))
 	}
 
 	// Check the return values from the operation and ensure the match
@@ -242,13 +175,13 @@ func (c *Calc) do(name string) {
 	}
 
 	if c.Listener != nil {
-		c.Listener(NewStackEvent("eval", c.stack.Items()))
+		c.Listener(NewStackEvent("eval", c.Stack))
 	}
 }
 
 func (c *Calc) checkOp(op Op) (*OpEnv, error) {
 	// First, make sure there are enough arguments for this operation
-	stackLen := c.stack.Len()
+	stackLen := c.Stack.Len()
 	if len(op.Params) > stackLen {
 		return nil, errors.InvalidArgCount(len(op.Params))
 	}
@@ -256,7 +189,7 @@ func (c *Calc) checkOp(op Op) (*OpEnv, error) {
 	// Create a call environment. Arguments are processed by starting
 	// at the top of the stack and working towards index 0.
 	var env OpEnv
-	env.Catalog = c.cat
+	env.Catalog = c.Catalog
 
 	// If there are a variable number of parameters, then consume
 	// the entire stack.
@@ -297,11 +230,11 @@ func (c *Calc) Do(names ...string) {
 }
 
 func (c *Calc) assembleArg(kindName string, env *OpEnv, idx int) bool {
-	paramKind, ok := c.cat.KindByName(kindName)
+	paramKind, ok := c.Catalog.KindByName(kindName)
 	if !ok {
 		panic(errors.UnknownKind(kindName))
 	}
-	item := stack.At(c.stack, idx)
+	item := stack.At(c.Stack, idx)
 	arg := item.Value
 	if !paramKind.Is(arg) {
 		convArg, ok := paramKind.To(arg)
@@ -316,7 +249,7 @@ func (c *Calc) assembleArg(kindName string, env *OpEnv, idx int) bool {
 }
 
 func (c *Calc) assembleRet(kindName string, env *OpEnv, idx int) bool {
-	retKind, ok := c.cat.KindByName(kindName)
+	retKind, ok := c.Catalog.KindByName(kindName)
 	if !ok {
 		panic(errors.UnknownKind(kindName))
 	}
@@ -355,9 +288,9 @@ func scanWord(s *scan.Scanner) string {
 	return s.Emit().Val
 }
 
-func (c *Calc) Eval(line string) {
+func (c *Calc) Eval(line string) error {
 	if c.Err != nil {
-		return
+		return c.Err
 	}
 	s := scan.NewScannerFromString("", line)
 	var words []string
@@ -370,7 +303,7 @@ func (c *Calc) Eval(line string) {
 	}
 	for _, w := range words {
 		if c.Err != nil {
-			return
+			return c.Err
 		}
 		if IsValue(w) {
 			c.Push(w)
@@ -378,25 +311,5 @@ func (c *Calc) Eval(line string) {
 			c.Do(w)
 		}
 	}
-}
-
-func IsValue(item string) bool {
-	runes := []rune(item)
-	var ch, next rune
-	if len(runes) > 0 {
-		ch = runes[0]
-	}
-	if len(runes) > 1 {
-		next = runes[1]
-	}
-
-	switch {
-	case unicode.IsDigit(ch), unicode.Is(unicode.Sc, ch):
-		return true
-	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
-		return true
-	case ch == '/':
-		return true
-	}
-	return false
+	return c.Err
 }

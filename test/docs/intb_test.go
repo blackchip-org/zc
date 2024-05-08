@@ -22,6 +22,19 @@ func TestOpDocsIntAddInt(t *testing.T) {
 	zc.AssertStack(t, c, "8")
 }
 
+func TestOpDocsIntPowInt(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("6")
+	zc.AssertStack(t, c, "6")
+
+	c.Eval("2")
+	zc.AssertStack(t, c, "6", "2")
+
+	c.Eval("powi")
+	zc.AssertStack(t, c, "36")
+}
+
 func TestOpDocsIntSubInt(t *testing.T) {
 	c := calc.New()
 

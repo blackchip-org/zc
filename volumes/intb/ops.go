@@ -19,6 +19,17 @@ var (
 		Prec:    kinds.PrecInt,
 		Func:    add,
 	}
+	PowInt = zc.Op{
+		Name:      "pow.int",
+		Overloads: "pow",
+		Aliases: []string{
+			"powi",
+		},
+		Params:  []string{kinds.Int, kinds.Int},
+		Returns: []string{kinds.Int},
+		Prec:    kinds.PrecInt,
+		Func:    pow,
+	}
 	SubInt = zc.Op{
 		Name:      "sub.int",
 		Overloads: "sub",

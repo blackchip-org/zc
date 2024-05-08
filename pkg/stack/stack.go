@@ -9,6 +9,7 @@ type Stack[T any] interface {
 	Items() []T
 	SetItems([]T)
 	Clear()
+	Clone() Stack[T]
 }
 
 func At[T any](s Stack[T], index int) T {

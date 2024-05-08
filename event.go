@@ -2,8 +2,9 @@ package zc
 
 import (
 	"fmt"
-	"slices"
 	"testing"
+
+	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
 
 type Event interface {
@@ -15,13 +16,13 @@ type Listener func(Event)
 
 type StackEvent struct {
 	type_ string
-	stack []Item
+	stack stack.Stack[Item]
 }
 
-func NewStackEvent(type_ string, stack []Item) StackEvent {
+func NewStackEvent(type_ string, stack stack.Stack[Item]) StackEvent {
 	return StackEvent{
 		type_: type_,
-		stack: slices.Clone(stack),
+		stack: stack.Clone(),
 	}
 }
 

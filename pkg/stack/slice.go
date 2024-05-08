@@ -1,5 +1,7 @@
 package stack
 
+import "slices"
+
 type sliceStack[T any] struct {
 	items []T
 }
@@ -36,4 +38,10 @@ func (s *sliceStack[T]) SetItems(items []T) {
 
 func (s *sliceStack[T]) Clear() {
 	s.items = nil
+}
+
+func (s *sliceStack[T]) Clone() Stack[T] {
+	s2 := NewSlice[T]()
+	s2.SetItems(slices.Clone(s.Items()))
+	return s2
 }
