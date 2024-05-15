@@ -9,7 +9,7 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestOpDocsFloatAddFloat(t *testing.T) {
+func TestOpDocs_Float_AddFloat(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("1.1")

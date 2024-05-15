@@ -10,11 +10,8 @@ func TestIsValue(t *testing.T) {
 		{"", false},
 		{"1", true},
 		{"11", true},
-		{"$1", true},
 		{"a", false},
 		{"abc", false},
-		{"/a", true},
-		{"/abc", true},
 	}
 
 	for _, test := range tests {

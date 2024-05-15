@@ -21,7 +21,13 @@ var Volume = zc.Vol{
 		Int64UKind,
 	},
 	Ops: []zc.Op{
+		AddInt16,
+		AddInt32,
+		AddInt64,
+		AddInt8,
 		AddIntArch,
-		Int8,
+		Int64ToInt8,
+		Uint64ToInt8,
+		IsInt8,
 	},
 }

@@ -9,7 +9,59 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestOpDocsIntsAddIntArch(t *testing.T) {
+func TestOpDocs_Ints_AddI16(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("0x7000")
+	zc.AssertStack(t, c, "0x7000")
+
+	c.Eval("0x1000")
+	zc.AssertStack(t, c, "0x7000", "0x1000")
+
+	c.Eval("addi16")
+	zc.AssertStack(t, c, "-32768")
+}
+
+func TestOpDocs_Ints_AddI32(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("0x70000000")
+	zc.AssertStack(t, c, "0x70000000")
+
+	c.Eval("0x10000000")
+	zc.AssertStack(t, c, "0x70000000", "0x10000000")
+
+	c.Eval("addi32")
+	zc.AssertStack(t, c, "-2147483648")
+}
+
+func TestOpDocs_Ints_AddI64(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("0x7000000000000000")
+	zc.AssertStack(t, c, "0x7000000000000000")
+
+	c.Eval("0x1000000000000000")
+	zc.AssertStack(t, c, "0x7000000000000000", "0x1000000000000000")
+
+	c.Eval("addi64")
+	zc.AssertStack(t, c, "-9223372036854775808")
+}
+
+func TestOpDocs_Ints_AddI8(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("0x70")
+	zc.AssertStack(t, c, "0x70")
+
+	c.Eval("0x10")
+	zc.AssertStack(t, c, "0x70", "0x10")
+
+	c.Eval("addi8")
+	zc.AssertStack(t, c, "-128")
+}
+
+func TestOpDocs_Ints_AddIntArch(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6")
@@ -18,11 +70,11 @@ func TestOpDocsIntsAddIntArch(t *testing.T) {
 	c.Eval("2")
 	zc.AssertStack(t, c, "6", "2")
 
-	c.Eval("a")
+	c.Eval("addia")
 	zc.AssertStack(t, c, "8")
 }
 
-func TestOpDocsIntsInt8(t *testing.T) {
+func TestOpDocs_Ints_Int8(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("c 127 int8")
@@ -30,4 +82,21 @@ func TestOpDocsIntsInt8(t *testing.T) {
 
 	c.Eval("c 128 int8")
 	zc.AssertStack(t, c, "-128")
+}
+
+func TestOpDocs_Ints_Int8_Uint64(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("18446744073709551615 int8")
+	zc.AssertStack(t, c, "-1")
+}
+
+func TestOpDocs_Ints_IsInt8(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("c 127 int8?")
+	zc.AssertStack(t, c, "true")
+
+	c.Eval("c 128 int8?")
+	zc.AssertStack(t, c, "false")
 }

@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	AddFloat = zc.Op{
+	Add = zc.Op{
 		Name:      "add.float",
 		Overloads: "add",
 		Aliases: []string{

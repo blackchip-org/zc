@@ -10,7 +10,6 @@ import (
 	"slices"
 	"sort"
 	"strings"
-	"unicode"
 
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
@@ -99,7 +98,7 @@ func genOps(vols []zc.VolDoc) {
 				if fn.Name == "" && i > 0 {
 					continue
 				}
-				fmt.Fprintf(f, "%v = zc.Op{\n", op.Ident)
+				fmt.Fprintf(f, "%v = zc.Op{\n", fn.Ident)
 				fmt.Fprintf(f, "Name: \"%v\",\n", op.Name)
 				if op.Overloads != "" {
 					fmt.Fprintf(f, "Overloads: \"%v\",\n", op.Overloads)
@@ -112,8 +111,19 @@ func genOps(vols []zc.VolDoc) {
 				if fn.Name != "" {
 					genValList(f, "Params", "VarParam", fn.Params)
 					genValList(f, "Returns", "VarReturn", fn.Returns)
+
+					var prec strings.Builder
 					if fn.Prec != "" {
-						fmt.Fprintf(f, "Prec: kinds.Prec%v,\n", fn.Prec)
+						fmt.Fprintf(&prec, "kinds.Prec%v", fn.Prec)
+					}
+					if i > 0 {
+						if prec.Len() > 0 {
+							fmt.Fprintf(&prec, " + ")
+						}
+						fmt.Fprintf(&prec, "%d", i)
+					}
+					if prec.Len() > 0 {
+						fmt.Fprintf(f, "Prec: %v,\n", prec.String())
 					}
 					fmt.Fprintf(f, "Func: %v,\n", fn.Name)
 				}
@@ -150,7 +160,16 @@ func genVols(vols []zc.VolDoc) {
 		if len(vol.Ops) > 0 {
 			fmt.Fprintf(f, "Ops: []zc.Op{\n")
 			for _, o := range vol.Ops {
-				fmt.Fprintf(f, "%v,\n", o.Ident)
+				if o.Macro == "" {
+					for i, fn := range o.Funcs {
+						if i > 0 && fn.Name == "" {
+							continue
+						}
+						if fn.Ident != "" {
+							fmt.Fprintf(f, "%v,\n", fn.Ident)
+						}
+					}
+				}
 			}
 			fmt.Fprintf(f, "},\n")
 		}
@@ -200,23 +219,32 @@ func genTests(vols []zc.VolDoc) {
 		fmt.Fprintf(f, ")\n")
 
 		for _, op := range vol.Ops {
-			fmt.Fprintf(f, "func TestOpDocs%v%v(t *testing.T) {\n", vol.Ident, op.Ident)
-			fmt.Fprintf(f, "c := calc.New()\n")
-			for _, e := range op.Example {
-				fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
-				if e.Error != "" {
-					fmt.Fprintf(f, "zc.AssertError(t, c, \"%v\")\n", e.Error)
-				} else {
-					fmt.Fprintf(f, "zc.AssertStack(t, c")
-					for _, out := range e.Output {
-						fmt.Fprintf(f, ", \"%v\"", out)
-					}
-					fmt.Fprintf(f, ")\n")
-				}
+			if len(op.Example) > 0 {
+				genTest(f, vol.Ident+"_"+op.Ident, op.Example)
 			}
-			fmt.Fprintf(f, "}\n\n")
+			for _, test := range op.Tests {
+				genTest(f, vol.Ident+"_"+op.Ident+"_"+test.Name, test.Test)
+			}
 		}
 	}
+}
+
+func genTest(f *os.File, name string, test []zc.Expect) {
+	fmt.Fprintf(f, "func TestOpDocs_%v(t *testing.T) {\n", name)
+	fmt.Fprintf(f, "c := calc.New()\n")
+	for _, e := range test {
+		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
+		if e.Error != "" {
+			fmt.Fprintf(f, "zc.AssertError(t, c, \"%v\")\n", e.Error)
+		} else {
+			fmt.Fprintf(f, "zc.AssertStack(t, c")
+			for _, out := range e.Output {
+				fmt.Fprintf(f, ", \"%v\"", out)
+			}
+			fmt.Fprintf(f, ")\n")
+		}
+	}
+	fmt.Fprintf(f, "}\n\n")
 }
 
 func genDocs(vols []zc.VolDoc) {
@@ -343,12 +371,6 @@ func genValList(f *os.File, name string, varName string, vals []string) {
 	if var_ != "" {
 		fmt.Fprintf(f, "%v: \"%v\",\n", varName, var_)
 	}
-}
-
-func opIdent(s string) string {
-	chs := []rune(s)
-	chs[0] = unicode.ToUpper(chs[0])
-	return string(chs)
 }
 
 func hasFuncImpl(op *zc.OpDoc) bool {

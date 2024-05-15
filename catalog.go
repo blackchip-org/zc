@@ -8,11 +8,20 @@ import (
 	"slices"
 )
 
+type Kind interface {
+	Name() string
+	Is(any) bool
+	Dup(any) any
+	Copy(any, any)
+	To(any) (any, bool)
+}
+
 type CatalogBuilder struct {
-	kinds    map[string]Kind
-	ordKinds []Kind
-	ops      map[string][]Op
-	ordOps   []Op
+	kinds      map[string]Kind
+	ordKinds   []Kind
+	ops        map[string][]Op
+	ordOps     []Op
+	preParsers map[string]PreParser
 }
 
 func NewCatalogBuilder() *CatalogBuilder {
@@ -38,11 +47,6 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 	var ok bool
 
 	if ops, ok = c.ops[name]; ok {
-		// An operation of this name already exists. Is it defined to be
-		// overloaded?
-		if name != op.Overloads {
-			panic(fmt.Errorf("operation cannot be overloaded: %v", name))
-		}
 		// Make sure that there isn't already an operation with the same
 		// parameter signature
 		for _, other := range ops {
@@ -56,6 +60,7 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 		slices.SortStableFunc(ops, func(a, b Op) int {
 			return cmp.Compare(a.Prec, b.Prec)
 		})
+		slices.Reverse(ops)
 	} else {
 		// No operation with this name has been defined yet.
 		ops = []Op{op}

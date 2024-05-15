@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	AddInt = zc.Op{
+	Add = zc.Op{
 		Name:      "add.int",
 		Overloads: "add",
 		Aliases: []string{
@@ -19,7 +19,7 @@ var (
 		Prec:    kinds.PrecInt,
 		Func:    add,
 	}
-	PowInt = zc.Op{
+	Pow = zc.Op{
 		Name:      "pow.int",
 		Overloads: "pow",
 		Aliases: []string{
@@ -30,7 +30,7 @@ var (
 		Prec:    kinds.PrecInt,
 		Func:    pow,
 	}
-	SubInt = zc.Op{
+	Sub = zc.Op{
 		Name:      "sub.int",
 		Overloads: "sub",
 		Aliases: []string{

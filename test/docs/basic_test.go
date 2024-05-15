@@ -9,7 +9,7 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestOpDocsBasicAdd(t *testing.T) {
+func TestOpDocs_Basic_Add(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6")
@@ -22,7 +22,7 @@ func TestOpDocsBasicAdd(t *testing.T) {
 	zc.AssertStack(t, c, "8")
 }
 
-func TestOpDocsBasicSub(t *testing.T) {
+func TestOpDocs_Basic_Sub(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6")

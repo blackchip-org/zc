@@ -8,19 +8,21 @@ type Expect struct {
 }
 
 type OpDoc struct {
-	Name      string    `yaml:"name"`
-	Ident     string    `yaml:"ident"`
-	Overloads string    `yaml:"overloads"`
-	Aliases   []string  `yaml:"aliases"`
-	Title     string    `yaml:"title"`
-	Funcs     []FuncDoc `yaml:"funcs"`
-	Macro     string    `yaml:"macro"`
-	Desc      string    `yaml:"desc"`
-	Example   []Expect  `yaml:"example"`
+	Name      string     `yaml:"name"`
+	Ident     string     `yaml:"ident"`
+	Overloads string     `yaml:"overloads"`
+	Aliases   []string   `yaml:"aliases"`
+	Title     string     `yaml:"title"`
+	Funcs     []*FuncDoc `yaml:"funcs"`
+	Macro     string     `yaml:"macro"`
+	Desc      string     `yaml:"desc"`
+	Example   []Expect   `yaml:"example"`
+	Tests     []TestDoc  `yaml:"tests"`
 }
 
 type FuncDoc struct {
 	Name    string   `yaml:"name"`
+	Ident   string   `yaml:"ident"`
 	Params  []string `yaml:"params"`
 	Returns []string `yaml:"returns"`
 	Prec    string   `yaml:"prec"`
@@ -34,4 +36,9 @@ type VolDoc struct {
 	Overview string
 	Kinds    []string `yaml:"kinds"`
 	Ops      []*OpDoc `yaml:"ops"`
+}
+
+type TestDoc struct {
+	Name string   `yaml:"name"`
+	Test []Expect `yaml:"test"`
 }

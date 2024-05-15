@@ -22,7 +22,8 @@ case "$1" in
         (ops)
         ;;
     run)
-        go run cmd/zc/main.go
+        shift
+        go run cmd/zc/main.go $@
         ;;
     serve)
     	go run cmd/server/main.go

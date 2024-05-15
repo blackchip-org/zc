@@ -9,7 +9,7 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestOpDocsZcalcClear(t *testing.T) {
+func TestOpDocs_Zcalc_Clear(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("1 2 3")
@@ -19,7 +19,7 @@ func TestOpDocsZcalcClear(t *testing.T) {
 	zc.AssertStack(t, c)
 }
 
-func TestOpDocsZcalcDown(t *testing.T) {
+func TestOpDocs_Zcalc_Down(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("1 2 3")
@@ -29,7 +29,7 @@ func TestOpDocsZcalcDown(t *testing.T) {
 	zc.AssertStack(t, c, "3", "1", "2")
 }
 
-func TestOpDocsZcalcDup(t *testing.T) {
+func TestOpDocs_Zcalc_Dup(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("10")

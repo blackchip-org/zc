@@ -12,6 +12,6 @@ var Volume = zc.Vol{
 		FloatKind,
 	},
 	Ops: []zc.Op{
-		AddFloat,
+		Add,
 	},
 }

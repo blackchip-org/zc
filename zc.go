@@ -10,14 +10,6 @@ const (
 	AnnoMarker = "#"
 )
 
-type Kind interface {
-	Name() string
-	Is(any) bool
-	Dup(any) any
-	Copy(any, any)
-	To(any) (any, bool)
-}
-
 type OpEnv struct {
 	Catalog *Catalog
 	Op      Op
@@ -80,11 +72,9 @@ func ItemStrings(items []Item) []string {
 
 func IsValuePrefix(ch rune, next rune) bool {
 	switch {
-	case unicode.IsDigit(ch), unicode.Is(unicode.Sc, ch):
+	case unicode.IsDigit(ch):
 		return true
 	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
-		return true
-	case ch == '/':
 		return true
 	}
 	return false

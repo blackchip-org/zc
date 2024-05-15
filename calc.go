@@ -224,6 +224,7 @@ func (c *Calc) checkOp(name string, op Op) (*OpEnv, error) {
 }
 
 func (c *Calc) Do(names ...string) {
+	c.Info = ""
 	for _, name := range names {
 		if c.Err != nil {
 			return
@@ -292,9 +293,7 @@ func scanWord(s *scan.Scanner) string {
 }
 
 func (c *Calc) Eval(line string) error {
-	if c.Err != nil {
-		return c.Err
-	}
+	c.Err = nil
 	s := scan.NewScannerFromString("", line)
 	var words []string
 	for s.HasMore() {

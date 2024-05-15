@@ -15,6 +15,7 @@ kinds:
 
 ops:
 - name: add.intarch
+  overloads: add
   aliases: [addia]
   ident: AddIntArch
   title: Addition, architecture sized integer
@@ -22,20 +23,96 @@ ops:
   - name: addIntArch
     params: [x:IntArch, y:IntArch]
     returns: [IntArch]
+    prec: IntArch
   desc: Adds the value of *x* to *y*.
   example:
   - i: 6
     o: [6]
   - i: 2
     o: [6, 2]
-  - i: a
+  - i: addia
     o: [8]
+
+- name: add.int8
+  aliases: [addi8]
+  ident: AddI8
+  title: Addition, 8-bit integer
+  funcs:
+  - name: addInt8
+    params: [x:Int8, y:Int8]
+    returns: [Int8]
+    prec: IntSized
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 0x70
+    o: [0x70]
+  - i: 0x10
+    o: [0x70, 0x10]
+  - i: addi8
+    o: [-128]
+
+- name: add.int16
+  aliases: [addi16]
+  ident: AddI16
+  title: Addition, 16-bit integer
+  funcs:
+  - name: addInt16
+    params: [x:Int16, y:Int16]
+    returns: [Int16]
+    prec: IntSized
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 0x7000
+    o: [0x7000]
+  - i: 0x1000
+    o: [0x7000, 0x1000]
+  - i: addi16
+    o: [-32768]
+
+- name: add.int32
+  aliases: [addi32]
+  ident: AddI32
+  title: Addition, 32-bit integer
+  funcs:
+  - name: addInt32
+    params: [x:Int32, y:Int32]
+    returns: [Int32]
+    prec: IntSized
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 0x70000000
+    o: [0x70000000]
+  - i: 0x10000000
+    o: [0x70000000, 0x10000000]
+  - i: addi32
+    o: [-2147483648]
+
+- name: add.int64
+  aliases: [addi64]
+  ident: AddI64
+  title: Addition, 64-bit integer
+  funcs:
+  - name: addInt64
+    params: [x:Int64, y:Int64]
+    returns: [Int64]
+    prec: IntSized
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 0x7000000000000000
+    o: [0x7000000000000000]
+  - i: 0x1000000000000000
+    o: [0x7000000000000000, 0x1000000000000000]
+  - i: addi64
+    o: [-9223372036854775808]
 
 - name: int8
   title: 8-bit signed integer
   funcs:
-  - name: int8_
+  - name: int64ToInt8
     params: [x:Int64]
+    returns: [Int8]
+  - name: uint64ToInt8
+    params: [x:Int64U]
     returns: [Int8]
   desc: Converts the value *x* to an 8-bit integer.
   example:
@@ -43,3 +120,29 @@ ops:
     o: [127]
   - i: c 128 int8
     o: [-128]
+  tests:
+  - name: Uint64
+    test:
+    - i: 18446744073709551615 int8
+      o: [-1]
+
+- name: int8?
+  title: An 8-bit signed integer?
+  funcs:
+  - name: isInt8
+    params: [x:Text]
+    returns: [Bool]
+  desc: |-
+    Places *true* on the stack if *x* is an 8-bit signed integer, otherwise
+    places *false*.
+  example:
+    - i: c 127 int8?
+      o: [true]
+    - i: c 128 int8?
+      o: [false]
+
+- name: int8.max
+  alias: i8max
+  title: Maximum 8-bit integer value
+  macro: 127
+  desc: Maximum 8-bit integer value

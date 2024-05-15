@@ -85,6 +85,13 @@ func loadDoc(dir string) (VolDoc, error) {
 					panic("no identifier for: " + op.Name)
 				}
 			}
+			for _, fn := range op.Funcs {
+				if fn.Name == "" && fn.Ident == "" {
+					fn.Ident = identFor(op.Name)
+				} else if fn.Ident == "" {
+					fn.Ident = identFor(fn.Name)
+				}
+			}
 		}
 
 		slices.SortFunc(doc.Ops, func(a *OpDoc, b *OpDoc) int {
@@ -93,30 +100,6 @@ func loadDoc(dir string) (VolDoc, error) {
 		return doc, err
 	}
 	return doc, fmt.Errorf("no yaml in %v", dir)
-}
-
-func opIdent(name string) (string, bool) {
-	var s scan.Scanner
-	s.InitFromString("", name)
-
-	// Skip any names that are only symbols
-	if !scan.IsLetter(s.This) {
-		return "", false
-	}
-	s.Val.WriteRune(unicode.ToUpper(s.This))
-	s.Skip()
-
-	for s.HasMore() {
-		if s.Next == '.' || s.Next == '-' {
-			s.Keep()
-			s.Skip()
-			s.Val.WriteRune(unicode.ToUpper(s.This))
-			s.Skip()
-		} else {
-			s.Keep()
-		}
-	}
-	return s.Emit().Val, true
 }
 
 func identFor(v string) string {
@@ -131,14 +114,19 @@ func identFor(v string) string {
 	s.Val.WriteRune(unicode.ToUpper(s.This))
 	s.Skip()
 
+	prefix := ""
 	for s.HasMore() {
-		if s.This == '.' && unicode.IsLetter(s.Next) {
+		switch {
+		case s.This == '.' && unicode.IsLetter(s.Next):
 			s.Skip()
 			s.Val.WriteRune(unicode.ToUpper(s.This))
 			s.Skip()
-		} else {
+		case s.This == '?' && s.Next == scan.EndOfText:
+			s.Skip()
+			prefix = "Is"
+		default:
 			s.Keep()
 		}
 	}
-	return s.Emit().Val
+	return prefix + s.Emit().Val
 }

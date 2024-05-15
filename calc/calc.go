@@ -3,6 +3,7 @@ package calc
 import (
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/volumes/basic"
+	"github.com/blackchip-org/zc/v6/volumes/boolean"
 	"github.com/blackchip-org/zc/v6/volumes/floatb"
 	"github.com/blackchip-org/zc/v6/volumes/floats"
 	"github.com/blackchip-org/zc/v6/volumes/intb"
@@ -21,6 +22,7 @@ func init() {
 	b := zc.NewCatalogBuilder()
 	b.AddVolume(
 		basic.Volume,
+		boolean.Volume,
 		floats.Volume,
 		ints.Volume,
 		text.Volume,

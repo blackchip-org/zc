@@ -1,0 +1,6 @@
+name: bool
+title: Boolean operations
+package: boolean
+
+kinds:
+  - Bool

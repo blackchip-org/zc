@@ -9,7 +9,7 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestOpDocsIntAddInt(t *testing.T) {
+func TestOpDocs_Int_AddInt(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6")
@@ -22,7 +22,7 @@ func TestOpDocsIntAddInt(t *testing.T) {
 	zc.AssertStack(t, c, "8")
 }
 
-func TestOpDocsIntPowInt(t *testing.T) {
+func TestOpDocs_Int_PowInt(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6")
@@ -35,7 +35,7 @@ func TestOpDocsIntPowInt(t *testing.T) {
 	zc.AssertStack(t, c, "36")
 }
 
-func TestOpDocsIntSubInt(t *testing.T) {
+func TestOpDocs_Int_SubInt(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6")

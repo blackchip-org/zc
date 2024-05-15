@@ -462,5 +462,10 @@ func (k int64UKind) Copy(src, dest any) {
 }
 
 func (k int64UKind) To(a any) (any, bool) {
+	switch v := a.(type) {
+	case string:
+		i, ok := strconv.ParseUint(v, 0, 64)
+		return i, ok == nil
+	}
 	return nil, false
 }

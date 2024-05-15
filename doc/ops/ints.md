@@ -8,10 +8,88 @@ Sized integer numbers
 
 | Operation                            | Description                         
 |--------------------------------------|-------------------------------------
+| [`add.int16, addi16`](#add.int16)    | Addition, 16-bit integer            
+| [`add.int32, addi32`](#add.int32)    | Addition, 32-bit integer            
+| [`add.int64, addi64`](#add.int64)    | Addition, 64-bit integer            
+| [`add.int8, addi8`](#add.int8)       | Addition, 8-bit integer             
 | [`add.intarch, addia`](#add.intarch) | Addition, architecture sized integer
 | [`int8`](#int8)                      | 8-bit signed integer                
+| [`int8.max`](#int8.max)              | Maximum 8-bit integer value         
+| [`int8?`](#int8)                     | An 8-bit signed integer?            
 
 ## Operations
+
+### add.int16
+
+Adds the value of *x* to *y*.
+
+Alias: 
+
+```
+( x:Int16 y:Int16 -- Int16 )
+```
+
+Example:
+
+| Input    | Stack             
+|----------|-------------------
+| `0x7000` | `0x7000`          
+| `0x1000` | `0x7000 \| 0x1000`
+| `addi16` | `-32768`          
+
+### add.int32
+
+Adds the value of *x* to *y*.
+
+Alias: 
+
+```
+( x:Int32 y:Int32 -- Int32 )
+```
+
+Example:
+
+| Input        | Stack                     
+|--------------|---------------------------
+| `0x70000000` | `0x70000000`              
+| `0x10000000` | `0x70000000 \| 0x10000000`
+| `addi32`     | `-2147483648`             
+
+### add.int64
+
+Adds the value of *x* to *y*.
+
+Alias: 
+
+```
+( x:Int64 y:Int64 -- Int64 )
+```
+
+Example:
+
+| Input                | Stack                                     
+|----------------------|-------------------------------------------
+| `0x7000000000000000` | `0x7000000000000000`                      
+| `0x1000000000000000` | `0x7000000000000000 \| 0x1000000000000000`
+| `addi64`             | `-9223372036854775808`                    
+
+### add.int8
+
+Adds the value of *x* to *y*.
+
+Alias: 
+
+```
+( x:Int8 y:Int8 -- Int8 )
+```
+
+Example:
+
+| Input   | Stack         
+|---------|---------------
+| `0x70`  | `0x70`        
+| `0x10`  | `0x70 \| 0x10`
+| `addi8` | `-128`        
 
 ### add.intarch
 
@@ -25,11 +103,11 @@ Alias:
 
 Example:
 
-| Input | Stack   
-|-------|---------
-| `6`   | `6`     
-| `2`   | `6 \| 2`
-| `a`   | `8`     
+| Input   | Stack   
+|---------|---------
+| `6`     | `6`     
+| `2`     | `6 \| 2`
+| `addia` | `8`     
 
 ### int8
 
@@ -37,6 +115,7 @@ Converts the value *x* to an 8-bit integer.
 
 ```
 ( x:Int64 -- Int8 )
+( x:Int64U -- Int8 )
 ```
 
 Example:
@@ -45,3 +124,28 @@ Example:
 |--------------|-------
 | `c 127 int8` | `127` 
 | `c 128 int8` | `-128`
+
+### int8.max
+
+Maximum 8-bit integer value
+
+```
+def int8.max 127
+```
+
+
+### int8?
+
+Places *true* on the stack if *x* is an 8-bit signed integer, otherwise
+places *false*.
+
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input         | Stack  
+|---------------|--------
+| `c 127 int8?` | `true` 
+| `c 128 int8?` | `false`
