@@ -5,13 +5,10 @@ import (
 	"unicode/utf8"
 )
 
-type Type interface {
-	Name() string
-	Is(any) bool
-	Dup(any) any
-	Copy(any, any)
-	To(any) (any, bool)
-}
+const (
+	ProgName   = "zc"
+	AnnoMarker = "#"
+)
 
 type OpEnv struct {
 	Catalog *Catalog
@@ -23,19 +20,54 @@ type OpEnv struct {
 
 type Op struct {
 	Name      string
+	Overloads string
 	Aliases   []string
 	Params    []string
 	VarParam  string
 	Returns   []string
 	VarReturn string
+	Prec      int
 	Func      func(*OpEnv)
 	Macro     string
 }
 
 type Vol struct {
 	Name  string
-	Types []Type
+	Kinds []Kind
 	Ops   []Op
+}
+
+type Item struct {
+	Value any
+	Kind  Kind
+	Anno  string
+}
+
+func (i Item) String() string {
+	return String(i.Value)
+}
+
+func (i Item) StringWithAnno() string {
+	if i.Anno == "" {
+		return String(i.Value)
+	}
+	return String(i.Value) + " # " + i.Anno
+}
+
+func ItemValues(items []Item) []any {
+	var vals []any
+	for _, item := range items {
+		vals = append(vals, item.Value)
+	}
+	return vals
+}
+
+func ItemStrings(items []Item) []string {
+	var strs []string
+	for _, item := range items {
+		strs = append(strs, String(item.Value))
+	}
+	return strs
 }
 
 func IsValuePrefix(ch rune, next rune) bool {

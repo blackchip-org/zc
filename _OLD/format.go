@@ -2,9 +2,11 @@ package zc
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 
 	"github.com/blackchip-org/scan"
+	"github.com/blackchip-org/zc/v6/pkg/stack"
 )
 
 func FormatList(vals ...any) string {
@@ -16,14 +18,18 @@ func FormatList(vals ...any) string {
 	return strings.Join(strs, " | ")
 }
 
-// func FormatStack(s stack.Stack[Item]) string {
-// 	var strs []string
-// 	for _, item := range s.Items() {
-// 		str := fmt.Sprintf("%v", item.Value)
-// 		strs = append(strs, str)
-// 	}
-// 	return strings.Join(strs, " | ")
-// }
+func FormatStack(s stack.Stack[Item]) string {
+	var strs []string
+	for _, item := range s.Items() {
+		str := fmt.Sprintf("%v", item.Value)
+		strs = append(strs, str)
+	}
+	return strings.Join(strs, " | ")
+}
+
+func String(a any) string {
+	return fmt.Sprintf("%v", a)
+}
 
 func Quote(v string) string {
 	var s scan.Scanner
@@ -57,6 +63,13 @@ func Quote(v string) string {
 	return s.Emit().Val
 }
 
-func ToString(v any) string {
-	return fmt.Sprintf("%v", v)
+func TypeName(v any) string {
+	var name strings.Builder
+	t := reflect.TypeOf(v)
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+		name.WriteRune('*')
+	}
+	name.WriteString(t.Name())
+	return name.String()
 }

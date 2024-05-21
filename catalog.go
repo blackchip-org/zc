@@ -6,39 +6,29 @@ import (
 	"maps"
 	"reflect"
 	"slices"
+
+	"github.com/blackchip-org/zc/v6/types"
 )
 
-type Kind interface {
-	Name() string
-	Is(any) bool
-	Dup(any) any
-	Copy(any, any)
-	To(any) (any, bool)
-}
-
 type CatalogBuilder struct {
-	kinds      map[string]Kind
-	ordKinds   []Kind
-	ops        map[string][]Op
-	ordOps     []Op
-	preParsers map[string]PreParser
+	types map[string]Type
+	ops   map[string][]Op
 }
 
 func NewCatalogBuilder() *CatalogBuilder {
 	return &CatalogBuilder{
-		kinds: make(map[string]Kind),
+		types: make(map[string]Type),
 		ops:   make(map[string][]Op),
 	}
 }
 
-func (c *CatalogBuilder) AddKind(ks ...Kind) {
-	for _, k := range ks {
-		name := k.Name()
-		if _, ok := c.kinds[name]; ok {
-			panic(fmt.Errorf("duplicate kind: %v", name))
+func (c *CatalogBuilder) AddType(ts ...Type) {
+	for _, t := range ts {
+		name := t.Name()
+		if _, ok := c.types[name]; ok {
+			panic(fmt.Errorf("duplicate type: %v", name))
 		}
-		c.kinds[name] = k
-		c.ordKinds = append(c.ordKinds, k)
+		c.types[name] = t
 	}
 }
 
@@ -55,12 +45,6 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 				panic(fmt.Errorf("duplicate op: %v", FormatList(stack)))
 			}
 		}
-		// Sort operations by precedence
-		ops = append(ops, op)
-		slices.SortStableFunc(ops, func(a, b Op) int {
-			return cmp.Compare(a.Prec, b.Prec)
-		})
-		slices.Reverse(ops)
 	} else {
 		// No operation with this name has been defined yet.
 		ops = []Op{op}
@@ -70,6 +54,17 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 		panic(fmt.Errorf("no function for op: %v", op.Name))
 	}
 	c.ops[name] = ops
+}
+
+func (c *CatalogBuilder) AddOp(ops ...Op) {
+	for _, op := range ops {
+		if op.Func != nil {
+			c.addOp(op.Name, op)
+		}
+		for _, alias := range op.Aliases {
+			c.AddMacro(alias, op.Name)
+		}
+	}
 }
 
 func (c *CatalogBuilder) AddMacro(name string, mac string) {
@@ -83,57 +78,35 @@ func (c *CatalogBuilder) AddMacro(name string, mac string) {
 	c.ops[name] = []Op{op}
 }
 
-func (c *CatalogBuilder) AddOp(ops ...Op) {
-	for _, op := range ops {
-		if op.Func != nil {
-			c.addOp(op.Name, op)
-		}
-		if op.Overloads != "" {
-			c.addOp(op.Overloads, op)
-		}
-		for _, alias := range op.Aliases {
-			c.AddMacro(alias, op.Name)
-		}
-		c.ordOps = append(c.ordOps, op)
-	}
-}
-
 func (c *CatalogBuilder) AddVolume(vols ...Vol) {
 	for _, vol := range vols {
-		c.AddKind(vol.Kinds...)
+		c.AddType(vol.Types...)
 		c.AddOp(vol.Ops...)
 	}
 }
 
 func (c *CatalogBuilder) Build() *Catalog {
 	cat := &Catalog{
-		kinds:    maps.Clone(c.kinds),
-		ordKinds: slices.Clone(c.ordKinds),
-		ops:      make(map[string][]Op),
-		ordOps:   slices.Clone(c.ordOps),
+		types: maps.Clone(c.types),
+		ops:   make(map[string][]Op),
 	}
 	for k, v := range c.ops {
 		cat.ops[k] = slices.Clone(v)
 	}
-	val := valKind{}
-	cat.kinds[val.Name()] = val
+	val := valType{}
+	cat.types[val.Name()] = val
 	return cat
 }
 
+// ----------------------------------------------------------------------------
+
 type Catalog struct {
-	kinds    map[string]Kind
-	ordKinds []Kind
-	ops      map[string][]Op
-	ordOps   []Op
+	types map[string]Type
+	ops   map[string][]Op
 }
 
-func (c *Catalog) KindByName(name string) (Kind, bool) {
-	k, ok := c.kinds[name]
-	return k, ok
-}
-
-func (c *Catalog) KindByType(v any) (Kind, bool) {
-	for _, t := range c.ordKinds {
+func (c *Catalog) TypeOf(v any) (Type, bool) {
+	for _, t := range c.types {
 		if t.Is(v) {
 			return t, true
 		}
@@ -141,52 +114,63 @@ func (c *Catalog) KindByType(v any) (Kind, bool) {
 	return nil, false
 }
 
-func (c *Catalog) OpByName(name string) ([]Op, bool) {
+func (c *Catalog) OpFor(name string) ([]Op, bool) {
 	op, ok := c.ops[name]
 	return op, ok
 }
 
 func (c *Catalog) Ops() []Op {
-	return slices.Clone(c.ordOps)
+	var ops []Op
+	for _, v := range c.ops {
+		ops = append(ops, v...)
+	}
+	slices.SortStableFunc(ops, func(a, b Op) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
+	return ops
 }
 
 func (c *Catalog) OpNames() []string {
 	var names []string
-	for _, op := range c.ordOps {
-		names = append(names, op.Name)
-		names = append(names, op.Aliases...)
+	for _, ops := range c.ops {
+		for _, op := range ops {
+			names = append(names, op.Name)
+			names = append(names, op.Aliases...)
+		}
 	}
 	slices.Sort(names)
 	return slices.Compact(names)
 }
 
 func (c *Catalog) Dup(v any) any {
-	k, ok := c.KindByType(v)
+	t, ok := c.TypeOf(v)
 	if !ok {
-		panic(fmt.Errorf("unregistered type: %v", TypeName(v)))
+		panic(fmt.Errorf("unregistered type: %v", types.GoName(v)))
 	}
-	return k.Dup(v)
+	return t
 }
 
-type valKind struct{}
+// ----------------------------------------------------------------------------
 
-func (k valKind) Name() string { return "Val" }
+type valType struct{}
 
-func (k valKind) Is(v any) bool {
+func (k valType) Name() string { return "Val" }
+
+func (k valType) Is(v any) bool {
 	if v == nil {
 		return false
 	}
 	return true
 }
 
-func (k valKind) Dup(any) any {
-	panic("Dup undefined")
+func (k valType) Dup(any) any {
+	panic("Dup() undefined")
 }
 
-func (k valKind) Copy(any, any) {
-	panic("Copy undefined")
+func (k valType) Copy(any, any) {
+	panic("Copy() undefined")
 }
 
-func (k valKind) To(a any) (any, bool) {
+func (k valType) To(a any) (any, bool) {
 	return a, false
 }
