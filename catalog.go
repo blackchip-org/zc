@@ -41,7 +41,11 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 		// parameter signature
 		for _, other := range ops {
 			if reflect.DeepEqual(other.Params, op.Params) {
-				stack := append(op.Params, name)
+				var params []string
+				for _, param := range op.Params {
+					params = append(params, param.Name())
+				}
+				stack := append(params, name)
 				panic(fmt.Errorf("duplicate op: %v", FormatList(stack)))
 			}
 		}

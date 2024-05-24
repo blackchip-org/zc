@@ -18,6 +18,23 @@ ops:
   - i: add/i
     o: [8]
 
+- name: div/i
+  title: Division
+  funcs:
+  - name: DivBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: div/i
+    o: [3]
+
 - name: mod/i
   title: Modulus
   funcs:
@@ -83,7 +100,6 @@ ops:
     o: [36]
 
 - name: rem/i
-  aliases: [remi]
   title: Remainder
   funcs:
   - name: RemBigInt

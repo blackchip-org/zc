@@ -24,10 +24,10 @@ type OpEnv struct {
 type Op struct {
 	Name      string
 	Aliases   []string
-	Params    []string
-	VarParam  string
-	Returns   []string
-	VarReturn string
+	Params    []Type
+	VarParam  Type
+	Returns   []Type
+	VarReturn Type
 	Func      func(*OpEnv)
 	Macro     string
 }

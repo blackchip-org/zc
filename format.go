@@ -16,14 +16,14 @@ func FormatList(vals ...any) string {
 	return strings.Join(strs, " | ")
 }
 
-// func FormatStack(s stack.Stack[Item]) string {
-// 	var strs []string
-// 	for _, item := range s.Items() {
-// 		str := fmt.Sprintf("%v", item.Value)
-// 		strs = append(strs, str)
-// 	}
-// 	return strings.Join(strs, " | ")
-// }
+func FormatStack(s *Stack) string {
+	var strs []string
+	for _, item := range s.Items {
+		str := fmt.Sprintf("%v", item.Value)
+		strs = append(strs, str)
+	}
+	return strings.Join(strs, " | ")
+}
 
 func Quote(v string) string {
 	var s scan.Scanner
