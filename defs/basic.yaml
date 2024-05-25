@@ -3,4 +3,5 @@ title: Basic calculator
 
 types:
   - Int
+  - Float
   - Str

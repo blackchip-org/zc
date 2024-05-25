@@ -26,7 +26,7 @@ func TestType(t *testing.T) {
 func TestUnregisteredType(t *testing.T) {
 	cat := NewCatalogBuilder().Build()
 	_, ok := cat.TypeOf(big.NewInt(12))
-	if !ok {
+	if ok {
 		t.Fatalf("expected not ok")
 	}
 }

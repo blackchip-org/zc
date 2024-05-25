@@ -11,6 +11,7 @@ var Basic = zc.Vol{
 	Name: "basic",
 	Types: []zc.Type{
 		types.Int,
+		types.Float,
 		types.Str,
 	},
 }

@@ -97,8 +97,8 @@ func (c *CatalogBuilder) Build() *Catalog {
 	for k, v := range c.ops {
 		cat.ops[k] = slices.Clone(v)
 	}
-	val := types.Val
-	cat.types[val.Name()] = val
+	//val := types.Val
+	//cat.types[val.Name()] = val
 	return cat
 }
 

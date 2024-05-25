@@ -66,7 +66,7 @@ func loadDef(dir string, f fs.DirEntry) (VolDef, error) {
 		log.Panicf("no volume name in %v", filename)
 	}
 	if def.Package == "" {
-		def.Package = def.Name
+		def.Package = identFor(def.Name)
 	}
 	if def.Ident == "" {
 		def.Ident = identFor(def.Name)
