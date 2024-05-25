@@ -1,0 +1,6 @@
+name: basic
+title: Basic calculator
+
+types:
+  - Int
+  - Str

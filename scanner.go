@@ -48,9 +48,3 @@ var rules = scan.NewRuleSet(
 	slashValueRule{},
 	scan.NewWhileRule(scan.Not(scan.IsSpace), TokenName),
 ).WithNoMatchFunc(scan.UnexpectedUntil(scan.IsSpace))
-
-func ScanWords(line string) []scan.Token {
-	s := scan.NewScannerFromString("", line)
-	runner := scan.NewRunner(s, rules)
-	return runner.All()
-}

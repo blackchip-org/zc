@@ -97,7 +97,7 @@ func (c *CatalogBuilder) Build() *Catalog {
 	for k, v := range c.ops {
 		cat.ops[k] = slices.Clone(v)
 	}
-	val := valType{}
+	val := types.Val
 	cat.types[val.Name()] = val
 	return cat
 }
@@ -148,33 +148,8 @@ func (c *Catalog) OpNames() []string {
 
 func (c *Catalog) Dup(v any) any {
 	t, ok := c.TypeOf(v)
-	if !ok {
+	if !ok || t == types.Val {
 		panic(fmt.Errorf("unregistered type: %v", types.GoName(v)))
 	}
-	return t
-}
-
-// ----------------------------------------------------------------------------
-
-type valType struct{}
-
-func (k valType) Name() string { return "Val" }
-
-func (k valType) Is(v any) bool {
-	if v == nil {
-		return false
-	}
-	return true
-}
-
-func (k valType) Dup(any) any {
-	panic("Dup() undefined")
-}
-
-func (k valType) Copy(any, any) {
-	panic("Copy() undefined")
-}
-
-func (k valType) To(a any) (any, bool) {
-	return a, false
+	return t.Dup(v)
 }

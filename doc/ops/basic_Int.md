@@ -147,11 +147,11 @@ if *x* is zero.
 
 Example:
 
-| Input       | Stack
-|-------------|------
-| `c -6 sign` | `-1` 
-| `c 6 sign`  | `1`  
-| `c 0 sign`  | `0`  
+| Input         | Stack
+|---------------|------
+| `c -6 sign/i` | `-1` 
+| `c 6 sign/i`  | `1`  
+| `c 0 sign/i`  | `0`  
 
 ### sqrt/i
 

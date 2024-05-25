@@ -1,0 +1,49 @@
+name: zcalc
+title: Stack operations and calculator info
+
+ops:
+- name: clear
+  aliases: [c]
+  title: Clear
+  funcs:
+  - name: Clear
+    params: [Val*]
+  desc: |-
+    Clears all items from the stack.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: c
+    o: []
+
+- name: down
+  aliases: [dn]
+  title: Rotate down
+  funcs:
+  - name: Down
+    params: [Val*]
+    returns: [Val*]
+  desc: |-
+    Rotates all items on the stack downwards. The direction is based on how
+    the stack is visualized -- the top item on the stack is displayed at
+    the bottom and the bottom item on the stack is displayed at the top.
+    Therefore, rotating downward moves the top item on the stack to the
+    bottom.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: down
+    o: [3, 1, 2]
+
+- name: dup
+  title: Duplicate
+  funcs:
+  - name: Dup
+    params: [x:Val]
+    returns: [x:Val, x:Val]
+  desc: Duplicates the top value on the stack
+  example:
+  - i: 10
+    o: [10]
+  - i: dup
+    o: [10, 10]

@@ -103,13 +103,13 @@ func TestOpDocs_BasicInt_RemI(t *testing.T) {
 func TestOpDocs_BasicInt_SignI(t *testing.T) {
 	c := calc.New()
 
-	c.Eval("c -6 sign")
+	c.Eval("c -6 sign/i")
 	zc.AssertStack(t, c, "-1")
 
-	c.Eval("c 6 sign")
+	c.Eval("c 6 sign/i")
 	zc.AssertStack(t, c, "1")
 
-	c.Eval("c 0 sign")
+	c.Eval("c 0 sign/i")
 	zc.AssertStack(t, c, "0")
 }
 

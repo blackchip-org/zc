@@ -6,19 +6,23 @@ import (
 )
 
 var (
-	Min   *zc.Catalog
-	Basic *zc.Catalog
-	All   *zc.Catalog
+	Min      *zc.Catalog
+	Standard *zc.Catalog
+	All      *zc.Catalog
 )
 
 func init() {
 	b := zc.NewCatalogBuilder()
 	b.AddVolume(
-		vols.BasicInt,
+		vols.Basic,
+		vols.Zcalc,
 	)
 	Min = b.Build()
 
-	Basic = b.Build()
+	b.AddVolume(
+		vols.BasicInt,
+	)
+	Standard = b.Build()
 	All = b.Build()
 }
 

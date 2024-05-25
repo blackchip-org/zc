@@ -25,6 +25,6 @@ type VolDef struct {
 	Title    string `yaml:"title"`
 	Package  string `yaml:"package"`
 	Overview string
-	Kinds    []string `yaml:"kinds"`
+	Types    []string `yaml:"types"`
 	Ops      []OpDef  `yaml:"ops"`
 }

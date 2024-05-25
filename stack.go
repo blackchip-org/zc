@@ -1,7 +1,6 @@
 package zc
 
 import (
-	"fmt"
 	"slices"
 )
 
@@ -51,21 +50,17 @@ func (s *Stack) PopN(n int) ([]Item, bool) {
 }
 
 func (s *Stack) At(idx int) Item {
-	l := len(s.Items)
-	if idx < 0 || idx >= l {
-		panic(fmt.Errorf("index out of bounds: %v", idx))
-	}
-	return s.Items[l-idx-1]
+	return s.Items[idx]
 }
 
 func (s *Stack) Len() int {
 	return len(s.Items)
 }
 
-func (s *Stack) Clone() *Stack {
+func (s *Stack) Clone() Stack {
 	var sc Stack
 	sc.Items = slices.Clone(s.Items)
-	return &sc
+	return sc
 }
 
 func (s *Stack) Clear() {

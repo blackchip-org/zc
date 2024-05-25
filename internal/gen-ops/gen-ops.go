@@ -129,14 +129,15 @@ func genVols(vols []zc.VolDef) {
 		fmt.Fprintf(f, "import (\n")
 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6\"\n")
 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/ops\"\n")
+		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/types\"\n")
 		fmt.Fprintf(f, ")\n")
 
 		fmt.Fprintf(f, "var %v = zc.Vol{\n", vol.Ident)
 		fmt.Fprintf(f, "Name: \"%v\",\n", vol.Name)
-		if len(vol.Kinds) > 0 {
-			fmt.Fprintf(f, "Kinds: []zc.Kind{\n")
-			for _, k := range vol.Kinds {
-				fmt.Fprintf(f, "%vKind,\n", k)
+		if len(vol.Types) > 0 {
+			fmt.Fprintf(f, "Types: []zc.Type{\n")
+			for _, k := range vol.Types {
+				fmt.Fprintf(f, "types.%v,\n", k)
 			}
 			fmt.Fprintf(f, "},\n")
 		}
@@ -353,7 +354,7 @@ func genValList(f *os.File, name string, varName string, vals []string) {
 	}
 	fmt.Fprintf(f, "%v},\n", strings.Join(list, ", "))
 	if var_ != "" {
-		fmt.Fprintf(f, "%v: \"%v\",\n", varName, var_)
+		fmt.Fprintf(f, "%v: types.%v,\n", varName, var_)
 	}
 }
 

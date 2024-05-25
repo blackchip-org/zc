@@ -3,6 +3,7 @@ package zc
 import (
 	"fmt"
 
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/types"
 )
 
@@ -12,6 +13,7 @@ type Calc struct {
 	Info     string
 	Listener Listener
 	Catalog  *Catalog
+	scanner  scan.Scanner
 }
 
 func NewCalc(cat *Catalog) *Calc {
@@ -26,7 +28,7 @@ func (c *Calc) Push(a any) {
 	if !ok {
 		panic(fmt.Errorf("unregistered type: %v", types.GoName(a)))
 	}
-	c.Push(Item{Value: a, Type: t})
+	c.Stack.Push(Item{Value: a, Type: t})
 	if c.Listener != nil {
 		c.Listener(NewStackEvent("push", c.Stack))
 	}
@@ -137,7 +139,7 @@ func (c *Calc) do(name string) {
 	idx := 0
 	for _, typ := range op.Returns {
 		if !c.assembleRet(typ, env, idx) {
-			panic(invalidRetKinds(name, op.Returns, op.VarReturn))
+			panic(invalidRetTypes(name, op.Returns, op.VarReturn))
 		}
 		idx++
 	}
@@ -148,7 +150,7 @@ func (c *Calc) do(name string) {
 	if op.VarReturn != nil {
 		for idx < len(env.Returns) {
 			if !c.assembleRet(env.Op.VarReturn, env, idx) {
-				panic(invalidRetKinds(name, op.Returns, op.VarReturn))
+				panic(invalidRetTypes(name, op.Returns, op.VarReturn))
 			}
 			idx++
 		}
@@ -183,9 +185,9 @@ func (c *Calc) checkOp(name string, op Op) (*OpEnv, error) {
 
 	// Check that the kind of each argument matches up with the expected
 	// parameter kind.
-	for _, kindName := range op.Params {
-		if !c.assembleArg(kindName, &env, idx) {
-			return nil, invalidArgKinds(name, op.Params, op.VarParam)
+	for _, type_ := range op.Params {
+		if !c.assembleArg(type_, &env, idx) {
+			return nil, invalidArgTypes(name, op.Params, op.VarParam)
 		}
 		idx++
 	}
@@ -195,7 +197,7 @@ func (c *Calc) checkOp(name string, op Op) (*OpEnv, error) {
 	if op.VarParam != nil {
 		for idx < stackLen {
 			if !c.assembleArg(op.VarParam, &env, idx) {
-				return nil, invalidArgKinds(name, op.Params, op.VarParam)
+				return nil, invalidArgTypes(name, op.Params, op.VarParam)
 			}
 			idx++
 		}
@@ -237,7 +239,7 @@ func (c *Calc) assembleRet(typ Type, env *OpEnv, idx int) bool {
 	return true
 }
 
-func invalidArgKinds(opName string, types []Type, varArgs Type) error {
+func invalidArgTypes(opName string, types []Type, varArgs Type) error {
 	var names []string
 	for _, t := range types {
 		names = append(names, t.Name())
@@ -248,7 +250,7 @@ func invalidArgKinds(opName string, types []Type, varArgs Type) error {
 	return fmt.Errorf("%v: invalid arguments, expected %v", opName, FormatList(names))
 }
 
-func invalidRetKinds(opName string, types []Type, varRets Type) error {
+func invalidRetTypes(opName string, types []Type, varRets Type) error {
 	var names []string
 	for _, t := range types {
 		names = append(names, t.Name())
@@ -259,6 +261,22 @@ func invalidRetKinds(opName string, types []Type, varRets Type) error {
 	return fmt.Errorf("%v: invalid returns, expected %v", opName, FormatList(names))
 }
 
-func (c *Calc) Eval(line string) {
-	panic("not implemented")
+func (c *Calc) Eval(line string) error {
+	c.scanner.InitFromString("", line)
+	r := scan.NewRunner(&c.scanner, rules)
+	toks := r.All()
+	for _, tok := range toks {
+		switch tok.Type {
+		case TokenValue:
+			c.Push(tok.Val)
+		case TokenName:
+			c.Do(tok.Val)
+		default:
+			panic(fmt.Errorf("unexpected token type: %v", tok.Type))
+		}
+		if c.Err != nil {
+			return c.Err
+		}
+	}
+	return nil
 }

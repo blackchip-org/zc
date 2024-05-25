@@ -14,7 +14,7 @@ type Listener func(Event)
 
 type StackEvent struct {
 	type_ string
-	stack *Stack
+	stack Stack
 }
 
 func NewStackEvent(type_ string, stack Stack) StackEvent {

@@ -17,7 +17,7 @@ func AddBigInt(e *zc.OpEnv) {
 
 func DivBigInt(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)
-	y := e.Args[0].(*big.Int)
+	y := e.Args[1].(*big.Int)
 	if y.Cmp(&ZeroBigInt) == 0 {
 		e.Err = zc.ErrDivisionByZero(e)
 		return
@@ -69,7 +69,7 @@ func SignBigInt(e *zc.OpEnv) {
 func SqrtBigInt(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)
 	if x.Cmp(&ZeroBigInt) < 0 {
-		zc.ErrInvalidArg(e, "%v < 0", x)
+		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
 		return
 	}
 	x.Sqrt(x)

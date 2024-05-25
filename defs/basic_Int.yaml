@@ -126,11 +126,11 @@ ops:
     Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
     if *x* is zero.
   example:
-  - i: c -6 sign
+  - i: c -6 sign/i
     o: [-1]
-  - i: c 6 sign
+  - i: c 6 sign/i
     o: [1]
-  - i: c 0 sign
+  - i: c 0 sign/i
     o: [0]
 
 - name: sqrt/i
