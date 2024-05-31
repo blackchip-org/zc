@@ -10,8 +10,10 @@ import (
 
 var (
 	AddBigInt = zc.Op{
-		Name:    "add/i",
-		Aliases: []string{},
+		Name: "add/i",
+		Aliases: []string{
+			"add",
+		},
 		Params:  []zc.Type{types.Int, types.Int},
 		Returns: []zc.Type{types.Int},
 		Func:    funcs.AddBigInt,

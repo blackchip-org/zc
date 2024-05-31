@@ -77,7 +77,7 @@ func genOps(vols []zc.VolDef) {
 			continue
 		}
 
-		f, err := os.Create(path.Join(OpsDir, vol.Package+"_ops.go"))
+		f, err := os.Create(path.Join(OpsDir, fileNameFor(vol.Name)+"_ops.go"))
 		if err != nil {
 			log.Panic(err)
 		}

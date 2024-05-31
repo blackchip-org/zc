@@ -48,3 +48,24 @@ func TestDuplicateType(t *testing.T) {
 	b.AddType(types.Int)
 	b.AddType(types.Int)
 }
+
+func TestOverload(t *testing.T) {
+	b := NewCatalogBuilder()
+	b.AddType(
+		types.Int,
+		types.Float,
+	)
+	b.AddOp(
+		Op{Name: "add/i", Aliases: []string{"add"}, Params: []Type{types.Int, types.Int}, Func: NoOp},
+		Op{Name: "add/f", Aliases: []string{"add"}, Params: []Type{types.Float, types.Float}, Func: NoOp},
+	)
+
+	cat := b.Build()
+	ops, ok := cat.OpFor("add")
+	if !ok {
+		t.Fatalf("not found")
+	}
+	if len(ops) != 2 {
+		t.Errorf("\n have: %v ops \n want: %v ops", len(ops), 2)
+	}
+}

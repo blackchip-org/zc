@@ -5,6 +5,7 @@ type OpDef struct {
 	Ident   string    `yaml:"ident"`
 	Aliases []string  `yaml:"aliases"`
 	Title   string    `yaml:"title"`
+	Virtual string    `yaml:"virtual"`
 	Funcs   []FuncDef `yaml:"funcs"`
 	Macro   string    `yaml:"macro"`
 	Desc    string    `yaml:"desc"`

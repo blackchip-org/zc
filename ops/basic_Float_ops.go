@@ -10,8 +10,10 @@ import (
 
 var (
 	AddBigFloat = zc.Op{
-		Name:    "add/f",
-		Aliases: []string{},
+		Name: "add/f",
+		Aliases: []string{
+			"add",
+		},
 		Params:  []zc.Type{types.Float, types.Float},
 		Returns: []zc.Type{types.Float},
 		Func:    funcs.AddBigFloat,

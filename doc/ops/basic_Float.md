@@ -6,15 +6,17 @@ Basic calculator, float implementation
 
 ## Index
 
-| Operation         | Description
-|-------------------|------------
-| [`add/f`](#add/f) | Addition   
+| Operation              | Description
+|------------------------|------------
+| [`add/f, add`](#add/f) | Addition   
 
 ## Operations
 
 ### add/f
 
 Adds the value of *x* to *y*.
+
+Alias: 
 
 ```
 ( x:Float y:Float -- Float )

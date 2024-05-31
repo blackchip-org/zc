@@ -5,3 +5,21 @@ types:
   - Int
   - Float
   - Str
+
+ops:
+- name: add
+  aliases: [a, "+"]
+  title: Addition
+  virtual: true
+  funcs:
+  - params: [x:Int, y:Int]
+    returns: [Int]
+  - params: [x:Float, y:Float]
+    returns: [Float]
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: c 6 2 a
+    o: [8]
+  - i: c 1.1 2.2 a
+    o: [3.3]
+

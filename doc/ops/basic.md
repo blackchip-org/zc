@@ -6,7 +6,26 @@ Basic calculator
 
 ## Index
 
-| Operation | Description
-|-----------|------------
+| Operation           | Description
+|---------------------|------------
+| [`add, a, +`](#add) | Addition   
 
 ## Operations
+
+### add
+
+Adds the value of *x* to *y*.
+
+Aliases: `+`
+
+```
+( x:Int y:Int -- Int )
+( x:Float y:Float -- Float )
+```
+
+Example:
+
+| Input         | Stack
+|---------------|------
+| `c 6 2 a`     | `8`  
+| `c 1.1 2.2 a` | `3.3`

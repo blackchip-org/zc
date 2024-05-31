@@ -11,3 +11,5 @@ type Test struct {
 	Name string   `yaml:"name"`
 	Test []Expect `yaml:"test"`
 }
+
+func NoOp(_ *OpEnv) {}

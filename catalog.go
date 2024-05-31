@@ -48,6 +48,8 @@ func (c *CatalogBuilder) addOp(name string, op Op) {
 				stack := append(params, name)
 				panic(fmt.Errorf("duplicate op: %v", FormatList(stack)))
 			}
+			ops = append(ops, op)
+			c.ops[name] = ops
 		}
 	} else {
 		// No operation with this name has been defined yet.
@@ -66,7 +68,8 @@ func (c *CatalogBuilder) AddOp(ops ...Op) {
 			c.addOp(op.Name, op)
 		}
 		for _, alias := range op.Aliases {
-			c.AddMacro(alias, op.Name)
+			//c.AddMacro(alias, op.Name)
+			c.addOp(alias, op)
 		}
 	}
 }

@@ -4,6 +4,7 @@ package: basic_Int
 
 ops:
 - name: add/i
+  aliases: [add]
   title: Addition
   funcs:
   - name: AddBigInt

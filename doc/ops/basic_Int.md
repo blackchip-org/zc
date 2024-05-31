@@ -6,24 +6,26 @@ Basic calculator, integer implementation
 
 ## Index
 
-| Operation           | Description   
-|---------------------|---------------
-| [`add/i`](#add/i)   | Addition      
-| [`div/i`](#div/i)   | Division      
-| [`mod/i`](#mod/i)   | Modulus       
-| [`mul/i`](#mul/i)   | Multiplication
-| [`neg/i`](#neg/i)   | Negation      
-| [`pow/i`](#pow/i)   | Exponentiation
-| [`rem/i`](#rem/i)   | Remainder     
-| [`sign/i`](#sign/i) | Sign          
-| [`sqrt/i`](#sqrt/i) | Square root   
-| [`sub/i`](#sub/i)   | Subtraction   
+| Operation              | Description   
+|------------------------|---------------
+| [`add/i, add`](#add/i) | Addition      
+| [`div/i`](#div/i)      | Division      
+| [`mod/i`](#mod/i)      | Modulus       
+| [`mul/i`](#mul/i)      | Multiplication
+| [`neg/i`](#neg/i)      | Negation      
+| [`pow/i`](#pow/i)      | Exponentiation
+| [`rem/i`](#rem/i)      | Remainder     
+| [`sign/i`](#sign/i)    | Sign          
+| [`sqrt/i`](#sqrt/i)    | Square root   
+| [`sub/i`](#sub/i)      | Subtraction   
 
 ## Operations
 
 ### add/i
 
 Adds the value of *x* to *y*.
+
+Alias: 
 
 ```
 ( x:Int y:Int -- Int )
