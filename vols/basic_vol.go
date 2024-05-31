@@ -12,10 +12,16 @@ var Basic = zc.Vol{
 	Name: "basic",
 	Types: []zc.Type{
 		types.Int,
+		types.Dec,
 		types.Float,
 		types.Str,
 	},
 	Ops: []zc.Op{
 		ops.Add,
+		ops.Mul,
+	},
+	Macros: []zc.Macro{
+		{Name: "a", Expr: "add"},
+		{Name: "+", Expr: "add"},
 	},
 }

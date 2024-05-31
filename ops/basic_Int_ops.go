@@ -10,75 +10,73 @@ import (
 
 var (
 	AddBigInt = zc.Op{
-		Name: "add/i",
-		Aliases: []string{
-			"add",
-		},
-		Params:  []zc.Type{types.Int, types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.AddBigInt,
+		Name:      "add/i",
+		Overloads: "add",
+		Params:    []zc.Type{types.Int, types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.AddBigInt,
 	}
 	DivBigInt = zc.Op{
-		Name:    "div/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int, types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.DivBigInt,
+		Name:      "div/i",
+		Overloads: "div",
+		Params:    []zc.Type{types.Int, types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.DivBigInt,
 	}
 	ModBigInt = zc.Op{
-		Name:    "mod/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int, types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.ModBigInt,
+		Name:      "mod/i",
+		Overloads: "mod",
+		Params:    []zc.Type{types.Int, types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.ModBigInt,
 	}
 	MulBigInt = zc.Op{
-		Name:    "mul/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int, types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.MulBigInt,
+		Name:      "mul/i",
+		Overloads: "mul",
+		Params:    []zc.Type{types.Int, types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.MulBigInt,
 	}
 	NegBigInt = zc.Op{
-		Name:    "neg/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.NegBigInt,
+		Name:      "neg/i",
+		Overloads: "neg",
+		Params:    []zc.Type{types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.NegBigInt,
 	}
 	PowBigInt = zc.Op{
-		Name:    "pow/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int, types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.PowBigInt,
+		Name:      "pow/i",
+		Overloads: "pow",
+		Params:    []zc.Type{types.Int, types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.PowBigInt,
 	}
 	RemBigInt = zc.Op{
-		Name:    "rem/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int, types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.RemBigInt,
+		Name:      "rem/i",
+		Overloads: "rem",
+		Params:    []zc.Type{types.Int, types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.RemBigInt,
 	}
 	SignBigInt = zc.Op{
-		Name:    "sign/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int},
-		Returns: []zc.Type{types.IntArch},
-		Func:    funcs.SignBigInt,
+		Name:      "sign/i",
+		Overloads: "sign",
+		Params:    []zc.Type{types.Int},
+		Returns:   []zc.Type{types.IntArch},
+		Func:      funcs.SignBigInt,
 	}
 	SqrtBigInt = zc.Op{
-		Name:    "sqrt/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.SqrtBigInt,
+		Name:      "sqrt/i",
+		Overloads: "sqrt",
+		Params:    []zc.Type{types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.SqrtBigInt,
 	}
 	SubBigInt = zc.Op{
-		Name:    "sub/i",
-		Aliases: []string{},
-		Params:  []zc.Type{types.Int, types.Int},
-		Returns: []zc.Type{types.Int},
-		Func:    funcs.SubBigInt,
+		Name:      "sub/i",
+		Overloads: "sub",
+		Params:    []zc.Type{types.Int, types.Int},
+		Returns:   []zc.Type{types.Int},
+		Func:      funcs.SubBigInt,
 	}
 )

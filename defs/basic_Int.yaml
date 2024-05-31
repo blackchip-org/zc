@@ -4,7 +4,6 @@ package: basic_Int
 
 ops:
 - name: add/i
-  aliases: [add]
   title: Addition
   funcs:
   - name: AddBigInt
@@ -35,6 +34,11 @@ ops:
     o: [6, 2]
   - i: div/i
     o: [3]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 div/i
+      error: "div/i: division by zero"
 
 - name: mod/i
   title: Modulus
@@ -52,9 +56,13 @@ ops:
     o: [-7, 2]
   - i: mod/i
     o: [1]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 mod/i
+      error: "mod/i: division by zero"
 
 - name: mul/i
-  overloads: mul
   title: Multiplication
   funcs:
   - name: MulBigInt
@@ -70,7 +78,6 @@ ops:
     o: [12]
 
 - name: neg/i
-  overloads: neg
   title: Negation
   funcs:
   - name: NegBigInt

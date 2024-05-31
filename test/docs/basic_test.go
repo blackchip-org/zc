@@ -18,3 +18,13 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 	c.Eval("c 1.1 2.2 a")
 	zc.AssertStack(t, c, "3.3")
 }
+
+func TestOpDocs_Basic_Mul(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("c 6 2 mul")
+	zc.AssertStack(t, c, "12")
+
+	c.Eval("c 6.6 2.2 mul")
+	zc.AssertStack(t, c, "14.52")
+}

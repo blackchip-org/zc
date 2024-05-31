@@ -13,11 +13,15 @@ type Calc struct {
 	Info     string
 	Listener Listener
 	Catalog  *Catalog
+	State    map[string]any
 	scanner  scan.Scanner
 }
 
 func NewCalc(cat *Catalog) *Calc {
-	return &Calc{Catalog: cat}
+	return &Calc{
+		Catalog: cat,
+		State:   make(map[string]any),
+	}
 }
 
 func (c *Calc) Push(a any) {
@@ -175,6 +179,7 @@ func (c *Calc) checkOp(name string, op Op) (*OpEnv, error) {
 	// at the top of the stack and working towards index 0.
 	var env OpEnv
 	env.Catalog = c.Catalog
+	env.State = c.State
 
 	// If there are a variable number of parameters, then consume
 	// the entire stack.

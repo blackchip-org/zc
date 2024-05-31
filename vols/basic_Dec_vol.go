@@ -7,15 +7,13 @@ import (
 	"github.com/blackchip-org/zc/v6/ops"
 )
 
-var Zcalc = zc.Vol{
-	Name: "zcalc",
+var BasicDec = zc.Vol{
+	Name: "basic/Dec",
 	Ops: []zc.Op{
-		ops.Clear,
-		ops.Down,
-		ops.Dup,
+		ops.AddDec,
+		ops.DivDec,
+		ops.MulDec,
+		ops.NegDec,
 	},
-	Macros: []zc.Macro{
-		{Name: "c", Expr: "clear"},
-		{Name: "dn", Expr: "down"},
-	},
+	Macros: []zc.Macro{},
 }

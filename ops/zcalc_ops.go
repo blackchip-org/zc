@@ -10,20 +10,14 @@ import (
 
 var (
 	Clear = zc.Op{
-		Name: "clear",
-		Aliases: []string{
-			"c",
-		},
+		Name:     "clear",
 		Params:   []zc.Type{},
 		VarParam: types.Val,
 		Returns:  []zc.Type{},
 		Func:     funcs.Clear,
 	}
 	Down = zc.Op{
-		Name: "down",
-		Aliases: []string{
-			"dn",
-		},
+		Name:      "down",
 		Params:    []zc.Type{},
 		VarParam:  types.Val,
 		Returns:   []zc.Type{},
@@ -32,7 +26,6 @@ var (
 	}
 	Dup = zc.Op{
 		Name:    "dup",
-		Aliases: []string{},
 		Params:  []zc.Type{types.Val},
 		Returns: []zc.Type{types.Val, types.Val},
 		Func:    funcs.Dup,

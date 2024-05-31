@@ -21,6 +21,7 @@ func init() {
 
 	b.AddVolume(
 		vols.BasicInt,
+		vols.BasicDec,
 		vols.BasicFloat,
 	)
 	Standard = b.Build()

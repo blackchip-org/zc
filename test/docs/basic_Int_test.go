@@ -35,6 +35,13 @@ func TestOpDocs_BasicInt_DivI(t *testing.T) {
 	zc.AssertStack(t, c, "3")
 }
 
+func TestOpDocs_BasicInt_DivI_Zero(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("6 0 div/i")
+	zc.AssertError(t, c, "div/i: division by zero")
+}
+
 func TestOpDocs_BasicInt_ModI(t *testing.T) {
 	c := calc.New()
 
@@ -46,6 +53,13 @@ func TestOpDocs_BasicInt_ModI(t *testing.T) {
 
 	c.Eval("mod/i")
 	zc.AssertStack(t, c, "1")
+}
+
+func TestOpDocs_BasicInt_ModI_Zero(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("6 0 mod/i")
+	zc.AssertError(t, c, "mod/i: division by zero")
 }
 
 func TestOpDocs_BasicInt_MulI(t *testing.T) {

@@ -29,6 +29,10 @@ func DivBigInt(e *zc.OpEnv) {
 func ModBigInt(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)
 	y := e.Args[1].(*big.Int)
+	if y.Cmp(&ZeroBigInt) == 0 {
+		e.Err = zc.ErrDivisionByZero(e)
+		return
+	}
 	x.Mod(x, y)
 	e.Returns = []any{x}
 }

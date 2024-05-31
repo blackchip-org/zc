@@ -12,4 +12,5 @@ var BasicFloat = zc.Vol{
 	Ops: []zc.Op{
 		ops.AddBigFloat,
 	},
+	Macros: []zc.Macro{},
 }

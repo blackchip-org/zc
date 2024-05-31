@@ -3,6 +3,7 @@ title: Basic calculator
 
 types:
   - Int
+  - Dec
   - Float
   - Str
 
@@ -22,4 +23,19 @@ ops:
     o: [8]
   - i: c 1.1 2.2 a
     o: [3.3]
+
+- name: mul
+  title: Multiplication
+  funcs:
+  - params: [x:Int, y:Int]
+    returns: [Int]
+  - params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Multiplies the value of *x* by *y*.
+  example:
+  - i: c 6 2 mul
+    o: [12]
+  - i: c 6.6 2.2 mul
+    o: [14.52]
+
 

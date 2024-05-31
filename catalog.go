@@ -67,9 +67,8 @@ func (c *CatalogBuilder) AddOp(ops ...Op) {
 		if op.Func != nil {
 			c.addOp(op.Name, op)
 		}
-		for _, alias := range op.Aliases {
-			//c.AddMacro(alias, op.Name)
-			c.addOp(alias, op)
+		if op.Overloads != "" {
+			c.addOp(op.Overloads, op)
 		}
 	}
 }
@@ -89,6 +88,9 @@ func (c *CatalogBuilder) AddVolume(vols ...Vol) {
 	for _, vol := range vols {
 		c.AddType(vol.Types...)
 		c.AddOp(vol.Ops...)
+		for _, mac := range vol.Macros {
+			c.AddMacro(mac.Name, mac.Expr)
+		}
 	}
 }
 
@@ -100,8 +102,6 @@ func (c *CatalogBuilder) Build() *Catalog {
 	for k, v := range c.ops {
 		cat.ops[k] = slices.Clone(v)
 	}
-	//val := types.Val
-	//cat.types[val.Name()] = val
 	return cat
 }
 
@@ -139,14 +139,11 @@ func (c *Catalog) Ops() []Op {
 
 func (c *Catalog) OpNames() []string {
 	var names []string
-	for _, ops := range c.ops {
-		for _, op := range ops {
-			names = append(names, op.Name)
-			names = append(names, op.Aliases...)
-		}
+	for name := range c.ops {
+		names = append(names, name)
 	}
 	slices.Sort(names)
-	return slices.Compact(names)
+	return names
 }
 
 func (c *Catalog) Dup(v any) any {

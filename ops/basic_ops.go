@@ -9,9 +9,8 @@ import (
 var (
 	Add = zc.Op{
 		Name: "add",
-		Aliases: []string{
-			"a",
-			"+",
-		},
+	}
+	Mul = zc.Op{
+		Name: "mul",
 	}
 )

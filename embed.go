@@ -82,6 +82,13 @@ func loadDef(dir string, f fs.DirEntry) (VolDef, error) {
 			}
 			def.Ops[i] = op
 		}
+		if op.Overloads == "" {
+			parts := strings.SplitN(op.Name, "/", 2)
+			if len(parts) > 1 {
+				op.Overloads = parts[0]
+			}
+			def.Ops[i] = op
+		}
 		for i, fn := range op.Funcs {
 			if fn.Name == "" && fn.Ident == "" {
 				fn.Ident = identFor(op.Name)

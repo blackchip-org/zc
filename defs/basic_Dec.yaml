@@ -1,0 +1,76 @@
+name: basic/Dec
+title: Basic calculator, decimals
+
+ops:
+- name: add/d
+  title: Addition
+  funcs:
+  - name: AddDec
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: add/d
+    o: [8.8]
+
+- name: div/d
+  title: Division
+  funcs:
+  - name: DivDec
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: |-
+    Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2
+    o: [6.6, 2]
+  - i: div/d
+    o: [3.3]
+  tests:
+  - name: Thirds
+    test:
+      - i: 2 3 div/d
+        o: [0.6666666666666667]
+  - name: Zero
+    test:
+      - i: 6.6 0 div/d
+        error: "div/d: division by zero"
+
+- name: mul/d
+  title: Multiplication
+  funcs:
+  - name: MulDec
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Multiplies the value of *x* by *y*.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: mul/d
+    o: [14.52]
+
+- name: neg/d
+  title: Negation
+  funcs:
+  - name: NegDec
+    params: [x:Dec]
+    returns: [Dec]
+  desc: Changes the sign of *x*.
+  example:
+  - i: -6.6
+    o: [-6.6]
+  - i: neg/d
+    o: [6.6]
+  - i: neg/d
+    o: [-6.6]
+
+

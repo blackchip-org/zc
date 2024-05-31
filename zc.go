@@ -5,6 +5,8 @@ import (
 	"unicode/utf8"
 )
 
+const ProgName = "zc"
+
 type Type interface {
 	Name() string
 	Is(any) bool
@@ -15,6 +17,7 @@ type Type interface {
 
 type OpEnv struct {
 	Catalog *Catalog
+	State   map[string]any
 	Op      Op
 	Args    []any
 	Returns []any
@@ -23,19 +26,25 @@ type OpEnv struct {
 
 type Op struct {
 	Name      string
-	Aliases   []string
+	Overloads string
 	Params    []Type
 	VarParam  Type
 	Returns   []Type
 	VarReturn Type
-	Func      func(*OpEnv)
 	Macro     string
+	Func      func(*OpEnv)
+}
+
+type Macro struct {
+	Name string
+	Expr string
 }
 
 type Vol struct {
-	Name  string
-	Types []Type
-	Ops   []Op
+	Name   string
+	Types  []Type
+	Ops    []Op
+	Macros []Macro
 }
 
 func IsValuePrefix(ch rune, next rune) bool {

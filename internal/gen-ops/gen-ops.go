@@ -99,11 +99,9 @@ func genOps(vols []zc.VolDef) {
 				}
 				fmt.Fprintf(f, "%v = zc.Op{\n", fn.Ident)
 				fmt.Fprintf(f, "Name: \"%v\",\n", op.Name)
-				fmt.Fprintf(f, "Aliases: []string{\n")
-				for _, a := range op.Aliases {
-					fmt.Fprintf(f, "\"%v\",\n", a)
+				if op.Overloads != "" {
+					fmt.Fprintf(f, "Overloads: \"%v\",\n", op.Overloads)
 				}
-				fmt.Fprintf(f, "},\n")
 				if fn.Name != "" {
 					genValList(f, "Params", "VarParam", fn.Params)
 					genValList(f, "Returns", "VarReturn", fn.Returns)
@@ -144,15 +142,26 @@ func genVols(vols []zc.VolDef) {
 		if len(vol.Ops) > 0 {
 			fmt.Fprintf(f, "Ops: []zc.Op{\n")
 			for _, o := range vol.Ops {
-				if o.Macro == "" {
-					for i, fn := range o.Funcs {
-						if i > 0 && fn.Name == "" {
-							continue
-						}
-						if fn.Ident != "" {
-							fmt.Fprintf(f, "ops.%v,\n", fn.Ident)
-						}
+				if o.Macro != "" {
+					continue
+				}
+				for i, fn := range o.Funcs {
+					if i > 0 && fn.Name == "" {
+						continue
 					}
+					if fn.Ident != "" {
+						fmt.Fprintf(f, "ops.%v,\n", fn.Ident)
+					}
+				}
+			}
+			fmt.Fprintf(f, "},\n")
+			fmt.Fprintf(f, "Macros: []zc.Macro{\n")
+			for _, o := range vol.Ops {
+				if o.Macro != "" {
+					fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", o.Name, o.Macro)
+				}
+				for _, a := range o.Aliases {
+					fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", a, o.Name)
 				}
 			}
 			fmt.Fprintf(f, "},\n")

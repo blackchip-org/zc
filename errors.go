@@ -15,3 +15,7 @@ func ErrInvalidArg(env *OpEnv, format string, args ...any) error {
 	args2 := append([]any{env.Op.Name}, args...)
 	return fmt.Errorf("%v: invalid argument, "+format, args2...)
 }
+
+func ErrOp(env *OpEnv, err error) error {
+	return fmt.Errorf("%v: %v", env.Op.Name, err)
+}

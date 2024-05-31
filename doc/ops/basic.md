@@ -6,9 +6,10 @@ Basic calculator
 
 ## Index
 
-| Operation           | Description
-|---------------------|------------
-| [`add, a, +`](#add) | Addition   
+| Operation           | Description   
+|---------------------|---------------
+| [`add, a, +`](#add) | Addition      
+| [`mul`](#mul)       | Multiplication
 
 ## Operations
 
@@ -29,3 +30,19 @@ Example:
 |---------------|------
 | `c 6 2 a`     | `8`  
 | `c 1.1 2.2 a` | `3.3`
+
+### mul
+
+Multiplies the value of *x* by *y*.
+
+```
+( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+```
+
+Example:
+
+| Input           | Stack  
+|-----------------|--------
+| `c 6 2 mul`     | `12`   
+| `c 6.6 2.2 mul` | `14.52`
