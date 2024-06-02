@@ -4,6 +4,7 @@ package: basic_Int
 
 ops:
 - name: add/i
+  overloads: add
   title: Addition
   funcs:
   - name: AddBigInt
@@ -19,6 +20,7 @@ ops:
     o: [8]
 
 - name: div/i
+  overloads: div
   title: Division
   funcs:
   - name: DivBigInt
@@ -41,6 +43,7 @@ ops:
       error: "div/i: division by zero"
 
 - name: mod/i
+  overloads: mod
   title: Modulus
   funcs:
   - name: ModBigInt
@@ -63,6 +66,7 @@ ops:
       error: "mod/i: division by zero"
 
 - name: mul/i
+  overloads: mul
   title: Multiplication
   funcs:
   - name: MulBigInt
@@ -78,6 +82,7 @@ ops:
     o: [12]
 
 - name: neg/i
+  overloads: neg
   title: Negation
   funcs:
   - name: NegBigInt
@@ -93,6 +98,7 @@ ops:
     o: [-6]
 
 - name: pow/i
+  overloads: pow
   title: Exponentiation
   funcs:
   - name: PowBigInt
@@ -108,6 +114,7 @@ ops:
     o: [36]
 
 - name: rem/i
+  overloads: rem
   title: Remainder
   funcs:
   - name: RemBigInt
@@ -125,6 +132,7 @@ ops:
     o: [-1]
 
 - name: sign/i
+  overloads: sign
   title: Sign
   funcs:
   - name: SignBigInt
@@ -142,6 +150,7 @@ ops:
     o: [0]
 
 - name: sqrt/i
+  overloads: sqrt
   title: Square root
   funcs:
   - name: SqrtBigInt
@@ -166,6 +175,7 @@ ops:
       error: "sqrt/i: invalid argument, -1 < 0"
 
 - name: sub/i
+  overloads: sub
   title: Subtraction
   funcs:
   - name: SubBigInt

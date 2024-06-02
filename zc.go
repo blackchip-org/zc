@@ -28,6 +28,7 @@ type OpEnv struct {
 type Op struct {
 	Name      string
 	Overloads string
+	Virtual   bool
 	Params    []Type
 	VarParam  Type
 	Returns   []Type

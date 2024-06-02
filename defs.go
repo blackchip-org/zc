@@ -4,6 +4,7 @@ type OpDef struct {
 	Name      string    `yaml:"name"`
 	Ident     string    `yaml:"ident"`
 	Overloads string    `yaml:"overloads"`
+	Virtual   bool      `yaml:"virtual"`
 	Aliases   []string  `yaml:"aliases"`
 	Title     string    `yaml:"title"`
 	Funcs     []FuncDef `yaml:"funcs"`

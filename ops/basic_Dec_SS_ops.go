@@ -10,38 +10,33 @@ import (
 
 var (
 	AddDecSS = zc.Op{
-		Name:      "add/d/ss",
-		Overloads: "add",
-		Params:    []zc.Type{types.DecSS, types.DecSS},
-		Returns:   []zc.Type{types.DecSS},
-		Func:      funcs.AddDecSS,
+		Name:    "add/d/ss",
+		Params:  []zc.Type{types.DecSS, types.DecSS},
+		Returns: []zc.Type{types.DecSS},
+		Func:    funcs.AddDecSS,
 	}
 	DivDecSS = zc.Op{
-		Name:      "div/d/ss",
-		Overloads: "div",
-		Params:    []zc.Type{types.DecSS, types.DecSS},
-		Returns:   []zc.Type{types.DecSS},
-		Func:      funcs.DivDecSS,
+		Name:    "div/d/ss",
+		Params:  []zc.Type{types.DecSS, types.DecSS},
+		Returns: []zc.Type{types.DecSS},
+		Func:    funcs.DivDecSS,
 	}
 	MulDecSS = zc.Op{
-		Name:      "mul/d/ss",
-		Overloads: "mul",
-		Params:    []zc.Type{types.DecSS, types.DecSS},
-		Returns:   []zc.Type{types.DecSS},
-		Func:      funcs.MulDecSS,
+		Name:    "mul/d/ss",
+		Params:  []zc.Type{types.DecSS, types.DecSS},
+		Returns: []zc.Type{types.DecSS},
+		Func:    funcs.MulDecSS,
 	}
 	NegDecSS = zc.Op{
-		Name:      "neg/d/ss",
-		Overloads: "neg",
-		Params:    []zc.Type{types.DecSS},
-		Returns:   []zc.Type{types.DecSS},
-		Func:      funcs.NegDecSS,
+		Name:    "neg/d/ss",
+		Params:  []zc.Type{types.DecSS},
+		Returns: []zc.Type{types.DecSS},
+		Func:    funcs.NegDecSS,
 	}
 	SubDecSS = zc.Op{
-		Name:      "sub/d/ss",
-		Overloads: "sub",
-		Params:    []zc.Type{types.DecSS, types.DecSS},
-		Returns:   []zc.Type{types.DecSS},
-		Func:      funcs.SubDecSS,
+		Name:    "sub/d/ss",
+		Params:  []zc.Type{types.DecSS, types.DecSS},
+		Returns: []zc.Type{types.DecSS},
+		Func:    funcs.SubDecSS,
 	}
 )

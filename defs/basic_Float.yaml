@@ -3,6 +3,7 @@ title: Basic calculator, float implementation
 
 ops:
 - name: add/f
+  overloads: add
   title: Addition
   funcs:
   - name: AddBigFloat

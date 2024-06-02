@@ -10,8 +10,8 @@ types:
 ops:
 - name: add
   aliases: [a, "+"]
-  title: Addition
   virtual: true
+  title: Addition
   funcs:
   - params: [x:Int, y:Int]
     returns: [Int]
@@ -26,6 +26,7 @@ ops:
 
 - name: mul
   title: Multiplication
+  virtual: true
   funcs:
   - params: [x:Int, y:Int]
     returns: [Int]
