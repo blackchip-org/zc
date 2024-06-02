@@ -42,3 +42,11 @@ func (t strType) Copy(src, dest any) {
 func (t strType) To(a any) (any, bool) {
 	return nil, false
 }
+
+func (t strType) Format(a any) string {
+	d, ok := a.(string)
+	if !ok {
+		panic(fmt.Errorf("expected string but got: %v", GoName(a)))
+	}
+	return d
+}

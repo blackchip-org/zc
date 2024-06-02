@@ -51,3 +51,11 @@ func (t decSSType) To(a any) (any, bool) {
 	}
 	return nil, false
 }
+
+func (t decSSType) Format(a any) string {
+	d, ok := a.(decimal.Decimal)
+	if !ok {
+		panic(fmt.Errorf("expected decimal.Decimal but got: %v", GoName(a)))
+	}
+	return d.String()
+}

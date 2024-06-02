@@ -13,6 +13,7 @@ type Type interface {
 	Dup(any) any
 	Copy(any, any)
 	To(any) (any, bool)
+	Format(any) string
 }
 
 type OpEnv struct {

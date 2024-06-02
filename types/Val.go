@@ -1,5 +1,7 @@
 package types
 
+import "fmt"
+
 var Val = valType{}
 
 type valType struct{}
@@ -23,4 +25,8 @@ func (t valType) Copy(any, any) {
 
 func (t valType) To(a any) (any, bool) {
 	return a, false
+}
+
+func (t valType) Format(a any) string {
+	return fmt.Sprintf("%v", a)
 }

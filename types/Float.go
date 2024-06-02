@@ -48,9 +48,17 @@ func (t floatType) To(a any) (any, bool) {
 	case float64:
 		return big.NewFloat(v), true
 	case string:
-		var f big.Float
+		f := new(big.Float)
 		_, ok := f.SetString(v)
-		return &f, ok
+		return f, ok
 	}
 	return nil, false
+}
+
+func (t floatType) Format(a any) string {
+	d, ok := a.(*big.Float)
+	if !ok {
+		panic(fmt.Errorf("expected *big.Float but got: %v", GoName(a)))
+	}
+	return fmt.Sprintf("%v", d)
 }

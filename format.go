@@ -19,7 +19,7 @@ func FormatList(vals ...any) string {
 func FormatStack(s Stack) string {
 	var strs []string
 	for _, item := range s.Items {
-		str := fmt.Sprintf("%v", item.Value)
+		str := fmt.Sprintf("%v", item.Type.Format(item.Value))
 		strs = append(strs, str)
 	}
 	return strings.Join(strs, " | ")

@@ -55,3 +55,11 @@ func (t decType) To(a any) (any, bool) {
 	}
 	return nil, false
 }
+
+func (t decType) Format(a any) string {
+	d, ok := a.(*apd.Decimal)
+	if !ok {
+		panic(fmt.Errorf("expected *apd.Decimal but got: %v", GoName(a)))
+	}
+	return RemoveTrailingZeros(d.Text('g'))
+}

@@ -60,6 +60,14 @@ func (t intType) To(a any) (any, bool) {
 	return nil, false
 }
 
+func (t intType) Format(a any) string {
+	d, ok := a.(*big.Int)
+	if !ok {
+		panic(fmt.Errorf("expected *big.Int but got: %v", GoName(a)))
+	}
+	return d.String()
+}
+
 // ----------------------------------------------------------------------------
 
 type intArchType struct{}
@@ -141,4 +149,12 @@ func (t intArchType) To(a any) (any, bool) {
 		return int(i), true
 	}
 	return nil, false
+}
+
+func (t intArchType) Format(a any) string {
+	d, ok := a.(int)
+	if !ok {
+		panic(fmt.Errorf("expected int but got: %v", GoName(a)))
+	}
+	return strconv.Itoa(d)
 }
