@@ -3,7 +3,7 @@ package types
 import (
 	"fmt"
 
-	"github.com/shopspring/decimal"
+	"github.com/cockroachdb/apd/v3"
 )
 
 var Dec = decType{}
@@ -14,36 +14,40 @@ func (t decType) Name() string { return "Dec" }
 
 func (t decType) Is(a any) bool {
 	switch a.(type) {
-	case decimal.Decimal:
+	case *apd.Decimal:
 		return true
 	}
 	return false
 }
 
-func (t decType) As(a any) decimal.Decimal {
-	v, ok := a.(decimal.Decimal)
+func (t decType) As(a any) *apd.Decimal {
+	v, ok := a.(*apd.Decimal)
 	if !ok {
-		panic(fmt.Errorf("expected decimal.Decimal but got %v", GoName(a)))
+		panic(fmt.Errorf("expected *apd.Decimal but got %v", GoName(a)))
 	}
 	return v
 }
 
 func (t decType) Dup(a any) any {
-	return a
+	r := new(apd.Decimal)
+	v := t.As(a)
+	r.Set(v)
+	return r
 }
 
 func (t decType) Copy(src, dest any) {
-	d, ok := dest.(*decimal.Decimal)
+	d, ok := dest.(*apd.Decimal)
 	if !ok {
-		panic(fmt.Errorf("expected *decimal.Decimal but got %v", GoName(dest)))
+		panic(fmt.Errorf("expected *apd.Decimal but got: %v", GoName(dest)))
 	}
-	*d = t.As(src)
+	s := t.As(src)
+	d.Set(s)
 }
 
 func (t decType) To(a any) (any, bool) {
 	switch v := a.(type) {
 	case string:
-		d, err := decimal.NewFromString(v)
+		d, _, err := apd.NewFromString(v)
 		if err != nil {
 			return nil, false
 		}

@@ -14,6 +14,7 @@ var BasicDec = zc.Vol{
 		ops.DivDec,
 		ops.MulDec,
 		ops.NegDec,
+		ops.SubDec,
 	},
 	Macros: []zc.Macro{},
 }

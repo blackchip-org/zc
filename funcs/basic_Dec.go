@@ -2,43 +2,69 @@ package funcs
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/shopspring/decimal"
+	"github.com/blackchip-org/zc/v6/state"
+	"github.com/cockroachdb/apd/v3"
 )
 
 func AddDec(e *zc.OpEnv) {
-	x := e.Args[0].(decimal.Decimal)
-	y := e.Args[1].(decimal.Decimal)
-	x = x.Add(y)
+	s := state.ForDec(e)
+	x := e.Args[0].(*apd.Decimal)
+	y := e.Args[1].(*apd.Decimal)
+	_, err := s.Context.Add(x, x, y)
+	if err != nil {
+		e.Err = zc.ErrOp(e, err)
+		return
+	}
 	e.Returns = []any{x}
 }
 
 func DivDec(e *zc.OpEnv) {
-	x := e.Args[0].(decimal.Decimal)
-	y := e.Args[1].(decimal.Decimal)
-	if y.IsZero() {
+	s := state.ForDec(e)
+	x := e.Args[0].(*apd.Decimal)
+	y := e.Args[1].(*apd.Decimal)
+	cond, err := s.Context.Quo(x, x, y)
+	if cond.DivisionByZero() {
 		e.Err = zc.ErrDivisionByZero(e)
 		return
 	}
-	x = x.Div(y)
+	if err != nil {
+		e.Err = zc.ErrOp(e, err)
+		return
+	}
 	e.Returns = []any{x}
 }
 
 func MulDec(e *zc.OpEnv) {
-	x := e.Args[0].(decimal.Decimal)
-	y := e.Args[1].(decimal.Decimal)
-	x = x.Mul(y)
+	s := state.ForDec(e)
+	x := e.Args[0].(*apd.Decimal)
+	y := e.Args[1].(*apd.Decimal)
+	_, err := s.Context.Mul(x, x, y)
+	if err != nil {
+		e.Err = zc.ErrOp(e, err)
+		return
+	}
 	e.Returns = []any{x}
 }
 
 func NegDec(e *zc.OpEnv) {
-	x := e.Args[0].(decimal.Decimal)
-	x = x.Neg()
+	s := state.ForDec(e)
+	x := e.Args[0].(*apd.Decimal)
+	_, err := s.Context.Neg(x, x)
+	if err != nil {
+		e.Err = zc.ErrOp(e, err)
+		return
+	}
 	e.Returns = []any{x}
 }
 
 func SubDec(e *zc.OpEnv) {
-	x := e.Args[0].(decimal.Decimal)
-	y := e.Args[1].(decimal.Decimal)
-	x = x.Sub(y)
+	s := state.ForDec(e)
+	x := e.Args[0].(*apd.Decimal)
+	y := e.Args[1].(*apd.Decimal)
+	_, err := s.Context.Sub(x, x, y)
+	if err != nil {
+		e.Err = zc.ErrOp(e, err)
+		return
+	}
 	e.Returns = []any{x}
 }

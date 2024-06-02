@@ -37,4 +37,11 @@ var (
 		Returns:   []zc.Type{types.Dec},
 		Func:      funcs.NegDec,
 	}
+	SubDec = zc.Op{
+		Name:      "sub/d",
+		Overloads: "sub",
+		Params:    []zc.Type{types.Dec, types.Dec},
+		Returns:   []zc.Type{types.Dec},
+		Func:      funcs.SubDec,
+	}
 )

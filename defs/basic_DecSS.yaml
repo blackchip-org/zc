@@ -1,28 +1,31 @@
-name: basic/Dec
-title: Basic calculator, Decimals
+name: basic/Dec/SS
+title: Basic calculator, Decimals (shopspring)
+
+types:
+- Dec/SS
 
 ops:
-- name: add/d
+- name: add/d/ss
   title: Addition
   funcs:
-  - name: AddDec
-    params: [x:Dec, y:Dec]
-    returns: [Dec]
+  - name: AddDecSS
+    params: [x:Dec/SS, y:Dec/SS]
+    returns: [Dec/SS]
   desc: Adds the value of *x* to *y*.
   example:
   - i: 6.6
     o: [6.6]
   - i: 2.2
     o: [6.6, 2.2]
-  - i: add/d
+  - i: add/d/ss
     o: [8.8]
 
-- name: div/d
+- name: div/d/ss
   title: Division
   funcs:
-  - name: DivDec
-    params: [x:Dec, y:Dec]
-    returns: [Dec]
+  - name: DivDecSS
+    params: [x:Dec/SS, y:Dec/SS]
+    returns: [Dec/SS]
   desc: |-
     Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
     error is raised.
@@ -31,59 +34,59 @@ ops:
     o: [6.6]
   - i: 2
     o: [6.6, 2]
-  - i: div/d
+  - i: div/d/ss
     o: [3.3]
   tests:
   - name: Thirds
     test:
-      - i: 2 3 div/d
+      - i: 2 3 div/d/ss
         o: [0.6666666666666667]
   - name: Zero
     test:
-      - i: 6.6 0 div/d
-        error: "div/d: division by zero"
+      - i: 6.6 0 div/d/ss
+        error: "div/d/ss: division by zero"
 
-- name: mul/d
+- name: mul/d/ss
   title: Multiplication
   funcs:
-  - name: MulDec
-    params: [x:Dec, y:Dec]
-    returns: [Dec]
+  - name: MulDecSS
+    params: [x:Dec/SS, y:Dec/SS]
+    returns: [Dec/SS]
   desc: Multiplies the value of *x* by *y*.
   example:
   - i: 6.6
     o: [6.6]
   - i: 2.2
     o: [6.6, 2.2]
-  - i: mul/d
+  - i: mul/d/ss
     o: [14.52]
 
-- name: neg/d
+- name: neg/d/ss
   title: Negation
   funcs:
-  - name: NegDec
-    params: [x:Dec]
-    returns: [Dec]
+  - name: NegDecSS
+    params: [x:Dec/SS]
+    returns: [Dec/SS]
   desc: Changes the sign of *x*.
   example:
   - i: -6.6
     o: [-6.6]
-  - i: neg/d
+  - i: neg/d/ss
     o: [6.6]
-  - i: neg/d
+  - i: neg/d/ss
     o: [-6.6]
 
-- name: sub/d
+- name: sub/d/ss
   title: Subtraction
   funcs:
-  - name: SubDec
-    params: [x:Dec, y:Dec]
-    returns: [Dec]
+  - name: SubDecSS
+    params: [x:Dec/SS, y:Dec/SS]
+    returns: [Dec/SS]
   desc: Subtracts the value of *y* from *x*
   example:
   - i: 6.6
     o: [6.6]
   - i: 2.2
     o: [6.6, 2.2]
-  - i: sub/d
+  - i: sub/d/ss
     o: [4.4]

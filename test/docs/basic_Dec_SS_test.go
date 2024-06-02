@@ -9,7 +9,7 @@ import (
 	"github.com/blackchip-org/zc/v6/calc"
 )
 
-func TestOpDocs_BasicDec_AddD(t *testing.T) {
+func TestOpDocs_BasicDecSS_AddDSs(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6.6")
@@ -18,11 +18,11 @@ func TestOpDocs_BasicDec_AddD(t *testing.T) {
 	c.Eval("2.2")
 	zc.AssertStack(t, c, "6.6", "2.2")
 
-	c.Eval("add/d")
+	c.Eval("add/d/ss")
 	zc.AssertStack(t, c, "8.8")
 }
 
-func TestOpDocs_BasicDec_DivD(t *testing.T) {
+func TestOpDocs_BasicDecSS_DivDSs(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6.6")
@@ -31,25 +31,25 @@ func TestOpDocs_BasicDec_DivD(t *testing.T) {
 	c.Eval("2")
 	zc.AssertStack(t, c, "6.6", "2")
 
-	c.Eval("div/d")
+	c.Eval("div/d/ss")
 	zc.AssertStack(t, c, "3.3")
 }
 
-func TestOpDocs_BasicDec_DivD_Thirds(t *testing.T) {
+func TestOpDocs_BasicDecSS_DivDSs_Thirds(t *testing.T) {
 	c := calc.New()
 
-	c.Eval("2 3 div/d")
+	c.Eval("2 3 div/d/ss")
 	zc.AssertStack(t, c, "0.6666666666666667")
 }
 
-func TestOpDocs_BasicDec_DivD_Zero(t *testing.T) {
+func TestOpDocs_BasicDecSS_DivDSs_Zero(t *testing.T) {
 	c := calc.New()
 
-	c.Eval("6.6 0 div/d")
-	zc.AssertError(t, c, "div/d: division by zero")
+	c.Eval("6.6 0 div/d/ss")
+	zc.AssertError(t, c, "div/d/ss: division by zero")
 }
 
-func TestOpDocs_BasicDec_MulD(t *testing.T) {
+func TestOpDocs_BasicDecSS_MulDSs(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6.6")
@@ -58,24 +58,24 @@ func TestOpDocs_BasicDec_MulD(t *testing.T) {
 	c.Eval("2.2")
 	zc.AssertStack(t, c, "6.6", "2.2")
 
-	c.Eval("mul/d")
+	c.Eval("mul/d/ss")
 	zc.AssertStack(t, c, "14.52")
 }
 
-func TestOpDocs_BasicDec_NegD(t *testing.T) {
+func TestOpDocs_BasicDecSS_NegDSs(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("-6.6")
 	zc.AssertStack(t, c, "-6.6")
 
-	c.Eval("neg/d")
+	c.Eval("neg/d/ss")
 	zc.AssertStack(t, c, "6.6")
 
-	c.Eval("neg/d")
+	c.Eval("neg/d/ss")
 	zc.AssertStack(t, c, "-6.6")
 }
 
-func TestOpDocs_BasicDec_SubD(t *testing.T) {
+func TestOpDocs_BasicDecSS_SubDSs(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("6.6")
@@ -84,6 +84,6 @@ func TestOpDocs_BasicDec_SubD(t *testing.T) {
 	c.Eval("2.2")
 	zc.AssertStack(t, c, "6.6", "2.2")
 
-	c.Eval("sub/d")
+	c.Eval("sub/d/ss")
 	zc.AssertStack(t, c, "4.4")
 }

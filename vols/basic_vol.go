@@ -4,7 +4,6 @@ package vols
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/ops"
 	"github.com/blackchip-org/zc/v6/types"
 )
 
@@ -16,10 +15,7 @@ var Basic = zc.Vol{
 		types.Float,
 		types.Str,
 	},
-	Ops: []zc.Op{
-		ops.Add,
-		ops.Mul,
-	},
+	Ops: []zc.Op{},
 	Macros: []zc.Macro{
 		{Name: "a", Expr: "add"},
 		{Name: "+", Expr: "add"},

@@ -10,6 +10,7 @@ require (
 
 require (
 	github.com/cockroachdb/apd v1.1.0 // indirect
+	github.com/cockroachdb/apd/v3 v3.2.1 // indirect
 	github.com/mattn/go-runewidth v0.0.3 // indirect
 	github.com/peterh/liner v1.2.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
