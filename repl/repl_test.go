@@ -12,20 +12,21 @@ func TestUndo(t *testing.T) {
 	ansi.Enabled = false
 	c := calc.New()
 	repl := New(c)
+	ct := zc.NewCalcTester(c, t)
 
 	repl.Eval("1")
 	repl.Eval("2")
 	repl.Eval("3")
-	zc.AssertStack(t, c, 1, 2, 3)
+	ct.AssertStack(1, 2, 3)
 
 	repl.Eval("undo")
-	zc.AssertStack(t, c, 1, 2)
+	ct.AssertStack(1, 2)
 
 	repl.Eval("undo")
-	zc.AssertStack(t, c, 1)
+	ct.AssertStack(1)
 
 	repl.Eval("undo")
-	zc.AssertStack(t, c)
+	ct.AssertStack()
 
 	repl.Eval("undo")
 	if repl.Error() == nil {
@@ -33,13 +34,13 @@ func TestUndo(t *testing.T) {
 	}
 	repl.Eval("redo")
 	// 1
-	zc.AssertStack(t, c, "1")
+	ct.AssertStack("1")
 
 	repl.Eval("redo")
 	// 1 2
 	repl.Eval("redo")
 	// 1 2 3
-	zc.AssertStack(t, c, "1", "2", "3")
+	ct.AssertStack("1", "2", "3")
 	repl.Eval("redo")
 	if repl.Error() == nil {
 		t.Fatalf("expected error")
@@ -50,6 +51,7 @@ func TestQuote(t *testing.T) {
 	ansi.Enabled = false
 	c := calc.New()
 	repl := New(c)
+	ct := zc.NewCalcTester(c, t)
 
 	repl.Eval("quote EOF")
 	repl.Eval("1 2 add")
@@ -58,13 +60,14 @@ func TestQuote(t *testing.T) {
 	repl.Eval("EOF")
 	repl.Eval("2 pow")
 
-	zc.AssertStack(t, c, "1 2 add", "2 3 sub", "16")
+	ct.AssertStack("1 2 add", "2 3 sub", "16")
 }
 
 func TestQuoteBlanks(t *testing.T) {
 	ansi.Enabled = false
 	c := calc.New()
 	repl := New(c)
+	ct := zc.NewCalcTester(c, t)
 
 	repl.Eval("quote EOF")
 	repl.Eval("1 2 add")
@@ -73,7 +76,7 @@ func TestQuoteBlanks(t *testing.T) {
 	repl.Eval("")
 	repl.Eval("EOF")
 
-	zc.AssertStack(t, c, "1 2 add", "2 3 sub", "", "")
+	ct.AssertStack("1 2 add", "2 3 sub", "", "")
 }
 
 func TestCommonPrefix(t *testing.T) {

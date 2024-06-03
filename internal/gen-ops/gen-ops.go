@@ -185,16 +185,20 @@ func genTests(vols []zc.VolDef) {
 func genTest(f *os.File, name string, test []zc.Expect) {
 	fmt.Fprintf(f, "func TestOpDocs_%v(t *testing.T) {\n", name)
 	fmt.Fprintf(f, "c := calc.New()\n")
+	fmt.Fprintf(f, "ct := zc.NewCalcTester(c, t)\n")
 	for _, e := range test {
-		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
+		fmt.Fprintf(f, "\nct.Eval(\"%v\")\n", e.Input)
 		if e.Error != "" {
-			fmt.Fprintf(f, "zc.AssertError(t, c, \"%v\")\n", e.Error)
+			fmt.Fprintf(f, "ct.AssertError(\"%v\")\n", e.Error)
 		} else if e.Info != "" {
-			fmt.Fprintf(f, "zc.AssertInfo(t, c, \"%v\")\n", e.Info)
+			fmt.Fprintf(f, "ct.AssertInfo(\"%v\")\n", e.Info)
 		} else {
-			fmt.Fprintf(f, "zc.AssertStack(t, c")
-			for _, out := range e.Output {
-				fmt.Fprintf(f, ", \"%v\"", out)
+			fmt.Fprintf(f, "ct.AssertStack(")
+			for i, out := range e.Output {
+				fmt.Fprintf(f, "\"%v\"", out)
+				if i < len(e.Output)-1 {
+					fmt.Fprintf(f, ", ")
+				}
 			}
 			fmt.Fprintf(f, ")\n")
 		}

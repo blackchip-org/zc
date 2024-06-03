@@ -24,10 +24,24 @@ var (
 		VarReturn: types.Val,
 		Func:      funcs.Down,
 	}
+	Drop = zc.Op{
+		Name:    "drop",
+		Params:  []zc.Type{types.Val},
+		Returns: []zc.Type{},
+		Func:    funcs.Drop,
+	}
 	Dup = zc.Op{
 		Name:    "dup",
 		Params:  []zc.Type{types.Val},
 		Returns: []zc.Type{types.Val, types.Val},
 		Func:    funcs.Dup,
+	}
+	Up = zc.Op{
+		Name:      "up",
+		Params:    []zc.Type{},
+		VarParam:  types.Val,
+		Returns:   []zc.Type{},
+		VarReturn: types.Val,
+		Func:      funcs.Up,
 	}
 )

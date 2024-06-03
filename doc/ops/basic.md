@@ -15,7 +15,7 @@ Basic calculator
 
 ### add
 
-Adds the value of *x* to *y*.
+Adds the value of * x* to *y*.
 
 Aliases: `+`
 

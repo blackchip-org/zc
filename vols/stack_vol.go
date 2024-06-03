@@ -12,7 +12,9 @@ var Stack = zc.Vol{
 	Ops: []zc.Op{
 		ops.Clear,
 		ops.Down,
+		ops.Drop,
 		ops.Dup,
+		ops.Up,
 	},
 	Macros: []zc.Macro{
 		{Name: "c", Expr: "clear"},

@@ -8,7 +8,7 @@ ops:
 - name: add/d/ss
   title: Addition
   funcs:
-  - name: AddDecSS
+  - name: AddDecimalSS
     params: [x:Dec/ss, y:Dec/ss]
     returns: [Dec/ss]
   desc: Adds the value of *x* to *y*.
@@ -23,7 +23,7 @@ ops:
 - name: div/d/ss
   title: Division
   funcs:
-  - name: DivDecSS
+  - name: DivDecimalSS
     params: [x:Dec/ss, y:Dec/ss]
     returns: [Dec/ss]
   desc: |-
@@ -49,7 +49,7 @@ ops:
 - name: mul/d/ss
   title: Multiplication
   funcs:
-  - name: MulDecSS
+  - name: MulDecimalSS
     params: [x:Dec/ss, y:Dec/ss]
     returns: [Dec/ss]
   desc: Multiplies the value of *x* by *y*.
@@ -64,7 +64,7 @@ ops:
 - name: neg/d/ss
   title: Negation
   funcs:
-  - name: NegDecSS
+  - name: NegDecimalSS
     params: [x:Dec/ss]
     returns: [Dec/ss]
   desc: Changes the sign of *x*.
@@ -79,7 +79,7 @@ ops:
 - name: sub/d/ss
   title: Subtraction
   funcs:
-  - name: SubDecSS
+  - name: SubDecimalSS
     params: [x:Dec/ss, y:Dec/ss]
     returns: [Dec/ss]
   desc: Subtracts the value of *y* from *x*

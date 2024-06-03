@@ -10,9 +10,10 @@ import (
 )
 
 var (
-	Int  = intType{}
-	IntA = intAType{}
-	IntU = intUType{}
+	Int   = intType{}
+	IntA  = intAType{}
+	Int32 = int32Type{}
+	IntU  = intUType{}
 )
 
 type intType struct{}
@@ -151,6 +152,88 @@ func (t intAType) Format(a any) string {
 		panic(fmt.Errorf("expected int but got: %v", GoName(a)))
 	}
 	return strconv.Itoa(d)
+}
+
+// ----------------------------------------------------------------------------
+
+type int32Type struct{}
+
+func (t int32Type) Name() string { return "Int/32" }
+
+func (t int32Type) Is(a any) bool {
+	switch a.(type) {
+	case int32, *int32:
+		return true
+	}
+	return false
+}
+
+func (t int32Type) As(a any) int32 {
+	v, ok := a.(int32)
+	if !ok {
+		panic(fmt.Errorf("expected int32 but got: %v", GoName(a)))
+	}
+	return v
+}
+
+func (t int32Type) Dup(a any) any {
+	return a
+}
+
+func (t int32Type) Copy(src, dest any) {
+	d, ok := dest.(*int32)
+	if !ok {
+		panic(fmt.Errorf("expected *int32 but got: %v", GoName(dest)))
+	}
+	s := t.As(src)
+	*d = s
+}
+
+func (t int32Type) To(state state.State, a any) (any, bool) {
+	switch v := a.(type) {
+	// case int64:
+	// 	if v > math.MaxInt || v < math.MinInt {
+	// 		return nil, false
+	// 	}
+	// 	return int(v), true
+	// case int32:
+	// 	return int(v), true
+	// case int16:
+	// 	return int(v), true
+	// case int8:
+	// 	return int(v), true
+	// case uint:
+	// 	if v > math.MaxInt {
+	// 		return nil, false
+	// 	}
+	// 	return int(v), true
+	// case uint64:
+	// 	if v > math.MaxInt {
+	// 		return 0, false
+	// 	}
+	// 	return int(v), true
+	// case uint32:
+	// 	return int(v), true
+	// case uint16:
+	// 	return int(v), true
+	// case uint8:
+	// 	return int(v), true
+	case string:
+		i, err := strconv.ParseInt(v, 0, 32)
+		if err != nil {
+			return 0, false
+		}
+		return int32(i), true
+	}
+	return nil, false
+}
+
+func (t int32Type) Format(a any) string {
+	d, ok := a.(int32)
+	if !ok {
+		panic(fmt.Errorf("expected int32 but got: %v", GoName(a)))
+	}
+	return strconv.FormatInt(int64(d), 10)
 }
 
 // ----------------------------------------------------------------------------

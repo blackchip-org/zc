@@ -24,11 +24,14 @@ func init() {
 		vols.BasicInt,
 		vols.BasicDec,
 		vols.BasicFloat,
+		vols.Format,
+		vols.FormatDec,
 	)
 	Standard = b.Build()
 
 	b.AddVolume(
 		vols.BasicDecSS,
+		vols.Stat,
 	)
 	All = b.Build()
 }

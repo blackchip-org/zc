@@ -29,6 +29,10 @@ type OpEnv struct {
 	Err     error
 }
 
+func (o *OpEnv) Calc() *Calc {
+	return NewCalc(o.Catalog)
+}
+
 type Op struct {
 	Name      string
 	Overloads string

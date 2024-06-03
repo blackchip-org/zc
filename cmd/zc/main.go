@@ -47,7 +47,7 @@ func main() {
 		log.Fatalf("(!) %v", err)
 	}
 	for _, item := range c.Stack.Items {
-		fmt.Println(item.StringWithAnno())
+		fmt.Println(item)
 	}
 	if c.Info != "" {
 		fmt.Println(c.Info)

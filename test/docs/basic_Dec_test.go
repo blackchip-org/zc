@@ -11,79 +11,100 @@ import (
 
 func TestOpDocs_BasicDec_AddD(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2.2")
-	zc.AssertStack(t, c, "6.6", "2.2")
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
 
-	c.Eval("add/d")
-	zc.AssertStack(t, c, "8.8")
+	ct.Eval("add/d")
+	ct.AssertStack("8.8")
 }
 
 func TestOpDocs_BasicDec_DivD(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "6.6", "2")
+	ct.Eval("2")
+	ct.AssertStack("6.6", "2")
 
-	c.Eval("div/d")
-	zc.AssertStack(t, c, "3.3")
+	ct.Eval("div/d")
+	ct.AssertStack("3.3")
 }
 
 func TestOpDocs_BasicDec_DivD_Thirds(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("2 3 div/d")
-	zc.AssertStack(t, c, "0.6666666666666667")
+	ct.Eval("2 3 div/d")
+	ct.AssertStack("0.6666666666666667")
 }
 
 func TestOpDocs_BasicDec_DivD_Zero(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6 0 div/d")
-	zc.AssertError(t, c, "div/d: division by zero")
+	ct.Eval("6.6 0 div/d")
+	ct.AssertError("div/d: division by zero")
 }
 
 func TestOpDocs_BasicDec_MulD(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2.2")
-	zc.AssertStack(t, c, "6.6", "2.2")
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
 
-	c.Eval("mul/d")
-	zc.AssertStack(t, c, "14.52")
+	ct.Eval("mul/d")
+	ct.AssertStack("14.52")
 }
 
 func TestOpDocs_BasicDec_NegD(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("-6.6")
-	zc.AssertStack(t, c, "-6.6")
+	ct.Eval("-6.6")
+	ct.AssertStack("-6.6")
 
-	c.Eval("neg/d")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("neg/d")
+	ct.AssertStack("6.6")
 
-	c.Eval("neg/d")
-	zc.AssertStack(t, c, "-6.6")
+	ct.Eval("neg/d")
+	ct.AssertStack("-6.6")
+}
+
+func TestOpDocs_BasicDec_PowD(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
+
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
+
+	ct.Eval("pow/d")
+	ct.AssertStack("63.53260431279859")
 }
 
 func TestOpDocs_BasicDec_SubD(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2.2")
-	zc.AssertStack(t, c, "6.6", "2.2")
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
 
-	c.Eval("sub/d")
-	zc.AssertStack(t, c, "4.4")
+	ct.Eval("sub/d")
+	ct.AssertStack("4.4")
 }

@@ -19,36 +19,58 @@ type Test struct {
 
 func NoOp(_ *OpEnv) {}
 
-func AssertStack(t *testing.T, c *Calc, want ...any) {
-	t.Helper()
+type CalcTester struct {
+	calc *Calc
+	t    *testing.T
+}
 
-	fmtWant := FormatList(want...)
-	fmtHave := FormatStack(c.Stack)
-
-	if c.Err != nil {
-		t.Fatalf("unexpected error: %v\nstack: %v", c.Err, fmtHave)
+func NewCalcTester(calc *Calc, t *testing.T) CalcTester {
+	return CalcTester{
+		calc: calc,
+		t:    t,
 	}
-	if c.Info != "" {
-		t.Fatalf("unexpected info: %v\n", c.Info)
+}
+
+func (c *CalcTester) Eval(line string) {
+	c.t.Helper()
+	c.t.Logf("%v > %v\n", ProgName, line)
+	c.calc.Eval(line)
+	if c.calc.Err != nil {
+		c.t.Logf("(!) %v\n", c.calc.Err)
+	}
+	if c.calc.Info != "" {
+		c.t.Logf("(info) %v", c.calc.Info)
+	}
+	c.t.Logf("%v\n", FormatStack(c.calc.Stack))
+}
+
+func (c *CalcTester) AssertStack(vals ...any) {
+	c.t.Helper()
+
+	fmtWant := FormatList(vals...)
+	fmtHave := FormatStack(c.calc.Stack)
+
+	if c.calc.Err != nil {
+		c.t.Fatalf("(FAIL) unexpected error")
+	}
+	if c.calc.Info != "" {
+		c.t.Fatalf("(FAIL) unexpected info")
 	}
 	if !reflect.DeepEqual(fmtHave, fmtWant) {
-		t.Fatalf("\n have: %v \n want: %v", fmtHave, fmtWant)
+		c.t.Fatalf("(FAIL) expected: %v", fmtWant)
 	}
 }
 
-func AssertError(t *testing.T, c *Calc, want string) {
-	t.Helper()
-	if c.Err == nil {
-		t.Fatalf("expected error: %v", want)
-	}
-	if c.Err.Error() != want {
-		t.Fatalf("\n have error: %v \n want error: %v", c.Err.Error(), want)
+func (c *CalcTester) AssertError(err string) {
+	c.t.Helper()
+	if c.calc.Err == nil || c.calc.Err.Error() != err {
+		c.t.Fatalf("(FAIL) expected error: %v", err)
 	}
 }
 
-func AssertInfo(t *testing.T, c *Calc, info string) {
-	t.Helper()
-	if c.Info != info {
-		t.Fatalf("\n have info: %v \n want info: %v", c.Info, info)
+func (c *CalcTester) AssertInfo(info string) {
+	c.t.Helper()
+	if c.calc.Info != info {
+		c.t.Fatalf("(FAIL) expected info: %v", info)
 	}
 }

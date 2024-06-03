@@ -11,30 +11,55 @@ import (
 
 func TestOpDocs_Stack_Clear(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("1 2 3")
-	zc.AssertStack(t, c, "1", "2", "3")
+	ct.Eval("1 2 3")
+	ct.AssertStack("1", "2", "3")
 
-	c.Eval("c")
-	zc.AssertStack(t, c)
+	ct.Eval("c")
+	ct.AssertStack()
 }
 
 func TestOpDocs_Stack_Down(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("1 2 3")
-	zc.AssertStack(t, c, "1", "2", "3")
+	ct.Eval("1 2 3")
+	ct.AssertStack("1", "2", "3")
 
-	c.Eval("down")
-	zc.AssertStack(t, c, "3", "1", "2")
+	ct.Eval("down")
+	ct.AssertStack("3", "1", "2")
+}
+
+func TestOpDocs_Stack_Drop(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("1 2 3")
+	ct.AssertStack("1", "2", "3")
+
+	ct.Eval("drop")
+	ct.AssertStack("1", "2")
 }
 
 func TestOpDocs_Stack_Dup(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("10")
-	zc.AssertStack(t, c, "10")
+	ct.Eval("10")
+	ct.AssertStack("10")
 
-	c.Eval("dup")
-	zc.AssertStack(t, c, "10", "10")
+	ct.Eval("dup")
+	ct.AssertStack("10", "10")
+}
+
+func TestOpDocs_Stack_Up(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("1 2 3")
+	ct.AssertStack("1", "2", "3")
+
+	ct.Eval("up")
+	ct.AssertStack("2", "3", "1")
 }

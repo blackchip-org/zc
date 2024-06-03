@@ -17,11 +17,10 @@ var (
 		Func:      funcs.AddBigInt,
 	}
 	DivBigInt = zc.Op{
-		Name:      "div/i",
-		Overloads: "div",
-		Params:    []zc.Type{types.Int, types.Int},
-		Returns:   []zc.Type{types.Int},
-		Func:      funcs.DivBigInt,
+		Name:    "div/i",
+		Params:  []zc.Type{types.Int, types.Int},
+		Returns: []zc.Type{types.Int},
+		Func:    funcs.DivBigInt,
 	}
 	ModBigInt = zc.Op{
 		Name:      "mod/i",

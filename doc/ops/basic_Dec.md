@@ -12,6 +12,7 @@ Basic calculator, Decimals
 | [`div/d`](#div/d) | Division      
 | [`mul/d`](#mul/d) | Multiplication
 | [`neg/d`](#neg/d) | Negation      
+| [`pow/d`](#pow/d) | Exponentiation
 | [`sub/d`](#sub/d) | Subtraction   
 
 ## Operations
@@ -80,6 +81,22 @@ Example:
 | `-6.6`  | `-6.6`
 | `neg/d` | `6.6` 
 | `neg/d` | `-6.6`
+
+### pow/d
+
+Raises *x* to the power of *y*
+
+```
+( x:Dec y:Dec -- Dec )
+```
+
+Example:
+
+| Input   | Stack              
+|---------|--------------------
+| `6.6`   | `6.6`              
+| `2.2`   | `6.6 \| 2.2`       
+| `pow/d` | `63.53260431279859`
 
 ### sub/d
 

@@ -6,13 +6,13 @@ import (
 	"github.com/blackchip-org/zc/v6/state"
 )
 
-var Str = strType{}
+var Text = textType{}
 
-type strType struct{}
+type textType struct{}
 
-func (t strType) Name() string { return "Str" }
+func (t textType) Name() string { return "Text" }
 
-func (t strType) Is(a any) bool {
+func (t textType) Is(a any) bool {
 	switch a.(type) {
 	case string, *string:
 		return true
@@ -20,7 +20,7 @@ func (t strType) Is(a any) bool {
 	return false
 }
 
-func (t strType) As(a any) string {
+func (t textType) As(a any) string {
 	switch t := a.(type) {
 	case string:
 		return t
@@ -31,11 +31,11 @@ func (t strType) As(a any) string {
 	}
 }
 
-func (t strType) Dup(a any) any {
+func (t textType) Dup(a any) any {
 	return a
 }
 
-func (t strType) Copy(src, dest any) {
+func (t textType) Copy(src, dest any) {
 	d, ok := dest.(*string)
 	if !ok {
 		panic(fmt.Errorf("expected *string but got: %v", GoName(dest)))
@@ -43,11 +43,11 @@ func (t strType) Copy(src, dest any) {
 	*d = t.As(src)
 }
 
-func (t strType) To(state state.State, a any) (any, bool) {
+func (t textType) To(state state.State, a any) (any, bool) {
 	return nil, false
 }
 
-func (t strType) Format(a any) string {
+func (t textType) Format(a any) string {
 	d, ok := a.(string)
 	if !ok {
 		panic(fmt.Errorf("expected string but got: %v", GoName(a)))

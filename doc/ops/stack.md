@@ -10,7 +10,9 @@ Stack operations
 |----------------------|------------
 | [`clear, c`](#clear) | Clear      
 | [`down, dn`](#down)  | Rotate down
+| [`drop`](#drop)      | Drop       
 | [`dup`](#dup)        | Duplicate  
+| [`up`](#up)          | Rotate up  
 
 ## Operations
 
@@ -52,6 +54,21 @@ Example:
 | `1 2 3` | `1 \| 2 \| 3`
 | `down`  | `3 \| 1 \| 2`
 
+### drop
+
+Remove the top item from the stack.
+
+```
+( Val --  )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `drop`  | `1 \| 2`     
+
 ### dup
 
 Duplicates the top value on the stack
@@ -66,3 +83,22 @@ Example:
 |-------|-----------
 | `10`  | `10`      
 | `dup` | `10 \| 10`
+
+### up
+
+Rotates all items on the stack upwards. The direction is based on how
+the stack is visualized -- the top item on the stack is displayed at
+the bottom and the bottom item on the stack is displayed at the top.
+Therefore, rotating upward moves the bottom item on the stack to the
+top.
+
+```
+( Val* -- Val* )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `up`    | `2 \| 3 \| 1`

@@ -1,0 +1,14 @@
+name: stat
+title: Statistic operations
+ops:
+- name: fact
+  title: Factorial
+  funcs:
+  - name: Factorial
+    params: [n:Int/u]
+    returns: [Int]
+  desc: |-
+    TODO
+  example:
+  - i: c 10 fact
+    o: [3628800]

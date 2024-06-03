@@ -12,6 +12,8 @@ var Conf = zc.Vol{
 	Ops: []zc.Op{
 		ops.FloatPrecSet,
 		ops.FloatPrecGet,
+		ops.RoundingModeSet,
+		ops.RoundingModeGet,
 	},
 	Macros: []zc.Macro{},
 }

@@ -11,14 +11,11 @@ type Item struct {
 }
 
 func (i Item) String() string {
-	return ToString(i.Value)
-}
-
-func (i Item) StringWithAnno() string {
-	if i.Anno == "" {
-		return ToString(i.Value)
+	var anno string
+	if i.Anno != "" {
+		anno = " # " + i.Anno
 	}
-	return ToString(i.Value) + " # " + i.Anno
+	return i.Type.Format(i.Value) + anno
 }
 
 type Stack struct {

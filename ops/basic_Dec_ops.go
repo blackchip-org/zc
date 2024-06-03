@@ -9,39 +9,45 @@ import (
 )
 
 var (
-	AddDec = zc.Op{
+	AddDecimal = zc.Op{
 		Name:      "add/d",
 		Overloads: "add",
 		Params:    []zc.Type{types.Dec, types.Dec},
 		Returns:   []zc.Type{types.Dec},
-		Func:      funcs.AddDec,
+		Func:      funcs.AddDecimal,
 	}
-	DivDec = zc.Op{
+	DivDecimal = zc.Op{
 		Name:      "div/d",
 		Overloads: "div",
 		Params:    []zc.Type{types.Dec, types.Dec},
 		Returns:   []zc.Type{types.Dec},
-		Func:      funcs.DivDec,
+		Func:      funcs.DivDecimal,
 	}
-	MulDec = zc.Op{
+	MulDecimal = zc.Op{
 		Name:      "mul/d",
 		Overloads: "mul",
 		Params:    []zc.Type{types.Dec, types.Dec},
 		Returns:   []zc.Type{types.Dec},
-		Func:      funcs.MulDec,
+		Func:      funcs.MulDecimal,
 	}
-	NegDec = zc.Op{
+	NegDecimal = zc.Op{
 		Name:      "neg/d",
 		Overloads: "neg",
 		Params:    []zc.Type{types.Dec},
 		Returns:   []zc.Type{types.Dec},
-		Func:      funcs.NegDec,
+		Func:      funcs.NegDecimal,
 	}
-	SubDec = zc.Op{
+	PowDecimal = zc.Op{
+		Name:    "pow/d",
+		Params:  []zc.Type{types.Dec, types.Dec},
+		Returns: []zc.Type{types.Dec},
+		Func:    funcs.PowDecimal,
+	}
+	SubDecimal = zc.Op{
 		Name:      "sub/d",
 		Overloads: "sub",
 		Params:    []zc.Type{types.Dec, types.Dec},
 		Returns:   []zc.Type{types.Dec},
-		Func:      funcs.SubDec,
+		Func:      funcs.SubDecimal,
 	}
 )

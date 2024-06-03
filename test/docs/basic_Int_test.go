@@ -11,155 +11,169 @@ import (
 
 func TestOpDocs_BasicInt_AddI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6")
-	zc.AssertStack(t, c, "6")
+	ct.Eval("6")
+	ct.AssertStack("6")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "6", "2")
+	ct.Eval("2")
+	ct.AssertStack("6", "2")
 
-	c.Eval("add/i")
-	zc.AssertStack(t, c, "8")
+	ct.Eval("add/i")
+	ct.AssertStack("8")
 }
 
 func TestOpDocs_BasicInt_DivI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6")
-	zc.AssertStack(t, c, "6")
+	ct.Eval("6")
+	ct.AssertStack("6")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "6", "2")
+	ct.Eval("2")
+	ct.AssertStack("6", "2")
 
-	c.Eval("div/i")
-	zc.AssertStack(t, c, "3")
+	ct.Eval("div/i")
+	ct.AssertStack("3")
 }
 
 func TestOpDocs_BasicInt_DivI_Zero(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6 0 div/i")
-	zc.AssertError(t, c, "div/i: division by zero")
+	ct.Eval("6 0 div/i")
+	ct.AssertError("div/i: division by zero")
 }
 
 func TestOpDocs_BasicInt_ModI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("-7")
-	zc.AssertStack(t, c, "-7")
+	ct.Eval("-7")
+	ct.AssertStack("-7")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "-7", "2")
+	ct.Eval("2")
+	ct.AssertStack("-7", "2")
 
-	c.Eval("mod/i")
-	zc.AssertStack(t, c, "1")
+	ct.Eval("mod/i")
+	ct.AssertStack("1")
 }
 
 func TestOpDocs_BasicInt_ModI_Zero(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6 0 mod/i")
-	zc.AssertError(t, c, "mod/i: division by zero")
+	ct.Eval("6 0 mod/i")
+	ct.AssertError("mod/i: division by zero")
 }
 
 func TestOpDocs_BasicInt_MulI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6")
-	zc.AssertStack(t, c, "6")
+	ct.Eval("6")
+	ct.AssertStack("6")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "6", "2")
+	ct.Eval("2")
+	ct.AssertStack("6", "2")
 
-	c.Eval("mul/i")
-	zc.AssertStack(t, c, "12")
+	ct.Eval("mul/i")
+	ct.AssertStack("12")
 }
 
 func TestOpDocs_BasicInt_NegI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("-6")
-	zc.AssertStack(t, c, "-6")
+	ct.Eval("-6")
+	ct.AssertStack("-6")
 
-	c.Eval("neg/i")
-	zc.AssertStack(t, c, "6")
+	ct.Eval("neg/i")
+	ct.AssertStack("6")
 
-	c.Eval("neg/i")
-	zc.AssertStack(t, c, "-6")
+	ct.Eval("neg/i")
+	ct.AssertStack("-6")
 }
 
 func TestOpDocs_BasicInt_PowI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6")
-	zc.AssertStack(t, c, "6")
+	ct.Eval("6")
+	ct.AssertStack("6")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "6", "2")
+	ct.Eval("2")
+	ct.AssertStack("6", "2")
 
-	c.Eval("pow/i")
-	zc.AssertStack(t, c, "36")
+	ct.Eval("pow/i")
+	ct.AssertStack("36")
 }
 
 func TestOpDocs_BasicInt_RemI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("-7")
-	zc.AssertStack(t, c, "-7")
+	ct.Eval("-7")
+	ct.AssertStack("-7")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "-7", "2")
+	ct.Eval("2")
+	ct.AssertStack("-7", "2")
 
-	c.Eval("rem/i")
-	zc.AssertStack(t, c, "-1")
+	ct.Eval("rem/i")
+	ct.AssertStack("-1")
 }
 
 func TestOpDocs_BasicInt_SignI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("c -6 sign/i")
-	zc.AssertStack(t, c, "-1")
+	ct.Eval("c -6 sign/i")
+	ct.AssertStack("-1")
 
-	c.Eval("c 6 sign/i")
-	zc.AssertStack(t, c, "1")
+	ct.Eval("c 6 sign/i")
+	ct.AssertStack("1")
 
-	c.Eval("c 0 sign/i")
-	zc.AssertStack(t, c, "0")
+	ct.Eval("c 0 sign/i")
+	ct.AssertStack("0")
 }
 
 func TestOpDocs_BasicInt_SqrtI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("65536")
-	zc.AssertStack(t, c, "65536")
+	ct.Eval("65536")
+	ct.AssertStack("65536")
 
-	c.Eval("sqrt/i")
-	zc.AssertStack(t, c, "256")
+	ct.Eval("sqrt/i")
+	ct.AssertStack("256")
 }
 
 func TestOpDocs_BasicInt_SqrtI_Zero(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("0 sqrt/i")
-	zc.AssertStack(t, c, "0")
+	ct.Eval("0 sqrt/i")
+	ct.AssertStack("0")
 }
 
 func TestOpDocs_BasicInt_SqrtI_Neg(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("-1 sqrt/i")
-	zc.AssertError(t, c, "sqrt/i: invalid argument, -1 < 0")
+	ct.Eval("-1 sqrt/i")
+	ct.AssertError("sqrt/i: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_BasicInt_SubI(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6")
-	zc.AssertStack(t, c, "6")
+	ct.Eval("6")
+	ct.AssertStack("6")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "6", "2")
+	ct.Eval("2")
+	ct.AssertStack("6", "2")
 
-	c.Eval("sub/i")
-	zc.AssertStack(t, c, "4")
+	ct.Eval("sub/i")
+	ct.AssertStack("4")
 }

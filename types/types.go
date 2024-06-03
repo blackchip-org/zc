@@ -18,6 +18,34 @@ func GoName(v any) string {
 	return name.String()
 }
 
+func FormatExponent(str string) string {
+	s := scan.NewScannerFromString("", str)
+
+	// Keep everything before the exponent
+	scan.Until(s, scan.Rune('E', 'e'), s.Keep)
+
+	// If no more, we didn't see the exponent
+	if s.HasMore() {
+		// We did see the exponent. Always write this out in lower case.
+		s.Skip()
+		s.Val.WriteRune('e')
+
+		// Omit positive signs but keep the negative ones
+		if s.This == '+' {
+			s.Skip()
+		}
+
+		// Remove all leading zeros and long.
+		if s.This == '0' && s.Next != scan.EndOfText {
+			scan.While(s, scan.Rune('0'), s.Skip)
+		}
+
+		// Actual digits of the exponent
+		scan.While(s, scan.IsAny, s.Keep)
+	}
+	return s.Emit().Val
+}
+
 func RemoveTrailingZeros(v string) string {
 	s := scan.NewScannerFromString("", v)
 	scan.Until(s, scan.Rune('.'), s.Keep)

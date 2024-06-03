@@ -11,79 +11,86 @@ import (
 
 func TestOpDocs_BasicDecSS_AddDSs(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2.2")
-	zc.AssertStack(t, c, "6.6", "2.2")
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
 
-	c.Eval("add/d/ss")
-	zc.AssertStack(t, c, "8.8")
+	ct.Eval("add/d/ss")
+	ct.AssertStack("8.8")
 }
 
 func TestOpDocs_BasicDecSS_DivDSs(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "6.6", "2")
+	ct.Eval("2")
+	ct.AssertStack("6.6", "2")
 
-	c.Eval("div/d/ss")
-	zc.AssertStack(t, c, "3.3")
+	ct.Eval("div/d/ss")
+	ct.AssertStack("3.3")
 }
 
 func TestOpDocs_BasicDecSS_DivDSs_Thirds(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("2 3 div/d/ss")
-	zc.AssertStack(t, c, "0.6666666666666667")
+	ct.Eval("2 3 div/d/ss")
+	ct.AssertStack("0.6666666666666667")
 }
 
 func TestOpDocs_BasicDecSS_DivDSs_Zero(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6 0 div/d/ss")
-	zc.AssertError(t, c, "div/d/ss: division by zero")
+	ct.Eval("6.6 0 div/d/ss")
+	ct.AssertError("div/d/ss: division by zero")
 }
 
 func TestOpDocs_BasicDecSS_MulDSs(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2.2")
-	zc.AssertStack(t, c, "6.6", "2.2")
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
 
-	c.Eval("mul/d/ss")
-	zc.AssertStack(t, c, "14.52")
+	ct.Eval("mul/d/ss")
+	ct.AssertStack("14.52")
 }
 
 func TestOpDocs_BasicDecSS_NegDSs(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("-6.6")
-	zc.AssertStack(t, c, "-6.6")
+	ct.Eval("-6.6")
+	ct.AssertStack("-6.6")
 
-	c.Eval("neg/d/ss")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("neg/d/ss")
+	ct.AssertStack("6.6")
 
-	c.Eval("neg/d/ss")
-	zc.AssertStack(t, c, "-6.6")
+	ct.Eval("neg/d/ss")
+	ct.AssertStack("-6.6")
 }
 
 func TestOpDocs_BasicDecSS_SubDSs(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("6.6")
-	zc.AssertStack(t, c, "6.6")
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
 
-	c.Eval("2.2")
-	zc.AssertStack(t, c, "6.6", "2.2")
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
 
-	c.Eval("sub/d/ss")
-	zc.AssertStack(t, c, "4.4")
+	ct.Eval("sub/d/ss")
+	ct.AssertStack("4.4")
 }

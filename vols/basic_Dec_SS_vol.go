@@ -14,11 +14,11 @@ var BasicDecSS = zc.Vol{
 		types.DecSS,
 	},
 	Ops: []zc.Op{
-		ops.AddDecSS,
-		ops.DivDecSS,
-		ops.MulDecSS,
-		ops.NegDecSS,
-		ops.SubDecSS,
+		ops.AddDecimalSS,
+		ops.DivDecimalSS,
+		ops.MulDecimalSS,
+		ops.NegDecimalSS,
+		ops.SubDecimalSS,
 	},
 	Macros: []zc.Macro{},
 }

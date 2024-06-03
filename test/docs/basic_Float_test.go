@@ -11,26 +11,28 @@ import (
 
 func TestOpDocs_BasicFloat_AddF(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("1.1")
-	zc.AssertStack(t, c, "1.1")
+	ct.Eval("1.1")
+	ct.AssertStack("1.1")
 
-	c.Eval("2.2")
-	zc.AssertStack(t, c, "1.1", "2.2")
+	ct.Eval("2.2")
+	ct.AssertStack("1.1", "2.2")
 
-	c.Eval("add/f")
-	zc.AssertStack(t, c, "3.3000000000000000002")
+	ct.Eval("add/f")
+	ct.AssertStack("3.3000000000000000002")
 }
 
 func TestOpDocs_BasicFloat_DivF(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("2")
-	zc.AssertStack(t, c, "2")
+	ct.Eval("2")
+	ct.AssertStack("2")
 
-	c.Eval("3")
-	zc.AssertStack(t, c, "2", "3")
+	ct.Eval("3")
+	ct.AssertStack("2", "3")
 
-	c.Eval("div/f")
-	zc.AssertStack(t, c, "0.6666666666666666667")
+	ct.Eval("div/f")
+	ct.AssertStack("0.6666666666666666667")
 }

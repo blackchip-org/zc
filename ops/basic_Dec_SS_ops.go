@@ -9,34 +9,34 @@ import (
 )
 
 var (
-	AddDecSS = zc.Op{
+	AddDecimalSS = zc.Op{
 		Name:    "add/d/ss",
 		Params:  []zc.Type{types.DecSS, types.DecSS},
 		Returns: []zc.Type{types.DecSS},
-		Func:    funcs.AddDecSS,
+		Func:    funcs.AddDecimalSS,
 	}
-	DivDecSS = zc.Op{
+	DivDecimalSS = zc.Op{
 		Name:    "div/d/ss",
 		Params:  []zc.Type{types.DecSS, types.DecSS},
 		Returns: []zc.Type{types.DecSS},
-		Func:    funcs.DivDecSS,
+		Func:    funcs.DivDecimalSS,
 	}
-	MulDecSS = zc.Op{
+	MulDecimalSS = zc.Op{
 		Name:    "mul/d/ss",
 		Params:  []zc.Type{types.DecSS, types.DecSS},
 		Returns: []zc.Type{types.DecSS},
-		Func:    funcs.MulDecSS,
+		Func:    funcs.MulDecimalSS,
 	}
-	NegDecSS = zc.Op{
+	NegDecimalSS = zc.Op{
 		Name:    "neg/d/ss",
 		Params:  []zc.Type{types.DecSS},
 		Returns: []zc.Type{types.DecSS},
-		Func:    funcs.NegDecSS,
+		Func:    funcs.NegDecimalSS,
 	}
-	SubDecSS = zc.Op{
+	SubDecimalSS = zc.Op{
 		Name:    "sub/d/ss",
 		Params:  []zc.Type{types.DecSS, types.DecSS},
 		Returns: []zc.Type{types.DecSS},
-		Func:    funcs.SubDecSS,
+		Func:    funcs.SubDecimalSS,
 	}
 )

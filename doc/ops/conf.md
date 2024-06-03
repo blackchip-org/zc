@@ -6,10 +6,12 @@ General configuration
 
 ## Index
 
-| Operation                     | Description                                  
-|-------------------------------|----------------------------------------------
-| [`float.prec=`](#float.prec=) | Sets the precision for floating-point numbers
-| [`float.prec?`](#float.prec)  | Gets the precision for floating-point numbers
+| Operation                           | Description                                  
+|-------------------------------------|----------------------------------------------
+| [`float.prec=`](#float.prec=)       | Sets the precision for floating-point numbers
+| [`float.prec?`](#float.prec)        | Gets the precision for floating-point numbers
+| [`rounding.mode=`](#rounding.mode=) | Sets the default rounding mode               
+| [`rounding.mode?`](#rounding.mode)  | Gets the default rounding mode               
 
 ## Operations
 
@@ -34,9 +36,45 @@ Example:
 ### float.prec?
 
 Places the current precision for floating-point numbers on the stack. The
-precision isthe maximum number of bits available for the mantissa.
+precision is the maximum number of bits available for the mantissa.
 
 ```
 (  -- p:Int/u )
 ```
 
+Example:
+
+| Input         | Stack           
+|---------------|-----------------
+| `float.prec?` | `64 # precision`
+
+### rounding.mode=
+
+Sets the rounding mode to one of the following:
+
+```
+( m:Text --  )
+```
+
+Example:
+
+| Input                  | Stack      
+|------------------------|------------
+| `rounding.mode?`       | `half.even`
+| `c 5.55 1 round`       | `5.6`      
+| `/down rounding.mode=` |            
+| `c 5.55 1 round`       | `5.5`      
+
+### rounding.mode?
+
+TODO
+
+```
+(  -- Text )
+```
+
+Example:
+
+| Input            | Stack      
+|------------------|------------
+| `rounding.mode?` | `half.even`

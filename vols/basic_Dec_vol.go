@@ -10,11 +10,12 @@ import (
 var BasicDec = zc.Vol{
 	Name: "basic/Dec",
 	Ops: []zc.Op{
-		ops.AddDec,
-		ops.DivDec,
-		ops.MulDec,
-		ops.NegDec,
-		ops.SubDec,
+		ops.AddDecimal,
+		ops.DivDecimal,
+		ops.MulDecimal,
+		ops.NegDecimal,
+		ops.PowDecimal,
+		ops.SubDecimal,
 	},
 	Macros: []zc.Macro{},
 }

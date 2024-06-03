@@ -11,20 +11,22 @@ import (
 
 func TestOpDocs_Basic_Add(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("c 6 2 a")
-	zc.AssertStack(t, c, "8")
+	ct.Eval("c 6 2 a")
+	ct.AssertStack("8")
 
-	c.Eval("c 1.1 2.2 a")
-	zc.AssertStack(t, c, "3.3")
+	ct.Eval("c 1.1 2.2 a")
+	ct.AssertStack("3.3")
 }
 
 func TestOpDocs_Basic_Mul(t *testing.T) {
 	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
 
-	c.Eval("c 6 2 mul")
-	zc.AssertStack(t, c, "12")
+	ct.Eval("c 6 2 mul")
+	ct.AssertStack("12")
 
-	c.Eval("c 6.6 2.2 mul")
-	zc.AssertStack(t, c, "14.52")
+	ct.Eval("c 6.6 2.2 mul")
+	ct.AssertStack("14.52")
 }

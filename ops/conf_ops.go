@@ -21,4 +21,16 @@ var (
 		Returns: []zc.Type{types.IntU},
 		Func:    funcs.FloatPrecGet,
 	}
+	RoundingModeSet = zc.Op{
+		Name:    "rounding.mode=",
+		Params:  []zc.Type{types.Text},
+		Returns: []zc.Type{},
+		Func:    funcs.RoundingModeSet,
+	}
+	RoundingModeGet = zc.Op{
+		Name:    "rounding.mode?",
+		Params:  []zc.Type{},
+		Returns: []zc.Type{types.Text},
+		Func:    funcs.RoundingModeGet,
+	}
 )

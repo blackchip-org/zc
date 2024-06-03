@@ -57,10 +57,19 @@ func (t decType) To(state state.State, a any) (any, bool) {
 	return nil, false
 }
 
-func (t decType) Format(a any) string {
+func (t decType) FormatWith(format byte, a any) string {
 	d, ok := a.(*apd.Decimal)
 	if !ok {
 		panic(fmt.Errorf("expected *apd.Decimal but got: %v", GoName(a)))
 	}
-	return RemoveTrailingZeros(d.Text('g'))
+
+	f := d.Text(format)
+
+	f = RemoveTrailingZeros(f)
+	f = FormatExponent(f)
+	return f
+}
+
+func (t decType) Format(a any) string {
+	return t.FormatWith('f', a)
 }

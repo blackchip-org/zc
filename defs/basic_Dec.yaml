@@ -6,7 +6,7 @@ ops:
   overloads: add
   title: Addition
   funcs:
-  - name: AddDec
+  - name: AddDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
   desc: Adds the value of *x* to *y*.
@@ -22,7 +22,7 @@ ops:
   overloads: div
   title: Division
   funcs:
-  - name: DivDec
+  - name: DivDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
   desc: |-
@@ -49,7 +49,7 @@ ops:
   overloads: mul
   title: Multiplication
   funcs:
-  - name: MulDec
+  - name: MulDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
   desc: Multiplies the value of *x* by *y*.
@@ -65,7 +65,7 @@ ops:
   overloads: neg
   title: Negation
   funcs:
-  - name: NegDec
+  - name: NegDecimal
     params: [x:Dec]
     returns: [Dec]
   desc: Changes the sign of *x*.
@@ -77,11 +77,26 @@ ops:
   - i: neg/d
     o: [-6.6]
 
+- name: pow/d
+  title: Exponentiation
+  funcs:
+  - name: PowDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Raises *x* to the power of *y*
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: pow/d
+    o: [63.53260431279859]
+
 - name: sub/d
   overloads: sub
   title: Subtraction
   funcs:
-  - name: SubDec
+  - name: SubDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
   desc: Subtracts the value of *y* from *x*

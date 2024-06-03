@@ -5,14 +5,14 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-func AddDecSS(e *zc.OpEnv) {
+func AddDecimalSS(e *zc.OpEnv) {
 	x := e.Args[0].(decimal.Decimal)
 	y := e.Args[1].(decimal.Decimal)
 	x = x.Add(y)
 	e.Returns = []any{x}
 }
 
-func DivDecSS(e *zc.OpEnv) {
+func DivDecimalSS(e *zc.OpEnv) {
 	x := e.Args[0].(decimal.Decimal)
 	y := e.Args[1].(decimal.Decimal)
 	if y.IsZero() {
@@ -23,20 +23,20 @@ func DivDecSS(e *zc.OpEnv) {
 	e.Returns = []any{x}
 }
 
-func MulDecSS(e *zc.OpEnv) {
+func MulDecimalSS(e *zc.OpEnv) {
 	x := e.Args[0].(decimal.Decimal)
 	y := e.Args[1].(decimal.Decimal)
 	x = x.Mul(y)
 	e.Returns = []any{x}
 }
 
-func NegDecSS(e *zc.OpEnv) {
+func NegDecimalSS(e *zc.OpEnv) {
 	x := e.Args[0].(decimal.Decimal)
 	x = x.Neg()
 	e.Returns = []any{x}
 }
 
-func SubDecSS(e *zc.OpEnv) {
+func SubDecimalSS(e *zc.OpEnv) {
 	x := e.Args[0].(decimal.Decimal)
 	y := e.Args[1].(decimal.Decimal)
 	x = x.Sub(y)

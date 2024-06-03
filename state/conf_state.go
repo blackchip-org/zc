@@ -5,18 +5,22 @@ import "math/big"
 const ConfID = "conf"
 
 type Conf struct {
-	FloatPrec    uint
-	DecPrec      uint32
-	RoundingMode big.RoundingMode
+	FloatPrec      uint
+	DecPrec        uint32
+	DecMaxExponent int32
+	DecMinExponent int32
+	RoundingMode   big.RoundingMode
 }
 
 func ForConf(state State) *Conf {
 	s, ok := state[ConfID]
 	if !ok {
 		s = &Conf{
-			FloatPrec:    64,
-			DecPrec:      16,
-			RoundingMode: big.ToNearestEven,
+			FloatPrec:      64,
+			DecPrec:        16,
+			DecMaxExponent: 100_000,
+			DecMinExponent: -100_000,
+			RoundingMode:   big.ToNearestEven,
 		}
 		state[ConfID] = s
 	}

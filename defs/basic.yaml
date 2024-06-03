@@ -3,9 +3,10 @@ title: Basic calculator
 
 types:
   - Int
+  - Int/32
   - Dec
   - Float
-  - Str
+  - Text
 
 ops:
 - name: add
@@ -17,7 +18,7 @@ ops:
     returns: [Int]
   - params: [x:Float, y:Float]
     returns: [Float]
-  desc: Adds the value of *x* to *y*.
+  desc: Adds the value of * x* to *y*.
   example:
   - i: c 6 2 a
     o: [8]

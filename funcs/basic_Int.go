@@ -6,7 +6,9 @@ import (
 	"github.com/blackchip-org/zc/v6"
 )
 
-var ZeroBigInt big.Int
+var (
+	ZeroBigInt big.Int
+)
 
 func AddBigInt(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)

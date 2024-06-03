@@ -20,7 +20,6 @@ ops:
     o: [8]
 
 - name: div/i
-  overloads: div
   title: Division
   funcs:
   - name: DivBigInt

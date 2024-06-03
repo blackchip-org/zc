@@ -6,7 +6,7 @@ import (
 	"github.com/cockroachdb/apd/v3"
 )
 
-func AddDec(e *zc.OpEnv) {
+func AddDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	x := e.Args[0].(*apd.Decimal)
 	y := e.Args[1].(*apd.Decimal)
@@ -18,7 +18,7 @@ func AddDec(e *zc.OpEnv) {
 	e.Returns = []any{x}
 }
 
-func DivDec(e *zc.OpEnv) {
+func DivDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	x := e.Args[0].(*apd.Decimal)
 	y := e.Args[1].(*apd.Decimal)
@@ -34,7 +34,7 @@ func DivDec(e *zc.OpEnv) {
 	e.Returns = []any{x}
 }
 
-func MulDec(e *zc.OpEnv) {
+func MulDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	x := e.Args[0].(*apd.Decimal)
 	y := e.Args[1].(*apd.Decimal)
@@ -46,7 +46,7 @@ func MulDec(e *zc.OpEnv) {
 	e.Returns = []any{x}
 }
 
-func NegDec(e *zc.OpEnv) {
+func NegDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	x := e.Args[0].(*apd.Decimal)
 	_, err := s.Context.Neg(x, x)
@@ -57,7 +57,19 @@ func NegDec(e *zc.OpEnv) {
 	e.Returns = []any{x}
 }
 
-func SubDec(e *zc.OpEnv) {
+func PowDecimal(e *zc.OpEnv) {
+	s := state.ForDec(e.State)
+	x := e.Args[0].(*apd.Decimal)
+	y := e.Args[1].(*apd.Decimal)
+	_, err := s.Context.Pow(x, x, y)
+	if err != nil {
+		e.Err = zc.ErrOp(e, err)
+		return
+	}
+	e.Returns = []any{x}
+}
+
+func SubDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	x := e.Args[0].(*apd.Decimal)
 	y := e.Args[1].(*apd.Decimal)

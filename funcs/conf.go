@@ -21,25 +21,56 @@ func FloatPrecGet(e *zc.OpEnv) {
 	e.Annos = []string{"precision"}
 }
 
+const (
+	RoundingModeCeil     = "ceil"
+	RoundingModeDown     = "down"
+	RoundingModeFloor    = "floor"
+	RoundingModeHalfUp   = "half.up"
+	RoundingModeHalfEven = "half.even"
+	RoundingModeUp       = "up"
+)
+
 func RoundingModeSet(e *zc.OpEnv) {
 	s := state.ForConf(e.State)
 	m := e.Args[0].(string)
 	switch m {
-	case "ceil":
+	case RoundingModeCeil:
 		s.RoundingMode = big.ToPositiveInf
-	case "down":
+	case RoundingModeDown:
 		s.RoundingMode = big.ToZero
-	case "floor":
+	case RoundingModeFloor:
 		s.RoundingMode = big.ToNegativeInf
-	case "half.up":
+	case RoundingModeHalfUp:
 		s.RoundingMode = big.ToNearestAway
-	case "half.even":
+	case RoundingModeHalfEven:
 		s.RoundingMode = big.ToNearestEven
-	case "up":
+	case RoundingModeUp:
 		s.RoundingMode = big.AwayFromZero
 	default:
 		e.Err = zc.ErrInvalidArg(e, "invalid rounding mode: %v", m)
 		return
 	}
 	e.Info = fmt.Sprintf("rounding mode set to %v", m)
+}
+
+func RoundingModeGet(e *zc.OpEnv) {
+	s := state.ForConf(e.State)
+	var m string
+	switch s.RoundingMode {
+	case big.ToPositiveInf:
+		m = RoundingModeCeil
+	case big.ToZero:
+		m = RoundingModeDown
+	case big.ToNegativeInf:
+		m = RoundingModeFloor
+	case big.ToNearestAway:
+		m = RoundingModeHalfUp
+	case big.ToNearestEven:
+		m = RoundingModeHalfEven
+	case big.AwayFromZero:
+		m = RoundingModeUp
+	default:
+		panic(fmt.Errorf("invalid rounding mode: %v", s.RoundingMode))
+	}
+	e.Returns = []any{m}
 }

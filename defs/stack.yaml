@@ -35,6 +35,19 @@ ops:
   - i: down
     o: [3, 1, 2]
 
+- name: drop
+  title: Drop
+  funcs:
+  - name: Drop
+    params: [Val]
+  desc: |-
+    Remove the top item from the stack.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: drop
+    o: [1, 2]
+
 - name: dup
   title: Duplicate
   funcs:
@@ -47,3 +60,21 @@ ops:
     o: [10]
   - i: dup
     o: [10, 10]
+
+- name: up
+  title: Rotate up
+  funcs:
+  - name: Up
+    params: [Val*]
+    returns: [Val*]
+  desc: |-
+    Rotates all items on the stack upwards. The direction is based on how
+    the stack is visualized -- the top item on the stack is displayed at
+    the bottom and the bottom item on the stack is displayed at the top.
+    Therefore, rotating upward moves the bottom item on the stack to the
+    top.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: up
+    o: [2, 3, 1]
