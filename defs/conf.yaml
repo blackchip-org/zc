@@ -12,7 +12,7 @@ ops:
     maximum number of bits available for the mantissa.
   example:
     - i: float.prec?
-      o: [64]
+      o: ['64 # precision']
     - i: c 2 3 div/f
       o: [0.6666666666666666667]
     - i: c 92 float.prec=

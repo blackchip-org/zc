@@ -13,13 +13,13 @@ func TestOpDocs_Conf_FloatPrecSet(t *testing.T) {
 	c := calc.New()
 
 	c.Eval("float.prec?")
-	zc.AssertStack(t, c, "64")
+	zc.AssertStack(t, c, "64 # precision")
 
 	c.Eval("c 2 3 div/f")
 	zc.AssertStack(t, c, "0.6666666666666666667")
 
 	c.Eval("c 92 float.prec=")
-	zc.AssertStack(t, c)
+	zc.AssertInfo(t, c, "precision set to 92")
 
 	c.Eval("c 2 3 div/f")
 	zc.AssertStack(t, c, "0.6666666666666666666666666667")

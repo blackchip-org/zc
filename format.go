@@ -20,7 +20,11 @@ func FormatStack(s Stack) string {
 	var strs []string
 	for _, item := range s.Items {
 		str := fmt.Sprintf("%v", item.Type.Format(item.Value))
-		strs = append(strs, str)
+		anno := ""
+		if item.Anno != "" {
+			anno = " # " + item.Anno
+		}
+		strs = append(strs, str+anno)
 	}
 	return strings.Join(strs, " | ")
 }

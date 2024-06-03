@@ -189,6 +189,8 @@ func genTest(f *os.File, name string, test []zc.Expect) {
 		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
 		if e.Error != "" {
 			fmt.Fprintf(f, "zc.AssertError(t, c, \"%v\")\n", e.Error)
+		} else if e.Info != "" {
+			fmt.Fprintf(f, "zc.AssertInfo(t, c, \"%v\")\n", e.Info)
 		} else {
 			fmt.Fprintf(f, "zc.AssertStack(t, c")
 			for _, out := range e.Output {

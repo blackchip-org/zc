@@ -28,6 +28,9 @@ func AssertStack(t *testing.T, c *Calc, want ...any) {
 	if c.Err != nil {
 		t.Fatalf("unexpected error: %v\nstack: %v", c.Err, fmtHave)
 	}
+	if c.Info != "" {
+		t.Fatalf("unexpected info: %v\n", c.Info)
+	}
 	if !reflect.DeepEqual(fmtHave, fmtWant) {
 		t.Fatalf("\n have: %v \n want: %v", fmtHave, fmtWant)
 	}
@@ -40,5 +43,12 @@ func AssertError(t *testing.T, c *Calc, want string) {
 	}
 	if c.Err.Error() != want {
 		t.Fatalf("\n have error: %v \n want error: %v", c.Err.Error(), want)
+	}
+}
+
+func AssertInfo(t *testing.T, c *Calc, info string) {
+	t.Helper()
+	if c.Info != info {
+		t.Fatalf("\n have info: %v \n want info: %v", c.Info, info)
 	}
 }
