@@ -51,7 +51,7 @@ func (t floatType) To(states state.State, a any) (any, bool) {
 		return big.NewFloat(v), true
 	case string:
 		s := state.ForConf(states)
-		f, _, err := big.ParseFloat(v, 0, s.FloatPrec, big.ToNearestEven)
+		f, _, err := big.ParseFloat(v, 0, s.FloatPrec, s.RoundingMode)
 		return f, err == nil
 	}
 	return nil, false
