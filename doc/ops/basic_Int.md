@@ -2,7 +2,7 @@
 
 # basic/Int
 
-Basic calculator, integer implementation
+Basic calculator
 
 ## Index
 
@@ -25,6 +25,7 @@ Basic calculator, integer implementation
 
 Adds the value of *x* to *y*.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ```
@@ -42,6 +43,7 @@ Example:
 Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ```
@@ -59,6 +61,7 @@ Example:
 The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
 zero' error is raised.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ```
@@ -75,6 +78,7 @@ Example:
 
 Multiplies the value of *x* by *y*.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ```
@@ -91,6 +95,7 @@ Example:
 
 Changes the sign of *x*.
 
+Stack effects:
 ```
 ( x:Int -- Int )
 ```
@@ -107,6 +112,7 @@ Example:
 
 Raises *x* to the power of *y*.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ```
@@ -124,6 +130,7 @@ Example:
 The remainder when *x* is divided by *y*. If *y* is zero, a
 'division by zero' error is raised.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ```
@@ -141,6 +148,7 @@ Example:
 Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
 if *x* is zero.
 
+Stack effects:
 ```
 ( x:Int -- Int/a )
 ```
@@ -158,6 +166,7 @@ Example:
 The square root of *x*. If the result is not an integer, the value is
 floored. If *x* is less than zero, an 'invalid argument' error is raised.
 
+Stack effects:
 ```
 ( x:Int -- Int )
 ```
@@ -173,6 +182,7 @@ Example:
 
 Subtracts the value of *y* from *x*.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ```

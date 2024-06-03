@@ -1,5 +1,6 @@
 name: format/Dec
-title: Value formatting, decimals
+title: Value formatting
+subtitle: decimal (apd)
 
 ops:
 - name: round/d

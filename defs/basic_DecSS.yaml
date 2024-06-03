@@ -1,5 +1,6 @@
 name: basic/Dec/SS
-title: Basic calculator, Decimals (shopspring)
+title: Basic calculator
+subtitle: decimal (shopspring)
 
 types:
 - Dec/SS

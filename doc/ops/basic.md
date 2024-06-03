@@ -17,8 +17,9 @@ Basic calculator
 
 Adds the value of * x* to *y*.
 
-Aliases: `+`
+Aliases: `a`, `+`
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Float y:Float -- Float )
@@ -35,6 +36,7 @@ Example:
 
 Multiplies the value of *x* by *y*.
 
+Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )

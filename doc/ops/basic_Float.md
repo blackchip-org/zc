@@ -2,7 +2,7 @@
 
 # basic/Float
 
-Basic calculator, float implementation
+Basic calculator
 
 ## Index
 
@@ -17,6 +17,7 @@ Basic calculator, float implementation
 
 Adds the value of *x* to *y*.
 
+Stack effects:
 ```
 ( x:Float y:Float -- Float )
 ```
@@ -34,6 +35,7 @@ Example:
 Divides the valueof *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
+Stack effects:
 ```
 ( x:Float y:Float -- Float )
 ```

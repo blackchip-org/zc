@@ -7,10 +7,10 @@
 ## a
 - [a](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [add](ops/basic.md#add): Addition
-  - [add/d](ops/basic_Dec.md#add/d)
-  - [add/d/ss](ops/basic_Dec_SS.md#add/d/ss)
-  - [add/f](ops/basic_Float.md#add/f)
-  - [add/i](ops/basic_Int.md#add/i)
+  - [add/d](ops/basic_Dec.md#add/d): decimal (apd)
+  - [add/d/ss](ops/basic_Dec_SS.md#add/d/ss): decimal (shopspring)
+  - [add/f](ops/basic_Float.md#add/f): float
+  - [add/i](ops/basic_Int.md#add/i): integer
 
 ## c
 - [c](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
@@ -24,26 +24,26 @@
 
 ## f
 - [fact](ops/stat.md#fact): Factorial
-- [float.prec=](ops/conf.md#float.prec=): Sets the precision for floating-point numbers
-- [float.prec?](ops/conf.md#float.prec?): Gets the precision for floating-point numbers
+- [float.prec=](ops/conf.md#floatprec=): Sets the precision for floating-point numbers
+- [float.prec?](ops/conf.md#floatprec?): Gets the precision for floating-point numbers
 
 ## m
 - [mul](ops/basic.md#mul): Multiplication
-  - [mul/d](ops/basic_Dec.md#mul/d)
-  - [mul/d/ss](ops/basic_Dec_SS.md#mul/d/ss)
-  - [mul/i](ops/basic_Int.md#mul/i)
+  - [mul/d](ops/basic_Dec.md#mul/d): decimal (apd)
+  - [mul/d/ss](ops/basic_Dec_SS.md#mul/d/ss): decimal (shopspring)
+  - [mul/i](ops/basic_Int.md#mul/i): integer
 
 ## r
 - [r](ops/format.md#round): Alias for [round](ops/format.md#round)
 - [round](ops/format.md#round): Round number
-  - [round/d](ops/format_Dec.md#round/d)
-- [rounding.mode=](ops/conf.md#rounding.mode=): Sets the default rounding mode
-- [rounding.mode?](ops/conf.md#rounding.mode?): Gets the default rounding mode
+  - [round/d](ops/format_Dec.md#round/d): decimal (apd)
+- [rounding.mode=](ops/conf.md#roundingmode=): Sets the default rounding mode
+- [rounding.mode?](ops/conf.md#roundingmode?): Gets the default rounding mode
 
 ## s
-- [scientific.notation](ops/format.md#scientific.notation): 
-  - [scientific.notation/d](ops/format_Dec.md#scientific.notation/d)
-- [sn](ops/format.md#scientific.notation): Alias for [scientific.notation](ops/format.md#scientific.notation)
+- [scientific.notation](ops/format.md#scientificnotation): 
+  - [scientific.notation/d](ops/format_Dec.md#scientificnotation/d): decimal (apd)
+- [sn](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 
 ## u
 - [up](ops/stack.md#up): Rotate up

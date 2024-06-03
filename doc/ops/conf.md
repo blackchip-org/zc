@@ -20,6 +20,7 @@ General configuration
 Sets the precision for floating-point numbers to *p*. The precision is the
 maximum number of bits available for the mantissa.
 
+Stack effects:
 ```
 ( p:Int/u --  )
 ```
@@ -38,6 +39,7 @@ Example:
 Places the current precision for floating-point numbers on the stack. The
 precision is the maximum number of bits available for the mantissa.
 
+Stack effects:
 ```
 (  -- p:Int/u )
 ```
@@ -52,6 +54,7 @@ Example:
 
 Sets the rounding mode to one of the following:
 
+Stack effects:
 ```
 ( m:Text --  )
 ```
@@ -69,6 +72,7 @@ Example:
 
 TODO
 
+Stack effects:
 ```
 (  -- Text )
 ```

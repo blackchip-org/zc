@@ -1,5 +1,6 @@
 name: basic/Dec
-title: Basic calculator, Decimals
+title: Basic calculator
+subtitle: decimal (apd)
 
 ops:
 - name: add/d

@@ -16,6 +16,7 @@ Statistic operations
 
 TODO
 
+Stack effects:
 ```
 ( n:Int/u -- Int )
 ```

@@ -258,14 +258,14 @@ func genOpDoc(f *os.File, op zc.OpDef) {
 			fmt.Fprintf(f, "Aliases: ")
 		}
 		var fmtAliases []string
-		for _, a := range op.Aliases[1:] {
+		for _, a := range op.Aliases {
 			fmtAliases = append(fmtAliases, fmt.Sprintf("`%v`", a))
 		}
 		fmt.Fprintf(f, "%v\n\n", strings.Join(fmtAliases, ", "))
 	}
 
 	if len(op.Funcs) > 0 {
-		fmt.Fprintf(f, "```\n")
+		fmt.Fprintf(f, "Stack effects:\n```\n")
 		for _, fn := range op.Funcs {
 			fmt.Fprintf(f, "( ")
 			fmt.Fprintf(f, "%v -- ", strings.Join(fn.Params, " "))
@@ -329,6 +329,7 @@ func genIndex(vols []zc.VolDef) {
 				e := entry{
 					name:   op.Name,
 					anchor: anchor(vol, op),
+					title:  vol.Subtitle,
 				}
 				entries := subs[prefix]
 				entries = append(entries, e)
@@ -370,7 +371,7 @@ func genIndex(vols []zc.VolDef) {
 		if ok {
 			slices.SortStableFunc(entries, entrySort)
 			for _, e := range entries {
-				fmt.Fprintf(f, "  - [%v](%v)\n", e.name, e.anchor)
+				fmt.Fprintf(f, "  - [%v](%v): %v\n", e.name, e.anchor, e.title)
 			}
 		}
 	}
@@ -437,5 +438,7 @@ func typeNameFor(p string) string {
 }
 
 func anchor(vol zc.VolDef, op zc.OpDef) string {
-	return fmt.Sprintf("ops/%v.md#%v", fileNameFor(vol.Name), op.Name)
+	name := op.Name
+	name = strings.ReplaceAll(name, ".", "")
+	return fmt.Sprintf("ops/%v.md#%v", fileNameFor(vol.Name), name)
 }

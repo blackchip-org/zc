@@ -2,7 +2,7 @@
 
 # basic/Dec/SS
 
-Basic calculator, Decimals (shopspring)
+Basic calculator
 
 ## Index
 
@@ -20,6 +20,7 @@ Basic calculator, Decimals (shopspring)
 
 Adds the value of *x* to *y*.
 
+Stack effects:
 ```
 ( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```
@@ -37,6 +38,7 @@ Example:
 Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
+Stack effects:
 ```
 ( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```
@@ -53,6 +55,7 @@ Example:
 
 Multiplies the value of *x* by *y*.
 
+Stack effects:
 ```
 ( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```
@@ -69,6 +72,7 @@ Example:
 
 Changes the sign of *x*.
 
+Stack effects:
 ```
 ( x:Dec/ss -- Dec/ss )
 ```
@@ -85,6 +89,7 @@ Example:
 
 Subtracts the value of *y* from *x*
 
+Stack effects:
 ```
 ( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```

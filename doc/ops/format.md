@@ -20,8 +20,9 @@ positive, the number is rounded to that many places after the decimal
 point. If *p* is zero, the number is rounded to an integer. If *p* is
 negative, is is round to that many places left of the decimal point.
 
-Alias: 
+Alias: `r`
 
+Stack effects:
 ```
 ( x:Dec p:Int/32 -- x:Dec )
 ```
@@ -39,8 +40,9 @@ Example:
 
 Formats *x* using scientific notation
 
-Alias: 
+Alias: `sn`
 
+Stack effects:
 ```
 ( x:Dec -- x:Dec )
 ```

@@ -2,7 +2,7 @@
 
 # basic/Dec
 
-Basic calculator, Decimals
+Basic calculator
 
 ## Index
 
@@ -21,6 +21,7 @@ Basic calculator, Decimals
 
 Adds the value of *x* to *y*.
 
+Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
 ```
@@ -38,6 +39,7 @@ Example:
 Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
+Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
 ```
@@ -54,6 +56,7 @@ Example:
 
 Multiplies the value of *x* by *y*.
 
+Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
 ```
@@ -70,6 +73,7 @@ Example:
 
 Changes the sign of *x*.
 
+Stack effects:
 ```
 ( x:Dec -- Dec )
 ```
@@ -86,6 +90,7 @@ Example:
 
 Raises *x* to the power of *y*
 
+Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
 ```
@@ -102,6 +107,7 @@ Example:
 
 Subtracts the value of *y* from *x*
 
+Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
 ```

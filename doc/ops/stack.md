@@ -20,8 +20,9 @@ Stack operations
 
 Clears all items from the stack.
 
-Alias: 
+Alias: `c`
 
+Stack effects:
 ```
 ( Val* --  )
 ```
@@ -41,8 +42,9 @@ the bottom and the bottom item on the stack is displayed at the top.
 Therefore, rotating downward moves the top item on the stack to the
 bottom.
 
-Alias: 
+Alias: `dn`
 
+Stack effects:
 ```
 ( Val* -- Val* )
 ```
@@ -58,6 +60,7 @@ Example:
 
 Remove the top item from the stack.
 
+Stack effects:
 ```
 ( Val --  )
 ```
@@ -73,6 +76,7 @@ Example:
 
 Duplicates the top value on the stack
 
+Stack effects:
 ```
 ( x:Val -- x:Val x:Val )
 ```
@@ -92,6 +96,7 @@ the bottom and the bottom item on the stack is displayed at the top.
 Therefore, rotating upward moves the bottom item on the stack to the
 top.
 
+Stack effects:
 ```
 ( Val* -- Val* )
 ```

@@ -2,7 +2,7 @@
 
 # format/Dec
 
-Value formatting, decimals
+Value formatting
 
 ## Index
 
@@ -20,6 +20,7 @@ positive, the number is rounded to that many places after the decimal
 point. If *p* is zero, the number is rounded to an integer. If *p* is
 negative, is is round to that many places left of the decimal point.
 
+Stack effects:
 ```
 ( x:Dec p:Int/32 -- x:Dec )
 ```
@@ -37,6 +38,7 @@ Example:
 
 Formats *x* using scientific notation
 
+Stack effects:
 ```
 ( x:Dec -- x:Text )
 ```

@@ -1,5 +1,6 @@
 name: basic/Float
-title: Basic calculator, float implementation
+title: Basic calculator
+subtitle: float
 
 ops:
 - name: add/f
