@@ -3,6 +3,8 @@ package types
 import (
 	"fmt"
 	"math/big"
+
+	"github.com/blackchip-org/zc/v6/state"
 )
 
 var Float = floatType{}
@@ -43,14 +45,14 @@ func (t floatType) Copy(src, dest any) {
 	d.Set(s)
 }
 
-func (t floatType) To(a any) (any, bool) {
+func (t floatType) To(states state.State, a any) (any, bool) {
 	switch v := a.(type) {
 	case float64:
 		return big.NewFloat(v), true
 	case string:
-		f := new(big.Float)
-		_, ok := f.SetString(v)
-		return f, ok
+		s := state.ForConf(states)
+		f, _, err := big.ParseFloat(v, 0, s.FloatPrec, big.ToNearestEven)
+		return f, err == nil
 	}
 	return nil, false
 }

@@ -9,6 +9,7 @@ Basic calculator, float implementation
 | Operation         | Description
 |-------------------|------------
 | [`add/f`](#add/f) | Addition   
+| [`div/f`](#div/f) | Division   
 
 ## Operations
 
@@ -27,3 +28,20 @@ Example:
 | `1.1`   | `1.1`                  
 | `2.2`   | `1.1 \| 2.2`           
 | `add/f` | `3.3000000000000000002`
+
+### div/f
+
+Divides the valueof *x* by *y*. If *y* is zero, a 'division by zero'
+error is raised.
+
+```
+( x:Float y:Float -- Float )
+```
+
+Example:
+
+| Input   | Stack                  
+|---------|------------------------
+| `2`     | `2`                    
+| `3`     | `2 \| 3`               
+| `div/f` | `0.6666666666666666667`

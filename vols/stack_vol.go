@@ -7,11 +7,15 @@ import (
 	"github.com/blackchip-org/zc/v6/ops"
 )
 
-var BasicFloat = zc.Vol{
-	Name: "basic/Float",
+var Stack = zc.Vol{
+	Name: "stack",
 	Ops: []zc.Op{
-		ops.AddBigFloat,
-		ops.DivBigFloat,
+		ops.Clear,
+		ops.Down,
+		ops.Dup,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "c", Expr: "clear"},
+		{Name: "dn", Expr: "down"},
+	},
 }

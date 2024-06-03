@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 
+	"github.com/blackchip-org/zc/v6/state"
 	"github.com/cockroachdb/apd/v3"
 )
 
@@ -44,7 +45,7 @@ func (t decType) Copy(src, dest any) {
 	d.Set(s)
 }
 
-func (t decType) To(a any) (any, bool) {
+func (t decType) To(state state.State, a any) (any, bool) {
 	switch v := a.(type) {
 	case string:
 		d, _, err := apd.NewFromString(v)

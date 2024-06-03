@@ -1,7 +1,5 @@
 package state
 
-import "github.com/blackchip-org/zc/v6"
-
 const ConfID = "conf"
 
 type Conf struct {
@@ -9,14 +7,14 @@ type Conf struct {
 	DecPrec   uint32
 }
 
-func ForConf(e *zc.OpEnv) *Conf {
-	s, ok := e.State[ConfID]
+func ForConf(state State) *Conf {
+	s, ok := state[ConfID]
 	if !ok {
 		s = &Conf{
-			FloatPrec: 53,
+			FloatPrec: 64,
 			DecPrec:   16,
 		}
-		e.State[ConfID] = s
+		state[ConfID] = s
 	}
 	return s.(*Conf)
 }

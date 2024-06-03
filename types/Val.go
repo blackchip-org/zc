@@ -1,6 +1,10 @@
 package types
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/blackchip-org/zc/v6/state"
+)
 
 var Val = valType{}
 
@@ -9,10 +13,7 @@ type valType struct{}
 func (t valType) Name() string { return "Val" }
 
 func (t valType) Is(v any) bool {
-	if v == nil {
-		return false
-	}
-	return true
+	return v != nil
 }
 
 func (t valType) Dup(any) any {
@@ -23,7 +24,7 @@ func (t valType) Copy(any, any) {
 	panic("type Val cannot be copied")
 }
 
-func (t valType) To(a any) (any, bool) {
+func (t valType) To(state state.State, a any) (any, bool) {
 	return a, false
 }
 

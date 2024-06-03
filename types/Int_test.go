@@ -32,7 +32,7 @@ func TestTo(t *testing.T) {
 	for _, test := range tests {
 		name := fmt.Sprintf("%v", test.want)
 		t.Run(name, func(t *testing.T) {
-			conv, ok := Int.To(test.src)
+			conv, ok := Int.To(nil, test.src)
 			if !ok {
 				t.Fatalf("conversion failed")
 			}

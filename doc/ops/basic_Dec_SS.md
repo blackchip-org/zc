@@ -21,7 +21,7 @@ Basic calculator, Decimals (shopspring)
 Adds the value of *x* to *y*.
 
 ```
-( x:Dec/SS y:Dec/SS -- Dec/SS )
+( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```
 
 Example:
@@ -38,7 +38,7 @@ Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
 ```
-( x:Dec/SS y:Dec/SS -- Dec/SS )
+( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```
 
 Example:
@@ -54,7 +54,7 @@ Example:
 Multiplies the value of *x* by *y*.
 
 ```
-( x:Dec/SS y:Dec/SS -- Dec/SS )
+( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```
 
 Example:
@@ -70,7 +70,7 @@ Example:
 Changes the sign of *x*.
 
 ```
-( x:Dec/SS -- Dec/SS )
+( x:Dec/ss -- Dec/ss )
 ```
 
 Example:
@@ -86,7 +86,7 @@ Example:
 Subtracts the value of *y* from *x*
 
 ```
-( x:Dec/SS y:Dec/SS -- Dec/SS )
+( x:Dec/ss y:Dec/ss -- Dec/ss )
 ```
 
 Example:

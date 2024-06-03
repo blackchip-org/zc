@@ -3,6 +3,8 @@ package zc
 import (
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/blackchip-org/zc/v6/state"
 )
 
 const ProgName = "zc"
@@ -12,16 +14,18 @@ type Type interface {
 	Is(any) bool
 	Dup(any) any
 	Copy(any, any)
-	To(any) (any, bool)
+	To(state.State, any) (any, bool)
 	Format(any) string
 }
 
 type OpEnv struct {
 	Catalog *Catalog
-	State   map[string]any
+	State   state.State
 	Op      Op
 	Args    []any
 	Returns []any
+	Annos   []string
+	Info    string
 	Err     error
 }
 

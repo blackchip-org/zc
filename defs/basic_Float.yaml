@@ -17,3 +17,21 @@ ops:
     o: [1.1, 2.2]
   - i: add/f
     o: [3.3000000000000000002]
+
+- name: div/f
+  overloads: div
+  title: Division
+  funcs:
+  - name: DivBigFloat
+    params: [x:Float, y:Float]
+    returns: [Float]
+  desc: |-
+    Divides the valueof *x* by *y*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 2
+    o: [2]
+  - i: 3
+    o: [2, 3]
+  - i: div/f
+    o: [0.6666666666666666667]

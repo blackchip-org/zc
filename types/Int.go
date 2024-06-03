@@ -5,11 +5,14 @@ import (
 	"math"
 	"math/big"
 	"strconv"
+
+	"github.com/blackchip-org/zc/v6/state"
 )
 
 var (
-	Int     = intType{}
-	IntArch = intArchType{}
+	Int  = intType{}
+	IntA = intAType{}
+	IntU = intUType{}
 )
 
 type intType struct{}
@@ -48,7 +51,7 @@ func (t intType) Copy(src, dest any) {
 	d.Set(s)
 }
 
-func (t intType) To(a any) (any, bool) {
+func (t intType) To(state state.State, a any) (any, bool) {
 	switch v := a.(type) {
 	case int:
 		return big.NewInt(int64(v)), true
@@ -70,11 +73,11 @@ func (t intType) Format(a any) string {
 
 // ----------------------------------------------------------------------------
 
-type intArchType struct{}
+type intAType struct{}
 
-func (t intArchType) Name() string { return "IntArch" }
+func (t intAType) Name() string { return "Int/a" }
 
-func (t intArchType) Is(a any) bool {
+func (t intAType) Is(a any) bool {
 	switch a.(type) {
 	case int, *int:
 		return true
@@ -82,7 +85,7 @@ func (t intArchType) Is(a any) bool {
 	return false
 }
 
-func (t intArchType) As(a any) int {
+func (t intAType) As(a any) int {
 	v, ok := a.(int)
 	if !ok {
 		panic(fmt.Errorf("expected int but got: %v", GoName(a)))
@@ -90,11 +93,11 @@ func (t intArchType) As(a any) int {
 	return v
 }
 
-func (t intArchType) Dup(a any) any {
+func (t intAType) Dup(a any) any {
 	return a
 }
 
-func (t intArchType) Copy(src, dest any) {
+func (t intAType) Copy(src, dest any) {
 	d, ok := dest.(*int)
 	if !ok {
 		panic(fmt.Errorf("expected *int but got: %v", GoName(dest)))
@@ -103,7 +106,7 @@ func (t intArchType) Copy(src, dest any) {
 	*d = s
 }
 
-func (t intArchType) To(a any) (any, bool) {
+func (t intAType) To(state state.State, a any) (any, bool) {
 	switch v := a.(type) {
 	case int64:
 		if v > math.MaxInt || v < math.MinInt {
@@ -117,29 +120,20 @@ func (t intArchType) To(a any) (any, bool) {
 	case int8:
 		return int(v), true
 	case uint:
-		if v < 0 || v > math.MaxUint {
+		if v > math.MaxInt {
 			return nil, false
 		}
 		return int(v), true
 	case uint64:
-		if v < 0 {
-			return nil, false
+		if v > math.MaxInt {
+			return 0, false
 		}
 		return int(v), true
 	case uint32:
-		if v < 0 || v > math.MaxUint32 {
-			return nil, false
-		}
 		return int(v), true
 	case uint16:
-		if v < 0 || v > math.MaxUint16 {
-			return nil, false
-		}
 		return int(v), true
 	case uint8:
-		if v < 0 || v > math.MaxUint8 {
-			return nil, false
-		}
 		return int(v), true
 	case string:
 		i, err := strconv.ParseInt(v, 0, 64)
@@ -151,10 +145,92 @@ func (t intArchType) To(a any) (any, bool) {
 	return nil, false
 }
 
-func (t intArchType) Format(a any) string {
+func (t intAType) Format(a any) string {
 	d, ok := a.(int)
 	if !ok {
 		panic(fmt.Errorf("expected int but got: %v", GoName(a)))
 	}
 	return strconv.Itoa(d)
+}
+
+// ----------------------------------------------------------------------------
+
+type intUType struct{}
+
+func (t intUType) Name() string { return "Int/u" }
+
+func (t intUType) Is(a any) bool {
+	switch a.(type) {
+	case uint, *uint:
+		return true
+	}
+	return false
+}
+
+func (t intUType) As(a any) uint {
+	v, ok := a.(uint)
+	if !ok {
+		panic(fmt.Errorf("expected uint but got: %v", GoName(a)))
+	}
+	return v
+}
+
+func (t intUType) Dup(a any) any {
+	return a
+}
+
+func (t intUType) Copy(src, dest any) {
+	d, ok := dest.(*uint)
+	if !ok {
+		panic(fmt.Errorf("expected *uint but got: %v", GoName(dest)))
+	}
+	s := t.As(src)
+	*d = s
+}
+
+func (t intUType) To(state state.State, a any) (any, bool) {
+	switch v := a.(type) {
+	// case int64:
+	// 	if v > math.MaxInt || v < math.MinInt {
+	// 		return nil, false
+	// 	}
+	// 	return int(v), true
+	// case int32:
+	// 	return int(v), true
+	// case int16:
+	// 	return int(v), true
+	// case int8:
+	// 	return int(v), true
+	// case uint:
+	// 	if v > math.MaxInt {
+	// 		return nil, false
+	// 	}
+	// 	return int(v), true
+	// case uint64:
+	// 	if v > math.MaxInt {
+	// 		return 0, false
+	// 	}
+	// 	return int(v), true
+	// case uint32:
+	// 	return int(v), true
+	// case uint16:
+	// 	return int(v), true
+	// case uint8:
+	// 	return int(v), true
+	case string:
+		i, err := strconv.ParseUint(v, 0, 0)
+		if err != nil {
+			return 0, false
+		}
+		return uint(i), true
+	}
+	return nil, false
+}
+
+func (t intUType) Format(a any) string {
+	d, ok := a.(uint)
+	if !ok {
+		panic(fmt.Errorf("expected int but got: %v", GoName(a)))
+	}
+	return strconv.FormatUint(uint64(d), 10)
 }

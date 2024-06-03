@@ -110,7 +110,6 @@ func identFor(v string) string {
 	s.Val.WriteRune(unicode.ToUpper(s.This))
 	s.Skip()
 
-	prefix := ""
 	for s.HasMore() {
 		switch {
 		case (s.This == '.' || s.This == '/') && unicode.IsLetter(s.Next):
@@ -119,10 +118,13 @@ func identFor(v string) string {
 			s.Skip()
 		case s.This == '?' && s.Next == scan.EndOfText:
 			s.Skip()
-			prefix = "Is"
+			s.Val.WriteString("Get")
+		case s.This == '=' && s.Next == scan.EndOfText:
+			s.Skip()
+			s.Val.WriteString("Set")
 		default:
 			s.Keep()
 		}
 	}
-	return prefix + s.Emit().Val
+	return s.Emit().Val
 }

@@ -62,7 +62,7 @@ var (
 		Name:      "sign/i",
 		Overloads: "sign",
 		Params:    []zc.Type{types.Int},
-		Returns:   []zc.Type{types.IntArch},
+		Returns:   []zc.Type{types.IntA},
 		Func:      funcs.SignBigInt,
 	}
 	SqrtBigInt = zc.Op{

@@ -9,8 +9,8 @@ ops:
   title: Addition
   funcs:
   - name: AddDecSS
-    params: [x:Dec/SS, y:Dec/SS]
-    returns: [Dec/SS]
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
   desc: Adds the value of *x* to *y*.
   example:
   - i: 6.6
@@ -24,8 +24,8 @@ ops:
   title: Division
   funcs:
   - name: DivDecSS
-    params: [x:Dec/SS, y:Dec/SS]
-    returns: [Dec/SS]
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
   desc: |-
     Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
     error is raised.
@@ -50,8 +50,8 @@ ops:
   title: Multiplication
   funcs:
   - name: MulDecSS
-    params: [x:Dec/SS, y:Dec/SS]
-    returns: [Dec/SS]
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
   desc: Multiplies the value of *x* by *y*.
   example:
   - i: 6.6
@@ -65,8 +65,8 @@ ops:
   title: Negation
   funcs:
   - name: NegDecSS
-    params: [x:Dec/SS]
-    returns: [Dec/SS]
+    params: [x:Dec/ss]
+    returns: [Dec/ss]
   desc: Changes the sign of *x*.
   example:
   - i: -6.6
@@ -80,8 +80,8 @@ ops:
   title: Subtraction
   funcs:
   - name: SubDecSS
-    params: [x:Dec/SS, y:Dec/SS]
-    returns: [Dec/SS]
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
   desc: Subtracts the value of *y* from *x*
   example:
   - i: 6.6

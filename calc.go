@@ -51,7 +51,7 @@ func (c *Calc) Pop(dest any) error {
 		panic(fmt.Errorf("unregistered type: %v", types.GoName(dest)))
 	}
 	if !destType.Is(item.Value) {
-		valConv, ok := destType.To(item.Value)
+		valConv, ok := destType.To(c.State, item.Value)
 		if !ok {
 			c.Err = fmt.Errorf("cannot convert %v from %v to %v", item.Value, item.Type.Name(), types.GoName(dest))
 			return c.Err
@@ -128,6 +128,7 @@ func (c *Calc) do(name string) {
 		c.Err = env.Err
 		return
 	}
+	c.Info = env.Info
 
 	// Arguments that were used for the operation now have to be removed
 	// from the stack. If there are variable returns, remove all items.
@@ -224,7 +225,7 @@ func (c *Calc) assembleArg(typ Type, env *OpEnv, idx int) bool {
 	item := c.Stack.At(idx)
 	arg := item.Value
 	if !typ.Is(arg) {
-		convArg, ok := typ.To(arg)
+		convArg, ok := typ.To(c.State, arg)
 		if !ok {
 			return false
 		}
@@ -240,7 +241,11 @@ func (c *Calc) assembleRet(typ Type, env *OpEnv, idx int) bool {
 	if !typ.Is(ret) {
 		return false
 	}
-	c.Stack.Push(Item{Value: ret, Type: typ})
+	var anno string
+	if idx < len(env.Annos) {
+		anno = env.Annos[idx]
+	}
+	c.Stack.Push(Item{Value: ret, Type: typ, Anno: anno})
 	return true
 }
 

@@ -21,3 +21,16 @@ func TestOpDocs_BasicFloat_AddF(t *testing.T) {
 	c.Eval("add/f")
 	zc.AssertStack(t, c, "3.3000000000000000002")
 }
+
+func TestOpDocs_BasicFloat_DivF(t *testing.T) {
+	c := calc.New()
+
+	c.Eval("2")
+	zc.AssertStack(t, c, "2")
+
+	c.Eval("3")
+	zc.AssertStack(t, c, "2", "3")
+
+	c.Eval("div/f")
+	zc.AssertStack(t, c, "0.6666666666666666667")
+}

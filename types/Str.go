@@ -1,6 +1,10 @@
 package types
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/blackchip-org/zc/v6/state"
+)
 
 var Str = strType{}
 
@@ -39,7 +43,7 @@ func (t strType) Copy(src, dest any) {
 	*d = t.As(src)
 }
 
-func (t strType) To(a any) (any, bool) {
+func (t strType) To(state state.State, a any) (any, bool) {
 	return nil, false
 }
 

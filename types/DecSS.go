@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 
+	"github.com/blackchip-org/zc/v6/state"
 	"github.com/shopspring/decimal"
 )
 
@@ -10,7 +11,7 @@ var DecSS = decSSType{}
 
 type decSSType struct{}
 
-func (t decSSType) Name() string { return "Dec/SS" }
+func (t decSSType) Name() string { return "Dec/ss" }
 
 func (t decSSType) Is(a any) bool {
 	switch a.(type) {
@@ -40,7 +41,7 @@ func (t decSSType) Copy(src, dest any) {
 	*d = t.As(src)
 }
 
-func (t decSSType) To(a any) (any, bool) {
+func (t decSSType) To(state state.State, a any) (any, bool) {
 	switch v := a.(type) {
 	case string:
 		d, err := decimal.NewFromString(v)

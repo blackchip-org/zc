@@ -1,5 +1,5 @@
-name: zcalc
-title: Stack operations and calculator info
+name: stack
+title: Stack operations
 
 ops:
 - name: clear

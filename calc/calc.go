@@ -15,7 +15,8 @@ func init() {
 	b := zc.NewCatalogBuilder()
 	b.AddVolume(
 		vols.Basic,
-		vols.Zcalc,
+		vols.Conf,
+		vols.Stack,
 	)
 	Min = b.Build()
 

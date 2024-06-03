@@ -142,7 +142,7 @@ Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
 if *x* is zero.
 
 ```
-( x:Int -- IntArch )
+( x:Int -- Int/a )
 ```
 
 Example:

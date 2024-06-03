@@ -16,4 +16,11 @@ var (
 		Returns:   []zc.Type{types.Float},
 		Func:      funcs.AddBigFloat,
 	}
+	DivBigFloat = zc.Op{
+		Name:      "div/f",
+		Overloads: "div",
+		Params:    []zc.Type{types.Float, types.Float},
+		Returns:   []zc.Type{types.Float},
+		Func:      funcs.DivBigFloat,
+	}
 )

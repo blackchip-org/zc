@@ -343,5 +343,9 @@ func fileNameFor(p string) string {
 }
 
 func typeNameFor(p string) string {
-	return strings.ReplaceAll(p, "/", "")
+	parts := strings.Split(p, "/")
+	for i := 1; i < len(parts); i++ {
+		parts[i] = strings.ToUpper(parts[i])
+	}
+	return strings.Join(parts, "")
 }
