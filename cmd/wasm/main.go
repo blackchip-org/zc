@@ -41,9 +41,9 @@ func zcEval() js.Func {
 			err = r.Error().Error()
 		}
 		for i := 0; i < c.Stack.Len(); i++ {
-			item := c.Stack.Items()[i]
+			item := c.Stack.Items[i]
 			stack = append(stack, map[string]any{
-				"value": zc.String(item.Value),
+				"value": zc.ToString(item.Value),
 				"anno":  item.Anno,
 			})
 		}
@@ -64,9 +64,9 @@ func zcStackLen() js.Func {
 func zcStack() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) any {
 		var stack []any
-		for _, item := range c.Stack.Items() {
+		for _, item := range c.Stack.Items {
 			stack = append(stack, map[string]any{
-				"value": zc.String(item.Value),
+				"value": zc.ToString(item.Value),
 				"anno":  item.Anno,
 			})
 		}
