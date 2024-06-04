@@ -13,6 +13,6 @@ func TestOpDocs_Stat_Fact(t *testing.T) {
 	c := calc.New()
 	ct := zc.NewCalcTester(c, t)
 
-	ct.Eval("c 10 fact")
+	ct.Eval("10 fact")
 	ct.AssertStack("3628800")
 }

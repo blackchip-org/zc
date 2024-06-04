@@ -26,7 +26,21 @@ type VolDef struct {
 	Ident    string   `yaml:"ident"`
 	Title    string   `yaml:"title"`
 	Subtitle string   `yaml:"subtitle"`
+	Category string   `yaml:"category"`
 	Types    []string `yaml:"types"`
 	Ops      []OpDef  `yaml:"ops"`
 	Overview string
+}
+
+type Category struct {
+	ID    string
+	Order int
+	Title string
+}
+
+var Categories = map[string]Category{
+	"calc": {Order: 1, ID: "calc", Title: "Calculator Operations"},
+	"unit": {Order: 2, ID: "unit", Title: "Units of Measure"},
+	"lib":  {Order: 3, ID: "lib", Title: "Library"},
+	"tab":  {Order: 4, ID: "tab", Title: "Tables"},
 }

@@ -1,5 +1,6 @@
 name: format
 title: Value formatting
+category: calc
 
 ops:
 - name: round

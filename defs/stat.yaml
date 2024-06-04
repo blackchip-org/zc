@@ -1,5 +1,7 @@
 name: stat
 title: Statistic operations
+category: calc
+
 ops:
 - name: fact
   title: Factorial
@@ -10,5 +12,5 @@ ops:
   desc: |-
     TODO
   example:
-  - i: c 10 fact
+  - i: 10 fact
     o: [3628800]

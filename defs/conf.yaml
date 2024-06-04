@@ -1,5 +1,6 @@
 name: conf
 title: General configuration
+category: calc
 
 ops:
 - name: float.prec=

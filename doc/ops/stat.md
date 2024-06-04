@@ -23,6 +23,6 @@ Stack effects:
 
 Example:
 
-| Input       | Stack    
-|-------------|----------
-| `c 10 fact` | `3628800`
+| Input     | Stack    
+|-----------|----------
+| `10 fact` | `3628800`
