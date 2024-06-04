@@ -33,7 +33,7 @@ ops:
   title: Cube of a number
   macro: dup dup mul mul
   desc: |-
-    The cube of a number *x*, x³
+    The cube of a number, x³
   example:
   - i: 3 cb
     o: [27]
@@ -167,11 +167,11 @@ ops:
     Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
     if *x* is zero.
   example:
-  - i: c -6 sign/i
+  - i: c -6 sign
     o: [-1]
-  - i: c 6 sign/i
+  - i: c 6 sign
     o: [1]
-  - i: c 0 sign/i
+  - i: c 0 sign
     o: [0]
 
 - name: square
@@ -179,7 +179,7 @@ ops:
   title: Square of a number
   macro: dup mul
   desc: |-
-    The square of a number *x*, x²
+    The square of a number, x²
   example:
   - i: 3 sq
     o: [9]
