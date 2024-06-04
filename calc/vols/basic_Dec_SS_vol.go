@@ -4,8 +4,8 @@ package vols
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/ops"
-	"github.com/blackchip-org/zc/v6/types"
+	"github.com/blackchip-org/zc/v6/calc/ops"
+	"github.com/blackchip-org/zc/v6/calc/types"
 )
 
 var BasicDecSS = zc.Vol{

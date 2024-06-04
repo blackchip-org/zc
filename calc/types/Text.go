@@ -3,7 +3,7 @@ package types
 import (
 	"fmt"
 
-	"github.com/blackchip-org/zc/v6/state"
+	"github.com/blackchip-org/zc/v6/calc/state"
 )
 
 var Text = textType{}

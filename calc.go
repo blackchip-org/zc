@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/blackchip-org/scan"
-	"github.com/blackchip-org/zc/v6/types"
+	"github.com/blackchip-org/zc/v6/calc/types"
 )
 
 type Calc struct {

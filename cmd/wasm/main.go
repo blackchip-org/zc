@@ -7,7 +7,7 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/calc"
-	"github.com/blackchip-org/zc/v6/repl"
+	"github.com/blackchip-org/zc/v6/calc/repl"
 )
 
 var (

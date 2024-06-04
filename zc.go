@@ -4,7 +4,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/blackchip-org/zc/v6/state"
+	"github.com/blackchip-org/zc/v6/calc/state"
 )
 
 const ProgName = "zc"

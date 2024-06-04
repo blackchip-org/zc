@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/blackchip-org/zc/v6/state"
+	"github.com/blackchip-org/zc/v6/calc/state"
 )
 
 var Float = floatType{}

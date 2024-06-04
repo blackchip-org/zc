@@ -2,7 +2,7 @@ package funcs
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/state"
+	"github.com/blackchip-org/zc/v6/calc/state"
 	"github.com/cockroachdb/apd/v3"
 )
 

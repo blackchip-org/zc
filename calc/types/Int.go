@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/blackchip-org/zc/v6/state"
+	"github.com/blackchip-org/zc/v6/calc/state"
 )
 
 var (

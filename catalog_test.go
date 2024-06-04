@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/blackchip-org/zc/v6/types"
+	"github.com/blackchip-org/zc/v6/calc/types"
 )
 
 func TestType(t *testing.T) {

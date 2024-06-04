@@ -15,9 +15,9 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const DefsDir = "defs"
+const DefsDir = "calc/defs"
 
-//go:embed defs/*
+//go:embed calc/defs/*
 var Defs embed.FS
 
 func LoadDefs() ([]VolDef, error) {

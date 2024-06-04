@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"slices"
 
-	"github.com/blackchip-org/zc/v6/types"
+	"github.com/blackchip-org/zc/v6/calc/types"
 )
 
 type CatalogBuilder struct {

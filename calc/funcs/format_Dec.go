@@ -2,8 +2,8 @@ package funcs
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/state"
-	"github.com/blackchip-org/zc/v6/types"
+	"github.com/blackchip-org/zc/v6/calc/state"
+	"github.com/blackchip-org/zc/v6/calc/types"
 	"github.com/cockroachdb/apd/v3"
 )
 

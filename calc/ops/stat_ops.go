@@ -4,8 +4,8 @@ package ops
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/funcs"
-	"github.com/blackchip-org/zc/v6/types"
+	"github.com/blackchip-org/zc/v6/calc/funcs"
+	"github.com/blackchip-org/zc/v6/calc/types"
 )
 
 var (

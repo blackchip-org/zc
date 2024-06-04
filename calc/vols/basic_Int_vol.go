@@ -4,7 +4,7 @@ package vols
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/ops"
+	"github.com/blackchip-org/zc/v6/calc/ops"
 )
 
 var BasicInt = zc.Vol{

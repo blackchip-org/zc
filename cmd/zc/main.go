@@ -9,8 +9,8 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/calc"
+	"github.com/blackchip-org/zc/v6/calc/repl"
 	"github.com/blackchip-org/zc/v6/pkg/ansi"
-	"github.com/blackchip-org/zc/v6/repl"
 )
 
 func main() {
