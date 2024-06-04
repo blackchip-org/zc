@@ -140,7 +140,7 @@ ops:
     The square root of *x*. If *x* is less than zero, an 'invalid argument'
     error is raised.
   example:
-  - i: 1.25 square
+  - i: 1.25 sq
     o: [1.5625]
   - i: sqrt
     o: [1.25]

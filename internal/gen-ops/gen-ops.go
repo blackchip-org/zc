@@ -293,12 +293,17 @@ func genOpExample(f *os.File, expected []zc.Expect) {
 	tab := pretty.NewMarkdownTable(2)
 	tab.Heading("Input", "Stack")
 	for _, ex := range expected {
-		o := strings.Join(ex.Output, " \\| ")
-		quotes := "`"
-		if strings.HasPrefix(o, "*") || o == "" {
-			quotes = ""
+		i := "`" + ex.Input + "`"
+		if ex.Info != "" {
+			tab.Row(i, "*"+ex.Info+"*")
+		} else if ex.Error != "" {
+			tab.Row(i, "_"+ex.Error+"_")
+		} else if len(ex.Output) == 0 {
+			tab.Row(i, "")
+		} else {
+			o := strings.Join(ex.Output, " \\| ")
+			tab.Row(i, "`"+o+"`")
 		}
-		tab.Row("`"+ex.Input+"`", quotes+o+quotes)
 	}
 	fmt.Fprint(f, tab.Format())
 }

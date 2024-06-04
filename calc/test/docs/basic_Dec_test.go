@@ -124,7 +124,7 @@ func TestOpDocs_BasicDec_SquareRootD(t *testing.T) {
 	c := calc.New()
 	ct := zc.NewCalcTester(c, t)
 
-	ct.Eval("1.25 square")
+	ct.Eval("1.25 sq")
 	ct.AssertStack("1.5625")
 
 	ct.Eval("sqrt")

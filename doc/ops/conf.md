@@ -31,7 +31,7 @@ Example:
 |--------------------|---------------------------------
 | `float.prec?`      | `64 # precision`                
 | `c 2 3 div/f`      | `0.6666666666666666667`         
-| `c 92 float.prec=` |                                 
+| `c 92 float.prec=` | *precision set to 92*           
 | `c 2 3 div/f`      | `0.6666666666666666666666666667`
 
 ### float.prec?
@@ -61,12 +61,12 @@ Stack effects:
 
 Example:
 
-| Input                  | Stack      
-|------------------------|------------
-| `rounding.mode?`       | `half.even`
-| `c 5.55 1 round`       | `5.6`      
-| `/down rounding.mode=` |            
-| `c 5.55 1 round`       | `5.5`      
+| Input                  | Stack                      
+|------------------------|----------------------------
+| `rounding.mode?`       | `half.even`                
+| `c 5.55 1 round`       | `5.6`                      
+| `/down rounding.mode=` | *rounding mode set to down*
+| `c 5.55 1 round`       | `5.5`                      
 
 ### rounding.mode?
 

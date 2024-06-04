@@ -153,10 +153,10 @@ Stack effects:
 
 Example:
 
-| Input         | Stack   
-|---------------|---------
-| `1.25 square` | `1.5625`
-| `sqrt`        | `1.25`  
+| Input     | Stack   
+|-----------|---------
+| `1.25 sq` | `1.5625`
+| `sqrt`    | `1.25`  
 
 ### sub/d
 
