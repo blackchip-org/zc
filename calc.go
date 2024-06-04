@@ -3,7 +3,6 @@ package zc
 import (
 	"fmt"
 
-	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/calc/types"
 )
 
@@ -14,7 +13,6 @@ type Calc struct {
 	Listener Listener
 	Catalog  *Catalog
 	State    map[string]any
-	scanner  scan.Scanner
 }
 
 func NewCalc(cat *Catalog) *Calc {
@@ -272,21 +270,17 @@ func invalidRetTypes(opName string, types []Type, varRets Type) error {
 }
 
 func (c *Calc) Eval(line string) error {
-	c.scanner.InitFromString("", line)
-	r := scan.NewRunner(&c.scanner, rules)
-	toks := r.All()
-	for _, tok := range toks {
-		switch tok.Type {
-		case TokenValue:
-			c.Push(tok.Val)
-		case TokenName:
-			c.Do(tok.Val)
-		default:
-			panic(fmt.Errorf("unexpected token type: %v", tok.Type))
-		}
-		if c.Err != nil {
+	var s Scanner
+	s.InitFromString(line)
+	for {
+		tok, lit := s.Next()
+		switch tok {
+		case TokEnd:
 			return c.Err
+		case TokValue:
+			c.Push(lit)
+		case TokName:
+			c.Do(lit)
 		}
 	}
-	return nil
 }

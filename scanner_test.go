@@ -2,24 +2,39 @@ package zc
 
 import (
 	"testing"
-
-	"github.com/blackchip-org/scan"
 )
 
 func TestScanner(t *testing.T) {
-	tests := []scan.Test{
-		scan.NewTest("abc", "abc", 1, 1, TokenName),
-		scan.NewTest("abc def", "abc", 1, 1, TokenName).
-			And("def", 1, 5, TokenName),
-		scan.NewTest("/abc", "abc", 1, 1, TokenValue),
-		scan.NewTest("/abc abc", "abc", 1, 1, TokenValue).
-			And("abc", 1, 6, TokenName),
-		scan.NewTest(`"abc"`, "abc", 1, 1, TokenValue),
-		scan.NewTest(`'abc'`, "abc", 1, 1, TokenValue),
-		scan.NewTest(`[abc]`, "abc", 1, 1, TokenValue),
-		scan.NewTest(`"abc`, "abc", 1, 1, TokenValue),
-		scan.NewTest(`'abc`, "abc", 1, 1, TokenValue),
-		scan.NewTest(`[abc`, "abc", 1, 1, TokenValue),
+	tests := []struct {
+		src  string
+		n    int
+		tok  Token
+		lit  string
+		name string
+	}{
+		{"a 0", 0, TokName, "a", "one name"},
+		{"a 0", 1, TokValue, "0", "one value"},
+		{"abc def", 0, TokName, "abc", "name"},
+		{"abc def", 1, TokName, "def", "name, name"},
+		{"/abc def", 0, TokValue, "abc", "slash val"},
+		{"/abc def", 1, TokName, "def", "slash val, name"},
+		{"\"abc\" def", 0, TokValue, "abc", "double quote val"},
+		{"'abc' def", 0, TokValue, "abc", "single quote val"},
+		{"[abc] def", 0, TokValue, "abc", "bracket quote val"},
+		{"[abc def", 0, TokValue, "abc def", "bracket quote val dangling"},
 	}
-	scan.RunTests(t, rules, tests)
+
+	for _, test := range tests {
+		var s Scanner
+		t.Run(test.name, func(t *testing.T) {
+			s.InitFromString(test.src)
+			for i := 0; i < test.n; i++ {
+				s.Next()
+			}
+			tok, lit := s.Next()
+			if tok != test.tok || lit != test.lit {
+				t.Errorf("\n have %v: %v \n want %v: %v", tok, lit, test.tok, test.lit)
+			}
+		})
+	}
 }

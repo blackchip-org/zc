@@ -5,6 +5,7 @@ import (
 	"math/big"
 
 	"github.com/blackchip-org/zc/v6/calc/state"
+	"github.com/cockroachdb/apd/v3"
 )
 
 var (
@@ -50,6 +51,18 @@ func (t floatType) Copy(src, dest any) {
 
 func (t floatType) To(states state.State, a any) (any, bool) {
 	switch v := a.(type) {
+	case *apd.Decimal:
+		f, err := v.Float64()
+		if err == nil {
+			return big.NewFloat(f), true
+		}
+		t := v.String()
+		s := state.ForConf(states)
+		bf, _, err := big.ParseFloat(t, 0, s.FloatPrec, s.RoundingMode)
+		if err != nil {
+			return nil, false
+		}
+		return bf, true
 	case float64:
 		return big.NewFloat(v), true
 	case string:

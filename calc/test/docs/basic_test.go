@@ -121,13 +121,13 @@ func TestOpDocs_Basic_Sign(t *testing.T) {
 	c := calc.New()
 	ct := zc.NewCalcTester(c, t)
 
-	ct.Eval("c -6 sign/i")
+	ct.Eval("c -6 sign")
 	ct.AssertStack("-1")
 
-	ct.Eval("c 6 sign/i")
+	ct.Eval("c 6 sign")
 	ct.AssertStack("1")
 
-	ct.Eval("c 0 sign/i")
+	ct.Eval("c 0 sign")
 	ct.AssertStack("0")
 }
 

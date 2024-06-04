@@ -46,10 +46,12 @@ Example:
 
 ### cube
 
-The cube of a number *x*, x³
+The cube of a number, x³
 
 Alias: `cb`
 
+Macro definition:
+```
 ```
 def cube dup dup mul mul
 ```
@@ -204,18 +206,20 @@ Stack effects:
 
 Example:
 
-| Input         | Stack
-|---------------|------
-| `c -6 sign/i` | `-1` 
-| `c 6 sign/i`  | `1`  
-| `c 0 sign/i`  | `0`  
+| Input       | Stack
+|-------------|------
+| `c -6 sign` | `-1` 
+| `c 6 sign`  | `1`  
+| `c 0 sign`  | `0`  
 
 ### square
 
-The square of a number *x*, x²
+The square of a number, x²
 
 Alias: `sq`
 
+Macro definition:
+```
 ```
 def square dup mul
 ```
