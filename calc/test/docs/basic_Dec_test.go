@@ -23,6 +23,17 @@ func TestOpDocs_BasicDec_AddD(t *testing.T) {
 	ct.AssertStack("8.8")
 }
 
+func TestOpDocs_BasicDec_CubeRootD(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("1.25 cube")
+	ct.AssertStack("1.953125")
+
+	ct.Eval("cbrt")
+	ct.AssertStack("1.25")
+}
+
 func TestOpDocs_BasicDec_DivD(t *testing.T) {
 	c := calc.New()
 	ct := zc.NewCalcTester(c, t)
@@ -93,6 +104,31 @@ func TestOpDocs_BasicDec_PowD(t *testing.T) {
 
 	ct.Eval("pow/d")
 	ct.AssertStack("63.53260431279859")
+}
+
+func TestOpDocs_BasicDec_RemD(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("6.75")
+	ct.AssertStack("6.75")
+
+	ct.Eval("0.5")
+	ct.AssertStack("6.75", "0.5")
+
+	ct.Eval("rem")
+	ct.AssertStack("0.25")
+}
+
+func TestOpDocs_BasicDec_SquareRootD(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("1.25 square")
+	ct.AssertStack("1.5625")
+
+	ct.Eval("sqrt")
+	ct.AssertStack("1.25")
 }
 
 func TestOpDocs_BasicDec_SubD(t *testing.T) {

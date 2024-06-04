@@ -20,5 +20,13 @@ var Basic = zc.Vol{
 	Macros: []zc.Macro{
 		{Name: "a", Expr: "add"},
 		{Name: "+", Expr: "add"},
+		{Name: "cube", Expr: "dup dup mul mul"},
+		{Name: "cb", Expr: "cube"},
+		{Name: "cbrt", Expr: "cube.root"},
+		{Name: "d", Expr: "div"},
+		{Name: "/", Expr: "div"},
+		{Name: "square", Expr: "dup mul"},
+		{Name: "sq", Expr: "square"},
+		{Name: "sqrt", Expr: "square.root"},
 	},
 }

@@ -10,7 +10,7 @@ ops:
   - name: AddBigInt
     params: [x:Int, y:Int]
     returns: [Int]
-  desc: Adds the value of *x* to *y*.
+  desc: Adds *x* to *y*.
   example:
   - i: 6
     o: [6]
@@ -26,7 +26,7 @@ ops:
     params: [x:Int, y:Int]
     returns: [Int]
   desc: |-
-    Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
+    Divides *x* by *y*. If *y* is zero, a 'division by zero'
     error is raised.
   example:
   - i: 6
@@ -149,7 +149,6 @@ ops:
     o: [0]
 
 - name: sqrt/i
-  overloads: sqrt
   title: Square root
   funcs:
   - name: SqrtBigInt

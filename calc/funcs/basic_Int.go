@@ -4,10 +4,7 @@ import (
 	"math/big"
 
 	"github.com/blackchip-org/zc/v6"
-)
-
-var (
-	ZeroBigInt big.Int
+	"github.com/blackchip-org/zc/v6/calc/types"
 )
 
 func AddBigInt(e *zc.OpEnv) {
@@ -20,7 +17,7 @@ func AddBigInt(e *zc.OpEnv) {
 func DivBigInt(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)
 	y := e.Args[1].(*big.Int)
-	if y.Cmp(&ZeroBigInt) == 0 {
+	if y.Cmp(types.ZeroBigInt) == 0 {
 		e.Err = zc.ErrDivisionByZero(e)
 		return
 	}
@@ -31,7 +28,7 @@ func DivBigInt(e *zc.OpEnv) {
 func ModBigInt(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)
 	y := e.Args[1].(*big.Int)
-	if y.Cmp(&ZeroBigInt) == 0 {
+	if y.Cmp(types.ZeroBigInt) == 0 {
 		e.Err = zc.ErrDivisionByZero(e)
 		return
 	}
@@ -74,7 +71,7 @@ func SignBigInt(e *zc.OpEnv) {
 
 func SqrtBigInt(e *zc.OpEnv) {
 	x := e.Args[0].(*big.Int)
-	if x.Cmp(&ZeroBigInt) < 0 {
+	if x.Cmp(types.ZeroBigInt) < 0 {
 		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
 		return
 	}

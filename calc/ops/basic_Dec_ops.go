@@ -16,6 +16,13 @@ var (
 		Returns:   []zc.Type{types.Dec},
 		Func:      funcs.AddDecimal,
 	}
+	CbrtDecimal = zc.Op{
+		Name:      "cube.root/d",
+		Overloads: "cube.root",
+		Params:    []zc.Type{types.Dec},
+		Returns:   []zc.Type{types.Dec},
+		Func:      funcs.CbrtDecimal,
+	}
 	DivDecimal = zc.Op{
 		Name:      "div/d",
 		Overloads: "div",
@@ -42,6 +49,20 @@ var (
 		Params:  []zc.Type{types.Dec, types.Dec},
 		Returns: []zc.Type{types.Dec},
 		Func:    funcs.PowDecimal,
+	}
+	RemDecimal = zc.Op{
+		Name:      "rem/d",
+		Overloads: "rem",
+		Params:    []zc.Type{types.Dec, types.Dec},
+		Returns:   []zc.Type{types.Dec},
+		Func:      funcs.RemDecimal,
+	}
+	SqrtDecimal = zc.Op{
+		Name:      "square.root/d",
+		Overloads: "square.root",
+		Params:    []zc.Type{types.Dec},
+		Returns:   []zc.Type{types.Dec},
+		Func:      funcs.SqrtDecimal,
 	}
 	SubDecimal = zc.Op{
 		Name:      "sub/d",

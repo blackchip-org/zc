@@ -6,14 +6,17 @@ Basic calculator
 
 ## Index
 
-| Operation         | Description   
-|-------------------|---------------
-| [`add/d`](#add/d) | Addition      
-| [`div/d`](#div/d) | Division      
-| [`mul/d`](#mul/d) | Multiplication
-| [`neg/d`](#neg/d) | Negation      
-| [`pow/d`](#pow/d) | Exponentiation
-| [`sub/d`](#sub/d) | Subtraction   
+| Operation                         | Description   
+|-----------------------------------|---------------
+| [`add/d`](#add/d)                 | Addition      
+| [`cube.root/d`](#cube.root/d)     | Cube Root     
+| [`div/d`](#div/d)                 | Division      
+| [`mul/d`](#mul/d)                 | Multiplication
+| [`neg/d`](#neg/d)                 | Negation      
+| [`pow/d`](#pow/d)                 | Exponentiation
+| [`rem/d`](#rem/d)                 | Remainder     
+| [`square.root/d`](#square.root/d) | Square Root   
+| [`sub/d`](#sub/d)                 | Subtraction   
 
 ## Operations
 
@@ -33,6 +36,23 @@ Example:
 | `6.6`   | `6.6`       
 | `2.2`   | `6.6 \| 2.2`
 | `add/d` | `8.8`       
+
+### cube.root/d
+
+The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Stack effects:
+```
+( x:Dec -- Dec )
+```
+
+Example:
+
+| Input       | Stack     
+|-------------|-----------
+| `1.25 cube` | `1.953125`
+| `cbrt`      | `1.25`    
 
 ### div/d
 
@@ -102,6 +122,41 @@ Example:
 | `6.6`   | `6.6`              
 | `2.2`   | `6.6 \| 2.2`       
 | `pow/d` | `63.53260431279859`
+
+### rem/d
+
+Remainder after dividing *y* by *x*. If *y* is zero, a 'division by zero'
+error is raised.
+
+Stack effects:
+```
+( x:Dec y:Dec -- Dec )
+```
+
+Example:
+
+| Input  | Stack        
+|--------|--------------
+| `6.75` | `6.75`       
+| `0.5`  | `6.75 \| 0.5`
+| `rem`  | `0.25`       
+
+### square.root/d
+
+The square root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Stack effects:
+```
+( x:Dec -- Dec )
+```
+
+Example:
+
+| Input         | Stack   
+|---------------|---------
+| `1.25 square` | `1.5625`
+| `sqrt`        | `1.25`  
 
 ### sub/d
 

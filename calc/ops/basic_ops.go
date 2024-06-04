@@ -7,6 +7,15 @@ import (
 )
 
 var (
-	Add = zc.Op{Name: "add", Virtual: true}
-	Mul = zc.Op{Name: "mul", Virtual: true}
+	Add        = zc.Op{Name: "add", Virtual: true}
+	CubeRoot   = zc.Op{Name: "cube.root", Virtual: true}
+	Div        = zc.Op{Name: "div", Virtual: true}
+	Mod        = zc.Op{Name: "mod", Virtual: true}
+	Mul        = zc.Op{Name: "mul", Virtual: true}
+	Neg        = zc.Op{Name: "neg", Virtual: true}
+	Pow        = zc.Op{Name: "pow", Virtual: true}
+	Rem        = zc.Op{Name: "rem", Virtual: true}
+	Sign       = zc.Op{Name: "sign", Virtual: true}
+	SquareRoot = zc.Op{Name: "square.root", Virtual: true}
+	Sub        = zc.Op{Name: "sub", Virtual: true}
 )

@@ -23,7 +23,7 @@ Basic calculator
 
 ### add/i
 
-Adds the value of *x* to *y*.
+Adds *x* to *y*.
 
 Stack effects:
 ```
@@ -40,7 +40,7 @@ Example:
 
 ### div/i
 
-Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
+Divides *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
 Stack effects:

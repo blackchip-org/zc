@@ -65,11 +65,10 @@ var (
 		Func:      funcs.SignBigInt,
 	}
 	SqrtBigInt = zc.Op{
-		Name:      "sqrt/i",
-		Overloads: "sqrt",
-		Params:    []zc.Type{types.Int},
-		Returns:   []zc.Type{types.Int},
-		Func:      funcs.SqrtBigInt,
+		Name:    "sqrt/i",
+		Params:  []zc.Type{types.Int},
+		Returns: []zc.Type{types.Int},
+		Func:    funcs.SqrtBigInt,
 	}
 	SubBigInt = zc.Op{
 		Name:      "sub/i",

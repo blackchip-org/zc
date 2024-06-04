@@ -7,7 +7,10 @@ import (
 	"github.com/cockroachdb/apd/v3"
 )
 
-var Dec = decType{}
+var (
+	Dec     = decType{}
+	DecZero = apd.New(0, 0)
+)
 
 type decType struct{}
 

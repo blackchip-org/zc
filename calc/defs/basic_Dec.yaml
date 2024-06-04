@@ -19,6 +19,23 @@ ops:
   - i: add/d
     o: [8.8]
 
+- name: cube.root/d
+  overloads: cube.root
+  alias: cbrt/d
+  title: Cube Root
+  funcs:
+  - name: CbrtDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 1.25 cube
+    o: [1.953125]
+  - i: cbrt
+    o: [1.25]
+
 - name: div/d
   overloads: div
   title: Division
@@ -92,6 +109,41 @@ ops:
     o: [6.6, 2.2]
   - i: pow/d
     o: [63.53260431279859]
+
+- name: rem/d
+  overloads: rem
+  title: Remainder
+  funcs:
+  - name: RemDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: |-
+    Remainder after dividing *y* by *x*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6.75
+    o: [6.75]
+  - i: 0.5
+    o: [6.75, 0.5]
+  - i: rem
+    o: [0.25]
+
+- name: square.root/d
+  overloads: square.root
+  alias: sqrt/d
+  title: Square Root
+  funcs:
+  - name: SqrtDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    The square root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 1.25 square
+    o: [1.5625]
+  - i: sqrt
+    o: [1.25]
 
 - name: sub/d
   overloads: sub

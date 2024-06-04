@@ -14,6 +14,8 @@ var (
 	IntA  = intAType{}
 	Int32 = int32Type{}
 	IntU  = intUType{}
+
+	ZeroBigInt = big.NewInt(0)
 )
 
 type intType struct{}
