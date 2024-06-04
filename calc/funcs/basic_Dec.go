@@ -97,6 +97,12 @@ func RemDecimal(e *zc.OpEnv) {
 	e.Returns = []any{x}
 }
 
+func SignDecimal(e *zc.OpEnv) {
+	x := e.Args[0].(*apd.Decimal)
+	s := x.Sign()
+	e.Returns = []any{s}
+}
+
 func SqrtDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	x := e.Args[0].(*apd.Decimal)

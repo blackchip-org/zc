@@ -23,4 +23,39 @@ var (
 		Returns:   []zc.Type{types.Float},
 		Func:      funcs.DivBigFloat,
 	}
+	MulBigFloat = zc.Op{
+		Name:      "mul/f",
+		Overloads: "mul",
+		Params:    []zc.Type{types.Float, types.Float},
+		Returns:   []zc.Type{types.Float},
+		Func:      funcs.MulBigFloat,
+	}
+	NegBigFloat = zc.Op{
+		Name:      "neg/f",
+		Overloads: "neg",
+		Params:    []zc.Type{types.Float},
+		Returns:   []zc.Type{types.Float},
+		Func:      funcs.NegBigFloat,
+	}
+	SignBigFloat = zc.Op{
+		Name:      "sign/f",
+		Overloads: "sign",
+		Params:    []zc.Type{types.Float},
+		Returns:   []zc.Type{types.IntA},
+		Func:      funcs.SignBigFloat,
+	}
+	SqrtBigFloat = zc.Op{
+		Name:      "square.root/f",
+		Overloads: "square.root",
+		Params:    []zc.Type{types.Float},
+		Returns:   []zc.Type{types.Float},
+		Func:      funcs.SqrtBigFloat,
+	}
+	SubBigFloat = zc.Op{
+		Name:      "sub/f",
+		Overloads: "sub",
+		Params:    []zc.Type{types.Float, types.Float},
+		Returns:   []zc.Type{types.Float},
+		Func:      funcs.SubBigFloat,
+	}
 )

@@ -250,14 +250,14 @@ func (c *Calc) assembleRet(typ Type, env *OpEnv, idx int) bool {
 }
 
 func invalidArgTypes(opName string, types []Type, varArgs Type) error {
-	var names []string
+	var names []any
 	for _, t := range types {
 		names = append(names, t.Name())
 	}
 	if varArgs != nil {
 		names = append(names, varArgs.Name()+"*")
 	}
-	return fmt.Errorf("%v: invalid arguments, expected %v", opName, FormatList(names))
+	return fmt.Errorf("%v: invalid arguments, expected %v", opName, FormatList(names...))
 }
 
 func invalidRetTypes(opName string, types []Type, varRets Type) error {

@@ -128,9 +128,27 @@ ops:
   - i: rem
     o: [0.25]
 
+- name: sign/d
+  overloads: sign
+  title: Sign
+  funcs:
+  - name: SignDecimal
+    params: [x:Dec]
+    returns: [Int/a]
+  desc: |-
+    Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+    if *x* is zero.
+  example:
+  - i: c -6.4 sign/d
+    o: [-1]
+  - i: c 6.4 sign/d
+    o: [1]
+  - i: c 0 sign/d
+    o: [0]
+
 - name: square.root/d
   overloads: square.root
-  alias: sqrt/d
+  aliases: [sqrt/d]
   title: Square Root
   funcs:
   - name: SqrtDecimal
@@ -142,7 +160,7 @@ ops:
   example:
   - i: 1.25 sq
     o: [1.5625]
-  - i: sqrt
+  - i: sqrt/d
     o: [1.25]
 
 - name: sub/d

@@ -49,12 +49,14 @@
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/d`](ops/basic_Dec.md#mul/d): decimal (apd)
   - [`mul/d/ss`](ops/basic_Dec_SS.md#mul/d/ss): decimal (shopspring)
+  - [`mul/f`](ops/basic_Float.md#mul/f): float
   - [`mul/i`](ops/basic_Int.md#mul/i): integer
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/d`](ops/basic_Dec.md#neg/d): decimal (apd)
   - [`neg/d/ss`](ops/basic_Dec_SS.md#neg/d/ss): decimal (shopspring)
+  - [`neg/f`](ops/basic_Float.md#neg/f): float
   - [`neg/i`](ops/basic_Int.md#neg/i): integer
 
 ## p
@@ -77,6 +79,8 @@
 - [`scientific.notation`](ops/format.md#scientificnotation): 
   - [`scientific.notation/d`](ops/format_Dec.md#scientificnotation/d): decimal (apd)
 - [`sign`](ops/basic.md#sign): Sign
+  - [`sign/d`](ops/basic_Dec.md#sign/d): decimal (apd)
+  - [`sign/f`](ops/basic_Float.md#sign/f): float
   - [`sign/i`](ops/basic_Int.md#sign/i): integer
 - [`sn`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
@@ -85,9 +89,11 @@
 - [`square`](ops/basic.md#square): Square of a number
 - [`square.root`](ops/basic.md#squareroot): Square Root
   - [`square.root/d`](ops/basic_Dec.md#squareroot/d): decimal (apd)
+  - [`square.root/f`](ops/basic_Float.md#squareroot/f): float
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/d`](ops/basic_Dec.md#sub/d): decimal (apd)
   - [`sub/d/ss`](ops/basic_Dec_SS.md#sub/d/ss): decimal (shopspring)
+  - [`sub/f`](ops/basic_Float.md#sub/f): float
   - [`sub/i`](ops/basic_Int.md#sub/i): integer
 
 ## u

@@ -57,6 +57,13 @@ var (
 		Returns:   []zc.Type{types.Dec},
 		Func:      funcs.RemDecimal,
 	}
+	SignDecimal = zc.Op{
+		Name:      "sign/d",
+		Overloads: "sign",
+		Params:    []zc.Type{types.Dec},
+		Returns:   []zc.Type{types.IntA},
+		Func:      funcs.SignDecimal,
+	}
 	SqrtDecimal = zc.Op{
 		Name:      "square.root/d",
 		Overloads: "square.root",

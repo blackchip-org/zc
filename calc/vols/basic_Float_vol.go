@@ -12,6 +12,13 @@ var BasicFloat = zc.Vol{
 	Ops: []zc.Op{
 		ops.AddBigFloat,
 		ops.DivBigFloat,
+		ops.MulBigFloat,
+		ops.NegBigFloat,
+		ops.SignBigFloat,
+		ops.SqrtBigFloat,
+		ops.SubBigFloat,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "sqrt/f", Expr: "square.root/f"},
+	},
 }

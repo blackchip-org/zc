@@ -7,7 +7,10 @@ import (
 	"github.com/blackchip-org/zc/v6/calc/state"
 )
 
-var Float = floatType{}
+var (
+	Float     = floatType{}
+	FloatZero = big.NewFloat(0)
+)
 
 type floatType struct{}
 

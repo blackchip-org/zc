@@ -36,3 +36,70 @@ func TestOpDocs_BasicFloat_DivF(t *testing.T) {
 	ct.Eval("div/f")
 	ct.AssertStack("0.6666666666666666667")
 }
+
+func TestOpDocs_BasicFloat_MulF(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
+
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
+
+	ct.Eval("mul/f")
+	ct.AssertStack("14.52")
+}
+
+func TestOpDocs_BasicFloat_NegF(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("-6.6")
+	ct.AssertStack("-6.6")
+
+	ct.Eval("neg/f")
+	ct.AssertStack("6.6")
+
+	ct.Eval("neg/f")
+	ct.AssertStack("-6.6")
+}
+
+func TestOpDocs_BasicFloat_SignF(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("c -6.4 sign/d")
+	ct.AssertStack("-1")
+
+	ct.Eval("c 6.4 sign/d")
+	ct.AssertStack("1")
+
+	ct.Eval("c 0 sign/d")
+	ct.AssertStack("0")
+}
+
+func TestOpDocs_BasicFloat_SquareRootF(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("1.25 sq")
+	ct.AssertStack("1.5625")
+
+	ct.Eval("sqrt/f")
+	ct.AssertStack("1.25")
+}
+
+func TestOpDocs_BasicFloat_SubF(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("6.6")
+	ct.AssertStack("6.6")
+
+	ct.Eval("2.2")
+	ct.AssertStack("6.6", "2.2")
+
+	ct.Eval("sub/d")
+	ct.AssertStack("4.4")
+}

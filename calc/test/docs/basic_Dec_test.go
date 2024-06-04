@@ -120,6 +120,20 @@ func TestOpDocs_BasicDec_RemD(t *testing.T) {
 	ct.AssertStack("0.25")
 }
 
+func TestOpDocs_BasicDec_SignD(t *testing.T) {
+	c := calc.New()
+	ct := zc.NewCalcTester(c, t)
+
+	ct.Eval("c -6.4 sign/d")
+	ct.AssertStack("-1")
+
+	ct.Eval("c 6.4 sign/d")
+	ct.AssertStack("1")
+
+	ct.Eval("c 0 sign/d")
+	ct.AssertStack("0")
+}
+
 func TestOpDocs_BasicDec_SquareRootD(t *testing.T) {
 	c := calc.New()
 	ct := zc.NewCalcTester(c, t)
@@ -127,7 +141,7 @@ func TestOpDocs_BasicDec_SquareRootD(t *testing.T) {
 	ct.Eval("1.25 sq")
 	ct.AssertStack("1.5625")
 
-	ct.Eval("sqrt")
+	ct.Eval("sqrt/d")
 	ct.AssertStack("1.25")
 }
 
