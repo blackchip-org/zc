@@ -25,8 +25,13 @@ var Basic = zc.Vol{
 		{Name: "cbrt", Expr: "cube.root"},
 		{Name: "d", Expr: "div"},
 		{Name: "/", Expr: "div"},
+		{Name: "m", Expr: "mul"},
+		{Name: "*", Expr: "mul"},
+		{Name: "**", Expr: "pow"},
 		{Name: "square", Expr: "dup mul"},
 		{Name: "sq", Expr: "square"},
 		{Name: "sqrt", Expr: "square.root"},
+		{Name: "s", Expr: "sub"},
+		{Name: "-", Expr: "sub"},
 	},
 }

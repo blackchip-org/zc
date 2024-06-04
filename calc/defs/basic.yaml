@@ -92,6 +92,7 @@ ops:
 - name: mul
   title: Multiplication
   virtual: true
+  aliases: [m, '*']
   funcs:
   - params: [x:Int, y:Int]
     returns: [Int]
@@ -123,6 +124,7 @@ ops:
 
 - name: pow
   virtual: true
+  aliases: ['**']
   title: Exponentiation
   funcs:
   - params: [x:Int, y:Int]
@@ -200,6 +202,7 @@ ops:
 
 - name: sub
   virtual: true
+  aliases: [s, '-']
   title: Subtraction
   funcs:
   - params: [x:Int, y:Int]

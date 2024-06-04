@@ -13,14 +13,14 @@ Basic calculator
 | [`cube.root, cbrt`](#cube.root)     | Cube root         
 | [`div, d, /`](#div)                 | Division          
 | [`mod`](#mod)                       | Modulus           
-| [`mul`](#mul)                       | Multiplication    
+| [`mul, m, *`](#mul)                 | Multiplication    
 | [`neg`](#neg)                       | Negation          
-| [`pow`](#pow)                       | Exponentiation    
+| [`pow, **`](#pow)                   | Exponentiation    
 | [`rem`](#rem)                       | Remainder         
 | [`sign`](#sign)                     | Sign              
 | [`square, sq`](#square)             | Square of a number
 | [`square.root, sqrt`](#square.root) | Square Root       
-| [`sub`](#sub)                       | Subtraction       
+| [`sub, s, -`](#sub)                 | Subtraction       
 
 ## Operations
 
@@ -121,6 +121,8 @@ Example:
 
 Multiplies *x* by *y*.
 
+Aliases: `m`, `*`
+
 Stack effects:
 ```
 ( x:Int y:Int -- Int )
@@ -155,6 +157,8 @@ Example:
 ### pow
 
 Raises *x* to the power of *y*.
+
+Alias: `**`
 
 Stack effects:
 ```
@@ -244,6 +248,8 @@ Example:
 ### sub
 
 Subtracts the value of *y* from *x*
+
+Aliases: `s`, `-`
 
 Stack effects:
 ```

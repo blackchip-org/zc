@@ -368,12 +368,12 @@ func genIndex(vols []zc.VolDef) {
 			section = ch
 			fmt.Fprintf(f, "\n## %c\n", ch)
 		}
-		fmt.Fprintf(f, "- [%v](%v): %v\n", e.name, e.anchor, e.title)
+		fmt.Fprintf(f, "- [`%v`](%v): %v\n", e.name, e.anchor, e.title)
 		entries, ok := subs[e.name]
 		if ok {
 			slices.SortStableFunc(entries, entrySort)
 			for _, e := range entries {
-				fmt.Fprintf(f, "  - [%v](%v): %v\n", e.name, e.anchor, e.title)
+				fmt.Fprintf(f, "  - [`%v`](%v): %v\n", e.name, e.anchor, e.title)
 			}
 		}
 	}
