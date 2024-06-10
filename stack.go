@@ -1,65 +1,62 @@
 package zc
 
 import (
-	"slices"
+	"strings"
 )
 
+type Meta struct {
+	Unit  string
+	Label string
+}
+
 type Item struct {
-	Value any
-	Type  Type
-	Anno  string
+	Val  any
+	Type TypeID
+	Meta *Meta
 }
 
 func (i Item) String() string {
-	var anno string
-	if i.Anno != "" {
-		anno = " # " + i.Anno
+	if i.Meta == nil {
+		return String(i.Val)
 	}
-	return i.Type.Format(i.Value) + anno
+	var label string
+	if i.Meta.Label != "" {
+		label = " # " + i.Meta.Label
+	}
+	return String(i.Val) + i.Meta.Unit + label
 }
 
 type Stack struct {
-	Items []Item
+	items []Item
+	pos   int
 }
 
 func (s *Stack) Push(item Item) {
-	s.Items = append(s.Items, item)
+	if s.pos < len(s.items) {
+		s.items[s.pos] = item
+	} else {
+		s.items = append(s.items, item)
+	}
+	s.pos++
 }
 
 func (s *Stack) Pop() (Item, bool) {
 	var item Item
-	n := len(s.Items)
-	if n == 0 {
+	if s.pos == 0 {
 		return item, false
 	}
-	item, s.Items = s.Items[n-1], s.Items[:n-1]
-	return item, true
+	s.pos--
+	return s.items[s.pos], true
 }
 
-func (s *Stack) PopN(n int) ([]Item, bool) {
-	var ret []Item
-	l := len(s.Items)
-	if l < n {
-		return nil, false
+func (s *Stack) Items() []Item {
+	return s.items[:s.pos]
+}
+
+func (s *Stack) String() string {
+	var strs []string
+	for _, i := range s.items[:s.pos] {
+		strs = append(strs, i.String())
 	}
-	ret, s.Items = s.Items[l-n:], s.Items[:l-n]
-	return ret, true
-}
-
-func (s *Stack) At(idx int) Item {
-	return s.Items[idx]
-}
-
-func (s *Stack) Len() int {
-	return len(s.Items)
-}
-
-func (s *Stack) Clone() Stack {
-	var sc Stack
-	sc.Items = slices.Clone(s.Items)
-	return sc
-}
-
-func (s *Stack) Clear() {
-	s.Items = nil
+	return strings.Join(strs, " | ")
 }

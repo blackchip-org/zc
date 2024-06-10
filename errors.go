@@ -1,21 +1,22 @@
 package zc
 
 import (
-	"errors"
 	"fmt"
+	"reflect"
+	"strings"
 )
 
-var ErrStackEmpty = errors.New("stack empty")
-
-func ErrDivisionByZero(env *OpEnv) error {
-	return fmt.Errorf("%v: division by zero", env.Op.Name)
+func ErrWrongGoType(want string, have any) error {
+	return fmt.Errorf("expected type %v, got %v", want, goName(have))
 }
 
-func ErrInvalidArg(env *OpEnv, format string, args ...any) error {
-	args2 := append([]any{env.Op.Name}, args...)
-	return fmt.Errorf("%v: invalid argument, "+format, args2...)
-}
-
-func ErrOp(env *OpEnv, err error) error {
-	return fmt.Errorf("%v: %v", env.Op.Name, err)
+func goName(v any) string {
+	var name strings.Builder
+	t := reflect.TypeOf(v)
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+		name.WriteRune('*')
+	}
+	name.WriteString(t.Name())
+	return name.String()
 }
