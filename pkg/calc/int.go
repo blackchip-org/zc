@@ -85,7 +85,7 @@ func (c *BigInt) BitLen() int {
 	if c.err != nil {
 		return 0
 	}
-	c.AssertArgs(0)
+	c.AssertArgs(1)
 	return c.Top().BitLen()
 }
 
