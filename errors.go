@@ -1,10 +1,17 @@
 package zc
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 	"strings"
 )
+
+func ErrNotEnoughArgs(have, want int) error {
+	return fmt.Errorf("expected %v argument(s), got %v", have, want)
+}
+
+var ErrStackEmpty = errors.New("stack empty")
 
 func ErrWrongGoType(want string, have any) error {
 	return fmt.Errorf("expected type %v, got %v", want, goName(have))

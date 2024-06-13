@@ -3,10 +3,12 @@ package calc
 import (
 	"math/big"
 	"testing"
+
+	"github.com/blackchip-org/zc/v6"
 )
 
-func TestEnvStack(t *testing.T) {
-	e := NewBigIntEnv()
+func TestStackPushPop(t *testing.T) {
+	e := newBigIntEnv()
 
 	e.Push(big.NewInt(1))
 	e.Push(big.NewInt(2))
@@ -49,19 +51,19 @@ func TestEnvStack(t *testing.T) {
 
 	defer func() {
 		if have := recover(); have != nil {
-			want := "stack empty"
+			want := zc.ErrStackEmpty
 			if have != want {
 				t.Fatalf("\n have panic: %v \n want panic: %v", have, want)
 			}
 		} else {
-			t.Fatal("expected panic ")
+			t.Fatal("expected panic")
 		}
 	}()
 	e.Pop()
 }
 
-func TestEnvStackRecycle(t *testing.T) {
-	e := NewBigIntEnv()
+func TestStackRecycle(t *testing.T) {
+	e := newBigIntEnv()
 
 	e.Push(big.NewInt(1))
 	e.Push(big.NewInt(2))
