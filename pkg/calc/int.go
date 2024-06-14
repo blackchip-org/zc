@@ -2,25 +2,10 @@ package calc
 
 import (
 	"math/big"
-	"math/rand"
 )
 
 type BigInt struct {
-	Calc[*big.Int]
-}
-
-func cloneBigInt(src *big.Int) *big.Int {
-	var dest big.Int
-	dest.Set(src)
-	return &dest
-}
-
-func newBigIntEnv() Calc[*big.Int] {
-	return Calc[*big.Int]{Clone: cloneBigInt}
-}
-
-func NewBigInt() *BigInt {
-	return &BigInt{Calc: newBigIntEnv()}
+	Stack[*big.Int]
 }
 
 func (c *BigInt) Abs() {
@@ -29,19 +14,19 @@ func (c *BigInt) Abs() {
 }
 
 func (c *BigInt) Add() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Add(x, y)
 }
 
 func (c *BigInt) And() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.And(x, y)
 }
 
 func (c *BigInt) AndNot() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.AndNot(x, y)
 }
@@ -58,29 +43,34 @@ func (c *BigInt) Binomial(n, k int64) {
 }
 
 func (c *BigInt) Cmp() int {
-	y := c.Release()
-	x := c.Release()
+	y := c.Top()
+	x := c.Next()
 	return x.Cmp(y)
 }
 
 func (c *BigInt) CmpAbs() int {
-	y := c.Release()
-	x := c.Release()
+	y := c.Top()
+	x := c.Next()
 	return x.CmpAbs(y)
 }
 
 func (c *BigInt) Div() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Div(x, y)
 }
 
 func (c *BigInt) DivMod() {
-	y := c.Release()
-	x := c.Release()
-	x.DivMod(x, y, y)
-	c.Push(y) // mod
-	c.Push(x)
+	m, ok := c.Recycle()
+	if !ok {
+		m = new(big.Int)
+	}
+
+	y := c.Drop()
+	x := c.Drop()
+	x.DivMod(x, y, m)
+	c.Push(x) // div
+	c.Push(m) // mod
 }
 
 func (c *BigInt) Dup() {
@@ -96,22 +86,22 @@ func (c *BigInt) Dup() {
 }
 
 func (c *BigInt) Exp() {
-	m := c.Release()
-	y := c.Release()
+	m := c.Drop()
+	y := c.Drop()
 	x := c.Top()
 	x.Exp(x, y, m)
 }
 
 func (c *BigInt) GCD() {
-	b := c.Release()
-	a := c.Release()
-	y := c.Release()
+	b := c.Drop()
+	a := c.Drop()
+	y := c.Drop()
 	x := c.Top()
 	x.GCD(x, y, a, b)
 }
 
 func (c *BigInt) GCD2() {
-	b := c.Release()
+	b := c.Drop()
 	a := c.Top()
 	a.GCD(nil, nil, a, b)
 }
@@ -122,25 +112,25 @@ func (c *BigInt) Lsh(n uint) {
 }
 
 func (c *BigInt) Mod() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Mod(x, y)
 }
 
 func (c *BigInt) ModInverse() {
-	n := c.Release()
+	n := c.Drop()
 	g := c.Top()
 	g.ModInverse(g, n)
 }
 
 func (c *BigInt) ModSqrt() {
-	p := c.Release()
+	p := c.Drop()
 	x := c.Top()
 	x.ModSqrt(x, p)
 }
 
 func (c *BigInt) Mul() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Mul(x, y)
 }
@@ -167,27 +157,38 @@ func (c *BigInt) Not() {
 }
 
 func (c *BigInt) Or() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Or(x, y)
 }
 
+func (c *BigInt) Pop() *big.Int {
+	var r big.Int
+	x := c.Drop()
+	r.Set(x)
+	return &r
+}
+
 func (c *BigInt) Quo() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Quo(x, y)
 }
 
 func (c *BigInt) QuoRem() {
-	y := c.Release()
-	x := c.Release()
-	x.QuoRem(x, y, y)
-	c.Push(y) // rem
-	c.Push(x)
+	r, ok := c.Recycle()
+	if !ok {
+		r = new(big.Int)
+	}
+	y := c.Drop()
+	x := c.Drop()
+	x.QuoRem(x, y, r)
+	c.Push(x) // quo
+	c.Push(r) // rem
 }
 
 func (c *BigInt) Pow() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Exp(x, y, nil)
 }
@@ -204,13 +205,8 @@ func (c *BigInt) PushInt(vals ...int) {
 	}
 }
 
-func (c *BigInt) Rand(rnd *rand.Rand) {
-	n := c.Top()
-	n.Rand(rnd, n)
-}
-
 func (c *BigInt) Rem() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Rem(x, y)
 }
@@ -225,23 +221,19 @@ func (c *BigInt) SetBit(i int, b uint) {
 	x.SetBit(x, i, b)
 }
 
-func (c *BigInt) Sign() int {
-	return c.Top().Sign()
-}
-
 func (c *BigInt) Sqrt() {
 	x := c.Top()
 	x.Sqrt(x)
 }
 
 func (c *BigInt) Sub() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Sub(x, y)
 }
 
 func (c *BigInt) Xor() {
-	y := c.Release()
+	y := c.Drop()
 	x := c.Top()
 	x.Xor(x, y)
 }

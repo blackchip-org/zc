@@ -6,7 +6,7 @@ import (
 )
 
 func TestBigIntAbs(t *testing.T) {
-	c := NewBigInt()
+	var c BigInt
 	c.PushInt(-5)
 	c.Abs()
 
@@ -18,7 +18,7 @@ func TestBigIntAbs(t *testing.T) {
 }
 
 func TestBigIntAdd(t *testing.T) {
-	c := NewBigInt()
+	var c BigInt
 	c.PushInt(6)
 	c.PushInt(3)
 	c.Add()
@@ -31,7 +31,7 @@ func TestBigIntAdd(t *testing.T) {
 }
 
 func TestBigIntAnd(t *testing.T) {
-	c := NewBigInt()
+	var c BigInt
 	c.PushInt(0b1100)
 	c.PushInt(0b1010)
 	c.And()
@@ -43,13 +43,364 @@ func TestBigIntAnd(t *testing.T) {
 	}
 }
 
+func TestBigIntAndNot(t *testing.T) {
+	var c BigInt
+	c.PushInt(0b1100)
+	c.PushInt(0b1010)
+	c.AndNot()
+
+	have := c.Top().Int64()
+	want := int64(0b0100)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntBinomial(t *testing.T) {
+	var c BigInt
+	c.Binomial(9, 5)
+
+	have := c.Top().Int64()
+	want := int64(126)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntCmp(t *testing.T) {
+	var c BigInt
+
+	c.PushInt(1, 2)
+	have := c.Cmp()
+	want := -1
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntCmpAbs(t *testing.T) {
+	var c BigInt
+
+	c.PushInt(1, -2)
+	have := c.CmpAbs()
+	want := -1
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntDiv(t *testing.T) {
+	var c BigInt
+	c.PushInt(-7)
+	c.PushInt(2)
+	c.Div()
+
+	have := c.Top().Int64()
+	want := int64(-4)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntDivMod(t *testing.T) {
+	var c BigInt
+	c.PushInt(-7, 2)
+	c.DivMod()
+
+	have := c.Top().Int64()
+	want := int64(1)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+
+	have = c.Next().Int64()
+	want = int64(-4)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntDup(t *testing.T) {
+	var c BigInt
+	c.PushInt(3)
+	c.Dup()
+	c.Add()
+
+	have := c.Top().Int64()
+	want := int64(6)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntExp(t *testing.T) {
+	var c BigInt
+	c.PushInt(6, 2, 0)
+	c.Exp()
+
+	have := c.Top().Int64()
+	want := int64(36)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntGCD(t *testing.T) {
+	var c BigInt
+	c.PushInt(1, 1, 8, 12)
+	c.GCD()
+
+	have := c.Top().Int64()
+	want := int64(4)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntGCD2(t *testing.T) {
+	var c BigInt
+	c.PushInt(8, 12)
+	c.GCD2()
+
+	have := c.Top().Int64()
+	want := int64(4)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntLsh(t *testing.T) {
+	var c BigInt
+	c.PushInt(0b10)
+	c.Lsh(2)
+
+	have := c.Top().Int64()
+	want := int64(0b1000)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntMod(t *testing.T) {
+	var c BigInt
+	c.PushInt(-7, 2)
+	c.Mod()
+
+	have := c.Top().Int64()
+	want := int64(1)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntModInverse(t *testing.T) {
+	var c BigInt
+	c.PushInt(7, 11)
+	c.ModInverse()
+
+	have := c.Top().Int64()
+	want := int64(8)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntModSqrt(t *testing.T) {
+	var c BigInt
+	c.PushInt(223, 17)
+	c.ModSqrt()
+
+	have := c.Top().Int64()
+	want := int64(6)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntMul(t *testing.T) {
+	var c BigInt
+	c.PushInt(6, 2)
+	c.Mul()
+
+	have := c.Top().Int64()
+	want := int64(12)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntMulRange(t *testing.T) {
+	var c BigInt
+	c.MulRange(1, 10)
+
+	have := c.Top().Int64()
+	want := int64(3628800)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntNeg(t *testing.T) {
+	var c BigInt
+	c.PushInt(6)
+	c.Neg()
+
+	have := c.Top().Int64()
+	want := int64(-6)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntNot(t *testing.T) {
+	var c BigInt
+	c.PushInt(0b101)
+	c.Not()
+
+	have := c.Top().Int64()
+	want := int64(-0b110)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntOr(t *testing.T) {
+	var c BigInt
+	c.PushInt(0b1100, 0b1010)
+	c.Or()
+
+	have := c.Top().Int64()
+	want := int64(0b1110)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntQuo(t *testing.T) {
+	var c BigInt
+	c.PushInt(-7)
+	c.PushInt(3)
+	c.Quo()
+
+	have := c.Top().Int64()
+	want := int64(-2)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntQuoRem(t *testing.T) {
+	var c BigInt
+	c.PushInt(-7)
+	c.PushInt(3)
+	c.QuoRem()
+
+	have := c.Top().Int64()
+	want := int64(-1)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+
+	have = c.Next().Int64()
+	want = int64(-2)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntPow(t *testing.T) {
+	var c BigInt
+	c.PushInt(6)
+	c.PushInt(2)
+	c.Pow()
+
+	have := c.Top().Int64()
+	want := int64(36)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntRem(t *testing.T) {
+	var c BigInt
+	c.PushInt(-7)
+	c.PushInt(3)
+	c.Rem()
+
+	have := c.Top().Int64()
+	want := int64(-1)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntRsh(t *testing.T) {
+	var c BigInt
+	c.PushInt(0b1000)
+	c.Rsh(2)
+
+	have := c.Top().Int64()
+	want := int64(0b10)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntSetBit(t *testing.T) {
+	var c BigInt
+	c.PushInt(0b101)
+	c.SetBit(1, 1)
+
+	have := c.Top().Int64()
+	want := int64(0b111)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
+func TestBigIntSqrt(t *testing.T) {
+	var c BigInt
+	c.PushInt(256)
+	c.Sqrt()
+
+	have := c.Top().Int64()
+	want := int64(16)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntSub(t *testing.T) {
+	var c BigInt
+	c.PushInt(6, 2)
+	c.Sub()
+
+	have := c.Top().Int64()
+	want := int64(4)
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
+func TestBigIntXor(t *testing.T) {
+	var c BigInt
+	c.PushInt(0b1100, 0b1010)
+	c.Xor()
+
+	have := c.Top().Int64()
+	want := int64(0b110)
+	if have != want {
+		t.Fatalf("\n have: %b \n want: %b", have, want)
+	}
+}
+
 const (
 	fact1000 = "402387260077093773543702433923003985719374864210714632543799910429938512398629020592044208486969404800479988610197196058631666872994808558901323829669944590997424504087073759918823627727188732519779505950995276120874975462497043601418278094646496291056393887437886487337119181045825783647849977012476632889835955735432513185323958463075557409114262417474349347553428646576611667797396668820291207379143853719588249808126867838374559731746136085379534524221586593201928090878297308431392844403281231558611036976801357304216168747609675871348312025478589320767169132448426236131412508780208000261683151027341827977704784635868170164365024153691398281264810213092761244896359928705114964975419909342221566832572080821333186116811553615836546984046708975602900950537616475847728421889679646244945160765353408198901385442487984959953319101723355556602139450399736280750137837615307127761926849034352625200015888535147331611702103968175921510907788019393178114194545257223865541461062892187960223838971476088506276862967146674697562911234082439208160153780889893964518263243671616762179168909779911903754031274622289988005195444414282012187361745992642956581746628302955570299024324153181617210465832036786906117260158783520751516284225540265170483304226143974286933061690897968482590125458327168226458066526769958652682272807075781391858178889652208164348344825993266043367660176999612831860788386150279465955131156552036093988180612138558600301435694527224206344631797460594682573103790084024432438465657245014402821885252470935190620929023136493273497565513958720559654228749774011413346962715422845862377387538230483865688976461927383814900140767310446640259899490222221765904339901886018566526485061799702356193897017860040811889729918311021171229845901641921068884387121855646124960798722908519296819372388642614839657382291123125024186649353143970137428531926649875337218940694281434118520158014123344828015051399694290153483077644569099073152433278288269864602789864321139083506217095002597389863554277196742822248757586765752344220207573630569498825087968928162753848863396909959826280956121450994871701244516461260379029309120889086942028510640182154399457156805941872748998094254742173582401063677404595741785160829230135358081840096996372524230560855903700624271243416909004153690105933983835777939410970027753472000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 	fib1000  = "43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875"
 )
 
 func factorialTest(n int) *big.Int {
-	c := NewBigInt()
+	var c BigInt
 	c.PushInt(1)
 	for i := 1; i <= n; i++ {
 		c.PushInt(i)
@@ -95,7 +446,7 @@ func BenchmarkFactorialNative(b *testing.B) {
 }
 
 func fibTest(n int) *big.Int {
-	c := NewBigInt()
+	var c BigInt
 	c.PushInt(1)
 	c.PushInt(1)
 	for i := 3; i <= n; i++ {
@@ -182,8 +533,8 @@ func distTestNative() *big.Int {
 }
 
 func TestDist(t *testing.T) {
-	c := NewBigInt()
-	r := distTest(c).String()
+	var c BigInt
+	r := distTest(&c).String()
 	if r != "5" {
 		t.Fatalf("\n have: %v \n want: %v", r, "5")
 	}
@@ -197,9 +548,9 @@ func TestDistNative(t *testing.T) {
 }
 
 func BenchmarkDist(b *testing.B) {
-	c := NewBigInt()
+	var c BigInt
 	for i := 0; i < b.N; i++ {
-		distTest(c)
+		distTest(&c)
 	}
 }
 

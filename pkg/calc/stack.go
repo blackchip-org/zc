@@ -7,34 +7,16 @@ import (
 	"github.com/blackchip-org/zc/v6"
 )
 
-type Calc[T any] struct {
+type Stack[T any] struct {
 	items []T
 	pos   int
-	err   error
-	Clone func(T) T
 }
 
-func (s *Calc[T]) Clear() {
-	s.err = nil
+func (s *Stack[T]) Clear() {
 	s.pos = 0
 }
 
-func (s *Calc[T]) Err() error {
-	return s.err
-}
-
-func (s *Calc[T]) Pop() T {
-	if s.err != nil {
-		panic(s.err)
-	}
-	if s.pos == 0 {
-		panic(zc.ErrStackEmpty)
-	}
-	s.pos--
-	return s.Clone(s.items[s.pos])
-}
-
-func (s *Calc[T]) Push(vals ...T) {
+func (s *Stack[T]) Push(vals ...T) {
 	for _, val := range vals {
 		if s.pos < len(s.items) {
 			s.items[s.pos] = val
@@ -45,7 +27,7 @@ func (s *Calc[T]) Push(vals ...T) {
 	}
 }
 
-func (s *Calc[T]) Recycle() (T, bool) {
+func (s *Stack[T]) Recycle() (T, bool) {
 	var item T
 	if s.pos >= len(s.items) {
 		return item, false
@@ -55,7 +37,7 @@ func (s *Calc[T]) Recycle() (T, bool) {
 	return item, true
 }
 
-func (s *Calc[T]) Release() T {
+func (s *Stack[T]) Drop() T {
 	if s.pos == 0 {
 		panic(zc.ErrStackEmpty)
 	}
@@ -63,7 +45,14 @@ func (s *Calc[T]) Release() T {
 	return s.items[s.pos]
 }
 
-func (s *Calc[T]) RotateDown() {
+func (s *Stack[T]) Next() T {
+	if s.pos < 2 {
+		panic(zc.ErrStackUnderflow)
+	}
+	return s.items[s.pos-2]
+}
+
+func (s *Stack[T]) RotateDown() {
 	if s.pos < 3 {
 		panic(zc.ErrNotEnoughArgs(s.pos, 3))
 	}
@@ -73,7 +62,7 @@ func (s *Calc[T]) RotateDown() {
 	s.items[2] = rot
 }
 
-func (s *Calc[T]) String() string {
+func (s *Stack[T]) String() string {
 	items := s.items[:s.pos]
 	var strs []string
 	for _, item := range items {
@@ -82,7 +71,7 @@ func (s *Calc[T]) String() string {
 	return strings.Join(strs, " | ")
 }
 
-func (s *Calc[T]) Top() T {
+func (s *Stack[T]) Top() T {
 	if s.pos == 0 {
 		panic(zc.ErrStackEmpty)
 	}
