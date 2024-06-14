@@ -14,12 +14,6 @@ type Calc[T any] struct {
 	Clone func(T) T
 }
 
-func (s *Calc[T]) AssertArgs(n int) {
-	if s.pos < n {
-		panic(zc.ErrNotEnoughArgs(s.pos, 3))
-	}
-}
-
 func (s *Calc[T]) Clear() {
 	s.err = nil
 	s.pos = 0
