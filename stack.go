@@ -1,10 +1,8 @@
-package calc
+package zc
 
 import (
 	"fmt"
 	"strings"
-
-	"github.com/blackchip-org/zc/v6"
 )
 
 type Stack[T any] struct {
@@ -39,7 +37,7 @@ func (s *Stack[T]) Recycle() (T, bool) {
 
 func (s *Stack[T]) Drop() T {
 	if s.pos == 0 {
-		panic(zc.ErrStackEmpty)
+		panic(ErrStackEmpty)
 	}
 	s.pos--
 	return s.items[s.pos]
@@ -47,14 +45,14 @@ func (s *Stack[T]) Drop() T {
 
 func (s *Stack[T]) Next() T {
 	if s.pos < 2 {
-		panic(zc.ErrStackUnderflow)
+		panic(ErrStackUnderflow)
 	}
 	return s.items[s.pos-2]
 }
 
 func (s *Stack[T]) RotateDown() {
 	if s.pos < 3 {
-		panic(zc.ErrNotEnoughArgs(s.pos, 3))
+		panic(ErrNotEnoughArgs(s.pos, 3))
 	}
 	rot := s.items[0]
 	s.items[0] = s.items[1]
@@ -73,7 +71,7 @@ func (s *Stack[T]) String() string {
 
 func (s *Stack[T]) Top() T {
 	if s.pos == 0 {
-		panic(zc.ErrStackEmpty)
+		panic(ErrStackEmpty)
 	}
 	return s.items[s.pos-1]
 }

@@ -1,57 +1,45 @@
-package calc
+package zc
 
 import (
 	"math/big"
 	"testing"
-
-	"github.com/blackchip-org/zc/v6"
 )
 
 func TestStackPushPop(t *testing.T) {
-	var c BigInt
+	var s Stack[int]
 
-	c.Push(big.NewInt(1))
-	c.Push(big.NewInt(2))
-	c.Push(big.NewInt(3))
-	c.Push(big.NewInt(4))
-	c.Push(big.NewInt(5))
-
-	v := c.Pop()
-	have := v.Int64()
-	want := int64(5)
+	s.Push(1, 2, 3, 4, 5)
+	have := s.Drop()
+	want := 5
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
-	c.Pop()
-	v = c.Pop()
-	have = v.Int64()
-	want = int64(3)
+	s.Drop()
+	have = s.Drop()
+	want = 3
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
-	c.Push(big.NewInt(6))
-	c.Push(big.NewInt(7))
-	v = c.Pop()
-	have = v.Int64()
-	want = int64(7)
+	s.Push(6, 7)
+	have = s.Drop()
+	want = 7
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
-	c.Pop()
-	c.Pop()
-	v = c.Pop()
-	have = v.Int64()
-	want = int64(1)
+	s.Drop()
+	s.Drop()
+	have = s.Drop()
+	want = 1
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
 	defer func() {
 		if have := recover(); have != nil {
-			want := zc.ErrStackEmpty
+			want := ErrStackEmpty
 			if have != want {
 				t.Fatalf("\n have panic: %v \n want panic: %v", have, want)
 			}
@@ -59,50 +47,51 @@ func TestStackPushPop(t *testing.T) {
 			t.Fatal("expected panic")
 		}
 	}()
-	c.Pop()
+	s.Drop()
 }
 
 func TestStackRecycle(t *testing.T) {
-	var c BigInt
+	var s Stack[*big.Int]
 
-	c.Push(big.NewInt(1))
-	c.Push(big.NewInt(2))
-	c.Push(big.NewInt(3))
+	s.Push(big.NewInt(1))
+	s.Push(big.NewInt(2))
+	s.Push(big.NewInt(3))
 
-	three := c.Pop()
+	three := s.Drop()
 	have := three.Int64()
 	want := int64(3)
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
-	c.Pop()
-	i, ok := c.Recycle()
+	s.Drop()
+	i, ok := s.Recycle()
 	if !ok {
 		t.Fatal("expected ok")
 	}
 	i.SetInt64(4)
 
-	i, ok = c.Recycle()
+	i, ok = s.Recycle()
 	if !ok {
 		t.Fatal("expected ok")
 	}
 	i.SetInt64(5)
 
-	_, ok = c.Recycle()
+	_, ok = s.Recycle()
 	if ok {
 		t.Fatal("expectd not ok")
 	}
 
-	v := c.Pop()
+	v := s.Drop()
 	have = v.Int64()
 	want = int64(5)
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
+	// Check that this got recycled
 	have = three.Int64()
-	want = int64(3)
+	want = int64(5)
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}

@@ -2,10 +2,12 @@ package calc
 
 import (
 	"math/big"
+
+	"github.com/blackchip-org/zc/v6"
 )
 
 type BigInt struct {
-	Stack[*big.Int]
+	zc.Stack[*big.Int]
 }
 
 func (c *BigInt) Abs() {
