@@ -8,6 +8,11 @@ import (
 
 var (
 	BigInt = BigIntType{}
+	Int    = IntType{}
+)
+
+var (
+	bigIntPool = zc.NewPool[big.Int](8)
 )
 
 type BigIntType struct{}
@@ -20,36 +25,26 @@ func (t BigIntType) As(item *zc.Item) *big.Int {
 	return val
 }
 
-func (t BigIntType) Recycle(r zc.Recycler) (*big.Int, bool) {
-	v, ok := r.Recycle()
-	if !ok {
-		return nil, false
-	}
-	if bi, ok := v.Val.(*big.Int); ok {
-		return bi, true
-	}
-	return nil, false
-}
-
-func (t BigIntType) New(r zc.Recycler) *big.Int {
-	bi, ok := t.Recycle(r)
-	if !ok {
-		bi = new(big.Int)
-		return bi
-	}
-	return bi
-}
-
-func (t BigIntType) From(r zc.Recycler, src *zc.Item) (any, bool) {
-	switch v := src.Val.(type) {
+func (t BigIntType) From(src any) (any, zc.Type, bool) {
+	switch v := src.(type) {
 	case *big.Int:
-		return v, true
+		return v, t, true
 	case int:
-		bi := t.New(r)
+		bi := bigIntPool.New()
 		bi.SetInt64(int64(v))
-		return bi, true
+		return bi, Int, true
 	}
-	return nil, false
+	return nil, nil, false
+}
+
+func (t BigIntType) Recycle(v any) {
+	bigIntPool.Recycle(v.(*big.Int))
 }
 
 type IntType struct{}
+
+func (t IntType) From(src any) (any, zc.Type, bool) {
+	return nil, nil, false
+}
+
+func (t IntType) Recycle(v any) {}

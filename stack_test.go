@@ -1,7 +1,6 @@
 package zc
 
 import (
-	"math/big"
 	"testing"
 )
 
@@ -9,29 +8,29 @@ func TestStackPushPop(t *testing.T) {
 	var s Stack[int]
 
 	s.Push(1, 2, 3, 4, 5)
-	have := s.Drop()
+	have := s.Pop()
 	want := 5
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
-	s.Drop()
-	have = s.Drop()
+	s.Pop()
+	have = s.Pop()
 	want = 3
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
 	s.Push(6, 7)
-	have = s.Drop()
+	have = s.Pop()
 	want = 7
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
-	s.Drop()
-	s.Drop()
-	have = s.Drop()
+	s.Pop()
+	s.Pop()
+	have = s.Pop()
 	want = 1
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
@@ -47,9 +46,10 @@ func TestStackPushPop(t *testing.T) {
 			t.Fatal("expected panic")
 		}
 	}()
-	s.Drop()
+	s.Pop()
 }
 
+/*
 func TestStackRecycle(t *testing.T) {
 	var s Stack[*big.Int]
 
@@ -57,14 +57,14 @@ func TestStackRecycle(t *testing.T) {
 	s.Push(big.NewInt(2))
 	s.Push(big.NewInt(3))
 
-	three := s.Drop()
+	three := s.Pop()
 	have := three.Int64()
 	want := int64(3)
 	if have != want {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 
-	s.Drop()
+	s.Pop()
 	i, ok := s.Recycle()
 	if !ok {
 		t.Fatal("expected ok")
@@ -82,7 +82,7 @@ func TestStackRecycle(t *testing.T) {
 		t.Fatal("expectd not ok")
 	}
 
-	v := s.Drop()
+	v := s.Pop()
 	have = v.Int64()
 	want = int64(5)
 	if have != want {
@@ -96,3 +96,4 @@ func TestStackRecycle(t *testing.T) {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 }
+*/

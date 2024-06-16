@@ -45,8 +45,8 @@ func distTestNative() *big.Int {
 }
 
 func TestDist(t *testing.T) {
-	var c calc.BigInt
-	r := distTest(&c).String()
+	c := calc.NewBigInt()
+	r := distTest(c).String()
 	if r != "5" {
 		t.Fatalf("\n have: %v \n want: %v", r, "5")
 	}
@@ -60,9 +60,9 @@ func TestDistNative(t *testing.T) {
 }
 
 func BenchmarkDist(b *testing.B) {
-	var c calc.BigInt
+	c := calc.NewBigInt()
 	for i := 0; i < b.N; i++ {
-		distTest(&c)
+		distTest(c)
 	}
 }
 

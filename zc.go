@@ -5,11 +5,8 @@ type Item struct {
 }
 
 type Type interface {
-	From(Recycler, *Item) (any, bool)
-}
-
-type Recycler interface {
-	Recycle() (*Item, bool)
+	From(any) (any, Type, bool)
+	Recycle(any)
 }
 
 type OpEnv struct {

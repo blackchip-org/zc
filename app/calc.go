@@ -2,11 +2,14 @@ package app
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/app/types"
 )
 
 type Calc struct {
 	zc.Stack[*zc.Item]
+}
+
+func NewCalc() *Calc {
+	return &Calc{}
 }
 
 func (c *Calc) PushVal(vals ...any) {
@@ -16,20 +19,18 @@ func (c *Calc) PushVal(vals ...any) {
 }
 
 func (c *Calc) Do(op zc.Op) {
-	top := c.Top()
-	cTop, ok := types.BigInt.From(c, top)
-	if !ok {
-		panic("cannot convert")
+	nParams := len(op.Params)
+	for i, param := range op.Params {
+		arg := c.Peek(nParams - i - 1)
+		convVal, argType, ok := param.From(arg.Val)
+		if !ok {
+			panic("cannot convert")
+		}
+		if argType != param {
+			argType.Recycle(arg.Val)
+			arg.Val = convVal
+		}
 	}
-	top.Val = cTop
-
-	next := c.Next()
-	cNext, ok := types.BigInt.From(c, next)
-	if !ok {
-		panic("cannot convert")
-	}
-	next.Val = cNext
-
 	op.Func(zc.OpEnv{
 		Stack: &c.Stack,
 	})

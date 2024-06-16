@@ -25,17 +25,7 @@ func (s *Stack[T]) Push(vals ...T) {
 	}
 }
 
-func (s *Stack[T]) Recycle() (T, bool) {
-	var item T
-	if s.pos >= len(s.items) {
-		return item, false
-	}
-	item = s.items[s.pos]
-	s.pos++
-	return item, true
-}
-
-func (s *Stack[T]) Drop() T {
+func (s *Stack[T]) Pop() T {
 	if s.pos == 0 {
 		panic(ErrStackEmpty)
 	}
@@ -43,11 +33,29 @@ func (s *Stack[T]) Drop() T {
 	return s.items[s.pos]
 }
 
+func (s *Stack[T]) Len() int {
+	return s.pos
+}
+
+func (s *Stack[T]) Top() T {
+	if s.pos == 0 {
+		panic(ErrStackEmpty)
+	}
+	return s.items[s.pos-1]
+}
+
 func (s *Stack[T]) Next() T {
 	if s.pos < 2 {
 		panic(ErrStackUnderflow)
 	}
 	return s.items[s.pos-2]
+}
+
+func (s *Stack[T]) Peek(i int) T {
+	if i >= s.pos {
+		panic(ErrStackUnderflow)
+	}
+	return s.items[s.pos-i-1]
 }
 
 func (s *Stack[T]) RotateDown() {
@@ -67,11 +75,4 @@ func (s *Stack[T]) String() string {
 		strs = append(strs, fmt.Sprintf("%v", item))
 	}
 	return strings.Join(strs, " | ")
-}
-
-func (s *Stack[T]) Top() T {
-	if s.pos == 0 {
-		panic(ErrStackEmpty)
-	}
-	return s.items[s.pos-1]
 }

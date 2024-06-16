@@ -6,13 +6,15 @@ import (
 )
 
 func BigIntAdd(e zc.OpEnv) {
-	y := types.BigInt.As(e.Drop())
+	y := types.BigInt.As(e.Pop())
 	x := types.BigInt.As(e.Top())
 	x.Add(x, y)
+	types.BigInt.Recycle(y)
 }
 
 func BigIntMul(e zc.OpEnv) {
-	y := types.BigInt.As(e.Drop())
+	y := types.BigInt.As(e.Pop())
 	x := types.BigInt.As(e.Top())
 	x.Mul(x, y)
+	types.BigInt.Recycle(y)
 }
