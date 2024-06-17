@@ -17,10 +17,12 @@ func (p *Pool[T]) New() *T {
 	return p.items[p.pos]
 }
 
-func (p *Pool[T]) Recycle(v *T) {
-	if p.pos >= len(p.items) {
-		return
+func (p *Pool[T]) Recycle(vs ...*T) {
+	for _, v := range vs {
+		if p.pos >= len(p.items) {
+			return
+		}
+		p.items[p.pos] = v
+		p.pos++
 	}
-	p.items[p.pos] = v
-	p.pos++
 }

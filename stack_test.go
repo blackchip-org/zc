@@ -4,6 +4,19 @@ import (
 	"testing"
 )
 
+func TestRotate(t *testing.T) {
+	var s Stack[int]
+
+	s.Push(1, 2, 3)
+	s.Rotate()
+	have := s.String()
+	want := "2 | 3 | 1"
+
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}
+
 func TestStackPushPop(t *testing.T) {
 	var s Stack[int]
 
@@ -48,52 +61,3 @@ func TestStackPushPop(t *testing.T) {
 	}()
 	s.Pop()
 }
-
-/*
-func TestStackRecycle(t *testing.T) {
-	var s Stack[*big.Int]
-
-	s.Push(big.NewInt(1))
-	s.Push(big.NewInt(2))
-	s.Push(big.NewInt(3))
-
-	three := s.Pop()
-	have := three.Int64()
-	want := int64(3)
-	if have != want {
-		t.Fatalf("\n have: %v \n want: %v", have, want)
-	}
-
-	s.Pop()
-	i, ok := s.Recycle()
-	if !ok {
-		t.Fatal("expected ok")
-	}
-	i.SetInt64(4)
-
-	i, ok = s.Recycle()
-	if !ok {
-		t.Fatal("expected ok")
-	}
-	i.SetInt64(5)
-
-	_, ok = s.Recycle()
-	if ok {
-		t.Fatal("expectd not ok")
-	}
-
-	v := s.Pop()
-	have = v.Int64()
-	want = int64(5)
-	if have != want {
-		t.Fatalf("\n have: %v \n want: %v", have, want)
-	}
-
-	// Check that this got recycled
-	have = three.Int64()
-	want = int64(5)
-	if have != want {
-		t.Fatalf("\n have: %v \n want: %v", have, want)
-	}
-}
-*/

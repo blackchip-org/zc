@@ -15,7 +15,7 @@ func fibTest(n int) *big.Int {
 	c.PushInt(1)
 	for i := 3; i <= n; i++ {
 		c.Dup()
-		c.RotateDown()
+		c.Rotate()
 		c.Add()
 	}
 	return c.Pop()

@@ -21,7 +21,7 @@ func (c *Calc) PushVal(vals ...any) {
 func (c *Calc) Do(op zc.Op) {
 	nParams := len(op.Params)
 	for i, param := range op.Params {
-		arg := c.Peek(nParams - i - 1)
+		arg := c.Get(nParams - i - 1)
 		convVal, argType, ok := param.From(arg.Val)
 		if !ok {
 			panic("cannot convert")
@@ -29,7 +29,7 @@ func (c *Calc) Do(op zc.Op) {
 		if argType != param {
 			argType.Recycle(arg.Val)
 			arg.Val = convVal
-			c.Poke(nParams-i-1, arg)
+			c.Set(nParams-i-1, arg)
 		}
 	}
 	op.Func(zc.OpEnv{
