@@ -4,10 +4,30 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/blackchip-org/zc/v6/app"
+	"github.com/blackchip-org/zc/v6/app/ops"
+	"github.com/blackchip-org/zc/v6/app/types"
 	"github.com/blackchip-org/zc/v6/pkg/calc"
 )
 
-func distTest(c *calc.BigInt) *big.Int {
+func distTestZc(c *app.Calc) *big.Int {
+	c.PushVal(5, 2)
+	c.Do(ops.SubBigInt)
+	c.PushVal(2)
+	c.Do(ops.PowBigInt)
+
+	c.PushVal(7, 3)
+	c.Do(ops.SubBigInt)
+	c.PushVal(2)
+	c.Do(ops.PowBigInt)
+
+	c.Do(ops.AddBigInt)
+	c.Do(ops.SqrtBigInt)
+
+	return types.BigInt.As(c.Pop())
+}
+
+func distTestCalc(c *calc.BigInt) *big.Int {
 	c.PushInt(5, 2)
 	c.Sub()
 	c.PushInt(2)
@@ -44,9 +64,17 @@ func distTestNative() *big.Int {
 	return &r
 }
 
-func TestDist(t *testing.T) {
+func TestDistZc(t *testing.T) {
+	c := app.NewCalc()
+	r := distTestZc(c).String()
+	if r != "5" {
+		t.Fatalf("\n have: %v \n want: %v", r, "5")
+	}
+}
+
+func TestDistCalc(t *testing.T) {
 	c := calc.NewBigInt()
-	r := distTest(c).String()
+	r := distTestCalc(c).String()
 	if r != "5" {
 		t.Fatalf("\n have: %v \n want: %v", r, "5")
 	}
@@ -59,10 +87,17 @@ func TestDistNative(t *testing.T) {
 	}
 }
 
-func BenchmarkDist(b *testing.B) {
+func BenchmarkDistZc(b *testing.B) {
+	c := app.NewCalc()
+	for i := 0; i < b.N; i++ {
+		distTestZc(c)
+	}
+}
+
+func BenchmarkDistCalc(b *testing.B) {
 	c := calc.NewBigInt()
 	for i := 0; i < b.N; i++ {
-		distTest(c)
+		distTestCalc(c)
 	}
 }
 

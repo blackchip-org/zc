@@ -5,7 +5,7 @@ import (
 )
 
 type Calc struct {
-	zc.Stack[*zc.Item]
+	zc.Stack[zc.Item]
 }
 
 func NewCalc() *Calc {
@@ -14,7 +14,7 @@ func NewCalc() *Calc {
 
 func (c *Calc) PushVal(vals ...any) {
 	for _, val := range vals {
-		c.Push(&zc.Item{Val: val})
+		c.Push(zc.Item{Val: val})
 	}
 }
 
@@ -29,6 +29,7 @@ func (c *Calc) Do(op zc.Op) {
 		if argType != param {
 			argType.Recycle(arg.Val)
 			arg.Val = convVal
+			c.Poke(nParams-i-1, arg)
 		}
 	}
 	op.Func(zc.OpEnv{

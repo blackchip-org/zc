@@ -17,7 +17,7 @@ var (
 
 type BigIntType struct{}
 
-func (t BigIntType) As(item *zc.Item) *big.Int {
+func (t BigIntType) As(item zc.Item) *big.Int {
 	val, ok := item.Val.(*big.Int)
 	if !ok {
 		panic(zc.ErrWrongGoType("*big.Int", item.Val))

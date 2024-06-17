@@ -10,7 +10,7 @@ type Type interface {
 }
 
 type OpEnv struct {
-	*Stack[*Item]
+	*Stack[Item]
 }
 
 type Op struct {

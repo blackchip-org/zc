@@ -7,12 +7,24 @@ import (
 )
 
 var (
-	BigIntAdd = zc.Op{
+	AddBigInt = zc.Op{
 		Params: []zc.Type{types.BigInt, types.BigInt},
-		Func:   fn.BigIntAdd,
+		Func:   fn.AddBigInt,
 	}
-	BigIntMul = zc.Op{
+	MulBigInt = zc.Op{
 		Params: []zc.Type{types.BigInt, types.BigInt},
-		Func:   fn.BigIntMul,
+		Func:   fn.MulBigInt,
+	}
+	PowBigInt = zc.Op{
+		Params: []zc.Type{types.BigInt, types.BigInt},
+		Func:   fn.PowBigInt,
+	}
+	SqrtBigInt = zc.Op{
+		Params: []zc.Type{types.BigInt},
+		Func:   fn.SqrtBigInt,
+	}
+	SubBigInt = zc.Op{
+		Params: []zc.Type{types.BigInt, types.BigInt},
+		Func:   fn.SubBigInt,
 	}
 )

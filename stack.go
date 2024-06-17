@@ -58,6 +58,13 @@ func (s *Stack[T]) Peek(i int) T {
 	return s.items[s.pos-i-1]
 }
 
+func (s *Stack[T]) Poke(i int, v T) {
+	if i >= s.pos {
+		panic(ErrStackUnderflow)
+	}
+	s.items[s.pos-i-1] = v
+}
+
 func (s *Stack[T]) RotateDown() {
 	if s.pos < 3 {
 		panic(ErrNotEnoughArgs(s.pos, 3))

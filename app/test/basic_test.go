@@ -12,7 +12,7 @@ func TestAdd(t *testing.T) {
 	var c app.Calc
 
 	c.PushVal(6, 2)
-	c.Do(ops.BigIntAdd)
+	c.Do(ops.AddBigInt)
 
 	have := types.BigInt.As(c.Top()).String()
 	want := "8"

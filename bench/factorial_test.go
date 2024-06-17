@@ -17,7 +17,7 @@ func factorialZcTest(n int) *big.Int {
 	c.PushVal(1)
 	for i := 1; i <= n; i++ {
 		c.PushVal(i)
-		c.Do(ops.BigIntMul)
+		c.Do(ops.MulBigInt)
 	}
 	return types.BigInt.As(c.Pop())
 }
