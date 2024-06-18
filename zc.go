@@ -8,11 +8,6 @@ func (i Item) String() string {
 	return Format(i.Val)
 }
 
-type Type interface {
-	From(any) (any, Type, bool)
-	Recycle(any)
-}
-
 type OpEnv struct {
 	*Stack[Item]
 }

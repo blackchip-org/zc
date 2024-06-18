@@ -19,6 +19,12 @@ import (
 	"golang.org/x/exp/maps"
 )
 
+var typeMap map[string]string = map[string]string{
+	zc.Any.Name():    "Any",
+	zc.BigInt.Name(): "BigInt",
+	zc.Int.Name():    "Int",
+}
+
 type ValDef struct {
 	Label string
 	Type  string
@@ -121,7 +127,7 @@ func genVols(vols []zc.VolDef) {
 		if len(vol.Types) > 0 {
 			fmt.Fprintf(f, "Types: []zc.Type{\n")
 			for _, t := range vol.Types {
-				fmt.Fprintf(f, "types.%v,\n", typeNameFor(t))
+				fmt.Fprintf(f, "zc.%v,\n", typeNameFor(t))
 			}
 			fmt.Fprintf(f, "},\n")
 		}
@@ -462,12 +468,12 @@ func genValList(f *os.File, name string, varName string, vals []string) {
 		if valDoc.Var {
 			var_ = typeNameFor(valDoc.Type)
 		} else {
-			list = append(list, fmt.Sprintf("types.%v", typeNameFor(valDoc.Type)))
+			list = append(list, fmt.Sprintf("zc.%v", typeNameFor(valDoc.Type)))
 		}
 	}
 	fmt.Fprintf(f, "%v},\n", strings.Join(list, ", "))
 	if var_ != "" {
-		fmt.Fprintf(f, "%v: types.%v,\n", varName, var_)
+		fmt.Fprintf(f, "%v: zc.%v,\n", varName, var_)
 	}
 }
 
@@ -487,11 +493,11 @@ func fileNameFor(p string) string {
 }
 
 func typeNameFor(p string) string {
-	parts := strings.Split(p, "/")
-	for i := 1; i < len(parts); i++ {
-		parts[i] = strings.ToUpper(parts[i])
+	n, ok := typeMap[p]
+	if !ok {
+		panic("unknown type: " + p)
 	}
-	return strings.Join(parts, "")
+	return n
 }
 
 func anchor(vol zc.VolDef, op zc.OpDef) string {

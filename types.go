@@ -14,7 +14,17 @@ var (
 	bigIntPool = NewPool[big.Int](8)
 )
 
+type Type interface {
+	Name() string
+	From(any) (any, Type, bool)
+	Recycle(any)
+}
+
+// ----------------------------------------------------------------------------
+
 type anyType struct{}
+
+func (t anyType) Name() string { return "Any" }
 
 func (t anyType) From(src any) (any, Type, bool) {
 	return src, Any, true
@@ -22,7 +32,11 @@ func (t anyType) From(src any) (any, Type, bool) {
 
 func (t anyType) Recycle(any) {}
 
+// ----------------------------------------------------------------------------
+
 type BigIntType struct{}
+
+func (t BigIntType) Name() string { return "Int" }
 
 func (t BigIntType) As(item Item) *big.Int {
 	val, ok := item.Val.(*big.Int)
@@ -52,7 +66,11 @@ func (t BigIntType) Recycle(v any) {
 	bigIntPool.Recycle(v.(*big.Int))
 }
 
+// ----------------------------------------------------------------------------
+
 type IntType struct{}
+
+func (t IntType) Name() string { return "int" }
 
 func (t IntType) From(src any) (any, Type, bool) {
 	return nil, nil, false
