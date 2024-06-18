@@ -11,8 +11,13 @@ var BasicInt = zc.Vol{
 	Name: "basic/Int",
 	Ops: []zc.Op{
 		ops.AddBigInt,
+		ops.DivBigInt,
+		ops.ModBigInt,
 		ops.MulBigInt,
+		ops.NegBigInt,
 		ops.PowBigInt,
+		ops.RemBigInt,
+		ops.SignBigInt,
 		ops.SqrtBigInt,
 		ops.SubBigInt,
 	},

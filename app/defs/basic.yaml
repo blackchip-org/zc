@@ -1,0 +1,24 @@
+name: basic
+title: Basic calculator
+category: calc
+
+ops:
+- name: cube
+  aliases: [cb]
+  title: Cube of a number
+  macro: dup dup mul mul
+  desc: |-
+    The cube of a number, x³
+  example:
+  - i: 3 cb
+    o: [27]
+
+- name: square
+  aliases: [sq]
+  title: Square of a number
+  macro: dup mul
+  desc: |-
+    The square of a number, x²
+  example:
+  - i: 3 sq
+    o: [9]

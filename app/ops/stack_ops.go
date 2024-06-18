@@ -8,6 +8,25 @@ import (
 )
 
 var (
+	Clear = zc.Op{
+		Name:     "clear",
+		Params:   []zc.Type{},
+		VarParam: zc.Any,
+		Returns:  []zc.Type{},
+		Func:     funcs.Clear,
+	}
+	DupBigInt = zc.Op{
+		Name:    "dup",
+		Params:  []zc.Type{zc.BigInt},
+		Returns: []zc.Type{zc.BigInt, zc.BigInt},
+		Func:    funcs.DupBigInt,
+	}
+	DupDecimal = zc.Op{
+		Name:    "dup",
+		Params:  []zc.Type{zc.Decimal},
+		Returns: []zc.Type{zc.Decimal, zc.Decimal},
+		Func:    funcs.DupDecimal,
+	}
 	TuckBigInt = zc.Op{
 		Name:    "tuck",
 		Params:  []zc.Type{zc.Any, zc.BigInt},

@@ -15,6 +15,19 @@ var (
 		Returns:   []zc.Type{zc.BigInt},
 		Func:      funcs.AddBigInt,
 	}
+	DivBigInt = zc.Op{
+		Name:    "div/i",
+		Params:  []zc.Type{zc.BigInt, zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.DivBigInt,
+	}
+	ModBigInt = zc.Op{
+		Name:      "mod/i",
+		Overloads: "mod",
+		Params:    []zc.Type{zc.BigInt, zc.BigInt},
+		Returns:   []zc.Type{zc.BigInt},
+		Func:      funcs.ModBigInt,
+	}
 	MulBigInt = zc.Op{
 		Name:      "mul/i",
 		Overloads: "mul",
@@ -22,12 +35,33 @@ var (
 		Returns:   []zc.Type{zc.BigInt},
 		Func:      funcs.MulBigInt,
 	}
+	NegBigInt = zc.Op{
+		Name:      "neg/i",
+		Overloads: "neg",
+		Params:    []zc.Type{zc.BigInt},
+		Returns:   []zc.Type{zc.BigInt},
+		Func:      funcs.NegBigInt,
+	}
 	PowBigInt = zc.Op{
 		Name:      "pow/i",
 		Overloads: "pow",
 		Params:    []zc.Type{zc.BigInt, zc.BigInt},
 		Returns:   []zc.Type{zc.BigInt},
 		Func:      funcs.PowBigInt,
+	}
+	RemBigInt = zc.Op{
+		Name:      "rem/i",
+		Overloads: "rem",
+		Params:    []zc.Type{zc.BigInt, zc.BigInt},
+		Returns:   []zc.Type{zc.BigInt},
+		Func:      funcs.RemBigInt,
+	}
+	SignBigInt = zc.Op{
+		Name:      "sign/i",
+		Overloads: "sign",
+		Params:    []zc.Type{zc.BigInt},
+		Returns:   []zc.Type{zc.Int},
+		Func:      funcs.SignBigInt,
 	}
 	SqrtBigInt = zc.Op{
 		Name:    "sqrt/i",

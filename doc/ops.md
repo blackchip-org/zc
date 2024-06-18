@@ -6,6 +6,7 @@
 ## Calculator Operations
 | Volume                | Description     
 |-----------------------|-----------------
+| [basic](ops/basic.md) | Basic calculator
 | [stack](ops/stack.md) | Stack operations
 
 

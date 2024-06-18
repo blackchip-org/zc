@@ -2,17 +2,23 @@ package zc
 
 import (
 	"math/big"
+
+	"github.com/cockroachdb/apd/v3"
 )
 
 var (
-	Any    = anyType{}
-	BigInt = BigIntType{}
-	Int    = IntType{}
-	String = StringType{}
+	Any     = anyType{}
+	BigInt  = BigIntType{}
+	Decimal = DecimalType{}
+	Float64 = Float64Type{}
+	Int     = IntType{}
+	String  = StringType{}
 )
 
 var (
-	bigIntPool = NewPool[big.Int](8)
+	poolSize    = 8
+	bigIntPool  = NewPool[big.Int](poolSize)
+	decimalPool = NewPool[apd.Decimal](poolSize)
 )
 
 type Type interface {
@@ -70,6 +76,65 @@ func (t BigIntType) New() *big.Int {
 func (t BigIntType) Recycle(v any) {
 	bigIntPool.Recycle(v.(*big.Int))
 }
+
+// ----------------------------------------------------------------------------
+
+type DecimalType struct{}
+
+func (t DecimalType) Name() string { return "Dec" }
+
+func (t DecimalType) As(item Item) *apd.Decimal {
+	val, ok := item.Val.(*apd.Decimal)
+	if !ok {
+		panic(ErrWrongGoType("*apd.Decimal", item.Val))
+	}
+	return val
+}
+
+func (t DecimalType) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case *apd.Decimal:
+		return v, t, true
+	case *big.Int:
+		// FIXME: slow
+		d := decimalPool.New()
+		d.SetString(v.String())
+		return d, BigInt, true
+	case int:
+		d := decimalPool.New()
+		d.SetInt64(int64(v))
+		return d, Int, true
+	case float64:
+		d := decimalPool.New()
+		d.SetFloat64(v)
+		return d, Float64, true
+	case string:
+		d := decimalPool.New()
+		_, _, err := d.SetString(v)
+		return d, String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t DecimalType) New() *apd.Decimal {
+	return decimalPool.New()
+}
+
+func (t DecimalType) Recycle(v any) {
+	decimalPool.Recycle(v.(*apd.Decimal))
+}
+
+// ----------------------------------------------------------------------------
+
+type Float64Type struct{}
+
+func (t Float64Type) Name() string { return "float/64" }
+
+func (t Float64Type) From(src any) (any, Type, bool) {
+	return nil, nil, false
+}
+
+func (t Float64Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 

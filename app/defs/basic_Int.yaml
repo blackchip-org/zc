@@ -19,6 +19,51 @@ ops:
   - i: add/i
     o: [8]
 
+- name: div/i
+  title: Division
+  funcs:
+  - name: DivBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    Divides *x* by *y*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6
+    o: [6]
+  - i: 2
+    o: [6, 2]
+  - i: div/i
+    o: [3]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 div/i
+      error: "div/i: division by zero"
+
+- name: mod/i
+  overloads: mod
+  title: Modulus
+  funcs:
+  - name: ModBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+    zero' error is raised.
+  example:
+  - i: -7
+    o: [-7]
+  - i: 2
+    o: [-7, 2]
+  - i: mod/i
+    o: [1]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 mod/i
+      error: "mod/i: division by zero"
+
 - name: mul/i
   overloads: mul
   title: Multiplication
@@ -35,6 +80,22 @@ ops:
   - i: mul/i
     o: [12]
 
+- name: neg/i
+  overloads: neg
+  title: Negation
+  funcs:
+  - name: NegBigInt
+    params: [x:Int]
+    returns: [Int]
+  desc: Changes the sign of *x*.
+  example:
+  - i: -6
+    o: [-6]
+  - i: neg/i
+    o: [6]
+  - i: neg/i
+    o: [-6]
+
 - name: pow/i
   overloads: pow
   title: Exponentiation
@@ -50,6 +111,42 @@ ops:
     o: [6, 2]
   - i: pow/i
     o: [36]
+
+- name: rem/i
+  overloads: rem
+  title: Remainder
+  funcs:
+  - name: RemBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    The remainder when *x* is divided by *y*. If *y* is zero, a
+    'division by zero' error is raised.
+  example:
+  - i: -7
+    o: [-7]
+  - i: 2
+    o: [-7, 2]
+  - i: rem/i
+    o: [-1]
+
+- name: sign/i
+  overloads: sign
+  title: Sign
+  funcs:
+  - name: SignBigInt
+    params: [x:Int]
+    returns: [int]
+  desc: |-
+    Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+    if *x* is zero.
+  example:
+  - i: c -6 sign/i
+    o: [-1]
+  - i: c 6 sign/i
+    o: [1]
+  - i: c 0 sign/i
+    o: [0]
 
 - name: sqrt/i
   title: Square root
@@ -90,3 +187,5 @@ ops:
     o: [6, 2]
   - i: sub/i
     o: [4]
+
+

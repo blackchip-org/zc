@@ -10,7 +10,12 @@ import (
 var Stack = zc.Vol{
 	Name: "stack",
 	Ops: []zc.Op{
+		ops.Clear,
+		ops.DupBigInt,
+		ops.DupDecimal,
 		ops.TuckBigInt,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "c", Expr: "clear"},
+	},
 }

@@ -3,5 +3,18 @@
 # Index
 
 
+## c
+- [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
+- [`cb`](ops/basic.md#cube): Alias for [cube](ops/basic.md#cube)
+- [`clear`](ops/stack.md#clear): Clear
+- [`cube`](ops/basic.md#cube): Cube of a number
+
+## d
+- [`dup`](ops/stack.md#dup): Duplicate
+
+## s
+- [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
+- [`square`](ops/basic.md#square): Square of a number
+
 ## t
 - [`tuck`](ops/stack.md#tuck): Copy top and place below

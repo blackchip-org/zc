@@ -21,6 +21,46 @@ func TestOpDocs_BasicInt_AddI(t *testing.T) {
 	c.AssertStack("8")
 }
 
+func TestOpDocs_BasicInt_DivI(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6")
+	c.AssertStack("6")
+
+	c.Eval("2")
+	c.AssertStack("6", "2")
+
+	c.Eval("div/i")
+	c.AssertStack("3")
+}
+
+func TestOpDocs_BasicInt_DivI_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 div/i")
+	c.AssertError("div/i: division by zero")
+}
+
+func TestOpDocs_BasicInt_ModI(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-7")
+	c.AssertStack("-7")
+
+	c.Eval("2")
+	c.AssertStack("-7", "2")
+
+	c.Eval("mod/i")
+	c.AssertStack("1")
+}
+
+func TestOpDocs_BasicInt_ModI_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 mod/i")
+	c.AssertError("mod/i: division by zero")
+}
+
 func TestOpDocs_BasicInt_MulI(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -34,6 +74,19 @@ func TestOpDocs_BasicInt_MulI(t *testing.T) {
 	c.AssertStack("12")
 }
 
+func TestOpDocs_BasicInt_NegI(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-6")
+	c.AssertStack("-6")
+
+	c.Eval("neg/i")
+	c.AssertStack("6")
+
+	c.Eval("neg/i")
+	c.AssertStack("-6")
+}
+
 func TestOpDocs_BasicInt_PowI(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -45,6 +98,32 @@ func TestOpDocs_BasicInt_PowI(t *testing.T) {
 
 	c.Eval("pow/i")
 	c.AssertStack("36")
+}
+
+func TestOpDocs_BasicInt_RemI(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-7")
+	c.AssertStack("-7")
+
+	c.Eval("2")
+	c.AssertStack("-7", "2")
+
+	c.Eval("rem/i")
+	c.AssertStack("-1")
+}
+
+func TestOpDocs_BasicInt_SignI(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c -6 sign/i")
+	c.AssertStack("-1")
+
+	c.Eval("c 6 sign/i")
+	c.AssertStack("1")
+
+	c.Eval("c 0 sign/i")
+	c.AssertStack("0")
 }
 
 func TestOpDocs_BasicInt_SqrtI(t *testing.T) {

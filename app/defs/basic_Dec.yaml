@@ -1,0 +1,180 @@
+name: basic/Dec
+title: Basic calculator
+subtitle: decimal (apd)
+
+ops:
+- name: add/d
+  overloads: add
+  title: Addition
+  funcs:
+  - name: AddDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: add/d
+    o: [8.8]
+
+- name: cube.root/d
+  overloads: cube.root
+  aliases: [cbrt/d]
+  title: Cube Root
+  funcs:
+  - name: CbrtDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 1.25 cube
+    o: [1.953125]
+  - i: cbrt/d
+    o: [1.25]
+
+- name: div/d
+  overloads: div
+  title: Division
+  funcs:
+  - name: DivDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: |-
+    Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2
+    o: [6.6, 2]
+  - i: div/d
+    o: [3.3]
+  tests:
+  - name: Thirds
+    test:
+      - i: 2 3 div/d
+        o: [0.6666666666666667]
+  - name: Zero
+    test:
+      - i: 6.6 0 div/d
+        error: "div/d: division by zero"
+
+- name: mul/d
+  overloads: mul
+  title: Multiplication
+  funcs:
+  - name: MulDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Multiplies the value of *x* by *y*.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: mul/d
+    o: [14.52]
+
+- name: neg/d
+  overloads: neg
+  title: Negation
+  funcs:
+  - name: NegDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: Changes the sign of *x*.
+  example:
+  - i: -6.6
+    o: [-6.6]
+  - i: neg/d
+    o: [6.6]
+  - i: neg/d
+    o: [-6.6]
+
+- name: pow/d
+  title: Exponentiation
+  funcs:
+  - name: PowDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Raises *x* to the power of *y*
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: pow/d
+    o: [63.53260431279859]
+
+- name: rem/d
+  overloads: rem
+  title: Remainder
+  funcs:
+  - name: RemDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: |-
+    Remainder after dividing *y* by *x*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6.75
+    o: [6.75]
+  - i: 0.5
+    o: [6.75, 0.5]
+  - i: rem
+    o: [0.25]
+
+- name: sign/d
+  overloads: sign
+  title: Sign
+  funcs:
+  - name: SignDecimal
+    params: [x:Dec]
+    returns: [int]
+  desc: |-
+    Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+    if *x* is zero.
+  example:
+  - i: c -6.4 sign/d
+    o: [-1]
+  - i: c 6.4 sign/d
+    o: [1]
+  - i: c 0 sign/d
+    o: [0]
+
+- name: square.root/d
+  overloads: square.root
+  aliases: [sqrt/d]
+  title: Square Root
+  funcs:
+  - name: SqrtDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    The square root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 1.25 sq
+    o: [1.5625]
+  - i: sqrt/d
+    o: [1.25]
+
+- name: sub/d
+  overloads: sub
+  title: Subtraction
+  funcs:
+  - name: SubDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Dec]
+  desc: Subtracts the value of *y* from *x*
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: sub/d
+    o: [4.4]

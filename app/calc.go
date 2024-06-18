@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/app/state"
 	"github.com/blackchip-org/zc/v6/app/vols"
 )
 
@@ -10,18 +11,30 @@ var mainCatalog *zc.Catalog
 
 func init() {
 	mainCatalog = zc.NewCatalog()
-	mainCatalog.AddVolume(vols.BasicInt, vols.Stack)
+
+	// Order here is important. BasicInt adds overloads for basic before
+	// BasicDec does. Do not try to sort this list.
+	mainCatalog.AddVolume(
+		vols.Basic,
+		vols.BasicInt,
+		vols.BasicDec,
+		vols.Stack,
+	)
 }
 
 type Calc struct {
 	zc.Stack[zc.Item]
-	cat  *zc.Catalog
-	Err  error
-	Info string
+	cat   *zc.Catalog
+	state state.State
+	Err   error
+	Info  string
 }
 
 func NewCalc() *Calc {
-	return &Calc{cat: mainCatalog}
+	return &Calc{
+		cat:   mainCatalog,
+		state: state.New(),
+	}
 }
 
 func (c *Calc) PushVal(vals ...any) {
@@ -99,6 +112,16 @@ func (c *Calc) isParamMatch(op zc.Op) bool {
 }
 
 func (c *Calc) Do(op zc.Op) {
+	if len(op.Macro) > 0 {
+		for _, tok := range op.Macro {
+			if c.Err != nil {
+				return
+			}
+			c.EvalToken(tok)
+		}
+		return
+	}
+
 	nParams := len(op.Params)
 	for i, param := range op.Params {
 		arg := c.Get(nParams - i - 1)
@@ -116,6 +139,7 @@ func (c *Calc) Do(op zc.Op) {
 	env := zc.OpEnv{
 		Op:    op,
 		Stack: &c.Stack,
+		State: c.state,
 	}
 	op.Func(&env)
 	c.Err = env.Err

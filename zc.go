@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"reflect"
 	"unicode"
+
+	"github.com/blackchip-org/scan"
+	"github.com/blackchip-org/zc/v6/app/state"
 )
 
 const ProgName = "zc"
@@ -18,9 +21,10 @@ func (i Item) String() string {
 
 type OpEnv struct {
 	*Stack[Item]
-	Op   Op
-	Err  error
-	Info string
+	Op    Op
+	State state.State
+	Err   error
+	Info  string
 }
 
 func (e *OpEnv) PushVal(vals ...any) {
@@ -32,10 +36,13 @@ func (e *OpEnv) PushVal(vals ...any) {
 type Op struct {
 	Name      string
 	Overloads string
+	Virtual   bool
 	Params    []Type
+	VarParam  Type
 	Returns   []Type
+	VarReturn Type
 	Func      func(*OpEnv)
-	Macro     string
+	Macro     []scan.Token
 }
 
 type Macro struct {
@@ -45,7 +52,6 @@ type Macro struct {
 
 type Vol struct {
 	Name   string
-	Types  []Type
 	Ops    []Op
 	Macros []Macro
 }
@@ -104,9 +110,10 @@ func (c *Catalog) AddMacro(name string, mac string) {
 	if _, ok := c.ops[name]; ok {
 		panic(fmt.Errorf("duplicate op: %v", name))
 	}
+	toks := ScanWords(mac)
 	op := Op{
 		Name:  name,
-		Macro: mac,
+		Macro: toks,
 	}
 	c.ops[name] = []Op{op}
 }

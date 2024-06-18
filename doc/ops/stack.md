@@ -6,11 +6,48 @@ Stack operations
 
 ## Index
 
-| Operation       | Description             
-|-----------------|-------------------------
-| [`tuck`](#tuck) | Copy top and place below
+| Operation            | Description             
+|----------------------|-------------------------
+| [`clear, c`](#clear) | Clear                   
+| [`dup`](#dup)        | Duplicate               
+| [`tuck`](#tuck)      | Copy top and place below
 
 ## Operations
+
+### clear
+
+Clears all items from the stack.
+
+Alias: `c`
+
+Stack effects:
+```
+( Any* --  )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `c`     |              
+
+### dup
+
+Duplicates the top value on the stack
+
+Stack effects:
+```
+( x:Int -- x:Int x:Int )
+( x:Dec -- x:Dec x:Dec )
+```
+
+Example:
+
+| Input | Stack     
+|-------|-----------
+| `10`  | `10`      
+| `dup` | `10 \| 10`
 
 ### tuck
 

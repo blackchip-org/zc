@@ -9,8 +9,13 @@ Basic calculator
 | Operation           | Description   
 |---------------------|---------------
 | [`add/i`](#add/i)   | Addition      
+| [`div/i`](#div/i)   | Division      
+| [`mod/i`](#mod/i)   | Modulus       
 | [`mul/i`](#mul/i)   | Multiplication
+| [`neg/i`](#neg/i)   | Negation      
 | [`pow/i`](#pow/i)   | Exponentiation
+| [`rem/i`](#rem/i)   | Remainder     
+| [`sign/i`](#sign/i) | Sign          
 | [`sqrt/i`](#sqrt/i) | Square root   
 | [`sub/i`](#sub/i)   | Subtraction   
 
@@ -33,6 +38,42 @@ Example:
 | `2`     | `6 \| 2`
 | `add/i` | `8`     
 
+### div/i
+
+Divides *x* by *y*. If *y* is zero, a 'division by zero'
+error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input   | Stack   
+|---------|---------
+| `6`     | `6`     
+| `2`     | `6 \| 2`
+| `div/i` | `3`     
+
+### mod/i
+
+The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+zero' error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input   | Stack    
+|---------|----------
+| `-7`    | `-7`     
+| `2`     | `-7 \| 2`
+| `mod/i` | `1`      
+
 ### mul/i
 
 Multiplies the value of *x* by *y*.
@@ -50,6 +91,23 @@ Example:
 | `2`     | `6 \| 2`
 | `mul/i` | `12`    
 
+### neg/i
+
+Changes the sign of *x*.
+
+Stack effects:
+```
+( x:Int -- Int )
+```
+
+Example:
+
+| Input   | Stack
+|---------|------
+| `-6`    | `-6` 
+| `neg/i` | `6`  
+| `neg/i` | `-6` 
+
 ### pow/i
 
 Raises *x* to the power of *y*.
@@ -66,6 +124,42 @@ Example:
 | `6`     | `6`     
 | `2`     | `6 \| 2`
 | `pow/i` | `36`    
+
+### rem/i
+
+The remainder when *x* is divided by *y*. If *y* is zero, a
+'division by zero' error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input   | Stack    
+|---------|----------
+| `-7`    | `-7`     
+| `2`     | `-7 \| 2`
+| `rem/i` | `-1`     
+
+### sign/i
+
+Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+if *x* is zero.
+
+Stack effects:
+```
+( x:Int -- int )
+```
+
+Example:
+
+| Input         | Stack
+|---------------|------
+| `c -6 sign/i` | `-1` 
+| `c 6 sign/i`  | `1`  
+| `c 0 sign/i`  | `0`  
 
 ### sqrt/i
 

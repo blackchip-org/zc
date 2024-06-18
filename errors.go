@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+func ErrDivisionByZero(e *OpEnv) error {
+	return fmt.Errorf("%v: division by zero", e.Op.Name)
+}
+
 func ErrInvalidArg(e *OpEnv, format string, args ...any) error {
 	return fmt.Errorf("%v: invalid argument, %v", e.Op.Name, fmt.Sprintf(format, args...))
 }
@@ -21,6 +25,10 @@ func ErrNoSuchOp(name string) error {
 
 func ErrNotEnoughArgs(have, want int) error {
 	return fmt.Errorf("expected %v argument(s), got %v", want, have)
+}
+
+func ErrOp(env *OpEnv, err error) error {
+	return fmt.Errorf("%v: %v", env.Op.Name, err)
 }
 
 var ErrStackEmpty = errors.New("stack empty")
