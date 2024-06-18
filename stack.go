@@ -2,6 +2,7 @@ package zc
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 )
 
@@ -12,6 +13,11 @@ type Stack[T any] struct {
 
 func (s *Stack[T]) Clear() {
 	s.pos = 0
+}
+
+func (s *Stack[T]) Clone() Stack[T] {
+	items := slices.Clone(s.items)[:s.pos]
+	return Stack[T]{items: items, pos: len(items)}
 }
 
 func (s *Stack[T]) Get(i int) T {

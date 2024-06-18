@@ -24,16 +24,16 @@ func init() {
 
 type Calc struct {
 	zc.Stack[zc.Item]
-	cat   *zc.Catalog
-	state state.State
-	Err   error
-	Info  string
+	Catalog *zc.Catalog
+	state   state.State
+	Err     error
+	Info    string
 }
 
 func NewCalc() *Calc {
 	return &Calc{
-		cat:   mainCatalog,
-		state: state.New(),
+		Catalog: mainCatalog,
+		state:   state.New(),
 	}
 }
 
@@ -43,14 +43,15 @@ func (c *Calc) PushVal(vals ...any) {
 	}
 }
 
-func (c *Calc) Eval(line string) {
+func (c *Calc) Eval(line string) error {
 	toks := zc.ScanWords(line)
 	for _, tok := range toks {
 		if c.Err != nil {
-			return
+			return c.Err
 		}
 		c.EvalToken(tok)
 	}
+	return c.Err
 }
 
 func (c *Calc) EvalToken(tok scan.Token) {
@@ -83,7 +84,7 @@ func (c *Calc) evalName(name string) {
 }
 
 func (c *Calc) LookupOp(name string) ([]zc.Op, bool) {
-	ops, ok := c.cat.OpFor(name)
+	ops, ok := c.Catalog.OpFor(name)
 	return ops, ok
 }
 
