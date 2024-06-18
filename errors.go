@@ -8,7 +8,7 @@ import (
 )
 
 func ErrNotEnoughArgs(have, want int) error {
-	return fmt.Errorf("expected %v argument(s), got %v", have, want)
+	return fmt.Errorf("expected %v argument(s), got %v", want, have)
 }
 
 var ErrStackEmpty = errors.New("stack empty")

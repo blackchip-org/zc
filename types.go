@@ -1,31 +1,38 @@
-package types
+package zc
 
 import (
 	"math/big"
-
-	"github.com/blackchip-org/zc/v6"
 )
 
 var (
+	Any    = anyType{}
 	BigInt = BigIntType{}
 	Int    = IntType{}
 )
 
 var (
-	bigIntPool = zc.NewPool[big.Int](8)
+	bigIntPool = NewPool[big.Int](8)
 )
+
+type anyType struct{}
+
+func (t anyType) From(src any) (any, Type, bool) {
+	return src, Any, true
+}
+
+func (t anyType) Recycle(any) {}
 
 type BigIntType struct{}
 
-func (t BigIntType) As(item zc.Item) *big.Int {
+func (t BigIntType) As(item Item) *big.Int {
 	val, ok := item.Val.(*big.Int)
 	if !ok {
-		panic(zc.ErrWrongGoType("*big.Int", item.Val))
+		panic(ErrWrongGoType("*big.Int", item.Val))
 	}
 	return val
 }
 
-func (t BigIntType) From(src any) (any, zc.Type, bool) {
+func (t BigIntType) From(src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Int:
 		return v, t, true
@@ -37,13 +44,17 @@ func (t BigIntType) From(src any) (any, zc.Type, bool) {
 	return nil, nil, false
 }
 
+func (t BigIntType) New() *big.Int {
+	return bigIntPool.New()
+}
+
 func (t BigIntType) Recycle(v any) {
 	bigIntPool.Recycle(v.(*big.Int))
 }
 
 type IntType struct{}
 
-func (t IntType) From(src any) (any, zc.Type, bool) {
+func (t IntType) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 

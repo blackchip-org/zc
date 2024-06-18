@@ -4,9 +4,9 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app"
 	"github.com/blackchip-org/zc/v6/app/ops"
-	"github.com/blackchip-org/zc/v6/app/types"
 	"github.com/blackchip-org/zc/v6/pkg/calc"
 )
 
@@ -19,7 +19,7 @@ func factorialZcTest(n int) *big.Int {
 		c.PushVal(i)
 		c.Do(ops.MulBigInt)
 	}
-	return types.BigInt.As(c.Pop())
+	return zc.BigInt.As(c.Pop())
 }
 
 func factorialCalcTest(n int) *big.Int {

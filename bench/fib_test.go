@@ -4,15 +4,27 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/app"
+	"github.com/blackchip-org/zc/v6/app/ops"
 	"github.com/blackchip-org/zc/v6/pkg/calc"
 )
 
 const fib1000 = "43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875"
 
-func fibTest(n int) *big.Int {
+func fibTestZc(n int) *big.Int {
+	c := app.NewCalc()
+	c.PushVal(1, 1)
+	for i := 3; i <= n; i++ {
+		c.Do(ops.TuckBigInt)
+		c.Do(ops.AddBigInt)
+	}
+	return zc.BigInt.As(c.Pop())
+}
+
+func fibTestCalc(n int) *big.Int {
 	c := calc.NewBigInt()
-	c.PushInt(1)
-	c.PushInt(1)
+	c.PushInt(1, 1)
 	for i := 3; i <= n; i++ {
 		c.Dup()
 		c.Rotate()
@@ -33,8 +45,15 @@ func fibTestNative(n int) *big.Int {
 	return &f2
 }
 
-func TestFib(t *testing.T) {
-	result := fibTest(1000).String()
+func TestFibZc(t *testing.T) {
+	result := fibTestZc(1000).String()
+	if result != fib1000 {
+		t.Fatalf("\n have: %v \n want: %v", result, fib1000)
+	}
+}
+
+func TestFibCalc(t *testing.T) {
+	result := fibTestCalc(1000).String()
 	if result != fib1000 {
 		t.Fatalf("\n have: %v \n want: %v", result, fib1000)
 	}
@@ -47,9 +66,15 @@ func TestFibNative(t *testing.T) {
 	}
 }
 
-func BenchmarkFib(b *testing.B) {
+func BenchmarkFibZc(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		fibTest(1000)
+		fibTestZc(1000)
+	}
+}
+
+func BenchmarkFibCalc(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		fibTestCalc(1000)
 	}
 }
 

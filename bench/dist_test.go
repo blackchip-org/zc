@@ -4,9 +4,9 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app"
 	"github.com/blackchip-org/zc/v6/app/ops"
-	"github.com/blackchip-org/zc/v6/app/types"
 	"github.com/blackchip-org/zc/v6/pkg/calc"
 )
 
@@ -24,7 +24,7 @@ func distTestZc(c *app.Calc) *big.Int {
 	c.Do(ops.AddBigInt)
 	c.Do(ops.SqrtBigInt)
 
-	return types.BigInt.As(c.Pop())
+	return zc.BigInt.As(c.Pop())
 }
 
 func distTestCalc(c *calc.BigInt) *big.Int {

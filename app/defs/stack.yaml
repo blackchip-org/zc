@@ -1,0 +1,28 @@
+name: stack
+title: Stack operations
+category: calc
+
+ops:
+- name: tuck
+  title: Copy top and place below
+  funcs:
+  - name: TuckBigInt
+    params: [x:Any, y:Int]
+    returns: [y:Int, x:Any, y:Int]
+  desc: |-
+    Duplicates the top item on the stack, *y*, and places it below *x*.
+
+    This operation can be useful for a calculation when accumulating a value
+    which would otherwise be consumed by another operation. The example
+    below shows using `tuck` to calculate fibonacci numbers.
+  example:
+  - i: 1 2
+    o: [1, 2]
+  - i: tuck
+    o: [2, 1, 2]
+  - i: add
+    o: [2, 3]
+  - i: tuck add
+    o: [3, 5]
+  - i: tuck add
+    o: [5, 7]
