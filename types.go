@@ -8,6 +8,7 @@ var (
 	Any    = anyType{}
 	BigInt = BigIntType{}
 	Int    = IntType{}
+	String = StringType{}
 )
 
 var (
@@ -54,6 +55,10 @@ func (t BigIntType) From(src any) (any, Type, bool) {
 		bi := bigIntPool.New()
 		bi.SetInt64(int64(v))
 		return bi, Int, true
+	case string:
+		bi := bigIntPool.New()
+		_, ok := bi.SetString(v, 0)
+		return bi, String, ok
 	}
 	return nil, nil, false
 }
@@ -77,3 +82,15 @@ func (t IntType) From(src any) (any, Type, bool) {
 }
 
 func (t IntType) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type StringType struct{}
+
+func (t StringType) Name() string { return "Text" }
+
+func (t StringType) From(src any) (any, Type, bool) {
+	return nil, nil, false
+}
+
+func (t StringType) Recycle(v any) {}

@@ -25,4 +25,4 @@ ops:
   - i: tuck add
     o: [3, 5]
   - i: tuck add
-    o: [5, 7]
+    o: [5, 8]

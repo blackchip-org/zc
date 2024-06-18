@@ -46,7 +46,7 @@ func main() {
 	}
 	genOps(defs)
 	genVols(defs)
-	//genTests(defs)
+	genTests(defs)
 	genOpDocs(defs)
 	genOpRef(defs)
 	genIndex(defs)
@@ -181,7 +181,7 @@ func genTests(vols []zc.VolDef) {
 		fmt.Fprintf(f, "import (\n")
 		fmt.Fprintf(f, "\"testing\"\n")
 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6\"\n")
-		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/calc\"\n")
+		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/app\"\n")
 		fmt.Fprintf(f, ")\n")
 
 		for _, op := range vol.Ops {
@@ -197,16 +197,15 @@ func genTests(vols []zc.VolDef) {
 
 func genTest(f *os.File, name string, test []zc.Expect) {
 	fmt.Fprintf(f, "func TestOpDocs_%v(t *testing.T) {\n", name)
-	fmt.Fprintf(f, "c := calc.New()\n")
-	fmt.Fprintf(f, "ct := zc.NewCalcTester(c, t)\n")
+	fmt.Fprintf(f, "c := app.NewCalcTester(t)\n")
 	for _, e := range test {
-		fmt.Fprintf(f, "\nct.Eval(\"%v\")\n", e.Input)
+		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
 		if e.Error != "" {
-			fmt.Fprintf(f, "ct.AssertError(\"%v\")\n", e.Error)
+			fmt.Fprintf(f, "c.AssertError(\"%v\")\n", e.Error)
 		} else if e.Info != "" {
-			fmt.Fprintf(f, "ct.AssertInfo(\"%v\")\n", e.Info)
+			fmt.Fprintf(f, "c.AssertInfo(\"%v\")\n", e.Info)
 		} else {
-			fmt.Fprintf(f, "ct.AssertStack(")
+			fmt.Fprintf(f, "c.AssertStack(")
 			for i, out := range e.Output {
 				fmt.Fprintf(f, "\"%v\"", out)
 				if i < len(e.Output)-1 {

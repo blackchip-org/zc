@@ -33,4 +33,4 @@ Example:
 | `tuck`     | `2 \| 1 \| 2`
 | `add`      | `2 \| 3`     
 | `tuck add` | `3 \| 5`     
-| `tuck add` | `5 \| 7`     
+| `tuck add` | `5 \| 8`     

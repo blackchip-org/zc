@@ -4,18 +4,18 @@ import (
 	"github.com/blackchip-org/zc/v6"
 )
 
-func DupBigInt(e zc.OpEnv) {
+func DupBigInt(e *zc.OpEnv) {
 	x := zc.BigInt.As(e.Top())
 	x2 := zc.BigInt.New()
 	x2.Set(x)
 	e.PushVal(x2)
 }
 
-func Rotate(e zc.OpEnv) {
+func Rotate(e *zc.OpEnv) {
 	e.Stack.Rotate()
 }
 
-func TuckBigInt(e zc.OpEnv) {
+func TuckBigInt(e *zc.OpEnv) {
 	y := e.Pop()
 	x := e.Pop()
 	y2 := zc.BigInt.New()
