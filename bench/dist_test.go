@@ -8,7 +8,15 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 	"github.com/blackchip-org/zc/v6/app/ops"
 	"github.com/blackchip-org/zc/v6/pkg/calc"
+	"github.com/cockroachdb/apd/v3"
 )
+
+func distTestZcEval(c *app.Calc) *apd.Decimal {
+	c.Eval("5 2 sub 2 pow")
+	c.Eval("7 3 sub 2 pow")
+	c.Eval("add sqrt")
+	return zc.Decimal.As(c.Pop())
+}
 
 func distTestZc(c *app.Calc) *big.Int {
 	c.PushVal(5, 2)
@@ -64,6 +72,14 @@ func distTestNative() *big.Int {
 	return &r
 }
 
+func TestDistZcEval(t *testing.T) {
+	c := app.NewCalc()
+	r := zc.Format(distTestZcEval(c))
+	if r != "5" {
+		t.Fatalf("\n have: %v \n want: %v", r, "5")
+	}
+}
+
 func TestDistZc(t *testing.T) {
 	c := app.NewCalc()
 	r := distTestZc(c).String()
@@ -84,6 +100,13 @@ func TestDistNative(t *testing.T) {
 	r := distTestNative().String()
 	if r != "5" {
 		t.Fatalf("\n have: %v \n want: %v", r, "5")
+	}
+}
+
+func BenchmarkDistZcEval(b *testing.B) {
+	c := app.NewCalc()
+	for i := 0; i < b.N; i++ {
+		distTestZcEval(c)
 	}
 }
 
