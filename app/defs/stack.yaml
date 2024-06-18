@@ -39,6 +39,9 @@ ops:
   - name: TuckBigInt
     params: [x:Any, y:Int]
     returns: [y:Int, x:Any, y:Int]
+  - name: TuckDecimal
+    params: [x:Any, y:Dec]
+    returns: [y:Dec, x:Any, y:Dec]
   desc: |-
     Duplicates the top item on the stack, *y*, and places it below *x*.
 
@@ -56,3 +59,8 @@ ops:
     o: [3, 5]
   - i: tuck add
     o: [5, 8]
+  tests:
+  - name: Decimal
+    test:
+    - i: 1.1 2.2 tuck
+      o: [2.2, 1.1, 2.2]

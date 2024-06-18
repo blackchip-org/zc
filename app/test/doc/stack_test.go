@@ -46,3 +46,10 @@ func TestOpDocs_Stack_Tuck(t *testing.T) {
 	c.Eval("tuck add")
 	c.AssertStack("5", "8")
 }
+
+func TestOpDocs_Stack_Tuck_Decimal(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1.1 2.2 tuck")
+	c.AssertStack("2.2", "1.1", "2.2")
+}

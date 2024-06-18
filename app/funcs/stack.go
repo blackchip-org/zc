@@ -34,3 +34,12 @@ func TuckBigInt(e *zc.OpEnv) {
 	e.PushVal(y2)
 	e.Push(x, y)
 }
+
+func TuckDecimal(e *zc.OpEnv) {
+	y := e.Pop()
+	x := e.Pop()
+	y2 := zc.Decimal.New()
+	y2.Set(zc.Decimal.As(y))
+	e.PushVal(y2)
+	e.Push(x, y)
+}

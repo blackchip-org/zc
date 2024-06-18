@@ -60,6 +60,7 @@ below shows using `tuck` to calculate fibonacci numbers.
 Stack effects:
 ```
 ( x:Any y:Int -- y:Int x:Any y:Int )
+( x:Any y:Dec -- y:Dec x:Any y:Dec )
 ```
 
 Example:
