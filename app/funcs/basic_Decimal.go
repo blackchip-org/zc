@@ -9,7 +9,7 @@ import (
 func AddDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	y := zc.Decimal.As(e.Pop())
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 	defer zc.Decimal.Recycle(y)
 
 	_, err := s.Context.Add(x, x, y)
@@ -22,7 +22,7 @@ func AddDecimal(e *zc.OpEnv) {
 func CbrtDecimal(e *zc.OpEnv) {
 	var zero apd.Decimal
 	s := state.ForDec(e.State)
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 
 	if x.Cmp(&zero) < 0 {
 		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
@@ -38,7 +38,7 @@ func CbrtDecimal(e *zc.OpEnv) {
 func DivDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	y := zc.Decimal.As(e.Pop())
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 	defer zc.Decimal.Recycle(y)
 
 	cond, err := s.Context.Quo(x, x, y)
@@ -55,7 +55,7 @@ func DivDecimal(e *zc.OpEnv) {
 func MulDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	y := zc.Decimal.As(e.Pop())
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 	defer zc.Decimal.Recycle(y)
 
 	_, err := s.Context.Mul(x, x, y)
@@ -67,7 +67,7 @@ func MulDecimal(e *zc.OpEnv) {
 
 func NegDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 	_, err := s.Context.Neg(x, x)
 	if err != nil {
 		e.Err = zc.ErrOp(e, err)
@@ -78,7 +78,7 @@ func NegDecimal(e *zc.OpEnv) {
 func PowDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	y := zc.Decimal.As(e.Pop())
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 	defer zc.Decimal.Recycle(y)
 
 	_, err := s.Context.Pow(x, x, y)
@@ -91,7 +91,7 @@ func PowDecimal(e *zc.OpEnv) {
 func RemDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	y := zc.Decimal.As(e.Pop())
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 	defer zc.Decimal.Recycle(y)
 
 	cond, err := s.Context.Rem(x, x, y)
@@ -106,14 +106,14 @@ func RemDecimal(e *zc.OpEnv) {
 }
 
 func SignDecimal(e *zc.OpEnv) {
-	x := e.TopRef()
+	x := e.PopTop()
 	x.Val = zc.Decimal.As(*x).Sign()
 }
 
 func SqrtDecimal(e *zc.OpEnv) {
 	var zero apd.Decimal
 	s := state.ForDec(e.State)
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 
 	if x.Cmp(&zero) < 0 {
 		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
@@ -129,7 +129,7 @@ func SqrtDecimal(e *zc.OpEnv) {
 func SubDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
 	y := zc.Decimal.As(e.Pop())
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.As(*e.PopTop())
 	defer zc.Decimal.Recycle(y)
 
 	_, err := s.Context.Sub(x, x, y)

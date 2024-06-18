@@ -12,7 +12,9 @@ import (
 const ProgName = "zc"
 
 type Item struct {
-	Val any
+	Val   any
+	Unit  string
+	Label string
 }
 
 func (i Item) String() string {
@@ -31,6 +33,13 @@ func (e *OpEnv) PushVal(vals ...any) {
 	for _, val := range vals {
 		e.Push(Item{Val: val})
 	}
+}
+
+func (e *OpEnv) PopTop() *Item {
+	t := e.Stack.TopRef()
+	t.Unit = ""
+	t.Label = ""
+	return t
 }
 
 type Op struct {

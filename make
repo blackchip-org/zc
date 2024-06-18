@@ -12,6 +12,11 @@ test() {
     go test $@ ./...
 }
 
+bench() {
+    set -x
+    go test $@ -benchmem -run=^$  -bench . github.com/blackchip-org/zc/v6/bench
+}
+
 wasm() {
     set -x
     GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
@@ -32,6 +37,11 @@ case "$1" in
         shift
         (ops)
         (test $@)
+        ;;
+    bench)
+        shift
+        (ops)
+        (bench $@)
         ;;
     wasm)
         (ops)
