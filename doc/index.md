@@ -2,19 +2,71 @@
 
 # Index
 
+- [`*`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
+- [`**`](ops/basic.md#pow): Alias for [pow](ops/basic.md#pow)
+- [`+`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
+- [`-`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
+- [`/`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+
+## a
+- [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
+- [`add`](ops/basic.md#add): Addition
+  - [`add/d`](ops/basic_Dec.md#add/d): decimal (apd)
+  - [`add/i`](ops/basic_Int.md#add/i): integer
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`cb`](ops/basic.md#cube): Alias for [cube](ops/basic.md#cube)
+- [`cbrt`](ops/basic.md#cuberoot): Alias for [cube.root](ops/basic.md#cuberoot)
 - [`clear`](ops/stack.md#clear): Clear
 - [`cube`](ops/basic.md#cube): Cube of a number
+- [`cube.root`](ops/basic.md#cuberoot): Cube root
+  - [`cube.root/d`](ops/basic_Dec.md#cuberoot/d): decimal (apd)
 
 ## d
+- [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- [`div`](ops/basic.md#div): Division
+  - [`div/d`](ops/basic_Dec.md#div/d): decimal (apd)
+  - [`div/i`](ops/basic_Int.md#div/i): integer
 - [`dup`](ops/stack.md#dup): Duplicate
 
+## m
+- [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
+- [`mod`](ops/basic.md#mod): Modulus
+  - [`mod/i`](ops/basic_Int.md#mod/i): integer
+- [`mul`](ops/basic.md#mul): Multiplication
+  - [`mul/d`](ops/basic_Dec.md#mul/d): decimal (apd)
+  - [`mul/i`](ops/basic_Int.md#mul/i): integer
+
+## n
+- [`neg`](ops/basic.md#neg): Negation
+  - [`neg/d`](ops/basic_Dec.md#neg/d): decimal (apd)
+  - [`neg/i`](ops/basic_Int.md#neg/i): integer
+
+## p
+- [`pow`](ops/basic.md#pow): Exponentiation
+  - [`pow/d`](ops/basic_Dec.md#pow/d): decimal (apd)
+  - [`pow/i`](ops/basic_Int.md#pow/i): integer
+
+## r
+- [`rem`](ops/basic.md#rem): Remainder
+  - [`rem/d`](ops/basic_Dec.md#rem/d): decimal (apd)
+  - [`rem/i`](ops/basic_Int.md#rem/i): integer
+
 ## s
+- [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
+- [`sign`](ops/basic.md#sign): Sign
+  - [`sign/d`](ops/basic_Dec.md#sign/d): decimal (apd)
+  - [`sign/i`](ops/basic_Int.md#sign/i): integer
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
+- [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
+  - [`sqrt/i`](ops/basic_Int.md#sqrt/i): integer
 - [`square`](ops/basic.md#square): Square of a number
+- [`square.root`](ops/basic.md#squareroot): Square Root
+  - [`square.root/d`](ops/basic_Dec.md#squareroot/d): decimal (apd)
+- [`sub`](ops/basic.md#sub): Subtraction
+  - [`sub/d`](ops/basic_Dec.md#sub/d): decimal (apd)
+  - [`sub/i`](ops/basic_Int.md#sub/i): integer
 
 ## t
 - [`tuck`](ops/stack.md#tuck): Copy top and place below

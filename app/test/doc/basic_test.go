@@ -8,6 +8,16 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
+func TestOpDocs_Basic_Add(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 6 2 a")
+	c.AssertStack("8")
+
+	c.Eval("c 1.1 2.2 a")
+	c.AssertStack("3.3")
+}
+
 func TestOpDocs_Basic_Cube(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -15,9 +25,127 @@ func TestOpDocs_Basic_Cube(t *testing.T) {
 	c.AssertStack("27")
 }
 
+func TestOpDocs_Basic_CubeRoot(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("27")
+	c.AssertStack("27")
+
+	c.Eval("cbrt")
+	c.AssertStack("3")
+}
+
+func TestOpDocs_Basic_Div(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 12 4 d")
+	c.AssertStack("3")
+
+	c.Eval("c 11 2 d")
+	c.AssertStack("5.5")
+}
+
+func TestOpDocs_Basic_Mod(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-7")
+	c.AssertStack("-7")
+
+	c.Eval("2")
+	c.AssertStack("-7", "2")
+
+	c.Eval("mod/i")
+	c.AssertStack("1")
+}
+
+func TestOpDocs_Basic_Mul(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 6 2 mul")
+	c.AssertStack("12")
+
+	c.Eval("c 6.6 2.2 mul")
+	c.AssertStack("14.52")
+}
+
+func TestOpDocs_Basic_Neg(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-6")
+	c.AssertStack("-6")
+
+	c.Eval("neg")
+	c.AssertStack("6")
+
+	c.Eval("neg")
+	c.AssertStack("-6")
+}
+
+func TestOpDocs_Basic_Pow(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6")
+	c.AssertStack("6")
+
+	c.Eval("2")
+	c.AssertStack("6", "2")
+
+	c.Eval("pow")
+	c.AssertStack("36")
+}
+
+func TestOpDocs_Basic_Rem(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-7")
+	c.AssertStack("-7")
+
+	c.Eval("2")
+	c.AssertStack("-7", "2")
+
+	c.Eval("rem")
+	c.AssertStack("-1")
+}
+
+func TestOpDocs_Basic_Sign(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c -6 sign")
+	c.AssertStack("-1")
+
+	c.Eval("c 6 sign")
+	c.AssertStack("1")
+
+	c.Eval("c 0 sign")
+	c.AssertStack("0")
+}
+
 func TestOpDocs_Basic_Square(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("3 sq")
 	c.AssertStack("9")
+}
+
+func TestOpDocs_Basic_SquareRoot(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("256")
+	c.AssertStack("256")
+
+	c.Eval("sqrt")
+	c.AssertStack("16")
+}
+
+func TestOpDocs_Basic_Sub(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6")
+	c.AssertStack("6")
+
+	c.Eval("2")
+	c.AssertStack("6", "2")
+
+	c.Eval("sub")
+	c.AssertStack("4")
 }

@@ -6,12 +6,43 @@ Basic calculator
 
 ## Index
 
-| Operation               | Description       
-|-------------------------|-------------------
-| [`cube, cb`](#cube)     | Cube of a number  
-| [`square, sq`](#square) | Square of a number
+| Operation                           | Description       
+|-------------------------------------|-------------------
+| [`add, a, +`](#add)                 | Addition          
+| [`cube, cb`](#cube)                 | Cube of a number  
+| [`cube.root, cbrt`](#cube.root)     | Cube root         
+| [`div, d, /`](#div)                 | Division          
+| [`mod`](#mod)                       | Modulus           
+| [`mul, m, *`](#mul)                 | Multiplication    
+| [`neg`](#neg)                       | Negation          
+| [`pow, **`](#pow)                   | Exponentiation    
+| [`rem`](#rem)                       | Remainder         
+| [`sign`](#sign)                     | Sign              
+| [`square, sq`](#square)             | Square of a number
+| [`square.root, sqrt`](#square.root) | Square Root       
+| [`sub, s, -`](#sub)                 | Subtraction       
 
 ## Operations
+
+### add
+
+Adds *x* to *y*.
+
+Aliases: `a`, `+`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+( x:Float y:Float -- Float )
+```
+
+Example:
+
+| Input         | Stack
+|---------------|------
+| `c 6 2 a`     | `8`  
+| `c 1.1 2.2 a` | `3.3`
 
 ### cube
 
@@ -31,6 +62,156 @@ Example:
 |--------|------
 | `3 cb` | `27` 
 
+### cube.root
+
+The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Alias: `cbrt`
+
+Stack effects:
+```
+( x:Dec -- Dec )
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `27`   | `27` 
+| `cbrt` | `3`  
+
+### div
+
+Divides *x* by *y*. If *y* is zero, a 'division by zero'
+error is raised.
+
+Aliases: `d`, `/`
+
+Stack effects:
+```
+( x:Dec y:Dec -- Dec )
+( x:Float y:Float -- Float )
+```
+
+Example:
+
+| Input      | Stack
+|------------|------
+| `c 12 4 d` | `3`  
+| `c 11 2 d` | `5.5`
+
+### mod
+
+The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+zero' error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input   | Stack    
+|---------|----------
+| `-7`    | `-7`     
+| `2`     | `-7 \| 2`
+| `mod/i` | `1`      
+
+### mul
+
+Multiplies *x* by *y*.
+
+Aliases: `m`, `*`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+( x:Float y:Float -- Float )
+```
+
+Example:
+
+| Input           | Stack  
+|-----------------|--------
+| `c 6 2 mul`     | `12`   
+| `c 6.6 2.2 mul` | `14.52`
+
+### neg
+
+Changes the sign of *x*.
+
+Stack effects:
+```
+( x:Int -- Int )
+```
+
+Example:
+
+| Input | Stack
+|-------|------
+| `-6`  | `-6` 
+| `neg` | `6`  
+| `neg` | `-6` 
+
+### pow
+
+Raises *x* to the power of *y*.
+
+Alias: `**`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input | Stack   
+|-------|---------
+| `6`   | `6`     
+| `2`   | `6 \| 2`
+| `pow` | `36`    
+
+### rem
+
+The remainder when *x* is divided by *y*. If *y* is zero, a
+'division by zero' error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input | Stack    
+|-------|----------
+| `-7`  | `-7`     
+| `2`   | `-7 \| 2`
+| `rem` | `-1`     
+
+### sign
+
+Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+if *x* is zero.
+
+Stack effects:
+```
+( x:Int -- Int/a )
+( x:Dec -- Int/a )
+```
+
+Example:
+
+| Input       | Stack
+|-------------|------
+| `c -6 sign` | `-1` 
+| `c 6 sign`  | `1`  
+| `c 0 sign`  | `0`  
+
 ### square
 
 The square of a number, x²
@@ -48,3 +229,42 @@ Example:
 | Input  | Stack
 |--------|------
 | `3 sq` | `9`  
+
+### square.root
+
+The square root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Alias: `sqrt`
+
+Stack effects:
+```
+( x:Dec -- Dec )
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `256`  | `256`
+| `sqrt` | `16` 
+
+### sub
+
+Subtracts the value of *y* from *x*
+
+Aliases: `s`, `-`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+```
+
+Example:
+
+| Input | Stack   
+|-------|---------
+| `6`   | `6`     
+| `2`   | `6 \| 2`
+| `sub` | `4`     
