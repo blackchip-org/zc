@@ -3,8 +3,8 @@
 ops() {
     set -x
     go generate internal/gen-ops/gen-ops.go
-    goimports -w calc/ops/*.go calc/vols/*.go calc/test/docs/*
-    gofmt -w     calc/ops/*.go calc/vols/*.go calc/test/docs/*
+    goimports -w app/ops/*.go app/vols/*.go app/test/doc/*
+    gofmt -w     app/ops/*.go app/vols/*.go app/test/doc/*
 }
 
 test() {

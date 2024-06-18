@@ -1,4 +1,4 @@
-package fn
+package funcs
 
 import (
 	"github.com/blackchip-org/zc/v6"

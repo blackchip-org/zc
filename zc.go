@@ -19,6 +19,21 @@ func (e *OpEnv) PushVal(vals ...any) {
 }
 
 type Op struct {
-	Params []Type
-	Func   func(OpEnv)
+	Name      string
+	Overloads string
+	Params    []Type
+	Returns   []Type
+	Func      func(OpEnv)
+}
+
+type Macro struct {
+	Name string
+	Expr string
+}
+
+type Vol struct {
+	Name   string
+	Types  []Type
+	Ops    []Op
+	Macros []Macro
 }
