@@ -24,10 +24,11 @@ func init() {
 
 type Calc struct {
 	zc.Stack[zc.Item]
-	Catalog *zc.Catalog
-	state   state.State
-	Err     error
-	Info    string
+	Catalog  *zc.Catalog
+	state    state.State
+	Err      error
+	Info     string
+	Listener zc.Listener
 }
 
 func NewCalc() *Calc {
@@ -37,10 +38,25 @@ func NewCalc() *Calc {
 	}
 }
 
+func (c *Calc) Push(item zc.Item) {
+	c.Stack.Push(item)
+	if c.Listener != nil {
+		c.Listener(zc.NewStackEvent("push", c.Stack))
+	}
+}
+
 func (c *Calc) PushVal(vals ...any) {
 	for _, val := range vals {
 		c.Push(zc.Item{Val: val})
 	}
+}
+
+func (c *Calc) Pop() zc.Item {
+	item := c.Stack.Pop()
+	if c.Listener != nil {
+		c.Listener(zc.NewStackEvent("pop", c.Stack))
+	}
+	return item
 }
 
 func (c *Calc) Eval(line string) error {
@@ -54,14 +70,19 @@ func (c *Calc) Eval(line string) error {
 	return c.Err
 }
 
-func (c *Calc) EvalToken(tok scan.Token) {
-	switch tok.Type {
-	case zc.TokenName:
-		c.evalName(tok.Val)
-	case zc.TokenValue:
-		c.evalValue(tok.Val)
-	default:
-		panic("unknown token type: " + tok.Type)
+func (c *Calc) EvalToken(toks ...scan.Token) {
+	for _, tok := range toks {
+		if c.Err != nil {
+			return
+		}
+		switch tok.Type {
+		case zc.TokenName:
+			c.evalName(tok.Val)
+		case zc.TokenValue:
+			c.evalValue(tok.Val)
+		default:
+			panic("unknown token type: " + tok.Type)
+		}
 	}
 }
 
@@ -141,6 +162,9 @@ func (c *Calc) Do(op zc.Op) {
 		Op:    op,
 		Stack: &c.Stack,
 		State: c.state,
+	}
+	if c.Listener != nil {
+		c.Listener(zc.NewOpEvent(&env))
 	}
 	op.Func(&env)
 	c.Err = env.Err

@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -8,13 +9,13 @@ import (
 )
 
 type CalcTester struct {
-	calc *Calc
+	Calc *Calc
 	t    *testing.T
 }
 
 func NewCalcTester(t *testing.T) *CalcTester {
 	return &CalcTester{
-		calc: NewCalc(),
+		Calc: NewCalc(),
 		t:    t,
 	}
 }
@@ -22,43 +23,44 @@ func NewCalcTester(t *testing.T) *CalcTester {
 func (c *CalcTester) Eval(line string) {
 	c.t.Helper()
 	c.t.Logf("%v> %v\n", zc.ProgName, line)
-	c.calc.Eval(line)
-	if c.calc.Err != nil {
-		c.t.Logf("(!) %v\n", c.calc.Err)
+	c.Calc.Eval(line)
+	if c.Calc.Err != nil {
+		c.t.Logf("(!) %v\n", c.Calc.Err)
 	}
-	if c.calc.Info != "" {
-		c.t.Logf("(info) %v", c.calc.Info)
+	if c.Calc.Info != "" {
+		c.t.Logf("(info) %v", c.Calc.Info)
 	}
-	c.t.Logf("%v\n", c.calc.Stack.String())
+	c.t.Logf("%v\n", c.Calc.Stack.String())
 }
 
 func (c *CalcTester) AssertStack(vals ...any) {
 	c.t.Helper()
 
 	fmtWant := zc.FormatList(vals...)
-	fmtHave := c.calc.Stack.String()
+	fmtHave := c.Calc.Stack.String()
 
-	if c.calc.Err != nil {
+	if c.Calc.Err != nil {
 		c.t.Fatalf("(FAIL) unexpected error")
 	}
-	if c.calc.Info != "" {
+	if c.Calc.Info != "" {
 		c.t.Fatalf("(FAIL) unexpected info")
 	}
 	if !reflect.DeepEqual(fmtHave, fmtWant) {
+		fmt.Printf("\n have: %v \n want: %v\n", fmtHave, fmtWant)
 		c.t.Fatalf("(FAIL) expected: %v", fmtWant)
 	}
 }
 
 func (c *CalcTester) AssertError(err string) {
 	c.t.Helper()
-	if c.calc.Err == nil || c.calc.Err.Error() != err {
+	if c.Calc.Err == nil || c.Calc.Err.Error() != err {
 		c.t.Fatalf("(FAIL) expected error: %v", err)
 	}
 }
 
 func (c *CalcTester) AssertInfo(info string) {
 	c.t.Helper()
-	if c.calc.Info != info {
+	if c.Calc.Info != info {
 		c.t.Fatalf("(FAIL) expected info: %v", info)
 	}
 }

@@ -10,6 +10,38 @@ import (
 	"github.com/cockroachdb/apd/v3"
 )
 
+func Quote(v string) string {
+	var s scan.Scanner
+	s.InitFromString("", v)
+
+	needsQuotes := false
+	if !IsValuePrefix(s.This, s.Next) {
+		needsQuotes = true
+	} else {
+		scan.Until(&s, scan.IsSpace, s.Discard)
+		if s.HasMore() {
+			needsQuotes = true
+		}
+	}
+
+	if !needsQuotes {
+		return v
+	}
+
+	s.InitFromString("", v)
+	s.Val.WriteRune('\'')
+	for s.HasMore() {
+		if s.This == '\'' {
+			s.Val.WriteString("\\'")
+			s.Skip()
+		} else {
+			s.Keep()
+		}
+	}
+	s.Val.WriteRune('\'')
+	return s.Emit().Val
+}
+
 func Format(a any) string {
 	switch v := a.(type) {
 	case *big.Int:

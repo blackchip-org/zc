@@ -27,6 +27,10 @@ func (s *Stack[T]) Get(i int) T {
 	return s.items[s.pos-i-1]
 }
 
+func (s *Stack[T]) Items() []T {
+	return s.items[:s.pos]
+}
+
 func (s *Stack[T]) Len() int {
 	return s.pos
 }
