@@ -34,6 +34,10 @@
   - [`div/i`](ops/basic_Int.md#div/i): integer
 - [`dup`](ops/stack.md#dup): Duplicate
 
+## f
+- [`float.prec=`](ops/conf.md#floatprec=): Sets the precision for floating-point numbers
+- [`float.prec?`](ops/conf.md#floatprec?): Gets the precision for floating-point numbers
+
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
 - [`mod`](ops/basic.md#mod): Modulus
@@ -60,6 +64,8 @@
 - [`rem`](ops/basic.md#rem): Remainder
   - [`rem/d`](ops/basic_Dec.md#rem/d): decimal (apd)
   - [`rem/i`](ops/basic_Int.md#rem/i): integer
+- [`rounding.mode=`](ops/conf.md#roundingmode=): Sets the default rounding mode
+- [`rounding.mode?`](ops/conf.md#roundingmode?): Gets the default rounding mode
 
 ## s
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)

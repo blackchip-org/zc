@@ -2,7 +2,9 @@ package zc
 
 import (
 	"math/big"
+	"strconv"
 
+	"github.com/blackchip-org/zc/v6/app/state"
 	"github.com/cockroachdb/apd/v3"
 	"github.com/shopspring/decimal"
 )
@@ -15,7 +17,9 @@ var (
 	DecimalSS = DecimalSSType{}
 	Float64   = Float64Type{}
 	Int       = IntType{}
+	Int32     = Int32Type{}
 	String    = StringType{}
+	Uint      = UintType{}
 )
 
 var (
@@ -93,6 +97,14 @@ func (t DecimalType) As(item Item) *apd.Decimal {
 		panic(ErrWrongGoType("*apd.Decimal", item.Val))
 	}
 	return val
+}
+
+func (t DecimalType) Pop(e *OpEnv) *apd.Decimal {
+	return t.As(e.Pop())
+}
+
+func (t DecimalType) Push(e *OpEnv, v *apd.Decimal) {
+	e.PushVal(v)
 }
 
 func (t DecimalType) From(src any) (any, Type, bool) {
@@ -178,6 +190,13 @@ func (t BigFloatType) As(item Item) *big.Float {
 	return val
 }
 
+func (t BigFloatType) Pop(e *OpEnv) *big.Float {
+	conf := state.ForConf(e.State)
+	bf := t.As(e.Pop())
+	bf.SetPrec(conf.FloatPrec)
+	return bf
+}
+
 func (t BigFloatType) Push(e *OpEnv, bf *big.Float) {
 	if bf.IsInf() {
 		e.Err = ErrInfinity(e, bf.Sign())
@@ -241,12 +260,86 @@ func (t IntType) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 
+type Int32Type struct{}
+
+func (t Int32Type) Name() string { return "int/32" }
+
+func (t Int32Type) As(a any) int32 {
+	val, ok := a.(int32)
+	if !ok {
+		panic(ErrWrongGoType("int32", a))
+	}
+	return val
+}
+
+func (t Int32Type) Pop(e *OpEnv) int32 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Int32Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case int32:
+		return v, t, true
+	case string:
+		i32, err := strconv.ParseInt(v, 0, 32)
+		return int32(i32), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Int32Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
 type StringType struct{}
 
 func (t StringType) Name() string { return "Text" }
+
+func (t StringType) As(item Item) string {
+	val, ok := item.Val.(string)
+	if !ok {
+		panic(ErrWrongGoType("string", item.Val))
+	}
+	return val
+}
+
+func (t StringType) Push(e *OpEnv, s string) {
+	e.PushVal(s)
+}
 
 func (t StringType) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
 func (t StringType) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type UintType struct{}
+
+func (t UintType) Name() string { return "int/u" }
+
+func (t UintType) As(item Item) uint {
+	val, ok := item.Val.(uint)
+	if !ok {
+		panic(ErrWrongGoType("uint", item.Val))
+	}
+	return val
+}
+
+func (t UintType) Push(e *OpEnv, ui uint) {
+	e.PushVal(ui)
+}
+
+func (t UintType) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case uint:
+		return v, t, true
+	case string:
+		ui, err := strconv.ParseUint(v, 0, 0)
+		return uint(ui), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t UintType) Recycle(v any) {}

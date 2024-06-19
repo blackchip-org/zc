@@ -27,7 +27,9 @@ var typeMap map[string]string = map[string]string{
 	zc.DecimalSS.Name(): "DecimalSS",
 	zc.Float64.Name():   "Float64",
 	zc.Int.Name():       "Int",
+	zc.Int32.Name():     "Int32",
 	zc.String.Name():    "String",
+	zc.Uint.Name():      "Uint",
 }
 
 type ValDef struct {

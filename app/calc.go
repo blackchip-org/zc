@@ -21,6 +21,7 @@ func init() {
 		vols.BasicDecSS,
 		vols.BasicFloat,
 		vols.Stack,
+		vols.Conf,
 	)
 }
 

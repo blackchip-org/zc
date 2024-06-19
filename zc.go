@@ -16,7 +16,11 @@ type Item struct {
 }
 
 func (i Item) String() string {
-	return Format(i.Val)
+	var label string
+	if i.Label != "" {
+		label = i.Label + ": "
+	}
+	return label + Format(i.Val) + i.Unit
 }
 
 type OpEnv struct {
@@ -31,6 +35,12 @@ func (e *OpEnv) PushVal(vals ...any) {
 	for _, val := range vals {
 		e.Push(Item{Val: val})
 	}
+}
+
+func (e *OpEnv) Label(l string) {
+	item := e.Stack.Pop()
+	item.Label = l
+	e.Stack.Push(item)
 }
 
 type Op struct {
