@@ -1,0 +1,105 @@
+.stack-item {
+    color: rgb(0,205,205);
+}
+
+.top-item {
+    color: white;
+}
+
+.error {
+    color: rgb(255,255,0);
+    font-size: 16pt;
+}
+
+.info {
+    color: rgb(0,205,0);
+    font-size: 16pt;
+}
+
+.history {
+    color: rgb(127,127,127);
+    font-size: 16pt;
+}
+
+.label {
+    color: rgb(127,127,127);
+}
+
+@font-face {
+    font-family: "Inconsolata";
+    src: url("Inconsolata-Regular.ttf")
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-size: 32pt;
+    font-family: "Inconsolata";
+}
+
+#main {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#output {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-end;
+    height: 100%;
+}
+
+#output-panel {
+    flex: 1 1 auto;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#footer-panel {
+    flex: 1 1 auto;
+}
+
+#footer {
+    padding: 25px;
+    display: flex;
+    flex-flow: row;
+}
+
+#input {
+    font-family: "Inconsolata";
+    font-size: 32pt;
+    color: white;
+    background-color: #333;
+    border: 0px;
+    padding-left: 10px;
+    width: 100%;
+    margin-left: 20px;
+}
+
+#input:focus {
+    background-color: #555;
+    border: 0px;
+    outline: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+}
+
+#popup {
+    flex: 1 1 auto;
+    color: #aaa;
+    font-size: 24pt;
+    margin: 10px;
+}
+
+#auto {
+    margin-left: 10px;
+    font-size: 24pt;
+    background-color: #ddd;
+    border: none;
+}
