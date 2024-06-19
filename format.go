@@ -47,7 +47,7 @@ func Format(a any) string {
 	case *big.Int:
 		return v.String()
 	case *apd.Decimal:
-		f := RemoveTrailingZeros(v.String())
+		f := RemoveTrailingZeros(v.Text('f'))
 		f = FormatExponent(f)
 		return f
 	case int:

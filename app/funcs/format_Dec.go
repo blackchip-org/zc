@@ -2,15 +2,13 @@ package funcs
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/calc/state"
-	"github.com/blackchip-org/zc/v6/calc/types"
-	"github.com/cockroachdb/apd/v3"
+	"github.com/blackchip-org/zc/v6/app/state"
 )
 
 func RoundDecimal(e *zc.OpEnv) {
 	s := state.ForDec(e.State)
-	x := e.Args[0].(*apd.Decimal)
-	p := e.Args[1].(int32)
+	p := zc.Int32.Pop(e)
+	x := zc.Decimal.Pop(e)
 
 	// For Quantize this needs to be the opposite. -3 is to round to three
 	// places after the decimal point
@@ -21,11 +19,12 @@ func RoundDecimal(e *zc.OpEnv) {
 		e.Err = zc.ErrOp(e, err)
 		return
 	}
-	e.Returns = []any{x}
+	zc.Decimal.Push(e, x)
 }
 
 func ScientificNotationDecimal(e *zc.OpEnv) {
-	x := e.Args[0].(*apd.Decimal)
-	sn := types.Dec.FormatWith('e', x)
-	e.Returns = []any{sn}
+	x := zc.Decimal.Pop(e)
+	sn := zc.FormatExponent(x.Text('e'))
+	zc.String.Push(e, sn)
+	zc.Decimal.Recycle(x)
 }

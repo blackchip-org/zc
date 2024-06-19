@@ -276,6 +276,10 @@ func (t Int32Type) Pop(e *OpEnv) int32 {
 	return t.As(e.Pop().Val)
 }
 
+func (t Int32Type) Push(e *OpEnv, v int32) {
+	e.PushVal(v)
+}
+
 func (t Int32Type) From(src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int32:
@@ -308,6 +312,10 @@ func (t StringType) Push(e *OpEnv, s string) {
 }
 
 func (t StringType) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case string:
+		return v, t, true
+	}
 	return nil, nil, false
 }
 

@@ -61,18 +61,24 @@
   - [`pow/i`](ops/basic_Int.md#pow/i): integer
 
 ## r
+- [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
 - [`rem`](ops/basic.md#rem): Remainder
   - [`rem/d`](ops/basic_Dec.md#rem/d): decimal (apd)
   - [`rem/i`](ops/basic_Int.md#rem/i): integer
+- [`round`](ops/format.md#round): Round number
+  - [`round/d`](ops/format_Dec.md#round/d): decimal (apd)
 - [`rounding.mode=`](ops/conf.md#roundingmode=): Sets the default rounding mode
 - [`rounding.mode?`](ops/conf.md#roundingmode?): Gets the default rounding mode
 
 ## s
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
+- [`scientific.notation`](ops/format.md#scientificnotation): 
+  - [`scientific.notation/d`](ops/format_Dec.md#scientificnotation/d): decimal (apd)
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/d`](ops/basic_Dec.md#sign/d): decimal (apd)
   - [`sign/f`](ops/basic_Float.md#sign/f): float
   - [`sign/i`](ops/basic_Int.md#sign/i): integer
+- [`sn`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
   - [`sqrt/i`](ops/basic_Int.md#sqrt/i): integer
