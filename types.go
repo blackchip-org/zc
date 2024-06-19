@@ -4,21 +4,25 @@ import (
 	"math/big"
 
 	"github.com/cockroachdb/apd/v3"
+	"github.com/shopspring/decimal"
 )
 
 var (
-	Any     = anyType{}
-	BigInt  = BigIntType{}
-	Decimal = DecimalType{}
-	Float64 = Float64Type{}
-	Int     = IntType{}
-	String  = StringType{}
+	Any       = anyType{}
+	BigInt    = BigIntType{}
+	BigFloat  = BigFloatType{}
+	Decimal   = DecimalType{}
+	DecimalSS = DecimalSSType{}
+	Float64   = Float64Type{}
+	Int       = IntType{}
+	String    = StringType{}
 )
 
 var (
-	poolSize    = 8
-	bigIntPool  = NewPool[big.Int](poolSize)
-	decimalPool = NewPool[apd.Decimal](poolSize)
+	poolSize     = 8
+	bigIntPool   = NewPool[big.Int](poolSize)
+	decimalPool  = NewPool[apd.Decimal](poolSize)
+	bigFloatPool = NewPool[big.Float](poolSize)
 )
 
 type Type interface {
@@ -122,6 +126,93 @@ func (t DecimalType) New() *apd.Decimal {
 
 func (t DecimalType) Recycle(v any) {
 	decimalPool.Recycle(v.(*apd.Decimal))
+}
+
+// ----------------------------------------------------------------------------
+
+type DecimalSSType struct{}
+
+func (t DecimalSSType) Name() string { return "Dec/ss" }
+
+func (t DecimalSSType) As(item Item) decimal.Decimal {
+	val, ok := item.Val.(decimal.Decimal)
+	if !ok {
+		panic(ErrWrongGoType("decimal.Decimal", item.Val))
+	}
+	return val
+}
+
+func (t DecimalSSType) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case decimal.Decimal:
+		return v, t, true
+	case *big.Int:
+		d := decimal.NewFromBigInt(v, 0)
+		return d, BigInt, true
+	case int:
+		d := decimal.NewFromInt(int64(v))
+		return d, Int, true
+	case float64:
+		d := decimal.NewFromFloat(v)
+		return d, Float64, true
+	case string:
+		d, err := decimal.NewFromString(v)
+		return d, String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t DecimalSSType) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type BigFloatType struct{}
+
+func (t BigFloatType) Name() string { return "Float" }
+
+func (t BigFloatType) As(item Item) *big.Float {
+	val, ok := item.Val.(*big.Float)
+	if !ok {
+		panic(ErrWrongGoType("*big.Float", item.Val))
+	}
+	return val
+}
+
+func (t BigFloatType) Push(e *OpEnv, bf *big.Float) {
+	if bf.IsInf() {
+		e.Err = ErrInfinity(e, bf.Sign())
+	} else {
+		e.PushVal(bf)
+	}
+}
+
+func (t BigFloatType) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case *big.Float:
+		return v, t, true
+	case *apd.Decimal:
+		// FIXME: slow
+		bf := bigFloatPool.New()
+		bf.SetString(v.String())
+		return bf, Decimal, true
+	case int:
+		bf := bigFloatPool.New()
+		bf.SetInt64(int64(v))
+		return bf, Int, true
+	case string:
+		bf := bigFloatPool.New()
+		_, ok := bf.SetString(v)
+		return bf, String, ok
+	}
+	return nil, nil, false
+}
+
+func (t BigFloatType) New() *big.Float {
+	return bigFloatPool.New()
+}
+
+func (t BigFloatType) Recycle(v any) {
+	bigFloatPool.Recycle(v.(*big.Float))
 }
 
 // ----------------------------------------------------------------------------

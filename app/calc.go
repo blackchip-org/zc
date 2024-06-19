@@ -18,6 +18,8 @@ func init() {
 		vols.Basic,
 		vols.BasicInt,
 		vols.BasicDec,
+		vols.BasicDecSS,
+		vols.BasicFloat,
 		vols.Stack,
 	)
 }

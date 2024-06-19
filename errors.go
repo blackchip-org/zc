@@ -11,6 +11,19 @@ func ErrDivisionByZero(e *OpEnv) error {
 	return fmt.Errorf("%v: division by zero", e.Op.Name)
 }
 
+func ErrInfinity(e *OpEnv, sign int) error {
+	var inf string
+	switch {
+	case sign < 1:
+		inf = "-infinity"
+	case sign > 0:
+		inf = "+infinity"
+	default:
+		inf = "infinity"
+	}
+	return fmt.Errorf("%v: %v", e.Op.Name, inf)
+}
+
 func ErrInvalidArg(e *OpEnv, format string, args ...any) error {
 	return fmt.Errorf("%v: invalid argument, %v", e.Op.Name, fmt.Sprintf(format, args...))
 }
@@ -21,6 +34,10 @@ func ErrNoMatchForOp(name string) error {
 
 func ErrNoSuchOp(name string) error {
 	return fmt.Errorf("no such operation: %v", name)
+}
+
+func ErrNotANumber(e *OpEnv) error {
+	return fmt.Errorf("%v: not a number", e.Op.Name)
 }
 
 func ErrNotEnoughArgs(have, want int) error {

@@ -12,6 +12,8 @@
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`add`](ops/basic.md#add): Addition
   - [`add/d`](ops/basic_Dec.md#add/d): decimal (apd)
+  - [`add/d/ss`](ops/basic_Dec_SS.md#add/d/ss): decimal (shopspring)
+  - [`add/f`](ops/basic_Float.md#add/f): float
   - [`add/i`](ops/basic_Int.md#add/i): integer
 
 ## c
@@ -27,6 +29,8 @@
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
 - [`div`](ops/basic.md#div): Division
   - [`div/d`](ops/basic_Dec.md#div/d): decimal (apd)
+  - [`div/d/ss`](ops/basic_Dec_SS.md#div/d/ss): decimal (shopspring)
+  - [`div/f`](ops/basic_Float.md#div/f): float
   - [`div/i`](ops/basic_Int.md#div/i): integer
 - [`dup`](ops/stack.md#dup): Duplicate
 
@@ -36,11 +40,15 @@
   - [`mod/i`](ops/basic_Int.md#mod/i): integer
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/d`](ops/basic_Dec.md#mul/d): decimal (apd)
+  - [`mul/d/ss`](ops/basic_Dec_SS.md#mul/d/ss): decimal (shopspring)
+  - [`mul/f`](ops/basic_Float.md#mul/f): float
   - [`mul/i`](ops/basic_Int.md#mul/i): integer
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/d`](ops/basic_Dec.md#neg/d): decimal (apd)
+  - [`neg/d/ss`](ops/basic_Dec_SS.md#neg/d/ss): decimal (shopspring)
+  - [`neg/f`](ops/basic_Float.md#neg/f): float
   - [`neg/i`](ops/basic_Int.md#neg/i): integer
 
 ## p
@@ -57,6 +65,7 @@
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/d`](ops/basic_Dec.md#sign/d): decimal (apd)
+  - [`sign/f`](ops/basic_Float.md#sign/f): float
   - [`sign/i`](ops/basic_Int.md#sign/i): integer
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
@@ -64,8 +73,11 @@
 - [`square`](ops/basic.md#square): Square of a number
 - [`square.root`](ops/basic.md#squareroot): Square Root
   - [`square.root/d`](ops/basic_Dec.md#squareroot/d): decimal (apd)
+  - [`square.root/f`](ops/basic_Float.md#squareroot/f): float
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/d`](ops/basic_Dec.md#sub/d): decimal (apd)
+  - [`sub/d/ss`](ops/basic_Dec_SS.md#sub/d/ss): decimal (shopspring)
+  - [`sub/f`](ops/basic_Float.md#sub/f): float
   - [`sub/i`](ops/basic_Int.md#sub/i): integer
 
 ## t

@@ -1,0 +1,90 @@
+name: basic/Dec/SS
+title: Basic calculator
+subtitle: decimal (shopspring)
+
+ops:
+- name: add/d/ss
+  title: Addition
+  funcs:
+  - name: AddDecimalSS
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
+  desc: Adds the value of *x* to *y*.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: add/d/ss
+    o: [8.8]
+
+- name: div/d/ss
+  title: Division
+  funcs:
+  - name: DivDecimalSS
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
+  desc: |-
+    Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2
+    o: [6.6, 2]
+  - i: div/d/ss
+    o: [3.3]
+  tests:
+  - name: Thirds
+    test:
+      - i: 2 3 div/d/ss
+        o: [0.6666666666666667]
+  - name: Zero
+    test:
+      - i: 6.6 0 div/d/ss
+        error: "div/d/ss: division by zero"
+
+- name: mul/d/ss
+  title: Multiplication
+  funcs:
+  - name: MulDecimalSS
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
+  desc: Multiplies the value of *x* by *y*.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: mul/d/ss
+    o: [14.52]
+
+- name: neg/d/ss
+  title: Negation
+  funcs:
+  - name: NegDecimalSS
+    params: [x:Dec/ss]
+    returns: [Dec/ss]
+  desc: Changes the sign of *x*.
+  example:
+  - i: -6.6
+    o: [-6.6]
+  - i: neg/d/ss
+    o: [6.6]
+  - i: neg/d/ss
+    o: [-6.6]
+
+- name: sub/d/ss
+  title: Subtraction
+  funcs:
+  - name: SubDecimalSS
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
+  desc: Subtracts the value of *y* from *x*
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: sub/d/ss
+    o: [4.4]

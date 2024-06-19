@@ -31,6 +31,7 @@ func (c *CalcTester) Eval(line string) {
 		c.t.Logf("(info) %v", c.Calc.Info)
 	}
 	c.t.Logf("%v\n", c.Calc.Stack.String())
+	c.t.Logf("\t%v\n", c.StackTypes())
 }
 
 func (c *CalcTester) AssertStack(vals ...any) {
@@ -63,4 +64,13 @@ func (c *CalcTester) AssertInfo(info string) {
 	if c.Calc.Info != info {
 		c.t.Fatalf("(FAIL) expected info: %v", info)
 	}
+}
+
+func (c *CalcTester) StackTypes() string {
+	var types []any
+	items := c.Calc.Items()
+	for _, item := range items {
+		types = append(types, reflect.TypeOf(item.Val).String())
+	}
+	return zc.FormatList(types...)
 }

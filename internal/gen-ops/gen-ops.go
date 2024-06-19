@@ -20,12 +20,14 @@ import (
 )
 
 var typeMap map[string]string = map[string]string{
-	zc.Any.Name():     "Any",
-	zc.BigInt.Name():  "BigInt",
-	zc.Decimal.Name(): "Decimal",
-	zc.Float64.Name(): "Float64",
-	zc.Int.Name():     "Int",
-	zc.String.Name():  "String",
+	zc.Any.Name():       "Any",
+	zc.BigInt.Name():    "BigInt",
+	zc.BigFloat.Name():  "BigFloat",
+	zc.Decimal.Name():   "Decimal",
+	zc.DecimalSS.Name(): "DecimalSS",
+	zc.Float64.Name():   "Float64",
+	zc.Int.Name():       "Int",
+	zc.String.Name():    "String",
 }
 
 type ValDef struct {
