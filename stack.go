@@ -89,10 +89,3 @@ func (s *Stack[T]) Top() T {
 	}
 	return s.items[s.pos-1]
 }
-
-func (s *Stack[T]) TopRef() *T {
-	if s.pos == 0 {
-		panic(ErrStackEmpty)
-	}
-	return &s.items[s.pos-1]
-}

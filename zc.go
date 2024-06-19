@@ -33,13 +33,6 @@ func (e *OpEnv) PushVal(vals ...any) {
 	}
 }
 
-func (e *OpEnv) PopTop() *Item {
-	t := e.Stack.TopRef()
-	t.Unit = ""
-	t.Label = ""
-	return t
-}
-
 type Op struct {
 	Name      string
 	Overloads string
