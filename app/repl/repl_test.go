@@ -70,6 +70,18 @@ func TestDrop(t *testing.T) {
 	r.AssertStack(1, 2)
 }
 
+func TestLabel(t *testing.T) {
+	r := NewReplTester(t)
+	r.Eval("42 /answer label")
+	r.AssertStack("answer: 42")
+	r.Eval("1 add")
+	r.AssertStack("43")
+	r.Eval("c float.prec?")
+	r.AssertStack("precision: 64")
+	r.Eval("1 add")
+	r.AssertStack("65")
+}
+
 func TestCommonPrefix(t *testing.T) {
 	tests := []struct {
 		common string

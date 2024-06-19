@@ -73,6 +73,10 @@ func (t BigIntType) From(src any) (any, Type, bool) {
 		bi := bigIntPool.New()
 		_, ok := bi.SetString(v, 0)
 		return bi, String, ok
+	case uint:
+		bi := bigIntPool.New()
+		bi.SetUint64(uint64(v))
+		return bi, Uint, true
 	}
 	return nil, nil, false
 }
@@ -347,6 +351,12 @@ func (t UintType) From(src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case uint:
 		return v, t, true
+	case *big.Int:
+		if !v.IsUint64() {
+			return nil, nil, false
+		}
+		ui := v.Uint64()
+		return ui, BigInt, true
 	case string:
 		ui, err := strconv.ParseUint(v, 0, 0)
 		return uint(ui), String, err == nil

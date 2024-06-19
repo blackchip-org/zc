@@ -40,6 +40,7 @@ func (r *ReplTester) Eval(line string) {
 		r.t.Logf("(info) %v", r.Calc.Info)
 	}
 	r.t.Logf("%v\n", r.Calc.Stack.String())
+	r.t.Logf("    %v\n", r.ct.StackTypes())
 }
 
 func (r *ReplTester) AssertStack(vals ...any) {
