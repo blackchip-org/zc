@@ -11,6 +11,7 @@ var Stack = zc.Vol{
 	Name: "stack",
 	Ops: []zc.Op{
 		ops.Clear,
+		ops.Drop,
 		ops.DupBigInt,
 		ops.DupDecimal,
 		ops.TuckBigInt,

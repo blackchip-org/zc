@@ -17,6 +17,20 @@ ops:
   - i: c
     o: []
 
+- name: drop
+  title: Drop
+  funcs:
+  - name: Drop
+    params: [Any]
+  desc: |-
+    Remove the top item from the stack. An item can also be dropped by
+    entering in a blank line.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: drop
+    o: [1, 2]
+
 - name: dup
   title: Duplicate
   funcs:

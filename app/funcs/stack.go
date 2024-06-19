@@ -8,6 +8,10 @@ func Clear(e *zc.OpEnv) {
 	e.Clear()
 }
 
+func Drop(e *zc.OpEnv) {
+	e.Pop()
+}
+
 func DupBigInt(e *zc.OpEnv) {
 	x := zc.BigInt.As(e.Top())
 	x2 := zc.BigInt.New()

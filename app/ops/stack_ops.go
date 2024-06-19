@@ -15,6 +15,12 @@ var (
 		Returns:  []zc.Type{},
 		Func:     funcs.Clear,
 	}
+	Drop = zc.Op{
+		Name:    "drop",
+		Params:  []zc.Type{zc.Any},
+		Returns: []zc.Type{},
+		Func:    funcs.Drop,
+	}
 	DupBigInt = zc.Op{
 		Name:    "dup",
 		Params:  []zc.Type{zc.BigInt},

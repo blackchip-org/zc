@@ -32,6 +32,7 @@
   - [`div/d/ss`](ops/basic_Dec_SS.md#div/d/ss): decimal (shopspring)
   - [`div/f`](ops/basic_Float.md#div/f): float
   - [`div/i`](ops/basic_Int.md#div/i): integer
+- [`drop`](ops/stack.md#drop): Drop
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## f

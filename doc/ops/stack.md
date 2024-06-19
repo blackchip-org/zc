@@ -9,6 +9,7 @@ Stack operations
 | Operation            | Description             
 |----------------------|-------------------------
 | [`clear, c`](#clear) | Clear                   
+| [`drop`](#drop)      | Drop                    
 | [`dup`](#dup)        | Duplicate               
 | [`tuck`](#tuck)      | Copy top and place below
 
@@ -31,6 +32,23 @@ Example:
 |---------|--------------
 | `1 2 3` | `1 \| 2 \| 3`
 | `c`     |              
+
+### drop
+
+Remove the top item from the stack. An item can also be dropped by
+entering in a blank line.
+
+Stack effects:
+```
+( Any --  )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `drop`  | `1 \| 2`     
 
 ### dup
 
