@@ -5,6 +5,7 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app"
+	"github.com/blackchip-org/zc/v6/pkg/ansi"
 )
 
 type ReplTester struct {
@@ -15,6 +16,7 @@ type ReplTester struct {
 }
 
 func NewReplTester(t *testing.T) *ReplTester {
+	ansi.Enabled = false
 	ct := app.NewCalcTester(t)
 	return &ReplTester{
 		Calc: ct.Calc,

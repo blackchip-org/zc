@@ -112,14 +112,24 @@ func (r *Repl) Eval(line string) error {
 		return nil
 	}
 
-	toks := zc.ScanWords(line)
-	cmdName := toks[0].Val
-	cmd, ok := cmds[cmdName]
-
+	var cmdName string
 	var err error
-	if ok {
-		err = cmd(r, toks[1:])
-	} else {
+	toks := zc.ScanWords(line)
+
+	switch {
+	case len(toks) == 0:
+		if r.EndQuote == "" && r.Calc.Stack.Len() > 0 {
+			r.Calc.Stack.Pop()
+		}
+	case toks[0].Type == zc.TokenName:
+		cmdName = toks[0].Val
+		cmd, ok := cmds[cmdName]
+		if ok {
+			err = cmd(r, toks[1:])
+		} else {
+			r.evalLine(toks)
+		}
+	default:
 		r.evalLine(toks)
 	}
 
@@ -254,12 +264,20 @@ func colorize(color string, item zc.Item) string {
 		fmt.Fprintf(&b, "%v: ", item.Label)
 	}
 
+	ansi.Fprint(&b, ansi.Reset)
 	ansi.Fprint(&b, color)
-	b.WriteString(item.String())
+	b.WriteString(zc.Format(item.Val))
 
-	if item.Label != "" {
-		fmt.Fprintf(&b, item.Label)
+	if item.Unit != "" {
+		ansi.Fprint(&b, ansi.DarkGray)
+		fmt.Fprintf(&b, item.Unit)
 	}
+
+	// if item.Label != "" {
+	// 	ansi.Fprint(&b, ansi.DarkGray)
+	// 	fmt.Fprintf(&b, " (%v)", item.Label)
+	// }
+
 	ansi.Fprint(&b, ansi.Reset)
 	return b.String()
 }

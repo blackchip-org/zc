@@ -1,0 +1,30 @@
+name: anno
+title: Annotations
+category: lib
+
+ops:
+- name: label
+  title: Attach label
+  funcs:
+  - name: Label
+    params: [x:Any, l:Text]
+    returns: [x:Any]
+  desc: Attaches a label *l* to *x*.
+  example:
+  - i: 42
+    o: [42]
+  - i: /answer label
+    o: ["answer: 42"]
+
+- name: unit
+  title: Attach unit
+  funcs:
+  - name: Unit
+    params: [x:Any, u:Text]
+    returns: [x:Any]
+  desc: Attaches a unit *u* to *x*.
+  example:
+  - i: 42
+    o: [42]
+  - i: /°F unit
+    o: [42°F]

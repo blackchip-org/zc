@@ -2,70 +2,72 @@ package repl
 
 import (
 	"testing"
-
-	"github.com/blackchip-org/zc/v6/pkg/ansi"
 )
 
 func TestUndo(t *testing.T) {
-	ansi.Enabled = false
-	repl := NewReplTester(t)
+	r := NewReplTester(t)
 
-	repl.Eval("1")
-	repl.Eval("2")
-	repl.Eval("3")
-	repl.AssertStack(1, 2, 3)
+	r.Eval("1")
+	r.Eval("2")
+	r.Eval("3")
+	r.AssertStack(1, 2, 3)
 
-	repl.Eval("undo")
-	repl.AssertStack(1, 2)
+	r.Eval("undo")
+	r.AssertStack(1, 2)
 
-	repl.Eval("undo")
-	repl.AssertStack(1)
+	r.Eval("undo")
+	r.AssertStack(1)
 
-	repl.Eval("undo")
-	repl.AssertStack()
+	r.Eval("undo")
+	r.AssertStack()
 
-	repl.Eval("undo")
-	repl.AssertError("undo stack is empty")
+	r.Eval("undo")
+	r.AssertError("undo stack is empty")
 
-	repl.Eval("redo")
+	r.Eval("redo")
 	// 1
-	repl.AssertStack("1")
+	r.AssertStack("1")
 
-	repl.Eval("redo")
+	r.Eval("redo")
 	// 1 2
-	repl.Eval("redo")
+	r.Eval("redo")
 	// 1 2 3
-	repl.AssertStack("1", "2", "3")
-	repl.Eval("redo")
-	repl.AssertError("redo stack is empty")
+	r.AssertStack("1", "2", "3")
+	r.Eval("redo")
+	r.AssertError("redo stack is empty")
 }
 
 func TestQuote(t *testing.T) {
-	ansi.Enabled = false
-	repl := NewReplTester(t)
+	r := NewReplTester(t)
 
-	repl.Eval("quote EOF")
-	repl.Eval("1 2 add")
-	repl.Eval("2 3 sub")
-	repl.Eval("4")
-	repl.Eval("EOF")
-	repl.Eval("2 pow")
+	r.Eval("quote EOF")
+	r.Eval("1 2 add")
+	r.Eval("2 3 sub")
+	r.Eval("4")
+	r.Eval("EOF")
+	r.Eval("2 pow")
 
-	repl.AssertStack("1 2 add", "2 3 sub", "16")
+	r.AssertStack("1 2 add", "2 3 sub", "16")
 }
 
 func TestQuoteBlanks(t *testing.T) {
-	ansi.Enabled = false
-	repl := NewReplTester(t)
+	r := NewReplTester(t)
 
-	repl.Eval("quote EOF")
-	repl.Eval("1 2 add")
-	repl.Eval("2 3 sub")
-	repl.Eval("")
-	repl.Eval("")
-	repl.Eval("EOF")
+	r.Eval("quote EOF")
+	r.Eval("1 2 add")
+	r.Eval("2 3 sub")
+	r.Eval("")
+	r.Eval("")
+	r.Eval("EOF")
 
-	repl.AssertStack("1 2 add", "2 3 sub", "", "")
+	r.AssertStack("1 2 add", "2 3 sub", "", "")
+}
+
+func TestDrop(t *testing.T) {
+	r := NewReplTester(t)
+	r.Eval("1 2 3")
+	r.Eval("")
+	r.AssertStack(1, 2)
 }
 
 func TestCommonPrefix(t *testing.T) {

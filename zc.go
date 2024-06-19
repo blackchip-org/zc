@@ -43,6 +43,12 @@ func (e *OpEnv) Label(l string) {
 	e.Stack.Push(item)
 }
 
+func (e *OpEnv) Unit(u string) {
+	item := e.Stack.Pop()
+	item.Unit = u
+	e.Stack.Push(item)
+}
+
 type Op struct {
 	Name      string
 	Overloads string

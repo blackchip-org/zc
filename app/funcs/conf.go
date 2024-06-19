@@ -32,7 +32,7 @@ const (
 
 func RoundingModeSet(e *zc.OpEnv) {
 	s := state.ForConf(e.State)
-	m := zc.String.As(e.Pop())
+	m := zc.String.Pop(e)
 	switch m {
 	case RoundingModeCeil:
 		s.RoundingMode = big.ToPositiveInf

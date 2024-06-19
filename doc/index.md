@@ -39,6 +39,9 @@
 - [`float.prec=`](ops/conf.md#floatprec=): Sets the precision for floating-point numbers
 - [`float.prec?`](ops/conf.md#floatprec?): Gets the precision for floating-point numbers
 
+## l
+- [`label`](ops/anno.md#label): Attach label
+
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
 - [`mod`](ops/basic.md#mod): Modulus
@@ -95,3 +98,6 @@
 
 ## t
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
+
+## u
+- [`unit`](ops/anno.md#unit): Attach unit

@@ -15,7 +15,7 @@ var cmds map[string]Cmd
 func init() {
 	cmds = map[string]Cmd{
 		"def":   def,
-		"":      pop,
+		"drop":  drop,
 		"redo":  redo,
 		"u":     undo,
 		"quit":  quit,
@@ -56,7 +56,7 @@ func def(r *Repl, toks []scan.Token) error {
 	return nil
 }
 
-func pop(r *Repl, _ []scan.Token) error {
+func drop(r *Repl, _ []scan.Token) error {
 	if r.EndQuote == "" {
 		r.Calc.Stack.Pop()
 	}

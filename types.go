@@ -299,12 +299,16 @@ type StringType struct{}
 
 func (t StringType) Name() string { return "Text" }
 
-func (t StringType) As(item Item) string {
-	val, ok := item.Val.(string)
+func (t StringType) As(a any) string {
+	val, ok := a.(string)
 	if !ok {
-		panic(ErrWrongGoType("string", item.Val))
+		panic(ErrWrongGoType("string", a))
 	}
 	return val
+}
+
+func (t StringType) Pop(e *OpEnv) string {
+	return t.As(e.Pop().Val)
 }
 
 func (t StringType) Push(e *OpEnv, s string) {

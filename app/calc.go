@@ -15,6 +15,7 @@ func init() {
 	// Order here is important. BasicInt adds overloads for basic before
 	// BasicDec does. Do not try to sort this list.
 	mainCatalog.AddVolume(
+		vols.Anno,
 		vols.Basic,
 		vols.BasicInt,
 		vols.BasicDec,
