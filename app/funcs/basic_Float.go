@@ -52,6 +52,7 @@ func SqrtBigFloat(e *zc.OpEnv) {
 	x := zc.BigFloat.Pop(e)
 	if x.Cmp(&zero) < 0 {
 		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
+		return
 	}
 	x.Sqrt(x)
 	zc.BigFloat.Push(e, x)

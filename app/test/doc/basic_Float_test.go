@@ -34,6 +34,13 @@ func TestOpDocs_BasicFloat_DivF(t *testing.T) {
 	c.AssertStack("0.6666666666666666667")
 }
 
+func TestOpDocs_BasicFloat_DivF_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 div/f")
+	c.AssertError("div/f: division by zero")
+}
+
 func TestOpDocs_BasicFloat_MulF(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -81,6 +88,13 @@ func TestOpDocs_BasicFloat_SquareRootF(t *testing.T) {
 
 	c.Eval("sqrt/f")
 	c.AssertStack("1.25")
+}
+
+func TestOpDocs_BasicFloat_SquareRootF_Negative(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 sqrt/f")
+	c.AssertError("square.root/f: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_BasicFloat_SubF(t *testing.T) {

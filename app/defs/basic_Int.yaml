@@ -111,6 +111,15 @@ ops:
     o: [6, 2]
   - i: pow/i
     o: [36]
+  tests:
+  - name: Zero
+    test:
+    - i: 0 0 pow/i
+      o: [1]
+  - name: Inf
+    test:
+    - i: 0 -1 pow/i
+      o: [1]
 
 - name: rem/i
   overloads: rem
@@ -129,6 +138,11 @@ ops:
     o: [-7, 2]
   - i: rem/i
     o: [-1]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 rem
+      error: "rem/i: division by zero"
 
 - name: sign/i
   overloads: sign

@@ -36,6 +36,11 @@ ops:
     o: [2, 3]
   - i: div/f
     o: [0.6666666666666666667]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 div/f
+      error: "div/f: division by zero"
 
 - name: mul/f
   overloads: mul
@@ -103,6 +108,11 @@ ops:
     o: [1.5625]
   - i: sqrt/f
     o: [1.25]
+  tests:
+  - name: Negative
+    test:
+    - i: -1 sqrt/f
+      error: "square.root/f: invalid argument, -1 < 0"
 
 - name: sub/f
   overloads: sub

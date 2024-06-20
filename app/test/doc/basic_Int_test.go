@@ -100,6 +100,20 @@ func TestOpDocs_BasicInt_PowI(t *testing.T) {
 	c.AssertStack("36")
 }
 
+func TestOpDocs_BasicInt_PowI_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 0 pow/i")
+	c.AssertStack("1")
+}
+
+func TestOpDocs_BasicInt_PowI_Inf(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 -1 pow/i")
+	c.AssertStack("1")
+}
+
 func TestOpDocs_BasicInt_RemI(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -111,6 +125,13 @@ func TestOpDocs_BasicInt_RemI(t *testing.T) {
 
 	c.Eval("rem/i")
 	c.AssertStack("-1")
+}
+
+func TestOpDocs_BasicInt_RemI_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 rem")
+	c.AssertError("rem/i: division by zero")
 }
 
 func TestOpDocs_BasicInt_SignI(t *testing.T) {
