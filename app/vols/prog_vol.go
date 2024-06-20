@@ -26,6 +26,10 @@ var Prog = zc.Vol{
 	},
 	Macros: []zc.Macro{
 		{Name: "lsh", Expr: "left.shift"},
+		{Name: "shift.left", Expr: "left.shift"},
+		{Name: "shl", Expr: "left.shift"},
 		{Name: "rsh", Expr: "right.shift"},
+		{Name: "shift.right", Expr: "right.shift"},
+		{Name: "shr", Expr: "right.shift"},
 	},
 }

@@ -109,7 +109,7 @@ ops:
       o: [-0x1]
 
 - name: left.shift
-  aliases: [lsh]
+  aliases: [lsh, shift.left, shl]
   title: Shift bits left
   funcs:
   - name: Lsh
@@ -171,7 +171,7 @@ ops:
     o: [0b1110]
 
 - name: right.shift
-  aliases: [rsh]
+  aliases: [rsh, shift.right, shr]
   title: Shift bits right
   funcs:
   - name: Rsh

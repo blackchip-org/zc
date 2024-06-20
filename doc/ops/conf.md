@@ -6,12 +6,12 @@ General configuration
 
 ## Index
 
-| Operation                          | Description                                  
-|------------------------------------|----------------------------------------------
-| [`float.prec=`](#floatprec=)       | Sets the precision for floating-point numbers
-| [`float.prec?`](#floatprec)        | Gets the precision for floating-point numbers
-| [`rounding.mode=`](#roundingmode=) | Sets the default rounding mode               
-| [`rounding.mode?`](#roundingmode)  | Gets the default rounding mode               
+| Operation                         | Description                                  
+|-----------------------------------|----------------------------------------------
+| [`float.prec=`](#floatprec)       | Sets the precision for floating-point numbers
+| [`float.prec?`](#floatprec)       | Gets the precision for floating-point numbers
+| [`rounding.mode=`](#roundingmode) | Sets the default rounding mode               
+| [`rounding.mode?`](#roundingmode) | Gets the default rounding mode               
 
 ## Operations
 

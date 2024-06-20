@@ -46,7 +46,7 @@
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## f
-- [`float.prec=`](ops/conf.md#floatprec=): Sets the precision for floating-point numbers
+- [`float.prec=`](ops/conf.md#floatprec): Sets the precision for floating-point numbers
 - [`float.prec?`](ops/conf.md#floatprec): Gets the precision for floating-point numbers
 
 ## h
@@ -97,7 +97,7 @@
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`round`](ops/format.md#round): Round number
   - [`round/d`](ops/format_Dec.md#roundd): decimal (apd)
-- [`rounding.mode=`](ops/conf.md#roundingmode=): Sets the default rounding mode
+- [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
 - [`rounding.mode?`](ops/conf.md#roundingmode): Gets the default rounding mode
 - [`rsh`](ops/prog.md#rightshift): Alias for [right.shift](ops/prog.md#rightshift)
 
@@ -105,6 +105,10 @@
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - `scientific.notation`
   - [`scientific.notation/d`](ops/format_Dec.md#scientificnotationd): decimal (apd)
+- [`shift.left`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
+- [`shift.right`](ops/prog.md#rightshift): Alias for [right.shift](ops/prog.md#rightshift)
+- [`shl`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
+- [`shr`](ops/prog.md#rightshift): Alias for [right.shift](ops/prog.md#rightshift)
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/d`](ops/basic_Dec.md#signd): decimal (apd)
   - [`sign/f`](ops/basic_Float.md#signf): float
