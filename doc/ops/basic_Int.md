@@ -6,18 +6,18 @@ Basic calculator
 
 ## Index
 
-| Operation           | Description   
-|---------------------|---------------
-| [`add/i`](#add/i)   | Addition      
-| [`div/i`](#div/i)   | Division      
-| [`mod/i`](#mod/i)   | Modulus       
-| [`mul/i`](#mul/i)   | Multiplication
-| [`neg/i`](#neg/i)   | Negation      
-| [`pow/i`](#pow/i)   | Exponentiation
-| [`rem/i`](#rem/i)   | Remainder     
-| [`sign/i`](#sign/i) | Sign          
-| [`sqrt/i`](#sqrt/i) | Square root   
-| [`sub/i`](#sub/i)   | Subtraction   
+| Operation                                 | Description   
+|-------------------------------------------|---------------
+| [`add/i`](#add/i)                         | Addition      
+| [`div/i`](#div/i)                         | Division      
+| [`mod/i`](#mod/i)                         | Modulus       
+| [`mul/i`](#mul/i)                         | Multiplication
+| [`neg/i`](#neg/i)                         | Negation      
+| [`pow/i`](#pow/i)                         | Exponentiation
+| [`rem/i`](#rem/i)                         | Remainder     
+| [`sign/i`](#sign/i)                       | Sign          
+| [`square.root/i, sqrt/i`](#square.root/i) | Square root   
+| [`sub/i`](#sub/i)                         | Subtraction   
 
 ## Operations
 
@@ -161,10 +161,12 @@ Example:
 | `c 6 sign/i`  | `1`  
 | `c 0 sign/i`  | `0`  
 
-### sqrt/i
+### square.root/i
 
 The square root of *x*. If the result is not an integer, the value is
 floored. If *x* is less than zero, an 'invalid argument' error is raised.
+
+Alias: `sqrt/i`
 
 Stack effects:
 ```

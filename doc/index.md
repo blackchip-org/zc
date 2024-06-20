@@ -88,11 +88,11 @@
 - [`sn`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
-  - [`sqrt/i`](ops/basic_Int.md#sqrt/i): integer
 - [`square`](ops/basic.md#square): Square of a number
 - [`square.root`](ops/basic.md#squareroot): Square Root
   - [`square.root/d`](ops/basic_Dec.md#squareroot/d): decimal (apd)
   - [`square.root/f`](ops/basic_Float.md#squareroot/f): float
+  - [`square.root/i`](ops/basic_Int.md#squareroot/i): integer
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/d`](ops/basic_Dec.md#sub/d): decimal (apd)
   - [`sub/d/ss`](ops/basic_Dec_SS.md#sub/d/ss): decimal (shopspring)

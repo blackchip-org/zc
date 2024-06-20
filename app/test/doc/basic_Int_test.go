@@ -147,7 +147,7 @@ func TestOpDocs_BasicInt_SignI(t *testing.T) {
 	c.AssertStack("0")
 }
 
-func TestOpDocs_BasicInt_SqrtI(t *testing.T) {
+func TestOpDocs_BasicInt_SquareRootI(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("65536")
@@ -157,18 +157,18 @@ func TestOpDocs_BasicInt_SqrtI(t *testing.T) {
 	c.AssertStack("256")
 }
 
-func TestOpDocs_BasicInt_SqrtI_Zero(t *testing.T) {
+func TestOpDocs_BasicInt_SquareRootI_Zero(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0 sqrt/i")
 	c.AssertStack("0")
 }
 
-func TestOpDocs_BasicInt_SqrtI_Neg(t *testing.T) {
+func TestOpDocs_BasicInt_SquareRootI_Neg(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("-1 sqrt/i")
-	c.AssertError("sqrt/i: invalid argument, -1 < 0")
+	c.AssertError("square.root/i: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_BasicInt_SubI(t *testing.T) {

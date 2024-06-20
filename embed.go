@@ -21,22 +21,18 @@ const DefsDir = "app/defs"
 var Defs embed.FS
 
 func LoadDefs() ([]VolDef, error) {
-	files, err := Defs.ReadDir(DefsDir)
-	if err != nil {
-		return nil, err
-	}
-
 	var defs []VolDef
-	for _, f := range files {
-		if !strings.HasSuffix(f.Name(), ".yaml") {
-			continue
+	fs.WalkDir(Defs, DefsDir, func(p string, d fs.DirEntry, e error) error {
+		if !strings.HasSuffix(p, ".yaml") {
+			return nil
 		}
-		def, err := loadDef(DefsDir, f)
+		def, err := loadDef(path.Dir(p), d)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		defs = append(defs, def)
-	}
+		return nil
+	})
 	return defs, nil
 }
 

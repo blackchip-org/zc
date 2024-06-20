@@ -64,7 +64,7 @@ var (
 		Func:      funcs.SignBigInt,
 	}
 	SqrtBigInt = zc.Op{
-		Name:    "sqrt/i",
+		Name:    "square.root/i",
 		Params:  []zc.Type{zc.BigInt},
 		Returns: []zc.Type{zc.BigInt},
 		Func:    funcs.SqrtBigInt,

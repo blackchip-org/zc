@@ -162,7 +162,8 @@ ops:
   - i: c 0 sign/i
     o: [0]
 
-- name: sqrt/i
+- name: square.root/i
+  aliases: [sqrt/i]
   title: Square root
   funcs:
   - name: SqrtBigInt
@@ -184,7 +185,7 @@ ops:
   - name: Neg
     test:
     - i: -1 sqrt/i
-      error: "sqrt/i: invalid argument, -1 < 0"
+      error: "square.root/i: invalid argument, -1 < 0"
 
 - name: sub/i
   overloads: sub

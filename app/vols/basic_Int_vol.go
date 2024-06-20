@@ -21,5 +21,7 @@ var BasicInt = zc.Vol{
 		ops.SqrtBigInt,
 		ops.SubBigInt,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "sqrt/i", Expr: "square.root/i"},
+	},
 }
