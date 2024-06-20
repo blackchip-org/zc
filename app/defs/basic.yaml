@@ -106,6 +106,8 @@ ops:
   funcs:
   - params: [x:Int]
     returns: [Int]
+  - params: [x:Dec]
+    returns: [Dec]
   desc: Changes the sign of *x*.
   example:
   - i: -6
@@ -122,6 +124,8 @@ ops:
   funcs:
   - params: [x:Int, y:Int]
     returns: [Int]
+  - params: [x:Dec, y:Dec]
+    returns: [Dec]
   desc: Raises *x* to the power of *y*.
   example:
   - i: 6
@@ -137,6 +141,8 @@ ops:
   funcs:
   - params: [x:Int, y:Int]
     returns: [Int]
+  - params: [x:Dec, y:Dec]
+    returns: [Dec]
   desc: |-
     The remainder when *x* is divided by *y*. If *y* is zero, a
     'division by zero' error is raised.

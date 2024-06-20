@@ -125,7 +125,7 @@ ops:
     o: [6.75]
   - i: 0.5
     o: [6.75, 0.5]
-  - i: rem
+  - i: rem/d
     o: [0.25]
 
 - name: sign/d

@@ -79,6 +79,7 @@ func (t BigIntType) From(src any) (any, Type, bool) {
 		return bi, Int, true
 	case string:
 		bi := bigIntPool.New()
+		v = PreParseNumber(v)
 		_, ok := bi.SetString(v, 0)
 		return bi, String, ok
 	case uint:
@@ -138,6 +139,7 @@ func (t DecimalType) From(src any) (any, Type, bool) {
 		return d, Float64, true
 	case string:
 		d := decimalPool.New()
+		v = PreParseNumber(v)
 		_, _, err := d.SetString(v)
 		return d, String, err == nil
 	}
@@ -188,6 +190,7 @@ func (t DecimalSSType) From(src any) (any, Type, bool) {
 		d := decimal.NewFromFloat(v)
 		return d, Float64, true
 	case string:
+		v = PreParseNumber(v)
 		d, err := decimal.NewFromString(v)
 		return d, String, err == nil
 	}
@@ -240,6 +243,7 @@ func (t BigFloatType) From(src any) (any, Type, bool) {
 		return bf, Int, true
 	case string:
 		bf := bigFloatPool.New()
+		v = PreParseNumber(v)
 		_, ok := bf.SetString(v)
 		return bf, String, ok
 	}
@@ -337,6 +341,7 @@ func (t Int32Type) From(src any) (any, Type, bool) {
 	case int32:
 		return v, t, true
 	case string:
+		v = PreParseNumber(v)
 		i32, err := strconv.ParseInt(v, 0, 32)
 		return int32(i32), String, err == nil
 	}
@@ -410,6 +415,7 @@ func (t UintType) From(src any) (any, Type, bool) {
 		ui := v.Uint64()
 		return ui, BigInt, true
 	case string:
+		v = PreParseNumber(v)
 		ui, err := strconv.ParseUint(v, 0, 0)
 		return uint(ui), String, err == nil
 	}

@@ -10,8 +10,11 @@ Basic calculator
 |-------------------------|---------------
 | [`add/d/ss`](#add/d/ss) | Addition      
 | [`div/d/ss`](#div/d/ss) | Division      
+| [`mod/d/ss`](#mod/d/ss) | Modulus       
 | [`mul/d/ss`](#mul/d/ss) | Multiplication
 | [`neg/d/ss`](#neg/d/ss) | Negation      
+| [`pow/d/ss`](#pow/d/ss) | Exponentiation
+| [`rem/d/ss`](#rem/d/ss) | Remainder     
 | [`sub/d/ss`](#sub/d/ss) | Subtraction   
 
 ## Operations
@@ -51,6 +54,24 @@ Example:
 | `2`        | `6.6 \| 2`
 | `div/d/ss` | `3.3`     
 
+### mod/d/ss
+
+The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+zero' error is raised.
+
+Stack effects:
+```
+( x:Dec/ss y:Dec/ss -- Dec/ss )
+```
+
+Example:
+
+| Input      | Stack        
+|------------|--------------
+| `6.75`     | `6.75`       
+| `0.5`      | `6.75 \| 0.5`
+| `mod/d/ss` | `0.25`       
+
 ### mul/d/ss
 
 Multiplies the value of *x* by *y*.
@@ -84,6 +105,44 @@ Example:
 | `-6.6`     | `-6.6`
 | `neg/d/ss` | `6.6` 
 | `neg/d/ss` | `-6.6`
+
+### pow/d/ss
+
+Raises *x* to the power of *y*.
+
+Stack effects:
+```
+( x:Dec/ss y:Dec/ss -- Dec/ss )
+```
+
+Example:
+
+| Input      | Stack                          
+|------------|--------------------------------
+| `6.6`      | `6.6`                          
+| `2.2`      | `6.6 \| 2.2`                   
+| `pow/d/ss` | `63.53260431279859336003829262`
+
+### rem/d/ss
+
+Remainder after dividing *y* by *x* with precision *p*. If *y* is zero, a
+'division by zero' error is raised.
+
+The example below shows there is a one cent remainder when $100 is
+divided among three people.
+
+Stack effects:
+```
+( x:Dec/ss y:Dec/ss p:Int/s32 -- Dec/ss )
+```
+
+Example:
+
+| Input        | Stack      
+|--------------|------------
+| `$100`       | `$100`     
+| `3`          | `$100 \| 3`
+| `2 rem/d/ss` | `0.01`     
 
 ### sub/d/ss
 

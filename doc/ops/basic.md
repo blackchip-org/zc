@@ -52,7 +52,6 @@ Alias: `cb`
 
 Macro definition:
 ```
-```
 def cube dup dup mul mul
 ```
 
@@ -146,6 +145,7 @@ Changes the sign of *x*.
 Stack effects:
 ```
 ( x:Int -- Int )
+( x:Dec -- Dec )
 ```
 
 Example:
@@ -165,6 +165,7 @@ Alias: `**`
 Stack effects:
 ```
 ( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
 ```
 
 Example:
@@ -183,6 +184,7 @@ The remainder when *x* is divided by *y*. If *y* is zero, a
 Stack effects:
 ```
 ( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
 ```
 
 Example:
@@ -219,7 +221,6 @@ The square of a number, x²
 Alias: `sq`
 
 Macro definition:
-```
 ```
 def square dup mul
 ```

@@ -45,6 +45,7 @@
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
 - [`mod`](ops/basic.md#mod): Modulus
+  - [`mod/d/ss`](ops/basic_Dec_SS.md#mod/d/ss): decimal (shopspring)
   - [`mod/i`](ops/basic_Int.md#mod/i): integer
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/d`](ops/basic_Dec.md#mul/d): decimal (apd)
@@ -62,12 +63,14 @@
 ## p
 - [`pow`](ops/basic.md#pow): Exponentiation
   - [`pow/d`](ops/basic_Dec.md#pow/d): decimal (apd)
+  - [`pow/d/ss`](ops/basic_Dec_SS.md#pow/d/ss): decimal (shopspring)
   - [`pow/i`](ops/basic_Int.md#pow/i): integer
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
 - [`rem`](ops/basic.md#rem): Remainder
   - [`rem/d`](ops/basic_Dec.md#rem/d): decimal (apd)
+  - [`rem/d/ss`](ops/basic_Dec_SS.md#rem/d/ss): decimal (shopspring)
   - [`rem/i`](ops/basic_Int.md#rem/i): integer
 - [`round`](ops/format.md#round): Round number
   - [`round/d`](ops/format_Dec.md#round/d): decimal (apd)

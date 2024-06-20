@@ -48,6 +48,19 @@ func TestOpDocs_BasicDecSS_DivDSs_Zero(t *testing.T) {
 	c.AssertError("div/d/ss: division by zero")
 }
 
+func TestOpDocs_BasicDecSS_ModDSs(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.75")
+	c.AssertStack("6.75")
+
+	c.Eval("0.5")
+	c.AssertStack("6.75", "0.5")
+
+	c.Eval("mod/d/ss")
+	c.AssertStack("0.25")
+}
+
 func TestOpDocs_BasicDecSS_MulDSs(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -72,6 +85,32 @@ func TestOpDocs_BasicDecSS_NegDSs(t *testing.T) {
 
 	c.Eval("neg/d/ss")
 	c.AssertStack("-6.6")
+}
+
+func TestOpDocs_BasicDecSS_PowDSs(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.6")
+	c.AssertStack("6.6")
+
+	c.Eval("2.2")
+	c.AssertStack("6.6", "2.2")
+
+	c.Eval("pow/d/ss")
+	c.AssertStack("63.53260431279859336003829262")
+}
+
+func TestOpDocs_BasicDecSS_RemDSs(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("$100")
+	c.AssertStack("$100")
+
+	c.Eval("3")
+	c.AssertStack("$100", "3")
+
+	c.Eval("2 rem/d/ss")
+	c.AssertStack("0.01")
 }
 
 func TestOpDocs_BasicDecSS_SubDSs(t *testing.T) {

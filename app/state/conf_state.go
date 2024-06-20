@@ -1,8 +1,12 @@
 package state
 
-import "math/big"
+import (
+	"math"
+	"math/big"
+)
 
 const ConfID = "conf"
+const SettingDecPrec = "dec.prec"
 
 type Conf struct {
 	FloatPrec      uint
@@ -10,6 +14,13 @@ type Conf struct {
 	DecMaxExponent int32
 	DecMinExponent int32
 	RoundingMode   big.RoundingMode
+}
+
+func (c Conf) DecPrecAsInt32() int32 {
+	if c.DecPrec > math.MaxInt32 {
+		return int32(math.MaxInt32)
+	}
+	return int32(c.DecPrec)
 }
 
 func ForConf(state State) *Conf {

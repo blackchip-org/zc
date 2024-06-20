@@ -289,7 +289,7 @@ func genOpDoc(f *os.File, op zc.OpDef) {
 		fmt.Fprintln(f, "")
 	}
 	if op.Macro != "" {
-		fmt.Fprintf(f, "Macro definition:\n```\n")
+		fmt.Fprintf(f, "Macro definition:\n")
 		fmt.Fprintf(f, "```\n")
 		fmt.Fprintf(f, "def %v %v\n", op.Name, op.Macro)
 		fmt.Fprintf(f, "```\n")

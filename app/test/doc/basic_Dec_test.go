@@ -106,7 +106,7 @@ func TestOpDocs_BasicDec_RemD(t *testing.T) {
 	c.Eval("0.5")
 	c.AssertStack("6.75", "0.5")
 
-	c.Eval("rem")
+	c.Eval("rem/d")
 	c.AssertStack("0.25")
 }
 

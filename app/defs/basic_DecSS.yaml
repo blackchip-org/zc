@@ -44,6 +44,23 @@ ops:
       - i: 6.6 0 div/d/ss
         error: "div/d/ss: division by zero"
 
+- name: mod/d/ss
+  title: Modulus
+  funcs:
+  - name: ModDecimalSS
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
+  desc: |-
+    The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+    zero' error is raised.
+  example:
+  - i: 6.75
+    o: [6.75]
+  - i: 0.5
+    o: [6.75, 0.5]
+  - i: mod/d/ss
+    o: [0.25]
+
 - name: mul/d/ss
   title: Multiplication
   funcs:
@@ -73,6 +90,41 @@ ops:
     o: [6.6]
   - i: neg/d/ss
     o: [-6.6]
+
+- name: pow/d/ss
+  title: Exponentiation
+  funcs:
+  - name: PowDecimalSS
+    params: [x:Dec/ss, y:Dec/ss]
+    returns: [Dec/ss]
+  desc: Raises *x* to the power of *y*.
+  example:
+  - i: 6.6
+    o: [6.6]
+  - i: 2.2
+    o: [6.6, 2.2]
+  - i: pow/d/ss
+    o: [63.53260431279859336003829262]
+
+- name: rem/d/ss
+  title: Remainder
+  funcs:
+  - name: RemDecimalSS
+    params: [x:Dec/ss, y:Dec/ss, p:Int/s32]
+    returns: [Dec/ss]
+  desc: |-
+    Remainder after dividing *y* by *x* with precision *p*. If *y* is zero, a
+    'division by zero' error is raised.
+
+    The example below shows there is a one cent remainder when $100 is
+    divided among three people.
+  example:
+  - i: $100
+    o: [$100]
+  - i: 3
+    o: [$100, 3]
+  - i: 2 rem/d/ss
+    o: [0.01]
 
 - name: sub/d/ss
   title: Subtraction

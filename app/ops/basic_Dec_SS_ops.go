@@ -20,6 +20,12 @@ var (
 		Returns: []zc.Type{zc.DecimalSS},
 		Func:    funcs.DivDecimalSS,
 	}
+	ModDecimalSS = zc.Op{
+		Name:    "mod/d/ss",
+		Params:  []zc.Type{zc.DecimalSS, zc.DecimalSS},
+		Returns: []zc.Type{zc.DecimalSS},
+		Func:    funcs.ModDecimalSS,
+	}
 	MulDecimalSS = zc.Op{
 		Name:    "mul/d/ss",
 		Params:  []zc.Type{zc.DecimalSS, zc.DecimalSS},
@@ -31,6 +37,18 @@ var (
 		Params:  []zc.Type{zc.DecimalSS},
 		Returns: []zc.Type{zc.DecimalSS},
 		Func:    funcs.NegDecimalSS,
+	}
+	PowDecimalSS = zc.Op{
+		Name:    "pow/d/ss",
+		Params:  []zc.Type{zc.DecimalSS, zc.DecimalSS},
+		Returns: []zc.Type{zc.DecimalSS},
+		Func:    funcs.PowDecimalSS,
+	}
+	RemDecimalSS = zc.Op{
+		Name:    "rem/d/ss",
+		Params:  []zc.Type{zc.DecimalSS, zc.DecimalSS, zc.Int32},
+		Returns: []zc.Type{zc.DecimalSS},
+		Func:    funcs.RemDecimalSS,
 	}
 	SubDecimalSS = zc.Op{
 		Name:    "sub/d/ss",
