@@ -19,7 +19,7 @@ func factorialZcTest(n int) *big.Int {
 		c.PushVal(i)
 		c.Do(ops.MulBigInt)
 	}
-	return zc.BigInt.As(c.Pop())
+	return zc.BigInt.As(c.Pop().Val)
 }
 
 func factorialCalcTest(n int) *big.Int {

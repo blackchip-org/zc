@@ -5,34 +5,39 @@ import (
 )
 
 func AddDecimalSS(e *zc.OpEnv) {
-	y := zc.DecimalSS.As(e.Pop())
-	x := zc.DecimalSS.As(e.Pop())
-	e.PushVal(x.Add(y))
+	y := zc.DecimalSS.Pop(e)
+	x := zc.DecimalSS.Pop(e)
+	x = x.Add(y)
+	zc.DecimalSS.Push(e, x)
 }
 
 func DivDecimalSS(e *zc.OpEnv) {
-	y := zc.DecimalSS.As(e.Pop())
-	x := zc.DecimalSS.As(e.Pop())
+	y := zc.DecimalSS.Pop(e)
+	x := zc.DecimalSS.Pop(e)
 	if y.IsZero() {
 		e.Err = zc.ErrDivisionByZero(e)
 		return
 	}
-	e.PushVal(x.Div(y))
+	x = x.Div(y)
+	zc.DecimalSS.Push(e, x)
 }
 
 func MulDecimalSS(e *zc.OpEnv) {
-	y := zc.DecimalSS.As(e.Pop())
-	x := zc.DecimalSS.As(e.Pop())
-	e.PushVal(x.Mul(y))
+	y := zc.DecimalSS.Pop(e)
+	x := zc.DecimalSS.Pop(e)
+	x = x.Mul(y)
+	zc.DecimalSS.Push(e, x)
 }
 
 func NegDecimalSS(e *zc.OpEnv) {
-	x := zc.DecimalSS.As(e.Pop())
-	e.PushVal(x.Neg())
+	x := zc.DecimalSS.Pop(e)
+	x = x.Neg()
+	zc.DecimalSS.Push(e, x)
 }
 
 func SubDecimalSS(e *zc.OpEnv) {
-	y := zc.DecimalSS.As(e.Pop())
-	x := zc.DecimalSS.As(e.Pop())
-	e.PushVal(x.Sub(y))
+	y := zc.DecimalSS.Pop(e)
+	x := zc.DecimalSS.Pop(e)
+	x = x.Sub(y)
+	zc.DecimalSS.Push(e, x)
 }

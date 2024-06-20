@@ -13,17 +13,19 @@ func Drop(e *zc.OpEnv) {
 }
 
 func DupBigInt(e *zc.OpEnv) {
-	x := zc.BigInt.As(e.Top())
+	x := zc.BigInt.Pop(e)
 	x2 := zc.BigInt.New()
 	x2.Set(x)
-	e.PushVal(x2)
+	zc.BigInt.Push(e, x)
+	zc.BigInt.Push(e, x2)
 }
 
 func DupDecimal(e *zc.OpEnv) {
-	x := zc.Decimal.As(e.Top())
+	x := zc.Decimal.Pop(e)
 	x2 := zc.Decimal.New()
 	x2.Set(x)
-	e.PushVal(x2)
+	zc.Decimal.Push(e, x)
+	zc.Decimal.Push(e, x2)
 }
 
 func Rotate(e *zc.OpEnv) {
@@ -34,7 +36,7 @@ func TuckBigInt(e *zc.OpEnv) {
 	y := e.Pop()
 	x := e.Pop()
 	y2 := zc.BigInt.New()
-	y2.Set(zc.BigInt.As(y))
+	y2.Set(zc.BigInt.As(y.Val))
 	e.PushVal(y2)
 	e.Push(x, y)
 }
@@ -43,7 +45,7 @@ func TuckDecimal(e *zc.OpEnv) {
 	y := e.Pop()
 	x := e.Pop()
 	y2 := zc.Decimal.New()
-	y2.Set(zc.Decimal.As(y))
+	y2.Set(zc.Decimal.As(y.Val))
 	e.PushVal(y2)
 	e.Push(x, y)
 }

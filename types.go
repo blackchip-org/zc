@@ -53,12 +53,20 @@ type BigIntType struct{}
 
 func (t BigIntType) Name() string { return "Int" }
 
-func (t BigIntType) As(item Item) *big.Int {
-	val, ok := item.Val.(*big.Int)
+func (t BigIntType) As(a any) *big.Int {
+	val, ok := a.(*big.Int)
 	if !ok {
-		panic(ErrWrongGoType("*big.Int", item.Val))
+		panic(ErrWrongGoType("*big.Int", a))
 	}
 	return val
+}
+
+func (t BigIntType) Pop(e *OpEnv) *big.Int {
+	return t.As(e.Pop().Val)
+}
+
+func (t BigIntType) Push(e *OpEnv, v *big.Int) {
+	e.PushVal(v)
 }
 
 func (t BigIntType) From(src any) (any, Type, bool) {
@@ -95,16 +103,16 @@ type DecimalType struct{}
 
 func (t DecimalType) Name() string { return "Dec" }
 
-func (t DecimalType) As(item Item) *apd.Decimal {
-	val, ok := item.Val.(*apd.Decimal)
+func (t DecimalType) As(a any) *apd.Decimal {
+	val, ok := a.(*apd.Decimal)
 	if !ok {
-		panic(ErrWrongGoType("*apd.Decimal", item.Val))
+		panic(ErrWrongGoType("*apd.Decimal", a))
 	}
 	return val
 }
 
 func (t DecimalType) Pop(e *OpEnv) *apd.Decimal {
-	return t.As(e.Pop())
+	return t.As(e.Pop().Val)
 }
 
 func (t DecimalType) Push(e *OpEnv, v *apd.Decimal) {
@@ -150,12 +158,20 @@ type DecimalSSType struct{}
 
 func (t DecimalSSType) Name() string { return "Dec/ss" }
 
-func (t DecimalSSType) As(item Item) decimal.Decimal {
-	val, ok := item.Val.(decimal.Decimal)
+func (t DecimalSSType) As(a any) decimal.Decimal {
+	val, ok := a.(decimal.Decimal)
 	if !ok {
-		panic(ErrWrongGoType("decimal.Decimal", item.Val))
+		panic(ErrWrongGoType("decimal.Decimal", a))
 	}
 	return val
+}
+
+func (t DecimalSSType) Pop(e *OpEnv) decimal.Decimal {
+	return t.As(e.Pop().Val)
+}
+
+func (t DecimalSSType) Push(e *OpEnv, v decimal.Decimal) {
+	e.PushVal(v)
 }
 
 func (t DecimalSSType) From(src any) (any, Type, bool) {
@@ -186,17 +202,17 @@ type BigFloatType struct{}
 
 func (t BigFloatType) Name() string { return "Float" }
 
-func (t BigFloatType) As(item Item) *big.Float {
-	val, ok := item.Val.(*big.Float)
+func (t BigFloatType) As(a any) *big.Float {
+	val, ok := a.(*big.Float)
 	if !ok {
-		panic(ErrWrongGoType("*big.Float", item.Val))
+		panic(ErrWrongGoType("*big.Float", a))
 	}
 	return val
 }
 
 func (t BigFloatType) Pop(e *OpEnv) *big.Float {
 	conf := state.ForConf(e.State)
-	bf := t.As(e.Pop())
+	bf := t.As(e.Pop().Val)
 	bf.SetPrec(conf.FloatPrec)
 	return bf
 }
@@ -244,6 +260,22 @@ type Float64Type struct{}
 
 func (t Float64Type) Name() string { return "float/64" }
 
+func (t Float64Type) As(a any) float64 {
+	val, ok := a.(float64)
+	if !ok {
+		panic(ErrWrongGoType("float64", a))
+	}
+	return val
+}
+
+func (t Float64Type) Pop(e *OpEnv) float64 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Float64Type) Push(e *OpEnv, v float64) {
+	e.PushVal(v)
+}
+
 func (t Float64Type) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
@@ -255,6 +287,22 @@ func (t Float64Type) Recycle(v any) {}
 type IntType struct{}
 
 func (t IntType) Name() string { return "int" }
+
+func (t IntType) As(a any) int {
+	val, ok := a.(int)
+	if !ok {
+		panic(ErrWrongGoType("int", a))
+	}
+	return val
+}
+
+func (t IntType) Pop(e *OpEnv) int {
+	return t.As(e.Pop().Val)
+}
+
+func (t IntType) Push(e *OpEnv, v int) {
+	e.PushVal(v)
+}
 
 func (t IntType) From(src any) (any, Type, bool) {
 	return nil, nil, false
@@ -335,12 +383,16 @@ type UintType struct{}
 
 func (t UintType) Name() string { return "int/u" }
 
-func (t UintType) As(item Item) uint {
-	val, ok := item.Val.(uint)
+func (t UintType) As(a any) uint {
+	val, ok := a.(uint)
 	if !ok {
-		panic(ErrWrongGoType("uint", item.Val))
+		panic(ErrWrongGoType("uint", a))
 	}
 	return val
+}
+
+func (t UintType) Pop(e *OpEnv) uint {
+	return t.As(e.Pop().Val)
 }
 
 func (t UintType) Push(e *OpEnv, ui uint) {

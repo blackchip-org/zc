@@ -15,7 +15,7 @@ func distTestZcEval(c *app.Calc) *apd.Decimal {
 	c.Eval("5 2 sub 2 pow")
 	c.Eval("7 3 sub 2 pow")
 	c.Eval("add sqrt")
-	return zc.Decimal.As(c.Pop())
+	return zc.Decimal.As(c.Pop().Val)
 }
 
 func distTestZc(c *app.Calc) *big.Int {
@@ -32,7 +32,7 @@ func distTestZc(c *app.Calc) *big.Int {
 	c.Do(ops.AddBigInt)
 	c.Do(ops.SqrtBigInt)
 
-	return zc.BigInt.As(c.Pop())
+	return zc.BigInt.As(c.Pop().Val)
 }
 
 func distTestCalc(c *calc.BigInt) *big.Int {

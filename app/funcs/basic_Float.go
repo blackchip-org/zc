@@ -44,7 +44,7 @@ func NegBigFloat(e *zc.OpEnv) {
 func SignBigFloat(e *zc.OpEnv) {
 	x := zc.BigFloat.Pop(e)
 	s := x.Sign()
-	e.PushVal(s)
+	zc.Int.Push(e, s)
 }
 
 func SqrtBigFloat(e *zc.OpEnv) {

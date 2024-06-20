@@ -7,17 +7,17 @@ import (
 )
 
 func AddBigInt(e *zc.OpEnv) {
-	y := zc.BigInt.As(e.Pop())
-	x := zc.BigInt.As(e.Pop())
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
 	x.Add(x, y)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 	zc.BigInt.Recycle(y)
 }
 
 func DivBigInt(e *zc.OpEnv) {
 	var zero big.Int
-	y := zc.BigInt.As(e.Pop())
-	x := zc.BigInt.As(e.Pop())
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
@@ -25,13 +25,13 @@ func DivBigInt(e *zc.OpEnv) {
 		return
 	}
 	x.Div(x, y)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 }
 
 func ModBigInt(e *zc.OpEnv) {
 	var zero big.Int
-	y := zc.BigInt.As(e.Pop())
-	x := zc.BigInt.As(e.Pop())
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
@@ -39,35 +39,35 @@ func ModBigInt(e *zc.OpEnv) {
 		return
 	}
 	x.Mod(x, y)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 }
 
 func MulBigInt(e *zc.OpEnv) {
-	y := zc.BigInt.As(e.Pop())
-	x := zc.BigInt.As(e.Pop())
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
 	x.Mul(x, y)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 	zc.BigInt.Recycle(y)
 }
 
 func NegBigInt(e *zc.OpEnv) {
-	x := zc.BigInt.As(e.Pop())
+	x := zc.BigInt.Pop(e)
 	x.Neg(x)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 }
 
 func PowBigInt(e *zc.OpEnv) {
-	y := zc.BigInt.As(e.Pop())
-	x := zc.BigInt.As(e.Pop())
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
 	x.Exp(x, y, nil)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 	zc.BigInt.Recycle(y)
 }
 
 func RemBigInt(e *zc.OpEnv) {
 	var zero big.Int
-	y := zc.BigInt.As(e.Pop())
-	x := zc.BigInt.As(e.Pop())
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
@@ -75,30 +75,30 @@ func RemBigInt(e *zc.OpEnv) {
 		return
 	}
 	x.Rem(x, y)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 }
 
 func SignBigInt(e *zc.OpEnv) {
-	x := zc.BigInt.As(e.Pop())
-	e.PushVal(x.Sign())
+	x := zc.BigInt.Pop(e)
+	zc.Int.Push(e, x.Sign())
 	zc.BigInt.Recycle(x)
 }
 
 func SqrtBigInt(e *zc.OpEnv) {
 	var zero big.Int
-	x := zc.BigInt.As(e.Pop())
+	x := zc.BigInt.Pop(e)
 	if x.Cmp(&zero) < 0 {
 		e.Err = zc.ErrInvalidArg(e, "%v < 0", x.String())
 		return
 	}
 	x.Sqrt(x)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 }
 
 func SubBigInt(e *zc.OpEnv) {
-	y := zc.BigInt.As(e.Pop())
-	x := zc.BigInt.As(e.Pop())
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
 	x.Sub(x, y)
-	e.PushVal(x)
+	zc.BigInt.Push(e, x)
 	zc.BigInt.Recycle(y)
 }

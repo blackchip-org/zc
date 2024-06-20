@@ -19,7 +19,7 @@ func fibTestZc(n int) *big.Int {
 		c.Do(ops.TuckBigInt)
 		c.Do(ops.AddBigInt)
 	}
-	return zc.BigInt.As(c.Pop())
+	return zc.BigInt.As(c.Pop().Val)
 }
 
 func fibTestCalc(n int) *big.Int {

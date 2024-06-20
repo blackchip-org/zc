@@ -10,7 +10,7 @@ import (
 
 func FloatPrecSet(e *zc.OpEnv) {
 	s := state.ForConf(e.State)
-	p := zc.Uint.As(e.Pop())
+	p := zc.Uint.Pop(e)
 	s.FloatPrec = p
 	e.Info = fmt.Sprintf("precision set to %v", p)
 }
