@@ -6,21 +6,23 @@ Programmer's calculator
 
 ## Index
 
-| Operation                                           | Description           
-|-----------------------------------------------------|-----------------------
-| [`and, and/i`](#andi)                               | Bitwise and           
-| [`bin`](#bin)                                       | Binary conversion     
-| [`bit`](#bit)                                       | Bit value             
-| [`bits`](#bits)                                     | Bit length            
-| [`bytes`](#bytes)                                   | Byte length           
-| [`dec, dec/i`](#deci)                               | Decimal conversion    
-| [`hex`](#hex)                                       | Hexadecimal conversion
-| [`left.shift, lsh, shift.left, shl`](#leftshift)    | Shift bits left       
-| [`not, not/i`](#noti)                               | Bitwise not           
-| [`oct`](#oct)                                       | Octal conversion      
-| [`or, or/i`](#ori)                                  | Bitwise or            
-| [`right.shift, rsh, shift.right, shr`](#rightshift) | Shift bits right      
-| [`xor`](#xor)                                       | Bitwise exclusive or  
+| Operation                         | Description           
+|-----------------------------------|-----------------------
+| [`and, and/i`](#andi)             | Bitwise and           
+| [`bin`](#bin)                     | Binary conversion     
+| [`bit`](#bit)                     | Bit value             
+| [`bits`](#bits)                   | Bit length            
+| [`bytes`](#bytes)                 | Byte length           
+| [`dec, dec/i`](#deci)             | Decimal conversion    
+| [`hex`](#hex)                     | Hexadecimal conversion
+| [`left.shift, lsh`](#leftshift)   | Shift bits left       
+| [`not, not/i`](#noti)             | Bitwise not           
+| [`oct`](#oct)                     | Octal conversion      
+| [`or, or/i`](#ori)                | Bitwise or            
+| [`right.shift, rsh`](#rightshift) | Shift bits right      
+| [`shift.left, shl`](#shiftleft)   | Shift bits left       
+| [`shift.right, shr`](#shiftright) | Shift bits right      
+| [`xor`](#xor)                     | Bitwise exclusive or  
 
 ## Operations
 
@@ -145,7 +147,7 @@ Example:
 
 Shifts all bits in *x* to the left by *n*.
 
-Aliases: `lsh`, `shift.left`, `shl`
+Alias: `lsh`
 
 Stack effects:
 ```
@@ -216,7 +218,7 @@ Example:
 
 Shifts all bits in *x* to the right by *n*.
 
-Aliases: `rsh`, `shift.right`, `shr`
+Alias: `rsh`
 
 Stack effects:
 ```
@@ -229,6 +231,42 @@ Example:
 |-------------|---------
 | `0b1000`    | `0b1000`
 | `2 rsh bin` | `0b10`  
+
+### shift.left
+
+Shifts all bits in *x* to the left by *n*.
+
+Alias: `shl`
+
+Stack effects:
+```
+( x:Int n:Int/u -- Int )
+```
+
+Example:
+
+| Input       | Stack   
+|-------------|---------
+| `0b10`      | `0b10`  
+| `2 shl bin` | `0b1000`
+
+### shift.right
+
+Shifts all bits in *x* to the right by *n*.
+
+Alias: `shr`
+
+Stack effects:
+```
+( x:Int n:Int/u -- Int )
+```
+
+Example:
+
+| Input       | Stack   
+|-------------|---------
+| `0b1000`    | `0b1000`
+| `2 shr bin` | `0b10`  
 
 ### xor
 

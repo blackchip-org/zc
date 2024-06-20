@@ -134,6 +134,26 @@ func TestOpDocs_Prog_RightShift(t *testing.T) {
 	c.AssertStack("0b10")
 }
 
+func TestOpDocs_Prog_ShiftLeft(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0b10")
+	c.AssertStack("0b10")
+
+	c.Eval("2 shl bin")
+	c.AssertStack("0b1000")
+}
+
+func TestOpDocs_Prog_ShiftRight(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0b1000")
+	c.AssertStack("0b1000")
+
+	c.Eval("2 shr bin")
+	c.AssertStack("0b10")
+}
+
 func TestOpDocs_Prog_Xor(t *testing.T) {
 	c := app.NewCalcTester(t)
 

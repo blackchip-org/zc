@@ -109,7 +109,7 @@ ops:
       o: [-0x1]
 
 - name: left.shift
-  aliases: [lsh, shift.left, shl]
+  aliases: [lsh]
   title: Shift bits left
   funcs:
   - name: Lsh
@@ -171,7 +171,7 @@ ops:
     o: [0b1110]
 
 - name: right.shift
-  aliases: [rsh, shift.right, shr]
+  aliases: [rsh]
   title: Shift bits right
   funcs:
   - name: Rsh
@@ -182,6 +182,34 @@ ops:
   - i: 0b1000
     o: [0b1000]
   - i: 2 rsh bin
+    o: [0b10]
+
+- name: shift.left
+  aliases: [shl]
+  title: Shift bits left
+  funcs:
+  - name: Shl
+    params: [x:Int, n:Int/u]
+    returns: [Int]
+  desc: Shifts all bits in *x* to the left by *n*.
+  example:
+  - i: 0b10
+    o: [0b10]
+  - i: 2 shl bin
+    o: [0b1000]
+
+- name: shift.right
+  aliases: [shr]
+  title: Shift bits right
+  funcs:
+  - name: Shr
+    params: [x:Int, n:Int/u]
+    returns: [Int]
+  desc: Shifts all bits in *x* to the right by *n*.
+  example:
+  - i: 0b1000
+    o: [0b1000]
+  - i: 2 shr bin
     o: [0b10]
 
 - name: xor

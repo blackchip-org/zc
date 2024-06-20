@@ -84,6 +84,18 @@ var (
 		Returns: []zc.Type{zc.BigInt},
 		Func:    funcs.Rsh,
 	}
+	Shl = zc.Op{
+		Name:    "shift.left",
+		Params:  []zc.Type{zc.BigInt, zc.Uint},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.Shl,
+	}
+	Shr = zc.Op{
+		Name:    "shift.right",
+		Params:  []zc.Type{zc.BigInt, zc.Uint},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.Shr,
+	}
 	XorBigInt = zc.Op{
 		Name:    "xor",
 		Params:  []zc.Type{zc.BigInt, zc.BigInt},

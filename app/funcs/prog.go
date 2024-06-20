@@ -120,6 +120,9 @@ func Rsh(e *zc.OpEnv) {
 	zc.BigInt.Push(e, x)
 }
 
+var Shl = Lsh
+var Shr = Rsh
+
 func XorBigInt(e *zc.OpEnv) {
 	y := zc.BigInt.Pop(e)
 	x := zc.BigInt.Pop(e)

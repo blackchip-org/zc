@@ -22,14 +22,14 @@ var Prog = zc.Vol{
 		ops.Oct,
 		ops.OrBigInt,
 		ops.Rsh,
+		ops.Shl,
+		ops.Shr,
 		ops.XorBigInt,
 	},
 	Macros: []zc.Macro{
 		{Name: "lsh", Expr: "left.shift"},
-		{Name: "shift.left", Expr: "left.shift"},
-		{Name: "shl", Expr: "left.shift"},
 		{Name: "rsh", Expr: "right.shift"},
-		{Name: "shift.right", Expr: "right.shift"},
-		{Name: "shr", Expr: "right.shift"},
+		{Name: "shl", Expr: "shift.left"},
+		{Name: "shr", Expr: "shift.right"},
 	},
 }
