@@ -1,8 +1,6 @@
 package zc
 
 import (
-	"unicode"
-
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/app/state"
 )
@@ -70,17 +68,4 @@ type Vol struct {
 	Name   string
 	Ops    []Op
 	Macros []Macro
-}
-
-func IsValuePrefix(ch rune, next rune) bool {
-	switch {
-	case unicode.IsDigit(ch):
-		return true
-	// Currency symbols
-	case unicode.Is(unicode.Sc, ch):
-		return true
-	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
-		return true
-	}
-	return false
 }

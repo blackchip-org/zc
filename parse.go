@@ -84,3 +84,16 @@ func PreParseNumber(s string) string {
 	s = strings.Replace(s, "x10", "e", 1)
 	return s
 }
+
+func IsValuePrefix(ch rune, next rune) bool {
+	switch {
+	case unicode.IsDigit(ch):
+		return true
+	// Currency symbols
+	case unicode.Is(unicode.Sc, ch):
+		return true
+	case (ch == '-' || ch == '+' || ch == '.') && unicode.IsDigit(next):
+		return true
+	}
+	return false
+}
