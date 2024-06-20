@@ -7,7 +7,7 @@ ops:
   title: Sets the precision for floating-point numbers
   funcs:
   - name: FloatPrecSet
-    params: [p:int/u]
+    params: [p:Int/u]
   desc: |-
     Sets the precision for floating-point numbers to *p*. The precision is the
     maximum number of bits available for the mantissa.
@@ -25,7 +25,7 @@ ops:
   title: Gets the precision for floating-point numbers
   funcs:
   - name: FloatPrecGet
-    returns: [p:int/u]
+    returns: [p:Int/u]
   desc: |-
     Places the current precision for floating-point numbers on the stack. The
     precision is the maximum number of bits available for the mantissa.

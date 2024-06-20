@@ -94,7 +94,7 @@ if *x* is zero.
 
 Stack effects:
 ```
-( x:Float -- int )
+( x:Float -- Int/s )
 ```
 
 Example:

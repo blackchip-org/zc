@@ -8,7 +8,7 @@ ops:
   virtual: true
   title: Round number
   funcs:
-  - params: [x:Dec, p:int/32]
+  - params: [x:Dec, p:Int/s32]
     returns: [x:Dec]
   desc: |-
     Rounds the decimal number *x* to a number of places *p*. If *p* is

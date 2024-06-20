@@ -151,7 +151,7 @@ if *x* is zero.
 
 Stack effects:
 ```
-( x:Dec -- int )
+( x:Dec -- Int/s )
 ```
 
 Example:

@@ -258,7 +258,7 @@ func (t BigFloatType) Recycle(v any) {
 
 type Float64Type struct{}
 
-func (t Float64Type) Name() string { return "float/64" }
+func (t Float64Type) Name() string { return "Float/64" }
 
 func (t Float64Type) As(a any) float64 {
 	val, ok := a.(float64)
@@ -286,7 +286,7 @@ func (t Float64Type) Recycle(v any) {}
 
 type IntType struct{}
 
-func (t IntType) Name() string { return "int" }
+func (t IntType) Name() string { return "Int/s" }
 
 func (t IntType) As(a any) int {
 	val, ok := a.(int)
@@ -314,7 +314,7 @@ func (t IntType) Recycle(v any) {}
 
 type Int32Type struct{}
 
-func (t Int32Type) Name() string { return "int/32" }
+func (t Int32Type) Name() string { return "Int/s32" }
 
 func (t Int32Type) As(a any) int32 {
 	val, ok := a.(int32)
@@ -381,7 +381,7 @@ func (t StringType) Recycle(v any) {}
 
 type UintType struct{}
 
-func (t UintType) Name() string { return "int/u" }
+func (t UintType) Name() string { return "Int/u" }
 
 func (t UintType) As(a any) uint {
 	val, ok := a.(uint)

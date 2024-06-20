@@ -22,7 +22,7 @@ maximum number of bits available for the mantissa.
 
 Stack effects:
 ```
-( p:int/u --  )
+( p:Int/u --  )
 ```
 
 Example:
@@ -41,7 +41,7 @@ precision is the maximum number of bits available for the mantissa.
 
 Stack effects:
 ```
-(  -- p:int/u )
+(  -- p:Int/u )
 ```
 
 Example:

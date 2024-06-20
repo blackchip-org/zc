@@ -150,7 +150,7 @@ if *x* is zero.
 
 Stack effects:
 ```
-( x:Int -- int )
+( x:Int -- Int/s )
 ```
 
 Example:

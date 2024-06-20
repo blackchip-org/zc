@@ -22,7 +22,7 @@ negative, is is round to that many places left of the decimal point.
 
 Stack effects:
 ```
-( x:Dec p:int/32 -- x:Dec )
+( x:Dec p:Int/s32 -- x:Dec )
 ```
 
 Example:
