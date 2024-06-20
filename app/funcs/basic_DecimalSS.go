@@ -1,6 +1,8 @@
 package funcs
 
 import (
+	"strings"
+
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/state"
 )
@@ -26,6 +28,10 @@ func DivDecimalSS(e *zc.OpEnv) {
 func ModDecimalSS(e *zc.OpEnv) {
 	y := zc.DecimalSS.Pop(e)
 	x := zc.DecimalSS.Pop(e)
+	if y.IsZero() {
+		e.Err = zc.ErrDivisionByZero(e)
+		return
+	}
 	x = x.Mod(y)
 	zc.DecimalSS.Push(e, x)
 }
@@ -49,7 +55,17 @@ func PowDecimalSS(e *zc.OpEnv) {
 	x := zc.DecimalSS.Pop(e)
 	z, err := x.PowWithPrecision(y, conf.DecPrecAsInt32())
 	if err != nil {
-		e.Err = err
+		msg := err.Error()
+		switch {
+		case strings.HasPrefix(msg, "cannot represent imaginary"):
+			e.Err = zc.ErrInvalidArg(e, "root of negative number: %v", x)
+		case strings.HasPrefix(msg, "cannot represent undefined"):
+			e.Err = zc.ErrUndefined(e)
+		case strings.HasPrefix(msg, "cannot represent infinity"):
+			e.Err = zc.ErrInfinity(e, 0)
+		default:
+			e.Err = zc.ErrOp(e, err)
+		}
 		return
 	}
 	zc.DecimalSS.Push(e, z)

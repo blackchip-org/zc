@@ -117,7 +117,15 @@ func (t DecimalType) Pop(e *OpEnv) *apd.Decimal {
 }
 
 func (t DecimalType) Push(e *OpEnv, v *apd.Decimal) {
-	e.PushVal(v)
+	switch v.Form {
+	case apd.Infinite:
+		// FIXME: Does the Sign have the direction?
+		e.Err = ErrInfinity(e, 0)
+	case apd.NaN:
+		e.Err = ErrNotANumber(e)
+	default:
+		e.PushVal(v)
+	}
 }
 
 func (t DecimalType) From(src any) (any, Type, bool) {

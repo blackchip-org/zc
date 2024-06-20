@@ -61,6 +61,13 @@ func TestOpDocs_BasicDecSS_ModDSs(t *testing.T) {
 	c.AssertStack("0.25")
 }
 
+func TestOpDocs_BasicDecSS_ModDSs_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 mod/d/ss")
+	c.AssertError("mod/d/ss: division by zero")
+}
+
 func TestOpDocs_BasicDecSS_MulDSs(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -100,6 +107,27 @@ func TestOpDocs_BasicDecSS_PowDSs(t *testing.T) {
 	c.AssertStack("63.53260431279859336003829262")
 }
 
+func TestOpDocs_BasicDecSS_PowDSs_NegativeSqrt(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 0.5 pow/d/ss")
+	c.AssertError("pow/d/ss: invalid argument, root of negative number: -1")
+}
+
+func TestOpDocs_BasicDecSS_PowDSs_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 0 pow/d/ss")
+	c.AssertError("pow/d/ss: undefined")
+}
+
+func TestOpDocs_BasicDecSS_PowDSs_Inf(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 -1 pow/d/ss")
+	c.AssertError("pow/d/ss: infinity")
+}
+
 func TestOpDocs_BasicDecSS_RemDSs(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -111,6 +139,13 @@ func TestOpDocs_BasicDecSS_RemDSs(t *testing.T) {
 
 	c.Eval("2 rem/d/ss")
 	c.AssertStack("0.01")
+}
+
+func TestOpDocs_BasicDecSS_RemDSs_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 0 rem/d/ss")
+	c.AssertError("rem/d/ss: division by zero")
 }
 
 func TestOpDocs_BasicDecSS_SubDSs(t *testing.T) {

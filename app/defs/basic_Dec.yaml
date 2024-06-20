@@ -35,6 +35,11 @@ ops:
     o: [1.953125]
   - i: cbrt/d
     o: [1.25]
+  tests:
+  - name: negative
+    test:
+    - i: -1 cbrt/d
+      error: "cube.root/d: invalid argument, -1 < 0"
 
 - name: div/d
   overloads: div
@@ -109,6 +114,19 @@ ops:
     o: [6.6, 2.2]
   - i: pow/d
     o: [63.53260431279859]
+  tests:
+  - name: NegativeSqrt
+    test:
+    - i: -1 0.5 pow/d
+      error: "pow/d: invalid operation"
+  - name: Zero
+    test:
+    - i: 0 0 pow/d
+      error: "pow/d: invalid operation"
+  - name: Inf
+    test:
+    - i: 0 -1 pow/d
+      error: "pow/d: infinity"
 
 - name: rem/d
   overloads: rem
@@ -127,6 +145,11 @@ ops:
     o: [6.75, 0.5]
   - i: rem/d
     o: [0.25]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 rem/d
+      error: "rem/d: division by zero"
 
 - name: sign/d
   overloads: sign
@@ -162,6 +185,11 @@ ops:
     o: [1.5625]
   - i: sqrt/d
     o: [1.25]
+  tests:
+    - name: Negative
+      test:
+      - i: -1 sqrt/d
+        error: "square.root/d: invalid argument, -1 < 0"
 
 - name: sub/d
   overloads: sub

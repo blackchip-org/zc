@@ -14,7 +14,7 @@ func ErrDivisionByZero(e *OpEnv) error {
 func ErrInfinity(e *OpEnv, sign int) error {
 	var inf string
 	switch {
-	case sign < 1:
+	case sign < 0:
 		inf = "-infinity"
 	case sign > 0:
 		inf = "+infinity"
@@ -50,6 +50,10 @@ func ErrOp(env *OpEnv, err error) error {
 
 var ErrStackEmpty = errors.New("stack empty")
 var ErrStackUnderflow = errors.New("stack underflow")
+
+func ErrUndefined(e *OpEnv) error {
+	return fmt.Errorf("%v: undefined", e.Op.Name)
+}
 
 func ErrWrongGoType(want string, have any) error {
 	return fmt.Errorf("expected type %v, got %v", want, goName(have))

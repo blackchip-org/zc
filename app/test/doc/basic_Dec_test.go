@@ -31,6 +31,13 @@ func TestOpDocs_BasicDec_CubeRootD(t *testing.T) {
 	c.AssertStack("1.25")
 }
 
+func TestOpDocs_BasicDec_CubeRootD_negative(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 cbrt/d")
+	c.AssertError("cube.root/d: invalid argument, -1 < 0")
+}
+
 func TestOpDocs_BasicDec_DivD(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -97,6 +104,27 @@ func TestOpDocs_BasicDec_PowD(t *testing.T) {
 	c.AssertStack("63.53260431279859")
 }
 
+func TestOpDocs_BasicDec_PowD_NegativeSqrt(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 0.5 pow/d")
+	c.AssertError("pow/d: invalid operation")
+}
+
+func TestOpDocs_BasicDec_PowD_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 0 pow/d")
+	c.AssertError("pow/d: invalid operation")
+}
+
+func TestOpDocs_BasicDec_PowD_Inf(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 -1 pow/d")
+	c.AssertError("pow/d: infinity")
+}
+
 func TestOpDocs_BasicDec_RemD(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -108,6 +136,13 @@ func TestOpDocs_BasicDec_RemD(t *testing.T) {
 
 	c.Eval("rem/d")
 	c.AssertStack("0.25")
+}
+
+func TestOpDocs_BasicDec_RemD_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 rem/d")
+	c.AssertError("rem/d: division by zero")
 }
 
 func TestOpDocs_BasicDec_SignD(t *testing.T) {
@@ -131,6 +166,13 @@ func TestOpDocs_BasicDec_SquareRootD(t *testing.T) {
 
 	c.Eval("sqrt/d")
 	c.AssertStack("1.25")
+}
+
+func TestOpDocs_BasicDec_SquareRootD_Negative(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 sqrt/d")
+	c.AssertError("square.root/d: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_BasicDec_SubD(t *testing.T) {

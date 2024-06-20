@@ -100,11 +100,11 @@ func RemDecimal(e *zc.OpEnv) {
 	x := zc.Decimal.Pop(e)
 	defer zc.Decimal.Recycle(y)
 
-	cond, err := s.Context.Rem(x, x, y)
-	if cond.DivisionByZero() {
+	if y.IsZero() {
 		e.Err = zc.ErrDivisionByZero(e)
 		return
 	}
+	_, err := s.Context.Rem(x, x, y)
 	if err != nil {
 		e.Err = zc.ErrOp(e, err)
 		return
