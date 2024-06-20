@@ -127,10 +127,10 @@ func (r *Repl) Eval(line string) error {
 		if ok {
 			err = cmd(r, toks[1:])
 		} else {
-			r.evalLine(toks)
+			err = r.evalLine(toks)
 		}
 	default:
-		r.evalLine(toks)
+		err = r.evalLine(toks)
 	}
 
 	if err == nil && cmdName != "undo" && cmdName != "u" && cmdName != "redo" {
