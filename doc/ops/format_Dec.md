@@ -6,10 +6,10 @@ Value formatting
 
 ## Index
 
-| Operation                                         | Description 
-|---------------------------------------------------|-------------
-| [`round/d`](#round/d)                             | Round number
-| [`scientific.notation/d`](#scientific.notation/d) |             
+| Operation                                                            | Description 
+|----------------------------------------------------------------------|-------------
+| [`round, round/d`](#roundd)                                          | Round number
+| [`scientific.notation, scientific.notation/d`](#scientificnotationd) |             
 
 ## Operations
 
@@ -19,6 +19,8 @@ Rounds the decimal number *x* to a number of places *p*. If *p* is
 positive, the number is rounded to that many places after the decimal
 point. If *p* is zero, the number is rounded to an integer. If *p* is
 negative, is is round to that many places left of the decimal point.
+
+Overloads: `round`
 
 Stack effects:
 ```
@@ -37,6 +39,8 @@ Example:
 ### scientific.notation/d
 
 Formats *x* using scientific notation
+
+Overloads: `scientific.notation`
 
 Stack effects:
 ```

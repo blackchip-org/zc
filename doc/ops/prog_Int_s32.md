@@ -6,9 +6,9 @@ Programmer's calculator
 
 ## Index
 
-| Operation                     | Description                
-|-------------------------------|----------------------------
-| [`max.int/s32`](#max.int/s32) | Maximum signed 32-bit value
+| Operation                   | Description                
+|-----------------------------|----------------------------
+| [`max.int/s32`](#maxints32) | Maximum signed 32-bit value
 
 ## Operations
 

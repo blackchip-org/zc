@@ -11,10 +11,18 @@
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`add`](ops/basic.md#add): Addition
-  - [`add/d`](ops/basic_Dec.md#add/d): decimal (apd)
-  - [`add/d/ss`](ops/basic_Dec_SS.md#add/d/ss): decimal (shopspring)
-  - [`add/f`](ops/basic_Float.md#add/f): float
-  - [`add/i`](ops/basic_Int.md#add/i): integer
+  - [`add/d`](ops/basic_Dec.md#addd): decimal (apd)
+  - [`add/d/ss`](ops/basic_Dec_SS.md#adddss): decimal (shopspring)
+  - [`add/f`](ops/basic_Float.md#addf): float
+  - [`add/i`](ops/basic_Int.md#addi): integer
+- `and`
+  - [`and/i`](ops/prog.md#andi): Bitwise and
+
+## b
+- [`bin`](ops/prog.md#bin): Binary conversion
+- [`bit`](ops/prog.md#bit): Bit value
+- [`bits`](ops/prog.md#bits): Bit length
+- [`bytes`](ops/prog.md#bytes): Byte length
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
@@ -23,84 +31,103 @@
 - [`clear`](ops/stack.md#clear): Clear
 - [`cube`](ops/basic.md#cube): Cube of a number
 - [`cube.root`](ops/basic.md#cuberoot): Cube root
-  - [`cube.root/d`](ops/basic_Dec.md#cuberoot/d): decimal (apd)
+  - [`cube.root/d`](ops/basic_Dec.md#cuberootd): decimal (apd)
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- `dec`
+  - [`dec/i`](ops/prog.md#deci): Decimal conversion
 - [`div`](ops/basic.md#div): Division
-  - [`div/d`](ops/basic_Dec.md#div/d): decimal (apd)
-  - [`div/d/ss`](ops/basic_Dec_SS.md#div/d/ss): decimal (shopspring)
-  - [`div/f`](ops/basic_Float.md#div/f): float
-  - [`div/i`](ops/basic_Int.md#div/i): integer
+  - [`div/d`](ops/basic_Dec.md#divd): decimal (apd)
+  - [`div/d/ss`](ops/basic_Dec_SS.md#divdss): decimal (shopspring)
+  - [`div/f`](ops/basic_Float.md#divf): float
+  - [`div/i`](ops/basic_Int.md#divi): integer
 - [`drop`](ops/stack.md#drop): Drop
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## f
 - [`float.prec=`](ops/conf.md#floatprec=): Sets the precision for floating-point numbers
-- [`float.prec?`](ops/conf.md#floatprec?): Gets the precision for floating-point numbers
+- [`float.prec?`](ops/conf.md#floatprec): Gets the precision for floating-point numbers
+
+## h
+- [`hex`](ops/prog.md#hex): Hexadecimal conversion
 
 ## l
 - [`label`](ops/anno.md#label): Attach label
+- [`left.shift`](ops/prog.md#leftshift): Shift bits left
+- [`lsh`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
 - [`mod`](ops/basic.md#mod): Modulus
-  - [`mod/d/ss`](ops/basic_Dec_SS.md#mod/d/ss): decimal (shopspring)
-  - [`mod/i`](ops/basic_Int.md#mod/i): integer
+  - [`mod/d/ss`](ops/basic_Dec_SS.md#moddss): decimal (shopspring)
+  - [`mod/i`](ops/basic_Int.md#modi): integer
 - [`mul`](ops/basic.md#mul): Multiplication
-  - [`mul/d`](ops/basic_Dec.md#mul/d): decimal (apd)
-  - [`mul/d/ss`](ops/basic_Dec_SS.md#mul/d/ss): decimal (shopspring)
-  - [`mul/f`](ops/basic_Float.md#mul/f): float
-  - [`mul/i`](ops/basic_Int.md#mul/i): integer
+  - [`mul/d`](ops/basic_Dec.md#muld): decimal (apd)
+  - [`mul/d/ss`](ops/basic_Dec_SS.md#muldss): decimal (shopspring)
+  - [`mul/f`](ops/basic_Float.md#mulf): float
+  - [`mul/i`](ops/basic_Int.md#muli): integer
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
-  - [`neg/d`](ops/basic_Dec.md#neg/d): decimal (apd)
-  - [`neg/d/ss`](ops/basic_Dec_SS.md#neg/d/ss): decimal (shopspring)
-  - [`neg/f`](ops/basic_Float.md#neg/f): float
-  - [`neg/i`](ops/basic_Int.md#neg/i): integer
+  - [`neg/d`](ops/basic_Dec.md#negd): decimal (apd)
+  - [`neg/d/ss`](ops/basic_Dec_SS.md#negdss): decimal (shopspring)
+  - [`neg/f`](ops/basic_Float.md#negf): float
+  - [`neg/i`](ops/basic_Int.md#negi): integer
+- `not`
+  - [`not/i`](ops/prog.md#noti): Bitwise not
+
+## o
+- [`oct`](ops/prog.md#oct): Octal conversion
+- `or`
+  - [`or/i`](ops/prog.md#ori): Bitwise or
 
 ## p
 - [`pow`](ops/basic.md#pow): Exponentiation
-  - [`pow/d`](ops/basic_Dec.md#pow/d): decimal (apd)
-  - [`pow/d/ss`](ops/basic_Dec_SS.md#pow/d/ss): decimal (shopspring)
-  - [`pow/i`](ops/basic_Int.md#pow/i): integer
+  - [`pow/d`](ops/basic_Dec.md#powd): decimal (apd)
+  - [`pow/d/ss`](ops/basic_Dec_SS.md#powdss): decimal (shopspring)
+  - [`pow/i`](ops/basic_Int.md#powi): integer
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
 - [`rem`](ops/basic.md#rem): Remainder
-  - [`rem/d`](ops/basic_Dec.md#rem/d): decimal (apd)
-  - [`rem/d/ss`](ops/basic_Dec_SS.md#rem/d/ss): decimal (shopspring)
-  - [`rem/i`](ops/basic_Int.md#rem/i): integer
+  - [`rem/d`](ops/basic_Dec.md#remd): decimal (apd)
+  - [`rem/d/ss`](ops/basic_Dec_SS.md#remdss): decimal (shopspring)
+  - [`rem/i`](ops/basic_Int.md#remi): integer
+- [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`round`](ops/format.md#round): Round number
-  - [`round/d`](ops/format_Dec.md#round/d): decimal (apd)
+  - [`round/d`](ops/format_Dec.md#roundd): decimal (apd)
 - [`rounding.mode=`](ops/conf.md#roundingmode=): Sets the default rounding mode
-- [`rounding.mode?`](ops/conf.md#roundingmode?): Gets the default rounding mode
+- [`rounding.mode?`](ops/conf.md#roundingmode): Gets the default rounding mode
+- [`rsh`](ops/prog.md#rightshift): Alias for [right.shift](ops/prog.md#rightshift)
 
 ## s
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
-- [`scientific.notation`](ops/format.md#scientificnotation): 
-  - [`scientific.notation/d`](ops/format_Dec.md#scientificnotation/d): decimal (apd)
+- `scientific.notation`
+  - [`scientific.notation/d`](ops/format_Dec.md#scientificnotationd): decimal (apd)
 - [`sign`](ops/basic.md#sign): Sign
-  - [`sign/d`](ops/basic_Dec.md#sign/d): decimal (apd)
-  - [`sign/f`](ops/basic_Float.md#sign/f): float
-  - [`sign/i`](ops/basic_Int.md#sign/i): integer
+  - [`sign/d`](ops/basic_Dec.md#signd): decimal (apd)
+  - [`sign/f`](ops/basic_Float.md#signf): float
+  - [`sign/i`](ops/basic_Int.md#signi): integer
 - [`sn`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
 - [`square`](ops/basic.md#square): Square of a number
 - [`square.root`](ops/basic.md#squareroot): Square Root
-  - [`square.root/d`](ops/basic_Dec.md#squareroot/d): decimal (apd)
-  - [`square.root/f`](ops/basic_Float.md#squareroot/f): float
-  - [`square.root/i`](ops/basic_Int.md#squareroot/i): integer
+  - [`square.root/d`](ops/basic_Dec.md#squarerootd): decimal (apd)
+  - [`square.root/f`](ops/basic_Float.md#squarerootf): float
+  - [`square.root/i`](ops/basic_Int.md#squarerooti): integer
 - [`sub`](ops/basic.md#sub): Subtraction
-  - [`sub/d`](ops/basic_Dec.md#sub/d): decimal (apd)
-  - [`sub/d/ss`](ops/basic_Dec_SS.md#sub/d/ss): decimal (shopspring)
-  - [`sub/f`](ops/basic_Float.md#sub/f): float
-  - [`sub/i`](ops/basic_Int.md#sub/i): integer
+  - [`sub/d`](ops/basic_Dec.md#subd): decimal (apd)
+  - [`sub/d/ss`](ops/basic_Dec_SS.md#subdss): decimal (shopspring)
+  - [`sub/f`](ops/basic_Float.md#subf): float
+  - [`sub/i`](ops/basic_Int.md#subi): integer
 
 ## t
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit
+
+## x
+- [`xor`](ops/prog.md#xor): Bitwise exclusive or

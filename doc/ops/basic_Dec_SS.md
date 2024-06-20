@@ -6,16 +6,16 @@ Basic calculator
 
 ## Index
 
-| Operation               | Description   
-|-------------------------|---------------
-| [`add/d/ss`](#add/d/ss) | Addition      
-| [`div/d/ss`](#div/d/ss) | Division      
-| [`mod/d/ss`](#mod/d/ss) | Modulus       
-| [`mul/d/ss`](#mul/d/ss) | Multiplication
-| [`neg/d/ss`](#neg/d/ss) | Negation      
-| [`pow/d/ss`](#pow/d/ss) | Exponentiation
-| [`rem/d/ss`](#rem/d/ss) | Remainder     
-| [`sub/d/ss`](#sub/d/ss) | Subtraction   
+| Operation             | Description   
+|-----------------------|---------------
+| [`add/d/ss`](#adddss) | Addition      
+| [`div/d/ss`](#divdss) | Division      
+| [`mod/d/ss`](#moddss) | Modulus       
+| [`mul/d/ss`](#muldss) | Multiplication
+| [`neg/d/ss`](#negdss) | Negation      
+| [`pow/d/ss`](#powdss) | Exponentiation
+| [`rem/d/ss`](#remdss) | Remainder     
+| [`sub/d/ss`](#subdss) | Subtraction   
 
 ## Operations
 

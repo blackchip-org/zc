@@ -6,24 +6,26 @@ Basic calculator
 
 ## Index
 
-| Operation                                 | Description   
-|-------------------------------------------|---------------
-| [`add/d`](#add/d)                         | Addition      
-| [`cube.root/d, cbrt/d`](#cube.root/d)     | Cube Root     
-| [`div/d`](#div/d)                         | Division      
-| [`mul/d`](#mul/d)                         | Multiplication
-| [`neg/d`](#neg/d)                         | Negation      
-| [`pow/d`](#pow/d)                         | Exponentiation
-| [`rem/d`](#rem/d)                         | Remainder     
-| [`sign/d`](#sign/d)                       | Sign          
-| [`square.root/d, sqrt/d`](#square.root/d) | Square Root   
-| [`sub/d`](#sub/d)                         | Subtraction   
+| Operation                                            | Description   
+|------------------------------------------------------|---------------
+| [`add, add/d`](#addd)                                | Addition      
+| [`cube.root, cube.root/d, cbrt/d`](#cuberootd)       | Cube Root     
+| [`div, div/d`](#divd)                                | Division      
+| [`mul, mul/d`](#muld)                                | Multiplication
+| [`neg, neg/d`](#negd)                                | Negation      
+| [`pow/d`](#powd)                                     | Exponentiation
+| [`rem, rem/d`](#remd)                                | Remainder     
+| [`sign, sign/d`](#signd)                             | Sign          
+| [`square.root, square.root/d, sqrt/d`](#squarerootd) | Square Root   
+| [`sub, sub/d`](#subd)                                | Subtraction   
 
 ## Operations
 
 ### add/d
 
 Adds the value of *x* to *y*.
+
+Overloads: `add`
 
 Stack effects:
 ```
@@ -42,6 +44,8 @@ Example:
 
 The cube root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
+
+Overloads: `cube.root`
 
 Alias: `cbrt/d`
 
@@ -62,6 +66,8 @@ Example:
 Divides the value of *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
+Overloads: `div`
+
 Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
@@ -79,6 +85,8 @@ Example:
 
 Multiplies the value of *x* by *y*.
 
+Overloads: `mul`
+
 Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
@@ -95,6 +103,8 @@ Example:
 ### neg/d
 
 Changes the sign of *x*.
+
+Overloads: `neg`
 
 Stack effects:
 ```
@@ -131,6 +141,8 @@ Example:
 Remainder after dividing *y* by *x*. If *y* is zero, a 'division by zero'
 error is raised.
 
+Overloads: `rem`
+
 Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
@@ -148,6 +160,8 @@ Example:
 
 Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
 if *x* is zero.
+
+Overloads: `sign`
 
 Stack effects:
 ```
@@ -167,6 +181,8 @@ Example:
 The square root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
 
+Overloads: `square.root`
+
 Alias: `sqrt/d`
 
 Stack effects:
@@ -184,6 +200,8 @@ Example:
 ### sub/d
 
 Subtracts the value of *y* from *x*
+
+Overloads: `sub`
 
 Stack effects:
 ```

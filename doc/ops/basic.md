@@ -6,21 +6,21 @@ Basic calculator
 
 ## Index
 
-| Operation                           | Description       
-|-------------------------------------|-------------------
-| [`add, a, +`](#add)                 | Addition          
-| [`cube, cb`](#cube)                 | Cube of a number  
-| [`cube.root, cbrt`](#cube.root)     | Cube root         
-| [`div, d, /`](#div)                 | Division          
-| [`mod`](#mod)                       | Modulus           
-| [`mul, m, *`](#mul)                 | Multiplication    
-| [`neg`](#neg)                       | Negation          
-| [`pow, **`](#pow)                   | Exponentiation    
-| [`rem`](#rem)                       | Remainder         
-| [`sign`](#sign)                     | Sign              
-| [`square, sq`](#square)             | Square of a number
-| [`square.root, sqrt`](#square.root) | Square Root       
-| [`sub, s, -`](#sub)                 | Subtraction       
+| Operation                          | Description       
+|------------------------------------|-------------------
+| [`add, a, +`](#add)                | Addition          
+| [`cube, cb`](#cube)                | Cube of a number  
+| [`cube.root, cbrt`](#cuberoot)     | Cube root         
+| [`div, d, /`](#div)                | Division          
+| [`mod`](#mod)                      | Modulus           
+| [`mul, m, *`](#mul)                | Multiplication    
+| [`neg`](#neg)                      | Negation          
+| [`pow, **`](#pow)                  | Exponentiation    
+| [`rem`](#rem)                      | Remainder         
+| [`sign`](#sign)                    | Sign              
+| [`square, sq`](#square)            | Square of a number
+| [`square.root, sqrt`](#squareroot) | Square Root       
+| [`sub, s, -`](#sub)                | Subtraction       
 
 ## Operations
 

@@ -317,6 +317,14 @@ func (t IntType) Push(e *OpEnv, v int) {
 }
 
 func (t IntType) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case int:
+		return src, Int, true
+	case string:
+		v = PreParseNumber(v)
+		i, err := strconv.ParseInt(v, 0, 0)
+		return int(i), String, err == nil
+	}
 	return nil, nil, false
 }
 

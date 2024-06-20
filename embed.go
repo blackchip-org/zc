@@ -28,7 +28,7 @@ func LoadDefs() ([]VolDef, error) {
 		}
 		def, err := loadDef(path.Dir(p), d)
 		if err != nil {
-			return err
+			panic(err)
 		}
 		defs = append(defs, def)
 		return nil

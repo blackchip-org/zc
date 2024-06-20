@@ -24,6 +24,7 @@ func init() {
 		vols.Conf,
 		vols.Format,
 		vols.FormatDec,
+		vols.Prog,
 		vols.ProgIntS32,
 		vols.Stack,
 	)

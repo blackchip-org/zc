@@ -248,9 +248,15 @@ func genOpDocs(vols []zc.VolDef) {
 		tab.Heading("Operation", "Description")
 
 		for _, op := range vol.Ops {
-			names := strings.Join(append([]string{op.Name}, op.Aliases...), ", ")
-			anchor := strings.ReplaceAll(op.Name, "?", "")
-			entry := fmt.Sprintf("[`%v`](#%v)", names, anchor)
+			var names []string
+			if op.Overloads != "" {
+				names = append(names, op.Overloads)
+			}
+			names = append(names, op.Name)
+			names = append(names, op.Aliases...)
+
+			fmtNames := strings.Join(names, ", ")
+			entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
 			tab.Row(entry, op.Title)
 		}
 		fmt.Fprint(f, tab.Format())
@@ -265,6 +271,10 @@ func genOpDocs(vols []zc.VolDef) {
 func genOpDoc(f *os.File, op zc.OpDef) {
 	fmt.Fprintf(f, "\n### %v\n\n", op.Name)
 	fmt.Fprintf(f, "%v\n\n", op.Desc)
+
+	if op.Overloads != "" {
+		fmt.Fprintf(f, "Overloads: `%v`\n\n", op.Overloads)
+	}
 	if len(op.Aliases) > 0 {
 		if len(op.Aliases) == 1 {
 			fmt.Fprintf(f, "Alias: ")
@@ -339,17 +349,27 @@ func genIndex(vols []zc.VolDef) {
 	defer f.Close()
 
 	var entries []entry
+	names := make(map[string]struct{})
+	overloads := make(map[string]struct{})
 	subs := make(map[string][]entry)
 
 	for _, vol := range vols {
 		for _, op := range vol.Ops {
+			names[op.Name] = struct{}{}
+			if op.Overloads != "" {
+				overloads[op.Overloads] = struct{}{}
+			}
 			slash := strings.Index(op.Name, "/")
 			if slash != -1 {
 				prefix := op.Name[:slash]
+				title := vol.Subtitle
+				if title == "" {
+					title = op.Title
+				}
 				e := entry{
 					name:   op.Name,
-					anchor: anchor(vol, op),
-					title:  vol.Subtitle,
+					anchor: opsAnchor(vol, op),
+					title:  title,
 				}
 				entries := subs[prefix]
 				entries = append(entries, e)
@@ -358,18 +378,29 @@ func genIndex(vols []zc.VolDef) {
 			}
 			e := entry{
 				name:   op.Name,
-				anchor: anchor(vol, op),
+				anchor: opsAnchor(vol, op),
 				title:  op.Title,
 			}
 			entries = append(entries, e)
 			for _, a := range op.Aliases {
 				e2 := entry{
 					name:   a,
-					anchor: anchor(vol, op),
+					anchor: opsAnchor(vol, op),
 					title:  fmt.Sprintf("Alias for [%v](%v)", e.name, e.anchor),
 				}
 				entries = append(entries, e2)
 			}
+		}
+	}
+
+	// Find operations that overload but don't yet have an entry for the
+	// overloaded operation.
+	for ov := range overloads {
+		if _, ok := names[ov]; !ok {
+			e := entry{
+				name: ov,
+			}
+			entries = append(entries, e)
 		}
 	}
 
@@ -386,7 +417,12 @@ func genIndex(vols []zc.VolDef) {
 			section = ch
 			fmt.Fprintf(f, "\n## %c\n", ch)
 		}
-		fmt.Fprintf(f, "- [`%v`](%v): %v\n", e.name, e.anchor, e.title)
+
+		if e.title != "" {
+			fmt.Fprintf(f, "- [`%v`](%v): %v\n", e.name, e.anchor, e.title)
+		} else {
+			fmt.Fprintf(f, "- `%v`\n", e.name)
+		}
 		entries, ok := subs[e.name]
 		if ok {
 			slices.SortStableFunc(entries, entrySort)
@@ -506,8 +542,15 @@ func typeNameFor(p string) string {
 	return n
 }
 
-func anchor(vol zc.VolDef, op zc.OpDef) string {
-	name := op.Name
-	name = strings.ReplaceAll(name, ".", "")
+func opsAnchor(vol zc.VolDef, op zc.OpDef) string {
+	name := anchor(op.Name)
 	return fmt.Sprintf("ops/%v.md#%v", fileNameFor(vol.Name), name)
+}
+
+func anchor(s string) string {
+	s = strings.ReplaceAll(s, ".", "")
+	s = strings.ReplaceAll(s, "?", "")
+	s = strings.ReplaceAll(s, "/", "")
+
+	return s
 }

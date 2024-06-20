@@ -6,10 +6,10 @@ Value formatting
 
 ## Index
 
-| Operation                                         | Description 
-|---------------------------------------------------|-------------
-| [`round, r`](#round)                              | Round number
-| [`scientific.notation, sn`](#scientific.notation) |             
+| Operation                                        | Description 
+|--------------------------------------------------|-------------
+| [`round, r`](#round)                             | Round number
+| [`scientific.notation, sn`](#scientificnotation) |             
 
 ## Operations
 

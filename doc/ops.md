@@ -4,12 +4,13 @@
 
 
 ## Calculator Operations
-| Volume                  | Description          
-|-------------------------|----------------------
-| [basic](ops/basic.md)   | Basic calculator     
-| [conf](ops/conf.md)     | General configuration
-| [format](ops/format.md) | Value formatting     
-| [stack](ops/stack.md)   | Stack operations     
+| Volume                  | Description            
+|-------------------------|------------------------
+| [basic](ops/basic.md)   | Basic calculator       
+| [conf](ops/conf.md)     | General configuration  
+| [format](ops/format.md) | Value formatting       
+| [prog](ops/prog.md)     | Programmer's calculator
+| [stack](ops/stack.md)   | Stack operations       
 
 
 

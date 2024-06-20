@@ -6,24 +6,26 @@ Basic calculator
 
 ## Index
 
-| Operation                                 | Description   
-|-------------------------------------------|---------------
-| [`add/i`](#add/i)                         | Addition      
-| [`div/i`](#div/i)                         | Division      
-| [`mod/i`](#mod/i)                         | Modulus       
-| [`mul/i`](#mul/i)                         | Multiplication
-| [`neg/i`](#neg/i)                         | Negation      
-| [`pow/i`](#pow/i)                         | Exponentiation
-| [`rem/i`](#rem/i)                         | Remainder     
-| [`sign/i`](#sign/i)                       | Sign          
-| [`square.root/i, sqrt/i`](#square.root/i) | Square root   
-| [`sub/i`](#sub/i)                         | Subtraction   
+| Operation                               | Description   
+|-----------------------------------------|---------------
+| [`add, add/i`](#addi)                   | Addition      
+| [`div/i`](#divi)                        | Division      
+| [`mod, mod/i`](#modi)                   | Modulus       
+| [`mul, mul/i`](#muli)                   | Multiplication
+| [`neg, neg/i`](#negi)                   | Negation      
+| [`pow, pow/i`](#powi)                   | Exponentiation
+| [`rem, rem/i`](#remi)                   | Remainder     
+| [`sign, sign/i`](#signi)                | Sign          
+| [`square.root/i, sqrt/i`](#squarerooti) | Square root   
+| [`sub, sub/i`](#subi)                   | Subtraction   
 
 ## Operations
 
 ### add/i
 
 Adds *x* to *y*.
+
+Overloads: `add`
 
 Stack effects:
 ```
@@ -61,6 +63,8 @@ Example:
 The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
 zero' error is raised.
 
+Overloads: `mod`
+
 Stack effects:
 ```
 ( x:Int y:Int -- Int )
@@ -77,6 +81,8 @@ Example:
 ### mul/i
 
 Multiplies the value of *x* by *y*.
+
+Overloads: `mul`
 
 Stack effects:
 ```
@@ -95,6 +101,8 @@ Example:
 
 Changes the sign of *x*.
 
+Overloads: `neg`
+
 Stack effects:
 ```
 ( x:Int -- Int )
@@ -111,6 +119,8 @@ Example:
 ### pow/i
 
 Raises *x* to the power of *y*.
+
+Overloads: `pow`
 
 Stack effects:
 ```
@@ -130,6 +140,8 @@ Example:
 The remainder when *x* is divided by *y*. If *y* is zero, a
 'division by zero' error is raised.
 
+Overloads: `rem`
+
 Stack effects:
 ```
 ( x:Int y:Int -- Int )
@@ -147,6 +159,8 @@ Example:
 
 Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
 if *x* is zero.
+
+Overloads: `sign`
 
 Stack effects:
 ```
@@ -183,6 +197,8 @@ Example:
 ### sub/i
 
 Subtracts the value of *y* from *x*.
+
+Overloads: `sub`
 
 Stack effects:
 ```
