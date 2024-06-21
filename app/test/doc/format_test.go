@@ -27,6 +27,6 @@ func TestOpDocs_Format_Round(t *testing.T) {
 func TestOpDocs_Format_ScientificNotation(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("123 sn")
+	c.Eval("123 sci")
 	c.AssertStack("1.23e2")
 }

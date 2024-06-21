@@ -27,6 +27,7 @@ ops:
 
 - name: scientific.notation/d
   overloads: scientific.notation
+  aliases: [sci/d]
   funcs:
   - name: ScientificNotationDecimal
     params: [x:Dec]
@@ -34,5 +35,5 @@ ops:
   desc: |-
     Formats *x* using scientific notation
   example:
-    - i: 123.456 sn
+    - i: 123.456 sci/d
       o: [1.23456e2]

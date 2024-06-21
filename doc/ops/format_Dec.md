@@ -6,10 +6,10 @@ Value formatting
 
 ## Index
 
-| Operation                                                            | Description 
-|----------------------------------------------------------------------|-------------
-| [`round, round/d`](#roundd)                                          | Round number
-| [`scientific.notation, scientific.notation/d`](#scientificnotationd) |             
+| Operation                                                                   | Description 
+|-----------------------------------------------------------------------------|-------------
+| [`round, round/d`](#roundd)                                                 | Round number
+| [`scientific.notation, scientific.notation/d, sci/d`](#scientificnotationd) |             
 
 ## Operations
 
@@ -42,6 +42,8 @@ Formats *x* using scientific notation
 
 Overloads: `scientific.notation`
 
+Alias: `sci/d`
+
 Stack effects:
 ```
 ( x:Dec -- x:Text )
@@ -49,6 +51,6 @@ Stack effects:
 
 Example:
 
-| Input        | Stack      
-|--------------|------------
-| `123.456 sn` | `1.23456e2`
+| Input           | Stack      
+|-----------------|------------
+| `123.456 sci/d` | `1.23456e2`

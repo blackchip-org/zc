@@ -11,6 +11,6 @@ var Format = zc.Vol{
 	Ops:  []zc.Op{},
 	Macros: []zc.Macro{
 		{Name: "r", Expr: "round"},
-		{Name: "sn", Expr: "scientific.notation"},
+		{Name: "sci", Expr: "scientific.notation"},
 	},
 }

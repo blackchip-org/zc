@@ -26,7 +26,7 @@ ops:
     o: [67000]
 
 - name: scientific.notation
-  aliases: [sn]
+  aliases: [sci]
   virtual: true
   funcs:
   - params: [x:Dec]
@@ -34,6 +34,6 @@ ops:
   desc: |-
     Formats *x* using scientific notation
   example:
-    - i: 123 sn
+    - i: 123 sci
       o: [1.23e2]
 

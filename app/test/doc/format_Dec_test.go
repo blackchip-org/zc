@@ -27,6 +27,6 @@ func TestOpDocs_FormatDec_RoundD(t *testing.T) {
 func TestOpDocs_FormatDec_ScientificNotationD(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("123.456 sn")
+	c.Eval("123.456 sci/d")
 	c.AssertStack("1.23456e2")
 }

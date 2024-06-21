@@ -13,5 +13,7 @@ var FormatDec = zc.Vol{
 		ops.RoundDecimal,
 		ops.ScientificNotationDecimal,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "sci/d", Expr: "scientific.notation/d"},
+	},
 }

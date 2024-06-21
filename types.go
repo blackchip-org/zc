@@ -17,10 +17,41 @@ var (
 	DecimalSS = DecimalSSType{}
 	Float64   = Float64Type{}
 	Int       = IntType{}
+	Int8      = Int8Type{}
 	Int32     = Int32Type{}
 	String    = StringType{}
 	Uint      = UintType{}
+	Uint8     = Uint8Type{}
 )
+
+func TypeOf(a any) Type {
+	switch a.(type) {
+	case *big.Int:
+		return BigInt
+	case *big.Float:
+		return BigFloat
+	case *apd.Decimal:
+		return Decimal
+	case decimal.Decimal:
+		return DecimalSS
+	case float64:
+		return Float64
+	case int:
+		return Int
+	case int8:
+		return Int8
+	case int32:
+		return Int32
+	case string:
+		return String
+	case uint:
+		return Uint
+	case uint8:
+		return Uint8
+	default:
+		return Any
+	}
+}
 
 var (
 	poolSize     = 8
@@ -83,6 +114,10 @@ func (t BigIntType) From(src any) (any, Type, bool) {
 		_, ok := bi.SetString(v, 0)
 		return bi, String, ok
 	case uint:
+		bi := bigIntPool.New()
+		bi.SetUint64(uint64(v))
+		return bi, Uint, true
+	case uint8:
 		bi := bigIntPool.New()
 		bi.SetUint64(uint64(v))
 		return bi, Uint, true
@@ -368,6 +403,42 @@ func (t Int32Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 
+type Int8Type struct{}
+
+func (t Int8Type) Name() string { return "Int/s8" }
+
+func (t Int8Type) As(a any) int8 {
+	val, ok := a.(int8)
+	if !ok {
+		panic(ErrWrongGoType("int8", a))
+	}
+	return val
+}
+
+func (t Int8Type) Pop(e *OpEnv) int8 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Int8Type) Push(e *OpEnv, v int8) {
+	e.PushVal(v)
+}
+
+func (t Int8Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case int8:
+		return v, t, true
+	case string:
+		v = PreParseNumber(v)
+		i8, err := strconv.ParseInt(v, 0, 8)
+		return int8(i8), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Int8Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
 type StringType struct{}
 
 func (t StringType) Name() string { return "Text" }
@@ -439,3 +510,39 @@ func (t UintType) From(src any) (any, Type, bool) {
 }
 
 func (t UintType) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type Uint8Type struct{}
+
+func (t Uint8Type) Name() string { return "Int/u8" }
+
+func (t Uint8Type) As(a any) uint8 {
+	val, ok := a.(uint8)
+	if !ok {
+		panic(ErrWrongGoType("uint8", a))
+	}
+	return val
+}
+
+func (t Uint8Type) Pop(e *OpEnv) uint8 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Uint8Type) Push(e *OpEnv, v uint8) {
+	e.PushVal(v)
+}
+
+func (t Uint8Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case uint8:
+		return v, t, true
+	case string:
+		v = PreParseNumber(v)
+		u8, err := strconv.ParseUint(v, 0, 8)
+		return uint8(u8), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Uint8Type) Recycle(v any) {}

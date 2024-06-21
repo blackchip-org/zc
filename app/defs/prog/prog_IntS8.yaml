@@ -1,0 +1,23 @@
+name: prog/Int/s8
+title: Programmer's calculator
+subtitle: 8-bit signed integers
+
+ops:
+- name: add/s8
+  title: Addition
+  funcs:
+  - name: AddInt8
+    params: [x:Int/s8, y:Int/s8]
+    returns: [Int/s8]
+  desc: |-
+    Adds *x* to *y*. The overflow flag is set if the result is larger than
+    an 8-bit number.
+  example:
+  - i: 127
+    o: [127]
+  - i: 1
+    o: [127, 1]
+  - i: add/s8
+    o: [-128]
+  - i: info
+    info: "Int/s8: overflow"

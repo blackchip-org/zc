@@ -7,6 +7,7 @@
 - [`+`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`-`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`/`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- [`?`](ops/stack.md#info): Alias for [info](ops/stack.md#info)
 
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
@@ -15,6 +16,8 @@
   - [`add/d/ss`](ops/basic_Dec_SS.md#adddss): decimal (shopspring)
   - [`add/f`](ops/basic_Float.md#addf): float
   - [`add/i`](ops/basic_Int.md#addi): integer
+  - [`add/s8`](ops/prog_Int_s8.md#adds8): 8-bit signed integers
+  - [`add/u8`](ops/prog_Int_u8.md#addu8): 8-bit unsigned integers
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
 
@@ -52,6 +55,9 @@
 ## h
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
 
+## i
+- [`info`](ops/stack.md#info): Information about the top item
+
 ## l
 - [`label`](ops/anno.md#label): Attach label
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
@@ -74,6 +80,7 @@
   - [`neg/d/ss`](ops/basic_Dec_SS.md#negdss): decimal (shopspring)
   - [`neg/f`](ops/basic_Float.md#negf): float
   - [`neg/i`](ops/basic_Int.md#negi): integer
+  - [`neg/u8`](ops/prog_Int_u8.md#negu8): 8-bit unsigned integers
 - `not`
   - [`not/i`](ops/prog.md#noti): Bitwise not
 
@@ -103,6 +110,7 @@
 
 ## s
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
+- [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - `scientific.notation`
   - [`scientific.notation/d`](ops/format_Dec.md#scientificnotationd): decimal (apd)
 - [`shift.left`](ops/prog.md#shiftleft): Shift bits left
@@ -113,7 +121,6 @@
   - [`sign/d`](ops/basic_Dec.md#signd): decimal (apd)
   - [`sign/f`](ops/basic_Float.md#signf): float
   - [`sign/i`](ops/basic_Int.md#signi): integer
-- [`sn`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
 - [`square`](ops/basic.md#square): Square of a number
@@ -126,6 +133,7 @@
   - [`sub/d/ss`](ops/basic_Dec_SS.md#subdss): decimal (shopspring)
   - [`sub/f`](ops/basic_Float.md#subf): float
   - [`sub/i`](ops/basic_Int.md#subi): integer
+  - [`sub/u8`](ops/prog_Int_u8.md#subu8): 8-bit unsigned integers
 
 ## t
 - [`tuck`](ops/stack.md#tuck): Copy top and place below

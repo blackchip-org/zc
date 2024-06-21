@@ -26,6 +26,8 @@ func init() {
 		vols.FormatDec,
 		vols.Prog,
 		vols.ProgIntS32,
+		vols.ProgIntS8,
+		vols.ProgIntU8,
 		vols.Stack,
 	)
 }
@@ -106,7 +108,7 @@ func (c *Calc) evalName(name string) {
 	}
 	op, ok := c.ResolveOp(ops)
 	if !ok {
-		c.Err = zc.ErrNoMatchForOp(name)
+		c.Err = zc.ErrArgMismatch(name)
 		return
 	}
 	c.Do(op)

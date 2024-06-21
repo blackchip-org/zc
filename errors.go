@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+func ErrArgMismatch(name string) error {
+	return fmt.Errorf("argument mismatch for operation: %v", name)
+}
+
 func ErrDivisionByZero(e *OpEnv) error {
 	return fmt.Errorf("%v: division by zero", e.Op.Name)
 }
@@ -26,10 +30,6 @@ func ErrInfinity(e *OpEnv, sign int) error {
 
 func ErrInvalidArg(e *OpEnv, format string, args ...any) error {
 	return fmt.Errorf("%v: invalid argument, %v", e.Op.Name, fmt.Sprintf(format, args...))
-}
-
-func ErrNoMatchForOp(name string) error {
-	return fmt.Errorf("no match for operation: %v", name)
 }
 
 func ErrNoSuchOp(name string) error {

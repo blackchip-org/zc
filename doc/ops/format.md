@@ -6,10 +6,10 @@ Value formatting
 
 ## Index
 
-| Operation                                        | Description 
-|--------------------------------------------------|-------------
-| [`round, r`](#round)                             | Round number
-| [`scientific.notation, sn`](#scientificnotation) |             
+| Operation                                         | Description 
+|---------------------------------------------------|-------------
+| [`round, r`](#round)                              | Round number
+| [`scientific.notation, sci`](#scientificnotation) |             
 
 ## Operations
 
@@ -40,7 +40,7 @@ Example:
 
 Formats *x* using scientific notation
 
-Alias: `sn`
+Alias: `sci`
 
 Stack effects:
 ```
@@ -49,6 +49,6 @@ Stack effects:
 
 Example:
 
-| Input    | Stack   
-|----------|---------
-| `123 sn` | `1.23e2`
+| Input     | Stack   
+|-----------|---------
+| `123 sci` | `1.23e2`

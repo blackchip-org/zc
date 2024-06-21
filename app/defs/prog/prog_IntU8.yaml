@@ -1,0 +1,56 @@
+name: prog/Int/u8
+title: Programmer's calculator
+subtitle: 8-bit unsigned integers
+
+ops:
+- name: add/u8
+  title: Addition
+  funcs:
+  - name: AddUint8
+    params: [x:Int/u8, y:Int/u8]
+    returns: [Int/u8]
+  desc: |-
+    Adds *x* to *y*. The carry flag is set if the result is larger than an
+    8-bit integer. The overflow flag is set if the result is larger than
+    an signed 8-bit integer.
+  example:
+  - i: 255 1 add/u8
+    o: [0]
+  - i: info
+    info: "Int/u8: carry"
+  - i: c 127 1 add/u8
+    o: [128]
+  - i: info
+    info: "Int/u8: overflow"
+
+- name: neg/u8
+  title: Negation
+  funcs:
+  - name: NegUint8
+    params: [x:Int/u8]
+    returns: [Int/u8]
+  desc: |-
+    Negates the value of *x*.
+  example:
+  - i: 0x01 neg/u8 hex
+    o: [0xff]
+
+- name: sub/u8
+  title: Subraction
+  funcs:
+  - name: SubUint8
+    params: [x:Int/u8, y:Int/u8]
+    returns: [Int/u8]
+  desc: |-
+    Subracts *y* from *x*. The carry flag is set if the result is larger than
+    an 8-bit integer. The overflow flag is set if the result is larger than
+    an signed 8-bit integer.
+  example:
+  - i: 0 1 sub/u8
+    o: [255]
+  - i: info
+    info: "Int/u8: carry"
+  - i: c 128 1 sub/u8
+    o: [127]
+  - i: info
+    info: "Int/u8: overflow"

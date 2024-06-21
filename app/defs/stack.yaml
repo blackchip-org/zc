@@ -47,6 +47,26 @@ ops:
   - i: dup
     o: [10, 10]
 
+- name: info
+  aliases: ["?"]
+  title: Information about the top item
+  funcs:
+  - name: Info
+    params: [x:Any]
+    returns: [x:Any]
+  desc: |-
+    Describes the top stack item by listing its type and any flags that were
+    set from the last operation
+  example:
+  - i: 127
+    o: [127]
+  - i: 1
+    o: [127, 1]
+  - i: add/s8
+    o: [-128]
+  - i: info
+    info: "Int/s8: overflow"
+
 - name: tuck
   title: Copy top and place below
   funcs:
