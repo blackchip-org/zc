@@ -14,11 +14,35 @@ var (
 		Returns: []zc.Type{zc.Uint8},
 		Func:    funcs.AddUint8,
 	}
+	Uint8Uint64 = zc.Op{
+		Name:    "int/u8",
+		Params:  []zc.Type{zc.Uint64},
+		Returns: []zc.Type{zc.Uint8},
+		Func:    funcs.Uint8Uint64,
+	}
+	Uint8Int64 = zc.Op{
+		Name:    "int/u8",
+		Params:  []zc.Type{zc.Int64},
+		Returns: []zc.Type{zc.Uint8},
+		Func:    funcs.Uint8Int64,
+	}
+	LeftShiftUint8 = zc.Op{
+		Name:    "left.shift/u8",
+		Params:  []zc.Type{zc.Uint8},
+		Returns: []zc.Type{zc.Uint8},
+		Func:    funcs.LeftShiftUint8,
+	}
 	NegUint8 = zc.Op{
 		Name:    "neg/u8",
 		Params:  []zc.Type{zc.Uint8},
 		Returns: []zc.Type{zc.Uint8},
 		Func:    funcs.NegUint8,
+	}
+	NotUint8 = zc.Op{
+		Name:    "not/u8",
+		Params:  []zc.Type{zc.Uint8},
+		Returns: []zc.Type{zc.Uint8},
+		Func:    funcs.NotUint8,
 	}
 	SubUint8 = zc.Op{
 		Name:    "sub/u8",

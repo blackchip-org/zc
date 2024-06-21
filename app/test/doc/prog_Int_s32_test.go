@@ -14,3 +14,10 @@ func TestOpDocs_ProgIntS32_MaxIntS32(t *testing.T) {
 	c.Eval("max.int/s32")
 	c.AssertStack("2147483647")
 }
+
+func TestOpDocs_ProgIntS32_MaxIntS32_Example(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 2 31 pow 1 sub")
+	c.AssertStack("2147483647")
+}

@@ -2,6 +2,7 @@
 
 ops() {
     set -x
+    rm -rf app/ops/* doc/ops/* app/vols/* test/doc/*
     go generate internal/gen-ops/gen-ops.go
     goimports -w app/ops/*.go app/vols/*.go app/test/doc/*
     gofmt -w     app/ops/*.go app/vols/*.go app/test/doc/*

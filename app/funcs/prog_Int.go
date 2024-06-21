@@ -50,10 +50,52 @@ func AddUint8(e *zc.OpEnv) {
 	e.Flags(intFlags(c, v))
 }
 
+func LeftRotateUint8(e *zc.OpEnv) {
+	x := zc.Uint8.Pop(e)
+	c := x&(1<<7) != 0
+	x <<= 1
+	if c {
+		x |= 1
+	}
+	zc.Uint8.Push(e, x)
+}
+
+func LeftShiftUint8(e *zc.OpEnv) {
+	x := zc.Uint8.Pop(e)
+	c := x&(1<<7) != 0
+	x <<= 1
+	zc.Uint8.Push(e, x)
+	e.Flags(intFlags(c, false))
+}
+
 func NegUint8(e *zc.OpEnv) {
 	x := zc.Uint8.Pop(e)
 	x = -x
 	zc.Uint8.Push(e, x)
+}
+
+func NotUint8(e *zc.OpEnv) {
+	x := zc.Uint8.Pop(e)
+	x = ^x
+	zc.Uint8.Push(e, x)
+}
+
+func RightRotateUint8(e *zc.OpEnv) {
+	x := zc.Uint8.Pop(e)
+	c := x&1 != 0
+	x >>= 1
+	if c {
+		x |= (1 << 7)
+	}
+	zc.Uint8.Push(e, x)
+}
+
+func RightShiftUint8(e *zc.OpEnv) {
+	x := zc.Uint8.Pop(e)
+	c := x&1 != 0
+	x >>= 1
+	zc.Uint8.Push(e, x)
+	e.Flags(intFlags(c, false))
 }
 
 func SubUint8(e *zc.OpEnv) {
@@ -61,5 +103,15 @@ func SubUint8(e *zc.OpEnv) {
 	x := zc.Uint8.Pop(e)
 	z, c, v := add8(x, ^y, true)
 	zc.Uint8.Push(e, z)
-	e.Flags(intFlags(!c, !v))
+	e.Flags(intFlags(!c, v))
+}
+
+func Uint8Int64(e *zc.OpEnv) {
+	x := zc.Int64.Pop(e)
+	zc.Uint8.Push(e, uint8(x))
+}
+
+func Uint8Uint64(e *zc.OpEnv) {
+	x := zc.Uint64.Pop(e)
+	zc.Uint8.Push(e, uint8(x))
 }

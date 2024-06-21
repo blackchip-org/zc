@@ -9,17 +9,23 @@ const ProgName = "zc"
 
 type Item struct {
 	Val   any
+	Repr  string
 	Unit  string
 	Label string
 	Flags uint64
 }
 
 func (i Item) String() string {
-	var label string
+	var label, val string
 	if i.Label != "" {
 		label = i.Label + ": "
 	}
-	return label + Format(i.Val) + i.Unit
+	if i.Repr != "" {
+		val = i.Repr
+	} else {
+		val = Format(i.Val)
+	}
+	return label + val + i.Unit
 }
 
 type OpEnv struct {

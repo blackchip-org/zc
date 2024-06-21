@@ -20,14 +20,18 @@ func Bin(e *zc.OpEnv) {
 	var zero big.Int
 	var b string
 
-	x := zc.BigInt.Pop(e)
+	ix := e.Pop()
+
+	x := zc.BigInt.As(ix.Val)
 	if x.Cmp(&zero) < 0 {
 		x.Abs(x)
 		b = fmt.Sprintf("-0b%b", x)
 	} else {
 		b = fmt.Sprintf("0b%b", x)
 	}
-	zc.String.Push(e, b)
+
+	ix.Repr = b
+	e.Push(ix)
 	zc.BigInt.Recycle(x)
 }
 
@@ -66,14 +70,18 @@ func Hex(e *zc.OpEnv) {
 	var zero big.Int
 	var b string
 
-	x := zc.BigInt.Pop(e)
+	ix := e.Pop()
+
+	x := zc.BigInt.As(ix.Val)
 	if x.Cmp(&zero) < 0 {
 		x.Abs(x)
 		b = fmt.Sprintf("-0x%x", x)
 	} else {
 		b = fmt.Sprintf("0x%x", x)
 	}
-	zc.String.Push(e, b)
+
+	ix.Repr = b
+	e.Push(ix)
 	zc.BigInt.Recycle(x)
 }
 
@@ -94,14 +102,18 @@ func Oct(e *zc.OpEnv) {
 	var zero big.Int
 	var b string
 
-	x := zc.BigInt.Pop(e)
+	ix := e.Pop()
+
+	x := zc.BigInt.As(ix.Val)
 	if x.Cmp(&zero) < 0 {
 		x.Abs(x)
 		b = fmt.Sprintf("-0o%o", x)
 	} else {
 		b = fmt.Sprintf("0o%o", x)
 	}
-	zc.String.Push(e, b)
+
+	ix.Repr = b
+	e.Push(ix)
 	zc.BigInt.Recycle(x)
 }
 

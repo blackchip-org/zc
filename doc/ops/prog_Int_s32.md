@@ -14,7 +14,7 @@ Programmer's calculator
 
 ### max.int/s32
 
-The maximum value of a signed 32-bit integer: 2 32 pow 1 sub
+The maximum value of a signed 32-bit integer: 2 31 pow 1 sub
 
 Macro definition:
 ```

@@ -8,7 +8,23 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_ProgIntU8_AddU8(t *testing.T) {
+func TestOpDocs_ProgInt_AddS8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("127")
+	c.AssertStack("127")
+
+	c.Eval("1")
+	c.AssertStack("127", "1")
+
+	c.Eval("add/s8")
+	c.AssertStack("-128")
+
+	c.Eval("info")
+	c.AssertInfo("Int/s8: overflow")
+}
+
+func TestOpDocs_ProgInt_AddU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("255 1 add/u8")
@@ -24,65 +40,49 @@ func TestOpDocs_ProgIntU8_AddU8(t *testing.T) {
 	c.AssertInfo("Int/u8: overflow")
 }
 
-func TestOpDocs_ProgIntU8_IntU8(t *testing.T) {
+func TestOpDocs_ProgInt_MaxIntS32(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0x1234 int/u8 hex")
-	c.AssertStack("0x34")
+	c.Eval("max.int/s32")
+	c.AssertStack("2147483647")
 }
 
-func TestOpDocs_ProgIntU8_IntU8_Negative(t *testing.T) {
+func TestOpDocs_ProgInt_MaxIntS32_Example(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("-1 int/u8 hex")
-	c.AssertStack("0xff")
+	c.Eval("c 2 31 pow 1 sub")
+	c.AssertStack("2147483647")
 }
 
-func TestOpDocs_ProgIntU8_LeftShiftU8(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("0b10101010 lsh/u8")
-	c.AssertStack("84")
-
-	c.Eval("?")
-	c.AssertInfo("Int/u8: carry")
-
-	c.Eval("bin")
-	c.AssertStack("0b1010100")
-
-	c.Eval("?")
-	c.AssertInfo("Int: carry")
-}
-
-func TestOpDocs_ProgIntU8_MaxIntU8(t *testing.T) {
+func TestOpDocs_ProgInt_MaxIntU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("max.int/u8")
 	c.AssertStack("255")
 }
 
-func TestOpDocs_ProgIntU8_MaxIntU8_Example(t *testing.T) {
+func TestOpDocs_ProgInt_MaxIntU8_Example(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 2 8 pow 1 sub")
 	c.AssertStack("255")
 }
 
-func TestOpDocs_ProgIntU8_NegU8(t *testing.T) {
+func TestOpDocs_ProgInt_NegU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0x01 neg/u8 hex")
 	c.AssertStack("0xff")
 }
 
-func TestOpDocs_ProgIntU8_NotU8(t *testing.T) {
+func TestOpDocs_ProgInt_NotU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0x01 not/u8 hex")
 	c.AssertStack("0xfe")
 }
 
-func TestOpDocs_ProgIntU8_SubU8(t *testing.T) {
+func TestOpDocs_ProgInt_SubU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0 1 sub/u8")

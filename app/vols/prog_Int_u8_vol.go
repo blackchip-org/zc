@@ -11,8 +11,15 @@ var ProgIntU8 = zc.Vol{
 	Name: "prog/Int/u8",
 	Ops: []zc.Op{
 		ops.AddUint8,
+		ops.Uint8Uint64,
+		ops.Uint8Int64,
+		ops.LeftShiftUint8,
 		ops.NegUint8,
+		ops.NotUint8,
 		ops.SubUint8,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "lsh/u8", Expr: "left.shift/u8"},
+		{Name: "max.int/u8", Expr: "255"},
+	},
 }

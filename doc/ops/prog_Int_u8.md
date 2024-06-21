@@ -6,11 +6,15 @@ Programmer's calculator
 
 ## Index
 
-| Operation          | Description
-|--------------------|------------
-| [`add/u8`](#addu8) | Addition   
-| [`neg/u8`](#negu8) | Negation   
-| [`sub/u8`](#subu8) | Subraction 
+| Operation                               | Description                 
+|-----------------------------------------|-----------------------------
+| [`add/u8`](#addu8)                      | Addition                    
+| [`int/u8`](#intu8)                      | Signed 8-bit conversion     
+| [`left.shift/u8, lsh/u8`](#leftshiftu8) | Shift bits left             
+| [`max.int/u8`](#maxintu8)               | Maximum unsigned 8-bit value
+| [`neg/u8`](#negu8)                      | Negation                    
+| [`not/u8`](#notu8)                      | Bitwise not                 
+| [`sub/u8`](#subu8)                      | Subtraction                 
 
 ## Operations
 
@@ -34,6 +38,58 @@ Example:
 | `c 127 1 add/u8` | `128`             
 | `info`           | *Int/u8: overflow*
 
+### int/u8
+
+Converts *x* into a signed 8-bit integer.
+
+Stack effects:
+```
+( x:Int/u64 -- x:Int/u8 )
+( x:Int/s64 -- x:Int/u8 )
+```
+
+Example:
+
+| Input               | Stack 
+|---------------------|-------
+| `0x1234 int/u8 hex` | `0x34`
+
+### left.shift/u8
+
+Shifts all bits in *x* to the left by one. The carry flag is set to the
+value of the bit shifted out.
+
+Alias: `lsh/u8`
+
+Stack effects:
+```
+( x:Int/u8 -- x:Int/u8 )
+```
+
+Example:
+
+| Input               | Stack          
+|---------------------|----------------
+| `0b10101010 lsh/u8` | `84`           
+| `?`                 | *Int/u8: carry*
+| `bin`               | `0b1010100`    
+| `?`                 | *Int: carry*   
+
+### max.int/u8
+
+Maximum value of an unsigned 8-bit value: 2 8 pow 1 sub.
+
+Macro definition:
+```
+def max.int/u8 255
+```
+
+Example:
+
+| Input        | Stack
+|--------------|------
+| `max.int/u8` | `255`
+
 ### neg/u8
 
 Negates the value of *x*.
@@ -49,9 +105,24 @@ Example:
 |-------------------|-------
 | `0x01 neg/u8 hex` | `0xff`
 
+### not/u8
+
+Bitwise not of *x*.
+
+Stack effects:
+```
+( x:Int/u8 -- x:Int/u8 )
+```
+
+Example:
+
+| Input             | Stack 
+|-------------------|-------
+| `0x01 not/u8 hex` | `0xfe`
+
 ### sub/u8
 
-Subracts *y* from *x*. The carry flag is set if the result is larger than
+Subtracts *y* from *x*. The carry flag is clear if the result is larger than
 an 8-bit integer. The overflow flag is set if the result is larger than
 an signed 8-bit integer.
 

@@ -1,6 +1,6 @@
 name: prog/Int/u8
 title: Programmer's calculator
-subtitle: 8-bit unsigned integers
+subtitle: unsigned 8-bit integers
 
 ops:
 - name: add/u8
@@ -13,6 +13,8 @@ ops:
     Adds *x* to *y*. The carry flag is set if the result is larger than an
     8-bit integer. The overflow flag is set if the result is larger than
     an signed 8-bit integer.
+  sources:
+  - https://stackoverflow.com/questions/8034566/overflow-and-carry-flags-on-z80/8037485%238037485
   example:
   - i: 255 1 add/u8
     o: [0]
@@ -22,6 +24,59 @@ ops:
     o: [128]
   - i: info
     info: "Int/u8: overflow"
+
+- name: int/u8
+  title: Signed 8-bit conversion
+  funcs:
+  - name: Uint8Uint64
+    params: [x:Int/u64]
+    returns: [x:Int/u8]
+  - name: Uint8Int64
+    params: [x:Int/s64]
+    returns: [x:Int/u8]
+  desc: Converts *x* into a signed 8-bit integer.
+  example:
+  - i: 0x1234 int/u8 hex
+    o: [0x34]
+  tests:
+  - name: Negative
+    test:
+    - i: -1 int/u8 hex
+      o: [0xff]
+
+- name: left.shift/u8
+  aliases: [lsh/u8]
+  title: Shift bits left
+  funcs:
+  - name: LeftShiftUint8
+    params: [x:Int/u8]
+    returns: [x:Int/u8]
+  desc: |-
+    Shifts all bits in *x* to the left by one. The carry flag is set to the
+    value of the bit shifted out.
+  example:
+  - i: 0b10101010 lsh/u8
+    o: [84]
+  - i: "?"
+    info: "Int/u8: carry"
+  - i: bin
+    o: [0b1010100]
+  - i: "?"
+    info: "Int: carry"
+
+- name: max.int/u8
+  title: Maximum unsigned 8-bit value
+  macro: 255
+  desc: |-
+    Maximum value of an unsigned 8-bit value: 2 8 pow 1 sub.
+  example:
+  - i: max.int/u8
+    o: [255]
+  tests:
+  - name: Example
+    test:
+    - i: c 2 8 pow 1 sub
+      o: [255]
 
 - name: neg/u8
   title: Negation
@@ -35,16 +90,30 @@ ops:
   - i: 0x01 neg/u8 hex
     o: [0xff]
 
+- name: not/u8
+  title: Bitwise not
+  funcs:
+  - name: NotUint8
+    params: [x:Int/u8]
+    returns: [x:Int/u8]
+  desc: |-
+    Bitwise not of *x*.
+  example:
+  - i: 0x01 not/u8 hex
+    o: [0xfe]
+
 - name: sub/u8
-  title: Subraction
+  title: Subtraction
   funcs:
   - name: SubUint8
     params: [x:Int/u8, y:Int/u8]
     returns: [Int/u8]
   desc: |-
-    Subracts *y* from *x*. The carry flag is set if the result is larger than
+    Subtracts *y* from *x*. The carry flag is clear if the result is larger than
     an 8-bit integer. The overflow flag is set if the result is larger than
     an signed 8-bit integer.
+  sources:
+  - https://stackoverflow.com/questions/8034566/overflow-and-carry-flags-on-z80/8037485%238037485
   example:
   - i: 0 1 sub/u8
     o: [255]
@@ -54,3 +123,4 @@ ops:
     o: [127]
   - i: info
     info: "Int/u8: overflow"
+

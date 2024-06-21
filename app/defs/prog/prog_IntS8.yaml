@@ -1,6 +1,6 @@
 name: prog/Int/s8
 title: Programmer's calculator
-subtitle: 8-bit signed integers
+subtitle: signed 8-bit integers
 
 ops:
 - name: add/s8
@@ -21,3 +21,4 @@ ops:
     o: [-128]
   - i: info
     info: "Int/s8: overflow"
+

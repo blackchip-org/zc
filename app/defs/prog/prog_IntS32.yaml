@@ -1,13 +1,18 @@
 name: prog/Int/s32
 title: Programmer's calculator
-subtitle: 32-bit signed integers
+subtitle: signed 32-bit integers
 
 ops:
 - name: max.int/s32
   title: Maximum signed 32-bit value
   macro: 2147483647
   desc: |-
-    The maximum value of a signed 32-bit integer: 2 32 pow 1 sub
+    The maximum value of a signed 32-bit integer: 2 31 pow 1 sub
   example:
   - i: max.int/s32
     o: [2147483647]
+  tests:
+  - name: Example
+    test:
+    - i: c 2 31 pow 1 sub
+      o: [2147483647]

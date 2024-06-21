@@ -19,9 +19,11 @@ var (
 	Int       = IntType{}
 	Int8      = Int8Type{}
 	Int32     = Int32Type{}
+	Int64     = Int64Type{}
 	String    = StringType{}
 	Uint      = UintType{}
 	Uint8     = Uint8Type{}
+	Uint64    = Uint64Type{}
 )
 
 func TypeOf(a any) Type {
@@ -367,6 +369,42 @@ func (t IntType) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 
+type Int8Type struct{}
+
+func (t Int8Type) Name() string { return "Int/s8" }
+
+func (t Int8Type) As(a any) int8 {
+	val, ok := a.(int8)
+	if !ok {
+		panic(ErrWrongGoType("int8", a))
+	}
+	return val
+}
+
+func (t Int8Type) Pop(e *OpEnv) int8 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Int8Type) Push(e *OpEnv, v int8) {
+	e.PushVal(v)
+}
+
+func (t Int8Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case int8:
+		return v, t, true
+	case string:
+		v = PreParseNumber(v)
+		i8, err := strconv.ParseInt(v, 0, 8)
+		return int8(i8), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Int8Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
 type Int32Type struct{}
 
 func (t Int32Type) Name() string { return "Int/s32" }
@@ -403,39 +441,39 @@ func (t Int32Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 
-type Int8Type struct{}
+type Int64Type struct{}
 
-func (t Int8Type) Name() string { return "Int/s8" }
+func (t Int64Type) Name() string { return "Int/s64" }
 
-func (t Int8Type) As(a any) int8 {
-	val, ok := a.(int8)
+func (t Int64Type) As(a any) int64 {
+	val, ok := a.(int64)
 	if !ok {
-		panic(ErrWrongGoType("int8", a))
+		panic(ErrWrongGoType("int64", a))
 	}
 	return val
 }
 
-func (t Int8Type) Pop(e *OpEnv) int8 {
+func (t Int64Type) Pop(e *OpEnv) int64 {
 	return t.As(e.Pop().Val)
 }
 
-func (t Int8Type) Push(e *OpEnv, v int8) {
+func (t Int64Type) Push(e *OpEnv, v int64) {
 	e.PushVal(v)
 }
 
-func (t Int8Type) From(src any) (any, Type, bool) {
+func (t Int64Type) From(src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case int8:
+	case int64:
 		return v, t, true
 	case string:
 		v = PreParseNumber(v)
-		i8, err := strconv.ParseInt(v, 0, 8)
-		return int8(i8), String, err == nil
+		i64, err := strconv.ParseInt(v, 0, 64)
+		return int64(i64), String, err == nil
 	}
 	return nil, nil, false
 }
 
-func (t Int8Type) Recycle(v any) {}
+func (t Int64Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -546,3 +584,39 @@ func (t Uint8Type) From(src any) (any, Type, bool) {
 }
 
 func (t Uint8Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type Uint64Type struct{}
+
+func (t Uint64Type) Name() string { return "Int/u64" }
+
+func (t Uint64Type) As(a any) uint64 {
+	val, ok := a.(uint64)
+	if !ok {
+		panic(ErrWrongGoType("uint64", a))
+	}
+	return val
+}
+
+func (t Uint64Type) Pop(e *OpEnv) uint64 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Uint64Type) Push(e *OpEnv, v uint64) {
+	e.PushVal(v)
+}
+
+func (t Uint64Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case uint8:
+		return v, t, true
+	case string:
+		v = PreParseNumber(v)
+		u64, err := strconv.ParseUint(v, 0, 64)
+		return uint64(u64), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Uint64Type) Recycle(v any) {}
