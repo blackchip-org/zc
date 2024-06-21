@@ -6,15 +6,18 @@ Programmer's calculator
 
 ## Index
 
-| Operation                               | Description                 
-|-----------------------------------------|-----------------------------
-| [`add/u8`](#addu8)                      | Addition                    
-| [`int/u8`](#intu8)                      | Signed 8-bit conversion     
-| [`left.shift/u8, lsh/u8`](#leftshiftu8) | Shift bits left             
-| [`max.int/u8`](#maxintu8)               | Maximum unsigned 8-bit value
-| [`neg/u8`](#negu8)                      | Negation                    
-| [`not/u8`](#notu8)                      | Bitwise not                 
-| [`sub/u8`](#subu8)                      | Subtraction                 
+| Operation                                   | Description                 
+|---------------------------------------------|-----------------------------
+| [`add/u8`](#addu8)                          | Addition                    
+| [`int/u8`](#intu8)                          | Signed 8-bit conversion     
+| [`left.rotate/u8, lro/u8`](#leftrotateu8)   | Rotate bits left            
+| [`left.shift/u8, lsh/u8`](#leftshiftu8)     | Shift bits left             
+| [`max.int/u8`](#maxintu8)                   | Maximum unsigned 8-bit value
+| [`neg/u8`](#negu8)                          | Negation                    
+| [`not/u8`](#notu8)                          | Bitwise not                 
+| [`right.rotate/u8, rro/u8`](#rightrotateu8) | Rotate bits right           
+| [`right.shift/u8, rsh/u8`](#rightshiftu8)   | Shift bits right            
+| [`sub/u8`](#subu8)                          | Subtraction                 
 
 ## Operations
 
@@ -54,6 +57,25 @@ Example:
 |---------------------|-------
 | `0x1234 int/u8 hex` | `0x34`
 
+### left.rotate/u8
+
+Shifts all bits in *x* to the left by one. The lowest bit is set to the
+value of the highest bit that is shifted out.
+
+Alias: `lro/u8`
+
+Stack effects:
+```
+( x:Int/u8 -- x:Int/u8 )
+```
+
+Example:
+
+| Input               | Stack       
+|---------------------|-------------
+| `0b11000000 lro/u8` | `129`       
+| `bin`               | `0b10000001`
+
 ### left.shift/u8
 
 Shifts all bits in *x* to the left by one. The carry flag is set to the
@@ -70,9 +92,9 @@ Example:
 
 | Input               | Stack          
 |---------------------|----------------
-| `0b10101010 lsh/u8` | `84`           
+| `0b11000000 lsh/u8` | `128`          
 | `?`                 | *Int/u8: carry*
-| `bin`               | `0b1010100`    
+| `bin`               | `0b10000000`   
 | `?`                 | *Int: carry*   
 
 ### max.int/u8
@@ -119,6 +141,46 @@ Example:
 | Input             | Stack 
 |-------------------|-------
 | `0x01 not/u8 hex` | `0xfe`
+
+### right.rotate/u8
+
+Shifts all bits in *x* to the right by one. The highest bit is set to the
+value of the lowest bit that is shifted out.
+
+Alias: `rro/u8`
+
+Stack effects:
+```
+( x:Int/u8 -- x:Int/u8 )
+```
+
+Example:
+
+| Input               | Stack       
+|---------------------|-------------
+| `0b11000000 lro/u8` | `129`       
+| `bin`               | `0b10000001`
+
+### right.shift/u8
+
+Shifts all bits in *x* to the left by one. The carry flag is set to the
+value of the bit shifted out.
+
+Alias: `rsh/u8`
+
+Stack effects:
+```
+( x:Int/u8 -- x:Int/u8 )
+```
+
+Example:
+
+| Input         | Stack          
+|---------------|----------------
+| `0b11 rsh/u8` | `1`            
+| `?`           | *Int/u8: carry*
+| `bin`         | `0b1`          
+| `?`           | *Int: carry*   
 
 ### sub/u8
 

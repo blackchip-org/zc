@@ -38,17 +38,27 @@ func TestOpDocs_ProgIntU8_IntU8_Negative(t *testing.T) {
 	c.AssertStack("0xff")
 }
 
+func TestOpDocs_ProgIntU8_LeftRotateU8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0b11000000 lro/u8")
+	c.AssertStack("129")
+
+	c.Eval("bin")
+	c.AssertStack("0b10000001")
+}
+
 func TestOpDocs_ProgIntU8_LeftShiftU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0b10101010 lsh/u8")
-	c.AssertStack("84")
+	c.Eval("0b11000000 lsh/u8")
+	c.AssertStack("128")
 
 	c.Eval("?")
 	c.AssertInfo("Int/u8: carry")
 
 	c.Eval("bin")
-	c.AssertStack("0b1010100")
+	c.AssertStack("0b10000000")
 
 	c.Eval("?")
 	c.AssertInfo("Int: carry")
@@ -80,6 +90,32 @@ func TestOpDocs_ProgIntU8_NotU8(t *testing.T) {
 
 	c.Eval("0x01 not/u8 hex")
 	c.AssertStack("0xfe")
+}
+
+func TestOpDocs_ProgIntU8_RightRotateU8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0b11000000 lro/u8")
+	c.AssertStack("129")
+
+	c.Eval("bin")
+	c.AssertStack("0b10000001")
+}
+
+func TestOpDocs_ProgIntU8_RightShiftU8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0b11 rsh/u8")
+	c.AssertStack("1")
+
+	c.Eval("?")
+	c.AssertInfo("Int/u8: carry")
+
+	c.Eval("bin")
+	c.AssertStack("0b1")
+
+	c.Eval("?")
+	c.AssertInfo("Int: carry")
 }
 
 func TestOpDocs_ProgIntU8_SubU8(t *testing.T) {

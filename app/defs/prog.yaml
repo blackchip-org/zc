@@ -19,6 +19,19 @@ ops:
   - i: and bin
     o: [0b1000]
 
+- name: bcd-dec
+  title: From binary-coded decimal
+  funcs:
+  - name: BcdDec
+    params: [x:Int]
+    returns: [Int]
+  desc: |-
+    Converts the binary-coded decimal (BCD) integer *x* into a decimal
+    representation.
+  example:
+  - i: 0x123456 bcd-dec
+    o: [123456]
+
 - name: bin
   title: Binary conversion
   funcs:
@@ -82,13 +95,26 @@ ops:
   funcs:
   - name: DecBigInt
     params: [x:Int]
-    returns: [Text]
+    returns: [x:Int]
   desc: Converts the value of *x* to a base-10 representation.
   example:
   - i: 0xf
     o: [0xf]
   - i: dec
     o: [15]
+
+- name: dec-bcd
+  title: To binary-coded decimal
+  funcs:
+  - name: DecBcd
+    params: [x:Int]
+    returns: [Int]
+  desc: |-
+    Converts the decimal integer *x* into a binary-coded decimal (BCD)
+    representation.
+  example:
+  - i: 123456 dec-bcd hex
+    o: [0x123456]
 
 - name: hex
   title: Hexadecimal conversion
@@ -182,34 +208,6 @@ ops:
   - i: 0b1000
     o: [0b1000]
   - i: 2 rsh bin
-    o: [0b10]
-
-- name: shift.left
-  aliases: [shl]
-  title: Shift bits left
-  funcs:
-  - name: Shl
-    params: [x:Int, n:Int/u]
-    returns: [Int]
-  desc: Shifts all bits in *x* to the left by *n*.
-  example:
-  - i: 0b10
-    o: [0b10]
-  - i: 2 shl bin
-    o: [0b1000]
-
-- name: shift.right
-  aliases: [shr]
-  title: Shift bits right
-  funcs:
-  - name: Shr
-    params: [x:Int, n:Int/u]
-    returns: [Int]
-  desc: Shifts all bits in *x* to the right by *n*.
-  example:
-  - i: 0b1000
-    o: [0b1000]
-  - i: 2 shr bin
     o: [0b10]
 
 - name: xor

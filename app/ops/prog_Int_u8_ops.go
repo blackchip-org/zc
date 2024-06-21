@@ -26,6 +26,12 @@ var (
 		Returns: []zc.Type{zc.Uint8},
 		Func:    funcs.Uint8Int64,
 	}
+	LeftRotateUint8 = zc.Op{
+		Name:    "left.rotate/u8",
+		Params:  []zc.Type{zc.Uint8},
+		Returns: []zc.Type{zc.Uint8},
+		Func:    funcs.LeftRotateUint8,
+	}
 	LeftShiftUint8 = zc.Op{
 		Name:    "left.shift/u8",
 		Params:  []zc.Type{zc.Uint8},
@@ -43,6 +49,18 @@ var (
 		Params:  []zc.Type{zc.Uint8},
 		Returns: []zc.Type{zc.Uint8},
 		Func:    funcs.NotUint8,
+	}
+	RightRotateUint8 = zc.Op{
+		Name:    "right.rotate/u8",
+		Params:  []zc.Type{zc.Uint8},
+		Returns: []zc.Type{zc.Uint8},
+		Func:    funcs.RightRotateUint8,
+	}
+	RightShiftUint8 = zc.Op{
+		Name:    "right.shift/u8",
+		Params:  []zc.Type{zc.Uint8},
+		Returns: []zc.Type{zc.Uint8},
+		Func:    funcs.RightShiftUint8,
 	}
 	SubUint8 = zc.Op{
 		Name:    "sub/u8",

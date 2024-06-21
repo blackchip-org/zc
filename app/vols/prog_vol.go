@@ -11,10 +11,12 @@ var Prog = zc.Vol{
 	Name: "prog",
 	Ops: []zc.Op{
 		ops.AndBigInt,
+		ops.BcdDec,
 		ops.Bin,
 		ops.Bit,
 		ops.Bits,
 		ops.Bytes,
+		ops.DecBcd,
 		ops.DecBigInt,
 		ops.Hex,
 		ops.Lsh,
@@ -22,14 +24,10 @@ var Prog = zc.Vol{
 		ops.Oct,
 		ops.OrBigInt,
 		ops.Rsh,
-		ops.Shl,
-		ops.Shr,
 		ops.XorBigInt,
 	},
 	Macros: []zc.Macro{
 		{Name: "lsh", Expr: "left.shift"},
 		{Name: "rsh", Expr: "right.shift"},
-		{Name: "shl", Expr: "shift.left"},
-		{Name: "shr", Expr: "shift.right"},
 	},
 }

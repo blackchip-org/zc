@@ -15,6 +15,12 @@ var (
 		Returns:   []zc.Type{zc.BigInt},
 		Func:      funcs.AndBigInt,
 	}
+	BcdDec = zc.Op{
+		Name:    "bcd-dec",
+		Params:  []zc.Type{zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.BcdDec,
+	}
 	Bin = zc.Op{
 		Name:    "bin",
 		Params:  []zc.Type{zc.BigInt},
@@ -39,11 +45,17 @@ var (
 		Returns: []zc.Type{zc.Int},
 		Func:    funcs.Bytes,
 	}
+	DecBcd = zc.Op{
+		Name:    "dec-bcd",
+		Params:  []zc.Type{zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.DecBcd,
+	}
 	DecBigInt = zc.Op{
 		Name:      "dec/i",
 		Overloads: "dec",
 		Params:    []zc.Type{zc.BigInt},
-		Returns:   []zc.Type{zc.String},
+		Returns:   []zc.Type{zc.BigInt},
 		Func:      funcs.DecBigInt,
 	}
 	Hex = zc.Op{
@@ -83,18 +95,6 @@ var (
 		Params:  []zc.Type{zc.BigInt, zc.Uint},
 		Returns: []zc.Type{zc.BigInt},
 		Func:    funcs.Rsh,
-	}
-	Shl = zc.Op{
-		Name:    "shift.left",
-		Params:  []zc.Type{zc.BigInt, zc.Uint},
-		Returns: []zc.Type{zc.BigInt},
-		Func:    funcs.Shl,
-	}
-	Shr = zc.Op{
-		Name:    "shift.right",
-		Params:  []zc.Type{zc.BigInt, zc.Uint},
-		Returns: []zc.Type{zc.BigInt},
-		Func:    funcs.Shr,
 	}
 	XorBigInt = zc.Op{
 		Name:    "xor",

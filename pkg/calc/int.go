@@ -48,14 +48,14 @@ func (c *BigInt) Binomial(n, k int64) {
 }
 
 func (c *BigInt) Cmp() int {
-	y := c.Top()
-	x := c.Next()
+	y := c.Pop()
+	x := c.Top()
 	return x.Cmp(y)
 }
 
 func (c *BigInt) CmpAbs() int {
-	y := c.Top()
-	x := c.Next()
+	y := c.Pop()
+	x := c.Top()
 	return x.CmpAbs(y)
 }
 
@@ -191,6 +191,14 @@ func (c *BigInt) PushInt(vals ...int) {
 	for _, v := range vals {
 		i := c.pool.New()
 		i.SetInt64(int64(v))
+		c.Push(i)
+	}
+}
+
+func (c *BigInt) PushInt64(vals ...int64) {
+	for _, v := range vals {
+		i := c.pool.New()
+		i.SetInt64(v)
 		c.Push(i)
 	}
 }

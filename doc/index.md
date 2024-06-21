@@ -22,6 +22,7 @@
   - [`and/i`](ops/prog.md#andi): Bitwise and
 
 ## b
+- [`bcd-dec`](ops/prog.md#bcd-dec): From binary-coded decimal
 - [`bin`](ops/prog.md#bin): Binary conversion
 - [`bit`](ops/prog.md#bit): Bit value
 - [`bits`](ops/prog.md#bits): Bit length
@@ -40,6 +41,7 @@
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
 - `dec`
   - [`dec/i`](ops/prog.md#deci): Decimal conversion
+- [`dec-bcd`](ops/prog.md#dec-bcd): To binary-coded decimal
 - [`div`](ops/basic.md#div): Division
   - [`div/d`](ops/basic_Dec.md#divd): decimal (apd)
   - [`div/d/ss`](ops/basic_Dec_SS.md#divdss): decimal (shopspring)
@@ -104,6 +106,7 @@
   - [`rem/d/ss`](ops/basic_Dec_SS.md#remdss): decimal (shopspring)
   - [`rem/i`](ops/basic_Int.md#remi): integer
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
+  - [`right.shift/u8`](ops/prog_Int_u8.md#rightshiftu8): unsigned 8-bit integers
 - [`round`](ops/format.md#round): Round number
   - [`round/d`](ops/format_Dec.md#roundd): decimal (apd)
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
@@ -115,10 +118,6 @@
 - [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - `scientific.notation`
   - [`scientific.notation/d`](ops/format_Dec.md#scientificnotationd): decimal (apd)
-- [`shift.left`](ops/prog.md#shiftleft): Shift bits left
-- [`shift.right`](ops/prog.md#shiftright): Shift bits right
-- [`shl`](ops/prog.md#shiftleft): Alias for [shift.left](ops/prog.md#shiftleft)
-- [`shr`](ops/prog.md#shiftright): Alias for [shift.right](ops/prog.md#shiftright)
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/d`](ops/basic_Dec.md#signd): decimal (apd)
   - [`sign/f`](ops/basic_Float.md#signf): float
