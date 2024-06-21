@@ -64,20 +64,6 @@ func TestOpDocs_ProgIntU8_LeftShiftU8(t *testing.T) {
 	c.AssertInfo("Int: carry")
 }
 
-func TestOpDocs_ProgIntU8_MaxIntU8(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("max.int/u8")
-	c.AssertStack("255")
-}
-
-func TestOpDocs_ProgIntU8_MaxIntU8_Example(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("c 2 8 pow 1 sub")
-	c.AssertStack("255")
-}
-
 func TestOpDocs_ProgIntU8_NegU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 

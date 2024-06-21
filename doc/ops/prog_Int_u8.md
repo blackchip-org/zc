@@ -6,18 +6,17 @@ Programmer's calculator
 
 ## Index
 
-| Operation                                   | Description                 
-|---------------------------------------------|-----------------------------
-| [`add/u8`](#addu8)                          | Addition                    
-| [`int/u8`](#intu8)                          | Signed 8-bit conversion     
-| [`left.rotate/u8, lro/u8`](#leftrotateu8)   | Rotate bits left            
-| [`left.shift/u8, lsh/u8`](#leftshiftu8)     | Shift bits left             
-| [`max.int/u8`](#maxintu8)                   | Maximum unsigned 8-bit value
-| [`neg/u8`](#negu8)                          | Negation                    
-| [`not/u8`](#notu8)                          | Bitwise not                 
-| [`right.rotate/u8, rro/u8`](#rightrotateu8) | Rotate bits right           
-| [`right.shift/u8, rsh/u8`](#rightshiftu8)   | Shift bits right            
-| [`sub/u8`](#subu8)                          | Subtraction                 
+| Operation                                   | Description            
+|---------------------------------------------|------------------------
+| [`add/u8`](#addu8)                          | Addition               
+| [`int/u8`](#intu8)                          | Signed 8-bit conversion
+| [`left.rotate/u8, lro/u8`](#leftrotateu8)   | Rotate bits left       
+| [`left.shift/u8, lsh/u8`](#leftshiftu8)     | Shift bits left        
+| [`neg/u8`](#negu8)                          | Negation               
+| [`not/u8`](#notu8)                          | Bitwise not            
+| [`right.rotate/u8, rro/u8`](#rightrotateu8) | Rotate bits right      
+| [`right.shift/u8, rsh/u8`](#rightshiftu8)   | Shift bits right       
+| [`sub/u8`](#subu8)                          | Subtraction            
 
 ## Operations
 
@@ -96,21 +95,6 @@ Example:
 | `?`                 | *Int/u8: carry*
 | `bin`               | `0b10000000`   
 | `?`                 | *Int: carry*   
-
-### max.int/u8
-
-Maximum value of an unsigned 8-bit value: 2 8 pow 1 sub.
-
-Macro definition:
-```
-def max.int/u8 255
-```
-
-Example:
-
-| Input        | Stack
-|--------------|------
-| `max.int/u8` | `255`
 
 ### neg/u8
 

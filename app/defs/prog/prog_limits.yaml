@@ -1,0 +1,32 @@
+name: prog/limits
+title: Programmer's calculator
+subtitle: type limits
+
+ops:
+- name: max.int/u8
+  title: Maximum unsigned 8-bit value
+  macro: 255
+  desc: |-
+    Maximum value of an unsigned 8-bit value: 2 8 pow 1 sub.
+  example:
+  - i: max.int/u8
+    o: [255]
+  tests:
+  - name: Example
+    test:
+    - i: c 2 8 pow 1 sub
+      o: [255]
+
+- name: max.int/u16
+  title: Maximum unsigned 16-bit value
+  macro: 65535
+  desc: |-
+    Maximum value of an unsigned 16-bit value: 2 16 pow 1 sub.
+  example:
+  - i: max.int/u16
+    o: [65535]
+  tests:
+  - name: Example
+    test:
+    - i: c 2 16 pow 1 sub
+      o: [65535]

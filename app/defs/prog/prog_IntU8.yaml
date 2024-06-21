@@ -80,20 +80,6 @@ ops:
   - i: "?"
     info: "Int: carry"
 
-- name: max.int/u8
-  title: Maximum unsigned 8-bit value
-  macro: 255
-  desc: |-
-    Maximum value of an unsigned 8-bit value: 2 8 pow 1 sub.
-  example:
-  - i: max.int/u8
-    o: [255]
-  tests:
-  - name: Example
-    test:
-    - i: c 2 8 pow 1 sub
-      o: [255]
-
 - name: neg/u8
   title: Negation
   funcs:

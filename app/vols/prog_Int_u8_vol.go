@@ -24,7 +24,6 @@ var ProgIntU8 = zc.Vol{
 	Macros: []zc.Macro{
 		{Name: "lro/u8", Expr: "left.rotate/u8"},
 		{Name: "lsh/u8", Expr: "left.shift/u8"},
-		{Name: "max.int/u8", Expr: "255"},
 		{Name: "rro/u8", Expr: "right.rotate/u8"},
 		{Name: "rsh/u8", Expr: "right.shift/u8"},
 	},
