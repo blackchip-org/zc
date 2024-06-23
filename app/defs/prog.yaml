@@ -19,19 +19,6 @@ ops:
   - i: and bin
     o: [0b1000]
 
-- name: bcd-dec
-  title: From binary-coded decimal
-  funcs:
-  - name: BcdDec
-    params: [x:Int]
-    returns: [Int]
-  desc: |-
-    Converts the binary-coded decimal (BCD) integer *x* into a decimal
-    representation.
-  example:
-  - i: 0x123456 bcd-dec
-    o: [123456]
-
 - name: bin
   title: Binary conversion
   funcs:
@@ -102,19 +89,6 @@ ops:
     o: [0xf]
   - i: dec
     o: [15]
-
-- name: dec-bcd
-  title: To binary-coded decimal
-  funcs:
-  - name: DecBcd
-    params: [x:Int]
-    returns: [Int]
-  desc: |-
-    Converts the decimal integer *x* into a binary-coded decimal (BCD)
-    representation.
-  example:
-  - i: 123456 dec-bcd hex
-    o: [0x123456]
 
 - name: hex
   title: Hexadecimal conversion

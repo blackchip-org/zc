@@ -6,10 +6,11 @@ import (
 	"github.com/blackchip-org/zc/v6"
 )
 
-var ProgIntS32 = zc.Vol{
-	Name: "prog/Int/s32",
+var TypesInt = zc.Vol{
+	Name: "types/Int",
 	Ops:  []zc.Op{},
 	Macros: []zc.Macro{
-		{Name: "max.int/s32", Expr: "2147483647"},
+		{Name: "max.val/u16", Expr: "65535"},
+		{Name: "max.val/u8", Expr: "255"},
 	},
 }

@@ -6,23 +6,21 @@ Programmer's calculator
 
 ## Index
 
-| Operation                         | Description              
-|-----------------------------------|--------------------------
-| [`and, and/i`](#andi)             | Bitwise and              
-| [`bcd-dec`](#bcd-dec)             | From binary-coded decimal
-| [`bin`](#bin)                     | Binary conversion        
-| [`bit`](#bit)                     | Bit value                
-| [`bits`](#bits)                   | Bit length               
-| [`bytes`](#bytes)                 | Byte length              
-| [`dec-bcd`](#dec-bcd)             | To binary-coded decimal  
-| [`dec, dec/i`](#deci)             | Decimal conversion       
-| [`hex`](#hex)                     | Hexadecimal conversion   
-| [`left.shift, lsh`](#leftshift)   | Shift bits left          
-| [`not, not/i`](#noti)             | Bitwise not              
-| [`oct`](#oct)                     | Octal conversion         
-| [`or, or/i`](#ori)                | Bitwise or               
-| [`right.shift, rsh`](#rightshift) | Shift bits right         
-| [`xor`](#xor)                     | Bitwise exclusive or     
+| Operation                         | Description           
+|-----------------------------------|-----------------------
+| [`and, and/i`](#andi)             | Bitwise and           
+| [`bin`](#bin)                     | Binary conversion     
+| [`bit`](#bit)                     | Bit value             
+| [`bits`](#bits)                   | Bit length            
+| [`bytes`](#bytes)                 | Byte length           
+| [`dec, dec/i`](#deci)             | Decimal conversion    
+| [`hex`](#hex)                     | Hexadecimal conversion
+| [`left.shift, lsh`](#leftshift)   | Shift bits left       
+| [`not, not/i`](#noti)             | Bitwise not           
+| [`oct`](#oct)                     | Octal conversion      
+| [`or, or/i`](#ori)                | Bitwise or            
+| [`right.shift, rsh`](#rightshift) | Shift bits right      
+| [`xor`](#xor)                     | Bitwise exclusive or  
 
 ## Operations
 
@@ -44,22 +42,6 @@ Example:
 | `0b1100`  | `0b1100`          
 | `0b1010`  | `0b1100 \| 0b1010`
 | `and bin` | `0b1000`          
-
-### bcd-dec
-
-Converts the binary-coded decimal (BCD) integer *x* into a decimal
-representation.
-
-Stack effects:
-```
-( x:Int -- Int )
-```
-
-Example:
-
-| Input              | Stack   
-|--------------------|---------
-| `0x123456 bcd-dec` | `123456`
 
 ### bin
 
@@ -124,22 +106,6 @@ Example:
 |---------|--------
 | `0x1ff` | `0x1ff`
 | `bytes` | `2`    
-
-### dec-bcd
-
-Converts the decimal integer *x* into a binary-coded decimal (BCD)
-representation.
-
-Stack effects:
-```
-( x:Int -- Int )
-```
-
-Example:
-
-| Input                | Stack     
-|----------------------|-----------
-| `123456 dec-bcd hex` | `0x123456`
 
 ### dec/i
 

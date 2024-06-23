@@ -33,12 +33,6 @@ var (
 		Returns: []zc.Type{zc.Decimal, zc.Decimal},
 		Func:    funcs.DupDecimal,
 	}
-	Info = zc.Op{
-		Name:    "info",
-		Params:  []zc.Type{zc.Any},
-		Returns: []zc.Type{zc.Any},
-		Func:    funcs.Info,
-	}
 	TuckBigInt = zc.Op{
 		Name:    "tuck",
 		Params:  []zc.Type{zc.Any, zc.BigInt},

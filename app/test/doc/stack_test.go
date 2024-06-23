@@ -38,22 +38,6 @@ func TestOpDocs_Stack_Dup(t *testing.T) {
 	c.AssertStack("10", "10")
 }
 
-func TestOpDocs_Stack_Info(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("127")
-	c.AssertStack("127")
-
-	c.Eval("1")
-	c.AssertStack("127", "1")
-
-	c.Eval("add/s8")
-	c.AssertStack("-128")
-
-	c.Eval("info")
-	c.AssertInfo("Int/s8: overflow")
-}
-
 func TestOpDocs_Stack_Tuck(t *testing.T) {
 	c := app.NewCalcTester(t)
 

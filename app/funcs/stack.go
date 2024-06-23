@@ -1,8 +1,6 @@
 package funcs
 
 import (
-	"strings"
-
 	"github.com/blackchip-org/zc/v6"
 )
 
@@ -28,30 +26,6 @@ func DupDecimal(e *zc.OpEnv) {
 	x2.Set(x)
 	zc.Decimal.Push(e, x)
 	zc.Decimal.Push(e, x2)
-}
-
-func Info(e *zc.OpEnv) {
-	if e.Len() == 0 {
-		e.Err = zc.ErrStackEmpty
-		return
-	}
-
-	var s strings.Builder
-
-	x := e.Stack.Top()
-	s.WriteString(zc.TypeOf(x.Val).Name())
-	if x.Flags != 0 {
-		s.WriteString(": ")
-		var flags []string
-		if x.Flags&zc.FlagCarry != 0 {
-			flags = append(flags, "carry")
-		}
-		if x.Flags&zc.FlagOverflow != 0 {
-			flags = append(flags, "overflow")
-		}
-		s.WriteString(strings.Join(flags, ", "))
-	}
-	e.Info = s.String()
 }
 
 func Rotate(e *zc.OpEnv) {

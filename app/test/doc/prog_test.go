@@ -21,13 +21,6 @@ func TestOpDocs_Prog_AndI(t *testing.T) {
 	c.AssertStack("0b1000")
 }
 
-func TestOpDocs_Prog_BcdDec(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("0x123456 bcd-dec")
-	c.AssertStack("123456")
-}
-
 func TestOpDocs_Prog_Bin(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -66,13 +59,6 @@ func TestOpDocs_Prog_Bytes(t *testing.T) {
 
 	c.Eval("bytes")
 	c.AssertStack("2")
-}
-
-func TestOpDocs_Prog_DecBcd(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("123456 dec-bcd hex")
-	c.AssertStack("0x123456")
 }
 
 func TestOpDocs_Prog_DecI(t *testing.T) {

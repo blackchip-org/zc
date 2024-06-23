@@ -7,7 +7,6 @@
 - [`+`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`-`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`/`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
-- [`?`](ops/stack.md#info): Alias for [info](ops/stack.md#info)
 
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
@@ -16,13 +15,10 @@
   - [`add/d/ss`](ops/basic_Dec_SS.md#adddss): decimal (shopspring)
   - [`add/f`](ops/basic_Float.md#addf): float
   - [`add/i`](ops/basic_Int.md#addi): integer
-  - [`add/s8`](ops/prog_Int_s8.md#adds8): signed 8-bit integers
-  - [`add/u8`](ops/prog_Int_u8.md#addu8): unsigned 8-bit integers
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
 
 ## b
-- [`bcd-dec`](ops/prog.md#bcd-dec): From binary-coded decimal
 - [`bin`](ops/prog.md#bin): Binary conversion
 - [`bit`](ops/prog.md#bit): Bit value
 - [`bits`](ops/prog.md#bits): Bit length
@@ -41,7 +37,6 @@
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
 - `dec`
   - [`dec/i`](ops/prog.md#deci): Decimal conversion
-- [`dec-bcd`](ops/prog.md#dec-bcd): To binary-coded decimal
 - [`div`](ops/basic.md#div): Division
   - [`div/d`](ops/basic_Dec.md#divd): decimal (apd)
   - [`div/d/ss`](ops/basic_Dec_SS.md#divdss): decimal (shopspring)
@@ -57,13 +52,9 @@
 ## h
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
 
-## i
-- [`info`](ops/stack.md#info): Information about the top item
-
 ## l
 - [`label`](ops/anno.md#label): Attach label
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
-  - [`left.shift/u8`](ops/prog_Int_u8.md#leftshiftu8): unsigned 8-bit integers
 - [`lsh`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
 
 ## m
@@ -83,10 +74,8 @@
   - [`neg/d/ss`](ops/basic_Dec_SS.md#negdss): decimal (shopspring)
   - [`neg/f`](ops/basic_Float.md#negf): float
   - [`neg/i`](ops/basic_Int.md#negi): integer
-  - [`neg/u8`](ops/prog_Int_u8.md#negu8): unsigned 8-bit integers
 - `not`
   - [`not/i`](ops/prog.md#noti): Bitwise not
-  - [`not/u8`](ops/prog_Int_u8.md#notu8): unsigned 8-bit integers
 
 ## o
 - [`oct`](ops/prog.md#oct): Octal conversion
@@ -106,7 +95,6 @@
   - [`rem/d/ss`](ops/basic_Dec_SS.md#remdss): decimal (shopspring)
   - [`rem/i`](ops/basic_Int.md#remi): integer
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
-  - [`right.shift/u8`](ops/prog_Int_u8.md#rightshiftu8): unsigned 8-bit integers
 - [`round`](ops/format.md#round): Round number
   - [`round/d`](ops/format_Dec.md#roundd): decimal (apd)
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
@@ -134,7 +122,6 @@
   - [`sub/d/ss`](ops/basic_Dec_SS.md#subdss): decimal (shopspring)
   - [`sub/f`](ops/basic_Float.md#subf): float
   - [`sub/i`](ops/basic_Int.md#subi): integer
-  - [`sub/u8`](ops/prog_Int_u8.md#subu8): unsigned 8-bit integers
 
 ## t
 - [`tuck`](ops/stack.md#tuck): Copy top and place below

@@ -6,13 +6,12 @@ Stack operations
 
 ## Index
 
-| Operation            | Description                   
-|----------------------|-------------------------------
-| [`clear, c`](#clear) | Clear                         
-| [`drop`](#drop)      | Drop                          
-| [`dup`](#dup)        | Duplicate                     
-| [`info, ?`](#info)   | Information about the top item
-| [`tuck`](#tuck)      | Copy top and place below      
+| Operation            | Description             
+|----------------------|-------------------------
+| [`clear, c`](#clear) | Clear                   
+| [`drop`](#drop)      | Drop                    
+| [`dup`](#dup)        | Duplicate               
+| [`tuck`](#tuck)      | Copy top and place below
 
 ## Operations
 
@@ -67,27 +66,6 @@ Example:
 |-------|-----------
 | `10`  | `10`      
 | `dup` | `10 \| 10`
-
-### info
-
-Describes the top stack item by listing its type and any flags that were
-set from the last operation
-
-Alias: `?`
-
-Stack effects:
-```
-( x:Any -- x:Any )
-```
-
-Example:
-
-| Input    | Stack             
-|----------|-------------------
-| `127`    | `127`             
-| `1`      | `127 \| 1`        
-| `add/s8` | `-128`            
-| `info`   | *Int/s8: overflow*
 
 ### tuck
 

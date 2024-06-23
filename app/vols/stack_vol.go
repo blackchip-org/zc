@@ -14,12 +14,10 @@ var Stack = zc.Vol{
 		ops.Drop,
 		ops.DupBigInt,
 		ops.DupDecimal,
-		ops.Info,
 		ops.TuckBigInt,
 		ops.TuckDecimal,
 	},
 	Macros: []zc.Macro{
 		{Name: "c", Expr: "clear"},
-		{Name: "?", Expr: "info"},
 	},
 }

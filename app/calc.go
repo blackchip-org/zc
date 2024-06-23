@@ -25,11 +25,8 @@ func init() {
 		vols.Format,
 		vols.FormatDec,
 		vols.Prog,
-		vols.ProgIntS32,
-		vols.ProgIntS8,
-		vols.ProgIntU8,
-		vols.ProgLimits,
 		vols.Stack,
+		vols.TypesInt,
 	)
 }
 

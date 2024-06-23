@@ -11,12 +11,10 @@ var Prog = zc.Vol{
 	Name: "prog",
 	Ops: []zc.Op{
 		ops.AndBigInt,
-		ops.BcdDec,
 		ops.Bin,
 		ops.Bit,
 		ops.Bits,
 		ops.Bytes,
-		ops.DecBcd,
 		ops.DecBigInt,
 		ops.Hex,
 		ops.Lsh,

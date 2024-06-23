@@ -8,28 +8,28 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_ProgLimits_MaxIntU16(t *testing.T) {
+func TestOpDocs_TypesInt_MaxValU16(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("max.int/u16")
+	c.Eval("max.val/u16")
 	c.AssertStack("65535")
 }
 
-func TestOpDocs_ProgLimits_MaxIntU16_Example(t *testing.T) {
+func TestOpDocs_TypesInt_MaxValU16_Example(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 2 16 pow 1 sub")
 	c.AssertStack("65535")
 }
 
-func TestOpDocs_ProgLimits_MaxIntU8(t *testing.T) {
+func TestOpDocs_TypesInt_MaxValU8(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("max.int/u8")
+	c.Eval("max.val/u8")
 	c.AssertStack("255")
 }
 
-func TestOpDocs_ProgLimits_MaxIntU8_Example(t *testing.T) {
+func TestOpDocs_TypesInt_MaxValU8_Example(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 2 8 pow 1 sub")

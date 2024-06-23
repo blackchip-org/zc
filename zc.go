@@ -12,7 +12,6 @@ type Item struct {
 	Repr  string
 	Unit  string
 	Label string
-	Flags uint64
 }
 
 func (i Item) String() string {
@@ -51,12 +50,6 @@ func (e *OpEnv) Label(l string) {
 func (e *OpEnv) Unit(u string) {
 	item := e.Stack.Pop()
 	item.Unit = u
-	e.Stack.Push(item)
-}
-
-func (e *OpEnv) Flags(f uint64) {
-	item := e.Stack.Pop()
-	item.Flags = f
 	e.Stack.Push(item)
 }
 
