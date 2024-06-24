@@ -4,17 +4,17 @@
 
 
 ## Calculator Operations
-| Volume                                    | Description            
-|-------------------------------------------|------------------------
-| [basic](ops/basic.md)                     | Basic calculator       
-| [conf](ops/conf.md)                       | General configuration  
-| [format](ops/format.md)                   | Value formatting       
-| [prog](ops/prog.md)                       | Programmer's calculator
-| [sci](ops/sci.md)                         | Scientific calculator  
-| [sci/Complex/128](ops/sci/Complex/128.md) | Scientific calculator  
-| [sci/Float/64](ops/sci/Float/64.md)       | Scientific calculator  
-| [sci/Int](ops/sci/Int.md)                 | Scientific calculator  
-| [stack](ops/stack.md)                     | Stack operations       
+| Volume                              | Description            
+|-------------------------------------|------------------------
+| [basic](ops/basic.md)               | Basic calculator       
+| [conf](ops/conf.md)                 | General configuration  
+| [format](ops/format.md)             | Value formatting       
+| [prog](ops/prog.md)                 | Programmer's calculator
+| [sci](ops/sci.md)                   | Scientific calculator  
+| [sci/Complex](ops/sci/Complex.md)   | Scientific calculator  
+| [sci/Float/64](ops/sci/Float/64.md) | Scientific calculator  
+| [sci/Int](ops/sci/Int.md)           | Scientific calculator  
+| [stack](ops/stack.md)               | Stack operations       
 
 
 

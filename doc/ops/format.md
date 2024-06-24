@@ -27,7 +27,7 @@ Alias: `r`
 Stack effects:
 ```
 ( x:Dec p:Int/s32 -- x:Dec )
-( x:Complex/128 p:Int/s32 -- x:Text )
+( x:Complex p:Int/s32 -- x:Text )
 ```
 
 Example:

@@ -8,11 +8,11 @@ import (
 	"github.com/cockroachdb/apd/v3"
 )
 
-func RoundComplex128(e *zc.OpEnv) {
+func RoundComplex(e *zc.OpEnv) {
 	var zero apd.Decimal
 	s := state.ForDec(e.State)
 	p := zc.Int32.Pop(e)
-	x := zc.Complex128.Pop(e)
+	x := zc.Complex.Pop(e)
 
 	if p < 0 {
 		e.Err = zc.ErrInvalidArg(e, "%v < 0", p)

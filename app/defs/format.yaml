@@ -10,8 +10,8 @@ ops:
   - name: RoundDecimal
     params: [x:Dec, p:Int/s32]
     returns: [x:Dec]
-  - name: RoundComplex128
-    params: [x:Complex/128, p:Int/s32]
+  - name: RoundComplex
+    params: [x:Complex, p:Int/s32]
     returns: [x:Text]
   desc: |-
     Rounds the decimal number *x* to a number of places *p*. If *p* is

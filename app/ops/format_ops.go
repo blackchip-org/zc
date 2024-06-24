@@ -14,11 +14,11 @@ var (
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.RoundDecimal,
 	}
-	RoundComplex128 = zc.Op{
+	RoundComplex = zc.Op{
 		Name:    "round",
-		Params:  []zc.Type{zc.Complex128, zc.Int32},
+		Params:  []zc.Type{zc.Complex, zc.Int32},
 		Returns: []zc.Type{zc.String},
-		Func:    funcs.RoundComplex128,
+		Func:    funcs.RoundComplex,
 	}
 	ScientificNotationDecimal = zc.Op{
 		Name:    "scientific.notation",

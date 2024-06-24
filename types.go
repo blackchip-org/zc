@@ -13,21 +13,21 @@ import (
 )
 
 var (
-	Any        = anyType{}
-	BigInt     = BigIntType{}
-	BigFloat   = BigFloatType{}
-	Complex128 = Complex128Type{}
-	Decimal    = DecimalType{}
-	DecimalSS  = DecimalSSType{}
-	Float64    = Float64Type{}
-	Int        = IntType{}
-	Int8       = Int8Type{}
-	Int32      = Int32Type{}
-	Int64      = Int64Type{}
-	String     = StringType{}
-	Uint       = UintType{}
-	Uint8      = Uint8Type{}
-	Uint64     = Uint64Type{}
+	Any       = anyType{}
+	BigInt    = BigIntType{}
+	BigFloat  = BigFloatType{}
+	Complex   = ComplexType{}
+	Decimal   = DecimalType{}
+	DecimalSS = DecimalSSType{}
+	Float64   = Float64Type{}
+	Int       = IntType{}
+	Int8      = Int8Type{}
+	Int32     = Int32Type{}
+	Int64     = Int64Type{}
+	String    = StringType{}
+	Uint      = UintType{}
+	Uint8     = Uint8Type{}
+	Uint64    = Uint64Type{}
 )
 
 func TypeOf(a any) Type {
@@ -39,7 +39,7 @@ func TypeOf(a any) Type {
 	case *apd.Decimal:
 		return Decimal
 	case complex128:
-		return Complex128
+		return Complex
 	case decimal.Decimal:
 		return DecimalSS
 	case float64:
@@ -151,11 +151,11 @@ func (t BigIntType) Recycle(v any) {
 }
 
 // ----------------------------------------------------------------------------
-type Complex128Type struct{}
+type ComplexType struct{}
 
-func (t Complex128Type) Name() string { return "Complex/128" }
+func (t ComplexType) Name() string { return "Complex" }
 
-func (t Complex128Type) As(a any) complex128 {
+func (t ComplexType) As(a any) complex128 {
 	val, ok := a.(complex128)
 	if !ok {
 		panic(ErrWrongGoType("complex128", a))
@@ -163,11 +163,11 @@ func (t Complex128Type) As(a any) complex128 {
 	return val
 }
 
-func (t Complex128Type) Pop(e *OpEnv) complex128 {
+func (t ComplexType) Pop(e *OpEnv) complex128 {
 	return t.As(e.Pop().Val)
 }
 
-func (t Complex128Type) Push(e *OpEnv, v complex128) {
+func (t ComplexType) Push(e *OpEnv, v complex128) {
 	switch {
 	case cmplx.IsInf(v):
 		e.Err = ErrInfinity(e, 0)
@@ -178,8 +178,10 @@ func (t Complex128Type) Push(e *OpEnv, v complex128) {
 	}
 }
 
-func (t Complex128Type) From(src any) (any, Type, bool) {
+func (t ComplexType) From(src any) (any, Type, bool) {
 	switch v := src.(type) {
+	case complex128:
+		return src, Complex, true
 	case *apd.Decimal:
 		f, err := v.Float64()
 		return f, Decimal, err == nil
@@ -202,13 +204,13 @@ func (t Complex128Type) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
-func (t Complex128Type) Format(v any) string {
+func (t ComplexType) Format(v any) string {
 	f := strconv.FormatComplex(t.As(v), 'f', -1, 128)
 	f = f[1 : len(f)-1]
 	return f
 }
 
-func (t Complex128Type) Recycle(v any) {
+func (t ComplexType) Recycle(v any) {
 }
 
 // ----------------------------------------------------------------------------

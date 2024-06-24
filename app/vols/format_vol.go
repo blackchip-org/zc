@@ -11,7 +11,7 @@ var Format = zc.Vol{
 	Name: "format",
 	Ops: []zc.Op{
 		ops.RoundDecimal,
-		ops.RoundComplex128,
+		ops.RoundComplex,
 		ops.ScientificNotationDecimal,
 	},
 	Macros: []zc.Macro{

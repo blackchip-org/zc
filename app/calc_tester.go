@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -47,7 +46,6 @@ func (c *CalcTester) AssertStack(vals ...any) {
 		c.t.Fatalf("(FAIL) unexpected info")
 	}
 	if !reflect.DeepEqual(fmtHave, fmtWant) {
-		fmt.Printf("\n have: %v \n want: %v\n", fmtHave, fmtWant)
 		c.t.Fatalf("(FAIL) expected: %v", fmtWant)
 	}
 }

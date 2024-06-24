@@ -11,14 +11,14 @@
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`abs`](ops/sci.md#abs): Absolute value
-  - [`abs/c128`](ops/sci_Complex_128.md#absc128): 128-bit complex
+  - [`abs/c`](ops/sci_Complex.md#absc): 128-bit complex
   - [`abs/f64`](ops/sci_Float_64.md#absf64): 64-bit floating-point
   - [`abs/i`](ops/sci_Int.md#absi): integer
 - [`acos`](ops/sci.md#acos): Inverse cosine
-  - [`acos/c128`](ops/sci_Complex_128.md#acosc128): 128-bit complex
+  - [`acos/c`](ops/sci_Complex.md#acosc): 128-bit complex
   - [`acos/f64`](ops/sci_Float_64.md#acosf64): 64-bit floating-point
 - [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
-  - [`acosh/c128`](ops/sci_Complex_128.md#acoshc128): 128-bit complex
+  - [`acosh/c`](ops/sci_Complex.md#acoshc): 128-bit complex
   - [`acosh/f64`](ops/sci_Float_64.md#acoshf64): 64-bit floating-point
 - [`add`](ops/basic.md#add): Addition
   - [`add/d`](ops/basic_Dec.md#addd): decimal (apd)
@@ -28,17 +28,17 @@
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
 - [`asin`](ops/sci.md#asin): Inverse sine
-  - [`asin/c128`](ops/sci_Complex_128.md#asinc128): 128-bit complex
+  - [`asin/c`](ops/sci_Complex.md#asinc): 128-bit complex
   - [`asin/f64`](ops/sci_Float_64.md#asinf64): 64-bit floating-point
 - [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
-  - [`asinh/c128`](ops/sci_Complex_128.md#asinhc128): 128-bit complex
+  - [`asinh/c`](ops/sci_Complex.md#asinhc): 128-bit complex
   - [`asinh/f64`](ops/sci_Float_64.md#asinhf64): 64-bit floating-point
 - [`atan`](ops/sci.md#atan): Inverse tangent
-  - [`atan/c128`](ops/sci_Complex_128.md#atanc128): 128-bit complex
+  - [`atan/c`](ops/sci_Complex.md#atanc): 128-bit complex
   - [`atan/f64`](ops/sci_Float_64.md#atanf64): 64-bit floating-point
 - [`atan2`](ops/sci.md#atan2): Inverse tangent
 - [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
-  - [`atanh/c128`](ops/sci_Complex_128.md#atanhc128): 128-bit complex
+  - [`atanh/c`](ops/sci_Complex.md#atanhc): 128-bit complex
   - [`atanh/f64`](ops/sci_Float_64.md#atanhf64): 64-bit floating-point
 
 ## b
