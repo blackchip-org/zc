@@ -57,4 +57,73 @@ var (
 		Returns:   []zc.Type{zc.Complex},
 		Func:      funcs.AtanhComplex,
 	}
+	CosComplex = zc.Op{
+		Name:      "cos/c",
+		Overloads: "cos",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.CosComplex,
+	}
+	CoshComplex = zc.Op{
+		Name:      "cosh/c",
+		Overloads: "cosh",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.CoshComplex,
+	}
+	CotComplex = zc.Op{
+		Name:    "cot/c",
+		Params:  []zc.Type{zc.Complex},
+		Returns: []zc.Type{zc.Complex},
+		Func:    funcs.CotComplex,
+	}
+	ExpComplex = zc.Op{
+		Name:      "exp/c",
+		Overloads: "exp",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.ExpComplex,
+	}
+	LogComplex = zc.Op{
+		Name:      "log/c",
+		Overloads: "log",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.LogComplex,
+	}
+	Log10Complex = zc.Op{
+		Name:      "log10/c",
+		Overloads: "log10",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.Log10Complex,
+	}
+	SinComplex = zc.Op{
+		Name:      "sin/c",
+		Overloads: "sin",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.SinComplex,
+	}
+	SinhComplex = zc.Op{
+		Name:      "sinh/c",
+		Overloads: "sinh",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.SinhComplex,
+	}
+	TanComplex = zc.Op{
+		Name:      "tan/c",
+		Overloads: "tan",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.TanComplex,
+	}
+	TanhComplex = zc.Op{
+		Name:      "tanh/c",
+		Overloads: "tanh",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.TanhComplex,
+	}
 )

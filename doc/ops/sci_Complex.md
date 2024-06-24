@@ -15,6 +15,16 @@ Scientific calculator
 | [`asinh, asinh/c`](#asinhc) | Inverse hyperbolic sine            
 | [`atan, atan/c`](#atanc)    | Inverse tangent                    
 | [`atanh, atanh/c`](#atanhc) | Inverse hyperbolic tangent         
+| [`cos, cos/c`](#cosc)       | Cosine                             
+| [`cosh, cosh/c`](#coshc)    | Hyperbolic cosine                  
+| [`cot/c`](#cotc)            | Cotangent                          
+| [`exp, exp/c`](#expc)       | Natural exponential                
+| [`log, log/c`](#logc)       | Natural logarithm                  
+| [`log10, log10/c`](#log10c) | Decimal logarithm                  
+| [`sin, sin/c`](#sinc)       | Sine                               
+| [`sinh, sinh/c`](#sinhc)    | Hyperbolic Sine                    
+| [`tan, tan/c`](#tanc)       | Tangent                            
+| [`tanh, tanh/c`](#tanhc)    | Hyperbolic tangent                 
 
 ## Operations
 
@@ -37,7 +47,7 @@ Example:
 
 ### acos/c
 
-Inverse cosine of *x* in radians.
+Inverse cosine of *x*.
 
 Overloads: `acos`
 
@@ -54,7 +64,7 @@ Example:
 
 ### acosh/c
 
-Inverse hyperbolic cosine of *x* in radians.
+Inverse hyperbolic cosine of *x*.
 
 Overloads: `acosh`
 
@@ -71,7 +81,7 @@ Example:
 
 ### asin/c
 
-Inverse sine of *x* in radians.
+Inverse sine of *x*.
 
 Overloads: `asin`
 
@@ -88,7 +98,7 @@ Example:
 
 ### asinh/c
 
-Inverse hyperbolic sine of *x* in radians.
+Inverse hyperbolic sine of *x*.
 
 Overloads: `asinh`
 
@@ -105,7 +115,7 @@ Example:
 
 ### atan/c
 
-Inverse tangent of *x* in radians.
+Inverse tangent of *x*.
 
 Overloads: `atan`
 
@@ -122,7 +132,7 @@ Example:
 
 ### atanh/c
 
-Inverse hyperbolic tangent of *x* in radians.
+Inverse hyperbolic tangent of *x*.
 
 Overloads: `atanh`
 
@@ -136,3 +146,171 @@ Example:
 | Input                    | Stack             
 |--------------------------|-------------------
 | `0.5+2i atanh/c 5 round` | `0.09642+1.12656i`
+
+### cos/c
+
+Cosine of *x*.
+
+Overloads: `cos`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                | Stack              
+|----------------------|--------------------
+| `2+2i cos/c 5 round` | `-1.56563-3.29789i`
+
+### cosh/c
+
+Hyperbolic cosine of *x*.
+
+Overloads: `cosh`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                 | Stack              
+|-----------------------|--------------------
+| `2+2i cosh/c 5 round` | `-1.56563+3.29789i`
+
+### cot/c
+
+Cotangent of *x*.
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                | Stack              
+|----------------------|--------------------
+| `2+3i cot/c 5 round` | `-0.00374-0.99676i`
+
+### exp/c
+
+Natural exponential of *x*.
+
+Overloads: `exp`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                | Stack              
+|----------------------|--------------------
+| `2+2i exp/c 5 round` | `-3.07493+6.71885i`
+
+### log/c
+
+Natural logarithm of *x*.
+
+Overloads: `log`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                | Stack             
+|----------------------|-------------------
+| `8+2i log/c 5 round` | `2.10975+0.24498i`
+
+### log10/c
+
+Decimal logarithm of *x*.
+
+Overloads: `log10`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                    | Stack             
+|--------------------------|-------------------
+| `50+20i log10/c 5 round` | `1.73120+0.16525i`
+
+### sin/c
+
+Sine of *x*.
+
+Overloads: `sin`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                | Stack             
+|----------------------|-------------------
+| `2+2i sin/c 5 round` | `3.42095-1.50931i`
+
+### sinh/c
+
+Hyperbolic sine of *x*.
+
+Overloads: `sinh`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                 | Stack              
+|-----------------------|--------------------
+| `2+2i sinh/c 5 round` | `-1.50931+3.42095i`
+
+### tan/c
+
+Tangent of *x*.
+
+Overloads: `tan`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                | Stack              
+|----------------------|--------------------
+| `2+2i tan/c 5 round` | `-0.02839+1.02384i`
+
+### tanh/c
+
+Hyperbolic tangent of *x*.
+
+Overloads: `tanh`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input                 | Stack             
+|-----------------------|-------------------
+| `2+2i tanh/c 5 round` | `1.02384-0.02839i`

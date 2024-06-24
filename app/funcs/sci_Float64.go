@@ -54,3 +54,57 @@ func AtanhFloat64(e *zc.OpEnv) {
 	z := math.Atanh(x)
 	zc.Float64.Push(e, z)
 }
+
+func CosFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Cos(x)
+	zc.Float64.Push(e, z)
+}
+
+func CoshFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Cosh(x)
+	zc.Float64.Push(e, z)
+}
+
+func ExpFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Exp(x)
+	zc.Float64.Push(e, z)
+}
+
+func LogFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Log(x)
+	zc.Float64.Push(e, z)
+}
+
+func Log10Float64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Log10(x)
+	zc.Float64.Push(e, z)
+}
+
+func SinFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Sin(x)
+	zc.Float64.Push(e, z)
+}
+
+func SinhFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Sinh(x)
+	zc.Float64.Push(e, z)
+}
+
+func TanFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Tan(x)
+	zc.Float64.Push(e, z)
+}
+
+func TanhFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Tanh(x)
+	zc.Float64.Push(e, z)
+}
