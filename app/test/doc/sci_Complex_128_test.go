@@ -14,3 +14,45 @@ func TestOpDocs_SciComplex128_AbsC128(t *testing.T) {
 	c.Eval("2+2i abs 5 round")
 	c.AssertStack("2.82843")
 }
+
+func TestOpDocs_SciComplex128_AcosC128(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0.5+1i acos/c128 5 round")
+	c.AssertStack("1.22136-0.92613i")
+}
+
+func TestOpDocs_SciComplex128_AcoshC128(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2+2i acosh/c128 5 round")
+	c.AssertStack("1.73432+0.81655i")
+}
+
+func TestOpDocs_SciComplex128_AsinC128(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0.5+2i asin/c128 5 round")
+	c.AssertStack("0.22102+1.46572i")
+}
+
+func TestOpDocs_SciComplex128_AsinhC128(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2+2i asinh/c128 5 round")
+	c.AssertStack("0.75425+1.73432i")
+}
+
+func TestOpDocs_SciComplex128_AtanC128(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0.5+2i atan/c128 5 round")
+	c.AssertStack("1.42155+0.50037i")
+}
+
+func TestOpDocs_SciComplex128_AtanhC128(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0.5+2i atanh/c128 5 round")
+	c.AssertStack("0.09642+1.12656i")
+}

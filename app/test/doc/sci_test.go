@@ -11,11 +11,11 @@ import (
 func TestOpDocs_Sci_Abs(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("-6")
-	c.AssertStack("-6")
-
-	c.Eval("abs")
+	c.Eval("-6 abs")
 	c.AssertStack("6")
+
+	c.Eval("c 2+2i abs 5 round")
+	c.AssertStack("2.82843")
 }
 
 func TestOpDocs_Sci_Acos(t *testing.T) {

@@ -16,3 +16,75 @@ ops:
   example:
   - i: 2+2i abs 5 round
     o: [2.82843]
+
+- name: acos/c128
+  overloads: acos
+  title: Inverse cosine
+  funcs:
+  - name: AcosComplex128
+    params: [x:Complex/128]
+    returns: [Complex/128]
+  desc: Inverse cosine of *x* in radians.
+  example:
+  - i: 0.5+1i acos/c128 5 round
+    o: [1.22136-0.92613i]
+
+- name: acosh/c128
+  overloads: acosh
+  title: Inverse hyperbolic cosine
+  funcs:
+  - name: AcoshComplex128
+    params: [x:Complex/128]
+    returns: [Complex/128]
+  desc: Inverse hyperbolic cosine of *x* in radians.
+  example:
+  - i: 2+2i acosh/c128 5 round
+    o: [1.73432+0.81655i]
+
+- name: asin/c128
+  overloads: asin
+  title: Inverse sine
+  funcs:
+  - name: AsinComplex128
+    params: [x:Complex/128]
+    returns: [Complex/128]
+  desc: Inverse sine of *x* in radians.
+  example:
+  - i: 0.5+2i asin/c128 5 round
+    o: [0.22102+1.46572i]
+
+- name: asinh/c128
+  overloads: asinh
+  title: Inverse hyperbolic sine
+  funcs:
+  - name: AsinhComplex128
+    params: [x:Complex/128]
+    returns: [Complex/128]
+  desc: Inverse hyperbolic sine of *x* in radians.
+  example:
+  - i: 2+2i asinh/c128 5 round
+    o: [0.75425+1.73432i]
+
+- name: atan/c128
+  overloads: atan
+  title: Inverse tangent
+  funcs:
+  - name: AtanComplex128
+    params: [x:Complex/128]
+    returns: [Complex/128]
+  desc: Inverse tangent of *x* in radians.
+  example:
+  - i: 0.5+2i atan/c128 5 round
+    o: [1.42155+0.50037i]
+
+- name: atanh/c128
+  overloads: atanh
+  title: Inverse hyperbolic tangent
+  funcs:
+  - name: AtanhComplex128
+    params: [x:Complex/128]
+    returns: [Complex/128]
+  desc: Inverse hyperbolic tangent of *x* in radians.
+  example:
+  - i: 0.5+2i atanh/c128 5 round
+    o: [0.09642+1.12656i]

@@ -11,6 +11,12 @@ var SciComplex128 = zc.Vol{
 	Name: "sci/Complex/128",
 	Ops: []zc.Op{
 		ops.AbsComplex128,
+		ops.AcosComplex128,
+		ops.AcoshComplex128,
+		ops.AsinComplex128,
+		ops.AsinhComplex128,
+		ops.AtanComplex128,
+		ops.AtanhComplex128,
 	},
 	Macros: []zc.Macro{},
 }

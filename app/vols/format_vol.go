@@ -4,11 +4,16 @@ package vols
 
 import (
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
 var Format = zc.Vol{
 	Name: "format",
-	Ops:  []zc.Op{},
+	Ops: []zc.Op{
+		ops.RoundDecimal,
+		ops.RoundComplex128,
+		ops.ScientificNotationDecimal,
+	},
 	Macros: []zc.Macro{
 		{Name: "r", Expr: "round"},
 		{Name: "sci", Expr: "scientific.notation"},

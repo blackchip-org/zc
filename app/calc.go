@@ -23,7 +23,6 @@ func init() {
 		vols.BasicFloat,
 		vols.Conf,
 		vols.Format,
-		vols.FormatDec,
 		vols.Prog,
 		vols.Sci,
 		vols.SciInt,

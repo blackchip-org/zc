@@ -4,9 +4,26 @@ package ops
 
 import (
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/app/funcs"
 )
 
 var (
-	Round              = zc.Op{Name: "round", Virtual: true}
-	ScientificNotation = zc.Op{Name: "scientific.notation", Virtual: true}
+	RoundDecimal = zc.Op{
+		Name:    "round",
+		Params:  []zc.Type{zc.Decimal, zc.Int32},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.RoundDecimal,
+	}
+	RoundComplex128 = zc.Op{
+		Name:    "round",
+		Params:  []zc.Type{zc.Complex128, zc.Int32},
+		Returns: []zc.Type{zc.String},
+		Func:    funcs.RoundComplex128,
+	}
+	ScientificNotationDecimal = zc.Op{
+		Name:    "scientific.notation",
+		Params:  []zc.Type{zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.ScientificNotationDecimal,
+	}
 )

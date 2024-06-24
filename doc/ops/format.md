@@ -18,13 +18,16 @@ Value formatting
 Rounds the decimal number *x* to a number of places *p*. If *p* is
 positive, the number is rounded to that many places after the decimal
 point. If *p* is zero, the number is rounded to an integer. If *p* is
-negative, is is round to that many places left of the decimal point.
+negative, is is rounded to that many places left of the decimal point.
+
+For complex numbers, *p* must not be negative.
 
 Alias: `r`
 
 Stack effects:
 ```
 ( x:Dec p:Int/s32 -- x:Dec )
+( x:Complex/128 p:Int/s32 -- x:Text )
 ```
 
 Example:
@@ -32,9 +35,9 @@ Example:
 | Input          | Stack              
 |----------------|--------------------
 | `200000 3 div` | `66666.66666666667`
-| `3 round/d`    | `66666.667`        
-| `0 round/d`    | `66667`            
-| `-3 round/d`   | `67000`            
+| `3 round`      | `66666.667`        
+| `0 round`      | `66667`            
+| `-3 round`     | `67000`            
 
 ### scientific.notation
 

@@ -14,14 +14,28 @@ func TestOpDocs_Format_Round(t *testing.T) {
 	c.Eval("200000 3 div")
 	c.AssertStack("66666.66666666667")
 
-	c.Eval("3 round/d")
+	c.Eval("3 round")
 	c.AssertStack("66666.667")
 
-	c.Eval("0 round/d")
+	c.Eval("0 round")
 	c.AssertStack("66667")
 
-	c.Eval("-3 round/d")
+	c.Eval("-3 round")
 	c.AssertStack("67000")
+}
+
+func TestOpDocs_Format_Round_Complex(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1.047197551196598+5.948293i 3 round")
+	c.AssertStack("1.047+5.948i")
+}
+
+func TestOpDocs_Format_Round_ComplexNegative(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1.047197551196598+5.948293i -3 round")
+	c.AssertError("round: invalid argument, -3 < 0")
 }
 
 func TestOpDocs_Format_ScientificNotation(t *testing.T) {

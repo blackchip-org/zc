@@ -15,4 +15,46 @@ var (
 		Returns:   []zc.Type{zc.Float64},
 		Func:      funcs.AbsComplex128,
 	}
+	AcosComplex128 = zc.Op{
+		Name:      "acos/c128",
+		Overloads: "acos",
+		Params:    []zc.Type{zc.Complex128},
+		Returns:   []zc.Type{zc.Complex128},
+		Func:      funcs.AcosComplex128,
+	}
+	AcoshComplex128 = zc.Op{
+		Name:      "acosh/c128",
+		Overloads: "acosh",
+		Params:    []zc.Type{zc.Complex128},
+		Returns:   []zc.Type{zc.Complex128},
+		Func:      funcs.AcoshComplex128,
+	}
+	AsinComplex128 = zc.Op{
+		Name:      "asin/c128",
+		Overloads: "asin",
+		Params:    []zc.Type{zc.Complex128},
+		Returns:   []zc.Type{zc.Complex128},
+		Func:      funcs.AsinComplex128,
+	}
+	AsinhComplex128 = zc.Op{
+		Name:      "asinh/c128",
+		Overloads: "asinh",
+		Params:    []zc.Type{zc.Complex128},
+		Returns:   []zc.Type{zc.Complex128},
+		Func:      funcs.AsinhComplex128,
+	}
+	AtanComplex128 = zc.Op{
+		Name:      "atan/c128",
+		Overloads: "atan",
+		Params:    []zc.Type{zc.Complex128},
+		Returns:   []zc.Type{zc.Complex128},
+		Func:      funcs.AtanComplex128,
+	}
+	AtanhComplex128 = zc.Op{
+		Name:      "atanh/c128",
+		Overloads: "atanh",
+		Params:    []zc.Type{zc.Complex128},
+		Returns:   []zc.Type{zc.Complex128},
+		Func:      funcs.AtanhComplex128,
+	}
 )

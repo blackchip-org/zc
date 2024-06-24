@@ -5,35 +5,49 @@ category: calc
 ops:
 - name: round
   aliases: [r]
-  virtual: true
   title: Round number
   funcs:
-  - params: [x:Dec, p:Int/s32]
+  - name: RoundDecimal
+    params: [x:Dec, p:Int/s32]
     returns: [x:Dec]
+  - name: RoundComplex128
+    params: [x:Complex/128, p:Int/s32]
+    returns: [x:Text]
   desc: |-
     Rounds the decimal number *x* to a number of places *p*. If *p* is
     positive, the number is rounded to that many places after the decimal
     point. If *p* is zero, the number is rounded to an integer. If *p* is
-    negative, is is round to that many places left of the decimal point.
+    negative, is is rounded to that many places left of the decimal point.
+
+    For complex numbers, *p* must not be negative.
   example:
   - i: 200000 3 div
     o: [66666.66666666667]
-  - i: 3 round/d
+  - i: 3 round
     o: [66666.667]
-  - i: 0 round/d
+  - i: 0 round
     o: [66667]
-  - i: -3 round/d
+  - i: -3 round
     o: [67000]
+  tests:
+  - name: Complex
+    test:
+    - i: 1.047197551196598+5.948293i 3 round
+      o: [1.047+5.948i]
+  - name: ComplexNegative
+    test:
+    - i: 1.047197551196598+5.948293i -3 round
+      error: "round: invalid argument, -3 < 0"
 
 - name: scientific.notation
   aliases: [sci]
-  virtual: true
   funcs:
-  - params: [x:Dec]
+  - name: ScientificNotationDecimal
+    params: [x:Dec]
     returns: [x:Dec]
   desc: |-
     Formats *x* using scientific notation
   example:
-    - i: 123 sci
-      o: [1.23e2]
+  - i: 123 sci
+    o: [1.23e2]
 

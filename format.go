@@ -1,13 +1,9 @@
 package zc
 
 import (
-	"fmt"
-	"math/big"
-	"strconv"
 	"strings"
 
 	"github.com/blackchip-org/scan"
-	"github.com/cockroachdb/apd/v3"
 )
 
 func Quote(v string) string {
@@ -43,20 +39,7 @@ func Quote(v string) string {
 }
 
 func Format(a any) string {
-	switch v := a.(type) {
-	case *big.Int:
-		return v.String()
-	case *apd.Decimal:
-		f := RemoveTrailingZeros(v.Text('f'))
-		f = FormatExponent(f)
-		return f
-	case int:
-		return strconv.Itoa(v)
-	case string:
-		return v
-	default:
-		return fmt.Sprintf("%v", a)
-	}
+	return TypeOf(a).Format(a)
 }
 
 func FormatList(vals ...any) string {

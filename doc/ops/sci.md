@@ -23,18 +23,22 @@ Scientific calculator
 
 If *x* is less than zero, the negated value of *x*, otherwise *p0*.
 
+For complex numbers, the distance of *x* from zero on the complex
+plane.
+
 Stack effects:
 ```
 ( x:Int -- Int )
 ( x:Float/64 -- Float/64 )
+( x:Complex/128 -- Float/64 )
 ```
 
 Example:
 
-| Input | Stack
-|-------|------
-| `-6`  | `-6` 
-| `abs` | `6`  
+| Input                | Stack    
+|----------------------|----------
+| `-6 abs`             | `6`      
+| `c 2+2i abs 5 round` | `2.82843`
 
 ### acos
 

@@ -1,11 +1,11 @@
 package zc
 
 import (
+	"fmt"
 	"math"
 	"math/big"
 	"math/cmplx"
 	"strconv"
-	"strings"
 
 	"github.com/blackchip-org/zc/v6/app/state"
 	"github.com/cockroachdb/apd/v3"
@@ -38,6 +38,8 @@ func TypeOf(a any) Type {
 		return BigFloat
 	case *apd.Decimal:
 		return Decimal
+	case complex128:
+		return Complex128
 	case decimal.Decimal:
 		return DecimalSS
 	case float64:
@@ -69,6 +71,7 @@ var (
 type Type interface {
 	Name() string
 	From(any) (any, Type, bool)
+	Format(any) string
 	Recycle(any)
 }
 
@@ -80,6 +83,10 @@ func (t anyType) Name() string { return "Any" }
 
 func (t anyType) From(src any) (any, Type, bool) {
 	return src, Any, true
+}
+
+func (t anyType) Format(a any) string {
+	return fmt.Sprintf("%v", a)
 }
 
 func (t anyType) Recycle(any) {}
@@ -131,6 +138,10 @@ func (t BigIntType) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t BigIntType) Format(a any) string {
+	return t.As(a).String()
+}
+
 func (t BigIntType) New() *big.Int {
 	return bigIntPool.New()
 }
@@ -180,16 +191,21 @@ func (t Complex128Type) From(src any) (any, Type, bool) {
 		return complex(float64(i), 0), Int, true
 	case int:
 		return complex(float64(v), 0), Int, true
+	case int32:
+		return complex(float64(v), 0), Int, true
 	case float64:
 		return complex(v, 0), Int, true
 	case string:
-		if !strings.HasSuffix(v, "i") {
-			return nil, nil, false
-		}
 		c, err := strconv.ParseComplex(v, 128)
 		return c, String, err == nil
 	}
 	return nil, nil, false
+}
+
+func (t Complex128Type) Format(v any) string {
+	f := strconv.FormatComplex(t.As(v), 'f', -1, 128)
+	f = f[1 : len(f)-1]
+	return f
 }
 
 func (t Complex128Type) Recycle(v any) {
@@ -251,6 +267,13 @@ func (t DecimalType) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t DecimalType) Format(v any) string {
+	f := t.As(v).Text('f')
+	f = RemoveTrailingZeros(f)
+	f = FormatExponent(f)
+	return f
+}
+
 func (t DecimalType) New() *apd.Decimal {
 	return decimalPool.New()
 }
@@ -300,6 +323,10 @@ func (t DecimalSSType) From(src any) (any, Type, bool) {
 		return d, String, err == nil
 	}
 	return nil, nil, false
+}
+
+func (t DecimalSSType) Format(v any) string {
+	return t.As(v).String()
 }
 
 func (t DecimalSSType) Recycle(v any) {}
@@ -355,6 +382,10 @@ func (t BigFloatType) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t BigFloatType) Format(v any) string {
+	return t.As(v).Text('f', -1)
+}
+
 func (t BigFloatType) New() *big.Float {
 	return bigFloatPool.New()
 }
@@ -406,6 +437,10 @@ func (t Float64Type) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t Float64Type) Format(v any) string {
+	return strconv.FormatFloat(t.As(v), 'f', -1, 64)
+}
+
 func (t Float64Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
@@ -440,6 +475,10 @@ func (t IntType) From(src any) (any, Type, bool) {
 		return int(i), String, err == nil
 	}
 	return nil, nil, false
+}
+
+func (t IntType) Format(v any) string {
+	return strconv.FormatInt(int64(t.As(v)), 10)
 }
 
 func (t IntType) Recycle(v any) {}
@@ -478,6 +517,10 @@ func (t Int8Type) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t Int8Type) Format(v any) string {
+	return strconv.FormatInt(int64(t.As(v)), 10)
+}
+
 func (t Int8Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
@@ -512,6 +555,10 @@ func (t Int32Type) From(src any) (any, Type, bool) {
 		return int32(i32), String, err == nil
 	}
 	return nil, nil, false
+}
+
+func (t Int32Type) Format(v any) string {
+	return strconv.FormatInt(int64(t.As(v)), 10)
 }
 
 func (t Int32Type) Recycle(v any) {}
@@ -550,6 +597,10 @@ func (t Int64Type) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t Int64Type) Format(v any) string {
+	return strconv.FormatInt(t.As(v), 10)
+}
+
 func (t Int64Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
@@ -580,6 +631,10 @@ func (t StringType) From(src any) (any, Type, bool) {
 		return v, t, true
 	}
 	return nil, nil, false
+}
+
+func (t StringType) Format(v any) string {
+	return t.As(v)
 }
 
 func (t StringType) Recycle(v any) {}
@@ -624,6 +679,10 @@ func (t UintType) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t UintType) Format(v any) string {
+	return strconv.FormatUint(uint64(t.As(v)), 10)
+}
+
 func (t UintType) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
@@ -660,6 +719,10 @@ func (t Uint8Type) From(src any) (any, Type, bool) {
 	return nil, nil, false
 }
 
+func (t Uint8Type) Format(v any) string {
+	return strconv.FormatUint(uint64(t.As(v)), 10)
+}
+
 func (t Uint8Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
@@ -694,6 +757,10 @@ func (t Uint64Type) From(src any) (any, Type, bool) {
 		return uint64(u64), String, err == nil
 	}
 	return nil, nil, false
+}
+
+func (t Uint64Type) Format(v any) string {
+	return strconv.FormatUint(t.As(v), 10)
 }
 
 func (t Uint64Type) Recycle(v any) {}
