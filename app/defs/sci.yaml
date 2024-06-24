@@ -11,13 +11,18 @@ ops:
     returns: [Int]
   - params: [x:Float/64]
     returns: [Float/64]
+  - params: [x:Complex/128]
+    returns: [Float/64]
   desc: |-
     If *x* is less than zero, the negated value of *x*, otherwise *p0*.
+
+    For complex numbers, the distance of *x* from zero on the complex
+    plane.
   example:
-  - i: -6
-    o: [-6]
-  - i: abs
+  - i: -6 abs
     o: [6]
+  - i: c 2+2i abs 5 round
+    o: [2.82843]
 
 - name: acos
   virtual: true
