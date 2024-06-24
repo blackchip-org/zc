@@ -1,8 +1,11 @@
 package zc
 
 import (
+	"math"
 	"math/big"
+	"math/cmplx"
 	"strconv"
+	"strings"
 
 	"github.com/blackchip-org/zc/v6/app/state"
 	"github.com/cockroachdb/apd/v3"
@@ -10,20 +13,21 @@ import (
 )
 
 var (
-	Any       = anyType{}
-	BigInt    = BigIntType{}
-	BigFloat  = BigFloatType{}
-	Decimal   = DecimalType{}
-	DecimalSS = DecimalSSType{}
-	Float64   = Float64Type{}
-	Int       = IntType{}
-	Int8      = Int8Type{}
-	Int32     = Int32Type{}
-	Int64     = Int64Type{}
-	String    = StringType{}
-	Uint      = UintType{}
-	Uint8     = Uint8Type{}
-	Uint64    = Uint64Type{}
+	Any        = anyType{}
+	BigInt     = BigIntType{}
+	BigFloat   = BigFloatType{}
+	Complex128 = Complex128Type{}
+	Decimal    = DecimalType{}
+	DecimalSS  = DecimalSSType{}
+	Float64    = Float64Type{}
+	Int        = IntType{}
+	Int8       = Int8Type{}
+	Int32      = Int32Type{}
+	Int64      = Int64Type{}
+	String     = StringType{}
+	Uint       = UintType{}
+	Uint8      = Uint8Type{}
+	Uint64     = Uint64Type{}
 )
 
 func TypeOf(a any) Type {
@@ -133,6 +137,62 @@ func (t BigIntType) New() *big.Int {
 
 func (t BigIntType) Recycle(v any) {
 	bigIntPool.Recycle(v.(*big.Int))
+}
+
+// ----------------------------------------------------------------------------
+type Complex128Type struct{}
+
+func (t Complex128Type) Name() string { return "Complex/128" }
+
+func (t Complex128Type) As(a any) complex128 {
+	val, ok := a.(complex128)
+	if !ok {
+		panic(ErrWrongGoType("complex128", a))
+	}
+	return val
+}
+
+func (t Complex128Type) Pop(e *OpEnv) complex128 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Complex128Type) Push(e *OpEnv, v complex128) {
+	switch {
+	case cmplx.IsInf(v):
+		e.Err = ErrInfinity(e, 0)
+	case cmplx.IsNaN(v):
+		e.Err = ErrNotANumber(e)
+	default:
+		e.PushVal(v)
+	}
+}
+
+func (t Complex128Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case *apd.Decimal:
+		f, err := v.Float64()
+		return f, Decimal, err == nil
+	case *big.Int:
+		if !v.IsInt64() {
+			return nil, nil, false
+		}
+		i := v.Int64()
+		return complex(float64(i), 0), Int, true
+	case int:
+		return complex(float64(v), 0), Int, true
+	case float64:
+		return complex(v, 0), Int, true
+	case string:
+		if !strings.HasSuffix(v, "i") {
+			return nil, nil, false
+		}
+		c, err := strconv.ParseComplex(v, 128)
+		return c, String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Complex128Type) Recycle(v any) {
 }
 
 // ----------------------------------------------------------------------------
@@ -322,10 +382,27 @@ func (t Float64Type) Pop(e *OpEnv) float64 {
 }
 
 func (t Float64Type) Push(e *OpEnv, v float64) {
-	e.PushVal(v)
+	switch {
+	case math.IsInf(v, 1):
+		e.Err = ErrInfinity(e, 1)
+	case math.IsInf(v, -1):
+		e.Err = ErrInfinity(e, -1)
+	case math.IsNaN(v):
+		e.Err = ErrNotANumber(e)
+	default:
+		e.PushVal(v)
+	}
 }
 
 func (t Float64Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case float64:
+		return v, Float64, true
+	case string:
+		v = PreParseNumber(v)
+		f64, err := strconv.ParseFloat(v, 64)
+		return f64, String, err == nil
+	}
 	return nil, nil, false
 }
 

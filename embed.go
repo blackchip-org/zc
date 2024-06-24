@@ -106,7 +106,7 @@ func identFor(v string) string {
 
 	for s.HasMore() {
 		switch {
-		case (s.This == '.' || s.This == '/' || s.This == '-') && unicode.IsLetter(s.Next):
+		case (s.This == '.' || s.This == '/' || s.This == '-'):
 			s.Skip()
 			s.Val.WriteRune(unicode.ToUpper(s.This))
 			s.Skip()

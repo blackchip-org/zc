@@ -25,6 +25,10 @@ func init() {
 		vols.Format,
 		vols.FormatDec,
 		vols.Prog,
+		vols.Sci,
+		vols.SciInt,
+		vols.SciFloat64,
+		vols.SciComplex128,
 		vols.Stack,
 		vols.TypesInt,
 	)

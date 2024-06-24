@@ -10,6 +10,14 @@
 
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
+- [`abs`](ops/sci.md#abs): Absolute value
+  - [`abs/c128`](ops/sci_Complex_128.md#absc128): 128-bit complex
+  - [`abs/f64`](ops/sci_Float_64.md#absf64): 64-bit floating-point
+  - [`abs/i`](ops/sci_Int.md#absi): integer
+- [`acos`](ops/sci.md#acos): Inverse cosine
+  - [`acos/f64`](ops/sci_Float_64.md#acosf64): 64-bit floating-point
+- [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
+  - [`acosh/f64`](ops/sci_Float_64.md#acoshf64): 64-bit floating-point
 - [`add`](ops/basic.md#add): Addition
   - [`add/d`](ops/basic_Dec.md#addd): decimal (apd)
   - [`add/d/ss`](ops/basic_Dec_SS.md#adddss): decimal (shopspring)
@@ -17,6 +25,15 @@
   - [`add/i`](ops/basic_Int.md#addi): integer
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
+- [`asin`](ops/sci.md#asin): Inverse sine
+  - [`asin/f64`](ops/sci_Float_64.md#asinf64): 64-bit floating-point
+- [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
+  - [`asinh/f64`](ops/sci_Float_64.md#asinhf64): 64-bit floating-point
+- [`atan`](ops/sci.md#atan): Inverse tangent
+  - [`atan/f64`](ops/sci_Float_64.md#atanf64): 64-bit floating-point
+- [`atan2`](ops/sci.md#atan2): Inverse tangent
+- [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
+  - [`atanh/f64`](ops/sci_Float_64.md#atanhf64): 64-bit floating-point
 
 ## b
 - [`bin`](ops/prog.md#bin): Binary conversion

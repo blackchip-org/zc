@@ -1,0 +1,20 @@
+name: sci/Int
+title: Scientific calculator
+subtitle: integer
+category: calc
+
+ops:
+- name: abs/i
+  overloads: abs
+  title: Absolute value
+  funcs:
+  - name: AbsBigInt
+    params: [x:Int]
+    returns: [Int]
+  desc: |-
+    If *x* is less than zero, the negated value of *x*, otherwise *p0*.
+  example:
+  - i: -6
+    o: [-6]
+  - i: abs
+    o: [6]

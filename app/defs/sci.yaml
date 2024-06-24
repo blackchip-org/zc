@@ -1,0 +1,98 @@
+name: sci
+title: Scientific calculator
+category: calc
+
+ops:
+- name: abs
+  virtual: true
+  title: Absolute value
+  funcs:
+  - params: [x:Int]
+    returns: [Int]
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: |-
+    If *x* is less than zero, the negated value of *x*, otherwise *p0*.
+  example:
+  - i: -6
+    o: [-6]
+  - i: abs
+    o: [6]
+
+- name: acos
+  virtual: true
+  title: Inverse cosine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Inverse cosine of *x* in radians.
+  example:
+  - i: 0.5 acos 5 round
+    o: [1.0472]
+
+- name: acosh
+  virtual: true
+  title: Inverse hyperbolic cosine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Inverse hyperbolic cosine of *x* in radians.
+  example:
+  - i: 2 acosh 5 round
+    o: [1.31696]
+
+- name: asin
+  virtual: true
+  title: Inverse sine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Inverse sine of *x* in radians.
+  example:
+  - i: 0.5 asin 5 round
+    o: [0.5236]
+
+- name: asinh
+  virtual: true
+  title: Inverse hyperbolic sine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Inverse hyperbolic sine of *x* in radians.
+  example:
+  - i: 2 asinh 5 round
+    o: [1.44364]
+
+- name: atan
+  virtual: true
+  title: Inverse tangent
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Inverse tangent of *x* in radians.
+  example:
+  - i: 0.5 atan 5 round
+    o: [0.46365]
+
+- name: atan2
+  title: Inverse tangent
+  funcs:
+  - name: Atan2Float64
+    params: [x:Float/64, y:Float/64]
+    returns: [Float/64]
+  desc: Inverse tangent of *x/y* in radians.
+  example:
+  - i: 1 2 atan2 5 round
+    o: [0.46365]
+
+- name: atanh
+  virtual: true
+  title: Inverse hyperbolic tangent
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Inverse hyperbolic tangent of *x* in radians.
+  example:
+  - i: 0.5 atanh 5 round
+    o: [0.54931]
+
