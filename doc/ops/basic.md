@@ -4,6 +4,13 @@
 
 Basic calculator
 
+## Related Volumes
+
+- [basic/Dec](basic_Dec.md)
+- [basic/Dec/SS](basic_Dec_SS.md)
+- [basic/Float](basic_Float.md)
+- [basic/Int](basic_Int.md)
+
 ## Index
 
 | Operation           | Description       

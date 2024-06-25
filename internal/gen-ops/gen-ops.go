@@ -247,6 +247,30 @@ func genOpDocs(vols []zc.VolDef) {
 			fmt.Fprintf(f, vol.Overview)
 			fmt.Fprintf(f, "\n")
 		}
+
+		// Find related volumes
+		var rels []zc.VolDef
+		for _, vol2 := range vols {
+			idx := strings.Index(vol2.Name, "/")
+			if idx >= 0 {
+				parent := vol2.Name[:idx]
+				if parent == vol.Name {
+					rels = append(rels, vol2)
+				}
+			}
+		}
+
+		if len(rels) > 0 {
+			slices.SortFunc(rels, func(a, b zc.VolDef) int {
+				return cmp.Compare(a.Name, b.Name)
+			})
+			fmt.Fprintf(f, "## Related Volumes\n\n")
+			for _, r := range rels {
+				fmt.Fprintf(f, "- [%v](%v.md)\n", r.Name, fileNameFor(r.Name))
+			}
+			fmt.Fprintf(f, "\n")
+		}
+
 		fmt.Fprintf(f, "## Index\n\n")
 
 		tab := pretty.NewMarkdownTable(2)
