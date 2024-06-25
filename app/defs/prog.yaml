@@ -24,7 +24,7 @@ ops:
   funcs:
   - name: Bin
     params: [x:Int]
-    returns: [x:Text]
+    returns: [x:Int]
   desc: Converts the value of *x* to a base-2 representation.
   example:
   - i: 0x0f
@@ -95,7 +95,7 @@ ops:
   funcs:
   - name: Hex
     params: [x:Int]
-    returns: [Text]
+    returns: [Int]
   desc: Converts the value of *x* to a base-16 representation.
   example:
   - i: 0b1111
@@ -141,7 +141,7 @@ ops:
   funcs:
   - name: Oct
     params: [x:Int]
-    returns: [Text]
+    returns: [Int]
   desc: Converts the value of *x* to a base-8 representation.
   example:
   - i: 0b1111

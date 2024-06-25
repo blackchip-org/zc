@@ -18,7 +18,7 @@ var (
 	Bin = zc.Op{
 		Name:    "bin",
 		Params:  []zc.Type{zc.BigInt},
-		Returns: []zc.Type{zc.String},
+		Returns: []zc.Type{zc.BigInt},
 		Func:    funcs.Bin,
 	}
 	Bit = zc.Op{
@@ -49,7 +49,7 @@ var (
 	Hex = zc.Op{
 		Name:    "hex",
 		Params:  []zc.Type{zc.BigInt},
-		Returns: []zc.Type{zc.String},
+		Returns: []zc.Type{zc.BigInt},
 		Func:    funcs.Hex,
 	}
 	Lsh = zc.Op{
@@ -68,7 +68,7 @@ var (
 	Oct = zc.Op{
 		Name:    "oct",
 		Params:  []zc.Type{zc.BigInt},
-		Returns: []zc.Type{zc.String},
+		Returns: []zc.Type{zc.BigInt},
 		Func:    funcs.Oct,
 	}
 	OrBigInt = zc.Op{

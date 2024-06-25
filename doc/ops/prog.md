@@ -49,7 +49,7 @@ Converts the value of *x* to a base-2 representation.
 
 Stack effects:
 ```
-( x:Int -- x:Text )
+( x:Int -- x:Int )
 ```
 
 Example:
@@ -131,7 +131,7 @@ Converts the value of *x* to a base-16 representation.
 
 Stack effects:
 ```
-( x:Int -- Text )
+( x:Int -- Int )
 ```
 
 Example:
@@ -183,7 +183,7 @@ Converts the value of *x* to a base-8 representation.
 
 Stack effects:
 ```
-( x:Int -- Text )
+( x:Int -- Int )
 ```
 
 Example:

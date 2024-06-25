@@ -123,19 +123,19 @@ func (c *Calc) LookupOp(name string) ([]zc.Op, bool) {
 func (c *Calc) ResolveOp(ops []zc.Op) (zc.Op, bool) {
 	var op zc.Op
 	for _, op = range ops {
-		if c.isParamMatch(op) {
+		if c.isTypeMatch(op.Params) {
 			return op, true
 		}
 	}
 	return op, false
 }
 
-func (c *Calc) isParamMatch(op zc.Op) bool {
-	if c.Len() < len(op.Params) {
+func (c *Calc) isTypeMatch(def []zc.Type) bool {
+	if c.Len() < len(def) {
 		return false
 	}
-	for i, param := range op.Params {
-		arg := c.Get(len(op.Params) - i - 1)
+	for i, param := range def {
+		arg := c.Get(len(def) - i - 1)
 		_, _, ok := param.From(arg.Val)
 		if !ok {
 			return false
@@ -178,6 +178,11 @@ func (c *Calc) Do(op zc.Op) {
 		c.Listener(zc.NewOpEvent(&env))
 	}
 	op.Func(&env)
+
 	c.Err = env.Err
 	c.Info = env.Info
+
+	if c.Err == nil && !c.isTypeMatch(op.Returns) {
+		c.Err = zc.ErrReturnMismatch(op.Name)
+	}
 }

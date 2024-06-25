@@ -48,6 +48,10 @@ func ErrOp(env *OpEnv, err error) error {
 	return fmt.Errorf("%v: %v", env.Op.Name, err)
 }
 
+func ErrReturnMismatch(name string) error {
+	return fmt.Errorf("return mismatch for operation: %v", name)
+}
+
 var ErrStackEmpty = errors.New("stack empty")
 var ErrStackUnderflow = errors.New("stack underflow")
 
