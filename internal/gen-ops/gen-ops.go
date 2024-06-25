@@ -478,6 +478,9 @@ func genOpRef(vols []zc.VolDef) {
 		if vol.Category == "" {
 			continue
 		}
+		if vol.Subtitle != "" {
+			continue
+		}
 		ref, ok := refs[vol.Category]
 		if !ok {
 			panic(fmt.Errorf("invalid category %v in volume %v", vol.Category, vol.Name))
