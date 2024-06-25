@@ -11,63 +11,63 @@ import (
 func TestOpDocs_SciComplex_AbsC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i abs/c 5 round")
+	c.Eval("2+2i abs 5 round")
 	c.AssertStack("2.82843")
 }
 
 func TestOpDocs_SciComplex_AcosC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5+1i acos/c 5 round")
+	c.Eval("0.5+1i acos 5 round")
 	c.AssertStack("1.22136-0.92613i")
 }
 
 func TestOpDocs_SciComplex_AcoshC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i acosh/c 5 round")
+	c.Eval("2+2i acosh 5 round")
 	c.AssertStack("1.73432+0.81655i")
 }
 
 func TestOpDocs_SciComplex_AsinC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5+2i asin/c 5 round")
+	c.Eval("0.5+2i asin 5 round")
 	c.AssertStack("0.22102+1.46572i")
 }
 
 func TestOpDocs_SciComplex_AsinhC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i asinh/c 5 round")
+	c.Eval("2+2i asinh 5 round")
 	c.AssertStack("1.73432+0.75425i")
 }
 
 func TestOpDocs_SciComplex_AtanC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5+2i atan/c 5 round")
+	c.Eval("0.5+2i atan 5 round")
 	c.AssertStack("1.42155+0.50037i")
 }
 
 func TestOpDocs_SciComplex_AtanhC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5+2i atanh/c 5 round")
+	c.Eval("0.5+2i atanh 5 round")
 	c.AssertStack("0.09642+1.12656i")
 }
 
 func TestOpDocs_SciComplex_CosC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i cos/c 5 round")
+	c.Eval("2+2i cos 5 round")
 	c.AssertStack("-1.56563-3.29789i")
 }
 
 func TestOpDocs_SciComplex_CoshC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i cosh/c 5 round")
+	c.Eval("2+2i cosh 5 round")
 	c.AssertStack("-1.56563+3.29789i")
 }
 
@@ -81,48 +81,48 @@ func TestOpDocs_SciComplex_CotC(t *testing.T) {
 func TestOpDocs_SciComplex_ExpC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i exp/c 5 round")
+	c.Eval("2+2i exp 5 round")
 	c.AssertStack("-3.07493+6.71885i")
 }
 
 func TestOpDocs_SciComplex_LogC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("8+2i log/c 5 round")
+	c.Eval("8+2i log 5 round")
 	c.AssertStack("2.10975+0.24498i")
 }
 
 func TestOpDocs_SciComplex_Log10C(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("50+20i log10/c 5 round")
+	c.Eval("50+20i log10 5 round")
 	c.AssertStack("1.73120+0.16525i")
 }
 
 func TestOpDocs_SciComplex_SinC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i sin/c 5 round")
+	c.Eval("2+2i sin 5 round")
 	c.AssertStack("3.42095-1.50931i")
 }
 
 func TestOpDocs_SciComplex_SinhC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i sinh/c 5 round")
+	c.Eval("2+2i sinh 5 round")
 	c.AssertStack("-1.50931+3.42095i")
 }
 
 func TestOpDocs_SciComplex_TanC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i tan/c 5 round")
+	c.Eval("2+2i tan 5 round")
 	c.AssertStack("-0.02839+1.02384i")
 }
 
 func TestOpDocs_SciComplex_TanhC(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2+2i tanh/c 5 round")
+	c.Eval("2+2i tanh 5 round")
 	c.AssertStack("1.02384-0.02839i")
 }

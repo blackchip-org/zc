@@ -15,6 +15,15 @@ Scientific calculator
 | [`asinh, asinh/f64`](#asinhf64) | Inverse hyperbolic sine   
 | [`atan, atan/f64`](#atanf64)    | Inverse tangent           
 | [`atanh, atanh/f64`](#atanhf64) | Inverse hyperbolic tangent
+| [`cos, cos/f64`](#cosf64)       | Cosine                    
+| [`cosh, cosh/f64`](#coshf64)    | Hyperbolic cosine         
+| [`exp, exp/f64`](#expf64)       | Natural exponential       
+| [`log, log/f64`](#logf64)       | Natural logarithm         
+| [`log10, log10/f64`](#log10f64) | Decimal logarithm         
+| [`sin, sin/f64`](#sinf64)       | Sine                      
+| [`sinh, sinh/f64`](#sinhf64)    | Hyperbolic sine           
+| [`tan, tan/f64`](#tanf64)       | Tangent                   
+| [`tanh, tanh/f64`](#tanhf64)    | Hyperbolic tangent        
 
 ## Operations
 
@@ -31,10 +40,10 @@ Stack effects:
 
 Example:
 
-| Input     | Stack 
-|-----------|-------
-| `-6.6`    | `-6.6`
-| `abs/f64` | `6.6` 
+| Input  | Stack 
+|--------|-------
+| `-6.6` | `-6.6`
+| `abs`  | `6.6` 
 
 ### acos/f64
 
@@ -49,9 +58,9 @@ Stack effects:
 
 Example:
 
-| Input                  | Stack   
-|------------------------|---------
-| `0.5 acos/f64 5 round` | `1.0472`
+| Input              | Stack   
+|--------------------|---------
+| `0.5 acos 5 round` | `1.0472`
 
 ### acosh/f64
 
@@ -66,9 +75,9 @@ Stack effects:
 
 Example:
 
-| Input                 | Stack    
-|-----------------------|----------
-| `2 acosh/f64 5 round` | `1.31696`
+| Input             | Stack    
+|-------------------|----------
+| `2 acosh 5 round` | `1.31696`
 
 ### asin/f64
 
@@ -83,9 +92,9 @@ Stack effects:
 
 Example:
 
-| Input                  | Stack   
-|------------------------|---------
-| `0.5 asin/f64 5 round` | `0.5236`
+| Input              | Stack   
+|--------------------|---------
+| `0.5 asin 5 round` | `0.5236`
 
 ### asinh/f64
 
@@ -100,9 +109,9 @@ Stack effects:
 
 Example:
 
-| Input                 | Stack    
-|-----------------------|----------
-| `2 asinh/f64 5 round` | `1.44364`
+| Input             | Stack    
+|-------------------|----------
+| `2 asinh 5 round` | `1.44364`
 
 ### atan/f64
 
@@ -117,9 +126,9 @@ Stack effects:
 
 Example:
 
-| Input                  | Stack    
-|------------------------|----------
-| `0.5 atan/f64 5 round` | `0.46365`
+| Input              | Stack    
+|--------------------|----------
+| `0.5 atan 5 round` | `0.46365`
 
 ### atanh/f64
 
@@ -134,6 +143,159 @@ Stack effects:
 
 Example:
 
-| Input                   | Stack    
-|-------------------------|----------
-| `0.5 atanh/f64 5 round` | `0.54931`
+| Input               | Stack    
+|---------------------|----------
+| `0.5 atanh 5 round` | `0.54931`
+
+### cos/f64
+
+Cosine of *x* in radians.
+
+Overloads: `cos`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input           | Stack     
+|-----------------|-----------
+| `2 cos 5 round` | `-0.41615`
+
+### cosh/f64
+
+Hyperbolic cosine of *x* in radians.
+
+Overloads: `cosh`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input            | Stack   
+|------------------|---------
+| `2 cosh 5 round` | `3.7622`
+
+### exp/f64
+
+Natural exponential of *x*.
+
+Overloads: `exp`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input           | Stack    
+|-----------------|----------
+| `2 exp 5 round` | `7.38906`
+
+### log/f64
+
+Natural logarithm of *x*.
+
+Overloads: `log`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input           | Stack    
+|-----------------|----------
+| `8 log 5 round` | `2.07944`
+
+### log10/f64
+
+Natural logarithm of *x*.
+
+Overloads: `log10`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input              | Stack    
+|--------------------|----------
+| `50 log10 5 round` | `1.69897`
+
+### sin/f64
+
+Sine of *x* in radians.
+
+Overloads: `sin`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input           | Stack   
+|-----------------|---------
+| `2 sin 5 round` | `0.9093`
+
+### sinh/f64
+
+Hyperbolic sine of *x* in radians.
+
+Overloads: `sinh`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input            | Stack    
+|------------------|----------
+| `2 sinh 5 round` | `3.62686`
+
+### tan/f64
+
+Tangent of *x* in radians.
+
+Overloads: `tan`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input           | Stack     
+|-----------------|-----------
+| `2 tan 5 round` | `-2.18504`
+
+### tanh/f64
+
+Hyperbolic tangent of *x* in radians.
+
+Overloads: `tanh`
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input            | Stack    
+|------------------|----------
+| `2 tanh 5 round` | `0.96403`

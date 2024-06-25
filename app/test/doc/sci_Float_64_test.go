@@ -14,48 +14,111 @@ func TestOpDocs_SciFloat64_AbsF64(t *testing.T) {
 	c.Eval("-6.6")
 	c.AssertStack("-6.6")
 
-	c.Eval("abs/f64")
+	c.Eval("abs")
 	c.AssertStack("6.6")
 }
 
 func TestOpDocs_SciFloat64_AcosF64(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5 acos/f64 5 round")
+	c.Eval("0.5 acos 5 round")
 	c.AssertStack("1.0472")
 }
 
 func TestOpDocs_SciFloat64_AcoshF64(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2 acosh/f64 5 round")
+	c.Eval("2 acosh 5 round")
 	c.AssertStack("1.31696")
 }
 
 func TestOpDocs_SciFloat64_AsinF64(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5 asin/f64 5 round")
+	c.Eval("0.5 asin 5 round")
 	c.AssertStack("0.5236")
 }
 
 func TestOpDocs_SciFloat64_AsinhF64(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2 asinh/f64 5 round")
+	c.Eval("2 asinh 5 round")
 	c.AssertStack("1.44364")
 }
 
 func TestOpDocs_SciFloat64_AtanF64(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5 atan/f64 5 round")
+	c.Eval("0.5 atan 5 round")
 	c.AssertStack("0.46365")
 }
 
 func TestOpDocs_SciFloat64_AtanhF64(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("0.5 atanh/f64 5 round")
+	c.Eval("0.5 atanh 5 round")
 	c.AssertStack("0.54931")
+}
+
+func TestOpDocs_SciFloat64_CosF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 cos 5 round")
+	c.AssertStack("-0.41615")
+}
+
+func TestOpDocs_SciFloat64_CoshF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 cosh 5 round")
+	c.AssertStack("3.7622")
+}
+
+func TestOpDocs_SciFloat64_ExpF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 exp 5 round")
+	c.AssertStack("7.38906")
+}
+
+func TestOpDocs_SciFloat64_LogF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("8 log 5 round")
+	c.AssertStack("2.07944")
+}
+
+func TestOpDocs_SciFloat64_Log10F64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("50 log10 5 round")
+	c.AssertStack("1.69897")
+}
+
+func TestOpDocs_SciFloat64_SinF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 sin 5 round")
+	c.AssertStack("0.9093")
+}
+
+func TestOpDocs_SciFloat64_SinhF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 sinh 5 round")
+	c.AssertStack("3.62686")
+}
+
+func TestOpDocs_SciFloat64_TanF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 tan 5 round")
+	c.AssertStack("-2.18504")
+}
+
+func TestOpDocs_SciFloat64_TanhF64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 tanh 5 round")
+	c.AssertStack("0.96403")
 }

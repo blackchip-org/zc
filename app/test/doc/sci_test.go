@@ -66,3 +66,66 @@ func TestOpDocs_Sci_Atanh(t *testing.T) {
 	c.Eval("0.5 atanh 5 round")
 	c.AssertStack("0.54931")
 }
+
+func TestOpDocs_Sci_Cos(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 cos 5 round")
+	c.AssertStack("-0.41615")
+}
+
+func TestOpDocs_Sci_Cosh(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 cosh 5 round")
+	c.AssertStack("3.7622")
+}
+
+func TestOpDocs_Sci_Exp(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 exp 5 round")
+	c.AssertStack("7.38906")
+}
+
+func TestOpDocs_Sci_Log(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("8 log 5 round")
+	c.AssertStack("2.07944")
+}
+
+func TestOpDocs_Sci_Log10(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("50 log10 5 round")
+	c.AssertStack("1.69897")
+}
+
+func TestOpDocs_Sci_Sin(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 sin 5 round")
+	c.AssertStack("0.9093")
+}
+
+func TestOpDocs_Sci_Sinh(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 sinh 5 round")
+	c.AssertStack("3.62686")
+}
+
+func TestOpDocs_Sci_Tan(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 tan 5 round")
+	c.AssertStack("-2.18504")
+}
+
+func TestOpDocs_Sci_Tanh(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 tanh 5 round")
+	c.AssertStack("0.96403")
+}

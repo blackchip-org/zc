@@ -14,7 +14,7 @@ ops:
   desc: |-
     the distance of *x* from zero in the complex plane.
   example:
-  - i: 2+2i abs/c 5 round
+  - i: 2+2i abs 5 round
     o: [2.82843]
 
 - name: acos/c
@@ -26,7 +26,7 @@ ops:
     returns: [Complex]
   desc: Inverse cosine of *x*.
   example:
-  - i: 0.5+1i acos/c 5 round
+  - i: 0.5+1i acos 5 round
     o: [1.22136-0.92613i]
 
 - name: acosh/c
@@ -38,7 +38,7 @@ ops:
     returns: [Complex]
   desc: Inverse hyperbolic cosine of *x*.
   example:
-  - i: 2+2i acosh/c 5 round
+  - i: 2+2i acosh 5 round
     o: [1.73432+0.81655i]
 
 - name: asin/c
@@ -50,7 +50,7 @@ ops:
     returns: [Complex]
   desc: Inverse sine of *x*.
   example:
-  - i: 0.5+2i asin/c 5 round
+  - i: 0.5+2i asin 5 round
     o: [0.22102+1.46572i]
 
 - name: asinh/c
@@ -62,7 +62,7 @@ ops:
     returns: [Complex]
   desc: Inverse hyperbolic sine of *x*.
   example:
-  - i: 2+2i asinh/c 5 round
+  - i: 2+2i asinh 5 round
     o: [1.73432+0.75425i]
 
 - name: atan/c
@@ -74,7 +74,7 @@ ops:
     returns: [Complex]
   desc: Inverse tangent of *x*.
   example:
-  - i: 0.5+2i atan/c 5 round
+  - i: 0.5+2i atan 5 round
     o: [1.42155+0.50037i]
 
 - name: atanh/c
@@ -86,7 +86,7 @@ ops:
     returns: [Complex]
   desc: Inverse hyperbolic tangent of *x*.
   example:
-  - i: 0.5+2i atanh/c 5 round
+  - i: 0.5+2i atanh 5 round
     o: [0.09642+1.12656i]
 
 - name: cos/c
@@ -98,7 +98,7 @@ ops:
     returns: [Complex]
   desc: Cosine of *x*.
   example:
-  - i: 2+2i cos/c 5 round
+  - i: 2+2i cos 5 round
     o: [-1.56563-3.29789i]
 
 - name: cosh/c
@@ -110,7 +110,7 @@ ops:
     returns: [Complex]
   desc: Hyperbolic cosine of *x*.
   example:
-  - i: 2+2i cosh/c 5 round
+  - i: 2+2i cosh 5 round
     o: [-1.56563+3.29789i]
 
 - name: cot/c
@@ -133,7 +133,7 @@ ops:
     returns: [Complex]
   desc: Natural exponential of *x*.
   example:
-  - i: 2+2i exp/c 5 round
+  - i: 2+2i exp 5 round
     o: [-3.07493+6.71885i]
 
 - name: log/c
@@ -145,7 +145,7 @@ ops:
     returns: [Complex]
   desc: Natural logarithm of *x*.
   example:
-  - i: 8+2i log/c 5 round
+  - i: 8+2i log 5 round
     o: [2.10975+0.24498i]
 
 - name: log10/c
@@ -157,7 +157,7 @@ ops:
     returns: [Complex]
   desc: Decimal logarithm of *x*.
   example:
-  - i: 50+20i log10/c 5 round
+  - i: 50+20i log10 5 round
     o: [1.73120+0.16525i]
 
 - name: sin/c
@@ -169,7 +169,7 @@ ops:
     returns: [Complex]
   desc: Sine of *x*.
   example:
-  - i: 2+2i sin/c 5 round
+  - i: 2+2i sin 5 round
     o: [3.42095-1.50931i]
 
 - name: sinh/c
@@ -181,7 +181,7 @@ ops:
     returns: [Complex]
   desc: Hyperbolic sine of *x*.
   example:
-  - i: 2+2i sinh/c 5 round
+  - i: 2+2i sinh 5 round
     o: [-1.50931+3.42095i]
 
 - name: tan/c
@@ -193,7 +193,7 @@ ops:
     returns: [Complex]
   desc: Tangent of *x*.
   example:
-  - i: 2+2i tan/c 5 round
+  - i: 2+2i tan 5 round
     o: [-0.02839+1.02384i]
 
 - name: tanh/c
@@ -205,5 +205,5 @@ ops:
     returns: [Complex]
   desc: Hyperbolic tangent of *x*.
   example:
-  - i: 2+2i tanh/c 5 round
+  - i: 2+2i tanh 5 round
     o: [1.02384-0.02839i]

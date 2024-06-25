@@ -101,3 +101,102 @@ ops:
   - i: 0.5 atanh 5 round
     o: [0.54931]
 
+- name: cos
+  virtual: true
+  title: Cosine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Cosine of *x* in radians.
+  example:
+  - i: 2 cos 5 round
+    o: [-0.41615]
+
+- name: cosh
+  virtual: true
+  title: Hyperbolic cosine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Hyperbolic cosine of *x* in radians.
+  example:
+  - i: 2 cosh 5 round
+    o: [3.7622]
+
+- name: exp
+  virtual: true
+  title: Natural exponential
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Natural exponential of *x*.
+  example:
+  - i: 2 exp 5 round
+    o: [7.38906]
+
+- name: log
+  virtual: true
+  title: Natural logarithm
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Natural logarithm of *x*.
+  example:
+  - i: 8 log 5 round
+    o: [2.07944]
+
+- name: log10
+  virtual: true
+  title: Decimal logarithm
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Natural logarithm of *x*.
+  example:
+  - i: 50 log10 5 round
+    o: [1.69897]
+
+- name: sin
+  virtual: true
+  title: Sine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Sine of *x* in radians.
+  example:
+  - i: 2 sin 5 round
+    o: [0.9093]
+
+- name: sinh
+  virtual: true
+  title: Hyperbolic sine
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Hyperbolic sine of *x* in radians.
+  example:
+  - i: 2 sinh 5 round
+    o: [3.62686]
+
+- name: tan
+  virtual: true
+  title: Tangent
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Tangent of *x* in radians.
+  example:
+  - i: 2 tan 5 round
+    o: [-2.18504]
+
+- name: tanh
+  virtual: true
+  title: Hyperbolic tangent
+  funcs:
+  - params: [x:Float/64]
+    returns: [Float/64]
+  desc: Hyperbolic tangent of *x* in radians.
+  example:
+  - i: 2 tanh 5 round
+    o: [0.96403]
+

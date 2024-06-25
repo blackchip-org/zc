@@ -21,4 +21,13 @@ var (
 		Func:    funcs.Atan2Float64,
 	}
 	Atanh = zc.Op{Name: "atanh", Virtual: true}
+	Cos   = zc.Op{Name: "cos", Virtual: true}
+	Cosh  = zc.Op{Name: "cosh", Virtual: true}
+	Exp   = zc.Op{Name: "exp", Virtual: true}
+	Log   = zc.Op{Name: "log", Virtual: true}
+	Log10 = zc.Op{Name: "log10", Virtual: true}
+	Sin   = zc.Op{Name: "sin", Virtual: true}
+	Sinh  = zc.Op{Name: "sinh", Virtual: true}
+	Tan   = zc.Op{Name: "tan", Virtual: true}
+	Tanh  = zc.Op{Name: "tanh", Virtual: true}
 )
