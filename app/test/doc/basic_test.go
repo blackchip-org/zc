@@ -25,16 +25,6 @@ func TestOpDocs_Basic_Cb(t *testing.T) {
 	c.AssertStack("27")
 }
 
-func TestOpDocs_Basic_Cbrt(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("27")
-	c.AssertStack("27")
-
-	c.Eval("cbrt")
-	c.AssertStack("3")
-}
-
 func TestOpDocs_Basic_Div(t *testing.T) {
 	c := app.NewCalcTester(t)
 

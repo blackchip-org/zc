@@ -26,6 +26,7 @@ Scientific calculator
 | [`tan, tan/c`](#tanc)       | Tangent                            
 | [`tanh, tanh/c`](#tanhc)    | Hyperbolic tangent                 
 
+
 ## Operations
 
 ### abs/c

@@ -6,15 +6,16 @@ Basic calculator
 
 ## Index
 
-| Operation                                            | Description   
-|------------------------------------------------------|---------------
-| [`add, add/f`](#addf)                                | Addition      
-| [`div, div/f`](#divf)                                | Division      
-| [`mul, mul/f`](#mulf)                                | Multiplication
-| [`neg, neg/f`](#negf)                                | Negation      
-| [`sign, sign/f`](#signf)                             | Sign          
-| [`square.root, square.root/f, sqrt/f`](#squarerootf) | Square Root   
-| [`sub, sub/f`](#subf)                                | Subtraction   
+| Operation                | Description   
+|--------------------------|---------------
+| [`add, add/f`](#addf)    | Addition      
+| [`div, div/f`](#divf)    | Division      
+| [`mul, mul/f`](#mulf)    | Multiplication
+| [`neg, neg/f`](#negf)    | Negation      
+| [`sign, sign/f`](#signf) | Sign          
+| [`sqrt, sqrt/f`](#sqrtf) | Square Root   
+| [`sub, sub/f`](#subf)    | Subtraction   
+
 
 ## Operations
 
@@ -115,14 +116,12 @@ Example:
 | `c 6.4 sign/d`  | `1`  
 | `c 0 sign/d`    | `0`  
 
-### square.root/f
+### sqrt/f
 
 The square root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
 
-Overloads: `square.root`
-
-Alias: `sqrt/f`
+Overloads: `sqrt`
 
 Stack effects:
 ```

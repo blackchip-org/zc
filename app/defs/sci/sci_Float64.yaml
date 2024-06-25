@@ -115,6 +115,10 @@ ops:
   - i: 2 cosh 5 round
     o: [3.7622]
 
+- name: ceil/f64
+  overloads: ceil
+  title: Ceiling
+
 - name: exp/f64
   overloads: exp
   title: Natural exponential

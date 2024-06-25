@@ -3,7 +3,6 @@ package funcs
 import (
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/state"
-	"github.com/cockroachdb/apd/v3"
 )
 
 func AddDecimal(e *zc.OpEnv) {
@@ -13,23 +12,6 @@ func AddDecimal(e *zc.OpEnv) {
 	defer zc.Decimal.Recycle(y)
 
 	_, err := s.Context.Add(x, x, y)
-	if err != nil {
-		e.Err = zc.ErrOp(e, err)
-		return
-	}
-	zc.Decimal.Push(e, x)
-}
-
-func CbrtDecimal(e *zc.OpEnv) {
-	var zero apd.Decimal
-	s := state.ForDec(e.State)
-	x := zc.Decimal.Pop(e)
-
-	if x.Cmp(&zero) < 0 {
-		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
-		return
-	}
-	_, err := s.Context.Cbrt(x, x)
 	if err != nil {
 		e.Err = zc.ErrOp(e, err)
 		return
@@ -116,23 +98,6 @@ func SignDecimal(e *zc.OpEnv) {
 	x := zc.Decimal.Pop(e)
 	zc.Int.Push(e, x.Sign())
 	zc.Decimal.Recycle(x)
-}
-
-func SqrtDecimal(e *zc.OpEnv) {
-	var zero apd.Decimal
-	s := state.ForDec(e.State)
-	x := zc.Decimal.Pop(e)
-
-	if x.Cmp(&zero) < 0 {
-		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
-		return
-	}
-	_, err := s.Context.Sqrt(x, x)
-	if err != nil {
-		e.Err = zc.ErrOp(e, err)
-		return
-	}
-	zc.Decimal.Push(e, x)
 }
 
 func SubDecimal(e *zc.OpEnv) {

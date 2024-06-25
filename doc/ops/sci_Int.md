@@ -10,6 +10,7 @@ Scientific calculator
 |-----------------------|---------------
 | [`abs, abs/i`](#absi) | Absolute value
 
+
 ## Operations
 
 ### abs/i

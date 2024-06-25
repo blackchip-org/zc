@@ -1,0 +1,34 @@
+name: sci/Dec
+title: Scientific calculator
+subtitle: decimal
+category: calc
+
+ops:
+- name: abs/d
+  title: Absolute value
+  funcs:
+  - name: AbsDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    If *x* is less than zero, the negated value of *x*, otherwise *p0*.
+  example:
+  - i: -6.6
+    o: [-6.6]
+  - i: abs/d
+    o: [6.6]
+
+- name: cbrt/d
+  title: Cube root
+  funcs:
+  - name: CbrtDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 10.648
+    o: [10.648]
+  - i: cbrt/d
+    o: [2.2]

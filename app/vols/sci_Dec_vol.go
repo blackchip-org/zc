@@ -7,16 +7,11 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var BasicFloat = zc.Vol{
-	Name: "basic/Float",
+var SciDec = zc.Vol{
+	Name: "sci/Dec",
 	Ops: []zc.Op{
-		ops.AddBigFloat,
-		ops.DivBigFloat,
-		ops.MulBigFloat,
-		ops.NegBigFloat,
-		ops.SignBigFloat,
-		ops.SqrtBigFloat,
-		ops.SubBigFloat,
+		ops.AbsDecimal,
+		ops.CbrtDecimal,
 	},
 	Macros: []zc.Macro{},
 }

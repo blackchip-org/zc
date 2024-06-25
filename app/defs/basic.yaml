@@ -30,21 +30,6 @@ ops:
   - i: 3 cb
     o: [27]
 
-- name: cbrt
-  virtual: true
-  title: Cube root
-  funcs:
-  - params: [x:Dec]
-    returns: [Dec]
-  desc: |-
-    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
-    error is raised.
-  example:
-  - i: 27
-    o: [27]
-  - i: cbrt
-    o: [3]
-
 - name: div
   aliases: [d, "/"]
   virtual: true
@@ -181,11 +166,11 @@ ops:
     o: [9]
 
 - name: sqrt
-  virtual: true
   title: Square Root
+  virtual: true
   funcs:
-  - params: [x:Dec]
-    returns: [Dec]
+  - params: [x:Float]
+    returns: [Float]
   desc: |-
     The square root of *x*. If *x* is less than zero, an 'invalid argument'
     error is raised.

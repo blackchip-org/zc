@@ -8,7 +8,6 @@ import (
 
 var (
 	Add  = zc.Op{Name: "add", Virtual: true}
-	Cbrt = zc.Op{Name: "cbrt", Virtual: true}
 	Div  = zc.Op{Name: "div", Virtual: true}
 	Mod  = zc.Op{Name: "mod", Virtual: true}
 	Mul  = zc.Op{Name: "mul", Virtual: true}

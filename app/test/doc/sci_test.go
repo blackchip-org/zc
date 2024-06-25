@@ -67,6 +67,16 @@ func TestOpDocs_Sci_Atanh(t *testing.T) {
 	c.AssertStack("0.54931")
 }
 
+func TestOpDocs_Sci_Cbrt(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("27")
+	c.AssertStack("27")
+
+	c.Eval("cbrt")
+	c.AssertStack("3")
+}
+
 func TestOpDocs_Sci_Cos(t *testing.T) {
 	c := app.NewCalcTester(t)
 

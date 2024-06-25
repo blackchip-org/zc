@@ -11,6 +11,7 @@ var Sci = zc.Vol{
 	Name: "sci",
 	Ops: []zc.Op{
 		ops.Atan2Float64,
+		ops.CbrtFloat64,
 	},
 	Macros: []zc.Macro{},
 }

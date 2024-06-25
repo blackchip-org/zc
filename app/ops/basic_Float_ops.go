@@ -44,8 +44,8 @@ var (
 		Func:      funcs.SignBigFloat,
 	}
 	SqrtBigFloat = zc.Op{
-		Name:      "square.root/f",
-		Overloads: "square.root",
+		Name:      "sqrt/f",
+		Overloads: "sqrt",
 		Params:    []zc.Type{zc.BigFloat},
 		Returns:   []zc.Type{zc.BigFloat},
 		Func:      funcs.SqrtBigFloat,

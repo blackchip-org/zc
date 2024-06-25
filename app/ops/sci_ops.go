@@ -20,7 +20,13 @@ var (
 		Returns: []zc.Type{zc.Float64},
 		Func:    funcs.Atan2Float64,
 	}
-	Atanh = zc.Op{Name: "atanh", Virtual: true}
+	Atanh       = zc.Op{Name: "atanh", Virtual: true}
+	CbrtFloat64 = zc.Op{
+		Name:    "cbrt",
+		Params:  []zc.Type{zc.Float64},
+		Returns: []zc.Type{zc.Float64},
+		Func:    funcs.CbrtFloat64,
+	}
 	Cos   = zc.Op{Name: "cos", Virtual: true}
 	Cosh  = zc.Op{Name: "cosh", Virtual: true}
 	Exp   = zc.Op{Name: "exp", Virtual: true}

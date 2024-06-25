@@ -80,7 +80,7 @@ func TestOpDocs_BasicFloat_SignF(t *testing.T) {
 	c.AssertStack("0")
 }
 
-func TestOpDocs_BasicFloat_SquareRootF(t *testing.T) {
+func TestOpDocs_BasicFloat_SqrtF(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("1.25 sq")
@@ -90,11 +90,11 @@ func TestOpDocs_BasicFloat_SquareRootF(t *testing.T) {
 	c.AssertStack("1.25")
 }
 
-func TestOpDocs_BasicFloat_SquareRootF_Negative(t *testing.T) {
+func TestOpDocs_BasicFloat_SqrtF_Negative(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("-1 sqrt/f")
-	c.AssertError("square.root/f: invalid argument, -1 < 0")
+	c.AssertError("sqrt/f: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_BasicFloat_SubF(t *testing.T) {

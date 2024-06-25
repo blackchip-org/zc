@@ -13,6 +13,7 @@ General configuration
 | [`rounding.mode=`](#roundingmode) | Sets the default rounding mode               
 | [`rounding.mode?`](#roundingmode) | Gets the default rounding mode               
 
+
 ## Operations
 
 ### float.prec=

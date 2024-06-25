@@ -19,6 +19,7 @@ Basic calculator
 | [`square.root/i, sqrt/i`](#squarerooti) | Square root   
 | [`sub, sub/i`](#subi)                   | Subtraction   
 
+
 ## Operations
 
 ### add/i

@@ -22,6 +22,7 @@ Programmer's calculator
 | [`right.shift, rsh`](#rightshift) | Shift bits right      
 | [`xor`](#xor)                     | Bitwise exclusive or  
 
+
 ## Operations
 
 ### and/i

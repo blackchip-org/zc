@@ -55,6 +55,22 @@ func AtanhFloat64(e *zc.OpEnv) {
 	zc.Float64.Push(e, z)
 }
 
+func CbrtFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	if x < 0 {
+		e.Err = zc.ErrInvalidArg(e, "%v < 0", x)
+		return
+	}
+	z := math.Cbrt(x)
+	zc.Float64.Push(e, z)
+}
+
+func CeilFloat64(e *zc.OpEnv) {
+	x := zc.Float64.Pop(e)
+	z := math.Ceil(x)
+	zc.Float64.Push(e, z)
+}
+
 func CosFloat64(e *zc.OpEnv) {
 	x := zc.Float64.Pop(e)
 	z := math.Cos(x)

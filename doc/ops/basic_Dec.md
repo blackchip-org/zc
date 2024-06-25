@@ -9,7 +9,6 @@ Basic calculator
 | Operation                | Description   
 |--------------------------|---------------
 | [`add, add/d`](#addd)    | Addition      
-| [`cbrt, cbrt/d`](#cbrtd) | Cube Root     
 | [`div, div/d`](#divd)    | Division      
 | [`mul, mul/d`](#muld)    | Multiplication
 | [`neg, neg/d`](#negd)    | Negation      
@@ -18,6 +17,7 @@ Basic calculator
 | [`sign, sign/d`](#signd) | Sign          
 | [`sqrt, sqrt/d`](#sqrtd) | Square Root   
 | [`sub, sub/d`](#subd)    | Subtraction   
+
 
 ## Operations
 
@@ -39,25 +39,6 @@ Example:
 | `6.6` | `6.6`       
 | `2.2` | `6.6 \| 2.2`
 | `add` | `8.8`       
-
-### cbrt/d
-
-The cube root of *x*. If *x* is less than zero, an 'invalid argument'
-error is raised.
-
-Overloads: `cbrt`
-
-Stack effects:
-```
-( x:Dec -- Dec )
-```
-
-Example:
-
-| Input     | Stack     
-|-----------|-----------
-| `1.25 cb` | `1.953125`
-| `cbrt`    | `1.25`    
 
 ### div/d
 

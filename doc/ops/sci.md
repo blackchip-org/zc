@@ -4,12 +4,6 @@
 
 Scientific calculator
 
-## Related Volumes
-
-- [sci/Complex](sci_Complex.md)
-- [sci/Float/64](sci_Float_64.md)
-- [sci/Int](sci_Int.md)
-
 ## Index
 
 | Operation         | Description               
@@ -22,6 +16,7 @@ Scientific calculator
 | [`atan`](#atan)   | Inverse tangent           
 | [`atan2`](#atan2) | Inverse tangent           
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
+| [`cbrt`](#cbrt)   | Cube root                 
 | [`cos`](#cos)     | Cosine                    
 | [`cosh`](#cosh)   | Hyperbolic cosine         
 | [`exp`](#exp)     | Natural exponential       
@@ -31,6 +26,14 @@ Scientific calculator
 | [`sinh`](#sinh)   | Hyperbolic sine           
 | [`tan`](#tan)     | Tangent                   
 | [`tanh`](#tanh)   | Hyperbolic tangent        
+
+## Related Volumes
+
+- [sci/Complex](sci_Complex.md)
+- [sci/Dec](sci_Dec.md)
+- [sci/Float/64](sci_Float_64.md)
+- [sci/Int](sci_Int.md)
+
 
 ## Operations
 
@@ -159,6 +162,23 @@ Example:
 | Input               | Stack    
 |---------------------|----------
 | `0.5 atanh 5 round` | `0.54931`
+
+### cbrt
+
+The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `27`   | `27` 
+| `cbrt` | `3`  
 
 ### cos
 

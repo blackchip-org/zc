@@ -248,6 +248,26 @@ func genOpDocs(vols []zc.VolDef) {
 			fmt.Fprintf(f, "\n")
 		}
 
+		fmt.Fprintf(f, "## Index\n\n")
+
+		tab := pretty.NewMarkdownTable(2)
+		tab.Heading("Operation", "Description")
+
+		for _, op := range vol.Ops {
+			var names []string
+			if op.Overloads != "" {
+				names = append(names, op.Overloads)
+			}
+			names = append(names, op.Name)
+			names = append(names, op.Aliases...)
+
+			fmtNames := strings.Join(names, ", ")
+			entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
+			tab.Row(entry, op.Title)
+		}
+		fmt.Fprint(f, tab.Format())
+		fmt.Fprintln(f)
+
 		// Find related volumes
 		var rels []zc.VolDef
 		for _, vol2 := range vols {
@@ -271,24 +291,6 @@ func genOpDocs(vols []zc.VolDef) {
 			fmt.Fprintf(f, "\n")
 		}
 
-		fmt.Fprintf(f, "## Index\n\n")
-
-		tab := pretty.NewMarkdownTable(2)
-		tab.Heading("Operation", "Description")
-
-		for _, op := range vol.Ops {
-			var names []string
-			if op.Overloads != "" {
-				names = append(names, op.Overloads)
-			}
-			names = append(names, op.Name)
-			names = append(names, op.Aliases...)
-
-			fmtNames := strings.Join(names, ", ")
-			entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
-			tab.Row(entry, op.Title)
-		}
-		fmt.Fprint(f, tab.Format())
 		fmt.Fprintf(f, "\n## Operations\n")
 
 		for _, op := range vol.Ops {

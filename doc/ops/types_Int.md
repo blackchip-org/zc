@@ -11,6 +11,7 @@ Type operations
 | [`max.val/u16`](#maxvalu16) | Maximum unsigned 16-bit value
 | [`max.val/u8`](#maxvalu8)   | Maximum unsigned 8-bit value 
 
+
 ## Operations
 
 ### max.val/u16

@@ -28,6 +28,7 @@ func init() {
 		vols.SciInt,
 		vols.SciFloat64,
 		vols.SciComplex,
+		vols.SciDec,
 		vols.Stack,
 		vols.TypesInt,
 	)

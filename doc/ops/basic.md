@@ -4,20 +4,12 @@
 
 Basic calculator
 
-## Related Volumes
-
-- [basic/Dec](basic_Dec.md)
-- [basic/Dec/SS](basic_Dec_SS.md)
-- [basic/Float](basic_Float.md)
-- [basic/Int](basic_Int.md)
-
 ## Index
 
 | Operation           | Description       
 |---------------------|-------------------
 | [`add, a, +`](#add) | Addition          
 | [`cb`](#cb)         | Cube of a number  
-| [`cbrt`](#cbrt)     | Cube root         
 | [`div, d, /`](#div) | Division          
 | [`mod`](#mod)       | Modulus           
 | [`mul, m, *`](#mul) | Multiplication    
@@ -28,6 +20,14 @@ Basic calculator
 | [`sq`](#sq)         | Square of a number
 | [`sqrt`](#sqrt)     | Square Root       
 | [`sub, s, -`](#sub) | Subtraction       
+
+## Related Volumes
+
+- [basic/Dec](basic_Dec.md)
+- [basic/Dec/SS](basic_Dec_SS.md)
+- [basic/Float](basic_Float.md)
+- [basic/Int](basic_Int.md)
+
 
 ## Operations
 
@@ -65,23 +65,6 @@ Example:
 | Input  | Stack
 |--------|------
 | `3 cb` | `27` 
-
-### cbrt
-
-The cube root of *x*. If *x* is less than zero, an 'invalid argument'
-error is raised.
-
-Stack effects:
-```
-( x:Dec -- Dec )
-```
-
-Example:
-
-| Input  | Stack
-|--------|------
-| `27`   | `27` 
-| `cbrt` | `3`  
 
 ### div
 
@@ -239,7 +222,7 @@ error is raised.
 
 Stack effects:
 ```
-( x:Dec -- Dec )
+( x:Float -- Float )
 ```
 
 Example:

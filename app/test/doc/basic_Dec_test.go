@@ -21,23 +21,6 @@ func TestOpDocs_BasicDec_AddD(t *testing.T) {
 	c.AssertStack("8.8")
 }
 
-func TestOpDocs_BasicDec_CbrtD(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("1.25 cb")
-	c.AssertStack("1.953125")
-
-	c.Eval("cbrt")
-	c.AssertStack("1.25")
-}
-
-func TestOpDocs_BasicDec_CbrtD_negative(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("-1 cbrt/d")
-	c.AssertError("cbrt/d: invalid argument, -1 < 0")
-}
-
 func TestOpDocs_BasicDec_DivD(t *testing.T) {
 	c := app.NewCalcTester(t)
 

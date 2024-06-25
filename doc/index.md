@@ -12,6 +12,7 @@
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`abs`](ops/sci.md#abs): Absolute value
   - [`abs/c`](ops/sci_Complex.md#absc): 128-bit complex
+  - [`abs/d`](ops/sci_Dec.md#absd): decimal
   - [`abs/f64`](ops/sci_Float_64.md#absf64): 64-bit floating-point
   - [`abs/i`](ops/sci_Int.md#absi): integer
 - [`acos`](ops/sci.md#acos): Inverse cosine
@@ -50,8 +51,10 @@
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`cb`](ops/basic.md#cb): Cube of a number
-- [`cbrt`](ops/basic.md#cbrt): Cube root
-  - [`cbrt/d`](ops/basic_Dec.md#cbrtd): decimal (apd)
+- [`cbrt`](ops/sci.md#cbrt): Cube root
+  - [`cbrt/d`](ops/sci_Dec.md#cbrtd): decimal
+- `ceil`
+  - [`ceil/f64`](ops/sci_Float_64.md#ceilf64): 64-bit floating-point
 - [`clear`](ops/stack.md#clear): Clear
 - [`cos`](ops/sci.md#cos): Cosine
   - [`cos/c`](ops/sci_Complex.md#cosc): 128-bit complex
@@ -155,9 +158,7 @@
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
   - [`sqrt/d`](ops/basic_Dec.md#sqrtd): decimal (apd)
-- `square.root`
-  - [`square.root/f`](ops/basic_Float.md#squarerootf): float
-  - [`square.root/i`](ops/basic_Int.md#squarerooti): integer
+  - [`sqrt/f`](ops/basic_Float.md#sqrtf): float
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/d`](ops/basic_Dec.md#subd): decimal (apd)
   - [`sub/d/ss`](ops/basic_Dec_SS.md#subdss): decimal (shopspring)

@@ -92,9 +92,8 @@ ops:
   - i: c 0 sign/d
     o: [0]
 
-- name: square.root/f
-  overloads: square.root
-  aliases: [sqrt/f]
+- name: sqrt/f
+  overloads: sqrt
   title: Square Root
   funcs:
   - name: SqrtBigFloat
@@ -112,7 +111,7 @@ ops:
   - name: Negative
     test:
     - i: -1 sqrt/f
-      error: "square.root/f: invalid argument, -1 < 0"
+      error: "sqrt/f: invalid argument, -1 < 0"
 
 - name: sub/f
   overloads: sub

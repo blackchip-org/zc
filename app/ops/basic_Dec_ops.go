@@ -15,13 +15,6 @@ var (
 		Returns:   []zc.Type{zc.Decimal},
 		Func:      funcs.AddDecimal,
 	}
-	CbrtDecimal = zc.Op{
-		Name:      "cbrt/d",
-		Overloads: "cbrt",
-		Params:    []zc.Type{zc.Decimal},
-		Returns:   []zc.Type{zc.Decimal},
-		Func:      funcs.CbrtDecimal,
-	}
 	DivDecimal = zc.Op{
 		Name:      "div/d",
 		Overloads: "div",

@@ -15,6 +15,7 @@ Scientific calculator
 | [`asinh, asinh/f64`](#asinhf64) | Inverse hyperbolic sine   
 | [`atan, atan/f64`](#atanf64)    | Inverse tangent           
 | [`atanh, atanh/f64`](#atanhf64) | Inverse hyperbolic tangent
+| [`ceil, ceil/f64`](#ceilf64)    | Ceiling                   
 | [`cos, cos/f64`](#cosf64)       | Cosine                    
 | [`cosh, cosh/f64`](#coshf64)    | Hyperbolic cosine         
 | [`exp, exp/f64`](#expf64)       | Natural exponential       
@@ -24,6 +25,7 @@ Scientific calculator
 | [`sinh, sinh/f64`](#sinhf64)    | Hyperbolic sine           
 | [`tan, tan/f64`](#tanf64)       | Tangent                   
 | [`tanh, tanh/f64`](#tanhf64)    | Hyperbolic tangent        
+
 
 ## Operations
 
@@ -146,6 +148,13 @@ Example:
 | Input               | Stack    
 |---------------------|----------
 | `0.5 atanh 5 round` | `0.54931`
+
+### ceil/f64
+
+
+
+Overloads: `ceil`
+
 
 ### cos/f64
 
