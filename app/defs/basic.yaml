@@ -21,8 +21,7 @@ ops:
   - i: c 1.1 2.2 a
     o: [3.3]
 
-- name: cube
-  aliases: [cb]
+- name: cb
   title: Cube of a number
   macro: dup dup mul mul
   desc: |-
@@ -31,9 +30,8 @@ ops:
   - i: 3 cb
     o: [27]
 
-- name: cube.root
+- name: cbrt
   virtual: true
-  aliases: [cbrt]
   title: Cube root
   funcs:
   - params: [x:Dec]
@@ -173,8 +171,7 @@ ops:
   - i: c 0 sign
     o: [0]
 
-- name: square
-  aliases: [sq]
+- name: sq
   title: Square of a number
   macro: dup mul
   desc: |-
@@ -183,9 +180,8 @@ ops:
   - i: 3 sq
     o: [9]
 
-- name: square.root
+- name: sqrt
   virtual: true
-  aliases: [sqrt]
   title: Square Root
   funcs:
   - params: [x:Dec]

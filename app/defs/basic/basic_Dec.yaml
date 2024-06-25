@@ -16,12 +16,11 @@ ops:
     o: [6.6]
   - i: 2.2
     o: [6.6, 2.2]
-  - i: add/d
+  - i: add
     o: [8.8]
 
-- name: cube.root/d
-  overloads: cube.root
-  aliases: [cbrt/d]
+- name: cbrt/d
+  overloads: cbrt
   title: Cube Root
   funcs:
   - name: CbrtDecimal
@@ -31,15 +30,15 @@ ops:
     The cube root of *x*. If *x* is less than zero, an 'invalid argument'
     error is raised.
   example:
-  - i: 1.25 cube
+  - i: 1.25 cb
     o: [1.953125]
-  - i: cbrt/d
+  - i: cbrt
     o: [1.25]
   tests:
   - name: negative
     test:
     - i: -1 cbrt/d
-      error: "cube.root/d: invalid argument, -1 < 0"
+      error: "cbrt/d: invalid argument, -1 < 0"
 
 - name: div/d
   overloads: div
@@ -56,7 +55,7 @@ ops:
     o: [6.6]
   - i: 2
     o: [6.6, 2]
-  - i: div/d
+  - i: div
     o: [3.3]
   tests:
   - name: Thirds
@@ -81,7 +80,7 @@ ops:
     o: [6.6]
   - i: 2.2
     o: [6.6, 2.2]
-  - i: mul/d
+  - i: mul
     o: [14.52]
 
 - name: neg/d
@@ -95,12 +94,13 @@ ops:
   example:
   - i: -6.6
     o: [-6.6]
-  - i: neg/d
+  - i: neg
     o: [6.6]
-  - i: neg/d
+  - i: neg
     o: [-6.6]
 
 - name: pow/d
+  overloads: pow
   title: Exponentiation
   funcs:
   - name: PowDecimal
@@ -112,7 +112,7 @@ ops:
     o: [6.6]
   - i: 2.2
     o: [6.6, 2.2]
-  - i: pow/d
+  - i: pow
     o: [63.53260431279859]
   tests:
   - name: NegativeSqrt
@@ -143,7 +143,7 @@ ops:
     o: [6.75]
   - i: 0.5
     o: [6.75, 0.5]
-  - i: rem/d
+  - i: rem
     o: [0.25]
   tests:
   - name: Zero
@@ -162,16 +162,15 @@ ops:
     Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
     if *x* is zero.
   example:
-  - i: c -6.4 sign/d
+  - i: c -6.4 sign
     o: [-1]
-  - i: c 6.4 sign/d
+  - i: c 6.4 sign
     o: [1]
-  - i: c 0 sign/d
+  - i: c 0 sign
     o: [0]
 
-- name: square.root/d
-  overloads: square.root
-  aliases: [sqrt/d]
+- name: sqrt/d
+  overloads: sqrt
   title: Square Root
   funcs:
   - name: SqrtDecimal
@@ -183,13 +182,13 @@ ops:
   example:
   - i: 1.25 sq
     o: [1.5625]
-  - i: sqrt/d
+  - i: sqrt
     o: [1.25]
   tests:
     - name: Negative
       test:
       - i: -1 sqrt/d
-        error: "square.root/d: invalid argument, -1 < 0"
+        error: "sqrt/d: invalid argument, -1 < 0"
 
 - name: sub/d
   overloads: sub
@@ -204,5 +203,5 @@ ops:
     o: [6.6]
   - i: 2.2
     o: [6.6, 2.2]
-  - i: sub/d
+  - i: sub
     o: [4.4]

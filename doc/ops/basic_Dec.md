@@ -6,18 +6,18 @@ Basic calculator
 
 ## Index
 
-| Operation                                            | Description   
-|------------------------------------------------------|---------------
-| [`add, add/d`](#addd)                                | Addition      
-| [`cube.root, cube.root/d, cbrt/d`](#cuberootd)       | Cube Root     
-| [`div, div/d`](#divd)                                | Division      
-| [`mul, mul/d`](#muld)                                | Multiplication
-| [`neg, neg/d`](#negd)                                | Negation      
-| [`pow/d`](#powd)                                     | Exponentiation
-| [`rem, rem/d`](#remd)                                | Remainder     
-| [`sign, sign/d`](#signd)                             | Sign          
-| [`square.root, square.root/d, sqrt/d`](#squarerootd) | Square Root   
-| [`sub, sub/d`](#subd)                                | Subtraction   
+| Operation                | Description   
+|--------------------------|---------------
+| [`add, add/d`](#addd)    | Addition      
+| [`cbrt, cbrt/d`](#cbrtd) | Cube Root     
+| [`div, div/d`](#divd)    | Division      
+| [`mul, mul/d`](#muld)    | Multiplication
+| [`neg, neg/d`](#negd)    | Negation      
+| [`pow, pow/d`](#powd)    | Exponentiation
+| [`rem, rem/d`](#remd)    | Remainder     
+| [`sign, sign/d`](#signd) | Sign          
+| [`sqrt, sqrt/d`](#sqrtd) | Square Root   
+| [`sub, sub/d`](#subd)    | Subtraction   
 
 ## Operations
 
@@ -34,20 +34,18 @@ Stack effects:
 
 Example:
 
-| Input   | Stack       
-|---------|-------------
-| `6.6`   | `6.6`       
-| `2.2`   | `6.6 \| 2.2`
-| `add/d` | `8.8`       
+| Input | Stack       
+|-------|-------------
+| `6.6` | `6.6`       
+| `2.2` | `6.6 \| 2.2`
+| `add` | `8.8`       
 
-### cube.root/d
+### cbrt/d
 
 The cube root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
 
-Overloads: `cube.root`
-
-Alias: `cbrt/d`
+Overloads: `cbrt`
 
 Stack effects:
 ```
@@ -56,10 +54,10 @@ Stack effects:
 
 Example:
 
-| Input       | Stack     
-|-------------|-----------
-| `1.25 cube` | `1.953125`
-| `cbrt/d`    | `1.25`    
+| Input     | Stack     
+|-----------|-----------
+| `1.25 cb` | `1.953125`
+| `cbrt`    | `1.25`    
 
 ### div/d
 
@@ -75,11 +73,11 @@ Stack effects:
 
 Example:
 
-| Input   | Stack     
-|---------|-----------
-| `6.6`   | `6.6`     
-| `2`     | `6.6 \| 2`
-| `div/d` | `3.3`     
+| Input | Stack     
+|-------|-----------
+| `6.6` | `6.6`     
+| `2`   | `6.6 \| 2`
+| `div` | `3.3`     
 
 ### mul/d
 
@@ -94,11 +92,11 @@ Stack effects:
 
 Example:
 
-| Input   | Stack       
-|---------|-------------
-| `6.6`   | `6.6`       
-| `2.2`   | `6.6 \| 2.2`
-| `mul/d` | `14.52`     
+| Input | Stack       
+|-------|-------------
+| `6.6` | `6.6`       
+| `2.2` | `6.6 \| 2.2`
+| `mul` | `14.52`     
 
 ### neg/d
 
@@ -113,15 +111,17 @@ Stack effects:
 
 Example:
 
-| Input   | Stack 
-|---------|-------
-| `-6.6`  | `-6.6`
-| `neg/d` | `6.6` 
-| `neg/d` | `-6.6`
+| Input  | Stack 
+|--------|-------
+| `-6.6` | `-6.6`
+| `neg`  | `6.6` 
+| `neg`  | `-6.6`
 
 ### pow/d
 
 Raises *x* to the power of *y*
+
+Overloads: `pow`
 
 Stack effects:
 ```
@@ -130,11 +130,11 @@ Stack effects:
 
 Example:
 
-| Input   | Stack              
-|---------|--------------------
-| `6.6`   | `6.6`              
-| `2.2`   | `6.6 \| 2.2`       
-| `pow/d` | `63.53260431279859`
+| Input | Stack              
+|-------|--------------------
+| `6.6` | `6.6`              
+| `2.2` | `6.6 \| 2.2`       
+| `pow` | `63.53260431279859`
 
 ### rem/d
 
@@ -150,11 +150,11 @@ Stack effects:
 
 Example:
 
-| Input   | Stack        
-|---------|--------------
-| `6.75`  | `6.75`       
-| `0.5`   | `6.75 \| 0.5`
-| `rem/d` | `0.25`       
+| Input  | Stack        
+|--------|--------------
+| `6.75` | `6.75`       
+| `0.5`  | `6.75 \| 0.5`
+| `rem`  | `0.25`       
 
 ### sign/d
 
@@ -170,20 +170,18 @@ Stack effects:
 
 Example:
 
-| Input           | Stack
-|-----------------|------
-| `c -6.4 sign/d` | `-1` 
-| `c 6.4 sign/d`  | `1`  
-| `c 0 sign/d`    | `0`  
+| Input         | Stack
+|---------------|------
+| `c -6.4 sign` | `-1` 
+| `c 6.4 sign`  | `1`  
+| `c 0 sign`    | `0`  
 
-### square.root/d
+### sqrt/d
 
 The square root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
 
-Overloads: `square.root`
-
-Alias: `sqrt/d`
+Overloads: `sqrt`
 
 Stack effects:
 ```
@@ -195,7 +193,7 @@ Example:
 | Input     | Stack   
 |-----------|---------
 | `1.25 sq` | `1.5625`
-| `sqrt/d`  | `1.25`  
+| `sqrt`    | `1.25`  
 
 ### sub/d
 
@@ -210,8 +208,8 @@ Stack effects:
 
 Example:
 
-| Input   | Stack       
-|---------|-------------
-| `6.6`   | `6.6`       
-| `2.2`   | `6.6 \| 2.2`
-| `sub/d` | `4.4`       
+| Input | Stack       
+|-------|-------------
+| `6.6` | `6.6`       
+| `2.2` | `6.6 \| 2.2`
+| `sub` | `4.4`       

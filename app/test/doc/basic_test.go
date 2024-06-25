@@ -18,14 +18,14 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 	c.AssertStack("3.3")
 }
 
-func TestOpDocs_Basic_Cube(t *testing.T) {
+func TestOpDocs_Basic_Cb(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("3 cb")
 	c.AssertStack("27")
 }
 
-func TestOpDocs_Basic_CubeRoot(t *testing.T) {
+func TestOpDocs_Basic_Cbrt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("27")
@@ -120,14 +120,14 @@ func TestOpDocs_Basic_Sign(t *testing.T) {
 	c.AssertStack("0")
 }
 
-func TestOpDocs_Basic_Square(t *testing.T) {
+func TestOpDocs_Basic_Sq(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("3 sq")
 	c.AssertStack("9")
 }
 
-func TestOpDocs_Basic_SquareRoot(t *testing.T) {
+func TestOpDocs_Basic_Sqrt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("256")

@@ -6,21 +6,21 @@ Basic calculator
 
 ## Index
 
-| Operation                          | Description       
-|------------------------------------|-------------------
-| [`add, a, +`](#add)                | Addition          
-| [`cube, cb`](#cube)                | Cube of a number  
-| [`cube.root, cbrt`](#cuberoot)     | Cube root         
-| [`div, d, /`](#div)                | Division          
-| [`mod`](#mod)                      | Modulus           
-| [`mul, m, *`](#mul)                | Multiplication    
-| [`neg`](#neg)                      | Negation          
-| [`pow, **`](#pow)                  | Exponentiation    
-| [`rem`](#rem)                      | Remainder         
-| [`sign`](#sign)                    | Sign              
-| [`square, sq`](#square)            | Square of a number
-| [`square.root, sqrt`](#squareroot) | Square Root       
-| [`sub, s, -`](#sub)                | Subtraction       
+| Operation           | Description       
+|---------------------|-------------------
+| [`add, a, +`](#add) | Addition          
+| [`cb`](#cb)         | Cube of a number  
+| [`cbrt`](#cbrt)     | Cube root         
+| [`div, d, /`](#div) | Division          
+| [`mod`](#mod)       | Modulus           
+| [`mul, m, *`](#mul) | Multiplication    
+| [`neg`](#neg)       | Negation          
+| [`pow, **`](#pow)   | Exponentiation    
+| [`rem`](#rem)       | Remainder         
+| [`sign`](#sign)     | Sign              
+| [`sq`](#sq)         | Square of a number
+| [`sqrt`](#sqrt)     | Square Root       
+| [`sub, s, -`](#sub) | Subtraction       
 
 ## Operations
 
@@ -44,15 +44,13 @@ Example:
 | `c 6 2 a`     | `8`  
 | `c 1.1 2.2 a` | `3.3`
 
-### cube
+### cb
 
 The cube of a number, x³
 
-Alias: `cb`
-
 Macro definition:
 ```
-def cube dup dup mul mul
+def cb dup dup mul mul
 ```
 
 Example:
@@ -61,12 +59,10 @@ Example:
 |--------|------
 | `3 cb` | `27` 
 
-### cube.root
+### cbrt
 
 The cube root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
-
-Alias: `cbrt`
 
 Stack effects:
 ```
@@ -214,15 +210,13 @@ Example:
 | `c 6 sign`  | `1`  
 | `c 0 sign`  | `0`  
 
-### square
+### sq
 
 The square of a number, x²
 
-Alias: `sq`
-
 Macro definition:
 ```
-def square dup mul
+def sq dup mul
 ```
 
 Example:
@@ -231,12 +225,10 @@ Example:
 |--------|------
 | `3 sq` | `9`  
 
-### square.root
+### sqrt
 
 The square root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
-
-Alias: `sqrt`
 
 Stack effects:
 ```

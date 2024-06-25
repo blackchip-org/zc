@@ -49,8 +49,9 @@
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
-- [`cb`](ops/basic.md#cube): Alias for [cube](ops/basic.md#cube)
-- [`cbrt`](ops/basic.md#cuberoot): Alias for [cube.root](ops/basic.md#cuberoot)
+- [`cb`](ops/basic.md#cb): Cube of a number
+- [`cbrt`](ops/basic.md#cbrt): Cube root
+  - [`cbrt/d`](ops/basic_Dec.md#cbrtd): decimal (apd)
 - [`clear`](ops/stack.md#clear): Clear
 - [`cos`](ops/sci.md#cos): Cosine
   - [`cos/c`](ops/sci_Complex.md#cosc): 128-bit complex
@@ -58,9 +59,6 @@
 - [`cosh`](ops/sci.md#cosh): Hyperbolic cosine
   - [`cosh/c`](ops/sci_Complex.md#coshc): 128-bit complex
   - [`cosh/f64`](ops/sci_Float_64.md#coshf64): 64-bit floating-point
-- [`cube`](ops/basic.md#cube): Cube of a number
-- [`cube.root`](ops/basic.md#cuberoot): Cube root
-  - [`cube.root/d`](ops/basic_Dec.md#cuberootd): decimal (apd)
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
@@ -154,11 +152,10 @@
 - [`sinh`](ops/sci.md#sinh): Hyperbolic sine
   - [`sinh/c`](ops/sci_Complex.md#sinhc): 128-bit complex
   - [`sinh/f64`](ops/sci_Float_64.md#sinhf64): 64-bit floating-point
-- [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
-- [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
-- [`square`](ops/basic.md#square): Square of a number
-- [`square.root`](ops/basic.md#squareroot): Square Root
-  - [`square.root/d`](ops/basic_Dec.md#squarerootd): decimal (apd)
+- [`sq`](ops/basic.md#sq): Square of a number
+- [`sqrt`](ops/basic.md#sqrt): Square Root
+  - [`sqrt/d`](ops/basic_Dec.md#sqrtd): decimal (apd)
+- `square.root`
   - [`square.root/f`](ops/basic_Float.md#squarerootf): float
   - [`square.root/i`](ops/basic_Int.md#squarerooti): integer
 - [`sub`](ops/basic.md#sub): Subtraction

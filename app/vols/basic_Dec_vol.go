@@ -21,8 +21,5 @@ var BasicDec = zc.Vol{
 		ops.SqrtDecimal,
 		ops.SubDecimal,
 	},
-	Macros: []zc.Macro{
-		{Name: "cbrt/d", Expr: "cube.root/d"},
-		{Name: "sqrt/d", Expr: "square.root/d"},
-	},
+	Macros: []zc.Macro{},
 }
