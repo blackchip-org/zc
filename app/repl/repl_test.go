@@ -73,11 +73,11 @@ func TestDrop(t *testing.T) {
 func TestLabel(t *testing.T) {
 	r := NewReplTester(t)
 	r.Eval("42 /answer label")
-	r.AssertStack("answer: 42")
+	r.AssertStack("42 :answer")
 	r.Eval("1 add")
 	r.AssertStack("43")
 	r.Eval("c float.prec?")
-	r.AssertStack("precision: 64")
+	r.AssertStack("64 :precision")
 	r.Eval("1 add")
 	r.AssertStack("65")
 }

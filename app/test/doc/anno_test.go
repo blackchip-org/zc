@@ -15,7 +15,7 @@ func TestOpDocs_Anno_Label(t *testing.T) {
 	c.AssertStack("42")
 
 	c.Eval("/answer label")
-	c.AssertStack("answer: 42")
+	c.AssertStack("42 :answer")
 }
 
 func TestOpDocs_Anno_Unit(t *testing.T) {

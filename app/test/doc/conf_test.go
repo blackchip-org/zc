@@ -12,7 +12,7 @@ func TestOpDocs_Conf_FloatPrecSet(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("float.prec?")
-	c.AssertStack("precision: 64")
+	c.AssertStack("64 :precision")
 
 	c.Eval("c 2 3 div/f")
 	c.AssertStack("0.6666666666666666667")
@@ -28,7 +28,7 @@ func TestOpDocs_Conf_FloatPrecGet(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("float.prec?")
-	c.AssertStack("precision: 64")
+	c.AssertStack("64 :precision")
 }
 
 func TestOpDocs_Conf_RoundingModeSet(t *testing.T) {

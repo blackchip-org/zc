@@ -28,13 +28,6 @@ var (
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.DivDecimal,
 	}
-	Mod       = zc.Op{Name: "mod", Virtual: true}
-	ModBigInt = zc.Op{
-		Name:    "mod",
-		Params:  []zc.Type{zc.BigInt, zc.BigInt},
-		Returns: []zc.Type{zc.BigInt},
-		Func:    funcs.ModBigInt,
-	}
 	Mul       = zc.Op{Name: "mul", Virtual: true}
 	MulBigInt = zc.Op{
 		Name:    "mul",
@@ -73,19 +66,6 @@ var (
 		Params:  []zc.Type{zc.Decimal, zc.Decimal},
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.PowDecimal,
-	}
-	Rem       = zc.Op{Name: "rem", Virtual: true}
-	RemBigInt = zc.Op{
-		Name:    "rem",
-		Params:  []zc.Type{zc.BigInt, zc.BigInt},
-		Returns: []zc.Type{zc.BigInt},
-		Func:    funcs.RemBigInt,
-	}
-	RemDecimal = zc.Op{
-		Name:    "rem",
-		Params:  []zc.Type{zc.Decimal, zc.Decimal},
-		Returns: []zc.Type{zc.Decimal},
-		Func:    funcs.RemDecimal,
 	}
 	Sign       = zc.Op{Name: "sign", Virtual: true}
 	SignBigInt = zc.Op{

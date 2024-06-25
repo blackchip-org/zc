@@ -17,14 +17,14 @@ type Item struct {
 func (i Item) String() string {
 	var label, val string
 	if i.Label != "" {
-		label = i.Label + ": "
+		label = " :" + i.Label
 	}
 	if i.Repr != "" {
 		val = i.Repr
 	} else {
 		val = Format(i.Val)
 	}
-	return label + val + i.Unit
+	return val + i.Unit + label
 }
 
 type OpEnv struct {

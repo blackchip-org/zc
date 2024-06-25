@@ -13,5 +13,7 @@ var Sci = zc.Vol{
 		ops.Atan2Float64,
 		ops.CbrtFloat64,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "cb", Expr: "dup dup mul mul"},
+	},
 }

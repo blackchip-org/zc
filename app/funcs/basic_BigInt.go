@@ -14,34 +14,6 @@ func AddBigInt(e *zc.OpEnv) {
 	zc.BigInt.Recycle(y)
 }
 
-func DivBigInt(e *zc.OpEnv) {
-	var zero big.Int
-	y := zc.BigInt.Pop(e)
-	x := zc.BigInt.Pop(e)
-	defer zc.BigInt.Recycle(y)
-
-	if y.Cmp(&zero) == 0 {
-		e.Err = zc.ErrDivisionByZero(e)
-		return
-	}
-	x.Div(x, y)
-	zc.BigInt.Push(e, x)
-}
-
-func ModBigInt(e *zc.OpEnv) {
-	var zero big.Int
-	y := zc.BigInt.Pop(e)
-	x := zc.BigInt.Pop(e)
-	defer zc.BigInt.Recycle(y)
-
-	if y.Cmp(&zero) == 0 {
-		e.Err = zc.ErrDivisionByZero(e)
-		return
-	}
-	x.Mod(x, y)
-	zc.BigInt.Push(e, x)
-}
-
 func MulBigInt(e *zc.OpEnv) {
 	y := zc.BigInt.Pop(e)
 	x := zc.BigInt.Pop(e)
@@ -62,20 +34,6 @@ func PowBigInt(e *zc.OpEnv) {
 	x.Exp(x, y, nil)
 	zc.BigInt.Push(e, x)
 	zc.BigInt.Recycle(y)
-}
-
-func RemBigInt(e *zc.OpEnv) {
-	var zero big.Int
-	y := zc.BigInt.Pop(e)
-	x := zc.BigInt.Pop(e)
-	defer zc.BigInt.Recycle(y)
-
-	if y.Cmp(&zero) == 0 {
-		e.Err = zc.ErrDivisionByZero(e)
-		return
-	}
-	x.Rem(x, y)
-	zc.BigInt.Push(e, x)
 }
 
 func SignBigInt(e *zc.OpEnv) {
@@ -101,4 +59,50 @@ func SubBigInt(e *zc.OpEnv) {
 	x.Sub(x, y)
 	zc.BigInt.Push(e, x)
 	zc.BigInt.Recycle(y)
+}
+
+func TDiv(e *zc.OpEnv) {
+	var zero big.Int
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
+	defer zc.BigInt.Recycle(y)
+
+	if y.Cmp(&zero) == 0 {
+		e.Err = zc.ErrDivisionByZero(e)
+		return
+	}
+	x.Quo(x, y)
+	zc.BigInt.Push(e, x)
+}
+
+func TDivRem(e *zc.OpEnv) {
+	var zero big.Int
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
+	r := zc.BigInt.New()
+	defer zc.BigInt.Recycle(y)
+
+	if y.Cmp(&zero) == 0 {
+		e.Err = zc.ErrDivisionByZero(e)
+		return
+	}
+	x.QuoRem(x, y, r)
+	zc.BigInt.Push(e, x)
+	e.Label("quo")
+	zc.BigInt.Push(e, r)
+	e.Label("rem")
+}
+
+func RemBigInt(e *zc.OpEnv) {
+	var zero big.Int
+	y := zc.BigInt.Pop(e)
+	x := zc.BigInt.Pop(e)
+	defer zc.BigInt.Recycle(y)
+
+	if y.Cmp(&zero) == 0 {
+		e.Err = zc.ErrDivisionByZero(e)
+		return
+	}
+	x.Mod(x, y)
+	zc.BigInt.Push(e, x)
 }

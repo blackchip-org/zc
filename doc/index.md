@@ -22,7 +22,6 @@
   - [`acosh/c`](ops/sci_Complex.md#acoshc): 128-bit complex
   - [`acosh/f64`](ops/sci_Float_64.md#acoshf64): 64-bit floating-point
 - [`add`](ops/basic.md#add): Addition
-  - [`add/d/ss`](ops/basic_Dec_SS.md#adddss): decimal (shopspring)
   - [`add/f`](ops/basic_Float.md#addf): float
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
@@ -48,7 +47,7 @@
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
-- [`cb`](ops/basic.md#cb): Cube of a number
+- [`cb`](ops/sci.md#cb): Cube of a number
 - [`cbrt`](ops/sci.md#cbrt): Cube root
   - [`cbrt/d`](ops/sci_Dec.md#cbrtd): decimal
 - `ceil`
@@ -66,9 +65,7 @@
 - `dec`
   - [`dec/i`](ops/prog.md#deci): Decimal conversion
 - [`div`](ops/basic.md#div): Division
-  - [`div/d/ss`](ops/basic_Dec_SS.md#divdss): decimal (shopspring)
   - [`div/f`](ops/basic_Float.md#divf): float
-  - [`div/i`](ops/basic_Int.md#divi): integer
 - [`drop`](ops/stack.md#drop): Drop
 - [`dup`](ops/stack.md#dup): Duplicate
 
@@ -97,15 +94,11 @@
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
-- [`mod`](ops/basic.md#mod): Modulus
-  - [`mod/d/ss`](ops/basic_Dec_SS.md#moddss): decimal (shopspring)
 - [`mul`](ops/basic.md#mul): Multiplication
-  - [`mul/d/ss`](ops/basic_Dec_SS.md#muldss): decimal (shopspring)
   - [`mul/f`](ops/basic_Float.md#mulf): float
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
-  - [`neg/d/ss`](ops/basic_Dec_SS.md#negdss): decimal (shopspring)
   - [`neg/f`](ops/basic_Float.md#negf): float
 - `not`
   - [`not/i`](ops/prog.md#noti): Bitwise not
@@ -117,12 +110,9 @@
 
 ## p
 - [`pow`](ops/basic.md#pow): Exponentiation
-  - [`pow/d/ss`](ops/basic_Dec_SS.md#powdss): decimal (shopspring)
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
-- [`rem`](ops/basic.md#rem): Remainder
-  - [`rem/d/ss`](ops/basic_Dec_SS.md#remdss): decimal (shopspring)
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`round`](ops/format.md#round): Round number
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
@@ -144,9 +134,7 @@
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): float
-  - [`sqrt/i`](ops/basic_Int.md#sqrti): integer
 - [`sub`](ops/basic.md#sub): Subtraction
-  - [`sub/d/ss`](ops/basic_Dec_SS.md#subdss): decimal (shopspring)
   - [`sub/f`](ops/basic_Float.md#subf): float
 
 ## t

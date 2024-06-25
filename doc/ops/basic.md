@@ -9,13 +9,10 @@ Basic calculator
 | Operation           | Description       
 |---------------------|-------------------
 | [`add, a, +`](#add) | Addition          
-| [`cb`](#cb)         | Cube of a number  
 | [`div, d, /`](#div) | Division          
-| [`mod`](#mod)       | Modulus           
 | [`mul, m, *`](#mul) | Multiplication    
 | [`neg`](#neg)       | Negation          
 | [`pow, **`](#pow)   | Exponentiation    
-| [`rem`](#rem)       | Remainder         
 | [`sign`](#sign)     | Sign              
 | [`sq`](#sq)         | Square of a number
 | [`sqrt`](#sqrt)     | Square Root       
@@ -23,9 +20,7 @@ Basic calculator
 
 ## Related Volumes
 
-- [basic/Dec/SS](basic_Dec_SS.md)
 - [basic/Float](basic_Float.md)
-- [basic/Int](basic_Int.md)
 
 
 ## Operations
@@ -49,21 +44,6 @@ Example:
 | `c 6 2 a`     | `8`  
 | `c 1.1 2.2 a` | `3.3`
 
-### cb
-
-The cube of a number, x³
-
-Macro definition:
-```
-def cb dup dup mul mul
-```
-
-Example:
-
-| Input  | Stack
-|--------|------
-| `3 cb` | `27` 
-
 ### div
 
 Divides *x* by *y*. If *y* is zero, a 'division by zero'
@@ -82,24 +62,6 @@ Example:
 |------------|------
 | `c 12 4 d` | `3`  
 | `c 11 2 d` | `5.5`
-
-### mod
-
-The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
-zero' error is raised.
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-```
-
-Example:
-
-| Input | Stack    
-|-------|----------
-| `-7`  | `-7`     
-| `2`   | `-7 \| 2`
-| `mod` | `1`      
 
 ### mul
 
@@ -157,24 +119,6 @@ Example:
 | `6`   | `6`     
 | `2`   | `6 \| 2`
 | `pow` | `36`    
-
-### rem
-
-The remainder when *x* is divided by *y*. If *y* is zero, a
-'division by zero' error is raised.
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-( x:Dec y:Dec -- Dec )
-```
-
-Example:
-
-| Input            | Stack 
-|------------------|-------
-| `-7 -2 rem`      | `-1`  
-| `c 6.75 0.5 rem` | `0.25`
 
 ### sign
 

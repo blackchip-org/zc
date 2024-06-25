@@ -21,15 +21,6 @@ ops:
   - i: c 1.1 2.2 a
     o: [3.3]
 
-- name: cb
-  title: Cube of a number
-  macro: dup dup mul mul
-  desc: |-
-    The cube of a number, x³
-  example:
-  - i: 3 cb
-    o: [27]
-
 - name: div
   aliases: [d, "/"]
   virtual: true
@@ -56,28 +47,28 @@ ops:
       - i: 6.6 0 div
         error: "div: division by zero"
 
-- name: mod
-  virtual: true
-  title: Modulus
-  funcs:
-  - name: ModBigInt
-    params: [x:Int, y:Int]
-    returns: [Int]
-  desc: |-
-    The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
-    zero' error is raised.
-  example:
-  - i: -7
-    o: [-7]
-  - i: 2
-    o: [-7, 2]
-  - i: mod
-    o: [1]
-  tests:
-  - name: Zero
-    test:
-    - i: 6 0 mod
-      error: "mod: division by zero"
+# - name: mod
+#   virtual: true
+#   title: Modulus
+#   funcs:
+#   - name: ModBigInt
+#     params: [x:Int, y:Int]
+#     returns: [Int]
+#   desc: |-
+#     The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
+#     zero' error is raised.
+#   example:
+#   - i: -7
+#     o: [-7]
+#   - i: 2
+#     o: [-7, 2]
+#   - i: mod
+#     o: [1]
+#   tests:
+#   - name: Zero
+#     test:
+#     - i: 6 0 mod
+#       error: "mod: division by zero"
 
 - name: mul
   virtual: true
@@ -161,34 +152,6 @@ ops:
     test:
     - i: 0.0 -1 pow
       error: "pow: infinity"
-
-- name: rem
-  virtual: true
-  title: Remainder
-  funcs:
-  - name: RemBigInt
-    params: [x:Int, y:Int]
-    returns: [Int]
-  - name: RemDecimal
-    params: [x:Dec, y:Dec]
-    returns: [Dec]
-  desc: |-
-    The remainder when *x* is divided by *y*. If *y* is zero, a
-    'division by zero' error is raised.
-  example:
-  - i: -7 -2 rem
-    o: [-1]
-  - i: c 6.75 0.5 rem
-    o: [0.25]
-  tests:
-  - name: BigIntZero
-    test:
-    - i: 6 0 rem
-      error: "rem: division by zero"
-  - name: DecimalZero
-    test:
-    - i: 6.6 0 rem
-      error: "rem: division by zero"
 
 - name: sign
   virtual: true

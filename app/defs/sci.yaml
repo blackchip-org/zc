@@ -101,6 +101,21 @@ ops:
   - i: 0.5 atanh 5 round
     o: [0.54931]
 
+- name: cbrt
+  title: Cube root
+  funcs:
+  - name: CbrtFloat64
+    params: [x:Float/64]
+    returns: [Float/64]
+  desc: |-
+    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 27
+    o: [27]
+  - i: cbrt
+    o: [3]
+
 - name: cos
   virtual: true
   title: Cosine
@@ -123,20 +138,14 @@ ops:
   - i: 2 cosh 5 round
     o: [3.7622]
 
-- name: cbrt
-  title: Cube root
-  funcs:
-  - name: CbrtFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+- name: cb
+  title: Cube of a number
+  macro: dup dup mul mul
   desc: |-
-    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
-    error is raised.
+    The cube of a number, x³
   example:
-  - i: 27
+  - i: 3 cb
     o: [27]
-  - i: cbrt
-    o: [3]
 
 - name: exp
   virtual: true

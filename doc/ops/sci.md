@@ -16,6 +16,7 @@ Scientific calculator
 | [`atan`](#atan)   | Inverse tangent           
 | [`atan2`](#atan2) | Inverse tangent           
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
+| [`cb`](#cb)       | Cube of a number          
 | [`cbrt`](#cbrt)   | Cube root                 
 | [`cos`](#cos)     | Cosine                    
 | [`cosh`](#cosh)   | Hyperbolic cosine         
@@ -162,6 +163,21 @@ Example:
 | Input               | Stack    
 |---------------------|----------
 | `0.5 atanh 5 round` | `0.54931`
+
+### cb
+
+The cube of a number, x³
+
+Macro definition:
+```
+def cb dup dup mul mul
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `3 cb` | `27` 
 
 ### cbrt
 

@@ -28,7 +28,7 @@ Example:
 | Input           | Stack       
 |-----------------|-------------
 | `42`            | `42`        
-| `/answer label` | `answer: 42`
+| `/answer label` | `42 :answer`
 
 ### unit
 

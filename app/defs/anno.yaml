@@ -14,7 +14,7 @@ ops:
   - i: 42
     o: [42]
   - i: /answer label
-    o: ["answer: 42"]
+    o: ["42 :answer"]
 
 - name: unit
   title: Attach unit
