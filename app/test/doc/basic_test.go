@@ -35,6 +35,20 @@ func TestOpDocs_Basic_Div(t *testing.T) {
 	c.AssertStack("5.5")
 }
 
+func TestOpDocs_Basic_Div_Thirds(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 3 div")
+	c.AssertStack("0.6666666666666667")
+}
+
+func TestOpDocs_Basic_Div_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.6 0 div")
+	c.AssertError("div: division by zero")
+}
+
 func TestOpDocs_Basic_Mod(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -44,8 +58,15 @@ func TestOpDocs_Basic_Mod(t *testing.T) {
 	c.Eval("2")
 	c.AssertStack("-7", "2")
 
-	c.Eval("mod/i")
+	c.Eval("mod")
 	c.AssertStack("1")
+}
+
+func TestOpDocs_Basic_Mod_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 mod")
+	c.AssertError("mod: division by zero")
 }
 
 func TestOpDocs_Basic_Mul(t *testing.T) {
@@ -71,6 +92,13 @@ func TestOpDocs_Basic_Neg(t *testing.T) {
 	c.AssertStack("-6")
 }
 
+func TestOpDocs_Basic_Neg_Decimal(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-6.6 neg")
+	c.AssertStack("6.6")
+}
+
 func TestOpDocs_Basic_Pow(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -84,17 +112,63 @@ func TestOpDocs_Basic_Pow(t *testing.T) {
 	c.AssertStack("36")
 }
 
+func TestOpDocs_Basic_Pow_BigIntZero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 0 pow")
+	c.AssertStack("1")
+}
+
+func TestOpDocs_Basic_Pow_BigIntInf(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 -1 pow")
+	c.AssertStack("1")
+}
+
+func TestOpDocs_Basic_Pow_DecimalNegativeSqrt(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 0.5 pow")
+	c.AssertError("pow: invalid operation")
+}
+
+func TestOpDocs_Basic_Pow_DecimalZero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0.0 0.0 pow")
+	c.AssertError("pow: invalid operation")
+}
+
+func TestOpDocs_Basic_Pow_DecimalInf(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0.0 -1 pow")
+	c.AssertError("pow: infinity")
+}
+
 func TestOpDocs_Basic_Rem(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("-7")
-	c.AssertStack("-7")
-
-	c.Eval("2")
-	c.AssertStack("-7", "2")
-
-	c.Eval("rem")
+	c.Eval("-7 -2 rem")
 	c.AssertStack("-1")
+
+	c.Eval("c 6.75 0.5 rem")
+	c.AssertStack("0.25")
+}
+
+func TestOpDocs_Basic_Rem_BigIntZero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 rem")
+	c.AssertError("rem: division by zero")
+}
+
+func TestOpDocs_Basic_Rem_DecimalZero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.6 0 rem")
+	c.AssertError("rem: division by zero")
 }
 
 func TestOpDocs_Basic_Sign(t *testing.T) {
@@ -110,6 +184,13 @@ func TestOpDocs_Basic_Sign(t *testing.T) {
 	c.AssertStack("0")
 }
 
+func TestOpDocs_Basic_Sign_Decimal(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-6.4 sign")
+	c.AssertStack("-1")
+}
+
 func TestOpDocs_Basic_Sq(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -120,22 +201,26 @@ func TestOpDocs_Basic_Sq(t *testing.T) {
 func TestOpDocs_Basic_Sqrt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("256")
-	c.AssertStack("256")
+	c.Eval("1.25 sq")
+	c.AssertStack("1.5625")
 
 	c.Eval("sqrt")
-	c.AssertStack("16")
+	c.AssertStack("1.25")
+}
+
+func TestOpDocs_Basic_Sqrt_Negative(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 sqrt")
+	c.AssertError("sqrt: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_Basic_Sub(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("6")
-	c.AssertStack("6")
-
-	c.Eval("2")
-	c.AssertStack("6", "2")
-
-	c.Eval("sub")
+	c.Eval("c 6 2 sub")
 	c.AssertStack("4")
+
+	c.Eval("c 6.6 2.2 sub")
+	c.AssertStack("4.4")
 }

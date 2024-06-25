@@ -8,19 +8,6 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_BasicInt_AddI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6")
-	c.AssertStack("6")
-
-	c.Eval("2")
-	c.AssertStack("6", "2")
-
-	c.Eval("add/i")
-	c.AssertStack("8")
-}
-
 func TestOpDocs_BasicInt_DivI(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -41,113 +28,7 @@ func TestOpDocs_BasicInt_DivI_Zero(t *testing.T) {
 	c.AssertError("div/i: division by zero")
 }
 
-func TestOpDocs_BasicInt_ModI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("-7")
-	c.AssertStack("-7")
-
-	c.Eval("2")
-	c.AssertStack("-7", "2")
-
-	c.Eval("mod/i")
-	c.AssertStack("1")
-}
-
-func TestOpDocs_BasicInt_ModI_Zero(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6 0 mod/i")
-	c.AssertError("mod/i: division by zero")
-}
-
-func TestOpDocs_BasicInt_MulI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6")
-	c.AssertStack("6")
-
-	c.Eval("2")
-	c.AssertStack("6", "2")
-
-	c.Eval("mul/i")
-	c.AssertStack("12")
-}
-
-func TestOpDocs_BasicInt_NegI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("-6")
-	c.AssertStack("-6")
-
-	c.Eval("neg/i")
-	c.AssertStack("6")
-
-	c.Eval("neg/i")
-	c.AssertStack("-6")
-}
-
-func TestOpDocs_BasicInt_PowI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6")
-	c.AssertStack("6")
-
-	c.Eval("2")
-	c.AssertStack("6", "2")
-
-	c.Eval("pow/i")
-	c.AssertStack("36")
-}
-
-func TestOpDocs_BasicInt_PowI_Zero(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("0 0 pow/i")
-	c.AssertStack("1")
-}
-
-func TestOpDocs_BasicInt_PowI_Inf(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("0 -1 pow/i")
-	c.AssertStack("1")
-}
-
-func TestOpDocs_BasicInt_RemI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("-7")
-	c.AssertStack("-7")
-
-	c.Eval("2")
-	c.AssertStack("-7", "2")
-
-	c.Eval("rem/i")
-	c.AssertStack("-1")
-}
-
-func TestOpDocs_BasicInt_RemI_Zero(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6 0 rem")
-	c.AssertError("rem/i: division by zero")
-}
-
-func TestOpDocs_BasicInt_SignI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("c -6 sign/i")
-	c.AssertStack("-1")
-
-	c.Eval("c 6 sign/i")
-	c.AssertStack("1")
-
-	c.Eval("c 0 sign/i")
-	c.AssertStack("0")
-}
-
-func TestOpDocs_BasicInt_SquareRootI(t *testing.T) {
+func TestOpDocs_BasicInt_SqrtI(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("65536")
@@ -157,29 +38,16 @@ func TestOpDocs_BasicInt_SquareRootI(t *testing.T) {
 	c.AssertStack("256")
 }
 
-func TestOpDocs_BasicInt_SquareRootI_Zero(t *testing.T) {
+func TestOpDocs_BasicInt_SqrtI_Zero(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0 sqrt/i")
 	c.AssertStack("0")
 }
 
-func TestOpDocs_BasicInt_SquareRootI_Neg(t *testing.T) {
+func TestOpDocs_BasicInt_SqrtI_Neg(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("-1 sqrt/i")
-	c.AssertError("square.root/i: invalid argument, -1 < 0")
-}
-
-func TestOpDocs_BasicInt_SubI(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6")
-	c.AssertStack("6")
-
-	c.Eval("2")
-	c.AssertStack("6", "2")
-
-	c.Eval("sub/i")
-	c.AssertStack("4")
+	c.AssertError("sqrt/i: invalid argument, -1 < 0")
 }

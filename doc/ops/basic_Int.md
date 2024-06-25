@@ -6,40 +6,13 @@ Basic calculator
 
 ## Index
 
-| Operation                               | Description   
-|-----------------------------------------|---------------
-| [`add, add/i`](#addi)                   | Addition      
-| [`div/i`](#divi)                        | Division      
-| [`mod, mod/i`](#modi)                   | Modulus       
-| [`mul, mul/i`](#muli)                   | Multiplication
-| [`neg, neg/i`](#negi)                   | Negation      
-| [`pow, pow/i`](#powi)                   | Exponentiation
-| [`rem, rem/i`](#remi)                   | Remainder     
-| [`sign, sign/i`](#signi)                | Sign          
-| [`square.root/i, sqrt/i`](#squarerooti) | Square root   
-| [`sub, sub/i`](#subi)                   | Subtraction   
+| Operation          | Description
+|--------------------|------------
+| [`div/i`](#divi)   | Division   
+| [`sqrt/i`](#sqrti) | Square root
 
 
 ## Operations
-
-### add/i
-
-Adds *x* to *y*.
-
-Overloads: `add`
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-```
-
-Example:
-
-| Input   | Stack   
-|---------|---------
-| `6`     | `6`     
-| `2`     | `6 \| 2`
-| `add/i` | `8`     
 
 ### div/i
 
@@ -59,129 +32,10 @@ Example:
 | `2`     | `6 \| 2`
 | `div/i` | `3`     
 
-### mod/i
-
-The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
-zero' error is raised.
-
-Overloads: `mod`
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-```
-
-Example:
-
-| Input   | Stack    
-|---------|----------
-| `-7`    | `-7`     
-| `2`     | `-7 \| 2`
-| `mod/i` | `1`      
-
-### mul/i
-
-Multiplies the value of *x* by *y*.
-
-Overloads: `mul`
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-```
-
-Example:
-
-| Input   | Stack   
-|---------|---------
-| `6`     | `6`     
-| `2`     | `6 \| 2`
-| `mul/i` | `12`    
-
-### neg/i
-
-Changes the sign of *x*.
-
-Overloads: `neg`
-
-Stack effects:
-```
-( x:Int -- Int )
-```
-
-Example:
-
-| Input   | Stack
-|---------|------
-| `-6`    | `-6` 
-| `neg/i` | `6`  
-| `neg/i` | `-6` 
-
-### pow/i
-
-Raises *x* to the power of *y*.
-
-Overloads: `pow`
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-```
-
-Example:
-
-| Input   | Stack   
-|---------|---------
-| `6`     | `6`     
-| `2`     | `6 \| 2`
-| `pow/i` | `36`    
-
-### rem/i
-
-The remainder when *x* is divided by *y*. If *y* is zero, a
-'division by zero' error is raised.
-
-Overloads: `rem`
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-```
-
-Example:
-
-| Input   | Stack    
-|---------|----------
-| `-7`    | `-7`     
-| `2`     | `-7 \| 2`
-| `rem/i` | `-1`     
-
-### sign/i
-
-Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
-if *x* is zero.
-
-Overloads: `sign`
-
-Stack effects:
-```
-( x:Int -- Int/s )
-```
-
-Example:
-
-| Input         | Stack
-|---------------|------
-| `c -6 sign/i` | `-1` 
-| `c 6 sign/i`  | `1`  
-| `c 0 sign/i`  | `0`  
-
-### square.root/i
+### sqrt/i
 
 The square root of *x*. If the result is not an integer, the value is
 floored. If *x* is less than zero, an 'invalid argument' error is raised.
-
-Alias: `sqrt/i`
 
 Stack effects:
 ```
@@ -194,22 +48,3 @@ Example:
 |----------|--------
 | `65536`  | `65536`
 | `sqrt/i` | `256`  
-
-### sub/i
-
-Subtracts the value of *y* from *x*.
-
-Overloads: `sub`
-
-Stack effects:
-```
-( x:Int y:Int -- Int )
-```
-
-Example:
-
-| Input   | Stack   
-|---------|---------
-| `6`     | `6`     
-| `2`     | `6 \| 2`
-| `sub/i` | `4`     

@@ -4,17 +4,120 @@ package ops
 
 import (
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/app/funcs"
 )
 
 var (
-	Add  = zc.Op{Name: "add", Virtual: true}
-	Div  = zc.Op{Name: "div", Virtual: true}
-	Mod  = zc.Op{Name: "mod", Virtual: true}
-	Mul  = zc.Op{Name: "mul", Virtual: true}
-	Neg  = zc.Op{Name: "neg", Virtual: true}
-	Pow  = zc.Op{Name: "pow", Virtual: true}
-	Rem  = zc.Op{Name: "rem", Virtual: true}
-	Sign = zc.Op{Name: "sign", Virtual: true}
-	Sqrt = zc.Op{Name: "sqrt", Virtual: true}
-	Sub  = zc.Op{Name: "sub", Virtual: true}
+	Add       = zc.Op{Name: "add", Virtual: true}
+	AddBigInt = zc.Op{
+		Name:    "add",
+		Params:  []zc.Type{zc.BigInt, zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.AddBigInt,
+	}
+	AddDecimal = zc.Op{
+		Name:    "add",
+		Params:  []zc.Type{zc.Decimal, zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.AddDecimal,
+	}
+	Div        = zc.Op{Name: "div", Virtual: true}
+	DivDecimal = zc.Op{
+		Name:    "div",
+		Params:  []zc.Type{zc.Decimal, zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.DivDecimal,
+	}
+	Mod       = zc.Op{Name: "mod", Virtual: true}
+	ModBigInt = zc.Op{
+		Name:    "mod",
+		Params:  []zc.Type{zc.BigInt, zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.ModBigInt,
+	}
+	Mul       = zc.Op{Name: "mul", Virtual: true}
+	MulBigInt = zc.Op{
+		Name:    "mul",
+		Params:  []zc.Type{zc.BigInt, zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.MulBigInt,
+	}
+	MulDecimal = zc.Op{
+		Name:    "mul",
+		Params:  []zc.Type{zc.Decimal, zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.MulDecimal,
+	}
+	Neg       = zc.Op{Name: "neg", Virtual: true}
+	NegBigInt = zc.Op{
+		Name:    "neg",
+		Params:  []zc.Type{zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.NegBigInt,
+	}
+	NegDecimal = zc.Op{
+		Name:    "neg",
+		Params:  []zc.Type{zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.NegDecimal,
+	}
+	Pow       = zc.Op{Name: "pow", Virtual: true}
+	PowBigInt = zc.Op{
+		Name:    "pow",
+		Params:  []zc.Type{zc.BigInt, zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.PowBigInt,
+	}
+	PowDecimal = zc.Op{
+		Name:    "pow",
+		Params:  []zc.Type{zc.Decimal, zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.PowDecimal,
+	}
+	Rem       = zc.Op{Name: "rem", Virtual: true}
+	RemBigInt = zc.Op{
+		Name:    "rem",
+		Params:  []zc.Type{zc.BigInt, zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.RemBigInt,
+	}
+	RemDecimal = zc.Op{
+		Name:    "rem",
+		Params:  []zc.Type{zc.Decimal, zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.RemDecimal,
+	}
+	Sign       = zc.Op{Name: "sign", Virtual: true}
+	SignBigInt = zc.Op{
+		Name:    "sign",
+		Params:  []zc.Type{zc.BigInt},
+		Returns: []zc.Type{zc.Int},
+		Func:    funcs.SignBigInt,
+	}
+	SignDecimal = zc.Op{
+		Name:    "sign",
+		Params:  []zc.Type{zc.Decimal},
+		Returns: []zc.Type{zc.Int},
+		Func:    funcs.SignDecimal,
+	}
+	Sqrt        = zc.Op{Name: "sqrt", Virtual: true}
+	SqrtDecimal = zc.Op{
+		Name:    "sqrt",
+		Params:  []zc.Type{zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.SqrtDecimal,
+	}
+	Sub       = zc.Op{Name: "sub", Virtual: true}
+	SubBigInt = zc.Op{
+		Name:    "sub",
+		Params:  []zc.Type{zc.BigInt, zc.BigInt},
+		Returns: []zc.Type{zc.BigInt},
+		Func:    funcs.SubBigInt,
+	}
+	SubDecimal = zc.Op{
+		Name:    "sub",
+		Params:  []zc.Type{zc.Decimal, zc.Decimal},
+		Returns: []zc.Type{zc.Decimal},
+		Func:    funcs.SubDecimal,
+	}
 )

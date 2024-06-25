@@ -4,11 +4,30 @@ package vols
 
 import (
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
 var Basic = zc.Vol{
 	Name: "basic",
-	Ops:  []zc.Op{},
+	Ops: []zc.Op{
+		ops.AddBigInt,
+		ops.AddDecimal,
+		ops.DivDecimal,
+		ops.ModBigInt,
+		ops.MulBigInt,
+		ops.MulDecimal,
+		ops.NegBigInt,
+		ops.NegDecimal,
+		ops.PowBigInt,
+		ops.PowDecimal,
+		ops.RemBigInt,
+		ops.RemDecimal,
+		ops.SignBigInt,
+		ops.SignDecimal,
+		ops.SqrtDecimal,
+		ops.SubBigInt,
+		ops.SubDecimal,
+	},
 	Macros: []zc.Macro{
 		{Name: "a", Expr: "add"},
 		{Name: "+", Expr: "add"},

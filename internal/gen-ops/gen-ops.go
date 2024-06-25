@@ -88,15 +88,16 @@ func genOps(vols []zc.VolDef) {
 		fmt.Fprintf(f, "var (\n")
 		for _, op := range vol.Ops {
 			if op.Virtual {
-				if hasFuncImpl(op) {
-					panic(fmt.Errorf("operation is virtual but has functions: %v", op.Name))
-				}
+				// if hasFuncImpl(op) {
+				// 	panic(fmt.Errorf("operation is virtual but has functions: %v", op.Name))
+				// }
 				fmt.Fprintf(f, "%v = zc.Op{Name: \"%v\", Virtual: true}\n", op.Ident, op.Name)
-				continue
+				// continue
 			}
 			for i, fn := range op.Funcs {
 				if !hasFuncImpl(op) {
-					panic(fmt.Errorf("operation must be virtual if it has no functions: %v", op.Name))
+					//panic(fmt.Errorf("operation must be virtual if it has no functions: %v", op.Name))
+					continue
 				}
 				if fn.Name == "" && i > 0 {
 					continue

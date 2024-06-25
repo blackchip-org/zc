@@ -23,7 +23,6 @@ Basic calculator
 
 ## Related Volumes
 
-- [basic/Dec](basic_Dec.md)
 - [basic/Dec/SS](basic_Dec_SS.md)
 - [basic/Float](basic_Float.md)
 - [basic/Int](basic_Int.md)
@@ -41,7 +40,6 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
-( x:Float y:Float -- Float )
 ```
 
 Example:
@@ -76,7 +74,6 @@ Aliases: `d`, `/`
 Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
-( x:Float y:Float -- Float )
 ```
 
 Example:
@@ -98,11 +95,11 @@ Stack effects:
 
 Example:
 
-| Input   | Stack    
-|---------|----------
-| `-7`    | `-7`     
-| `2`     | `-7 \| 2`
-| `mod/i` | `1`      
+| Input | Stack    
+|-------|----------
+| `-7`  | `-7`     
+| `2`   | `-7 \| 2`
+| `mod` | `1`      
 
 ### mul
 
@@ -114,7 +111,6 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
-( x:Float y:Float -- Float )
 ```
 
 Example:
@@ -175,11 +171,10 @@ Stack effects:
 
 Example:
 
-| Input | Stack    
-|-------|----------
-| `-7`  | `-7`     
-| `2`   | `-7 \| 2`
-| `rem` | `-1`     
+| Input            | Stack 
+|------------------|-------
+| `-7 -2 rem`      | `-1`  
+| `c 6.75 0.5 rem` | `0.25`
 
 ### sign
 
@@ -188,8 +183,8 @@ if *x* is zero.
 
 Stack effects:
 ```
-( x:Int -- Int/a )
-( x:Dec -- Int/a )
+( x:Int -- Int/s )
+( x:Dec -- Int/s )
 ```
 
 Example:
@@ -222,15 +217,15 @@ error is raised.
 
 Stack effects:
 ```
-( x:Float -- Float )
+( x:Dec -- Dec )
 ```
 
 Example:
 
-| Input  | Stack
-|--------|------
-| `256`  | `256`
-| `sqrt` | `16` 
+| Input     | Stack   
+|-----------|---------
+| `1.25 sq` | `1.5625`
+| `sqrt`    | `1.25`  
 
 ### sub
 
@@ -246,8 +241,7 @@ Stack effects:
 
 Example:
 
-| Input | Stack   
-|-------|---------
-| `6`   | `6`     
-| `2`   | `6 \| 2`
-| `sub` | `4`     
+| Input           | Stack
+|-----------------|------
+| `c 6 2 sub`     | `4`  
+| `c 6.6 2.2 sub` | `4.4`

@@ -70,13 +70,13 @@ func TestOpDocs_BasicFloat_NegF(t *testing.T) {
 func TestOpDocs_BasicFloat_SignF(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("c -6.4 sign/d")
+	c.Eval("c -6.4 sign/f")
 	c.AssertStack("-1")
 
-	c.Eval("c 6.4 sign/d")
+	c.Eval("c 6.4 sign/f")
 	c.AssertStack("1")
 
-	c.Eval("c 0 sign/d")
+	c.Eval("c 0 sign/f")
 	c.AssertStack("0")
 }
 
@@ -106,6 +106,6 @@ func TestOpDocs_BasicFloat_SubF(t *testing.T) {
 	c.Eval("2.2")
 	c.AssertStack("6.6", "2.2")
 
-	c.Eval("sub/d")
-	c.AssertStack("4.4")
+	c.Eval("sub/f")
+	c.AssertStack("4.3999999999999999997")
 }
