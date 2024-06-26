@@ -7,6 +7,7 @@ import (
 	"math/cmplx"
 	"strconv"
 
+	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/app/state"
 	"github.com/cockroachdb/apd/v3"
 	"github.com/shopspring/decimal"
@@ -24,6 +25,7 @@ var (
 	Int8      = Int8Type{}
 	Int32     = Int32Type{}
 	Int64     = Int64Type{}
+	Rat       = RatType{}
 	String    = StringType{}
 	Uint      = UintType{}
 	Uint8     = Uint8Type{}
@@ -36,6 +38,8 @@ func TypeOf(a any) Type {
 		return BigInt
 	case *big.Float:
 		return BigFloat
+	case *big.Rat:
+		return Rat
 	case *apd.Decimal:
 		return Decimal
 	case complex128:
@@ -63,9 +67,10 @@ func TypeOf(a any) Type {
 
 var (
 	poolSize     = 8
+	bigFloatPool = NewPool[big.Float](poolSize)
 	bigIntPool   = NewPool[big.Int](poolSize)
 	decimalPool  = NewPool[apd.Decimal](poolSize)
-	bigFloatPool = NewPool[big.Float](poolSize)
+	ratPool      = NewPool[big.Rat](poolSize)
 )
 
 type Type interface {
@@ -604,6 +609,159 @@ func (t Int64Type) Format(v any) string {
 }
 
 func (t Int64Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type RatType struct{}
+
+func (t RatType) Name() string { return "Rat" }
+
+func (t RatType) As(a any) *big.Rat {
+	val, ok := a.(*big.Rat)
+	if !ok {
+		panic(ErrWrongGoType("*big.Rat", a))
+	}
+	return val
+}
+
+func (t RatType) Pop(e *OpEnv) *big.Rat {
+	return t.As(e.Pop().Val)
+}
+
+func (t RatType) Push(e *OpEnv, r *big.Rat) {
+	e.PushVal(r)
+}
+
+func (t RatType) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case *big.Rat:
+		return v, t, true
+	case float64:
+		r := t.New()
+		r.SetFloat64(v)
+		return r, Float64, true
+	case int:
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int64, true
+	case int8:
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int64, true
+	case int16:
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int64, true
+	case int32:
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int64, true
+	case int64:
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int64, true
+	case string:
+		r, ok := t.Parse(v)
+		return r, String, ok
+	}
+	return nil, nil, false
+}
+
+func (t RatType) Parse(s string) (*big.Rat, bool) {
+	i, err := strconv.ParseInt(s, 10, 64)
+	if err == nil {
+		r := t.New()
+		r.SetInt64(i)
+		return r, true
+	}
+	f, err := strconv.ParseFloat(s, 64)
+	if err == nil {
+		r := t.New()
+		r.SetFloat64(f)
+		return r, true
+	}
+
+	sc := scan.NewScannerFromString("", s)
+
+	var sign, whole, num, denom int64
+
+	scan.SignedIntRule.Eval(sc)
+	s1 := sc.Emit().Val
+	i1, err := strconv.ParseInt(s1, 10, 64)
+	if err != nil {
+		return nil, false
+	}
+	if i1 < 0 {
+		sign = -1
+		i1 = i1 * -1
+	} else {
+		sign = 1
+	}
+	switch sc.This {
+	case '_', '-', ' ':
+		whole = i1
+	case '/':
+		num = i1
+	default:
+		return nil, false
+	}
+	sc.Skip()
+
+	scan.IntRule.Eval(sc)
+	s2 := sc.Emit().Val
+	i2, err := strconv.ParseInt(s2, 10, 64)
+	if err != nil {
+		return nil, false
+	}
+	if whole != 0 {
+		num = i2
+		if sc.This != '/' {
+			return nil, false
+		}
+		sc.Skip()
+		scan.IntRule.Eval(sc)
+		s3 := sc.Emit().Val
+		i3, err := strconv.ParseInt(s3, 10, 64)
+		if err != nil {
+			return nil, false
+		}
+		denom = i3
+	} else {
+		denom = i2
+	}
+
+	if whole != 0 {
+		num = num + (denom * whole)
+	}
+	num = num * sign
+	r := t.New()
+	r.SetFrac64(num, denom)
+	return r, true
+}
+
+func (t RatType) Format(v any) string {
+	r := t.As(v)
+	n := r.Num().Int64()
+	d := r.Denom().Int64()
+
+	if n > d {
+		w := n / d
+		n := n % d
+		if n == 0 && d == 1 {
+			return fmt.Sprintf("%v", w)
+		}
+		return fmt.Sprintf("%v %v/%v", w, n, d)
+	}
+	return r.RatString()
+}
+
+func (t RatType) New() *big.Rat {
+	return ratPool.New()
+}
+
+func (t RatType) Recycle(v any) {
+	ratPool.Recycle(v.(*big.Rat))
+}
 
 // ----------------------------------------------------------------------------
 

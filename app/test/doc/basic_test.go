@@ -17,6 +17,9 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 	c.Eval("c 1.1 2.2 a")
 	c.AssertStack("3.3")
 
+	c.Eval("c 1/2 1/4 add")
+	c.AssertStack("3/4")
+
 	c.Eval("c 6+6i 2+2i a")
 	c.AssertStack("8+8i")
 }
@@ -29,6 +32,9 @@ func TestOpDocs_Basic_Div(t *testing.T) {
 
 	c.Eval("c 11 2 d")
 	c.AssertStack("5.5")
+
+	c.Eval("c 1/4 4 div")
+	c.AssertStack("1/16")
 
 	c.Eval("c 12+12i 4+12i d")
 	c.AssertStack("1.2-0.6i")
@@ -80,6 +86,9 @@ func TestOpDocs_Basic_Mul(t *testing.T) {
 
 	c.Eval("c 6.6 2.2 mul")
 	c.AssertStack("14.52")
+
+	c.Eval("c 1/16 4 mul")
+	c.AssertStack("1/4")
 
 	c.Eval("c 2+3i 4+4i m")
 	c.AssertStack("-4+20i")
@@ -222,6 +231,9 @@ func TestOpDocs_Basic_Sub(t *testing.T) {
 
 	c.Eval("c 6.6 2.2 sub")
 	c.AssertStack("4.4")
+
+	c.Eval("c 3/4 1/2 sub")
+	c.AssertStack("1/4")
 
 	c.Eval("c 6+6i 2+2i sub")
 	c.AssertStack("4+4i")

@@ -2,6 +2,7 @@
 
 # Index
 
+- [`%`](ops/basic.md#rem): Alias for [rem](ops/basic.md#rem)
 - [`*`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
 - [`**`](ops/basic.md#pow): Alias for [pow](ops/basic.md#pow)
 - [`+`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
@@ -19,6 +20,7 @@
 - [`add`](ops/basic.md#add): Addition
   - [`add/c`](ops/basic_Complex.md#addc): complex
   - [`add/f`](ops/basic_Float.md#addf): float
+  - [`add/r`](ops/basic_Rat.md#addr): rational
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
 - [`asin`](ops/sci.md#asin): Inverse sine
@@ -57,6 +59,7 @@
   - [`div/c`](ops/basic_Complex.md#divc): complex
   - [`div/f`](ops/basic_Float.md#divf): float
   - [`div/i`](ops/basic_Int.md#divi): int
+  - [`div/r`](ops/basic_Rat.md#divr): rational
 - [`div.e`](ops/basic_Int.md#dive): Division (Euclidean)
 - [`div.mod.e`](ops/basic_Int.md#divmode): Division with modulus (Euclidean)
 - [`div.rem`](ops/basic.md#divrem): Division with remainder
@@ -93,11 +96,13 @@
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/c`](ops/basic_Complex.md#mulc): complex
   - [`mul/f`](ops/basic_Float.md#mulf): float
+  - [`mul/r`](ops/basic_Rat.md#mulr): rational
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/c`](ops/basic_Complex.md#negc): complex
   - [`neg/f`](ops/basic_Float.md#negf): float
+  - [`neg/r`](ops/basic_Rat.md#negr): rational
 - `not`
   - [`not/i`](ops/prog.md#noti): Bitwise not
 
@@ -136,6 +141,7 @@
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/c`](ops/basic_Complex.md#subc): complex
   - [`sub/f`](ops/basic_Float.md#subf): float
+  - [`sub/r`](ops/basic_Rat.md#subr): rational
 
 ## t
 - [`tan`](ops/sci.md#tan): Tangent

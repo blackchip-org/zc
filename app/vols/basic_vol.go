@@ -38,6 +38,7 @@ var Basic = zc.Vol{
 		{Name: "m", Expr: "mul"},
 		{Name: "*", Expr: "mul"},
 		{Name: "**", Expr: "pow"},
+		{Name: "%", Expr: "rem"},
 		{Name: "sq", Expr: "dup mul"},
 		{Name: "s", Expr: "sub"},
 		{Name: "-", Expr: "sub"},

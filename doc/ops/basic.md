@@ -15,7 +15,7 @@ Basic calculator
 | [`mul, m, *`](#mul)      | Multiplication         
 | [`neg`](#neg)            | Negation               
 | [`pow, **`](#pow)        | Exponentiation         
-| [`rem`](#rem)            | Remainder              
+| [`rem, %`](#rem)         | Remainder              
 | [`sign`](#sign)          | Sign                   
 | [`sq`](#sq)              | Square of a number     
 | [`sqrt`](#sqrt)          | Square Root            
@@ -26,6 +26,7 @@ Basic calculator
 - [basic/Complex](basic_Complex.md)
 - [basic/Float](basic_Float.md)
 - [basic/Int](basic_Int.md)
+- [basic/Rat](basic_Rat.md)
 
 
 ## Operations
@@ -40,6 +41,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat --  )
 ( x:Complex y:Complex -- Complex )
 ```
 
@@ -49,6 +51,7 @@ Example:
 |-----------------|-------
 | `c 6 2 a`       | `8`   
 | `c 1.1 2.2 a`   | `3.3` 
+| `c 1/2 1/4 add` | `3/4` 
 | `c 6+6i 2+2i a` | `8+8i`
 
 ### div
@@ -61,6 +64,7 @@ Aliases: `d`, `/`
 Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat --  )
 ( x:Complex y:Complex -- Complex )
 ```
 
@@ -70,6 +74,7 @@ Example:
 |--------------------|-----------
 | `c 12 4 d`         | `3`       
 | `c 11 2 d`         | `5.5`     
+| `c 1/4 4 div`      | `1/16`    
 | `c 12+12i 4+12i d` | `1.2-0.6i`
 
 ### div.rem
@@ -117,6 +122,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat --  )
 ( x:Complex y:Complex -- Complex )
 ```
 
@@ -126,6 +132,7 @@ Example:
 |-----------------|---------
 | `c 6 2 mul`     | `12`    
 | `c 6.6 2.2 mul` | `14.52` 
+| `c 1/16 4 mul`  | `1/4`   
 | `c 2+3i 4+4i m` | `-4+20i`
 
 ### neg
@@ -136,6 +143,7 @@ Stack effects:
 ```
 ( x:Int -- Int )
 ( x:Dec -- Dec )
+( x:Rat y:Rat --  )
 ( x:Complex -- Complex )
 ```
 
@@ -173,6 +181,8 @@ Example:
 The remainder, or truncated modulus, when *x* is divided by *y*. If *y* is
 zero, a 'division by zero' error is raised.
 
+Alias: `%`
+
 Stack effects:
 ```
 ( x:Int y:Int -- Int )
@@ -194,6 +204,7 @@ Stack effects:
 ```
 ( x:Int -- Int/s )
 ( x:Dec -- Int/s )
+( x:Rat y:Rat --  )
 ```
 
 Example:
@@ -247,6 +258,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat --  )
 ( x:Complex y:Complex -- x:Complex )
 ```
 
@@ -256,4 +268,5 @@ Example:
 |-------------------|-------
 | `c 6 2 sub`       | `4`   
 | `c 6.6 2.2 sub`   | `4.4` 
+| `c 3/4 1/2 sub`   | `1/4` 
 | `c 6+6i 2+2i sub` | `4+4i`

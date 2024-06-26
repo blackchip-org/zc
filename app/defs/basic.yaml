@@ -14,6 +14,8 @@ ops:
   - name: AddDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - params: [x:Rat, y:Rat]
+    return: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: Adds *x* to *y*.
@@ -22,6 +24,8 @@ ops:
     o: [8]
   - i: c 1.1 2.2 a
     o: [3.3]
+  - i: c 1/2 1/4 add
+    o: [3/4]
   - i: c 6+6i 2+2i a
     o: [8+8i]
 
@@ -33,6 +37,8 @@ ops:
   - name: DivDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - params: [x:Rat, y:Rat]
+    return: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: |-
@@ -43,6 +49,8 @@ ops:
     o: [3]
   - i: c 11 2 d
     o: [5.5]
+  - i: c 1/4 4 div
+    o: [1/16]
   - i: c 12+12i 4+12i d
     o: [1.2-0.6i]
   tests:
@@ -101,6 +109,8 @@ ops:
   - name: MulDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - params: [x:Rat, y:Rat]
+    return: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: Multiplies *x* by *y*.
@@ -109,6 +119,8 @@ ops:
     o: [12]
   - i: c 6.6 2.2 mul
     o: [14.52]
+  - i: c 1/16 4 mul
+    o: [1/4]
   - i: c 2+3i 4+4i m
     o: [-4+20i]
 
@@ -122,6 +134,8 @@ ops:
   - name: NegDecimal
     params: [x:Dec]
     returns: [Dec]
+  - params: [x:Rat, y:Rat]
+    return: [Rat]
   - params: [x:Complex]
     returns: [Complex]
   desc: Changes the sign of *x*.
@@ -137,7 +151,6 @@ ops:
     test:
     - i: -6.6 neg
       o: [6.6]
-
 
 - name: pow
   virtual: true
@@ -184,7 +197,7 @@ ops:
       error: "pow: infinity"
 
 - name: rem
-  alias: ["%"]
+  aliases: ["%"]
   virtual: true
   title: Remainder
   funcs:
@@ -215,6 +228,8 @@ ops:
   - name: SignDecimal
     params: [x:Dec]
     returns: [Int/s]
+  - params: [x:Rat, y:Rat]
+    return: [Rat]
   desc: |-
     Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
     if *x* is zero.
@@ -274,6 +289,8 @@ ops:
   - name: SubDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - params: [x:Rat, y:Rat]
+    return: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [x:Complex]
   desc: Subtracts the value of *y* from *x*
@@ -282,5 +299,7 @@ ops:
     o: [4]
   - i: c 6.6 2.2 sub
     o: [4.4]
+  - i: c 3/4 1/2 sub
+    o: [1/4]
   - i: c 6+6i 2+2i sub
     o: [4+4i]
