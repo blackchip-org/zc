@@ -10,22 +10,9 @@ import (
 var SciFloat64 = zc.Vol{
 	Name: "sci/Float/64",
 	Ops: []zc.Op{
-		ops.AbsFloat64,
-		ops.AcosFloat64,
-		ops.AcoshFloat64,
-		ops.AsinFloat64,
-		ops.AsinhFloat64,
-		ops.AtanFloat64,
-		ops.AtanhFloat64,
-		ops.CosFloat64,
-		ops.CoshFloat64,
+		ops.CbrtFloat64,
 		ops.ExpFloat64,
-		ops.LogFloat64,
 		ops.Log10Float64,
-		ops.SinFloat64,
-		ops.SinhFloat64,
-		ops.TanFloat64,
-		ops.TanhFloat64,
 	},
 	Macros: []zc.Macro{},
 }

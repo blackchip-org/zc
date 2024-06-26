@@ -18,9 +18,11 @@ Scientific calculator
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
 | [`cb`](#cb)       | Cube of a number          
 | [`cbrt`](#cbrt)   | Cube root                 
+| [`ceil`](#ceil)   | Ceiling                   
 | [`cos`](#cos)     | Cosine                    
 | [`cosh`](#cosh)   | Hyperbolic cosine         
 | [`exp`](#exp)     | Natural exponential       
+| [`floor`](#floor) | Floor                     
 | [`log`](#log)     | Natural logarithm         
 | [`log10`](#log10) | Decimal logarithm         
 | [`sin`](#sin)     | Sine                      
@@ -31,9 +33,7 @@ Scientific calculator
 ## Related Volumes
 
 - [sci/Complex](sci_Complex.md)
-- [sci/Dec](sci_Dec.md)
 - [sci/Float/64](sci_Float_64.md)
-- [sci/Int](sci_Int.md)
 
 
 ## Operations
@@ -48,8 +48,8 @@ plane.
 Stack effects:
 ```
 ( x:Int -- Int )
-( x:Float/64 -- Float/64 )
-( x:Complex/128 -- Float/64 )
+( x:Dec -- Dec )
+( x:Complex -- Float/64 )
 ```
 
 Example:
@@ -66,6 +66,7 @@ Inverse cosine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -81,6 +82,7 @@ Inverse hyperbolic cosine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -96,6 +98,7 @@ Inverse sine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -111,6 +114,7 @@ Inverse hyperbolic sine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -126,6 +130,7 @@ Inverse tangent of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -156,6 +161,7 @@ Inverse hyperbolic tangent of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -186,7 +192,7 @@ error is raised.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Dec -- Dec )
 ```
 
 Example:
@@ -196,6 +202,21 @@ Example:
 | `27`   | `27` 
 | `cbrt` | `3`  
 
+### ceil
+
+The nearest integer value greater than or equal to *x*.
+
+Stack effects:
+```
+( x:Dec -- x:Dec )
+```
+
+Example:
+
+| Input      | Stack
+|------------|------
+| `6.6 ceil` | `7`  
+
 ### cos
 
 Cosine of *x* in radians.
@@ -203,6 +224,7 @@ Cosine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -218,6 +240,7 @@ Hyperbolic cosine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -232,7 +255,8 @@ Natural exponential of *x*.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Dec -- Dec )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -241,6 +265,21 @@ Example:
 |-----------------|----------
 | `2 exp 5 round` | `7.38906`
 
+### floor
+
+The nearest integer value less than or equal to *x*.
+
+Stack effects:
+```
+( x:Dec -- x:Dec )
+```
+
+Example:
+
+| Input        | Stack
+|--------------|------
+| `6.12 floor` | `6`  
+
 ### log
 
 Natural logarithm of *x*.
@@ -248,6 +287,7 @@ Natural logarithm of *x*.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -262,7 +302,8 @@ Natural logarithm of *x*.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Dec -- Dec )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -278,6 +319,7 @@ Sine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -293,6 +335,7 @@ Hyperbolic sine of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -308,6 +351,7 @@ Tangent of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -323,6 +367,7 @@ Hyperbolic tangent of *x* in radians.
 Stack effects:
 ```
 ( x:Float/64 -- Float/64 )
+( x:Complex -- Complex )
 ```
 
 Example:

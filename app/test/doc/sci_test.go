@@ -18,6 +18,13 @@ func TestOpDocs_Sci_Abs(t *testing.T) {
 	c.AssertStack("2.82843")
 }
 
+func TestOpDocs_Sci_Abs_Dec(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-6.6 abs")
+	c.AssertStack("6.6")
+}
+
 func TestOpDocs_Sci_Acos(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -84,6 +91,13 @@ func TestOpDocs_Sci_Cbrt(t *testing.T) {
 	c.AssertStack("3")
 }
 
+func TestOpDocs_Sci_Ceil(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.6 ceil")
+	c.AssertStack("7")
+}
+
 func TestOpDocs_Sci_Cos(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -103,6 +117,13 @@ func TestOpDocs_Sci_Exp(t *testing.T) {
 
 	c.Eval("2 exp 5 round")
 	c.AssertStack("7.38906")
+}
+
+func TestOpDocs_Sci_Floor(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.12 floor")
+	c.AssertStack("6")
 }
 
 func TestOpDocs_Sci_Log(t *testing.T) {

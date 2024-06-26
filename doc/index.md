@@ -12,32 +12,23 @@
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`abs`](ops/sci.md#abs): Absolute value
   - [`abs/c`](ops/sci_Complex.md#absc): 128-bit complex
-  - [`abs/d`](ops/sci_Dec.md#absd): decimal
-  - [`abs/f64`](ops/sci_Float_64.md#absf64): 64-bit floating-point
-  - [`abs/i`](ops/sci_Int.md#absi): integer
 - [`acos`](ops/sci.md#acos): Inverse cosine
   - [`acos/c`](ops/sci_Complex.md#acosc): 128-bit complex
-  - [`acos/f64`](ops/sci_Float_64.md#acosf64): 64-bit floating-point
 - [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
   - [`acosh/c`](ops/sci_Complex.md#acoshc): 128-bit complex
-  - [`acosh/f64`](ops/sci_Float_64.md#acoshf64): 64-bit floating-point
 - [`add`](ops/basic.md#add): Addition
   - [`add/f`](ops/basic_Float.md#addf): float
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
 - [`asin`](ops/sci.md#asin): Inverse sine
   - [`asin/c`](ops/sci_Complex.md#asinc): 128-bit complex
-  - [`asin/f64`](ops/sci_Float_64.md#asinf64): 64-bit floating-point
 - [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
   - [`asinh/c`](ops/sci_Complex.md#asinhc): 128-bit complex
-  - [`asinh/f64`](ops/sci_Float_64.md#asinhf64): 64-bit floating-point
 - [`atan`](ops/sci.md#atan): Inverse tangent
   - [`atan/c`](ops/sci_Complex.md#atanc): 128-bit complex
-  - [`atan/f64`](ops/sci_Float_64.md#atanf64): 64-bit floating-point
 - [`atan2`](ops/sci.md#atan2): Inverse tangent
 - [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
   - [`atanh/c`](ops/sci_Complex.md#atanhc): 128-bit complex
-  - [`atanh/f64`](ops/sci_Float_64.md#atanhf64): 64-bit floating-point
 
 ## b
 - [`bin`](ops/prog.md#bin): Binary conversion
@@ -49,16 +40,13 @@
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`cb`](ops/sci.md#cb): Cube of a number
 - [`cbrt`](ops/sci.md#cbrt): Cube root
-  - [`cbrt/d`](ops/sci_Dec.md#cbrtd): decimal
-- `ceil`
-  - [`ceil/f64`](ops/sci_Float_64.md#ceilf64): 64-bit floating-point
+  - [`cbrt/f`](ops/sci_Float_64.md#cbrtf): 64-bit float
+- [`ceil`](ops/sci.md#ceil): Ceiling
 - [`clear`](ops/stack.md#clear): Clear
 - [`cos`](ops/sci.md#cos): Cosine
   - [`cos/c`](ops/sci_Complex.md#cosc): 128-bit complex
-  - [`cos/f64`](ops/sci_Float_64.md#cosf64): 64-bit floating-point
 - [`cosh`](ops/sci.md#cosh): Hyperbolic cosine
   - [`cosh/c`](ops/sci_Complex.md#coshc): 128-bit complex
-  - [`cosh/f64`](ops/sci_Float_64.md#coshf64): 64-bit floating-point
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
@@ -77,11 +65,12 @@
 ## e
 - [`exp`](ops/sci.md#exp): Natural exponential
   - [`exp/c`](ops/sci_Complex.md#expc): 128-bit complex
-  - [`exp/f64`](ops/sci_Float_64.md#expf64): 64-bit floating-point
+  - [`exp/f`](ops/sci_Float_64.md#expf): 64-bit float
 
 ## f
 - [`float.prec=`](ops/conf.md#floatprec): Sets the precision for floating-point numbers
 - [`float.prec?`](ops/conf.md#floatprec): Gets the precision for floating-point numbers
+- [`floor`](ops/sci.md#floor): Floor
 
 ## h
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
@@ -91,10 +80,9 @@
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`log`](ops/sci.md#log): Natural logarithm
   - [`log/c`](ops/sci_Complex.md#logc): 128-bit complex
-  - [`log/f64`](ops/sci_Float_64.md#logf64): 64-bit floating-point
 - [`log10`](ops/sci.md#log10): Decimal logarithm
   - [`log10/c`](ops/sci_Complex.md#log10c): 128-bit complex
-  - [`log10/f64`](ops/sci_Float_64.md#log10f64): 64-bit floating-point
+  - [`log10/f`](ops/sci_Float_64.md#log10f): 64-bit float
 - [`lsh`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
 
 ## m
@@ -134,10 +122,8 @@
   - [`sign/f`](ops/basic_Float.md#signf): float
 - [`sin`](ops/sci.md#sin): Sine
   - [`sin/c`](ops/sci_Complex.md#sinc): 128-bit complex
-  - [`sin/f64`](ops/sci_Float_64.md#sinf64): 64-bit floating-point
 - [`sinh`](ops/sci.md#sinh): Hyperbolic sine
   - [`sinh/c`](ops/sci_Complex.md#sinhc): 128-bit complex
-  - [`sinh/f64`](ops/sci_Float_64.md#sinhf64): 64-bit floating-point
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
   - [`sqrt/c`](ops/basic_Complex.md#sqrtc): complex
@@ -149,10 +135,8 @@
 ## t
 - [`tan`](ops/sci.md#tan): Tangent
   - [`tan/c`](ops/sci_Complex.md#tanc): 128-bit complex
-  - [`tan/f64`](ops/sci_Float_64.md#tanf64): 64-bit floating-point
 - [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
   - [`tanh/c`](ops/sci_Complex.md#tanhc): 128-bit complex
-  - [`tanh/f64`](ops/sci_Float_64.md#tanhf64): 64-bit floating-point
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
 - [`types`](ops/types.md#types): Label values with types
 

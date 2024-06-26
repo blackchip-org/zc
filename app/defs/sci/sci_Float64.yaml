@@ -1,126 +1,25 @@
 name: sci/Float/64
 title: Scientific calculator
-subtitle: 64-bit floating-point
+subtitle: 64-bit float
 category: calc
 
 ops:
-- name: abs/f64
-  overloads: abs
-  title: Absolute value
+- name: cbrt/f
+  title: Cube root
   funcs:
-  - name: AbsFloat64
+  - name: CbrtFloat64
     params: [x:Float/64]
     returns: [Float/64]
   desc: |-
-    If *x* is less than zero, the negated value of *x*, otherwise *p0*.
+    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
   example:
-  - i: -6.6
-    o: [-6.6]
-  - i: abs
-    o: [6.6]
+  - i: 10.648
+    o: [10.648]
+  - i: cbrt/f
+    o: [2.2]
 
-- name: acos/f64
-  overloads: acos
-  title: Inverse cosine
-  funcs:
-  - name: AcosFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Inverse cosine of *x* in radians.
-  example:
-  - i: 0.5 acos 5 round
-    o: [1.0472]
-
-- name: acosh/f64
-  overloads: acosh
-  title: Inverse hyperbolic cosine
-  funcs:
-  - name: AcoshFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Inverse hyperbolic cosine of *x* in radians.
-  example:
-  - i: 2 acosh 5 round
-    o: [1.31696]
-
-- name: asin/f64
-  overloads: asin
-  title: Inverse sine
-  funcs:
-  - name: AsinFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Inverse sine of *x* in radians.
-  example:
-  - i: 0.5 asin 5 round
-    o: [0.5236]
-
-- name: asinh/f64
-  overloads: asinh
-  title: Inverse hyperbolic sine
-  funcs:
-  - name: AsinhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Inverse hyperbolic sine of *x* in radians.
-  example:
-  - i: 2 asinh 5 round
-    o: [1.44364]
-
-- name: atan/f64
-  overloads: atan
-  title: Inverse tangent
-  funcs:
-  - name: AtanFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Inverse tangent of *x* in radians.
-  example:
-  - i: 0.5 atan 5 round
-    o: [0.46365]
-
-- name: atanh/f64
-  overloads: atanh
-  title: Inverse hyperbolic tangent
-  funcs:
-  - name: AtanhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Inverse hyperbolic tangent of *x* in radians.
-  example:
-  - i: 0.5 atanh 5 round
-    o: [0.54931]
-
-- name: cos/f64
-  overloads: cos
-  title: Cosine
-  funcs:
-  - name: CosFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Cosine of *x* in radians.
-  example:
-  - i: 2 cos 5 round
-    o: [-0.41615]
-
-- name: cosh/f64
-  overloads: cosh
-  title: Hyperbolic cosine
-  funcs:
-  - name: CoshFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Hyperbolic cosine of *x* in radians.
-  example:
-  - i: 2 cosh 5 round
-    o: [3.7622]
-
-- name: ceil/f64
-  overloads: ceil
-  title: Ceiling
-
-- name: exp/f64
-  overloads: exp
+- name: exp/f
   title: Natural exponential
   funcs:
   - name: ExpFloat64
@@ -131,20 +30,7 @@ ops:
   - i: 2 exp 5 round
     o: [7.38906]
 
-- name: log/f64
-  overloads: log
-  title: Natural logarithm
-  funcs:
-  - name: LogFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Natural logarithm of *x*.
-  example:
-  - i: 8 log 5 round
-    o: [2.07944]
-
-- name: log10/f64
-  overloads: log10
+- name: log10/f
   title: Decimal logarithm
   funcs:
   - name: Log10Float64
@@ -154,52 +40,3 @@ ops:
   example:
   - i: 50 log10 5 round
     o: [1.69897]
-
-- name: sin/f64
-  overloads: sin
-  title: Sine
-  funcs:
-  - name: SinFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Sine of *x* in radians.
-  example:
-  - i: 2 sin 5 round
-    o: [0.9093]
-
-- name: sinh/f64
-  overloads: sinh
-  title: Hyperbolic sine
-  funcs:
-  - name: SinhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Hyperbolic sine of *x* in radians.
-  example:
-  - i: 2 sinh 5 round
-    o: [3.62686]
-
-- name: tan/f64
-  overloads: tan
-  title: Tangent
-  funcs:
-  - name: TanFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Tangent of *x* in radians.
-  example:
-  - i: 2 tan 5 round
-    o: [-2.18504]
-
-- name: tanh/f64
-  overloads: tanh
-  title: Hyperbolic tangent
-  funcs:
-  - name: TanhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  desc: Hyperbolic tangent of *x* in radians.
-  example:
-  - i: 2 tanh 5 round
-    o: [0.96403]
-

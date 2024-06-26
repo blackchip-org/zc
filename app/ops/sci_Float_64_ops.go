@@ -8,116 +8,22 @@ import (
 )
 
 var (
-	AbsFloat64 = zc.Op{
-		Name:      "abs/f64",
-		Overloads: "abs",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.AbsFloat64,
-	}
-	AcosFloat64 = zc.Op{
-		Name:      "acos/f64",
-		Overloads: "acos",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.AcosFloat64,
-	}
-	AcoshFloat64 = zc.Op{
-		Name:      "acosh/f64",
-		Overloads: "acosh",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.AcoshFloat64,
-	}
-	AsinFloat64 = zc.Op{
-		Name:      "asin/f64",
-		Overloads: "asin",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.AsinFloat64,
-	}
-	AsinhFloat64 = zc.Op{
-		Name:      "asinh/f64",
-		Overloads: "asinh",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.AsinhFloat64,
-	}
-	AtanFloat64 = zc.Op{
-		Name:      "atan/f64",
-		Overloads: "atan",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.AtanFloat64,
-	}
-	AtanhFloat64 = zc.Op{
-		Name:      "atanh/f64",
-		Overloads: "atanh",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.AtanhFloat64,
-	}
-	CosFloat64 = zc.Op{
-		Name:      "cos/f64",
-		Overloads: "cos",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.CosFloat64,
-	}
-	CoshFloat64 = zc.Op{
-		Name:      "cosh/f64",
-		Overloads: "cosh",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.CoshFloat64,
+	CbrtFloat64 = zc.Op{
+		Name:    "cbrt/f",
+		Params:  []zc.Type{zc.Float64},
+		Returns: []zc.Type{zc.Float64},
+		Func:    funcs.CbrtFloat64,
 	}
 	ExpFloat64 = zc.Op{
-		Name:      "exp/f64",
-		Overloads: "exp",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.ExpFloat64,
-	}
-	LogFloat64 = zc.Op{
-		Name:      "log/f64",
-		Overloads: "log",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.LogFloat64,
+		Name:    "exp/f",
+		Params:  []zc.Type{zc.Float64},
+		Returns: []zc.Type{zc.Float64},
+		Func:    funcs.ExpFloat64,
 	}
 	Log10Float64 = zc.Op{
-		Name:      "log10/f64",
-		Overloads: "log10",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.Log10Float64,
-	}
-	SinFloat64 = zc.Op{
-		Name:      "sin/f64",
-		Overloads: "sin",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.SinFloat64,
-	}
-	SinhFloat64 = zc.Op{
-		Name:      "sinh/f64",
-		Overloads: "sinh",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.SinhFloat64,
-	}
-	TanFloat64 = zc.Op{
-		Name:      "tan/f64",
-		Overloads: "tan",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.TanFloat64,
-	}
-	TanhFloat64 = zc.Op{
-		Name:      "tanh/f64",
-		Overloads: "tanh",
-		Params:    []zc.Type{zc.Float64},
-		Returns:   []zc.Type{zc.Float64},
-		Func:      funcs.TanhFloat64,
+		Name:    "log10/f",
+		Params:  []zc.Type{zc.Float64},
+		Returns: []zc.Type{zc.Float64},
+		Func:    funcs.Log10Float64,
 	}
 )

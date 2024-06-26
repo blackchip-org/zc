@@ -65,12 +65,6 @@ func CbrtFloat64(e *zc.OpEnv) {
 	zc.Float64.Push(e, z)
 }
 
-func CeilFloat64(e *zc.OpEnv) {
-	x := zc.Float64.Pop(e)
-	z := math.Ceil(x)
-	zc.Float64.Push(e, z)
-}
-
 func CosFloat64(e *zc.OpEnv) {
 	x := zc.Float64.Pop(e)
 	z := math.Cos(x)
