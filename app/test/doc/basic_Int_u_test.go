@@ -11,6 +11,6 @@ import (
 func TestOpDocs_BasicIntU_AddU(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("max.val/u 1 add/u")
+	c.Eval("max.u 1 add/u")
 	c.AssertStack("0")
 }

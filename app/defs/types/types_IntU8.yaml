@@ -2,14 +2,13 @@ name: types/Int/u8
 title: Type operations
 
 ops:
-- name: max.val/u8
-  overloads: max.val
+- name: max.u8
   title: Maximum unsigned 8-bit integer
   macro: 255
   desc: |-
     Maximum value of an unsigned 8-bit value: 2 8 pow 1 sub.
   example:
-  - i: max.val/u8
+  - i: max.u8
     o: [255]
   tests:
   - name: Example

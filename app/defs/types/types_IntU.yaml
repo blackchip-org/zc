@@ -2,8 +2,7 @@ name: types/Int/u
 title: Type operations
 
 ops:
-- name: max.val/u
-  overloads: max.val
+- name: max.u
   title: Maximum unsigned integer
   funcs:
   - name: MaxUint
@@ -11,5 +10,5 @@ ops:
   desc: |-
     Maximum unsigned integer for the current architecture.
   example:
-  - i: max.val/u 1 add/u
+  - i: max.u 1 add/u
     o: [0]

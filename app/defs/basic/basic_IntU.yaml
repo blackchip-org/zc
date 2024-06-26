@@ -11,5 +11,5 @@ ops:
     returns: [x:Int/u]
   desc: Adds *x* to *y*. Value wraps around on overflow.
   example:
-  - i: max.val/u 1 add/u
+  - i: max.u 1 add/u
     o: [0]

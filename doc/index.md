@@ -97,12 +97,12 @@
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
+- [`max.u`](ops/types_Int_u.md#maxu): Maximum unsigned integer
+- [`max.u16`](ops/types_Int_u16.md#maxu16): Maximum unsigned 16-bit value
+- [`max.u32`](ops/types_Int_u32.md#maxu32): Maximum unsigned 32-bit value
+- [`max.u8`](ops/types_Int_u8.md#maxu8): Maximum unsigned 8-bit integer
 - `max.val`
-  - [`max.val/u`](ops/types_Int_u.md#maxvalu): Maximum unsigned integer
-  - [`max.val/u16`](ops/types_Int_u16.md#maxvalu16): Maximum unsigned 16-bit value
-  - [`max.val/u32`](ops/types_Int_u32.md#maxvalu32): Maximum unsigned 32-bit value
   - [`max.val/u64`](ops/types_Int_u64.md#maxvalu64): Maximum unsigned 64-bit value
-  - [`max.val/u8`](ops/types_Int_u8.md#maxvalu8): Maximum unsigned 8-bit integer
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/c`](ops/basic_Complex.md#mulc): complex

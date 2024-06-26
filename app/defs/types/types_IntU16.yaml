@@ -2,14 +2,13 @@ name: types/Int/u16
 title: Type operations
 
 ops:
-- name: max.val/u16
-  overloads: max.val
+- name: max.u16
   title: Maximum unsigned 16-bit value
   macro: 65535
   desc: |-
     Maximum value of an unsigned 16-bit value: 2 16 pow 1 sub.
   example:
-  - i: max.val/u16
+  - i: max.u16
     o: [65535]
   tests:
   - name: Example

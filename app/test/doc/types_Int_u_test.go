@@ -8,9 +8,9 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_TypesIntU_MaxValU(t *testing.T) {
+func TestOpDocs_TypesIntU_MaxU(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("max.val/u 1 add/u")
+	c.Eval("max.u 1 add/u")
 	c.AssertStack("0")
 }

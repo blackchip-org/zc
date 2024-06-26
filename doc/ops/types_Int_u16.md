@@ -6,26 +6,24 @@ Type operations
 
 ## Index
 
-| Operation                            | Description                  
-|--------------------------------------|------------------------------
-| [`max.val, max.val/u16`](#maxvalu16) | Maximum unsigned 16-bit value
+| Operation            | Description                  
+|----------------------|------------------------------
+| [`max.u16`](#maxu16) | Maximum unsigned 16-bit value
 
 
 ## Operations
 
-### max.val/u16
+### max.u16
 
 Maximum value of an unsigned 16-bit value: 2 16 pow 1 sub.
 
-Overloads: `max.val`
-
 Macro definition:
 ```
-def max.val/u16 65535
+def max.u16 65535
 ```
 
 Example:
 
-| Input         | Stack  
-|---------------|--------
-| `max.val/u16` | `65535`
+| Input     | Stack  
+|-----------|--------
+| `max.u16` | `65535`

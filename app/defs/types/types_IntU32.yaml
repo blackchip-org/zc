@@ -2,14 +2,13 @@ name: types/Int/u32
 title: Type operations
 
 ops:
-- name: max.val/u32
-  overloads: max.val
+- name: max.u32
   title: Maximum unsigned 32-bit value
   macro: 4294967295
   desc: |-
     Maximum value of an unsigned 32-bit value: 2 32 pow 1 sub.
   example:
-  - i: max.val/u32
+  - i: max.u32
     o: [4294967295]
   tests:
   - name: Example

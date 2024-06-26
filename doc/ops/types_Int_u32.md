@@ -6,26 +6,24 @@ Type operations
 
 ## Index
 
-| Operation                            | Description                  
-|--------------------------------------|------------------------------
-| [`max.val, max.val/u32`](#maxvalu32) | Maximum unsigned 32-bit value
+| Operation            | Description                  
+|----------------------|------------------------------
+| [`max.u32`](#maxu32) | Maximum unsigned 32-bit value
 
 
 ## Operations
 
-### max.val/u32
+### max.u32
 
 Maximum value of an unsigned 32-bit value: 2 32 pow 1 sub.
 
-Overloads: `max.val`
-
 Macro definition:
 ```
-def max.val/u32 4294967295
+def max.u32 4294967295
 ```
 
 Example:
 
-| Input         | Stack       
-|---------------|-------------
-| `max.val/u32` | `4294967295`
+| Input     | Stack       
+|-----------|-------------
+| `max.u32` | `4294967295`

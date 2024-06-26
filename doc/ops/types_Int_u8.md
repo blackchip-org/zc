@@ -6,26 +6,24 @@ Type operations
 
 ## Index
 
-| Operation                          | Description                   
-|------------------------------------|-------------------------------
-| [`max.val, max.val/u8`](#maxvalu8) | Maximum unsigned 8-bit integer
+| Operation          | Description                   
+|--------------------|-------------------------------
+| [`max.u8`](#maxu8) | Maximum unsigned 8-bit integer
 
 
 ## Operations
 
-### max.val/u8
+### max.u8
 
 Maximum value of an unsigned 8-bit value: 2 8 pow 1 sub.
 
-Overloads: `max.val`
-
 Macro definition:
 ```
-def max.val/u8 255
+def max.u8 255
 ```
 
 Example:
 
-| Input        | Stack
-|--------------|------
-| `max.val/u8` | `255`
+| Input    | Stack
+|----------|------
+| `max.u8` | `255`

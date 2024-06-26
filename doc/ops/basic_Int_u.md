@@ -28,6 +28,6 @@ Stack effects:
 
 Example:
 
-| Input               | Stack
-|---------------------|------
-| `max.val/u 1 add/u` | `0`  
+| Input           | Stack
+|-----------------|------
+| `max.u 1 add/u` | `0`  

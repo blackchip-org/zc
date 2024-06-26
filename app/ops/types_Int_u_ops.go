@@ -9,10 +9,9 @@ import (
 
 var (
 	MaxUint = zc.Op{
-		Name:      "max.val/u",
-		Overloads: "max.val",
-		Params:    []zc.Type{},
-		Returns:   []zc.Type{zc.Uint},
-		Func:      funcs.MaxUint,
+		Name:    "max.u",
+		Params:  []zc.Type{},
+		Returns: []zc.Type{zc.Uint},
+		Func:    funcs.MaxUint,
 	}
 )

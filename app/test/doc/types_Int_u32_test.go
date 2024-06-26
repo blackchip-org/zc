@@ -8,14 +8,14 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_TypesIntU32_MaxValU32(t *testing.T) {
+func TestOpDocs_TypesIntU32_MaxU32(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("max.val/u32")
+	c.Eval("max.u32")
 	c.AssertStack("4294967295")
 }
 
-func TestOpDocs_TypesIntU32_MaxValU32_Example(t *testing.T) {
+func TestOpDocs_TypesIntU32_MaxU32_Example(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 2 32 pow 1 sub")
