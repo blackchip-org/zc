@@ -6,9 +6,9 @@ Type operations
 
 ## Index
 
-| Operation                   | Description                  
-|-----------------------------|------------------------------
-| [`max.val/u64`](#maxvalu64) | Maximum unsigned 64-bit value
+| Operation                            | Description                  
+|--------------------------------------|------------------------------
+| [`max.val, max.val/u64`](#maxvalu64) | Maximum unsigned 64-bit value
 
 
 ## Operations
@@ -16,6 +16,8 @@ Type operations
 ### max.val/u64
 
 Maximum value of an unsigned 64-bit value: 2 64 pow 1 sub.
+
+Overloads: `max.val`
 
 Macro definition:
 ```

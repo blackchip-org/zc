@@ -1,9 +1,9 @@
 name: types/Int/u16
 title: Type operations
-subtitle: unsigned 16-bit integer
 
 ops:
 - name: max.val/u16
+  overloads: max.val
   title: Maximum unsigned 16-bit value
   macro: 65535
   desc: |-

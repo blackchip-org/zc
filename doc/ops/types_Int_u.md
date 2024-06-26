@@ -6,9 +6,9 @@ Type operations
 
 ## Index
 
-| Operation               | Description             
-|-------------------------|-------------------------
-| [`max.val/u`](#maxvalu) | Maximum unsigned integer
+| Operation                        | Description             
+|----------------------------------|-------------------------
+| [`max.val, max.val/u`](#maxvalu) | Maximum unsigned integer
 
 
 ## Operations
@@ -16,6 +16,8 @@ Type operations
 ### max.val/u
 
 Maximum unsigned integer for the current architecture.
+
+Overloads: `max.val`
 
 Stack effects:
 ```

@@ -1,9 +1,9 @@
 name: types/Int/u8
 title: Type operations
-subtitle: unsigned 8-bit integer
 
 ops:
 - name: max.val/u8
+  overloads: max.val
   title: Maximum unsigned 8-bit integer
   macro: 255
   desc: |-

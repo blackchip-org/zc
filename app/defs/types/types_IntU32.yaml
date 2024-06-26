@@ -1,9 +1,9 @@
 name: types/Int/u32
 title: Type operations
-subtitle: unsigned 32-bit integer
 
 ops:
 - name: max.val/u32
+  overloads: max.val
   title: Maximum unsigned 32-bit value
   macro: 4294967295
   desc: |-

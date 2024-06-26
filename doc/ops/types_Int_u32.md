@@ -6,9 +6,9 @@ Type operations
 
 ## Index
 
-| Operation                   | Description                  
-|-----------------------------|------------------------------
-| [`max.val/u32`](#maxvalu32) | Maximum unsigned 32-bit value
+| Operation                            | Description                  
+|--------------------------------------|------------------------------
+| [`max.val, max.val/u32`](#maxvalu32) | Maximum unsigned 32-bit value
 
 
 ## Operations
@@ -16,6 +16,8 @@ Type operations
 ### max.val/u32
 
 Maximum value of an unsigned 32-bit value: 2 32 pow 1 sub.
+
+Overloads: `max.val`
 
 Macro definition:
 ```

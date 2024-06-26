@@ -1,9 +1,9 @@
 name: types/Int/u64
 title: Type operations
-subtitle: unsigned 64-bit integer
 
 ops:
 - name: max.val/u64
+  overloads: max.val
   title: Maximum unsigned 64-bit value
   macro: 18446744073709551615
   desc: |-
