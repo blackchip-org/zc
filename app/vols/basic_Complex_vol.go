@@ -10,7 +10,12 @@ import (
 var BasicComplex = zc.Vol{
 	Name: "basic/Complex",
 	Ops: []zc.Op{
+		ops.AddComplex,
+		ops.DivComplex,
+		ops.MulComplex,
+		ops.NegComplex,
 		ops.SqrtComplex,
+		ops.SubComplex,
 	},
 	Macros: []zc.Macro{},
 }

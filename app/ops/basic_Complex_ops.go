@@ -8,11 +8,46 @@ import (
 )
 
 var (
+	AddComplex = zc.Op{
+		Name:      "add/c",
+		Overloads: "add",
+		Params:    []zc.Type{zc.Complex, zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.AddComplex,
+	}
+	DivComplex = zc.Op{
+		Name:      "div/c",
+		Overloads: "div",
+		Params:    []zc.Type{zc.Complex, zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.DivComplex,
+	}
+	MulComplex = zc.Op{
+		Name:      "mul/c",
+		Overloads: "mul",
+		Params:    []zc.Type{zc.Complex, zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.MulComplex,
+	}
+	NegComplex = zc.Op{
+		Name:      "neg/c",
+		Overloads: "neg",
+		Params:    []zc.Type{zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.NegComplex,
+	}
 	SqrtComplex = zc.Op{
 		Name:      "sqrt/c",
 		Overloads: "sqrt",
 		Params:    []zc.Type{zc.Complex},
 		Returns:   []zc.Type{zc.Complex},
 		Func:      funcs.SqrtComplex,
+	}
+	SubComplex = zc.Op{
+		Name:      "sub/c",
+		Overloads: "sub",
+		Params:    []zc.Type{zc.Complex, zc.Complex},
+		Returns:   []zc.Type{zc.Complex},
+		Func:      funcs.SubComplex,
 	}
 )

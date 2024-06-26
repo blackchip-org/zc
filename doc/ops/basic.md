@@ -247,7 +247,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
-( x:Complex y:Complex --  )
+( x:Complex y:Complex -- x:Complex )
 ```
 
 Example:

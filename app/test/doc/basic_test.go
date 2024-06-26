@@ -105,16 +105,6 @@ func TestOpDocs_Basic_Neg_Decimal(t *testing.T) {
 	c.AssertStack("6.6")
 }
 
-func TestOpDocs_Basic_Neg_Complex(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("c -6+6i neg")
-	c.AssertStack("6-6i")
-
-	c.Eval("c 6-6i neg")
-	c.AssertStack("-6+6i")
-}
-
 func TestOpDocs_Basic_Pow(t *testing.T) {
 	c := app.NewCalcTester(t)
 

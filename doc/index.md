@@ -17,6 +17,7 @@
 - [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
   - [`acosh/c`](ops/sci_Complex.md#acoshc): 128-bit complex
 - [`add`](ops/basic.md#add): Addition
+  - [`add/c`](ops/basic_Complex.md#addc): complex
   - [`add/f`](ops/basic_Float.md#addf): float
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
@@ -53,6 +54,7 @@
 - `dec`
   - [`dec/i`](ops/prog.md#deci): Decimal conversion
 - [`div`](ops/basic.md#div): Division
+  - [`div/c`](ops/basic_Complex.md#divc): complex
   - [`div/f`](ops/basic_Float.md#divf): float
   - [`div/i`](ops/basic_Int.md#divi): int
 - [`div.e`](ops/basic_Int.md#dive): Division (Euclidean)
@@ -89,10 +91,12 @@
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
+  - [`mul/c`](ops/basic_Complex.md#mulc): complex
   - [`mul/f`](ops/basic_Float.md#mulf): float
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
+  - [`neg/c`](ops/basic_Complex.md#negc): complex
   - [`neg/f`](ops/basic_Float.md#negf): float
 - `not`
   - [`not/i`](ops/prog.md#noti): Bitwise not
@@ -130,6 +134,7 @@
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): float
   - [`sqrt/i`](ops/basic_Int.md#sqrti): int
 - [`sub`](ops/basic.md#sub): Subtraction
+  - [`sub/c`](ops/basic_Complex.md#subc): complex
   - [`sub/f`](ops/basic_Float.md#subf): float
 
 ## t

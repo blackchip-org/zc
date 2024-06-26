@@ -6,12 +6,88 @@ Basic calculator
 
 ## Index
 
-| Operation                | Description
-|--------------------------|------------
-| [`sqrt, sqrt/c`](#sqrtc) | Square Root
+| Operation                | Description   
+|--------------------------|---------------
+| [`add, add/c`](#addc)    | Addition      
+| [`div, div/c`](#divc)    | Division      
+| [`mul, mul/c`](#mulc)    | Multiplication
+| [`neg, neg/c`](#negc)    | Negation      
+| [`sqrt, sqrt/c`](#sqrtc) | Square Root   
+| [`sub, sub/c`](#subc)    | Subtraction   
 
 
 ## Operations
+
+### add/c
+
+Adds *x* to *y*.
+
+Overloads: `add`
+
+Stack effects:
+```
+( x:Complex y:Complex -- Complex )
+```
+
+Example:
+
+| Input               | Stack 
+|---------------------|-------
+| `c 6+6i 2+2i add/c` | `8+8i`
+
+### div/c
+
+Divides *x* by *y*. If *y* is zero, a 'division by zero'
+error is raised.
+
+Overloads: `div`
+
+Stack effects:
+```
+( x:Complex y:Complex -- Complex )
+```
+
+Example:
+
+| Input                  | Stack     
+|------------------------|-----------
+| `c 12+12i 4+12i div/c` | `1.2-0.6i`
+
+### mul/c
+
+Multiplies *x* by *y*.
+
+Overloads: `mul`
+
+Stack effects:
+```
+( x:Complex y:Complex -- Complex )
+```
+
+Example:
+
+| Input               | Stack   
+|---------------------|---------
+| `c 2+3i 4+4i mul/c` | `-4+20i`
+
+### neg/c
+
+Changes the sign of *x*.
+
+Overloads: `neg`
+
+Stack effects:
+```
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input | Stack
+|-------|------
+| `-6`  | `-6` 
+| `neg` | `6`  
+| `neg` | `-6` 
 
 ### sqrt/c
 
@@ -30,3 +106,20 @@ Example:
 | Input       | Stack 
 |-------------|-------
 | `-4 sqrt/c` | `0+2i`
+
+### sub/c
+
+Subtracts the value of *y* from *x*
+
+Overloads: `sub`
+
+Stack effects:
+```
+( x:Complex y:Complex -- x:Complex )
+```
+
+Example:
+
+| Input             | Stack 
+|-------------------|-------
+| `c 6+6i 2+2i sub` | `4+4i`

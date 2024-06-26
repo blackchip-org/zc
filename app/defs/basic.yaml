@@ -14,8 +14,7 @@ ops:
   - name: AddDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
-  - name: AddComplex
-    params: [x:Complex, y:Complex]
+  - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: Adds *x* to *y*.
   example:
@@ -34,8 +33,7 @@ ops:
   - name: DivDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
-  - name: DivComplex
-    params: [x:Complex, y:Complex]
+  - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: |-
     Divides *x* by *y*. If *y* is zero, a 'division by zero'
@@ -103,8 +101,7 @@ ops:
   - name: MulDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
-  - name: MulComplex
-    params: [x:Complex, y:Complex]
+  - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: Multiplies *x* by *y*.
   example:
@@ -125,8 +122,7 @@ ops:
   - name: NegDecimal
     params: [x:Dec]
     returns: [Dec]
-  - name: NegComplex
-    params: [x:Complex]
+  - params: [x:Complex]
     returns: [Complex]
   desc: Changes the sign of *x*.
   example:
@@ -141,12 +137,7 @@ ops:
     test:
     - i: -6.6 neg
       o: [6.6]
-  - name: Complex
-    test:
-    - i: c -6+6i neg
-      o: [6-6i]
-    - i: c 6-6i neg
-      o: [-6+6i]
+
 
 - name: pow
   virtual: true
@@ -283,8 +274,8 @@ ops:
   - name: SubDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
-  - name: SubComplex
-    params: [x:Complex, y:Complex]
+  - params: [x:Complex, y:Complex]
+    returns: [x:Complex]
   desc: Subtracts the value of *y* from *x*
   example:
   - i: c 6 2 sub
