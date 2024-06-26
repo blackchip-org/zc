@@ -10,6 +10,6 @@ var TypesIntU64 = zc.Vol{
 	Name: "types/Int/u64",
 	Ops:  []zc.Op{},
 	Macros: []zc.Macro{
-		{Name: "max.val/u64", Expr: "18446744073709551615"},
+		{Name: "max.u64", Expr: "18446744073709551615"},
 	},
 }
