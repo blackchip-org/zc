@@ -4,7 +4,6 @@ subtitle: float
 
 ops:
 - name: add/f
-  overloads: add
   title: Addition
   funcs:
   - name: AddBigFloat
@@ -20,7 +19,6 @@ ops:
     o: [3.3000000000000000002]
 
 - name: div/f
-  overloads: div
   title: Division
   funcs:
   - name: DivBigFloat
@@ -43,7 +41,6 @@ ops:
       error: "div/f: division by zero"
 
 - name: mul/f
-  overloads: mul
   title: Multiplication
   funcs:
   - name: MulBigFloat
@@ -59,7 +56,6 @@ ops:
     o: [14.52]
 
 - name: neg/f
-  overloads: neg
   title: Negation
   funcs:
   - name: NegBigFloat
@@ -75,7 +71,6 @@ ops:
     o: [-6.6]
 
 - name: sign/f
-  overloads: sign
   title: Sign
   funcs:
   - name: SignBigFloat
@@ -93,7 +88,6 @@ ops:
     o: [0]
 
 - name: sqrt/f
-  overloads: sqrt
   title: Square Root
   funcs:
   - name: SqrtBigFloat
@@ -114,7 +108,6 @@ ops:
       error: "sqrt/f: invalid argument, -1 < 0"
 
 - name: sub/f
-  overloads: sub
   title: Subtraction
   funcs:
   - name: SubBigFloat

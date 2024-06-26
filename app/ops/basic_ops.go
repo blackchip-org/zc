@@ -21,12 +21,24 @@ var (
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.AddDecimal,
 	}
+	AddComplex = zc.Op{
+		Name:    "add",
+		Params:  []zc.Type{zc.Complex, zc.Complex},
+		Returns: []zc.Type{zc.Complex},
+		Func:    funcs.AddComplex,
+	}
 	Div        = zc.Op{Name: "div", Virtual: true}
 	DivDecimal = zc.Op{
 		Name:    "div",
 		Params:  []zc.Type{zc.Decimal, zc.Decimal},
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.DivDecimal,
+	}
+	DivComplex = zc.Op{
+		Name:    "div",
+		Params:  []zc.Type{zc.Complex, zc.Complex},
+		Returns: []zc.Type{zc.Complex},
+		Func:    funcs.DivComplex,
 	}
 	QuoRemBigInt = zc.Op{
 		Name:    "div.rem",
@@ -54,6 +66,12 @@ var (
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.MulDecimal,
 	}
+	MulComplex = zc.Op{
+		Name:    "mul",
+		Params:  []zc.Type{zc.Complex, zc.Complex},
+		Returns: []zc.Type{zc.Complex},
+		Func:    funcs.MulComplex,
+	}
 	Neg       = zc.Op{Name: "neg", Virtual: true}
 	NegBigInt = zc.Op{
 		Name:    "neg",
@@ -67,6 +85,12 @@ var (
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.NegDecimal,
 	}
+	NegComplex = zc.Op{
+		Name:    "neg",
+		Params:  []zc.Type{zc.Complex},
+		Returns: []zc.Type{zc.Complex},
+		Func:    funcs.NegComplex,
+	}
 	Pow       = zc.Op{Name: "pow", Virtual: true}
 	PowBigInt = zc.Op{
 		Name:    "pow",
@@ -79,6 +103,12 @@ var (
 		Params:  []zc.Type{zc.Decimal, zc.Decimal},
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.PowDecimal,
+	}
+	PowComplex = zc.Op{
+		Name:    "pow",
+		Params:  []zc.Type{zc.Complex, zc.Complex},
+		Returns: []zc.Type{zc.Complex},
+		Func:    funcs.PowComplex,
 	}
 	Rem       = zc.Op{Name: "rem", Virtual: true}
 	RemBigInt = zc.Op{
@@ -119,5 +149,11 @@ var (
 		Params:  []zc.Type{zc.Decimal, zc.Decimal},
 		Returns: []zc.Type{zc.Decimal},
 		Func:    funcs.SubDecimal,
+	}
+	SubComplex = zc.Op{
+		Name:    "sub",
+		Params:  []zc.Type{zc.Complex, zc.Complex},
+		Returns: []zc.Type{},
+		Func:    funcs.SubComplex,
 	}
 )

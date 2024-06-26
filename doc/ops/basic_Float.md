@@ -6,15 +6,15 @@ Basic calculator
 
 ## Index
 
-| Operation                | Description   
-|--------------------------|---------------
-| [`add, add/f`](#addf)    | Addition      
-| [`div, div/f`](#divf)    | Division      
-| [`mul, mul/f`](#mulf)    | Multiplication
-| [`neg, neg/f`](#negf)    | Negation      
-| [`sign, sign/f`](#signf) | Sign          
-| [`sqrt, sqrt/f`](#sqrtf) | Square Root   
-| [`sub, sub/f`](#subf)    | Subtraction   
+| Operation          | Description   
+|--------------------|---------------
+| [`add/f`](#addf)   | Addition      
+| [`div/f`](#divf)   | Division      
+| [`mul/f`](#mulf)   | Multiplication
+| [`neg/f`](#negf)   | Negation      
+| [`sign/f`](#signf) | Sign          
+| [`sqrt/f`](#sqrtf) | Square Root   
+| [`sub/f`](#subf)   | Subtraction   
 
 
 ## Operations
@@ -22,8 +22,6 @@ Basic calculator
 ### add/f
 
 Adds the value of *x* to *y*.
-
-Overloads: `add`
 
 Stack effects:
 ```
@@ -43,8 +41,6 @@ Example:
 Divides the valueof *x* by *y*. If *y* is zero, a 'division by zero'
 error is raised.
 
-Overloads: `div`
-
 Stack effects:
 ```
 ( x:Float y:Float -- Float )
@@ -62,8 +58,6 @@ Example:
 
 Multiplies the value of *x* by *y*.
 
-Overloads: `mul`
-
 Stack effects:
 ```
 ( x:Float y:Float -- Float )
@@ -80,8 +74,6 @@ Example:
 ### neg/f
 
 Changes the sign of *x*.
-
-Overloads: `neg`
 
 Stack effects:
 ```
@@ -101,8 +93,6 @@ Example:
 Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
 if *x* is zero.
 
-Overloads: `sign`
-
 Stack effects:
 ```
 ( x:Float -- Int/s )
@@ -121,8 +111,6 @@ Example:
 The square root of *x*. If *x* is less than zero, an 'invalid argument'
 error is raised.
 
-Overloads: `sqrt`
-
 Stack effects:
 ```
 ( x:Float -- Float )
@@ -138,8 +126,6 @@ Example:
 ### sub/f
 
 Subtracts the value of *y* from *x*
-
-Overloads: `sub`
 
 Stack effects:
 ```

@@ -14,12 +14,17 @@ ops:
   - name: AddDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - name: AddComplex
+    params: [x:Complex, y:Complex]
+    returns: [Complex]
   desc: Adds *x* to *y*.
   example:
   - i: c 6 2 a
     o: [8]
   - i: c 1.1 2.2 a
     o: [3.3]
+  - i: c 6+6i 2+2i a
+    o: [8+8i]
 
 - name: div
   aliases: [d, "/"]
@@ -29,6 +34,9 @@ ops:
   - name: DivDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - name: DivComplex
+    params: [x:Complex, y:Complex]
+    returns: [Complex]
   desc: |-
     Divides *x* by *y*. If *y* is zero, a 'division by zero'
     error is raised.
@@ -37,6 +45,8 @@ ops:
     o: [3]
   - i: c 11 2 d
     o: [5.5]
+  - i: c 12+12i 4+12i d
+    o: [1.2-0.6i]
   tests:
   - name: Thirds
     test:
@@ -93,12 +103,17 @@ ops:
   - name: MulDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - name: MulComplex
+    params: [x:Complex, y:Complex]
+    returns: [Complex]
   desc: Multiplies *x* by *y*.
   example:
   - i: c 6 2 mul
     o: [12]
   - i: c 6.6 2.2 mul
     o: [14.52]
+  - i: c 2+3i 4+4i m
+    o: [-4+20i]
 
 - name: neg
   virtual: true
@@ -110,6 +125,9 @@ ops:
   - name: NegDecimal
     params: [x:Dec]
     returns: [Dec]
+  - name: NegComplex
+    params: [x:Complex]
+    returns: [Complex]
   desc: Changes the sign of *x*.
   example:
   - i: -6
@@ -123,6 +141,12 @@ ops:
     test:
     - i: -6.6 neg
       o: [6.6]
+  - name: Complex
+    test:
+    - i: c -6+6i neg
+      o: [6-6i]
+    - i: c 6-6i neg
+      o: [-6+6i]
 
 - name: pow
   virtual: true
@@ -135,14 +159,17 @@ ops:
   - name: PowDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - name: PowComplex
+    params: [x:Complex, y:Complex]
+    returns: [Complex]
   desc: Raises *x* to the power of *y*.
   example:
-  - i: 6
-    o: [6]
-  - i: 2
-    o: [6, 2]
-  - i: pow
+  - i: c 6 2 pow
     o: [36]
+  - i: c 6.6 2.2 pow 2 round
+    o: [63.53]
+  - i: c 6+6i 2+2i pow 2 round
+    o: [13.57-6.32i]
   tests:
   - name: BigIntZero
     test:
@@ -229,14 +256,16 @@ ops:
   - name: SqrtDecimal
     params: [x:Dec]
     returns: [Dec]
+  - params: [x:Complex]
+    returns: [Complex]
   desc: |-
-    The square root of *x*. If *x* is less than zero, an 'invalid argument'
-    error is raised.
+    The square root of *x*. If *x* is not Complex and is less than zero, an
+    'invalid argument' error is raised.
   example:
-  - i: 1.25 sq
-    o: [1.5625]
-  - i: sqrt
+  - i: c 1.5625 sqrt
     o: [1.25]
+  - i: c -4+0i sqrt
+    o: [0+2i]
   tests:
     - name: Negative
       test:
@@ -254,9 +283,13 @@ ops:
   - name: SubDecimal
     params: [x:Dec, y:Dec]
     returns: [Dec]
+  - name: SubComplex
+    params: [x:Complex, y:Complex]
   desc: Subtracts the value of *y* from *x*
   example:
   - i: c 6 2 sub
     o: [4]
   - i: c 6.6 2.2 sub
     o: [4.4]
+  - i: c 6+6i 2+2i sub
+    o: [4+4i]

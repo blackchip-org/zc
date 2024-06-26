@@ -1,0 +1,19 @@
+name: basic/Complex
+title: Basic calculator
+subtitle: complex
+category: calc
+
+ops:
+- name: sqrt/c
+  overloads: sqrt
+  title: Square Root
+  funcs:
+  - name: SqrtComplex
+    params: [x:Complex]
+    returns: [Complex]
+  desc: |-
+    The square root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: -4 sqrt/c
+    o: [0+2i]

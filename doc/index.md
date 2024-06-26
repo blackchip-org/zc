@@ -140,6 +140,7 @@
   - [`sinh/f64`](ops/sci_Float_64.md#sinhf64): 64-bit floating-point
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
+  - [`sqrt/c`](ops/basic_Complex.md#sqrtc): complex
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): float
   - [`sqrt/i`](ops/basic_Int.md#sqrti): int
 - [`sub`](ops/basic.md#sub): Subtraction

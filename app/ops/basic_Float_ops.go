@@ -9,52 +9,45 @@ import (
 
 var (
 	AddBigFloat = zc.Op{
-		Name:      "add/f",
-		Overloads: "add",
-		Params:    []zc.Type{zc.BigFloat, zc.BigFloat},
-		Returns:   []zc.Type{zc.BigFloat},
-		Func:      funcs.AddBigFloat,
+		Name:    "add/f",
+		Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+		Returns: []zc.Type{zc.BigFloat},
+		Func:    funcs.AddBigFloat,
 	}
 	DivBigFloat = zc.Op{
-		Name:      "div/f",
-		Overloads: "div",
-		Params:    []zc.Type{zc.BigFloat, zc.BigFloat},
-		Returns:   []zc.Type{zc.BigFloat},
-		Func:      funcs.DivBigFloat,
+		Name:    "div/f",
+		Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+		Returns: []zc.Type{zc.BigFloat},
+		Func:    funcs.DivBigFloat,
 	}
 	MulBigFloat = zc.Op{
-		Name:      "mul/f",
-		Overloads: "mul",
-		Params:    []zc.Type{zc.BigFloat, zc.BigFloat},
-		Returns:   []zc.Type{zc.BigFloat},
-		Func:      funcs.MulBigFloat,
+		Name:    "mul/f",
+		Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+		Returns: []zc.Type{zc.BigFloat},
+		Func:    funcs.MulBigFloat,
 	}
 	NegBigFloat = zc.Op{
-		Name:      "neg/f",
-		Overloads: "neg",
-		Params:    []zc.Type{zc.BigFloat},
-		Returns:   []zc.Type{zc.BigFloat},
-		Func:      funcs.NegBigFloat,
+		Name:    "neg/f",
+		Params:  []zc.Type{zc.BigFloat},
+		Returns: []zc.Type{zc.BigFloat},
+		Func:    funcs.NegBigFloat,
 	}
 	SignBigFloat = zc.Op{
-		Name:      "sign/f",
-		Overloads: "sign",
-		Params:    []zc.Type{zc.BigFloat},
-		Returns:   []zc.Type{zc.Int},
-		Func:      funcs.SignBigFloat,
+		Name:    "sign/f",
+		Params:  []zc.Type{zc.BigFloat},
+		Returns: []zc.Type{zc.Int},
+		Func:    funcs.SignBigFloat,
 	}
 	SqrtBigFloat = zc.Op{
-		Name:      "sqrt/f",
-		Overloads: "sqrt",
-		Params:    []zc.Type{zc.BigFloat},
-		Returns:   []zc.Type{zc.BigFloat},
-		Func:      funcs.SqrtBigFloat,
+		Name:    "sqrt/f",
+		Params:  []zc.Type{zc.BigFloat},
+		Returns: []zc.Type{zc.BigFloat},
+		Func:    funcs.SqrtBigFloat,
 	}
 	SubBigFloat = zc.Op{
-		Name:      "sub/f",
-		Overloads: "sub",
-		Params:    []zc.Type{zc.BigFloat, zc.BigFloat},
-		Returns:   []zc.Type{zc.BigFloat},
-		Func:      funcs.SubBigFloat,
+		Name:    "sub/f",
+		Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+		Returns: []zc.Type{zc.BigFloat},
+		Func:    funcs.SubBigFloat,
 	}
 )

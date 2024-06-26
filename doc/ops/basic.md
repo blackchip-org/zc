@@ -23,6 +23,7 @@ Basic calculator
 
 ## Related Volumes
 
+- [basic/Complex](basic_Complex.md)
 - [basic/Float](basic_Float.md)
 - [basic/Int](basic_Int.md)
 
@@ -39,14 +40,16 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
+( x:Complex y:Complex -- Complex )
 ```
 
 Example:
 
-| Input         | Stack
-|---------------|------
-| `c 6 2 a`     | `8`  
-| `c 1.1 2.2 a` | `3.3`
+| Input           | Stack 
+|-----------------|-------
+| `c 6 2 a`       | `8`   
+| `c 1.1 2.2 a`   | `3.3` 
+| `c 6+6i 2+2i a` | `8+8i`
 
 ### div
 
@@ -58,14 +61,16 @@ Aliases: `d`, `/`
 Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
+( x:Complex y:Complex -- Complex )
 ```
 
 Example:
 
-| Input      | Stack
-|------------|------
-| `c 12 4 d` | `3`  
-| `c 11 2 d` | `5.5`
+| Input              | Stack     
+|--------------------|-----------
+| `c 12 4 d`         | `3`       
+| `c 11 2 d`         | `5.5`     
+| `c 12+12i 4+12i d` | `1.2-0.6i`
 
 ### div.rem
 
@@ -112,14 +117,16 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
+( x:Complex y:Complex -- Complex )
 ```
 
 Example:
 
-| Input           | Stack  
-|-----------------|--------
-| `c 6 2 mul`     | `12`   
-| `c 6.6 2.2 mul` | `14.52`
+| Input           | Stack   
+|-----------------|---------
+| `c 6 2 mul`     | `12`    
+| `c 6.6 2.2 mul` | `14.52` 
+| `c 2+3i 4+4i m` | `-4+20i`
 
 ### neg
 
@@ -129,6 +136,7 @@ Stack effects:
 ```
 ( x:Int -- Int )
 ( x:Dec -- Dec )
+( x:Complex -- Complex )
 ```
 
 Example:
@@ -149,15 +157,16 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
+( x:Complex y:Complex -- Complex )
 ```
 
 Example:
 
-| Input | Stack   
-|-------|---------
-| `6`   | `6`     
-| `2`   | `6 \| 2`
-| `pow` | `36`    
+| Input                     | Stack        
+|---------------------------|--------------
+| `c 6 2 pow`               | `36`         
+| `c 6.6 2.2 pow 2 round`   | `63.53`      
+| `c 6+6i 2+2i pow 2 round` | `13.57-6.32i`
 
 ### rem
 
@@ -212,20 +221,21 @@ Example:
 
 ### sqrt
 
-The square root of *x*. If *x* is less than zero, an 'invalid argument'
-error is raised.
+The square root of *x*. If *x* is not Complex and is less than zero, an
+'invalid argument' error is raised.
 
 Stack effects:
 ```
 ( x:Dec -- Dec )
+( x:Complex -- Complex )
 ```
 
 Example:
 
-| Input     | Stack   
-|-----------|---------
-| `1.25 sq` | `1.5625`
-| `sqrt`    | `1.25`  
+| Input           | Stack 
+|-----------------|-------
+| `c 1.5625 sqrt` | `1.25`
+| `c -4+0i sqrt`  | `0+2i`
 
 ### sub
 
@@ -237,11 +247,13 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
+( x:Complex y:Complex --  )
 ```
 
 Example:
 
-| Input           | Stack
-|-----------------|------
-| `c 6 2 sub`     | `4`  
-| `c 6.6 2.2 sub` | `4.4`
+| Input             | Stack 
+|-------------------|-------
+| `c 6 2 sub`       | `4`   
+| `c 6.6 2.2 sub`   | `4.4` 
+| `c 6+6i 2+2i sub` | `4+4i`

@@ -16,6 +16,9 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 
 	c.Eval("c 1.1 2.2 a")
 	c.AssertStack("3.3")
+
+	c.Eval("c 6+6i 2+2i a")
+	c.AssertStack("8+8i")
 }
 
 func TestOpDocs_Basic_Div(t *testing.T) {
@@ -26,6 +29,9 @@ func TestOpDocs_Basic_Div(t *testing.T) {
 
 	c.Eval("c 11 2 d")
 	c.AssertStack("5.5")
+
+	c.Eval("c 12+12i 4+12i d")
+	c.AssertStack("1.2-0.6i")
 }
 
 func TestOpDocs_Basic_Div_Thirds(t *testing.T) {
@@ -74,6 +80,9 @@ func TestOpDocs_Basic_Mul(t *testing.T) {
 
 	c.Eval("c 6.6 2.2 mul")
 	c.AssertStack("14.52")
+
+	c.Eval("c 2+3i 4+4i m")
+	c.AssertStack("-4+20i")
 }
 
 func TestOpDocs_Basic_Neg(t *testing.T) {
@@ -96,17 +105,27 @@ func TestOpDocs_Basic_Neg_Decimal(t *testing.T) {
 	c.AssertStack("6.6")
 }
 
+func TestOpDocs_Basic_Neg_Complex(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c -6+6i neg")
+	c.AssertStack("6-6i")
+
+	c.Eval("c 6-6i neg")
+	c.AssertStack("-6+6i")
+}
+
 func TestOpDocs_Basic_Pow(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("6")
-	c.AssertStack("6")
-
-	c.Eval("2")
-	c.AssertStack("6", "2")
-
-	c.Eval("pow")
+	c.Eval("c 6 2 pow")
 	c.AssertStack("36")
+
+	c.Eval("c 6.6 2.2 pow 2 round")
+	c.AssertStack("63.53")
+
+	c.Eval("c 6+6i 2+2i pow 2 round")
+	c.AssertStack("13.57-6.32i")
 }
 
 func TestOpDocs_Basic_Pow_BigIntZero(t *testing.T) {
@@ -191,11 +210,11 @@ func TestOpDocs_Basic_Sq(t *testing.T) {
 func TestOpDocs_Basic_Sqrt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("1.25 sq")
-	c.AssertStack("1.5625")
-
-	c.Eval("sqrt")
+	c.Eval("c 1.5625 sqrt")
 	c.AssertStack("1.25")
+
+	c.Eval("c -4+0i sqrt")
+	c.AssertStack("0+2i")
 }
 
 func TestOpDocs_Basic_Sqrt_Negative(t *testing.T) {
@@ -213,4 +232,7 @@ func TestOpDocs_Basic_Sub(t *testing.T) {
 
 	c.Eval("c 6.6 2.2 sub")
 	c.AssertStack("4.4")
+
+	c.Eval("c 6+6i 2+2i sub")
+	c.AssertStack("4+4i")
 }
