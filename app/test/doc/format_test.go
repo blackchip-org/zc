@@ -38,7 +38,7 @@ func TestOpDocs_Format_Round_ComplexNegative(t *testing.T) {
 	c.AssertError("round: invalid argument, -3 < 0")
 }
 
-func TestOpDocs_Format_ScientificNotation(t *testing.T) {
+func TestOpDocs_Format_Sci(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("123 sci")

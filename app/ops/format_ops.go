@@ -20,10 +20,10 @@ var (
 		Returns: []zc.Type{zc.String},
 		Func:    funcs.RoundComplex,
 	}
-	ScientificNotationDecimal = zc.Op{
-		Name:    "scientific.notation",
+	SciDecimal = zc.Op{
+		Name:    "sci",
 		Params:  []zc.Type{zc.Decimal},
 		Returns: []zc.Type{zc.Decimal},
-		Func:    funcs.ScientificNotationDecimal,
+		Func:    funcs.SciDecimal,
 	}
 )

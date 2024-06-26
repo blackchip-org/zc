@@ -12,10 +12,9 @@ var Format = zc.Vol{
 	Ops: []zc.Op{
 		ops.RoundDecimal,
 		ops.RoundComplex,
-		ops.ScientificNotationDecimal,
+		ops.SciDecimal,
 	},
 	Macros: []zc.Macro{
 		{Name: "r", Expr: "round"},
-		{Name: "sci", Expr: "scientific.notation"},
 	},
 }

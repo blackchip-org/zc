@@ -39,10 +39,10 @@ ops:
     - i: 1.047197551196598+5.948293i -3 round
       error: "round: invalid argument, -3 < 0"
 
-- name: scientific.notation
-  aliases: [sci]
+- name: sci
+  title: Scientific Notation
   funcs:
-  - name: ScientificNotationDecimal
+  - name: SciDecimal
     params: [x:Dec]
     returns: [x:Dec]
   desc: |-

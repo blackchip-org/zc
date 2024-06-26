@@ -62,9 +62,9 @@ func RoundDecimal(e *zc.OpEnv) {
 	zc.Decimal.Push(e, x)
 }
 
-func ScientificNotationDecimal(e *zc.OpEnv) {
-	x := zc.Decimal.Pop(e)
-	sn := zc.FormatExponent(x.Text('e'))
-	zc.String.Push(e, sn)
-	zc.Decimal.Recycle(x)
+func SciDecimal(e *zc.OpEnv) {
+	ix := e.Pop()
+	x := zc.Decimal.As(ix.Val)
+	ix.Repr = zc.FormatExponent(x.Text('e'))
+	e.Push(ix)
 }

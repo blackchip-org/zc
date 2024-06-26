@@ -135,8 +135,7 @@
 
 ## s
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
-- [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
-- `scientific.notation`
+- [`sci`](ops/format.md#sci): Scientific Notation
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/f`](ops/basic_Float.md#signf): float
 - [`sin`](ops/sci.md#sin): Sine
