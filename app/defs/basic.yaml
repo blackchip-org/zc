@@ -15,7 +15,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Dec]
   - params: [x:Rat, y:Rat]
-    return: [Rat]
+    returns: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: Adds *x* to *y*.
@@ -38,7 +38,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Dec]
   - params: [x:Rat, y:Rat]
-    return: [Rat]
+    returns: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: |-
@@ -110,7 +110,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Dec]
   - params: [x:Rat, y:Rat]
-    return: [Rat]
+    returns: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: Multiplies *x* by *y*.
@@ -134,8 +134,8 @@ ops:
   - name: NegDecimal
     params: [x:Dec]
     returns: [Dec]
-  - params: [x:Rat, y:Rat]
-    return: [Rat]
+  - params: [x:Rat]
+    returns: [Rat]
   - params: [x:Complex]
     returns: [Complex]
   desc: Changes the sign of *x*.
@@ -229,7 +229,7 @@ ops:
     params: [x:Dec]
     returns: [Int/s]
   - params: [x:Rat, y:Rat]
-    return: [Rat]
+    returns: [Rat]
   desc: |-
     Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
     if *x* is zero.
@@ -290,7 +290,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Dec]
   - params: [x:Rat, y:Rat]
-    return: [Rat]
+    returns: [Rat]
   - params: [x:Complex, y:Complex]
     returns: [x:Complex]
   desc: Subtracts the value of *y* from *x*

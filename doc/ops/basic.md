@@ -41,7 +41,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
-( x:Rat y:Rat --  )
+( x:Rat y:Rat -- Rat )
 ( x:Complex y:Complex -- Complex )
 ```
 
@@ -64,7 +64,7 @@ Aliases: `d`, `/`
 Stack effects:
 ```
 ( x:Dec y:Dec -- Dec )
-( x:Rat y:Rat --  )
+( x:Rat y:Rat -- Rat )
 ( x:Complex y:Complex -- Complex )
 ```
 
@@ -122,7 +122,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
-( x:Rat y:Rat --  )
+( x:Rat y:Rat -- Rat )
 ( x:Complex y:Complex -- Complex )
 ```
 
@@ -143,7 +143,7 @@ Stack effects:
 ```
 ( x:Int -- Int )
 ( x:Dec -- Dec )
-( x:Rat y:Rat --  )
+( x:Rat -- Rat )
 ( x:Complex -- Complex )
 ```
 
@@ -204,7 +204,7 @@ Stack effects:
 ```
 ( x:Int -- Int/s )
 ( x:Dec -- Int/s )
-( x:Rat y:Rat --  )
+( x:Rat y:Rat -- Rat )
 ```
 
 Example:
@@ -258,7 +258,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Int )
 ( x:Dec y:Dec -- Dec )
-( x:Rat y:Rat --  )
+( x:Rat y:Rat -- Rat )
 ( x:Complex y:Complex -- x:Complex )
 ```
 
