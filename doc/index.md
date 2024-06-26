@@ -66,6 +66,11 @@
   - [`dec/i`](ops/prog.md#deci): Decimal conversion
 - [`div`](ops/basic.md#div): Division
   - [`div/f`](ops/basic_Float.md#divf): float
+  - [`div/i`](ops/basic_Int.md#divi): int
+- [`div.e`](ops/basic_Int.md#dive): Division (Euclidean)
+- [`div.mod.e`](ops/basic_Int.md#divmode): Division with modulus (Euclidean)
+- [`div.rem`](ops/basic.md#divrem): Division with remainder
+- [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
 - [`drop`](ops/stack.md#drop): Drop
 - [`dup`](ops/stack.md#dup): Duplicate
 
@@ -94,6 +99,7 @@
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
+- [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/f`](ops/basic_Float.md#mulf): float
 
@@ -113,6 +119,7 @@
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
+- [`rem`](ops/basic.md#rem): Remainder
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`round`](ops/format.md#round): Round number
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
@@ -134,6 +141,7 @@
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): float
+  - [`sqrt/i`](ops/basic_Int.md#sqrti): int
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/basic_Float.md#subf): float
 
@@ -145,6 +153,7 @@
   - [`tanh/c`](ops/sci_Complex.md#tanhc): 128-bit complex
   - [`tanh/f64`](ops/sci_Float_64.md#tanhf64): 64-bit floating-point
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
+- [`types`](ops/types.md#types): Label values with types
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit

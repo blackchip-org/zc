@@ -60,7 +60,6 @@ func Bin(e *zc.OpEnv) {
 
 	ix.Repr = b
 	e.Push(ix)
-	zc.BigInt.Recycle(x)
 }
 
 func Bit(e *zc.OpEnv) {
@@ -144,7 +143,6 @@ func Hex(e *zc.OpEnv) {
 
 	ix.Repr = b
 	e.Push(ix)
-	zc.BigInt.Recycle(x)
 }
 
 func Lsh(e *zc.OpEnv) {
@@ -176,7 +174,6 @@ func Oct(e *zc.OpEnv) {
 
 	ix.Repr = b
 	e.Push(ix)
-	zc.BigInt.Recycle(x)
 }
 
 func OrBigInt(e *zc.OpEnv) {

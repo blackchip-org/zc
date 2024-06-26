@@ -6,21 +6,25 @@ Basic calculator
 
 ## Index
 
-| Operation           | Description       
-|---------------------|-------------------
-| [`add, a, +`](#add) | Addition          
-| [`div, d, /`](#div) | Division          
-| [`mul, m, *`](#mul) | Multiplication    
-| [`neg`](#neg)       | Negation          
-| [`pow, **`](#pow)   | Exponentiation    
-| [`sign`](#sign)     | Sign              
-| [`sq`](#sq)         | Square of a number
-| [`sqrt`](#sqrt)     | Square Root       
-| [`sub, s, -`](#sub) | Subtraction       
+| Operation                | Description            
+|--------------------------|------------------------
+| [`add, a, +`](#add)      | Addition               
+| [`div, d, /`](#div)      | Division               
+| [`div.rem, dr`](#divrem) | Division with remainder
+| [`mod`](#mod)            | Modulus                
+| [`mul, m, *`](#mul)      | Multiplication         
+| [`neg`](#neg)            | Negation               
+| [`pow, **`](#pow)        | Exponentiation         
+| [`rem`](#rem)            | Remainder              
+| [`sign`](#sign)          | Sign                   
+| [`sq`](#sq)              | Square of a number     
+| [`sqrt`](#sqrt)          | Square Root            
+| [`sub, s, -`](#sub)      | Subtraction            
 
 ## Related Volumes
 
 - [basic/Float](basic_Float.md)
+- [basic/Int](basic_Int.md)
 
 
 ## Operations
@@ -62,6 +66,41 @@ Example:
 |------------|------
 | `c 12 4 d` | `3`  
 | `c 11 2 d` | `5.5`
+
+### div.rem
+
+The quotient *quo* and remainder *rem* when dividing *x* by *y* using
+truncated division.
+
+Alias: `dr`
+
+Stack effects:
+```
+( x:Int y:Int -- quo:Int rem:Int )
+```
+
+Example:
+
+| Input          | Stack               
+|----------------|---------------------
+| `-7 2 div.rem` | `-3 :quo \| -1 :rem`
+
+### mod
+
+The Euclidean modulus when *x* is divided by *y*. If *y* is zero, a
+'division by zero' error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input        | Stack
+|--------------|------
+| `c -7 2 mod` | `1`  
+| `c -7 2 rem` | `-1` 
 
 ### mul
 
@@ -119,6 +158,23 @@ Example:
 | `6`   | `6`     
 | `2`   | `6 \| 2`
 | `pow` | `36`    
+
+### rem
+
+The remainder, or truncated modulus, when *x* is divided by *y*. If *y* is
+zero, a 'division by zero' error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input        | Stack
+|--------------|------
+| `c -7 2 mod` | `1`  
+| `c -7 2 rem` | `-1` 
 
 ### sign
 

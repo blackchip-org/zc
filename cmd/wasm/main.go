@@ -44,7 +44,7 @@ func zcEval() js.Func {
 		items := c.Stack.Items()
 		for _, item := range items {
 			stack = append(stack, map[string]any{
-				"value": zc.Format(item.Val),
+				"value": valueOf(item),
 				"label": item.Label,
 				"unit":  item.Unit,
 			})
@@ -68,7 +68,7 @@ func zcStack() js.Func {
 		var stack []any
 		for _, item := range c.Stack.Items() {
 			stack = append(stack, map[string]any{
-				"value": zc.Format(item.Val),
+				"value": valueOf(item),
 				"label": item.Label,
 				"unit":  item.Unit,
 			})
@@ -95,7 +95,9 @@ func zcSetStack() js.Func {
 		jsStack := args[0]
 		c.Stack.Clear()
 		for i := 0; i < jsStack.Length(); i++ {
-			c.PushVal(jsStack.Index(i).String())
+			item := jsStack.Index(i)
+			val := item.Get("value")
+			c.PushVal(val.String())
 		}
 		return nil
 	})
@@ -125,6 +127,13 @@ func zcWordCompleter() js.Func {
 			"suffix":     suffix,
 		}
 	})
+}
+
+func valueOf(item zc.Item) string {
+	if item.Repr != "" {
+		return item.Repr
+	}
+	return zc.Format(item.Val)
 }
 
 func main() {

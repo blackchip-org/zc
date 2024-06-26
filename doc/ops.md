@@ -12,6 +12,7 @@
 | [prog](ops/prog.md)     | Programmer's calculator
 | [sci](ops/sci.md)       | Scientific calculator  
 | [stack](ops/stack.md)   | Stack operations       
+| [types](ops/types.md)   | Type operations        
 
 
 

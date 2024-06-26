@@ -259,24 +259,31 @@ func colorize(color string, item zc.Item) string {
 
 	var b strings.Builder
 
-	if item.Label != "" {
-		ansi.Fprint(&b, ansi.DarkGray)
-		fmt.Fprintf(&b, "%v: ", item.Label)
-	}
+	// if item.Label != "" {
+	// 	ansi.Fprint(&b, ansi.DarkGray)
+	// 	fmt.Fprintf(&b, "%v: ", item.Label)
+	// }
 
 	ansi.Fprint(&b, ansi.Reset)
 	ansi.Fprint(&b, color)
-	b.WriteString(zc.Format(item.Val))
+
+	var val string
+	if item.Repr != "" {
+		val = item.Repr
+	} else {
+		val = zc.Format(item.Val)
+	}
+	b.WriteString(val)
 
 	if item.Unit != "" {
 		ansi.Fprint(&b, ansi.DarkGray)
 		fmt.Fprintf(&b, item.Unit)
 	}
 
-	// if item.Label != "" {
-	// 	ansi.Fprint(&b, ansi.DarkGray)
-	// 	fmt.Fprintf(&b, " (%v)", item.Label)
-	// }
+	if item.Label != "" {
+		ansi.Fprint(&b, ansi.DarkGray)
+		fmt.Fprintf(&b, " :%v", item.Label)
+	}
 
 	ansi.Fprint(&b, ansi.Reset)
 	return b.String()

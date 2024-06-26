@@ -1,0 +1,20 @@
+name: types
+title: Type operations
+category: calc
+
+ops:
+- name: types
+  title: Label values with types
+  funcs:
+  - name: Types
+    params: [Any*]
+    returns: [Any*]
+  desc: |-
+    Labels each ite on the stack with its corresponding type
+  example:
+  - i: 1 2
+    o: [1, 2]
+  - i: types
+    o: ["1 :Text", "2 :Text"]
+  - i: add types
+    o: ["3 :Int"]

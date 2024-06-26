@@ -42,6 +42,30 @@ func TestOpDocs_Basic_Div_Zero(t *testing.T) {
 	c.AssertError("div: division by zero")
 }
 
+func TestOpDocs_Basic_DivRem(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-7 2 div.rem")
+	c.AssertStack("-3 :quo", "-1 :rem")
+}
+
+func TestOpDocs_Basic_Mod(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c -7 2 mod")
+	c.AssertStack("1")
+
+	c.Eval("c -7 2 rem")
+	c.AssertStack("-1")
+}
+
+func TestOpDocs_Basic_Mod_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 mod")
+	c.AssertError("mod: division by zero")
+}
+
 func TestOpDocs_Basic_Mul(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -118,6 +142,23 @@ func TestOpDocs_Basic_Pow_DecimalInf(t *testing.T) {
 
 	c.Eval("0.0 -1 pow")
 	c.AssertError("pow: infinity")
+}
+
+func TestOpDocs_Basic_Rem(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c -7 2 mod")
+	c.AssertStack("1")
+
+	c.Eval("c -7 2 rem")
+	c.AssertStack("-1")
+}
+
+func TestOpDocs_Basic_Rem_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 rem")
+	c.AssertError("rem: division by zero")
 }
 
 func TestOpDocs_Basic_Sign(t *testing.T) {

@@ -47,28 +47,40 @@ ops:
       - i: 6.6 0 div
         error: "div: division by zero"
 
-# - name: mod
-#   virtual: true
-#   title: Modulus
-#   funcs:
-#   - name: ModBigInt
-#     params: [x:Int, y:Int]
-#     returns: [Int]
-#   desc: |-
-#     The modulus when *x* is divided by *y*. If *y* is zero, a 'division by
-#     zero' error is raised.
-#   example:
-#   - i: -7
-#     o: [-7]
-#   - i: 2
-#     o: [-7, 2]
-#   - i: mod
-#     o: [1]
-#   tests:
-#   - name: Zero
-#     test:
-#     - i: 6 0 mod
-#       error: "mod: division by zero"
+- name: div.rem
+  aliases: [dr]
+  title: Division with remainder
+  funcs:
+  - name: QuoRemBigInt
+    params: [x:Int, y:Int]
+    returns: [quo:Int, rem:Int]
+  desc: |-
+    The quotient *quo* and remainder *rem* when dividing *x* by *y* using
+    truncated division.
+  example:
+  - i: -7 2 div.rem
+    o: ["-3 :quo", "-1 :rem"]
+
+- name: mod
+  virtual: true
+  title: Modulus
+  funcs:
+  - name: ModBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    The Euclidean modulus when *x* is divided by *y*. If *y* is zero, a
+    'division by zero' error is raised.
+  example:
+  - i: c -7 2 mod
+    o: [1]
+  - i: c -7 2 rem
+    o: [-1]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 mod
+      error: "mod: division by zero"
 
 - name: mul
   virtual: true
@@ -152,6 +164,28 @@ ops:
     test:
     - i: 0.0 -1 pow
       error: "pow: infinity"
+
+- name: rem
+  alias: ["%"]
+  virtual: true
+  title: Remainder
+  funcs:
+  - name: RemBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    The remainder, or truncated modulus, when *x* is divided by *y*. If *y* is
+    zero, a 'division by zero' error is raised.
+  example:
+  - i: c -7 2 mod
+    o: [1]
+  - i: c -7 2 rem
+    o: [-1]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 rem
+      error: "rem: division by zero"
 
 - name: sign
   virtual: true

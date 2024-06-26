@@ -1,0 +1,59 @@
+name: basic/Int
+title: Basic calculator
+subtitle: int
+
+ops:
+- name: div/i
+  title: Division (truncated)
+  funcs:
+  - name: QuoBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: Divides *x* by *y* using truncated division. If *y* is zero, a
+    'division by zero' error is raised.
+  example:
+  - i: c -7 2 div/i
+    o: [-3]
+  - i: c -7 2 div.e
+    o: [-4]
+
+- name: div.e
+  title: Division (Euclidean)
+  funcs:
+  - name: DivBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    Divides *x* by *y* using Euclidean division. If *y* is zero, a
+    'division by zero' error is raised.
+  example:
+  - i: c -7 2 div/i
+    o: [-3]
+  - i: c -7 2 div.e
+    o: [-4]
+
+- name: div.mod.e
+  title: Division with modulus (Euclidean)
+  funcs:
+  - name: DivModBigInt
+    params: [x:Int, y:Int]
+    returns: [quo:Int, mod:Int]
+  desc: |-
+    The quotient *quo* and modulus *mod* when dividing *x* by *y* using
+    Euclidean division. If *y* is zero, a 'division by zero' error is raised.
+  example:
+  - i: -7 2 div.mod.e
+    o: ["-4 :quo", "1 :mod"]
+
+- name: sqrt/i
+  title: Square root
+  funcs:
+  - name: SqrtBigInt
+    params: [x:Int]
+    returns: [Int]
+  desc: |-
+    Square root of *x*. If *x* is negative, and 'invalid argument' error is
+    raised.
+  example:
+  - i: 7 sqrt/i
+    o: [2]
