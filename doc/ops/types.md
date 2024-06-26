@@ -12,7 +12,11 @@ Type operations
 
 ## Related Volumes
 
-- [types/Int](types_Int.md)
+- [types/Int/u](types_Int_u.md)
+- [types/Int/u16](types_Int_u16.md)
+- [types/Int/u32](types_Int_u32.md)
+- [types/Int/u64](types_Int_u64.md)
+- [types/Int/u8](types_Int_u8.md)
 
 
 ## Operations

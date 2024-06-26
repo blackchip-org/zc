@@ -1,0 +1,15 @@
+name: basic/Int/u16
+title: Basic calculator
+subtitle: unsigned 16-bit integer
+
+ops:
+- name: add/u16
+  title: Addition
+  funcs:
+  - name: AddUint16
+    params: [x:Int/u16, x:Int/u16]
+    returns: [x:Int/u16]
+  desc: Adds *x* to *y*. Value wraps around on overflow.
+  example:
+  - i: 65535 1 add/u16
+    o: [0]

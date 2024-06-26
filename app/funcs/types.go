@@ -1,6 +1,14 @@
 package funcs
 
-import "github.com/blackchip-org/zc/v6"
+import (
+	"math"
+
+	"github.com/blackchip-org/zc/v6"
+)
+
+func MaxUint(e *zc.OpEnv) {
+	zc.Uint.Push(e, math.MaxUint)
+}
 
 func Types(e *zc.OpEnv) {
 	for i := 0; i < e.Len(); i++ {

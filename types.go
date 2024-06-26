@@ -29,6 +29,8 @@ var (
 	String    = StringType{}
 	Uint      = UintType{}
 	Uint8     = Uint8Type{}
+	Uint16    = Uint16Type{}
+	Uint32    = Uint32Type{}
 	Uint64    = Uint64Type{}
 )
 
@@ -887,6 +889,86 @@ func (t Uint8Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 
+type Uint16Type struct{}
+
+func (t Uint16Type) Name() string { return "Int/u16" }
+
+func (t Uint16Type) As(a any) uint16 {
+	val, ok := a.(uint16)
+	if !ok {
+		panic(ErrWrongGoType("uint16", a))
+	}
+	return val
+}
+
+func (t Uint16Type) Pop(e *OpEnv) uint16 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Uint16Type) Push(e *OpEnv, v uint16) {
+	e.PushVal(v)
+}
+
+func (t Uint16Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case uint16:
+		return v, t, true
+	case string:
+		v = PreParseNumber(v)
+		u16, err := strconv.ParseUint(v, 0, 16)
+		return uint16(u16), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Uint16Type) Format(v any) string {
+	return strconv.FormatUint(uint64(t.As(v)), 10)
+}
+
+func (t Uint16Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type Uint32Type struct{}
+
+func (t Uint32Type) Name() string { return "Int/u32" }
+
+func (t Uint32Type) As(a any) uint32 {
+	val, ok := a.(uint32)
+	if !ok {
+		panic(ErrWrongGoType("uint32", a))
+	}
+	return val
+}
+
+func (t Uint32Type) Pop(e *OpEnv) uint32 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Uint32Type) Push(e *OpEnv, v uint32) {
+	e.PushVal(v)
+}
+
+func (t Uint32Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case uint32:
+		return v, t, true
+	case string:
+		v = PreParseNumber(v)
+		u32, err := strconv.ParseUint(v, 0, 32)
+		return uint32(u32), String, err == nil
+	}
+	return nil, nil, false
+}
+
+func (t Uint32Type) Format(v any) string {
+	return strconv.FormatUint(uint64(t.As(v)), 10)
+}
+
+func (t Uint32Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
 type Uint64Type struct{}
 
 func (t Uint64Type) Name() string { return "Int/u64" }
@@ -909,7 +991,7 @@ func (t Uint64Type) Push(e *OpEnv, v uint64) {
 
 func (t Uint64Type) From(src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case uint8:
+	case uint64:
 		return v, t, true
 	case string:
 		v = PreParseNumber(v)

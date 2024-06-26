@@ -26,6 +26,11 @@ Basic calculator
 - [basic/Complex](basic_Complex.md)
 - [basic/Float](basic_Float.md)
 - [basic/Int](basic_Int.md)
+- [basic/Int/u](basic_Int_u.md)
+- [basic/Int/u16](basic_Int_u16.md)
+- [basic/Int/u32](basic_Int_u32.md)
+- [basic/Int/u64](basic_Int_u64.md)
+- [basic/Int/u8](basic_Int_u8.md)
 - [basic/Rat](basic_Rat.md)
 
 

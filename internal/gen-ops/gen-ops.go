@@ -35,6 +35,8 @@ var typeMap map[string]string = map[string]string{
 	zc.String.Name():    "String",
 	zc.Uint.Name():      "Uint",
 	zc.Uint8.Name():     "Uint8",
+	zc.Uint16.Name():    "Uint16",
+	zc.Uint32.Name():    "Uint32",
 	zc.Uint64.Name():    "Uint64",
 }
 

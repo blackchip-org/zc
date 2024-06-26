@@ -21,6 +21,11 @@
   - [`add/c`](ops/basic_Complex.md#addc): complex
   - [`add/f`](ops/basic_Float.md#addf): float
   - [`add/r`](ops/basic_Rat.md#addr): rational
+  - [`add/u`](ops/basic_Int_u.md#addu): unsigned integer
+  - [`add/u16`](ops/basic_Int_u16.md#addu16): unsigned 16-bit integer
+  - [`add/u32`](ops/basic_Int_u32.md#addu32): unsigned 32-bit integer
+  - [`add/u64`](ops/basic_Int_u64.md#addu64): unsigned 64-bit integer
+  - [`add/u8`](ops/basic_Int_u8.md#addu8): unsigned 8-bit integer
 - `and`
   - [`and/i`](ops/prog.md#andi): Bitwise and
 - [`asin`](ops/sci.md#asin): Inverse sine

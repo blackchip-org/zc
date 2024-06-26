@@ -21,6 +21,11 @@ func init() {
 		vols.BasicFloat,
 		vols.BasicRat,
 		vols.BasicComplex,
+		vols.BasicIntU,
+		vols.BasicIntU8,
+		vols.BasicIntU16,
+		vols.BasicIntU32,
+		vols.BasicIntU64,
 		vols.Conf,
 		vols.Format,
 		vols.Prog,
@@ -29,7 +34,11 @@ func init() {
 		vols.SciFloat64,
 		vols.Stack,
 		vols.Types,
-		vols.TypesInt,
+		vols.TypesIntU,
+		vols.TypesIntU8,
+		vols.TypesIntU16,
+		vols.TypesIntU32,
+		vols.TypesIntU64,
 	)
 }
 
