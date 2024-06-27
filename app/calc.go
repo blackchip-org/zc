@@ -145,7 +145,7 @@ func (c *Calc) isTypeMatch(def []zc.Type) bool {
 	}
 	for i, param := range def {
 		arg := c.Get(len(def) - i - 1)
-		_, _, ok := param.From(arg.Val)
+		_, _, ok := param.From(c.state, arg.Val)
 		if !ok {
 			return false
 		}
@@ -167,7 +167,7 @@ func (c *Calc) Do(op zc.Op) {
 	nParams := len(op.Params)
 	for i, param := range op.Params {
 		arg := c.Get(nParams - i - 1)
-		convVal, argType, ok := param.From(arg.Val)
+		convVal, argType, ok := param.From(c.state, arg.Val)
 		if !ok {
 			panic("cannot convert")
 		}

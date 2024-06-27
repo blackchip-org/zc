@@ -27,7 +27,7 @@ func ForConf(state State) *Conf {
 	s, ok := state[ConfID]
 	if !ok {
 		s = &Conf{
-			FloatPrec:      64,
+			FloatPrec:      53,
 			DecPrec:        16,
 			DecMaxExponent: 100_000,
 			DecMinExponent: -100_000,

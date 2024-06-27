@@ -10,29 +10,28 @@ import (
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/app/state"
 	"github.com/cockroachdb/apd/v3"
-	"github.com/shopspring/decimal"
+	"golang.org/x/exp/constraints"
 )
 
 var (
-	Any       = anyType{}
-	BigInt    = BigIntType{}
-	BigFloat  = BigFloatType{}
-	Complex   = ComplexType{}
-	Decimal   = DecimalType{}
-	DecimalSS = DecimalSSType{}
-	Float64   = Float64Type{}
-	Int       = IntType{}
-	Int8      = Int8Type{}
-	Int16     = Int16Type{}
-	Int32     = Int32Type{}
-	Int64     = Int64Type{}
-	Rat       = RatType{}
-	String    = StringType{}
-	Uint      = UintType{}
-	Uint8     = Uint8Type{}
-	Uint16    = Uint16Type{}
-	Uint32    = Uint32Type{}
-	Uint64    = Uint64Type{}
+	Any      = anyType{}
+	BigFloat = BigFloatType{}
+	BigInt   = BigIntType{}
+	Complex  = ComplexType{}
+	Decimal  = DecimalType{}
+	Float64  = Float64Type{}
+	Int      = IntType{}
+	Int8     = Int8Type{}
+	Int16    = Int16Type{}
+	Int32    = Int32Type{}
+	Int64    = Int64Type{}
+	Rat      = RatType{}
+	String   = StringType{}
+	Uint     = UintType{}
+	Uint8    = Uint8Type{}
+	Uint16   = Uint16Type{}
+	Uint32   = Uint32Type{}
+	Uint64   = Uint64Type{}
 )
 
 func TypeOf(a any) Type {
@@ -47,8 +46,6 @@ func TypeOf(a any) Type {
 		return Decimal
 	case complex128:
 		return Complex
-	case decimal.Decimal:
-		return DecimalSS
 	case float64:
 		return Float64
 	case int:
@@ -88,7 +85,10 @@ var (
 
 type Type interface {
 	Name() string
-	From(any) (any, Type, bool)
+	GoName() string
+	String() string
+	Equal(any, any) bool
+	From(state.State, any) (any, Type, bool)
 	Format(any) string
 	Recycle(any)
 }
@@ -97,9 +97,15 @@ type Type interface {
 
 type anyType struct{}
 
-func (t anyType) Name() string { return "Any" }
+func (t anyType) Name() string   { return "Any" }
+func (t anyType) GoName() string { return "any" }
+func (t anyType) String() string { return t.Name() }
 
-func (t anyType) From(src any) (any, Type, bool) {
+func (t anyType) Equal(ax, ay any) bool {
+	return false
+}
+
+func (t anyType) From(_ state.State, src any) (any, Type, bool) {
 	return src, Any, true
 }
 
@@ -111,14 +117,125 @@ func (t anyType) Recycle(any) {}
 
 // ----------------------------------------------------------------------------
 
+type BigFloatType struct{}
+
+func (t BigFloatType) Name() string   { return "Float" }
+func (t BigFloatType) GoName() string { return "*big.Float" }
+func (t BigFloatType) String() string { return t.Name() }
+
+func (t BigFloatType) As(a any) *big.Float {
+	val, ok := a.(*big.Float)
+	if !ok {
+		panic(ErrWrongGoType(t.GoName(), a))
+	}
+	return val
+}
+
+func (t BigFloatType) Pop(e *OpEnv) *big.Float {
+	return t.As(e.Pop().Val)
+}
+
+func (t BigFloatType) Push(e *OpEnv, bf *big.Float) {
+	if bf.IsInf() {
+		e.Err = ErrInfinity(e, bf.Sign())
+	} else {
+		e.PushVal(bf)
+	}
+}
+
+func (t BigFloatType) Equal(ax, ay any) bool {
+	if ax == nil && ay == nil {
+		return false
+	}
+	x, y := t.As(ax), t.As(ay)
+	return x.Cmp(y) == 0
+}
+
+func (t BigFloatType) From(s state.State, src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case *big.Float:
+		return v, t, true
+	case *big.Int:
+		bf := t.New(s)
+		bf.SetInt(v)
+		return bf, BigInt, true
+	case complex128:
+		r, i := real(v), imag(v)
+		if i != 0 {
+			return nil, Complex, false
+		}
+		bf := t.New(s)
+		bf.SetFloat64(r)
+		return bf, Complex, true
+	case *apd.Decimal:
+		bf := t.New(s)
+		bf.SetString(v.String())
+		return bf, Decimal, true
+	case float64:
+		bf := t.New(s)
+		bf.SetFloat64(v)
+		return bf, Float64, true
+	case int:
+		return intToBigFloat(s, v), Int, true
+	case int8:
+		return intToBigFloat(s, v), Int8, true
+	case int16:
+		return intToBigFloat(s, v), Int16, true
+	case int32:
+		return intToBigFloat(s, v), Int32, true
+	case int64:
+		return intToBigFloat(s, v), Int64, true
+	case *big.Rat:
+		f, _ := v.Float64()
+		bf := t.New(s)
+		bf.SetFloat64(f)
+		return bf, Rat, true
+	case uint:
+		return uintToBigFloat(s, v), Uint, true
+	case uint8:
+		return uintToBigFloat(s, v), Uint8, true
+	case uint16:
+		return uintToBigFloat(s, v), Uint16, true
+	case uint32:
+		return uintToBigFloat(s, v), Uint32, true
+	case uint64:
+		return uintToBigFloat(s, v), Uint64, true
+	case string:
+		bf := t.New(s)
+		v = PreParseNumber(v)
+		_, ok := bf.SetString(v)
+		return bf, String, ok
+	}
+	return nil, Any, false
+}
+
+func (t BigFloatType) Format(v any) string {
+	return t.As(v).Text('f', -1)
+}
+
+func (t BigFloatType) New(s state.State) *big.Float {
+	conf := state.ForConf(s)
+	f := floatPool.New()
+	f.SetPrec(conf.FloatPrec)
+	return f
+}
+
+func (t BigFloatType) Recycle(v any) {
+	floatPool.Recycle(v.(*big.Float))
+}
+
+// ----------------------------------------------------------------------------
+
 type BigIntType struct{}
 
-func (t BigIntType) Name() string { return "Int" }
+func (t BigIntType) Name() string   { return "Int" }
+func (t BigIntType) GoName() string { return "*big.Int" }
+func (t BigIntType) String() string { return t.Name() }
 
 func (t BigIntType) As(a any) *big.Int {
 	val, ok := a.(*big.Int)
 	if !ok {
-		panic(ErrWrongGoType("*big.Int", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -131,7 +248,15 @@ func (t BigIntType) Push(e *OpEnv, v *big.Int) {
 	e.PushVal(v)
 }
 
-func (t BigIntType) From(src any) (any, Type, bool) {
+func (t BigIntType) Equal(ax, ay any) bool {
+	if ax == nil && ay == nil {
+		return false
+	}
+	x, y := t.As(ax), t.As(ay)
+	return x.Cmp(y) == 0
+}
+
+func (t BigIntType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Int:
 		return v, t, true
@@ -142,51 +267,56 @@ func (t BigIntType) From(src any) (any, Type, bool) {
 		bi := intPool.New()
 		v.Int(bi)
 		return bi, BigFloat, true
+	case complex128:
+		r, i := real(v), imag(v)
+		if i != 0 {
+			return nil, Complex, false
+		}
+		bi, ok := float64ToBigInt(r)
+		return bi, Complex, ok
+	case *apd.Decimal:
+		i64, err := v.Int64()
+		if err != nil {
+			return nil, Decimal, false
+		}
+		bi := intPool.New()
+		bi.SetInt64(i64)
+		return bi, Decimal, true
+	case float64:
+		bi, ok := float64ToBigInt(v)
+		return bi, Float64, ok
 	case int:
-		bi := intPool.New()
-		bi.SetInt64(int64(v))
-		return bi, Int, true
+		return intToBigInt(v), Int, true
 	case int8:
-		bi := intPool.New()
-		bi.SetInt64(int64(v))
-		return bi, Int8, true
+		return intToBigInt(v), Int8, true
 	case int16:
-		bi := intPool.New()
-		bi.SetInt64(int64(v))
-		return bi, Int16, true
+		return intToBigInt(v), Int16, true
 	case int32:
-		bi := intPool.New()
-		bi.SetInt64(int64(v))
-		return bi, Int32, true
+		return intToBigInt(v), Int32, true
 	case int64:
+		return intToBigInt(v), Int64, true
+	case *big.Rat:
+		if !v.IsInt() {
+			return nil, Rat, false
+		}
 		bi := intPool.New()
-		bi.SetInt64(int64(v))
-		return bi, Int64, true
+		bi.Set(v.Num())
+		return bi, Rat, true
+	case uint:
+		return uintToBigInt(v), Uint, true
+	case uint8:
+		return uintToBigInt(v), Uint8, true
+	case uint16:
+		return uintToBigInt(v), Uint16, true
+	case uint32:
+		return uintToBigInt(v), Uint32, true
+	case uint64:
+		return uintToBigInt(v), Uint64, true
 	case string:
 		bi := intPool.New()
 		v = PreParseNumber(v)
 		_, ok := bi.SetString(v, 0)
 		return bi, String, ok
-	case uint:
-		bi := intPool.New()
-		bi.SetUint64(uint64(v))
-		return bi, Uint, true
-	case uint8:
-		bi := intPool.New()
-		bi.SetUint64(uint64(v))
-		return bi, Uint8, true
-	case uint16:
-		bi := intPool.New()
-		bi.SetUint64(uint64(v))
-		return bi, Uint16, true
-	case uint32:
-		bi := intPool.New()
-		bi.SetUint64(uint64(v))
-		return bi, Uint32, true
-	case uint64:
-		bi := intPool.New()
-		bi.SetUint64(uint64(v))
-		return bi, Uint64, true
 	}
 	return nil, Any, false
 }
@@ -206,12 +336,14 @@ func (t BigIntType) Recycle(v any) {
 // ----------------------------------------------------------------------------
 type ComplexType struct{}
 
-func (t ComplexType) Name() string { return "Complex" }
+func (t ComplexType) Name() string   { return "Complex" }
+func (t ComplexType) GoName() string { return "complex128" }
+func (t ComplexType) String() string { return t.Name() }
 
 func (t ComplexType) As(a any) complex128 {
 	val, ok := a.(complex128)
 	if !ok {
-		panic(ErrWrongGoType("complex128", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -231,25 +363,53 @@ func (t ComplexType) Push(e *OpEnv, v complex128) {
 	}
 }
 
-func (t ComplexType) From(src any) (any, Type, bool) {
+func (t ComplexType) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t ComplexType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case complex128:
 		return src, Complex, true
-	case *apd.Decimal:
-		f, err := v.Float64()
-		return f, Decimal, err == nil
 	case *big.Int:
 		if !v.IsInt64() {
-			return nil, Any, false
+			return nil, BigInt, false
 		}
 		i := v.Int64()
-		return complex(float64(i), 0), Int, true
+		return complex(float64(i), 0), BigInt, true
+	case *apd.Decimal:
+		f, err := v.Float64()
+		return complex(f, 0), Decimal, err == nil
+	case float64:
+		return complex(v, 0), Float64, true
 	case int:
 		return complex(float64(v), 0), Int, true
+	case int8:
+		return complex(float64(v), 0), Int8, true
+	case int16:
+		return complex(float64(v), 0), Int16, true
 	case int32:
-		return complex(float64(v), 0), Int, true
-	case float64:
-		return complex(v, 0), Int, true
+		return complex(float64(v), 0), Int32, true
+	case int64:
+		return complex(float64(v), 0), Int64, true
+	case *big.Rat:
+		f64, _ := v.Float64()
+		if math.IsInf(f64, 0) {
+			return nil, Rat, false
+		}
+		// TODO: Set flag for inexact?
+		return complex(f64, 0), Rat, true
+	case uint:
+		return complex(float64(v), 0), Uint, true
+	case uint8:
+		return complex(float64(v), 0), Uint8, true
+	case uint16:
+		return complex(float64(v), 0), Uint16, true
+	case uint32:
+		return complex(float64(v), 0), Uint32, true
+	case uint64:
+		return complex(float64(v), 0), Uint64, true
 	case string:
 		c, err := strconv.ParseComplex(v, 128)
 		return c, String, err == nil
@@ -270,12 +430,14 @@ func (t ComplexType) Recycle(v any) {
 
 type DecimalType struct{}
 
-func (t DecimalType) Name() string { return "Dec" }
+func (t DecimalType) Name() string   { return "Dec" }
+func (t DecimalType) GoName() string { return "*apd.Decimal" }
+func (t DecimalType) String() string { return t.Name() }
 
 func (t DecimalType) As(a any) *apd.Decimal {
 	val, ok := a.(*apd.Decimal)
 	if !ok {
-		panic(ErrWrongGoType("*apd.Decimal", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -296,23 +458,50 @@ func (t DecimalType) Push(e *OpEnv, v *apd.Decimal) {
 	}
 }
 
-func (t DecimalType) From(src any) (any, Type, bool) {
+func (t DecimalType) Equal(ax, ay any) bool {
+	if ax == nil && ay == nil {
+		return false
+	}
+	x, y := t.As(ax), t.As(ay)
+	return x.Cmp(y) == 0
+}
+
+func (t DecimalType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *apd.Decimal:
 		return v, t, true
-	case *big.Int:
-		// FIXME: slow
+	case complex128:
+		r, i := real(v), imag(v)
+		if i != 0 {
+			return nil, Complex, false
+		}
 		d := decimalPool.New()
+		d.SetFloat64(r)
+		return d, Complex, true
+	case *big.Int:
+		d := t.New()
 		d.SetString(v.String())
 		return d, BigInt, true
-	case int:
-		d := decimalPool.New()
-		d.SetInt64(int64(v))
-		return d, Int, true
 	case float64:
 		d := decimalPool.New()
 		d.SetFloat64(v)
 		return d, Float64, true
+	case int:
+		return intToDecimal(v), Int, true
+	case int8:
+		return intToDecimal(v), Int8, true
+	case int16:
+		return intToDecimal(v), Int16, true
+	case int32:
+		return intToDecimal(v), Int32, true
+	case int64:
+		return intToDecimal(v), Int64, true
+	case *big.Rat:
+		conf := state.ForConf(s)
+		s := v.FloatString(int(conf.DecPrec))
+		d := t.New()
+		d.SetString(s)
+		return d, Rat, true
 	case string:
 		d := decimalPool.New()
 		v = PreParseNumber(v)
@@ -339,126 +528,16 @@ func (t DecimalType) Recycle(v any) {
 
 // ----------------------------------------------------------------------------
 
-type DecimalSSType struct{}
-
-func (t DecimalSSType) Name() string { return "Dec/ss" }
-
-func (t DecimalSSType) As(a any) decimal.Decimal {
-	val, ok := a.(decimal.Decimal)
-	if !ok {
-		panic(ErrWrongGoType("decimal.Decimal", a))
-	}
-	return val
-}
-
-func (t DecimalSSType) Pop(e *OpEnv) decimal.Decimal {
-	return t.As(e.Pop().Val)
-}
-
-func (t DecimalSSType) Push(e *OpEnv, v decimal.Decimal) {
-	e.PushVal(v)
-}
-
-func (t DecimalSSType) From(src any) (any, Type, bool) {
-	switch v := src.(type) {
-	case decimal.Decimal:
-		return v, t, true
-	case *big.Int:
-		d := decimal.NewFromBigInt(v, 0)
-		return d, BigInt, true
-	case int:
-		d := decimal.NewFromInt(int64(v))
-		return d, Int, true
-	case float64:
-		d := decimal.NewFromFloat(v)
-		return d, Float64, true
-	case string:
-		v = PreParseNumber(v)
-		d, err := decimal.NewFromString(v)
-		return d, String, err == nil
-	}
-	return nil, Any, false
-}
-
-func (t DecimalSSType) Format(v any) string {
-	return t.As(v).String()
-}
-
-func (t DecimalSSType) Recycle(v any) {}
-
-// ----------------------------------------------------------------------------
-
-type BigFloatType struct{}
-
-func (t BigFloatType) Name() string { return "Float" }
-
-func (t BigFloatType) As(a any) *big.Float {
-	val, ok := a.(*big.Float)
-	if !ok {
-		panic(ErrWrongGoType("*big.Float", a))
-	}
-	return val
-}
-
-func (t BigFloatType) Pop(e *OpEnv) *big.Float {
-	conf := state.ForConf(e.State)
-	bf := t.As(e.Pop().Val)
-	bf.SetPrec(conf.FloatPrec)
-	return bf
-}
-
-func (t BigFloatType) Push(e *OpEnv, bf *big.Float) {
-	if bf.IsInf() {
-		e.Err = ErrInfinity(e, bf.Sign())
-	} else {
-		e.PushVal(bf)
-	}
-}
-
-func (t BigFloatType) From(src any) (any, Type, bool) {
-	switch v := src.(type) {
-	case *big.Float:
-		return v, t, true
-	case *apd.Decimal:
-		// FIXME: slow
-		bf := floatPool.New()
-		bf.SetString(v.String())
-		return bf, Decimal, true
-	case int:
-		bf := floatPool.New()
-		bf.SetInt64(int64(v))
-		return bf, Int, true
-	case string:
-		bf := floatPool.New()
-		v = PreParseNumber(v)
-		_, ok := bf.SetString(v)
-		return bf, String, ok
-	}
-	return nil, Any, false
-}
-
-func (t BigFloatType) Format(v any) string {
-	return t.As(v).Text('f', -1)
-}
-
-func (t BigFloatType) New() *big.Float {
-	return floatPool.New()
-}
-
-func (t BigFloatType) Recycle(v any) {
-	floatPool.Recycle(v.(*big.Float))
-}
-
-// ----------------------------------------------------------------------------
-
 type Float64Type struct{}
 
-func (t Float64Type) Name() string { return "Float/64" }
+func (t Float64Type) Name() string   { return "Float/64" }
+func (t Float64Type) GoName() string { return "float64" }
+func (t Float64Type) String() string { return t.Name() }
 
 func (t Float64Type) As(a any) float64 {
 	val, ok := a.(float64)
 	if !ok {
-		panic(ErrWrongGoType("float64", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -480,7 +559,12 @@ func (t Float64Type) Push(e *OpEnv, v float64) {
 	}
 }
 
-func (t Float64Type) From(src any) (any, Type, bool) {
+func (t Float64Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Float64Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case float64:
 		return v, Float64, true
@@ -502,12 +586,14 @@ func (t Float64Type) Recycle(v any) {}
 
 type IntType struct{}
 
-func (t IntType) Name() string { return "Int/s" }
+func (t IntType) Name() string   { return "Int/s" }
+func (t IntType) GoName() string { return "int" }
+func (t IntType) String() string { return t.Name() }
 
 func (t IntType) As(a any) int {
 	val, ok := a.(int)
 	if !ok {
-		panic(ErrWrongGoType("int", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -520,7 +606,12 @@ func (t IntType) Push(e *OpEnv, v int) {
 	e.PushVal(v)
 }
 
-func (t IntType) From(src any) (any, Type, bool) {
+func (t IntType) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t IntType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int:
 		return src, Int, true
@@ -542,12 +633,14 @@ func (t IntType) Recycle(v any) {}
 
 type Int8Type struct{}
 
-func (t Int8Type) Name() string { return "Int/s8" }
+func (t Int8Type) Name() string   { return "Int/s8" }
+func (t Int8Type) GoName() string { return "int8" }
+func (t Int8Type) String() string { return t.Name() }
 
 func (t Int8Type) As(a any) int8 {
 	val, ok := a.(int8)
 	if !ok {
-		panic(ErrWrongGoType("int8", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -560,7 +653,12 @@ func (t Int8Type) Push(e *OpEnv, v int8) {
 	e.PushVal(v)
 }
 
-func (t Int8Type) From(src any) (any, Type, bool) {
+func (t Int8Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Int8Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int8:
 		return v, t, true
@@ -582,12 +680,14 @@ func (t Int8Type) Recycle(v any) {}
 
 type Int16Type struct{}
 
-func (t Int16Type) Name() string { return "Int/s16" }
+func (t Int16Type) Name() string   { return "Int/s16" }
+func (t Int16Type) GoName() string { return "int16" }
+func (t Int16Type) String() string { return t.Name() }
 
 func (t Int16Type) As(a any) int16 {
 	val, ok := a.(int16)
 	if !ok {
-		panic(ErrWrongGoType("int16", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -600,7 +700,12 @@ func (t Int16Type) Push(e *OpEnv, v int16) {
 	e.PushVal(v)
 }
 
-func (t Int16Type) From(src any) (any, Type, bool) {
+func (t Int16Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Int16Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int8:
 		return v, t, true
@@ -622,12 +727,14 @@ func (t Int16Type) Recycle(v any) {}
 
 type Int32Type struct{}
 
-func (t Int32Type) Name() string { return "Int/s32" }
+func (t Int32Type) Name() string   { return "Int/s32" }
+func (t Int32Type) GoName() string { return "int32" }
+func (t Int32Type) String() string { return t.Name() }
 
 func (t Int32Type) As(a any) int32 {
 	val, ok := a.(int32)
 	if !ok {
-		panic(ErrWrongGoType("int32", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -640,7 +747,12 @@ func (t Int32Type) Push(e *OpEnv, v int32) {
 	e.PushVal(v)
 }
 
-func (t Int32Type) From(src any) (any, Type, bool) {
+func (t Int32Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Int32Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int32:
 		return v, t, true
@@ -662,12 +774,14 @@ func (t Int32Type) Recycle(v any) {}
 
 type Int64Type struct{}
 
-func (t Int64Type) Name() string { return "Int/s64" }
+func (t Int64Type) Name() string   { return "Int/s64" }
+func (t Int64Type) GoName() string { return "int64" }
+func (t Int64Type) String() string { return t.Name() }
 
 func (t Int64Type) As(a any) int64 {
 	val, ok := a.(int64)
 	if !ok {
-		panic(ErrWrongGoType("int64", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -680,7 +794,12 @@ func (t Int64Type) Push(e *OpEnv, v int64) {
 	e.PushVal(v)
 }
 
-func (t Int64Type) From(src any) (any, Type, bool) {
+func (t Int64Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Int64Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int64:
 		return v, t, true
@@ -702,12 +821,14 @@ func (t Int64Type) Recycle(v any) {}
 
 type RatType struct{}
 
-func (t RatType) Name() string { return "Rat" }
+func (t RatType) Name() string   { return "Rat" }
+func (t RatType) GoName() string { return "*big.Rat" }
+func (t RatType) String() string { return t.Name() }
 
 func (t RatType) As(a any) *big.Rat {
 	val, ok := a.(*big.Rat)
 	if !ok {
-		panic(ErrWrongGoType("*big.Rat", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -720,7 +841,15 @@ func (t RatType) Push(e *OpEnv, r *big.Rat) {
 	e.PushVal(r)
 }
 
-func (t RatType) From(src any) (any, Type, bool) {
+func (t RatType) Equal(ax, ay any) bool {
+	if ax == nil && ay == nil {
+		return false
+	}
+	x, y := t.As(ax), t.As(ay)
+	return x.Cmp(y) == 0
+}
+
+func (t RatType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Rat:
 		return v, t, true
@@ -855,12 +984,14 @@ func (t RatType) Recycle(v any) {
 
 type StringType struct{}
 
-func (t StringType) Name() string { return "Text" }
+func (t StringType) Name() string   { return "Text" }
+func (t StringType) GoName() string { return "string" }
+func (t StringType) String() string { return t.Name() }
 
 func (t StringType) As(a any) string {
 	val, ok := a.(string)
 	if !ok {
-		panic(ErrWrongGoType("string", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -873,7 +1004,12 @@ func (t StringType) Push(e *OpEnv, s string) {
 	e.PushVal(s)
 }
 
-func (t StringType) From(src any) (any, Type, bool) {
+func (t StringType) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t StringType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case string:
 		return v, t, true
@@ -891,12 +1027,14 @@ func (t StringType) Recycle(v any) {}
 
 type UintType struct{}
 
-func (t UintType) Name() string { return "Int/u" }
+func (t UintType) Name() string   { return "Int/u" }
+func (t UintType) GoName() string { return "uint" }
+func (t UintType) String() string { return t.Name() }
 
 func (t UintType) As(a any) uint {
 	val, ok := a.(uint)
 	if !ok {
-		panic(ErrWrongGoType("uint", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -909,7 +1047,12 @@ func (t UintType) Push(e *OpEnv, ui uint) {
 	e.PushVal(ui)
 }
 
-func (t UintType) From(src any) (any, Type, bool) {
+func (t UintType) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t UintType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case uint:
 		return v, t, true
@@ -937,12 +1080,14 @@ func (t UintType) Recycle(v any) {}
 
 type Uint8Type struct{}
 
-func (t Uint8Type) Name() string { return "Int/u8" }
+func (t Uint8Type) Name() string   { return "Int/u8" }
+func (t Uint8Type) GoName() string { return "uint8" }
+func (t Uint8Type) String() string { return t.Name() }
 
 func (t Uint8Type) As(a any) uint8 {
 	val, ok := a.(uint8)
 	if !ok {
-		panic(ErrWrongGoType("uint8", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -955,7 +1100,12 @@ func (t Uint8Type) Push(e *OpEnv, v uint8) {
 	e.PushVal(v)
 }
 
-func (t Uint8Type) From(src any) (any, Type, bool) {
+func (t Uint8Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Uint8Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case uint8:
 		return v, t, true
@@ -977,12 +1127,14 @@ func (t Uint8Type) Recycle(v any) {}
 
 type Uint16Type struct{}
 
-func (t Uint16Type) Name() string { return "Int/u16" }
+func (t Uint16Type) Name() string   { return "Int/u16" }
+func (t Uint16Type) GoName() string { return "uint16" }
+func (t Uint16Type) String() string { return t.Name() }
 
 func (t Uint16Type) As(a any) uint16 {
 	val, ok := a.(uint16)
 	if !ok {
-		panic(ErrWrongGoType("uint16", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -995,7 +1147,12 @@ func (t Uint16Type) Push(e *OpEnv, v uint16) {
 	e.PushVal(v)
 }
 
-func (t Uint16Type) From(src any) (any, Type, bool) {
+func (t Uint16Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Uint16Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case uint16:
 		return v, t, true
@@ -1017,12 +1174,14 @@ func (t Uint16Type) Recycle(v any) {}
 
 type Uint32Type struct{}
 
-func (t Uint32Type) Name() string { return "Int/u32" }
+func (t Uint32Type) Name() string   { return "Int/u32" }
+func (t Uint32Type) GoName() string { return "uint32" }
+func (t Uint32Type) String() string { return t.Name() }
 
 func (t Uint32Type) As(a any) uint32 {
 	val, ok := a.(uint32)
 	if !ok {
-		panic(ErrWrongGoType("uint32", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -1035,7 +1194,12 @@ func (t Uint32Type) Push(e *OpEnv, v uint32) {
 	e.PushVal(v)
 }
 
-func (t Uint32Type) From(src any) (any, Type, bool) {
+func (t Uint32Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Uint32Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case uint32:
 		return v, t, true
@@ -1057,12 +1221,14 @@ func (t Uint32Type) Recycle(v any) {}
 
 type Uint64Type struct{}
 
-func (t Uint64Type) Name() string { return "Int/u64" }
+func (t Uint64Type) Name() string   { return "Int/u64" }
+func (t Uint64Type) GoName() string { return "uint64" }
+func (t Uint64Type) String() string { return t.Name() }
 
 func (t Uint64Type) As(a any) uint64 {
 	val, ok := a.(uint64)
 	if !ok {
-		panic(ErrWrongGoType("uint64", a))
+		panic(ErrWrongGoType(t.GoName(), a))
 	}
 	return val
 }
@@ -1075,7 +1241,12 @@ func (t Uint64Type) Push(e *OpEnv, v uint64) {
 	e.PushVal(v)
 }
 
-func (t Uint64Type) From(src any) (any, Type, bool) {
+func (t Uint64Type) Equal(ax, ay any) bool {
+	x, y := t.As(ax), t.As(ay)
+	return x == y
+}
+
+func (t Uint64Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case uint64:
 		return v, t, true
@@ -1092,3 +1263,71 @@ func (t Uint64Type) Format(v any) string {
 }
 
 func (t Uint64Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+func Equal(a, b any) bool {
+	at := TypeOf(a)
+	bt := TypeOf(b)
+	if at != bt {
+		return false
+	}
+	return at.Equal(a, b)
+}
+
+func float64ToInt64(f float64) (int64, bool) {
+	if f != math.Trunc(f) {
+		return 0, false
+	}
+	if f >= float64(math.MaxInt64) || f <= float64(math.MinInt64) {
+		return 0, false
+	}
+	return int64(f), true
+}
+
+func float64ToBigInt(f float64) (*big.Int, bool) {
+	i64, ok := float64ToInt64(f)
+	if !ok {
+		return nil, false
+	}
+	bi := BigInt.New()
+	bi.SetInt64(i64)
+	return bi, true
+}
+
+func intToBigInt[T constraints.Signed](i T) *big.Int {
+	bi := BigInt.New()
+	bi.SetInt64(int64(i))
+	return bi
+}
+
+func intToBigFloat[T constraints.Signed](s state.State, i T) *big.Float {
+	bf := BigFloat.New(s)
+	bf.SetInt64(int64(i))
+	return bf
+}
+
+func intToDecimal[T constraints.Signed](i T) *apd.Decimal {
+	d := Decimal.New()
+	d.SetInt64(int64(i))
+	return d
+}
+
+func uintToBigInt[T constraints.Unsigned](i T) *big.Int {
+	bi := BigInt.New()
+	bi.SetUint64(uint64(i))
+	return bi
+}
+
+func uintToBigFloat[T constraints.Unsigned](s state.State, i T) *big.Float {
+	bf := BigFloat.New(s)
+	bf.SetUint64(uint64(i))
+	return bf
+}
+
+func uintToDecimal[T constraints.Unsigned](i T) *apd.Decimal {
+	s := fmt.Sprintf("%v", i)
+	d := Decimal.New()
+	d.SetString(s)
+	return d
+}
