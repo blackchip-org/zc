@@ -23,6 +23,7 @@ var (
 	Float64   = Float64Type{}
 	Int       = IntType{}
 	Int8      = Int8Type{}
+	Int16     = Int16Type{}
 	Int32     = Int32Type{}
 	Int64     = Int64Type{}
 	Rat       = RatType{}
@@ -54,25 +55,35 @@ func TypeOf(a any) Type {
 		return Int
 	case int8:
 		return Int8
+	case int16:
+		return Int16
 	case int32:
 		return Int32
+	case int64:
+		return Int64
 	case string:
 		return String
 	case uint:
 		return Uint
 	case uint8:
 		return Uint8
+	case uint16:
+		return Uint16
+	case uint32:
+		return Uint32
+	case uint64:
+		return Uint64
 	default:
 		return Any
 	}
 }
 
 var (
-	poolSize     = 8
-	bigFloatPool = NewPool[big.Float](poolSize)
-	bigIntPool   = NewPool[big.Int](poolSize)
-	decimalPool  = NewPool[apd.Decimal](poolSize)
-	ratPool      = NewPool[big.Rat](poolSize)
+	poolSize    = 8
+	decimalPool = NewPool[apd.Decimal](poolSize)
+	floatPool   = NewPool[big.Float](poolSize)
+	intPool     = NewPool[big.Int](poolSize)
+	ratPool     = NewPool[big.Rat](poolSize)
 )
 
 type Type interface {
@@ -124,25 +135,60 @@ func (t BigIntType) From(src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Int:
 		return v, t, true
+	case *big.Float:
+		if !v.IsInt() {
+			return nil, Any, false
+		}
+		bi := intPool.New()
+		v.Int(bi)
+		return bi, BigFloat, true
 	case int:
-		bi := bigIntPool.New()
+		bi := intPool.New()
 		bi.SetInt64(int64(v))
 		return bi, Int, true
+	case int8:
+		bi := intPool.New()
+		bi.SetInt64(int64(v))
+		return bi, Int8, true
+	case int16:
+		bi := intPool.New()
+		bi.SetInt64(int64(v))
+		return bi, Int16, true
+	case int32:
+		bi := intPool.New()
+		bi.SetInt64(int64(v))
+		return bi, Int32, true
+	case int64:
+		bi := intPool.New()
+		bi.SetInt64(int64(v))
+		return bi, Int64, true
 	case string:
-		bi := bigIntPool.New()
+		bi := intPool.New()
 		v = PreParseNumber(v)
 		_, ok := bi.SetString(v, 0)
 		return bi, String, ok
 	case uint:
-		bi := bigIntPool.New()
+		bi := intPool.New()
 		bi.SetUint64(uint64(v))
 		return bi, Uint, true
 	case uint8:
-		bi := bigIntPool.New()
+		bi := intPool.New()
 		bi.SetUint64(uint64(v))
-		return bi, Uint, true
+		return bi, Uint8, true
+	case uint16:
+		bi := intPool.New()
+		bi.SetUint64(uint64(v))
+		return bi, Uint16, true
+	case uint32:
+		bi := intPool.New()
+		bi.SetUint64(uint64(v))
+		return bi, Uint32, true
+	case uint64:
+		bi := intPool.New()
+		bi.SetUint64(uint64(v))
+		return bi, Uint64, true
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t BigIntType) Format(a any) string {
@@ -150,11 +196,11 @@ func (t BigIntType) Format(a any) string {
 }
 
 func (t BigIntType) New() *big.Int {
-	return bigIntPool.New()
+	return intPool.New()
 }
 
 func (t BigIntType) Recycle(v any) {
-	bigIntPool.Recycle(v.(*big.Int))
+	intPool.Recycle(v.(*big.Int))
 }
 
 // ----------------------------------------------------------------------------
@@ -194,7 +240,7 @@ func (t ComplexType) From(src any) (any, Type, bool) {
 		return f, Decimal, err == nil
 	case *big.Int:
 		if !v.IsInt64() {
-			return nil, nil, false
+			return nil, Any, false
 		}
 		i := v.Int64()
 		return complex(float64(i), 0), Int, true
@@ -208,7 +254,7 @@ func (t ComplexType) From(src any) (any, Type, bool) {
 		c, err := strconv.ParseComplex(v, 128)
 		return c, String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t ComplexType) Format(v any) string {
@@ -273,7 +319,7 @@ func (t DecimalType) From(src any) (any, Type, bool) {
 		_, _, err := d.SetString(v)
 		return d, String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t DecimalType) Format(v any) string {
@@ -331,7 +377,7 @@ func (t DecimalSSType) From(src any) (any, Type, bool) {
 		d, err := decimal.NewFromString(v)
 		return d, String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t DecimalSSType) Format(v any) string {
@@ -375,20 +421,20 @@ func (t BigFloatType) From(src any) (any, Type, bool) {
 		return v, t, true
 	case *apd.Decimal:
 		// FIXME: slow
-		bf := bigFloatPool.New()
+		bf := floatPool.New()
 		bf.SetString(v.String())
 		return bf, Decimal, true
 	case int:
-		bf := bigFloatPool.New()
+		bf := floatPool.New()
 		bf.SetInt64(int64(v))
 		return bf, Int, true
 	case string:
-		bf := bigFloatPool.New()
+		bf := floatPool.New()
 		v = PreParseNumber(v)
 		_, ok := bf.SetString(v)
 		return bf, String, ok
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t BigFloatType) Format(v any) string {
@@ -396,11 +442,11 @@ func (t BigFloatType) Format(v any) string {
 }
 
 func (t BigFloatType) New() *big.Float {
-	return bigFloatPool.New()
+	return floatPool.New()
 }
 
 func (t BigFloatType) Recycle(v any) {
-	bigFloatPool.Recycle(v.(*big.Float))
+	floatPool.Recycle(v.(*big.Float))
 }
 
 // ----------------------------------------------------------------------------
@@ -443,7 +489,7 @@ func (t Float64Type) From(src any) (any, Type, bool) {
 		f64, err := strconv.ParseFloat(v, 64)
 		return f64, String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Float64Type) Format(v any) string {
@@ -483,7 +529,7 @@ func (t IntType) From(src any) (any, Type, bool) {
 		i, err := strconv.ParseInt(v, 0, 0)
 		return int(i), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t IntType) Format(v any) string {
@@ -523,7 +569,7 @@ func (t Int8Type) From(src any) (any, Type, bool) {
 		i8, err := strconv.ParseInt(v, 0, 8)
 		return int8(i8), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Int8Type) Format(v any) string {
@@ -531,6 +577,46 @@ func (t Int8Type) Format(v any) string {
 }
 
 func (t Int8Type) Recycle(v any) {}
+
+// ----------------------------------------------------------------------------
+
+type Int16Type struct{}
+
+func (t Int16Type) Name() string { return "Int/s16" }
+
+func (t Int16Type) As(a any) int16 {
+	val, ok := a.(int16)
+	if !ok {
+		panic(ErrWrongGoType("int16", a))
+	}
+	return val
+}
+
+func (t Int16Type) Pop(e *OpEnv) int16 {
+	return t.As(e.Pop().Val)
+}
+
+func (t Int16Type) Push(e *OpEnv, v int16) {
+	e.PushVal(v)
+}
+
+func (t Int16Type) From(src any) (any, Type, bool) {
+	switch v := src.(type) {
+	case int8:
+		return v, t, true
+	case string:
+		v = PreParseNumber(v)
+		i16, err := strconv.ParseInt(v, 0, 16)
+		return int16(i16), String, err == nil
+	}
+	return nil, Any, false
+}
+
+func (t Int16Type) Format(v any) string {
+	return strconv.FormatInt(int64(t.As(v)), 10)
+}
+
+func (t Int16Type) Recycle(v any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -563,7 +649,7 @@ func (t Int32Type) From(src any) (any, Type, bool) {
 		i32, err := strconv.ParseInt(v, 0, 32)
 		return int32(i32), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Int32Type) Format(v any) string {
@@ -603,7 +689,7 @@ func (t Int64Type) From(src any) (any, Type, bool) {
 		i64, err := strconv.ParseInt(v, 0, 64)
 		return int64(i64), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Int64Type) Format(v any) string {
@@ -666,7 +752,7 @@ func (t RatType) From(src any) (any, Type, bool) {
 		r, ok := t.Parse(v)
 		return r, String, ok
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t RatType) Parse(s string) (*big.Rat, bool) {
@@ -792,7 +878,7 @@ func (t StringType) From(src any) (any, Type, bool) {
 	case string:
 		return v, t, true
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t StringType) Format(v any) string {
@@ -829,7 +915,7 @@ func (t UintType) From(src any) (any, Type, bool) {
 		return v, t, true
 	case *big.Int:
 		if !v.IsUint64() {
-			return nil, nil, false
+			return nil, Any, false
 		}
 		ui := v.Uint64()
 		return ui, BigInt, true
@@ -838,7 +924,7 @@ func (t UintType) From(src any) (any, Type, bool) {
 		ui, err := strconv.ParseUint(v, 0, 0)
 		return uint(ui), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t UintType) Format(v any) string {
@@ -878,7 +964,7 @@ func (t Uint8Type) From(src any) (any, Type, bool) {
 		u8, err := strconv.ParseUint(v, 0, 8)
 		return uint8(u8), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Uint8Type) Format(v any) string {
@@ -918,7 +1004,7 @@ func (t Uint16Type) From(src any) (any, Type, bool) {
 		u16, err := strconv.ParseUint(v, 0, 16)
 		return uint16(u16), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Uint16Type) Format(v any) string {
@@ -958,7 +1044,7 @@ func (t Uint32Type) From(src any) (any, Type, bool) {
 		u32, err := strconv.ParseUint(v, 0, 32)
 		return uint32(u32), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Uint32Type) Format(v any) string {
@@ -998,7 +1084,7 @@ func (t Uint64Type) From(src any) (any, Type, bool) {
 		u64, err := strconv.ParseUint(v, 0, 64)
 		return uint64(u64), String, err == nil
 	}
-	return nil, nil, false
+	return nil, Any, false
 }
 
 func (t Uint64Type) Format(v any) string {
