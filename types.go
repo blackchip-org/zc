@@ -169,7 +169,16 @@ func (t BigFloatType) From(s state.State, src any) (any, Type, bool) {
 		return bf, Complex, true
 	case *apd.Decimal:
 		bf := t.New(s)
-		bf.SetString(v.String())
+		f, err := v.Float64()
+		if err == nil {
+			bf.SetFloat64(f)
+			return bf, Decimal, true
+		}
+		_, ok := bf.SetString(v.String())
+		if !ok {
+			t.Recycle(bf)
+			return nil, Decimal, false
+		}
 		return bf, Decimal, true
 	case float64:
 		bf := t.New(s)
@@ -201,12 +210,35 @@ func (t BigFloatType) From(s state.State, src any) (any, Type, bool) {
 	case uint64:
 		return uintToBigFloat(s, v), Uint64, true
 	case string:
-		bf := t.New(s)
 		v = PreParseNumber(v)
-		_, ok := bf.SetString(v)
+		bf, ok := t.Parse(s, v)
 		return bf, String, ok
 	}
 	return nil, Any, false
+}
+
+func (t BigFloatType) Parse(s state.State, str string) (*big.Float, bool) {
+	// Try to set with a float64 first. SetString("42.42") can give different
+	// results than SetFloat64(42.42)
+	bf := t.New(s)
+	if f, err := strconv.ParseFloat(str, 64); err == nil {
+		bf.SetFloat64(f)
+		return bf, true
+	}
+	_, ok := bf.SetString(str)
+	if !ok {
+		t.Recycle(bf)
+		return nil, false
+	}
+	return bf, true
+}
+
+func (t BigFloatType) MustParse(s state.State, str string) *big.Float {
+	bf, ok := t.Parse(s, str)
+	if !ok {
+		panic(str)
+	}
+	return bf
 }
 
 func (t BigFloatType) Format(v any) string {
@@ -256,7 +288,7 @@ func (t BigIntType) Equal(ax, ay any) bool {
 	return x.Cmp(y) == 0
 }
 
-func (t BigIntType) From(_ state.State, src any) (any, Type, bool) {
+func (t BigIntType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Int:
 		return v, t, true
@@ -264,7 +296,7 @@ func (t BigIntType) From(_ state.State, src any) (any, Type, bool) {
 		if !v.IsInt() {
 			return nil, Any, false
 		}
-		bi := intPool.New()
+		bi := t.New()
 		v.Int(bi)
 		return bi, BigFloat, true
 	case complex128:
@@ -279,7 +311,7 @@ func (t BigIntType) From(_ state.State, src any) (any, Type, bool) {
 		if err != nil {
 			return nil, Decimal, false
 		}
-		bi := intPool.New()
+		bi := t.New()
 		bi.SetInt64(i64)
 		return bi, Decimal, true
 	case float64:
@@ -299,7 +331,7 @@ func (t BigIntType) From(_ state.State, src any) (any, Type, bool) {
 		if !v.IsInt() {
 			return nil, Rat, false
 		}
-		bi := intPool.New()
+		bi := t.New()
 		bi.Set(v.Num())
 		return bi, Rat, true
 	case uint:
@@ -313,12 +345,25 @@ func (t BigIntType) From(_ state.State, src any) (any, Type, bool) {
 	case uint64:
 		return uintToBigInt(v), Uint64, true
 	case string:
-		bi := intPool.New()
-		v = PreParseNumber(v)
-		_, ok := bi.SetString(v, 0)
+		bi, ok := t.Parse(s, v)
 		return bi, String, ok
 	}
 	return nil, Any, false
+}
+
+func (t BigIntType) Parse(_ state.State, str string) (*big.Int, bool) {
+	bi := t.New()
+	str = PreParseNumber(str)
+	_, ok := bi.SetString(str, 0)
+	return bi, ok
+}
+
+func (t BigIntType) MustParse(s state.State, str string) *big.Int {
+	bi, ok := t.Parse(s, str)
+	if !ok {
+		panic(str)
+	}
+	return bi
 }
 
 func (t BigIntType) Format(a any) string {
@@ -475,7 +520,7 @@ func (t DecimalType) From(s state.State, src any) (any, Type, bool) {
 		if i != 0 {
 			return nil, Complex, false
 		}
-		d := decimalPool.New()
+		d := t.New()
 		d.SetFloat64(r)
 		return d, Complex, true
 	case *big.Int:
@@ -503,12 +548,25 @@ func (t DecimalType) From(s state.State, src any) (any, Type, bool) {
 		d.SetString(s)
 		return d, Rat, true
 	case string:
-		d := decimalPool.New()
-		v = PreParseNumber(v)
-		_, _, err := d.SetString(v)
-		return d, String, err == nil
+		d, ok := t.Parse(s, v)
+		return d, String, ok
 	}
 	return nil, Any, false
+}
+
+func (t DecimalType) Parse(e state.State, str string) (*apd.Decimal, bool) {
+	d := t.New()
+	str = PreParseNumber(str)
+	_, _, err := d.SetString(str)
+	return d, err == nil
+}
+
+func (t DecimalType) MustParse(e state.State, str string) *apd.Decimal {
+	d, ok := t.Parse(e, str)
+	if !ok {
+		panic(str)
+	}
+	return d
 }
 
 func (t DecimalType) Format(v any) string {
@@ -849,7 +907,7 @@ func (t RatType) Equal(ax, ay any) bool {
 	return x.Cmp(y) == 0
 }
 
-func (t RatType) From(_ state.State, src any) (any, Type, bool) {
+func (t RatType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Rat:
 		return v, t, true
@@ -878,13 +936,13 @@ func (t RatType) From(_ state.State, src any) (any, Type, bool) {
 		r.SetInt64(int64(v))
 		return r, Int64, true
 	case string:
-		r, ok := t.Parse(v)
+		r, ok := t.Parse(s, v)
 		return r, String, ok
 	}
 	return nil, Any, false
 }
 
-func (t RatType) Parse(s string) (*big.Rat, bool) {
+func (t RatType) Parse(_ state.State, s string) (*big.Rat, bool) {
 	i, err := strconv.ParseInt(s, 10, 64)
 	if err == nil {
 		r := t.New()
@@ -954,6 +1012,14 @@ func (t RatType) Parse(s string) (*big.Rat, bool) {
 	r := t.New()
 	r.SetFrac64(num, denom)
 	return r, true
+}
+
+func (t RatType) MustParse(s state.State, str string) *big.Rat {
+	r, ok := t.Parse(s, str)
+	if !ok {
+		panic(str)
+	}
+	return r
 }
 
 func (t RatType) Format(v any) string {
