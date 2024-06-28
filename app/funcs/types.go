@@ -13,7 +13,7 @@ func MaxUint(e *zc.OpEnv) {
 func Types(e *zc.OpEnv) {
 	for i := 0; i < e.Len(); i++ {
 		item := e.Stack.Get(i)
-		item.Label = zc.TypeOf(item.Val).Name()
+		item.Label = zc.TypeOf(item.Val).AppName()
 		e.Stack.Set(i, item)
 	}
 }

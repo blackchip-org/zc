@@ -25,7 +25,7 @@ func (c *Catalog) addOp(name string, op Op) {
 			if reflect.DeepEqual(other.Params, op.Params) {
 				var params []string
 				for _, param := range op.Params {
-					params = append(params, param.Name())
+					params = append(params, param.AppName())
 				}
 				stack := append(params, name)
 				panic(fmt.Errorf("duplicate op: %v", FormatList(
