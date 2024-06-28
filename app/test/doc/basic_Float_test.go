@@ -18,7 +18,7 @@ func TestOpDocs_BasicFloat_AddF(t *testing.T) {
 	c.AssertStack("1.1", "2.2")
 
 	c.Eval("add/f")
-	c.AssertStack("3.3000000000000000002")
+	c.AssertStack("3.3000000000000003")
 }
 
 func TestOpDocs_BasicFloat_DivF(t *testing.T) {
@@ -31,7 +31,7 @@ func TestOpDocs_BasicFloat_DivF(t *testing.T) {
 	c.AssertStack("2", "3")
 
 	c.Eval("div/f")
-	c.AssertStack("0.6666666666666666667")
+	c.AssertStack("0.6666666666666666")
 }
 
 func TestOpDocs_BasicFloat_DivF_Zero(t *testing.T) {
@@ -107,5 +107,5 @@ func TestOpDocs_BasicFloat_SubF(t *testing.T) {
 	c.AssertStack("6.6", "2.2")
 
 	c.Eval("sub/f")
-	c.AssertStack("4.3999999999999999997")
+	c.AssertStack("4.3999999999999995")
 }

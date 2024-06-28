@@ -13,9 +13,9 @@ ops:
     maximum number of bits available for the mantissa.
   example:
   - i: float.prec?
-    o: ['64 :precision']
+    o: ['53 :precision']
   - i: c 2 3 div/f
-    o: [0.6666666666666666667]
+    o: [0.6666666666666666]
   - i: c 92 float.prec=
     info: precision set to 92
   - i: c 2 3 div/f
@@ -31,7 +31,7 @@ ops:
     precision is the maximum number of bits available for the mantissa.
   example:
   - i: float.prec?
-    o: ['64 :precision']
+    o: ['53 :precision']
 
 - name: rounding.mode=
   title: Sets the default rounding mode

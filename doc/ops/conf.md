@@ -30,8 +30,8 @@ Example:
 
 | Input              | Stack                           
 |--------------------|---------------------------------
-| `float.prec?`      | `64 :precision`                 
-| `c 2 3 div/f`      | `0.6666666666666666667`         
+| `float.prec?`      | `53 :precision`                 
+| `c 2 3 div/f`      | `0.6666666666666666`            
 | `c 92 float.prec=` | *precision set to 92*           
 | `c 2 3 div/f`      | `0.6666666666666666666666666667`
 
@@ -49,7 +49,7 @@ Example:
 
 | Input         | Stack          
 |---------------|----------------
-| `float.prec?` | `64 :precision`
+| `float.prec?` | `53 :precision`
 
 ### rounding.mode=
 

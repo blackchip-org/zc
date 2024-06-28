@@ -77,9 +77,9 @@ func TestLabel(t *testing.T) {
 	r.Eval("1 add")
 	r.AssertStack("43")
 	r.Eval("c float.prec?")
-	r.AssertStack("64 :precision")
+	r.AssertStack("53 :precision")
 	r.Eval("1 add")
-	r.AssertStack("65")
+	r.AssertStack("54")
 }
 
 func TestCommonPrefix(t *testing.T) {
