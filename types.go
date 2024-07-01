@@ -91,7 +91,7 @@ type Type interface {
 	Equal(any, any) bool
 	From(state.State, any) (any, Type, bool)
 	Format(any) string
-	Recycle(any)
+	Recycle(...any)
 }
 
 // ----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ func (t anyType) Format(a any) string {
 	return fmt.Sprintf("%v", a)
 }
 
-func (t anyType) Recycle(any) {}
+func (t anyType) Recycle(...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -255,8 +255,10 @@ func (t BigFloatType) New(s state.State) *big.Float {
 	return f
 }
 
-func (t BigFloatType) Recycle(v any) {
-	floatPool.Recycle(v.(*big.Float))
+func (t BigFloatType) Recycle(vals ...any) {
+	for _, v := range vals {
+		floatPool.Recycle(v.(*big.Float))
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -378,8 +380,10 @@ func (t BigIntType) New() *big.Int {
 	return intPool.New()
 }
 
-func (t BigIntType) Recycle(v any) {
-	intPool.Recycle(v.(*big.Int))
+func (t BigIntType) Recycle(vals ...any) {
+	for _, v := range vals {
+		intPool.Recycle(v.(*big.Int))
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -473,7 +477,7 @@ func (t ComplexType) Format(v any) string {
 	return f
 }
 
-func (t ComplexType) Recycle(v any) {
+func (t ComplexType) Recycle(v ...any) {
 }
 
 // ----------------------------------------------------------------------------
@@ -596,8 +600,10 @@ func (t DecimalType) New() *apd.Decimal {
 	return decimalPool.New()
 }
 
-func (t DecimalType) Recycle(v any) {
-	decimalPool.Recycle(v.(*apd.Decimal))
+func (t DecimalType) Recycle(vals ...any) {
+	for _, v := range vals {
+		decimalPool.Recycle(v.(*apd.Decimal))
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -684,7 +690,7 @@ func (t Float64Type) Format(v any) string {
 	return strconv.FormatFloat(t.As(v), 'f', -1, 64)
 }
 
-func (t Float64Type) Recycle(v any) {}
+func (t Float64Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -765,7 +771,7 @@ func (t IntType) Format(v any) string {
 	return strconv.FormatInt(int64(t.As(v)), 10)
 }
 
-func (t IntType) Recycle(v any) {}
+func (t IntType) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -861,7 +867,7 @@ func (t Int8Type) Format(v any) string {
 	return strconv.FormatInt(int64(t.As(v)), 10)
 }
 
-func (t Int8Type) Recycle(v any) {}
+func (t Int8Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -957,7 +963,7 @@ func (t Int16Type) Format(v any) string {
 	return strconv.FormatInt(int64(t.As(v)), 10)
 }
 
-func (t Int16Type) Recycle(v any) {}
+func (t Int16Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1053,7 +1059,7 @@ func (t Int32Type) Format(v any) string {
 	return strconv.FormatInt(int64(t.As(v)), 10)
 }
 
-func (t Int32Type) Recycle(v any) {}
+func (t Int32Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1115,7 +1121,7 @@ func (t Int64Type) From(s state.State, src any) (any, Type, bool) {
 		i64, ok := ratToInt64(v)
 		return i64, Rat, ok
 	case uint:
-		return int64(v), Uint, true
+		return int64(v), Uint, isIntRangeU(uint64(v))
 	case uint8:
 		return int64(v), Uint8, true
 	case uint16:
@@ -1123,7 +1129,7 @@ func (t Int64Type) From(s state.State, src any) (any, Type, bool) {
 	case uint32:
 		return int64(v), Uint32, true
 	case uint64:
-		return int64(v), Uint64, v <= math.MaxInt64
+		return int64(v), Uint64, isIntRangeU(uint64(v))
 	case string:
 		i64, ok := t.Parse(s, v)
 		return i64, String, ok
@@ -1149,7 +1155,7 @@ func (t Int64Type) Format(v any) string {
 	return strconv.FormatInt(t.As(v), 10)
 }
 
-func (t Int64Type) Recycle(v any) {}
+func (t Int64Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1188,106 +1194,105 @@ func (t RatType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Rat:
 		return v, t, true
+	case *big.Float:
+		r, ok := formatToRat(v)
+		return r, BigFloat, ok
+	case *big.Int:
+		r, ok := formatToRat(v)
+		return r, BigInt, ok
+	case complex128:
+		r, ok := formatToRat(v)
+		return r, Complex, ok
+	case *apd.Decimal:
+		r := t.New()
+		_, ok := r.SetString(v.String())
+		if !ok {
+			t.Recycle(r)
+		}
+		return r, Decimal, ok
 	case float64:
 		r := t.New()
-		r.SetFloat64(v)
-		return r, Float64, true
+		_, ok := r.SetString(strconv.FormatFloat(v, 'g', -1, 64))
+		if !ok {
+			t.Recycle(r)
+		}
+		return r, Float64, ok
 	case int:
-		r := t.New()
-		r.SetInt64(int64(v))
-		return r, Int64, true
+		return intToRat(v), Int, true
 	case int8:
-		r := t.New()
-		r.SetInt64(int64(v))
-		return r, Int64, true
+		return intToRat(v), Int8, true
 	case int16:
-		r := t.New()
-		r.SetInt64(int64(v))
-		return r, Int64, true
+		return intToRat(v), Int16, true
 	case int32:
-		r := t.New()
-		r.SetInt64(int64(v))
-		return r, Int64, true
+		return intToRat(v), Int32, true
 	case int64:
-		r := t.New()
-		r.SetInt64(int64(v))
-		return r, Int64, true
+		return intToRat(v), Int64, true
 	case string:
 		r, ok := t.Parse(s, v)
 		return r, String, ok
 	}
-	return nil, Any, false
+
+	r := Rat.New()
+	st := TypeOf(src)
+	_, ok := r.SetString(st.Format(src))
+	if !ok {
+		Rat.Recycle(r)
+	}
+	return r, st, ok
 }
 
-func (t RatType) Parse(_ state.State, s string) (*big.Rat, bool) {
-	i, err := strconv.ParseInt(s, 10, 64)
-	if err == nil {
-		r := t.New()
-		r.SetInt64(i)
-		return r, true
-	}
-	f, err := strconv.ParseFloat(s, 64)
-	if err == nil {
-		r := t.New()
-		r.SetFloat64(f)
-		return r, true
-	}
-
-	sc := scan.NewScannerFromString("", s)
-
-	var sign, whole, num, denom int64
-
-	scan.SignedIntRule.Eval(sc)
-	s1 := sc.Emit().Val
-	i1, err := strconv.ParseInt(s1, 10, 64)
-	if err != nil {
-		return nil, false
-	}
-	if i1 < 0 {
-		sign = -1
-		i1 = i1 * -1
-	} else {
-		sign = 1
-	}
-	switch sc.This {
-	case '_', '-', ' ':
-		whole = i1
-	case '/':
-		num = i1
-	default:
-		return nil, false
-	}
-	sc.Skip()
-
-	scan.IntRule.Eval(sc)
-	s2 := sc.Emit().Val
-	i2, err := strconv.ParseInt(s2, 10, 64)
-	if err != nil {
-		return nil, false
-	}
-	if whole != 0 {
-		num = i2
-		if sc.This != '/' {
-			return nil, false
-		}
-		sc.Skip()
-		scan.IntRule.Eval(sc)
-		s3 := sc.Emit().Val
-		i3, err := strconv.ParseInt(s3, 10, 64)
-		if err != nil {
-			return nil, false
-		}
-		denom = i3
-	} else {
-		denom = i2
-	}
-
-	if whole != 0 {
-		num = num + (denom * whole)
-	}
-	num = num * sign
+func (t RatType) Parse(_ state.State, str string) (*big.Rat, bool) {
 	r := t.New()
-	r.SetFrac64(num, denom)
+	_, ok := r.SetString(str)
+	if ok {
+		return r, true
+	}
+
+	whole := Rat.New()
+	defer Rat.Recycle(whole)
+
+	num, denom := BigInt.New(), BigInt.New()
+	defer BigInt.Recycle(num, denom)
+
+	s := scan.NewScannerFromString("", str)
+	scan.SignedIntRule.Eval(s)
+	_, ok = whole.SetString(s.Emit().Val)
+	if !ok {
+		Rat.Recycle(r)
+		return nil, false
+	}
+
+	switch s.This {
+	case ' ', '_', '-':
+		s.Skip()
+	default:
+		Rat.Recycle(r)
+		return nil, false
+	}
+
+	scan.IntRule.Eval(s)
+	_, ok = num.SetString(s.Emit().Val, 10)
+	if !ok {
+		Rat.Recycle(r)
+		return nil, false
+	}
+
+	if s.This == '/' {
+		s.Skip()
+	} else {
+		Rat.Recycle(r)
+		return nil, false
+	}
+
+	scan.IntRule.Eval(s)
+	_, ok = denom.SetString(s.Emit().Val, 10)
+	if !ok {
+		Rat.Recycle(r)
+		return nil, false
+	}
+
+	r.SetFrac(num, denom)
+	r.Add(r, whole)
 	return r, true
 }
 
@@ -1319,8 +1324,10 @@ func (t RatType) New() *big.Rat {
 	return ratPool.New()
 }
 
-func (t RatType) Recycle(v any) {
-	ratPool.Recycle(v.(*big.Rat))
+func (t RatType) Recycle(vals ...any) {
+	for _, v := range vals {
+		ratPool.Recycle(v.(*big.Rat))
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -1365,7 +1372,7 @@ func (t StringType) Format(v any) string {
 	return t.As(v)
 }
 
-func (t StringType) Recycle(v any) {}
+func (t StringType) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1433,7 +1440,7 @@ func (t UintType) Format(v any) string {
 	return strconv.FormatUint(uint64(t.As(v)), 10)
 }
 
-func (t UintType) Recycle(v any) {}
+func (t UintType) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1495,7 +1502,7 @@ func (t Uint8Type) Format(v any) string {
 	return strconv.FormatUint(uint64(t.As(v)), 10)
 }
 
-func (t Uint8Type) Recycle(v any) {}
+func (t Uint8Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1557,7 +1564,7 @@ func (t Uint16Type) Format(v any) string {
 	return strconv.FormatUint(uint64(t.As(v)), 10)
 }
 
-func (t Uint16Type) Recycle(v any) {}
+func (t Uint16Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1619,7 +1626,7 @@ func (t Uint32Type) Format(v any) string {
 	return strconv.FormatUint(uint64(t.As(v)), 10)
 }
 
-func (t Uint32Type) Recycle(v any) {}
+func (t Uint32Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1681,7 +1688,7 @@ func (t Uint64Type) Format(v any) string {
 	return strconv.FormatUint(t.As(v), 10)
 }
 
-func (t Uint64Type) Recycle(v any) {}
+func (t Uint64Type) Recycle(v ...any) {}
 
 // ----------------------------------------------------------------------------
 
@@ -1697,6 +1704,20 @@ func Equal(a, b any) bool {
 func bigFloatToFloat64(bf *big.Float) (float64, bool) {
 	f, _ := bf.Float64()
 	return f, !math.IsInf(f, 0)
+}
+
+func bigFloatToBigInt(bf *big.Float) (*big.Int, bool) {
+	f64, ok := bigFloatToFloat64(bf)
+	if !ok {
+		return nil, false
+	}
+	i64, ok := float64ToInt64(f64)
+	if !ok {
+		return nil, false
+	}
+	bi := BigInt.New()
+	bi.SetInt64(i64)
+	return bi, true
 }
 
 func decimalToInt64(d *apd.Decimal) (int64, bool) {
@@ -1742,12 +1763,26 @@ func intToDecimal[T constraints.Signed](i T) *apd.Decimal {
 	return d
 }
 
+func intToRat[T constraints.Signed](i T) *big.Rat {
+	r := Rat.New()
+	r.SetInt64(int64(i))
+	return r
+}
+
 func ratToInt64(r *big.Rat) (int64, bool) {
-	fmt.Println(r)
 	if !r.Denom().IsInt64() || r.Denom().Int64() != 1 {
 		return 0, false
 	}
 	return r.Num().Int64(), r.Num().IsInt64()
+}
+
+func formatToRat(v any) (*big.Rat, bool) {
+	r := Rat.New()
+	_, ok := r.SetString(Format(v))
+	if !ok {
+		Rat.Recycle(r)
+	}
+	return r, ok
 }
 
 func uintToBigInt[T constraints.Unsigned](i T) *big.Int {
@@ -1767,6 +1802,12 @@ func uintToDecimal[T constraints.Unsigned](i T) *apd.Decimal {
 	d := Decimal.New()
 	d.SetString(s)
 	return d
+}
+
+func uintToRat[T constraints.Unsigned](i T) *big.Rat {
+	r := Rat.New()
+	r.SetUint64(uint64(i))
+	return r
 }
 
 func isIntRange(i int64) bool {

@@ -341,13 +341,54 @@ func TestFrom(t *testing.T) {
 
 		// Rat
 		{"rt01", rt("42"), rt("42"), Rat, Rat, true},
+		{"rt02", fl("42.42"), rt("42 21/50"), BigFloat, Rat, true},
+		{"rt03", fl("1e100"), rt(big1 + "/1"), BigFloat, Rat, true},
+		{"rt04", in("42"), rt("42"), BigInt, Rat, true},
+		{"rt05", complex128(42), rt("42"), Complex, Rat, true},
+		{"rt06", complex128(42.42), rt("42 21/50"), Complex, Rat, true},
+		{"rt07", complex128(42 + 42i), nil, Complex, Rat, false},
+		{"rt08", dc("42.42"), rt("42 21/50"), Decimal, Rat, true},
+		{"rt09", dc("1e100"), rt(big1 + "/1"), Decimal, Rat, true},
+		{"rt10", float64(42.42), rt("42 21/50"), Float64, Rat, true},
+		{"rt11", float64(1e100), rt(big1 + "/1"), Float64, Rat, true},
+		{"rt12", int(42), rt("42"), Int, Rat, true},
+		{"rt13", int8(42), rt("42"), Int8, Rat, true},
+		{"rt14", int16(42), rt("42"), Int16, Rat, true},
+		{"rt15", int32(42), rt("42"), Int32, Rat, true},
+		{"rt16", int64(42), rt("42"), Int64, Rat, true},
 	}
 
 	for _, test := range tests {
 		t.Run(test.id, func(t *testing.T) {
 			out, from, ok := test.to.From(s, test.in)
 			if (ok && !Equal(out, test.out)) || from != test.from || ok != test.ok {
-				t.Errorf("\n have: %v %v %v \n want: %v %v %v", Format(out), from.AppName(), ok, Format(test.out), test.from.AppName(), test.ok)
+				t.Fatalf("\n have: %v %v %v \n want: %v %v %v", Format(out), from.AppName(), ok, Format(test.out), test.from.AppName(), test.ok)
+			}
+		})
+	}
+}
+
+func TestRatParse(t *testing.T) {
+	s := state.New()
+	rt := func(v string) *big.Rat { return Rat.MustParse(s, v) }
+
+	tests := []struct {
+		in  string
+		out *big.Rat
+		ok  bool
+	}{
+		{"2", rt("2"), true},
+		{"0.5", rt("1/2"), true},
+		{"1/2", rt("1/2"), true},
+		{"-1/2", rt("-1/2"), true},
+		{"2 1/2", rt("5/2"), true},
+	}
+
+	for _, test := range tests {
+		t.Run(test.in, func(t *testing.T) {
+			out, ok := Rat.Parse(s, test.in)
+			if (ok && !Equal(out, test.out)) || ok != test.ok {
+				t.Fatalf("\n have: %v %v \n want: %v %v", Format(out), ok, Format(test.out), test.ok)
 			}
 		})
 	}
