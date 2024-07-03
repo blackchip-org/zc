@@ -10,8 +10,6 @@ import (
 var Conf = zc.Vol{
 	Name: "conf",
 	Ops: []zc.Op{
-		ops.FloatPrecSet,
-		ops.FloatPrecGet,
 		ops.RoundingModeSet,
 		ops.RoundingModeGet,
 	},

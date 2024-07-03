@@ -19,7 +19,6 @@
   - [`acosh/c`](ops/sci_Complex.md#acoshc): 128-bit complex
 - [`add`](ops/basic.md#add): Addition
   - [`add/c`](ops/basic_Complex.md#addc): complex
-  - [`add/f`](ops/basic_Float.md#addf): float
   - [`add/r`](ops/basic_Rat.md#addr): rational
   - [`add/u`](ops/basic_Int_u.md#addu): unsigned integer
   - [`add/u16`](ops/basic_Int_u16.md#addu16): unsigned 16-bit integer
@@ -62,7 +61,6 @@
   - [`dec/i`](ops/prog.md#deci): Decimal conversion
 - [`div`](ops/basic.md#div): Division
   - [`div/c`](ops/basic_Complex.md#divc): complex
-  - [`div/f`](ops/basic_Float.md#divf): float
   - [`div/i`](ops/basic_Int.md#divi): int
   - [`div/r`](ops/basic_Rat.md#divr): rational
 - [`div.e`](ops/basic_Int.md#dive): Division (Euclidean)
@@ -78,8 +76,6 @@
   - [`exp/f`](ops/sci_Float_64.md#expf): 64-bit float
 
 ## f
-- [`float.prec=`](ops/conf.md#floatprec): Sets the precision for floating-point numbers
-- [`float.prec?`](ops/conf.md#floatprec): Gets the precision for floating-point numbers
 - [`floor`](ops/sci.md#floor): Floor
 
 ## h
@@ -105,13 +101,11 @@
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/c`](ops/basic_Complex.md#mulc): complex
-  - [`mul/f`](ops/basic_Float.md#mulf): float
   - [`mul/r`](ops/basic_Rat.md#mulr): rational
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/c`](ops/basic_Complex.md#negc): complex
-  - [`neg/f`](ops/basic_Float.md#negf): float
   - [`neg/r`](ops/basic_Rat.md#negr): rational
 - `not`
   - [`not/i`](ops/prog.md#noti): Bitwise not
@@ -137,7 +131,6 @@
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`sci`](ops/format.md#sci): Scientific Notation
 - [`sign`](ops/basic.md#sign): Sign
-  - [`sign/f`](ops/basic_Float.md#signf): float
 - [`sin`](ops/sci.md#sin): Sine
   - [`sin/c`](ops/sci_Complex.md#sinc): 128-bit complex
 - [`sinh`](ops/sci.md#sinh): Hyperbolic sine
@@ -145,11 +138,9 @@
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
   - [`sqrt/c`](ops/basic_Complex.md#sqrtc): complex
-  - [`sqrt/f`](ops/basic_Float.md#sqrtf): float
   - [`sqrt/i`](ops/basic_Int.md#sqrti): int
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/c`](ops/basic_Complex.md#subc): complex
-  - [`sub/f`](ops/basic_Float.md#subf): float
   - [`sub/r`](ops/basic_Rat.md#subr): rational
 
 ## t

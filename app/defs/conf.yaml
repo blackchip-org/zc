@@ -3,36 +3,6 @@ title: General configuration
 category: calc
 
 ops:
-- name: float.prec=
-  title: Sets the precision for floating-point numbers
-  funcs:
-  - name: FloatPrecSet
-    params: [p:Int/u]
-  desc: |-
-    Sets the precision for floating-point numbers to *p*. The precision is the
-    maximum number of bits available for the mantissa.
-  example:
-  - i: float.prec?
-    o: ['53 :precision']
-  - i: c 2 3 div/f
-    o: [0.6666666666666666]
-  - i: c 92 float.prec=
-    info: precision set to 92
-  - i: c 2 3 div/f
-    o: [0.6666666666666666666666666667]
-
-- name: float.prec?
-  title: Gets the precision for floating-point numbers
-  funcs:
-  - name: FloatPrecGet
-    returns: [p:Int/u]
-  desc: |-
-    Places the current precision for floating-point numbers on the stack. The
-    precision is the maximum number of bits available for the mantissa.
-  example:
-  - i: float.prec?
-    o: ['53 :precision']
-
 - name: rounding.mode=
   title: Sets the default rounding mode
   funcs:

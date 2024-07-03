@@ -24,7 +24,6 @@ Basic calculator
 ## Related Volumes
 
 - [basic/Complex](basic_Complex.md)
-- [basic/Float](basic_Float.md)
 - [basic/Int](basic_Int.md)
 - [basic/Int/u](basic_Int_u.md)
 - [basic/Int/u16](basic_Int_u16.md)

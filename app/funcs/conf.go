@@ -8,19 +8,6 @@ import (
 	"github.com/blackchip-org/zc/v6/app/state"
 )
 
-func FloatPrecSet(e *zc.OpEnv) {
-	s := state.ForConf(e.State)
-	p := zc.Uint.Pop(e)
-	s.FloatPrec = p
-	e.Info = fmt.Sprintf("precision set to %v", p)
-}
-
-func FloatPrecGet(e *zc.OpEnv) {
-	s := state.ForConf(e.State)
-	zc.Uint.Push(e, s.FloatPrec)
-	e.Label("precision")
-}
-
 const (
 	RoundingModeCeil     = "ceil"
 	RoundingModeDown     = "down"

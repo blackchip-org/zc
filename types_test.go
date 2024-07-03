@@ -9,15 +9,27 @@ import (
 	"github.com/cockroachdb/apd/v3"
 )
 
+func maxUintBig() *big.Int {
+	bi := new(big.Int)
+	bi.SetUint64(math.MaxUint)
+	return bi
+}
+
+func maxUintBigPlus1() *big.Int {
+	one := big.NewInt(1)
+	max := maxUintBig()
+	max.Add(max, one)
+	return max
+}
+
 func TestFrom(t *testing.T) {
 	big1 := "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 
 	s := state.New()
 	conf := state.ForConf(s)
 	conf.DecPrec = 20
-	conf.FloatPrec = 60
+	//conf.FloatPrec = 60
 
-	fl := func(v string) *big.Float { return BigFloat.MustParse(s, v) }
 	in := func(v string) *big.Int { return BigInt.MustParse(s, v) }
 	rt := func(v string) *big.Rat { return Rat.MustParse(s, v) }
 	dc := func(v string) *apd.Decimal { return Decimal.MustParse(s, v) }
@@ -30,32 +42,8 @@ func TestFrom(t *testing.T) {
 		to   Type
 		ok   bool
 	}{
-		// BigFloat
-		{"fl01", fl("42.42"), fl("42.42"), BigFloat, BigFloat, true},
-		{"fl02", in("42"), fl("42"), BigInt, BigFloat, true},
-		{"fl03", complex128(42.42), fl("42.42"), Complex, BigFloat, true},
-		{"fl04", complex128(42 + 42i), nil, Complex, BigFloat, false},
-		{"fl05", dc("42.42"), fl("42.42"), Decimal, BigFloat, true},
-		{"fl06", float64(42.42), fl("42.42"), Float64, BigFloat, true},
-		{"fl07", int(42), fl("42"), Int, BigFloat, true},
-		{"fl08", int8(42), fl("42"), Int8, BigFloat, true},
-		{"fl09", int16(42), fl("42"), Int16, BigFloat, true},
-		{"fl10", int32(42), fl("42"), Int32, BigFloat, true},
-		{"fl11", int64(42), fl("42"), Int64, BigFloat, true},
-		{"fl12", rt("1/2"), fl("0.5"), Rat, BigFloat, true},
-		{"fl13", rt("1/3"), fl("0.333333333333333315"), Rat, BigFloat, true},
-		{"fl14", uint(42), fl("42"), Uint, BigFloat, true},
-		{"fl15", uint8(42), fl("42"), Uint8, BigFloat, true},
-		{"fl16", uint16(42), fl("42"), Uint16, BigFloat, true},
-		{"fl17", uint32(42), fl("42"), Uint32, BigFloat, true},
-		{"fl18", uint64(42), fl("42"), Uint64, BigFloat, true},
-		{"fl19", "42.42", fl("42.42"), String, BigFloat, true},
-		{"fl20", "$42_000.42", fl("42000.42"), String, BigFloat, true},
-		{"fl21", "x", nil, String, BigFloat, false},
-
 		// BigInt
 		{"in01", big.NewInt(42), in("42"), BigInt, BigInt, true},
-		{"in02", big.NewFloat(42), in("42"), BigFloat, BigInt, true},
 		{"in03", complex128(42), in("42"), Complex, BigInt, true},
 		{"in04", complex128(42 + 1i), nil, Complex, BigInt, false},
 		{"in05", dc("42"), in("42"), Decimal, BigInt, true},
@@ -128,8 +116,6 @@ func TestFrom(t *testing.T) {
 
 		// Float64
 		{"6f01", float64(42.42), float64(42.42), Float64, Float64, true},
-		{"6f02", fl("42.42"), float64(42.42), BigFloat, Float64, true},
-		{"6f03", fl("42.42e100000"), float64(42.42), BigFloat, Float64, false},
 		{"6f04", complex128(42.42), float64(42.42), Complex, Float64, true},
 		{"6f05", complex128(42 + 42i), nil, Complex, Float64, false},
 		{"6f06", int(42), float64(42), Int, Float64, true},
@@ -146,13 +132,10 @@ func TestFrom(t *testing.T) {
 		{"6f17", uint64(42), float64(42), Uint64, Float64, true},
 		{"6f18", "42.42", float64(42.42), String, Float64, true},
 		{"6f19", "$42_000.42", float64(42000.42), String, Float64, true},
-		{"6f20", "x", nil, String, BigFloat, false},
+		{"6f20", "x", nil, String, Float64, false},
 
 		// int
 		{"is01", int(42), int(42), Int, Int, true},
-		{"is02", fl("42"), int(42), BigFloat, Int, true},
-		{"is03", fl("42.42"), nil, BigFloat, Int, false},
-		{"is04", fl("1e42"), nil, BigFloat, Int, false},
 		{"is05", in("42"), int(42), BigInt, Int, true},
 		{"is06", in("9223372036854775808"), nil, BigInt, Int, false},
 		{"is07", complex128(42), int(42), Complex, Int, true},
@@ -182,9 +165,6 @@ func TestFrom(t *testing.T) {
 
 		// int8
 		{"sa01", int8(-42), int8(-42), Int8, Int8, true},
-		{"sa02", fl("-42"), int8(-42), BigFloat, Int8, true},
-		{"sa03", fl("-42.42"), nil, BigFloat, Int8, false},
-		{"sa04", fl("-129"), nil, BigFloat, Int8, false},
 		{"sa05", in("-42"), int8(-42), BigInt, Int8, true},
 		{"sa06", in("-129"), nil, BigInt, Int8, false},
 		{"sa07", complex128(-42), int8(-42), Complex, Int8, true},
@@ -225,9 +205,6 @@ func TestFrom(t *testing.T) {
 
 		// int16
 		{"sb01", int16(-42), int16(-42), Int16, Int16, true},
-		{"sb02", fl("-42"), int16(-42), BigFloat, Int16, true},
-		{"sb03", fl("-42.42"), nil, BigFloat, Int16, false},
-		{"sb04", fl("-32769"), nil, BigFloat, Int16, false},
 		{"sb05", in("-42"), int16(-42), BigInt, Int16, true},
 		{"sb06", in("-32769"), nil, BigInt, Int16, false},
 		{"sb07", complex128(-42), int16(-42), Complex, Int16, true},
@@ -266,9 +243,6 @@ func TestFrom(t *testing.T) {
 
 		// int32
 		{"sc01", int32(-42), int32(-42), Int32, Int32, true},
-		{"sc02", fl("-42"), int32(-42), BigFloat, Int32, true},
-		{"sc03", fl("-42.42"), nil, BigFloat, Int32, false},
-		{"sc04", fl("-2147483649"), nil, BigFloat, Int32, false},
 		{"sc05", in("-42"), int32(-42), BigInt, Int32, true},
 		{"sc06", in("-2147483649"), nil, BigInt, Int32, false},
 		{"sc07", complex128(-42), int32(-42), Complex, Int32, true},
@@ -305,9 +279,6 @@ func TestFrom(t *testing.T) {
 
 		// int64
 		{"sd01", int64(-42), int64(-42), Int64, Int64, true},
-		{"sd02", fl("-42"), int64(-42), BigFloat, Int64, true},
-		{"sd03", fl("-42.42"), nil, BigFloat, Int64, false},
-		{"sd04", fl("-9223372036854775809"), nil, BigFloat, Int64, false},
 		{"sd05", in("-42"), int64(-42), BigInt, Int64, true},
 		{"sd06", in("-9223372036854775809"), nil, BigInt, Int64, false},
 		{"sd07", complex128(-42), int64(-42), Complex, Int64, true},
@@ -341,28 +312,107 @@ func TestFrom(t *testing.T) {
 
 		// Rat
 		{"rt01", rt("42"), rt("42"), Rat, Rat, true},
-		{"rt02", fl("42.42"), rt("42 21/50"), BigFloat, Rat, true},
-		{"rt03", fl("1e100"), rt(big1 + "/1"), BigFloat, Rat, true},
 		{"rt04", in("42"), rt("42"), BigInt, Rat, true},
 		{"rt05", complex128(42), rt("42"), Complex, Rat, true},
 		{"rt06", complex128(42.42), rt("42 21/50"), Complex, Rat, true},
 		{"rt07", complex128(42 + 42i), nil, Complex, Rat, false},
 		{"rt08", dc("42.42"), rt("42 21/50"), Decimal, Rat, true},
 		{"rt09", dc("1e100"), rt(big1 + "/1"), Decimal, Rat, true},
-		{"rt10", float64(42.42), rt("42 21/50"), Float64, Rat, true},
+		{"rt10", float64(42.5), rt("42 1/2"), Float64, Rat, true},
 		{"rt11", float64(1e100), rt(big1 + "/1"), Float64, Rat, true},
-		{"rt12", int(42), rt("42"), Int, Rat, true},
-		{"rt13", int8(42), rt("42"), Int8, Rat, true},
-		{"rt14", int16(42), rt("42"), Int16, Rat, true},
-		{"rt15", int32(42), rt("42"), Int32, Rat, true},
-		{"rt16", int64(42), rt("42"), Int64, Rat, true},
+		{"rt12", int(-42), rt("-42"), Int, Rat, true},
+		{"rt13", int8(-42), rt("-42"), Int8, Rat, true},
+		{"rt14", int16(-42), rt("-42"), Int16, Rat, true},
+		{"rt15", int32(-42), rt("-42"), Int32, Rat, true},
+		{"rt16", int64(-42), rt("-42"), Int64, Rat, true},
+		{"rt17", uint(42), rt("42"), Uint, Rat, true},
+		{"rt18", uint8(42), rt("42"), Uint8, Rat, true},
+		{"rt19", uint16(42), rt("42"), Uint16, Rat, true},
+		{"rt20", uint32(42), rt("42"), Uint32, Rat, true},
+		{"rt21", uint64(42), rt("42"), Uint64, Rat, true},
+
+		// String
+		{"st01", "abc", "abc", String, String, true},
+		{"st02", in("42"), "42", BigInt, String, true},
+		{"st03", complex128(42 + 42i), "42+42i", Complex, String, true},
+		{"st04", dc("42.42"), "42.42", Decimal, String, true},
+		{"st05", float64(42.42), "42.42", Float64, String, true},
+		{"st06", int(-42), "-42", Int, String, true},
+		{"st07", int8(-42), "-42", Int8, String, true},
+		{"st08", int16(-42), "-42", Int16, String, true},
+		{"st09", int32(-42), "-42", Int32, String, true},
+		{"st10", int64(-42), "-42", Int64, String, true},
+		{"st11", rt("9/2"), "4 1/2", Rat, String, true},
+		{"st12", uint(42), "42", Uint, String, true},
+		{"st13", uint8(42), "42", Uint8, String, true},
+		{"st14", uint16(42), "42", Uint16, String, true},
+		{"st15", uint32(42), "42", Uint32, String, true},
+		{"st16", uint64(42), "42", Uint64, String, true},
+
+		// uint
+		{"iu01", in("0"), uint(0), BigInt, Uint, true},
+		{"iu02", in("-1"), nil, BigInt, Uint, false},
+		{"iu03", maxUintBig(), uint(math.MaxUint), BigInt, Uint, true},
+		{"iu04", maxUintBigPlus1(), nil, BigInt, Uint, false},
+		{"iu05", complex128(0), uint(0), Complex, Uint, true},
+		{"iu06", complex128(-1), nil, Complex, Uint, false},
+		{"iu07", complex128(MaxUintFloat64), uint(MaxUintFloat64), Complex, Uint, true},
+		{"iu08", complex128(MaxUintFloat64 + 2), nil, Complex, Uint, false},
+		{"iu09", complex128(1.1), nil, Complex, Uint, false},
+		{"iu10", complex128(1 + 1i), nil, Complex, Uint, false},
+		{"iu11", dc("0"), uint(0), Decimal, Uint, true},
+		{"iu12", dc("-1"), nil, Decimal, Uint, false},
+		{"iu13", dc(maxUintBig().String()), uint(math.MaxUint), Decimal, Uint, true},
+		{"iu14", dc(maxUintBigPlus1().String()), nil, Decimal, Uint, false},
+		{"iu15", dc("1.1"), nil, Decimal, Uint, false},
+		{"iu16", dc("1e1"), uint(10), Decimal, Uint, true},
+		{"iu17", float64(0), uint(0), Float64, Uint, true},
+		{"iu18", float64(-1), nil, Float64, Uint, false},
+		{"iu19", float64(MaxUintFloat64), uint(MaxUintFloat64), Float64, Uint, true},
+		{"iu20", float64(MaxUintFloat64 + 2), nil, Float64, Uint, false},
+		{"iu21", float64(1.1), nil, Float64, Uint, false},
+		{"iu22", int(0), uint(0), Int, Uint, true},
+		{"iu23", int(-1), nil, Int, Uint, false},
+		{"iu24", int(math.MaxInt), uint(math.MaxInt), Int, Uint, true},
+		{"iu25", int8(0), uint(0), Int8, Uint, true},
+		{"iu26", int8(-1), nil, Int8, Uint, false},
+		{"iu27", int8(math.MaxInt8), uint(math.MaxInt8), Int8, Uint, true},
+		{"iu28", int16(0), uint(0), Int16, Uint, true},
+		{"iu29", int16(-1), nil, Int16, Uint, false},
+		{"iu30", int16(math.MaxInt16), uint(math.MaxInt16), Int16, Uint, true},
+		{"iu31", int32(0), uint(0), Int32, Uint, true},
+		{"iu32", int32(-1), nil, Int32, Uint, false},
+		{"iu33", int32(math.MaxInt32), uint(math.MaxInt32), Int32, Uint, true},
+		{"iu34", int64(0), uint(0), Int64, Uint, true},
+		{"iu35", int64(-1), nil, Int64, Uint, false},
+		{"iu36", int64(math.MaxInt64), uint(math.MaxInt64), Int64, Uint, true},
+		{"iu37", rt("0"), uint(0), Rat, Uint, true},
+		{"iu38", rt("-1"), nil, Rat, Uint, false},
+		{"iu39", rt(maxUintBig().String()), uint(math.MaxUint), Rat, Uint, true},
+		{"iu40", rt(maxUintBigPlus1().String()), nil, Rat, Uint, false},
+		{"iu41", rt("1/2"), nil, Rat, Uint, false},
+		{"iu42", "0", uint(0), String, Uint, true},
+		{"iu43", "-1", nil, String, Uint, false},
+		{"iu44", maxUintBig().String(), uint(math.MaxUint), String, Uint, true},
+		{"iu45", maxUintBigPlus1().String(), nil, String, Uint, false},
+		{"iu46", "x", nil, String, Uint, false},
+		{"iu47", uint(0), uint(0), Uint, Uint, true},
+		{"iu48", uint(math.MaxUint), uint(math.MaxUint), Uint, Uint, true},
+		{"iu49", uint8(0), uint(0), Uint8, Uint, true},
+		{"iu50", uint8(math.MaxUint8), uint(math.MaxUint8), Uint8, Uint, true},
+		{"iu51", uint16(0), uint(0), Uint16, Uint, true},
+		{"iu52", uint16(math.MaxUint16), uint(math.MaxUint16), Uint16, Uint, true},
+		{"iu53", uint32(0), uint(0), Uint32, Uint, true},
+		{"iu54", uint32(math.MaxUint32), uint(math.MaxUint32), Uint32, Uint, true},
+		{"iu55", uint64(0), uint(0), Uint64, Uint, true},
+		{"iu56", uint64(math.MaxUint64), uint(math.MaxUint64), Uint64, Uint, math.MaxUint == math.MaxUint64},
 	}
 
 	for _, test := range tests {
 		t.Run(test.id, func(t *testing.T) {
 			out, from, ok := test.to.From(s, test.in)
 			if (ok && !Equal(out, test.out)) || from != test.from || ok != test.ok {
-				t.Fatalf("\n have: %v %v %v \n want: %v %v %v", Format(out), from.AppName(), ok, Format(test.out), test.from.AppName(), test.ok)
+				t.Fatalf("\n have: %v (%v) %v %v \n want: %v (%v) %v %v", Format(out), goName(out), from.AppName(), ok, Format(test.out), goName(test.out), test.from.AppName(), test.ok)
 			}
 		})
 	}

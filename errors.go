@@ -64,6 +64,9 @@ func ErrWrongGoType(want string, have any) error {
 }
 
 func goName(v any) string {
+	if v == nil {
+		return "nil"
+	}
 	var name strings.Builder
 	t := reflect.TypeOf(v)
 	for t.Kind() == reflect.Pointer {

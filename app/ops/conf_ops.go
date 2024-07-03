@@ -8,18 +8,6 @@ import (
 )
 
 var (
-	FloatPrecSet = zc.Op{
-		Name:    "float.prec=",
-		Params:  []zc.Type{zc.Uint},
-		Returns: []zc.Type{},
-		Func:    funcs.FloatPrecSet,
-	}
-	FloatPrecGet = zc.Op{
-		Name:    "float.prec?",
-		Params:  []zc.Type{},
-		Returns: []zc.Type{zc.Uint},
-		Func:    funcs.FloatPrecGet,
-	}
 	RoundingModeSet = zc.Op{
 		Name:    "rounding.mode=",
 		Params:  []zc.Type{zc.String},

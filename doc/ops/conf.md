@@ -6,50 +6,13 @@ General configuration
 
 ## Index
 
-| Operation                         | Description                                  
-|-----------------------------------|----------------------------------------------
-| [`float.prec=`](#floatprec)       | Sets the precision for floating-point numbers
-| [`float.prec?`](#floatprec)       | Gets the precision for floating-point numbers
-| [`rounding.mode=`](#roundingmode) | Sets the default rounding mode               
-| [`rounding.mode?`](#roundingmode) | Gets the default rounding mode               
+| Operation                         | Description                   
+|-----------------------------------|-------------------------------
+| [`rounding.mode=`](#roundingmode) | Sets the default rounding mode
+| [`rounding.mode?`](#roundingmode) | Gets the default rounding mode
 
 
 ## Operations
-
-### float.prec=
-
-Sets the precision for floating-point numbers to *p*. The precision is the
-maximum number of bits available for the mantissa.
-
-Stack effects:
-```
-( p:Int/u --  )
-```
-
-Example:
-
-| Input              | Stack                           
-|--------------------|---------------------------------
-| `float.prec?`      | `53 :precision`                 
-| `c 2 3 div/f`      | `0.6666666666666666`            
-| `c 92 float.prec=` | *precision set to 92*           
-| `c 2 3 div/f`      | `0.6666666666666666666666666667`
-
-### float.prec?
-
-Places the current precision for floating-point numbers on the stack. The
-precision is the maximum number of bits available for the mantissa.
-
-Stack effects:
-```
-(  -- p:Int/u )
-```
-
-Example:
-
-| Input         | Stack          
-|---------------|----------------
-| `float.prec?` | `53 :precision`
 
 ### rounding.mode=
 

@@ -8,29 +8,6 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_Conf_FloatPrecSet(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("float.prec?")
-	c.AssertStack("53 :precision")
-
-	c.Eval("c 2 3 div/f")
-	c.AssertStack("0.6666666666666666")
-
-	c.Eval("c 92 float.prec=")
-	c.AssertInfo("precision set to 92")
-
-	c.Eval("c 2 3 div/f")
-	c.AssertStack("0.6666666666666666666666666667")
-}
-
-func TestOpDocs_Conf_FloatPrecGet(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("float.prec?")
-	c.AssertStack("53 :precision")
-}
-
 func TestOpDocs_Conf_RoundingModeSet(t *testing.T) {
 	c := app.NewCalcTester(t)
 

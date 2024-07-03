@@ -18,7 +18,6 @@ func init() {
 		vols.Anno,
 		vols.Basic,
 		vols.BasicInt,
-		vols.BasicFloat,
 		vols.BasicRat,
 		vols.BasicComplex,
 		vols.BasicIntU,

@@ -14,32 +14,29 @@ import (
 )
 
 var (
-	Any      = anyType{}
-	BigFloat = BigFloatType{}
-	BigInt   = BigIntType{}
-	Complex  = ComplexType{}
-	Decimal  = DecimalType{}
-	Float64  = Float64Type{}
-	Int      = IntType{}
-	Int8     = Int8Type{}
-	Int16    = Int16Type{}
-	Int32    = Int32Type{}
-	Int64    = Int64Type{}
-	Rat      = RatType{}
-	String   = StringType{}
-	Uint     = UintType{}
-	Uint8    = Uint8Type{}
-	Uint16   = Uint16Type{}
-	Uint32   = Uint32Type{}
-	Uint64   = Uint64Type{}
+	Any     = anyType{}
+	BigInt  = BigIntType{}
+	Complex = ComplexType{}
+	Decimal = DecimalType{}
+	Float64 = Float64Type{}
+	Int     = IntType{}
+	Int8    = Int8Type{}
+	Int16   = Int16Type{}
+	Int32   = Int32Type{}
+	Int64   = Int64Type{}
+	Rat     = RatType{}
+	String  = StringType{}
+	Uint    = UintType{}
+	Uint8   = Uint8Type{}
+	Uint16  = Uint16Type{}
+	Uint32  = Uint32Type{}
+	Uint64  = Uint64Type{}
 )
 
 func TypeOf(a any) Type {
 	switch a.(type) {
 	case *big.Int:
 		return BigInt
-	case *big.Float:
-		return BigFloat
 	case *big.Rat:
 		return Rat
 	case *apd.Decimal:
@@ -78,9 +75,12 @@ func TypeOf(a any) Type {
 var (
 	poolSize    = 8
 	decimalPool = NewPool[apd.Decimal](poolSize)
-	floatPool   = NewPool[big.Float](poolSize)
 	intPool     = NewPool[big.Int](poolSize)
 	ratPool     = NewPool[big.Rat](poolSize)
+)
+
+const (
+	MaxUintFloat64 = float64(9007199254740992)
 )
 
 type Type interface {
@@ -119,150 +119,6 @@ func (t anyType) Recycle(...any) {}
 
 // ----------------------------------------------------------------------------
 
-type BigFloatType struct{}
-
-func (t BigFloatType) Name() string    { return "BigFloat" }
-func (t BigFloatType) AppName() string { return "Float" }
-func (t BigFloatType) GoName() string  { return "*big.Float" }
-func (t BigFloatType) String() string  { return t.AppName() }
-
-func (t BigFloatType) As(a any) *big.Float {
-	val, ok := a.(*big.Float)
-	if !ok {
-		panic(ErrWrongGoType(t.GoName(), a))
-	}
-	return val
-}
-
-func (t BigFloatType) Pop(e *OpEnv) *big.Float {
-	return t.As(e.Pop().Val)
-}
-
-func (t BigFloatType) Push(e *OpEnv, bf *big.Float) {
-	if bf.IsInf() {
-		e.Err = ErrInfinity(e, bf.Sign())
-	} else {
-		e.PushVal(bf)
-	}
-}
-
-func (t BigFloatType) Equal(ax, ay any) bool {
-	if ax == nil && ay == nil {
-		return false
-	}
-	x, y := t.As(ax), t.As(ay)
-	return x.Cmp(y) == 0
-}
-
-func (t BigFloatType) From(s state.State, src any) (any, Type, bool) {
-	switch v := src.(type) {
-	case *big.Float:
-		return v, t, true
-	case *big.Int:
-		bf := t.New(s)
-		bf.SetInt(v)
-		return bf, BigInt, true
-	case complex128:
-		r, i := real(v), imag(v)
-		if i != 0 {
-			return nil, Complex, false
-		}
-		bf := t.New(s)
-		bf.SetFloat64(r)
-		return bf, Complex, true
-	case *apd.Decimal:
-		bf := t.New(s)
-		f, err := v.Float64()
-		if err == nil {
-			bf.SetFloat64(f)
-			return bf, Decimal, true
-		}
-		_, ok := bf.SetString(v.String())
-		if !ok {
-			t.Recycle(bf)
-			return nil, Decimal, false
-		}
-		return bf, Decimal, true
-	case float64:
-		bf := t.New(s)
-		bf.SetFloat64(v)
-		return bf, Float64, true
-	case int:
-		return intToBigFloat(s, v), Int, true
-	case int8:
-		return intToBigFloat(s, v), Int8, true
-	case int16:
-		return intToBigFloat(s, v), Int16, true
-	case int32:
-		return intToBigFloat(s, v), Int32, true
-	case int64:
-		return intToBigFloat(s, v), Int64, true
-	case *big.Rat:
-		f, _ := v.Float64()
-		bf := t.New(s)
-		bf.SetFloat64(f)
-		return bf, Rat, true
-	case uint:
-		return uintToBigFloat(s, v), Uint, true
-	case uint8:
-		return uintToBigFloat(s, v), Uint8, true
-	case uint16:
-		return uintToBigFloat(s, v), Uint16, true
-	case uint32:
-		return uintToBigFloat(s, v), Uint32, true
-	case uint64:
-		return uintToBigFloat(s, v), Uint64, true
-	case string:
-		v = PreParseNumber(v)
-		bf, ok := t.Parse(s, v)
-		return bf, String, ok
-	}
-	return nil, Any, false
-}
-
-func (t BigFloatType) Parse(s state.State, str string) (*big.Float, bool) {
-	// Try to set with a float64 first. SetString("42.42") can give different
-	// results than SetFloat64(42.42)
-	bf := t.New(s)
-	if f, err := strconv.ParseFloat(str, 64); err == nil {
-		bf.SetFloat64(f)
-		return bf, true
-	}
-	_, ok := bf.SetString(str)
-	if !ok {
-		t.Recycle(bf)
-		return nil, false
-	}
-	return bf, true
-}
-
-func (t BigFloatType) MustParse(s state.State, str string) *big.Float {
-	bf, ok := t.Parse(s, str)
-	if !ok {
-		panic(str)
-	}
-	return bf
-}
-
-func (t BigFloatType) Format(v any) string {
-	return t.As(v).Text('f', -1)
-}
-
-func (t BigFloatType) New(s state.State) *big.Float {
-	conf := state.ForConf(s)
-	f := floatPool.New()
-	f.SetPrec(conf.FloatPrec)
-	return f
-}
-
-func (t BigFloatType) Recycle(vals ...any) {
-	for _, v := range vals {
-		floatPool.Recycle(v.(*big.Float))
-	}
-}
-
-// ----------------------------------------------------------------------------
-
 type BigIntType struct{}
 
 func (t BigIntType) Name() string    { return "BigInt" }
@@ -298,13 +154,6 @@ func (t BigIntType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Int:
 		return v, t, true
-	case *big.Float:
-		if !v.IsInt() {
-			return nil, Any, false
-		}
-		bi := t.New()
-		v.Int(bi)
-		return bi, BigFloat, true
 	case complex128:
 		r, i := real(v), imag(v)
 		if i != 0 {
@@ -649,9 +498,6 @@ func (t Float64Type) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case float64:
 		return v, Float64, true
-	case *big.Float:
-		f, acc := v.Float64()
-		return f, BigFloat, acc == big.Exact
 	case complex128:
 		r, i := real(v), imag(v)
 		return r, Complex, i == 0
@@ -687,7 +533,7 @@ func (t Float64Type) From(_ state.State, src any) (any, Type, bool) {
 }
 
 func (t Float64Type) Format(v any) string {
-	return strconv.FormatFloat(t.As(v), 'f', -1, 64)
+	return strconv.FormatFloat(t.As(v), 'g', -1, 64)
 }
 
 func (t Float64Type) Recycle(v ...any) {}
@@ -726,9 +572,6 @@ func (t IntType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int:
 		return src, Int, true
-	case *big.Float:
-		i64, acc := v.Int64()
-		return int(i64), BigFloat, acc == big.Exact && isIntRange(i64)
 	case *big.Int:
 		i64 := v.Int64()
 		return int(i64), BigInt, v.IsInt64() && isIntRange(i64)
@@ -807,9 +650,6 @@ func (t Int8Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int8:
 		return v, t, true
-	case *big.Float:
-		f, ok := bigFloatToFloat64(v)
-		return int8(f), BigFloat, ok && isInt8RangeF(f)
 	case *big.Int:
 		i64 := v.Int64()
 		return int8(i64), BigInt, v.IsInt64() && isInt8Range(i64)
@@ -903,9 +743,6 @@ func (t Int16Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int16:
 		return v, t, true
-	case *big.Float:
-		f, ok := bigFloatToFloat64(v)
-		return int16(f), BigFloat, ok && isInt16RangeF(f)
 	case *big.Int:
 		i64 := v.Int64()
 		return int16(i64), BigInt, v.IsInt64() && isInt16Range(i64)
@@ -999,9 +836,6 @@ func (t Int32Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int32:
 		return v, t, true
-	case *big.Float:
-		f, ok := bigFloatToFloat64(v)
-		return int32(f), BigFloat, ok && isInt32RangeF(f)
 	case *big.Int:
 		i64 := v.Int64()
 		return int32(i64), BigInt, v.IsInt64() && isInt32Range(i64)
@@ -1095,9 +929,6 @@ func (t Int64Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case int64:
 		return v, t, true
-	case *big.Float:
-		f, ok := bigFloatToFloat64(v)
-		return int64(f), BigFloat, ok && isInt64RangeF(f)
 	case *big.Int:
 		i64 := v.Int64()
 		return i64, BigInt, v.IsInt64()
@@ -1194,18 +1025,21 @@ func (t RatType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case *big.Rat:
 		return v, t, true
-	case *big.Float:
-		r, ok := formatToRat(v)
-		return r, BigFloat, ok
 	case *big.Int:
-		r, ok := formatToRat(v)
-		return r, BigInt, ok
+		r := t.New()
+		r.SetInt(v)
+		return r, BigInt, true
 	case complex128:
-		r, ok := formatToRat(v)
-		return r, Complex, ok
+		re, im := real(v), imag(v)
+		if im != 0 {
+			return nil, Complex, false
+		}
+		r := t.New()
+		r.SetString(Float64.Format(re))
+		return r, Complex, true
 	case *apd.Decimal:
 		r := t.New()
-		_, ok := r.SetString(v.String())
+		_, ok := r.SetString(Decimal.Format(v))
 		if !ok {
 			t.Recycle(r)
 		}
@@ -1218,7 +1052,9 @@ func (t RatType) From(s state.State, src any) (any, Type, bool) {
 		}
 		return r, Float64, ok
 	case int:
-		return intToRat(v), Int, true
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int, true
 	case int8:
 		return intToRat(v), Int8, true
 	case int16:
@@ -1227,18 +1063,21 @@ func (t RatType) From(s state.State, src any) (any, Type, bool) {
 		return intToRat(v), Int32, true
 	case int64:
 		return intToRat(v), Int64, true
+	case uint:
+		return uintToRat(v), Uint, true
+	case uint8:
+		return uintToRat(v), Uint8, true
+	case uint16:
+		return uintToRat(v), Uint16, true
+	case uint32:
+		return uintToRat(v), Uint32, true
+	case uint64:
+		return uintToRat(v), Uint64, true
 	case string:
 		r, ok := t.Parse(s, v)
 		return r, String, ok
 	}
-
-	r := Rat.New()
-	st := TypeOf(src)
-	_, ok := r.SetString(st.Format(src))
-	if !ok {
-		Rat.Recycle(r)
-	}
-	return r, st, ok
+	return nil, Any, false
 }
 
 func (t RatType) Parse(_ state.State, str string) (*big.Rat, bool) {
@@ -1364,6 +1203,36 @@ func (t StringType) From(_ state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
 	case string:
 		return v, t, true
+	case *big.Int:
+		return BigInt.Format(v), BigInt, true
+	case complex128:
+		return Complex.Format(v), Complex, true
+	case *apd.Decimal:
+		return Decimal.Format(v), Decimal, true
+	case float64:
+		return Float64.Format(v), Float64, true
+	case int:
+		return Int.Format(v), Int, true
+	case int8:
+		return Int8.Format(v), Int8, true
+	case int16:
+		return Int16.Format(v), Int16, true
+	case int32:
+		return Int32.Format(v), Int32, true
+	case int64:
+		return Int64.Format(v), Int64, true
+	case *big.Rat:
+		return Rat.Format(v), Rat, true
+	case uint:
+		return Uint.Format(v), Uint, true
+	case uint8:
+		return Uint8.Format(v), Uint8, true
+	case uint16:
+		return Uint16.Format(v), Uint16, true
+	case uint32:
+		return Uint32.Format(v), Uint32, true
+	case uint64:
+		return Uint64.Format(v), Uint64, true
 	}
 	return nil, Any, false
 }
@@ -1404,20 +1273,44 @@ func (t UintType) Equal(ax, ay any) bool {
 	return x == y
 }
 
-func (t UintType) From(_ state.State, src any) (any, Type, bool) {
+func (t UintType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case uint:
-		return v, t, true
 	case *big.Int:
-		if !v.IsUint64() {
-			return nil, Any, false
-		}
-		ui := v.Uint64()
-		return ui, BigInt, true
+		u64 := v.Uint64()
+		return uint(u64), BigInt, v.IsUint64() && u64 <= math.MaxUint
+	case complex128:
+		r, i := real(v), imag(v)
+		return uint(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= MaxUintFloat64
+	case *apd.Decimal:
+		u, err := strconv.ParseUint(Decimal.Format(v), 10, 0)
+		return uint(u), Decimal, err == nil
+	case float64:
+		return uint(v), Float64, math.Trunc(v) == v && v >= 0 && v <= MaxUintFloat64
+	case int:
+		return uint(v), Int, v >= 0
+	case int8:
+		return uint(v), Int8, v >= 0
+	case int16:
+		return uint(v), Int16, v >= 0
+	case int32:
+		return uint(v), Int32, v >= 0
+	case int64:
+		return uint(v), Int64, v >= 0
+	case *big.Rat:
+		return uint(v.Num().Uint64()), Rat, v.IsInt() && v.Num().IsUint64()
 	case string:
-		v = PreParseNumber(v)
-		ui, err := strconv.ParseUint(v, 0, 0)
-		return uint(ui), String, err == nil
+		u, ok := t.Parse(s, v)
+		return u, String, ok
+	case uint:
+		return src, Uint, true
+	case uint8:
+		return uint(v), Uint8, true
+	case uint16:
+		return uint(v), Uint16, true
+	case uint32:
+		return uint(v), Uint32, true
+	case uint64:
+		return uint(v), Uint64, v <= math.MaxUint
 	}
 	return nil, Any, false
 }
@@ -1472,16 +1365,44 @@ func (t Uint8Type) Equal(ax, ay any) bool {
 	return x == y
 }
 
-func (t Uint8Type) From(_ state.State, src any) (any, Type, bool) {
+func (t Uint8Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
+	case *big.Int:
+		u64 := v.Uint64()
+		return uint8(u64), BigInt, v.IsUint64() && u64 <= math.MaxUint8
+	case complex128:
+		r, i := real(v), imag(v)
+		u64, err := strconv.ParseUint(Float64.Format(r), 10, 8)
+		return uint8(u64), Complex, i == 0 && err == nil
+	case *apd.Decimal:
+		u, err := strconv.ParseUint(Decimal.Format(v), 10, 0)
+		return uint8(u), Decimal, err == nil
+	case int8:
+		return uint8(v), Int8, v >= 0
+	case int16:
+		return uint8(v), Int16, v >= 0
+	case int32:
+		return uint8(v), Int32, v >= 0
+	case int64:
+		return uint8(v), Int64, v >= 0
+	case *big.Rat:
+		return uint(v.Num().Uint64()), Rat, v.IsInt() && v.Num().IsUint64()
+	case uint:
+		return src, Uint, true
 	case uint8:
-		return v, t, true
+		return uint8(v), Uint8, true
+	case uint16:
+		return uint8(v), Uint16, true
+	case uint32:
+		return uint8(v), Uint32, true
+	case uint64:
+		return uint8(v), Uint64, v <= math.MaxUint
 	case string:
-		v = PreParseNumber(v)
-		u8, err := strconv.ParseUint(v, 0, 8)
-		return uint8(u8), String, err == nil
+		u, ok := t.Parse(s, v)
+		return u, String, ok
 	}
 	return nil, Any, false
+
 }
 
 func (t Uint8Type) Parse(_ state.State, str string) (uint8, bool) {
@@ -1720,6 +1641,10 @@ func bigFloatToBigInt(bf *big.Float) (*big.Int, bool) {
 	return bi, true
 }
 
+func complexToFloat(c complex128) (float64, bool) {
+	return real(c), imag(c) == 0
+}
+
 func decimalToInt64(d *apd.Decimal) (int64, bool) {
 	i64, err := d.Int64()
 	return i64, err == nil
@@ -1745,16 +1670,19 @@ func float64ToBigInt(f float64) (*big.Int, bool) {
 	return bi, true
 }
 
+func formatToRat(t Type, v any) (*big.Rat, bool) {
+	r := Rat.New()
+	_, ok := r.SetString(t.Format(v))
+	if !ok {
+		Rat.Recycle(r)
+	}
+	return r, ok
+}
+
 func intToBigInt[T constraints.Signed](i T) *big.Int {
 	bi := BigInt.New()
 	bi.SetInt64(int64(i))
 	return bi
-}
-
-func intToBigFloat[T constraints.Signed](s state.State, i T) *big.Float {
-	bf := BigFloat.New(s)
-	bf.SetInt64(int64(i))
-	return bf
 }
 
 func intToDecimal[T constraints.Signed](i T) *apd.Decimal {
@@ -1776,25 +1704,10 @@ func ratToInt64(r *big.Rat) (int64, bool) {
 	return r.Num().Int64(), r.Num().IsInt64()
 }
 
-func formatToRat(v any) (*big.Rat, bool) {
-	r := Rat.New()
-	_, ok := r.SetString(Format(v))
-	if !ok {
-		Rat.Recycle(r)
-	}
-	return r, ok
-}
-
 func uintToBigInt[T constraints.Unsigned](i T) *big.Int {
 	bi := BigInt.New()
 	bi.SetUint64(uint64(i))
 	return bi
-}
-
-func uintToBigFloat[T constraints.Unsigned](s state.State, i T) *big.Float {
-	bf := BigFloat.New(s)
-	bf.SetUint64(uint64(i))
-	return bf
 }
 
 func uintToDecimal[T constraints.Unsigned](i T) *apd.Decimal {
@@ -1852,4 +1765,8 @@ func isInt64RangeF(f float64) bool {
 
 func isInt(f float64) bool {
 	return math.Trunc(f) == f
+}
+
+func isUintRange(u uint64) bool {
+	return u <= math.MaxUint
 }
