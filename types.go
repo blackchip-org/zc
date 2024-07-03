@@ -1372,34 +1372,38 @@ func (t Uint8Type) From(s state.State, src any) (any, Type, bool) {
 		return uint8(u64), BigInt, v.IsUint64() && u64 <= math.MaxUint8
 	case complex128:
 		r, i := real(v), imag(v)
-		u64, err := strconv.ParseUint(Float64.Format(r), 10, 8)
-		return uint8(u64), Complex, i == 0 && err == nil
+		return uint8(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= math.MaxUint8
 	case *apd.Decimal:
-		u, err := strconv.ParseUint(Decimal.Format(v), 10, 0)
-		return uint8(u), Decimal, err == nil
+		u, err := v.Int64()
+		return uint8(u), Decimal, err == nil && u >= 0 && u <= math.MaxUint8
+	case float64:
+		return uint8(v), Float64, math.Trunc(v) == v && v >= 0 && v <= math.MaxUint8
+	case int:
+		return uint8(v), Int, v >= 0 && v <= math.MaxUint8
 	case int8:
 		return uint8(v), Int8, v >= 0
 	case int16:
-		return uint8(v), Int16, v >= 0
+		return uint8(v), Int16, v >= 0 && v <= math.MaxUint8
 	case int32:
-		return uint8(v), Int32, v >= 0
+		return uint8(v), Int32, v >= 0 && v <= math.MaxUint8
 	case int64:
-		return uint8(v), Int64, v >= 0
+		return uint8(v), Int64, v >= 0 && v <= math.MaxUint8
 	case *big.Rat:
-		return uint(v.Num().Uint64()), Rat, v.IsInt() && v.Num().IsUint64()
-	case uint:
-		return src, Uint, true
-	case uint8:
-		return uint8(v), Uint8, true
-	case uint16:
-		return uint8(v), Uint16, true
-	case uint32:
-		return uint8(v), Uint32, true
-	case uint64:
-		return uint8(v), Uint64, v <= math.MaxUint
+		u := v.Num().Uint64()
+		return uint8(u), Rat, v.IsInt() && v.Num().IsUint64() && u <= math.MaxUint8
 	case string:
 		u, ok := t.Parse(s, v)
 		return u, String, ok
+	case uint:
+		return uint8(v), Uint, v <= math.MaxUint8
+	case uint8:
+		return src, Uint8, true
+	case uint16:
+		return uint8(v), Uint16, v <= math.MaxUint8
+	case uint32:
+		return uint8(v), Uint32, v <= math.MaxUint8
+	case uint64:
+		return uint8(v), Uint64, v <= math.MaxUint8
 	}
 	return nil, Any, false
 
