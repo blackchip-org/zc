@@ -1406,7 +1406,6 @@ func (t Uint8Type) From(s state.State, src any) (any, Type, bool) {
 		return uint8(v), Uint64, v <= math.MaxUint8
 	}
 	return nil, Any, false
-
 }
 
 func (t Uint8Type) Parse(_ state.State, str string) (uint8, bool) {
@@ -1459,14 +1458,45 @@ func (t Uint16Type) Equal(ax, ay any) bool {
 	return x == y
 }
 
-func (t Uint16Type) From(_ state.State, src any) (any, Type, bool) {
+func (t Uint16Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case uint16:
-		return v, t, true
+	case *big.Int:
+		u64 := v.Uint64()
+		return uint16(u64), BigInt, v.IsUint64() && u64 <= math.MaxUint16
+	case complex128:
+		r, i := real(v), imag(v)
+		return uint16(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= math.MaxUint16
+	case *apd.Decimal:
+		u, err := v.Int64()
+		return uint16(u), Decimal, err == nil && u >= 0 && u <= math.MaxUint16
+	case float64:
+		return uint16(v), Float64, math.Trunc(v) == v && v >= 0 && v <= math.MaxUint16
+	case int:
+		return uint16(v), Int, v >= 0 && v <= math.MaxUint16
+	case int8:
+		return uint16(v), Int8, v >= 0
+	case int16:
+		return uint16(v), Int16, v >= 0
+	case int32:
+		return uint16(v), Int32, v >= 0 && v <= math.MaxUint16
+	case int64:
+		return uint16(v), Int64, v >= 0 && v <= math.MaxUint16
+	case *big.Rat:
+		u := v.Num().Uint64()
+		return uint16(u), Rat, v.IsInt() && v.Num().IsUint64() && u <= math.MaxUint16
 	case string:
-		v = PreParseNumber(v)
-		u16, err := strconv.ParseUint(v, 0, 16)
-		return uint16(u16), String, err == nil
+		u, ok := t.Parse(s, v)
+		return u, String, ok
+	case uint:
+		return uint16(v), Uint, v <= math.MaxUint16
+	case uint8:
+		return uint16(v), Uint8, true
+	case uint16:
+		return src, Uint16, true
+	case uint32:
+		return uint16(v), Uint32, v <= math.MaxUint16
+	case uint64:
+		return uint16(v), Uint64, v <= math.MaxUint16
 	}
 	return nil, Any, false
 }

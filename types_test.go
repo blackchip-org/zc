@@ -425,7 +425,7 @@ func TestFrom(t *testing.T) {
 		{"ua15", dc("1.1"), nil, Decimal, Uint8, false},
 		{"ua16", dc("1e1"), uint8(10), Decimal, Uint8, true},
 		{"ua17", float64(0), uint8(0), Float64, Uint8, true},
-		{"ua18", float64(-1), nil, Float64, Uint, false},
+		{"ua18", float64(-1), nil, Float64, Uint8, false},
 		{"ua19", float64(255), uint8(255), Float64, Uint8, true},
 		{"ua20", float64(256), nil, Float64, Uint8, false},
 		{"ua21", float64(1.1), nil, Float64, Uint8, false},
@@ -471,14 +471,76 @@ func TestFrom(t *testing.T) {
 		{"ua60", uint64(0), uint8(0), Uint64, Uint8, true},
 		{"ua61", uint64(255), uint8(255), Uint64, Uint8, true},
 		{"ua62", uint64(256), nil, Uint64, Uint8, false},
+
+		// uint16
+		{"ub01", in("0"), uint16(0), BigInt, Uint16, true},
+		{"ub02", in("-1"), nil, BigInt, Uint16, false},
+		{"ub03", in("65535"), uint16(65535), BigInt, Uint16, true},
+		{"ub04", in("65536"), nil, BigInt, Uint16, false},
+		{"ub05", complex128(0), uint16(0), Complex, Uint16, true},
+		{"ub06", complex128(-1), nil, Complex, Uint16, false},
+		{"ub07", complex128(65535), uint16(65535), Complex, Uint16, true},
+		{"ub08", complex128(65536), nil, Complex, Uint16, false},
+		{"ub09", complex128(1.1), nil, Complex, Uint16, false},
+		{"ub10", complex128(1 + 1i), nil, Complex, Uint16, false},
+		{"ub11", dc("0"), uint16(0), Decimal, Uint16, true},
+		{"ub12", dc("-1"), nil, Decimal, Uint16, false},
+		{"ub13", dc("65535"), uint16(65535), Decimal, Uint16, true},
+		{"ub14", dc("65536"), nil, Decimal, Uint16, false},
+		{"ub15", dc("1.1"), nil, Decimal, Uint16, false},
+		{"ub16", dc("1e1"), uint16(10), Decimal, Uint16, true},
+		{"ub17", float64(0), uint16(0), Float64, Uint16, true},
+		{"ub18", float64(-1), nil, Float64, Uint16, false},
+		{"ub19", float64(65535), uint16(65535), Float64, Uint16, true},
+		{"ub20", float64(65536), nil, Float64, Uint16, false},
+		{"ub21", float64(1.1), nil, Float64, Uint16, false},
+		{"ub22", int(0), uint16(0), Int, Uint16, true},
+		{"ub23", int(-1), nil, Int, Uint16, false},
+		{"ub24", int(65535), uint16(65535), Int, Uint16, true},
+		{"ub25", int(65536), nil, Int, Uint16, false},
+		{"ub26", int8(0), uint16(0), Int8, Uint16, true},
+		{"ub27", int8(-1), nil, Int8, Uint16, false},
+		{"ub28", int8(127), uint16(127), Int8, Uint16, true},
+		{"ub29", int16(0), uint16(0), Int16, Uint16, true},
+		{"ub30", int16(-1), nil, Int16, Uint16, false},
+		{"ub31", int16(32767), uint16(32767), Int16, Uint16, true},
+		{"ub32", int32(0), uint16(0), Int32, Uint16, true},
+		{"ub33", int32(-1), nil, Int32, Uint16, false},
+		{"ub34", int32(65535), uint16(65535), Int32, Uint16, true},
+		{"ub35", int32(65536), nil, Int32, Uint16, false},
+		{"ub36", int64(0), uint16(0), Int64, Uint16, true},
+		{"ub37", int64(-1), nil, Int64, Uint16, false},
+		{"ub38", int64(65535), uint16(65535), Int64, Uint16, true},
+		{"ub39", int64(65536), nil, Int64, Uint8, false},
+		{"ub40", rt("0"), uint16(0), Rat, Uint16, true},
+		{"ub41", rt("-1"), nil, Rat, Uint16, false},
+		{"ub42", rt("65535"), uint16(65535), Rat, Uint16, true},
+		{"ub43", rt("65536"), nil, Rat, Uint16, false},
+		{"ub44", rt("1/2"), nil, Rat, Uint16, false},
+		{"ub47", "0", uint16(0), String, Uint16, true},
+		{"ub48", "-1", nil, String, Uint16, false},
+		{"ub49", "65535", uint16(65535), String, Uint16, true},
+		{"ub50", "65536", nil, String, Uint16, false},
+		{"ub51", "x", nil, String, Uint16, false},
+		{"ub52", uint(0), uint16(0), Uint, Uint16, true},
+		{"ub53", uint(65535), uint16(65535), Uint, Uint16, true},
+		{"ub54", uint(65536), nil, Uint, Uint16, false},
+		{"ub55", uint8(0), uint16(0), Uint8, Uint16, true},
+		{"ub56", uint8(255), uint16(255), Uint8, Uint16, true},
+		{"ub57", uint16(65535), uint16(65535), Uint16, Uint16, true},
+		{"ub58", uint32(0), uint16(0), Uint32, Uint16, true},
+		{"ub59", uint32(65535), uint16(65535), Uint32, Uint16, true},
+		{"ub60", uint32(65536), nil, Uint32, Uint16, false},
+		{"ub61", uint64(0), uint16(0), Uint64, Uint16, true},
+		{"ub62", uint64(65535), uint16(65535), Uint64, Uint16, true},
+		{"ub63", uint64(65536), nil, Uint64, Uint16, false},
 	}
 
 	for _, test := range tests {
 		t.Run(test.id, func(t *testing.T) {
 			out, from, ok := test.to.From(s, test.in)
-			testOk := test.out != nil
-			if (ok && !Equal(out, test.out)) || from != test.from || ok != testOk {
-				t.Fatalf("\n have: %v (%v) %v %v \n want: %v (%v) %v %v", Format(out), goName(out), from.AppName(), ok, Format(test.out), goName(test.out), test.from.AppName(), testOk)
+			if (ok && !Equal(out, test.out)) || from != test.from || ok != test.ok {
+				t.Fatalf("\n have: %v (%v) %v %v \n want: %v (%v) %v %v", Format(out), goName(out), from.AppName(), ok, Format(test.out), goName(test.out), test.from.AppName(), test.ok)
 			}
 		})
 	}
