@@ -476,8 +476,9 @@ func TestFrom(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.id, func(t *testing.T) {
 			out, from, ok := test.to.From(s, test.in)
-			if (ok && !Equal(out, test.out)) || from != test.from || ok != test.ok {
-				t.Fatalf("\n have: %v (%v) %v %v \n want: %v (%v) %v %v", Format(out), goName(out), from.AppName(), ok, Format(test.out), goName(test.out), test.from.AppName(), test.ok)
+			testOk := test.out != nil
+			if (ok && !Equal(out, test.out)) || from != test.from || ok != testOk {
+				t.Fatalf("\n have: %v (%v) %v %v \n want: %v (%v) %v %v", Format(out), goName(out), from.AppName(), ok, Format(test.out), goName(test.out), test.from.AppName(), testOk)
 			}
 		})
 	}
