@@ -1551,14 +1551,45 @@ func (t Uint32Type) Equal(ax, ay any) bool {
 	return x == y
 }
 
-func (t Uint32Type) From(_ state.State, src any) (any, Type, bool) {
+func (t Uint32Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case uint32:
-		return v, t, true
+	case *big.Int:
+		u64 := v.Uint64()
+		return uint32(u64), BigInt, v.IsUint64() && u64 <= math.MaxUint32
+	case complex128:
+		r, i := real(v), imag(v)
+		return uint32(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= math.MaxUint32
+	case *apd.Decimal:
+		u, err := v.Int64()
+		return uint32(u), Decimal, err == nil && u >= 0 && u <= math.MaxUint32
+	case float64:
+		return uint32(v), Float64, math.Trunc(v) == v && v >= 0 && v <= math.MaxUint32
+	case int:
+		return uint32(v), Int, v >= 0 && v <= math.MaxUint32
+	case int8:
+		return uint32(v), Int8, v >= 0
+	case int16:
+		return uint32(v), Int16, v >= 0
+	case int32:
+		return uint32(v), Int32, v >= 0
+	case int64:
+		return uint32(v), Int64, v >= 0 && v <= math.MaxUint32
+	case *big.Rat:
+		u := v.Num().Uint64()
+		return uint32(u), Rat, v.IsInt() && v.Num().IsUint64() && u <= math.MaxUint32
 	case string:
-		v = PreParseNumber(v)
-		u32, err := strconv.ParseUint(v, 0, 32)
-		return uint32(u32), String, err == nil
+		u, ok := t.Parse(s, v)
+		return u, String, ok
+	case uint:
+		return uint32(v), Uint, v <= math.MaxUint32
+	case uint8:
+		return uint32(v), Uint8, true
+	case uint16:
+		return uint32(v), Uint16, true
+	case uint32:
+		return src, Uint32, true
+	case uint64:
+		return uint32(v), Uint64, v <= math.MaxUint32
 	}
 	return nil, Any, false
 }
