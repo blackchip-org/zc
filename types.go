@@ -1644,14 +1644,48 @@ func (t Uint64Type) Equal(ax, ay any) bool {
 	return x == y
 }
 
-func (t Uint64Type) From(_ state.State, src any) (any, Type, bool) {
+func (t Uint64Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case uint64:
-		return v, t, true
+	case *big.Int:
+		u64 := v.Uint64()
+		return u64, BigInt, v.IsUint64()
+	case complex128:
+		r, i := real(v), imag(v)
+		return uint64(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= MaxUintFloat64
+	case *apd.Decimal:
+		// There is no Uint64() function available for *apd.Decimal.
+		// Int64() is the best for native types, so format as string and
+		// then parse back.
+		u64, err := strconv.ParseUint(Decimal.Format(v), 10, 64)
+		return u64, Decimal, err == nil
+	case float64:
+		return uint64(v), Float64, math.Trunc(v) == v && v >= 0 && v <= MaxUintFloat64
+	case int:
+		return uint64(v), Int, v >= 0
+	case int8:
+		return uint64(v), Int8, v >= 0
+	case int16:
+		return uint64(v), Int16, v >= 0
+	case int32:
+		return uint64(v), Int32, v >= 0
+	case int64:
+		return uint64(v), Int64, v >= 0
+	case *big.Rat:
+		u64 := v.Num().Uint64()
+		return u64, Rat, v.IsInt() && v.Num().IsUint64()
 	case string:
-		v = PreParseNumber(v)
-		u64, err := strconv.ParseUint(v, 0, 64)
-		return uint64(u64), String, err == nil
+		u, ok := t.Parse(s, v)
+		return u, String, ok
+	case uint:
+		return uint64(v), Uint, true
+	case uint8:
+		return uint64(v), Uint8, true
+	case uint16:
+		return uint64(v), Uint16, true
+	case uint32:
+		return uint64(v), Uint32, true
+	case uint64:
+		return src, Uint64, true
 	}
 	return nil, Any, false
 }
