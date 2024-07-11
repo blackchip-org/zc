@@ -1,6 +1,8 @@
 package funcs
 
 import (
+	"fmt"
+
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/state"
 )
@@ -11,11 +13,12 @@ func AddDecimal(e *zc.OpEnv) {
 	x := zc.Decimal.Pop(e)
 	defer zc.Decimal.Recycle(y)
 
-	_, err := s.Context.Add(x, x, y)
+	c, err := s.Context.Add(x, x, y)
 	if err != nil {
 		e.Err = zc.ErrOp(e, err)
 		return
 	}
+	fmt.Printf("*** COND: %v\n", c)
 	zc.Decimal.Push(e, x)
 }
 

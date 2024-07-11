@@ -80,7 +80,8 @@ var (
 )
 
 const (
-	MaxUintFloat64 = float64(9007199254740992)
+	MaxIntFloat64 = float64(9007199254740992)
+	MinIntFloat64 = -MaxIntFloat64
 )
 
 type Type interface {
@@ -834,43 +835,43 @@ func (t Int32Type) Equal(ax, ay any) bool {
 
 func (t Int32Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case int32:
-		return v, t, true
 	case *big.Int:
 		i64 := v.Int64()
-		return int32(i64), BigInt, v.IsInt64() && isInt32Range(i64)
+		return int32(i64), BigInt, v.IsInt64() && i64 >= math.MinInt32 && i64 <= math.MaxInt32
 	case complex128:
 		r, i := real(v), imag(v)
-		return int32(r), Complex, i == 0 && isInt32RangeF(r)
+		return int32(r), Complex, i == 0 && r == math.Trunc(r) && r >= math.MinInt32 && r <= math.MaxInt32
 	case *apd.Decimal:
-		i64, ok := decimalToInt64(v)
-		return int32(i64), Decimal, ok && isInt32Range(i64)
+		i64, err := v.Int64()
+		return int32(i64), Decimal, err == nil && i64 >= math.MinInt32 && i64 <= math.MaxInt32
 	case float64:
-		return int32(v), Float64, isInt32RangeF(v)
+		return int32(v), Float64, v == math.Trunc(v) && v >= math.MinInt32 && v <= math.MaxInt32
 	case int:
-		return int32(v), Int, isInt32Range(int64(v))
+		return int32(v), Int, v >= math.MinInt32 && v <= math.MaxInt32
 	case int8:
 		return int32(v), Int8, true
 	case int16:
 		return int32(v), Int16, true
+	case int32:
+		return v, t, true
 	case int64:
-		return int32(v), Int64, isInt32Range(int64(v))
+		return int32(v), Int64, v >= math.MinInt32 && v <= math.MaxInt32
 	case *big.Rat:
-		i64, ok := ratToInt64(v)
-		return int32(i64), Rat, ok && isInt32Range(i64)
+		i64 := v.Num().Int64()
+		return int32(i64), Rat, v.IsInt() && v.Num().IsInt64() && i64 >= math.MinInt32 && i64 <= math.MaxInt32
+	case string:
+		i32, ok := t.Parse(s, v)
+		return i32, String, ok
 	case uint:
-		return int32(v), Uint, isInt16Range(int64(v))
+		return int32(v), Uint, v <= math.MaxInt32
 	case uint8:
 		return int32(v), Uint8, true
 	case uint16:
 		return int32(v), Uint16, true
 	case uint32:
-		return int32(v), Uint32, isInt32Range(int64(v))
+		return int32(v), Uint32, v <= math.MaxInt32
 	case uint64:
-		return int32(v), Uint64, isInt32Range(int64(v))
-	case string:
-		i32, ok := t.Parse(s, v)
-		return i32, String, ok
+		return int32(v), Uint64, v <= math.MaxInt32
 	}
 	return nil, Any, false
 }
@@ -927,19 +928,17 @@ func (t Int64Type) Equal(ax, ay any) bool {
 
 func (t Int64Type) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case int64:
-		return v, t, true
 	case *big.Int:
 		i64 := v.Int64()
 		return i64, BigInt, v.IsInt64()
 	case complex128:
-		r, i := real(v), imag(v)
-		return int64(r), Complex, i == 0 && isInt64RangeF(r)
+		re, im := real(v), imag(v)
+		return int64(re), Complex, im == 0 && re == math.Trunc(re) && re <= MaxIntFloat64 && re >= MinIntFloat64
 	case *apd.Decimal:
-		i64, ok := decimalToInt64(v)
-		return i64, Decimal, ok
+		i64, err := v.Int64()
+		return i64, Decimal, err == nil
 	case float64:
-		return int64(v), Float64, isInt64RangeF(v)
+		return int64(v), Float64, v == math.Trunc(v) && v <= MaxIntFloat64 && v >= MinIntFloat64
 	case int:
 		return int64(v), Int, true
 	case int8:
@@ -948,11 +947,15 @@ func (t Int64Type) From(s state.State, src any) (any, Type, bool) {
 		return int64(v), Int16, true
 	case int32:
 		return int64(v), Int32, true
+	case int64:
+		return v, t, true
 	case *big.Rat:
-		i64, ok := ratToInt64(v)
-		return i64, Rat, ok
+		if !v.Denom().IsInt64() || v.Denom().Int64() != 1 {
+			return 0, Rat, false
+		}
+		return v.Num().Int64(), Rat, v.Num().IsInt64()
 	case uint:
-		return int64(v), Uint, isIntRangeU(uint64(v))
+		return int64(v), Uint, v <= math.MaxInt64
 	case uint8:
 		return int64(v), Uint8, true
 	case uint16:
@@ -960,7 +963,7 @@ func (t Int64Type) From(s state.State, src any) (any, Type, bool) {
 	case uint32:
 		return int64(v), Uint32, true
 	case uint64:
-		return int64(v), Uint64, isIntRangeU(uint64(v))
+		return int64(v), Uint64, v <= math.MaxInt64
 	case string:
 		i64, ok := t.Parse(s, v)
 		return i64, String, ok
@@ -1023,8 +1026,6 @@ func (t RatType) Equal(ax, ay any) bool {
 
 func (t RatType) From(s state.State, src any) (any, Type, bool) {
 	switch v := src.(type) {
-	case *big.Rat:
-		return v, t, true
 	case *big.Int:
 		r := t.New()
 		r.SetInt(v)
@@ -1056,26 +1057,46 @@ func (t RatType) From(s state.State, src any) (any, Type, bool) {
 		r.SetInt64(int64(v))
 		return r, Int, true
 	case int8:
-		return intToRat(v), Int8, true
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int8, true
 	case int16:
-		return intToRat(v), Int16, true
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int16, true
 	case int32:
-		return intToRat(v), Int32, true
+		r := t.New()
+		r.SetInt64(int64(v))
+		return r, Int32, true
 	case int64:
-		return intToRat(v), Int64, true
-	case uint:
-		return uintToRat(v), Uint, true
-	case uint8:
-		return uintToRat(v), Uint8, true
-	case uint16:
-		return uintToRat(v), Uint16, true
-	case uint32:
-		return uintToRat(v), Uint32, true
-	case uint64:
-		return uintToRat(v), Uint64, true
+		r := t.New()
+		r.SetInt64(v)
+		return r, Int64, true
+	case *big.Rat:
+		return v, t, true
 	case string:
 		r, ok := t.Parse(s, v)
 		return r, String, ok
+	case uint:
+		r := t.New()
+		r.SetUint64(uint64(v))
+		return r, Uint, true
+	case uint8:
+		r := t.New()
+		r.SetUint64(uint64(v))
+		return r, Uint8, true
+	case uint16:
+		r := t.New()
+		r.SetUint64(uint64(v))
+		return r, Uint16, true
+	case uint32:
+		r := t.New()
+		r.SetUint64(uint64(v))
+		return r, Uint32, true
+	case uint64:
+		r := t.New()
+		r.SetUint64(v)
+		return r, Uint64, true
 	}
 	return nil, Any, false
 }
@@ -1280,12 +1301,12 @@ func (t UintType) From(s state.State, src any) (any, Type, bool) {
 		return uint(u64), BigInt, v.IsUint64() && u64 <= math.MaxUint
 	case complex128:
 		r, i := real(v), imag(v)
-		return uint(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= MaxUintFloat64
+		return uint(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= MaxIntFloat64
 	case *apd.Decimal:
 		u, err := strconv.ParseUint(Decimal.Format(v), 10, 0)
 		return uint(u), Decimal, err == nil
 	case float64:
-		return uint(v), Float64, math.Trunc(v) == v && v >= 0 && v <= MaxUintFloat64
+		return uint(v), Float64, math.Trunc(v) == v && v >= 0 && v <= MaxIntFloat64
 	case int:
 		return uint(v), Int, v >= 0
 	case int8:
@@ -1651,7 +1672,7 @@ func (t Uint64Type) From(s state.State, src any) (any, Type, bool) {
 		return u64, BigInt, v.IsUint64()
 	case complex128:
 		r, i := real(v), imag(v)
-		return uint64(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= MaxUintFloat64
+		return uint64(r), Complex, i == 0 && math.Trunc(r) == r && r >= 0 && r <= MaxIntFloat64
 	case *apd.Decimal:
 		// There is no Uint64() function available for *apd.Decimal.
 		// Int64() is the best for native types, so format as string and
@@ -1659,7 +1680,7 @@ func (t Uint64Type) From(s state.State, src any) (any, Type, bool) {
 		u64, err := strconv.ParseUint(Decimal.Format(v), 10, 64)
 		return u64, Decimal, err == nil
 	case float64:
-		return uint64(v), Float64, math.Trunc(v) == v && v >= 0 && v <= MaxUintFloat64
+		return uint64(v), Float64, math.Trunc(v) == v && v >= 0 && v <= MaxIntFloat64
 	case int:
 		return uint64(v), Int, v >= 0
 	case int8:
