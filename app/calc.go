@@ -3,95 +3,92 @@ package app
 import (
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/app/state"
-	"github.com/blackchip-org/zc/v6/app/vols"
 )
 
-var mainCatalog *zc.Catalog
-
-func init() {
-	mainCatalog = zc.NewCatalog()
-
-	// Order here is important. BasicInt adds overloads for basic before
-	// BasicDec does. Do not try to sort this list.
-	mainCatalog.AddVolume(
-		vols.Anno,
-		vols.Basic,
-		vols.BasicInt,
-		vols.BasicRat,
-		vols.BasicComplex,
-		vols.BasicIntU,
-		vols.BasicIntU8,
-		vols.BasicIntU16,
-		vols.BasicIntU32,
-		vols.BasicIntU64,
-		vols.Conf,
-		vols.Format,
-		vols.Prog,
-		vols.Sci,
-		vols.SciComplex,
-		vols.SciFloat64,
-		vols.Stack,
-		vols.Types,
-		vols.TypesIntU,
-		vols.TypesIntU8,
-		vols.TypesIntU16,
-		vols.TypesIntU32,
-		vols.TypesIntU64,
-	)
-}
-
 type Calc struct {
-	zc.Stack[zc.Item]
-	Catalog  *zc.Catalog
-	state    state.State
-	Err      error
-	Info     string
-	Listener zc.Listener
+	Catalog *zc.Catalog
+	Notice  string
+	Error   error
+	items   []zc.Item
+	pos     int
+	state   map[string]any
 }
 
-func NewCalc() *Calc {
-	return &Calc{
-		Catalog: mainCatalog,
-		state:   state.New(),
+func NewCalc(cat *zc.Catalog) *Calc {
+	c := &Calc{
+		state:   make(map[string]any),
+		Catalog: cat,
 	}
+	return c
 }
 
 func (c *Calc) Push(item zc.Item) {
-	c.Stack.Push(item)
-	if c.Listener != nil {
-		c.Listener(zc.NewStackEvent("push", c.Stack))
+	if c.pos < len(c.items) {
+		c.items[c.pos] = item
+	} else {
+		c.items = append(c.items, item)
 	}
-}
-
-func (c *Calc) PushVal(vals ...any) {
-	for _, val := range vals {
-		c.Push(zc.Item{Val: val})
-	}
+	c.pos++
 }
 
 func (c *Calc) Pop() zc.Item {
-	item := c.Stack.Pop()
-	if c.Listener != nil {
-		c.Listener(zc.NewStackEvent("pop", c.Stack))
+	if c.pos == 0 {
+		panic(zc.ErrStackEmpty)
 	}
-	return item
+	c.pos--
+	return c.items[c.pos]
+}
+
+func (c *Calc) Items() []zc.Item {
+	return c.items[:c.pos]
+}
+
+func (c *Calc) SetItems(items []zc.Item) {
+	c.items = items
+	c.pos = len(c.items)
+}
+
+func (c *Calc) Len() int {
+	return c.pos
+}
+
+func (c *Calc) String() string {
+	return zc.FormatList(zc.FormatItems(c.Items()))
+}
+
+func (c *Calc) State(name string) (any, bool) {
+	s, ok := c.state[name]
+	return s, ok
+}
+
+func (c *Calc) NewState(name string, a any) {
+	c.state[name] = a
+}
+
+func (c *Calc) Notify(msg string) {
+	c.Notice = msg
+}
+
+func (c *Calc) Raise(err error) {
+	if c.Error == nil {
+		c.Error = err
+	}
 }
 
 func (c *Calc) Eval(line string) error {
 	toks := zc.ScanWords(line)
 	for _, tok := range toks {
-		if c.Err != nil {
-			return c.Err
+		if c.Error != nil {
+			return c.Error
 		}
 		c.EvalToken(tok)
 	}
-	return c.Err
+	return c.Error
 }
 
 func (c *Calc) EvalToken(toks ...scan.Token) {
 	for _, tok := range toks {
-		if c.Err != nil {
+		if c.Error != nil {
 			return
 		}
 		switch tok.Type {
@@ -106,91 +103,74 @@ func (c *Calc) EvalToken(toks ...scan.Token) {
 }
 
 func (c *Calc) evalValue(val string) {
-	c.PushVal(val)
+	c.Push(zc.Item{TypeVal: val, Type: zc.String})
 }
 
 func (c *Calc) evalName(name string) {
-	ops, ok := c.LookupOp(name)
-	if !ok {
-		c.Err = zc.ErrNoSuchOp(name)
-		return
-	}
-	op, ok := c.ResolveOp(ops)
-	if !ok {
-		c.Err = zc.ErrArgMismatch(name)
-		return
-	}
-	c.Do(op)
-}
-
-func (c *Calc) LookupOp(name string) ([]zc.Op, bool) {
 	ops, ok := c.Catalog.OpFor(name)
-	return ops, ok
+	if !ok {
+		c.Raise(zc.ErrNoSuchOp(name))
+		return
+	}
+	fn, ok := c.ResolveOp(ops)
+	if !ok {
+		c.Raise(zc.ErrArgMismatch(name))
+		return
+	}
+	fn.Eval(c)
 }
 
-func (c *Calc) ResolveOp(ops []zc.Op) (zc.Op, bool) {
-	var op zc.Op
-	for _, op = range ops {
-		if c.isTypeMatch(op.Params) {
-			return op, true
+func (c *Calc) ResolveOp(op zc.Op) (zc.Func, bool) {
+	for _, fn := range op.Funcs {
+		if c.isTypeMatch(fn.Params, fn.VarParam) {
+			c.convert(fn.Params)
+			return fn, true
 		}
 	}
-	return op, false
+	return zc.Func{}, false
 }
 
-func (c *Calc) isTypeMatch(def []zc.Type) bool {
-	if c.Len() < len(def) {
+func (c *Calc) isTypeMatch(params []zc.Type, varParam zc.Type) bool {
+	if c.Len() < len(params) {
 		return false
 	}
-	for i, param := range def {
-		arg := c.Get(len(def) - i - 1)
-		_, _, ok := param.From(c.state, arg.Val)
-		if !ok {
+
+	for i, param := range params {
+		if !c.isParamMatch(i, param) {
 			return false
+		}
+	}
+	if varParam != nil {
+		for i := len(params); i < c.pos; i++ {
+			if !c.isParamMatch(i, varParam) {
+				return false
+			}
 		}
 	}
 	return true
 }
 
-func (c *Calc) Do(op zc.Op) {
-	if len(op.Macro) > 0 {
-		for _, tok := range op.Macro {
-			if c.Err != nil {
-				return
-			}
-			c.EvalToken(tok)
-		}
+func (c *Calc) isParamMatch(index int, param zc.Type) bool {
+	arg := c.items[c.pos-index-1]
+	if arg.Type == param {
+		return true
+	}
+	_, ok := param.Parse(arg.Val())
+	return ok
+}
+
+func (c *Calc) convertArg(index int, param zc.Type) {
+	arg := c.items[c.pos-index-1]
+	if arg.Type == param {
 		return
 	}
-
-	nParams := len(op.Params)
-	for i, param := range op.Params {
-		arg := c.Get(nParams - i - 1)
-		convVal, argType, ok := param.From(c.state, arg.Val)
-		if !ok {
-			panic("cannot convert")
-		}
-		if argType != param {
-			argType.Recycle(arg.Val)
-			arg.Val = convVal
-			c.Set(nParams-i-1, arg)
-		}
+	conv, ok := param.Parse(arg.Val())
+	if !ok {
+		panic("unexpected: should be correct type")
 	}
+	c.items[c.pos-index-1] = zc.Item{TypeVal: conv, Type: param}
+}
 
-	env := zc.OpEnv{
-		Op:    op,
-		Stack: &c.Stack,
-		State: c.state,
-	}
-	if c.Listener != nil {
-		c.Listener(zc.NewOpEvent(&env))
-	}
-	op.Func(&env)
+func (c *Calc) convert(def []zc.Type) bool {
 
-	c.Err = env.Err
-	c.Info = env.Info
-
-	if c.Err == nil && !c.isTypeMatch(op.Returns) {
-		c.Err = zc.ErrReturnMismatch(op.Name)
-	}
 }

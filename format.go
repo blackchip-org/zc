@@ -1,132 +1,92 @@
 package zc
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/blackchip-org/scan"
 )
 
-func Quote(v string) string {
-	var s scan.Scanner
-	s.InitFromString("", v)
+var escapeMap = map[rune]string{
+	'\a': `\a`,
+	'\b': `\b`,
+	'\f': `\f`,
+	'\n': `\n`,
+	'\r': `\r`,
+	'\t': `\t`,
+	'\v': `\v`,
+}
 
-	needsQuotes := false
-	if !IsValuePrefix(s.This, s.Next) {
-		needsQuotes = true
-	} else {
-		scan.Until(&s, scan.IsSpace, s.Discard)
-		if s.HasMore() {
-			needsQuotes = true
-		}
+func Escape(r rune) string {
+	es, ok := escapeMap[r]
+	if ok {
+		return es
 	}
-
-	if !needsQuotes {
-		return v
+	switch {
+	case scan.IsPrintable(r):
+		return string(r)
+	case r <= 0xff:
+		return fmt.Sprintf(`\x%02x`, r)
+	case r <= 0xffff:
+		return fmt.Sprintf(`\u%04x`, r)
+	default:
+		return fmt.Sprintf(`\U%08x`, r)
 	}
+}
 
-	s.InitFromString("", v)
-	s.Val.WriteRune('\'')
+func EscapeString(str string) string {
+	s := scan.NewScannerFromString("", str)
 	for s.HasMore() {
-		if s.This == '\'' {
-			s.Val.WriteString("\\'")
-			s.Skip()
-		} else {
-			s.Keep()
-		}
+		s.Val.WriteString(Escape(s.This))
+		s.Skip()
 	}
-	s.Val.WriteRune('\'')
 	return s.Emit().Val
 }
 
-func Format(a any) string {
-	return TypeOf(a).Format(a)
+func FormatItems(items []Item) []string {
+	strs := make([]string, len(items))
+	for i, item := range items {
+		strs[i] = item.Val()
+	}
+	return strs
 }
 
-func FormatList(vals ...any) string {
+func FormatList(vals []string) string {
+	var s scan.Scanner
 	var strs []string
 	for _, val := range vals {
-		strs = append(strs, Format(val))
+		s.InitFromString("", val)
+		for s.HasMore() {
+			switch {
+			case s.This == '|':
+				s.Val.WriteString(`\|`)
+				s.Skip()
+			default:
+				s.Val.WriteString(Escape(s.This))
+				s.Skip()
+			}
+		}
+		strs = append(strs, s.Emit().Val)
 	}
 	return strings.Join(strs, " | ")
 }
 
-func FormatExponent(str string) string {
+func Quote(str string) string {
+	quote := ""
 	s := scan.NewScannerFromString("", str)
-
-	// Keep everything before the exponent
-	scan.Until(s, scan.Rune('E', 'e'), s.Keep)
-
-	// If no more, we didn't see the exponent
-	if !s.HasMore() {
-		return str
-	}
-
-	// We did see the exponent. Always write this out in lower case.
-	s.Val.WriteRune('e')
-	s.Skip()
-
-	// Omit positive signs but keep the negative ones
-	if s.This == '+' {
-		s.Skip()
-	}
-
-	// Remove all leading zeros
-	for s.This == '0' && s.Next != scan.EndOfText {
-		s.Skip()
-	}
-
-	// Actual digits of the exponent
-	scan.While(s, scan.IsAny, s.Keep)
-	return s.Emit().Val
-}
-
-func RemoveTrailingZeros(v string) string {
-	s := scan.NewScannerFromString("", v)
-
-	// Keep everything up to the decimal separator
-	scan.Until(s, scan.Rune('.'), s.Keep)
-	if s.This == '.' {
-		s.Skip()
-	}
-	if !s.HasMore() {
-		return s.Emit().Val
-	}
-
-	// If the value is something like 100.00, we want to remove the decimal
-	// separator along with the zeros. The write of the separator is delayed
-	// until a digit is written
-	pendingDecSep := true
-
-	inZeros := false
-	zerosSeen := 0
 	for s.HasMore() {
-		// Count up the number of zeros seen until there is a non-zero
-		// rune. Then emit those zeros when not trailing.
-		if s.This == '0' {
-			if inZeros {
-				zerosSeen++
-			} else {
-				inZeros = true
-				zerosSeen = 1
-			}
-			s.Skip()
-		} else {
-			if pendingDecSep {
-				pendingDecSep = false
-				s.Val.WriteRune('.')
-			}
-			if inZeros && scan.IsDigit09(s.This) {
-				inZeros = false
-				for i := 0; i < zerosSeen; i++ {
-					s.Val.WriteRune('0')
-				}
-			}
-			if !scan.IsDigit09(s.This) {
-				scan.While(s, scan.IsAny, s.Keep)
-				break
-			}
+		switch {
+		case s.This == ' ':
+			quote = `"`
 			s.Keep()
+		case s.This == '"':
+			quote = `"`
+			s.Val.WriteString(`\"`)
+			s.Skip()
+		default:
+			s.Val.WriteString(Escape(s.This))
+			s.Skip()
 		}
 	}
-	return s.Emit().Val
+	return quote + s.Emit().Val + quote
 }

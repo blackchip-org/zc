@@ -1,15 +1,15 @@
 package zc
 
-type pool[T any] struct {
+type Pool[T any] struct {
 	items []*T
 	pos   int
 }
 
-func newPool[T any](n int) *pool[T] {
-	return &pool[T]{items: make([]*T, n)}
+func NewPool[T any](n int) *Pool[T] {
+	return &Pool[T]{items: make([]*T, n)}
 }
 
-func (p *pool[T]) New() *T {
+func (p *Pool[T]) New() *T {
 	if p.pos == 0 {
 		return new(T)
 	}
@@ -17,7 +17,7 @@ func (p *pool[T]) New() *T {
 	return p.items[p.pos]
 }
 
-func (p *pool[T]) Recycle(vs ...*T) {
+func (p *Pool[T]) Recycle(vs ...*T) {
 	for _, v := range vs {
 		if p.pos >= len(p.items) {
 			return

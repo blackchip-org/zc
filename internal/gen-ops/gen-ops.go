@@ -3,39 +3,33 @@
 package main
 
 import (
-	"cmp"
 	"fmt"
 	"log"
 	"os"
 	"path"
-	"slices"
 	"strings"
-	"unicode"
-	"unicode/utf8"
 
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/pkg/pretty"
-	"golang.org/x/exp/maps"
 )
 
 var typeMap map[string]string = map[string]string{
-	zc.Any.AppName():     "Any",
-	zc.BigInt.AppName():  "BigInt",
-	zc.Complex.AppName(): "Complex",
-	zc.Decimal.AppName(): "Decimal",
-	zc.Float64.AppName(): "Float64",
-	zc.Int.AppName():     "Int",
-	zc.Int8.AppName():    "Int8",
-	zc.Int32.AppName():   "Int32",
-	zc.Int64.AppName():   "Int64",
-	zc.Rat.AppName():     "Rat",
-	zc.String.AppName():  "String",
-	zc.Uint.AppName():    "Uint",
-	zc.Uint8.AppName():   "Uint8",
-	zc.Uint16.AppName():  "Uint16",
-	zc.Uint32.AppName():  "Uint32",
-	zc.Uint64.AppName():  "Uint64",
+	// zc.Any.AppName():     "Any",
+	zc.BigInt.AppName(): "BigInt",
+	// zc.Complex.AppName(): "Complex",
+	// zc.Decimal.AppName(): "Decimal",
+	// zc.Float64.AppName(): "Float64",
+	// zc.Int.AppName():     "Int",
+	// zc.Int8.AppName():    "Int8",
+	// zc.Int32.AppName():   "Int32",
+	// zc.Int64.AppName():   "Int64",
+	// zc.Rat.AppName():     "Rat",
+	zc.String.AppName(): "String",
+	// zc.Uint.AppName():    "Uint",
+	// zc.Uint8.AppName():   "Uint8",
+	// zc.Uint16.AppName():  "Uint16",
+	// zc.Uint32.AppName():  "Uint32",
+	// zc.Uint64.AppName():  "Uint64",
 }
 
 type ValDef struct {
@@ -59,13 +53,17 @@ func main() {
 	}
 	genOps(defs)
 	genVols(defs)
-	genTests(defs)
-	genOpDocs(defs)
-	genOpRef(defs)
-	genIndex(defs)
+	// genTests(defs)
+	// genOpDocs(defs)
+	// genOpRef(defs)
+	// genIndex(defs)
 }
 
 func genOps(vols []zc.VolDef) {
+	if err := os.MkdirAll(OpsDir, 0755); err != nil {
+		log.Fatalf("unable to make directory: %v: %v", OpsDir, err)
+	}
+
 	for _, vol := range vols {
 		// Skip if there are no ops defined
 		if len(vol.Ops) == 0 {
@@ -83,44 +81,34 @@ func genOps(vols []zc.VolDef) {
 		fmt.Fprintf(f, "import (\n")
 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6\"\n")
 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/app/funcs\"\n")
-		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/app/types\"\n")
 		fmt.Fprintf(f, ")\n")
 
 		fmt.Fprintf(f, "var (\n")
 		for _, op := range vol.Ops {
-			if op.Virtual {
-				// if hasFuncImpl(op) {
-				// 	panic(fmt.Errorf("operation is virtual but has functions: %v", op.Name))
-				// }
-				fmt.Fprintf(f, "%v = zc.Op{Name: \"%v\", Virtual: true}\n", op.Ident, op.Name)
-				// continue
-			}
+			fmt.Fprintf(f, "%v = zc.Op{\n", op.Ident)
+			fmt.Fprintf(f, "Name: \"%v\",\n", op.Name)
+			fmt.Fprintf(f, "Funcs: []zc.Func{\n")
 			for _, fn := range op.Funcs {
-				if !hasFuncImpl(op) {
-					//panic(fmt.Errorf("operation must be virtual if it has no functions: %v", op.Name))
-					continue
-				}
 				if fn.Name == "" {
-					continue
+					log.Panicf("func without name in op: %v", op.Name)
 				}
-				fmt.Fprintf(f, "%v = zc.Op{\n", fn.Ident)
-				fmt.Fprintf(f, "Name: \"%v\",\n", op.Name)
-				if op.Overloads != "" {
-					fmt.Fprintf(f, "Overloads: \"%v\",\n", op.Overloads)
-				}
-				if fn.Name != "" {
-					genValList(f, "Params", "VarParam", fn.Params)
-					genValList(f, "Returns", "VarReturn", fn.Returns)
-					fmt.Fprintf(f, "Func: funcs.%v,\n", fn.Name)
-				}
-				fmt.Fprintf(f, "}\n")
+				fmt.Fprintf(f, "{\n")
+				genValList(f, "Params", "VarParam", fn.Params)
+				genValList(f, "Returns", "VarReturn", fn.Returns)
+				fmt.Fprintf(f, "Eval: funcs.%v,\n", fn.Name)
+				fmt.Fprintf(f, "},\n") // End Func
 			}
+			fmt.Fprintf(f, "},\n") // End Funcs
+			fmt.Fprintf(f, "}")    // End Op
 		}
 		fmt.Fprintf(f, ")\n")
 	}
 }
 
 func genVols(vols []zc.VolDef) {
+	if err := os.MkdirAll(VolDir, 0755); err != nil {
+		log.Fatalf("unable to make directory: %v: %v", VolDir, err)
+	}
 	for _, vol := range vols {
 		f, err := os.Create(path.Join(VolDir, fileNameFor(vol.Name)+"_vol.go"))
 		if err != nil {
@@ -133,35 +121,17 @@ func genVols(vols []zc.VolDef) {
 		fmt.Fprintf(f, "import (\n")
 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6\"\n")
 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/app/ops\"\n")
-		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/app/types\"\n")
 		fmt.Fprintf(f, ")\n")
 
 		fmt.Fprintf(f, "var %v = zc.Vol{\n", vol.Ident)
 		fmt.Fprintf(f, "Name: \"%v\",\n", vol.Name)
-		if len(vol.Types) > 0 {
-			fmt.Fprintf(f, "Types: []zc.Type{\n")
-			for _, t := range vol.Types {
-				fmt.Fprintf(f, "zc.%v,\n", typeNameFor(t))
-			}
-			fmt.Fprintf(f, "},\n")
-		}
 		if len(vol.Ops) > 0 {
 			fmt.Fprintf(f, "Ops: []zc.Op{\n")
 			for _, o := range vol.Ops {
-				if !hasFuncImpl(o) {
-					continue
-				}
 				if o.Macro != "" {
 					continue
 				}
-				for i, fn := range o.Funcs {
-					if i > 0 && fn.Name == "" {
-						continue
-					}
-					if fn.Ident != "" {
-						fmt.Fprintf(f, "ops.%v,\n", fn.Ident)
-					}
-				}
+				fmt.Fprintf(f, "ops.%v,\n", o.Ident)
 			}
 			fmt.Fprintf(f, "},\n")
 			fmt.Fprintf(f, "Macros: []zc.Macro{\n")
@@ -179,344 +149,344 @@ func genVols(vols []zc.VolDef) {
 	}
 }
 
-func genTests(vols []zc.VolDef) {
-	for _, vol := range vols {
-		if len(vol.Ops) == 0 {
-			continue
-		}
-		f, err := os.Create(path.Join(TestDir, fileNameFor(vol.Name)+"_test.go"))
-		if err != nil {
-			log.Panic(err)
-		}
-		defer f.Close()
+// func genTests(vols []zc.VolDef) {
+// 	for _, vol := range vols {
+// 		if len(vol.Ops) == 0 {
+// 			continue
+// 		}
+// 		f, err := os.Create(path.Join(TestDir, fileNameFor(vol.Name)+"_test.go"))
+// 		if err != nil {
+// 			log.Panic(err)
+// 		}
+// 		defer f.Close()
 
-		fmt.Fprintf(f, "package doc_tests\n\n")
-		fmt.Fprintf(f, "// Code generated by 'gen-ops'; DO NOT EDIT.\n\n")
-		fmt.Fprintf(f, "import (\n")
-		fmt.Fprintf(f, "\"testing\"\n")
-		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6\"\n")
-		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/app\"\n")
-		fmt.Fprintf(f, ")\n")
+// 		fmt.Fprintf(f, "package doc_tests\n\n")
+// 		fmt.Fprintf(f, "// Code generated by 'gen-ops'; DO NOT EDIT.\n\n")
+// 		fmt.Fprintf(f, "import (\n")
+// 		fmt.Fprintf(f, "\"testing\"\n")
+// 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6\"\n")
+// 		fmt.Fprintf(f, "\"github.com/blackchip-org/zc/v6/app\"\n")
+// 		fmt.Fprintf(f, ")\n")
 
-		for _, op := range vol.Ops {
-			if len(op.Example) > 0 {
-				genTest(f, vol.Ident+"_"+op.Ident, op.Example)
-			}
-			for _, test := range op.Tests {
-				genTest(f, vol.Ident+"_"+op.Ident+"_"+test.Name, test.Test)
-			}
-		}
-	}
-}
+// 		for _, op := range vol.Ops {
+// 			if len(op.Example) > 0 {
+// 				genTest(f, vol.Ident+"_"+op.Ident, op.Example)
+// 			}
+// 			for _, test := range op.Tests {
+// 				genTest(f, vol.Ident+"_"+op.Ident+"_"+test.Name, test.Test)
+// 			}
+// 		}
+// 	}
+// }
 
-func genTest(f *os.File, name string, test []zc.Expect) {
-	fmt.Fprintf(f, "func TestOpDocs_%v(t *testing.T) {\n", name)
-	fmt.Fprintf(f, "c := app.NewCalcTester(t)\n")
-	for _, e := range test {
-		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
-		if e.Error != "" {
-			fmt.Fprintf(f, "c.AssertError(\"%v\")\n", e.Error)
-		} else if e.Info != "" {
-			fmt.Fprintf(f, "c.AssertInfo(\"%v\")\n", e.Info)
-		} else {
-			fmt.Fprintf(f, "c.AssertStack(")
-			for i, out := range e.Output {
-				fmt.Fprintf(f, "\"%v\"", out)
-				if i < len(e.Output)-1 {
-					fmt.Fprintf(f, ", ")
-				}
-			}
-			fmt.Fprintf(f, ")\n")
-		}
-	}
-	fmt.Fprintf(f, "}\n\n")
-}
+// func genTest(f *os.File, name string, test []zc.Expect) {
+// 	fmt.Fprintf(f, "func TestOpDocs_%v(t *testing.T) {\n", name)
+// 	fmt.Fprintf(f, "c := app.NewCalcTester(t)\n")
+// 	for _, e := range test {
+// 		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
+// 		if e.Error != "" {
+// 			fmt.Fprintf(f, "c.AssertError(\"%v\")\n", e.Error)
+// 		} else if e.Info != "" {
+// 			fmt.Fprintf(f, "c.AssertInfo(\"%v\")\n", e.Info)
+// 		} else {
+// 			fmt.Fprintf(f, "c.AssertStack(")
+// 			for i, out := range e.Output {
+// 				fmt.Fprintf(f, "\"%v\"", out)
+// 				if i < len(e.Output)-1 {
+// 					fmt.Fprintf(f, ", ")
+// 				}
+// 			}
+// 			fmt.Fprintf(f, ")\n")
+// 		}
+// 	}
+// 	fmt.Fprintf(f, "}\n\n")
+// }
 
-func genOpDocs(vols []zc.VolDef) {
-	for _, vol := range vols {
-		name := strings.ReplaceAll(vol.Name, "/", "_") + ".md"
-		f, err := os.Create(path.Join(DocDir, "ops", name))
-		if err != nil {
-			log.Panic(err)
-		}
+// func genOpDocs(vols []zc.VolDef) {
+// 	for _, vol := range vols {
+// 		name := strings.ReplaceAll(vol.Name, "/", "_") + ".md"
+// 		f, err := os.Create(path.Join(DocDir, "ops", name))
+// 		if err != nil {
+// 			log.Panic(err)
+// 		}
 
-		fmt.Fprintf(f, "<!-- Document generated by \"gen-ops\"; DO NOT EDIT. -->\n")
-		fmt.Fprintf(f, "\n")
-		fmt.Fprintf(f, "# %v\n\n", vol.Name)
-		fmt.Fprintf(f, "%v\n\n", vol.Title)
-		if vol.Overview != "" {
-			fmt.Fprintf(f, "## Overview\n\n")
-			fmt.Fprintf(f, vol.Overview)
-			fmt.Fprintf(f, "\n")
-		}
+// 		fmt.Fprintf(f, "<!-- Document generated by \"gen-ops\"; DO NOT EDIT. -->\n")
+// 		fmt.Fprintf(f, "\n")
+// 		fmt.Fprintf(f, "# %v\n\n", vol.Name)
+// 		fmt.Fprintf(f, "%v\n\n", vol.Title)
+// 		if vol.Overview != "" {
+// 			fmt.Fprintf(f, "## Overview\n\n")
+// 			fmt.Fprintf(f, vol.Overview)
+// 			fmt.Fprintf(f, "\n")
+// 		}
 
-		fmt.Fprintf(f, "## Index\n\n")
+// 		fmt.Fprintf(f, "## Index\n\n")
 
-		tab := pretty.NewMarkdownTable(2)
-		tab.Heading("Operation", "Description")
+// 		tab := pretty.NewMarkdownTable(2)
+// 		tab.Heading("Operation", "Description")
 
-		for _, op := range vol.Ops {
-			var names []string
-			if op.Overloads != "" {
-				names = append(names, op.Overloads)
-			}
-			names = append(names, op.Name)
-			names = append(names, op.Aliases...)
+// 		for _, op := range vol.Ops {
+// 			var names []string
+// 			if op.Overloads != "" {
+// 				names = append(names, op.Overloads)
+// 			}
+// 			names = append(names, op.Name)
+// 			names = append(names, op.Aliases...)
 
-			fmtNames := strings.Join(names, ", ")
-			entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
-			tab.Row(entry, op.Title)
-		}
-		fmt.Fprint(f, tab.Format())
-		fmt.Fprintln(f)
+// 			fmtNames := strings.Join(names, ", ")
+// 			entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
+// 			tab.Row(entry, op.Title)
+// 		}
+// 		fmt.Fprint(f, tab.Format())
+// 		fmt.Fprintln(f)
 
-		// Find related volumes
-		var rels []zc.VolDef
-		for _, vol2 := range vols {
-			idx := strings.Index(vol2.Name, "/")
-			if idx >= 0 {
-				parent := vol2.Name[:idx]
-				if parent == vol.Name {
-					rels = append(rels, vol2)
-				}
-			}
-		}
+// 		// Find related volumes
+// 		var rels []zc.VolDef
+// 		for _, vol2 := range vols {
+// 			idx := strings.Index(vol2.Name, "/")
+// 			if idx >= 0 {
+// 				parent := vol2.Name[:idx]
+// 				if parent == vol.Name {
+// 					rels = append(rels, vol2)
+// 				}
+// 			}
+// 		}
 
-		if len(rels) > 0 {
-			slices.SortFunc(rels, func(a, b zc.VolDef) int {
-				return cmp.Compare(a.Name, b.Name)
-			})
-			fmt.Fprintf(f, "## Related Volumes\n\n")
-			for _, r := range rels {
-				fmt.Fprintf(f, "- [%v](%v.md)\n", r.Name, fileNameFor(r.Name))
-			}
-			fmt.Fprintf(f, "\n")
-		}
+// 		if len(rels) > 0 {
+// 			slices.SortFunc(rels, func(a, b zc.VolDef) int {
+// 				return cmp.Compare(a.Name, b.Name)
+// 			})
+// 			fmt.Fprintf(f, "## Related Volumes\n\n")
+// 			for _, r := range rels {
+// 				fmt.Fprintf(f, "- [%v](%v.md)\n", r.Name, fileNameFor(r.Name))
+// 			}
+// 			fmt.Fprintf(f, "\n")
+// 		}
 
-		fmt.Fprintf(f, "\n## Operations\n")
+// 		fmt.Fprintf(f, "\n## Operations\n")
 
-		for _, op := range vol.Ops {
-			genOpDoc(f, op)
-		}
-	}
-}
+// 		for _, op := range vol.Ops {
+// 			genOpDoc(f, op)
+// 		}
+// 	}
+// }
 
-func genOpDoc(f *os.File, op zc.OpDef) {
-	fmt.Fprintf(f, "\n### %v\n\n", op.Name)
-	fmt.Fprintf(f, "%v\n\n", op.Desc)
+// func genOpDoc(f *os.File, op zc.OpDef) {
+// 	fmt.Fprintf(f, "\n### %v\n\n", op.Name)
+// 	fmt.Fprintf(f, "%v\n\n", op.Desc)
 
-	if op.Overloads != "" {
-		fmt.Fprintf(f, "Overloads: `%v`\n\n", op.Overloads)
-	}
-	if len(op.Aliases) > 0 {
-		if len(op.Aliases) == 1 {
-			fmt.Fprintf(f, "Alias: ")
-		} else {
-			fmt.Fprintf(f, "Aliases: ")
-		}
-		var fmtAliases []string
-		for _, a := range op.Aliases {
-			fmtAliases = append(fmtAliases, fmt.Sprintf("`%v`", a))
-		}
-		fmt.Fprintf(f, "%v\n\n", strings.Join(fmtAliases, ", "))
-	}
+// 	if op.Overloads != "" {
+// 		fmt.Fprintf(f, "Overloads: `%v`\n\n", op.Overloads)
+// 	}
+// 	if len(op.Aliases) > 0 {
+// 		if len(op.Aliases) == 1 {
+// 			fmt.Fprintf(f, "Alias: ")
+// 		} else {
+// 			fmt.Fprintf(f, "Aliases: ")
+// 		}
+// 		var fmtAliases []string
+// 		for _, a := range op.Aliases {
+// 			fmtAliases = append(fmtAliases, fmt.Sprintf("`%v`", a))
+// 		}
+// 		fmt.Fprintf(f, "%v\n\n", strings.Join(fmtAliases, ", "))
+// 	}
 
-	if len(op.Funcs) > 0 {
-		fmt.Fprintf(f, "Stack effects:\n```\n")
-		for _, fn := range op.Funcs {
-			fmt.Fprintf(f, "( ")
-			fmt.Fprintf(f, "%v -- ", strings.Join(fn.Params, " "))
-			fmt.Fprintf(f, "%v )\n", strings.Join(fn.Returns, " "))
-		}
-		fmt.Fprintf(f, "```\n")
-		fmt.Fprintln(f, "")
-	}
-	if op.Macro != "" {
-		fmt.Fprintf(f, "Macro definition:\n")
-		fmt.Fprintf(f, "```\n")
-		fmt.Fprintf(f, "def %v %v\n", op.Name, op.Macro)
-		fmt.Fprintf(f, "```\n")
-		fmt.Fprintln(f, "")
-	}
+// 	if len(op.Funcs) > 0 {
+// 		fmt.Fprintf(f, "Stack effects:\n```\n")
+// 		for _, fn := range op.Funcs {
+// 			fmt.Fprintf(f, "( ")
+// 			fmt.Fprintf(f, "%v -- ", strings.Join(fn.Params, " "))
+// 			fmt.Fprintf(f, "%v )\n", strings.Join(fn.Returns, " "))
+// 		}
+// 		fmt.Fprintf(f, "```\n")
+// 		fmt.Fprintln(f, "")
+// 	}
+// 	if op.Macro != "" {
+// 		fmt.Fprintf(f, "Macro definition:\n")
+// 		fmt.Fprintf(f, "```\n")
+// 		fmt.Fprintf(f, "def %v %v\n", op.Name, op.Macro)
+// 		fmt.Fprintf(f, "```\n")
+// 		fmt.Fprintln(f, "")
+// 	}
 
-	if len(op.Example) > 0 {
-		fmt.Fprintf(f, "Example:\n\n")
-		genOpExample(f, op.Example)
-	}
-}
+// 	if len(op.Example) > 0 {
+// 		fmt.Fprintf(f, "Example:\n\n")
+// 		genOpExample(f, op.Example)
+// 	}
+// }
 
-func genOpExample(f *os.File, expected []zc.Expect) {
-	tab := pretty.NewMarkdownTable(2)
-	tab.Heading("Input", "Stack")
-	for _, ex := range expected {
-		i := "`" + ex.Input + "`"
-		if ex.Info != "" {
-			tab.Row(i, "*"+ex.Info+"*")
-		} else if ex.Error != "" {
-			tab.Row(i, "_"+ex.Error+"_")
-		} else if len(ex.Output) == 0 {
-			tab.Row(i, "")
-		} else {
-			o := strings.Join(ex.Output, " \\| ")
-			tab.Row(i, "`"+o+"`")
-		}
-	}
-	fmt.Fprint(f, tab.Format())
-}
+// func genOpExample(f *os.File, expected []zc.Expect) {
+// 	tab := pretty.NewMarkdownTable(2)
+// 	tab.Heading("Input", "Stack")
+// 	for _, ex := range expected {
+// 		i := "`" + ex.Input + "`"
+// 		if ex.Info != "" {
+// 			tab.Row(i, "*"+ex.Info+"*")
+// 		} else if ex.Error != "" {
+// 			tab.Row(i, "_"+ex.Error+"_")
+// 		} else if len(ex.Output) == 0 {
+// 			tab.Row(i, "")
+// 		} else {
+// 			o := strings.Join(ex.Output, " \\| ")
+// 			tab.Row(i, "`"+o+"`")
+// 		}
+// 	}
+// 	fmt.Fprint(f, tab.Format())
+// }
 
-type entry struct {
-	name   string
-	anchor string
-	title  string
-}
+// type entry struct {
+// 	name   string
+// 	anchor string
+// 	title  string
+// }
 
-var entrySort = func(a, b entry) int {
-	return cmp.Compare(a.name, b.name)
-}
+// var entrySort = func(a, b entry) int {
+// 	return cmp.Compare(a.name, b.name)
+// }
 
-func genIndex(vols []zc.VolDef) {
-	f, err := os.Create(path.Join(DocDir, "index.md"))
-	if err != nil {
-		log.Panic(err)
-	}
-	defer f.Close()
+// func genIndex(vols []zc.VolDef) {
+// 	f, err := os.Create(path.Join(DocDir, "index.md"))
+// 	if err != nil {
+// 		log.Panic(err)
+// 	}
+// 	defer f.Close()
 
-	var entries []entry
-	names := make(map[string]struct{})
-	overloads := make(map[string]struct{})
-	subs := make(map[string][]entry)
+// 	var entries []entry
+// 	names := make(map[string]struct{})
+// 	overloads := make(map[string]struct{})
+// 	subs := make(map[string][]entry)
 
-	for _, vol := range vols {
-		for _, op := range vol.Ops {
-			names[op.Name] = struct{}{}
-			if op.Overloads != "" {
-				overloads[op.Overloads] = struct{}{}
-			}
-			slash := strings.Index(op.Name, "/")
-			if slash != -1 {
-				prefix := op.Name[:slash]
-				title := vol.Subtitle
-				if title == "" {
-					title = op.Title
-				}
-				e := entry{
-					name:   op.Name,
-					anchor: opsAnchor(vol, op),
-					title:  title,
-				}
-				entries := subs[prefix]
-				entries = append(entries, e)
-				subs[prefix] = entries
-				continue
-			}
-			e := entry{
-				name:   op.Name,
-				anchor: opsAnchor(vol, op),
-				title:  op.Title,
-			}
-			entries = append(entries, e)
-			for _, a := range op.Aliases {
-				e2 := entry{
-					name:   a,
-					anchor: opsAnchor(vol, op),
-					title:  fmt.Sprintf("Alias for [%v](%v)", e.name, e.anchor),
-				}
-				entries = append(entries, e2)
-			}
-		}
-	}
+// 	for _, vol := range vols {
+// 		for _, op := range vol.Ops {
+// 			names[op.Name] = struct{}{}
+// 			if op.Overloads != "" {
+// 				overloads[op.Overloads] = struct{}{}
+// 			}
+// 			slash := strings.Index(op.Name, "/")
+// 			if slash != -1 {
+// 				prefix := op.Name[:slash]
+// 				title := vol.Subtitle
+// 				if title == "" {
+// 					title = op.Title
+// 				}
+// 				e := entry{
+// 					name:   op.Name,
+// 					anchor: opsAnchor(vol, op),
+// 					title:  title,
+// 				}
+// 				entries := subs[prefix]
+// 				entries = append(entries, e)
+// 				subs[prefix] = entries
+// 				continue
+// 			}
+// 			e := entry{
+// 				name:   op.Name,
+// 				anchor: opsAnchor(vol, op),
+// 				title:  op.Title,
+// 			}
+// 			entries = append(entries, e)
+// 			for _, a := range op.Aliases {
+// 				e2 := entry{
+// 					name:   a,
+// 					anchor: opsAnchor(vol, op),
+// 					title:  fmt.Sprintf("Alias for [%v](%v)", e.name, e.anchor),
+// 				}
+// 				entries = append(entries, e2)
+// 			}
+// 		}
+// 	}
 
-	// Find operations that overload but don't yet have an entry for the
-	// overloaded operation.
-	for ov := range overloads {
-		if _, ok := names[ov]; !ok {
-			e := entry{
-				name: ov,
-			}
-			entries = append(entries, e)
-		}
-	}
+// 	// Find operations that overload but don't yet have an entry for the
+// 	// overloaded operation.
+// 	for ov := range overloads {
+// 		if _, ok := names[ov]; !ok {
+// 			e := entry{
+// 				name: ov,
+// 			}
+// 			entries = append(entries, e)
+// 		}
+// 	}
 
-	slices.SortStableFunc(entries, entrySort)
+// 	slices.SortStableFunc(entries, entrySort)
 
-	fmt.Fprintf(f, "<!-- Document generated by \"gen-ops\"; DO NOT EDIT. -->\n")
-	fmt.Fprintf(f, "\n")
-	fmt.Fprintf(f, "# Index\n\n")
+// 	fmt.Fprintf(f, "<!-- Document generated by \"gen-ops\"; DO NOT EDIT. -->\n")
+// 	fmt.Fprintf(f, "\n")
+// 	fmt.Fprintf(f, "# Index\n\n")
 
-	section := rune(0)
-	for _, e := range entries {
-		ch, _ := utf8.DecodeRuneInString(e.name)
-		if ch != section && unicode.IsLetter(ch) {
-			section = ch
-			fmt.Fprintf(f, "\n## %c\n", ch)
-		}
+// 	section := rune(0)
+// 	for _, e := range entries {
+// 		ch, _ := utf8.DecodeRuneInString(e.name)
+// 		if ch != section && unicode.IsLetter(ch) {
+// 			section = ch
+// 			fmt.Fprintf(f, "\n## %c\n", ch)
+// 		}
 
-		if e.title != "" {
-			fmt.Fprintf(f, "- [`%v`](%v): %v\n", e.name, e.anchor, e.title)
-		} else {
-			fmt.Fprintf(f, "- `%v`\n", e.name)
-		}
-		entries, ok := subs[e.name]
-		if ok {
-			slices.SortStableFunc(entries, entrySort)
-			for _, e := range entries {
-				fmt.Fprintf(f, "  - [`%v`](%v): %v\n", e.name, e.anchor, e.title)
-			}
-		}
-	}
-}
+// 		if e.title != "" {
+// 			fmt.Fprintf(f, "- [`%v`](%v): %v\n", e.name, e.anchor, e.title)
+// 		} else {
+// 			fmt.Fprintf(f, "- `%v`\n", e.name)
+// 		}
+// 		entries, ok := subs[e.name]
+// 		if ok {
+// 			slices.SortStableFunc(entries, entrySort)
+// 			for _, e := range entries {
+// 				fmt.Fprintf(f, "  - [`%v`](%v): %v\n", e.name, e.anchor, e.title)
+// 			}
+// 		}
+// 	}
+// }
 
-func genOpRef(vols []zc.VolDef) {
-	f, err := os.Create(path.Join(DocDir, "ops.md"))
-	if err != nil {
-		log.Panic(err)
-	}
-	defer f.Close()
+// func genOpRef(vols []zc.VolDef) {
+// 	f, err := os.Create(path.Join(DocDir, "ops.md"))
+// 	if err != nil {
+// 		log.Panic(err)
+// 	}
+// 	defer f.Close()
 
-	refs := make(map[string][]zc.VolDef)
-	for id := range zc.Categories {
-		refs[id] = make([]zc.VolDef, 0)
-	}
+// 	refs := make(map[string][]zc.VolDef)
+// 	for id := range zc.Categories {
+// 		refs[id] = make([]zc.VolDef, 0)
+// 	}
 
-	for _, vol := range vols {
-		if vol.Category == "" {
-			continue
-		}
-		if vol.Subtitle != "" {
-			continue
-		}
-		ref, ok := refs[vol.Category]
-		if !ok {
-			panic(fmt.Errorf("invalid category %v in volume %v", vol.Category, vol.Name))
-		}
-		ref = append(ref, vol)
-		refs[vol.Category] = ref
-	}
+// 	for _, vol := range vols {
+// 		if vol.Category == "" {
+// 			continue
+// 		}
+// 		if vol.Subtitle != "" {
+// 			continue
+// 		}
+// 		ref, ok := refs[vol.Category]
+// 		if !ok {
+// 			panic(fmt.Errorf("invalid category %v in volume %v", vol.Category, vol.Name))
+// 		}
+// 		ref = append(ref, vol)
+// 		refs[vol.Category] = ref
+// 	}
 
-	cats := maps.Values(zc.Categories)
-	slices.SortFunc(cats, func(a, b zc.Category) int {
-		return cmp.Compare(a.Order, b.Order)
-	})
+// 	cats := maps.Values(zc.Categories)
+// 	slices.SortFunc(cats, func(a, b zc.Category) int {
+// 		return cmp.Compare(a.Order, b.Order)
+// 	})
 
-	fmt.Fprintf(f, "<!-- Document generated by \"gen-ops\"; DO NOT EDIT. -->\n")
-	fmt.Fprintf(f, "\n")
-	fmt.Fprintf(f, "# Operation Reference\n\n")
+// 	fmt.Fprintf(f, "<!-- Document generated by \"gen-ops\"; DO NOT EDIT. -->\n")
+// 	fmt.Fprintf(f, "\n")
+// 	fmt.Fprintf(f, "# Operation Reference\n\n")
 
-	for _, cat := range cats {
-		fmt.Fprintf(f, "\n## %v\n", cat.Title)
-		tab := pretty.NewMarkdownTable(2)
-		tab.Heading("Volume", "Description")
-		vols := refs[cat.ID]
-		slices.SortFunc(vols, func(a, b zc.VolDef) int {
-			return cmp.Compare(a.Name, b.Name)
-		})
-		for _, vol := range vols {
-			name := fmt.Sprintf("[%v](ops/%v.md)", vol.Name, vol.Name)
-			tab.Row(name, vol.Title)
-		}
-		fmt.Fprintf(f, "%v\n\n", tab.Format())
-	}
-}
+// 	for _, cat := range cats {
+// 		fmt.Fprintf(f, "\n## %v\n", cat.Title)
+// 		tab := pretty.NewMarkdownTable(2)
+// 		tab.Heading("Volume", "Description")
+// 		vols := refs[cat.ID]
+// 		slices.SortFunc(vols, func(a, b zc.VolDef) int {
+// 			return cmp.Compare(a.Name, b.Name)
+// 		})
+// 		for _, vol := range vols {
+// 			name := fmt.Sprintf("[%v](ops/%v.md)", vol.Name, vol.Name)
+// 			tab.Row(name, vol.Title)
+// 		}
+// 		fmt.Fprintf(f, "%v\n\n", tab.Format())
+// 	}
+// }
 
 func parseValDoc(v string) ValDef {
 	s := scan.NewScannerFromString("", v)
@@ -555,17 +525,6 @@ func genValList(f *os.File, name string, varName string, vals []string) {
 	}
 }
 
-func hasFuncImpl(op zc.OpDef) bool {
-	found := false
-	for _, fn := range op.Funcs {
-		if fn.Name != "" {
-			found = true
-			break
-		}
-	}
-	return found
-}
-
 func fileNameFor(p string) string {
 	return strings.ReplaceAll(p, "/", "_")
 }
@@ -578,16 +537,16 @@ func typeNameFor(p string) string {
 	return n
 }
 
-func opsAnchor(vol zc.VolDef, op zc.OpDef) string {
-	name := anchor(op.Name)
-	return fmt.Sprintf("ops/%v.md#%v", fileNameFor(vol.Name), name)
-}
+// func opsAnchor(vol zc.VolDef, op zc.OpDef) string {
+// 	name := anchor(op.Name)
+// 	return fmt.Sprintf("ops/%v.md#%v", fileNameFor(vol.Name), name)
+// }
 
-func anchor(s string) string {
-	s = strings.ReplaceAll(s, ".", "")
-	s = strings.ReplaceAll(s, "?", "")
-	s = strings.ReplaceAll(s, "/", "")
-	s = strings.ReplaceAll(s, "=", "")
+// func anchor(s string) string {
+// 	s = strings.ReplaceAll(s, ".", "")
+// 	s = strings.ReplaceAll(s, "?", "")
+// 	s = strings.ReplaceAll(s, "/", "")
+// 	s = strings.ReplaceAll(s, "=", "")
 
-	return s
-}
+// 	return s
+// }

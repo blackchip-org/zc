@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"strings"
 	"unicode"
 
 	"github.com/blackchip-org/scan"
@@ -57,48 +58,31 @@ func ScanWords(line string) []scan.Token {
 	return runner.All()
 }
 
-func isDecoration(r rune) bool {
-	if r == ',' || r == '_' || r == ' ' {
+func isFormatting(ch rune) bool {
+	if ch == ',' || ch == '_' || ch == ' ' {
 		return true
 	}
-	// Currency symbols
-	if unicode.Is(unicode.Sc, r) {
+	if unicode.Is(unicode.Sc, ch) {
 		return true
 	}
 	return false
 }
 
-func isAltExponent(s *scan.Scanner) bool {
-	return (s.This == 'x' || s.This == '×') && s.Next == '1' && s.Peek(2) == '0'
-}
-
-func PreParseNumber(str string) string {
-	s := scan.NewScannerFromString("", str)
-	for s.HasMore() {
-		switch {
-		case isDecoration(s.This):
-			s.Skip()
-		default:
-			s.Keep()
+func cleanNumber(str string) string {
+	var res strings.Builder
+	for _, ch := range str {
+		if !isFormatting(ch) {
+			res.WriteRune(ch)
 		}
 	}
-	return s.Emit().Val
+	return res.String()
 }
 
-func PreParseFloat(str string) string {
-	s := scan.NewScannerFromString("", str)
-	for s.HasMore() {
-		switch {
-		case isDecoration(s.This):
-			s.Skip()
-		case isAltExponent(s):
-			scan.Repeat(s.Skip, 3)
-			s.Val.WriteRune('e')
-		default:
-			s.Keep()
-		}
-	}
-	return s.Emit().Val
+func PreParseNumber(s string) string {
+	s = cleanNumber(s)
+	s = strings.Replace(s, "×10", "e", 1)
+	s = strings.Replace(s, "x10", "e", 1)
+	return s
 }
 
 func IsValuePrefix(ch rune, next rune) bool {

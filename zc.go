@@ -1,68 +1,72 @@
 package zc
 
 import (
+	"strings"
+
 	"github.com/blackchip-org/scan"
-	"github.com/blackchip-org/zc/v6/app/state"
 )
 
-const ProgName = "zc"
+type Type interface {
+	AppName() string
+	GoName() string
+	Parse(string) (any, bool)
+	Format(any) string
+}
 
 type Item struct {
-	Val   any
-	Repr  string
-	Unit  string
-	Label string
+	TypeVal any
+	Type    Type
+	val     string
+	Unit    string
+	Label   string
+}
+
+func (i Item) Val() string {
+	var str string
+	if i.val == "" {
+		str = i.Type.Format(i.TypeVal)
+	} else {
+		str = i.val
+	}
+	return str
 }
 
 func (i Item) String() string {
-	var label, val string
+	var s strings.Builder
+	s.WriteString(EscapeString(i.Val()))
+	s.WriteString(i.Unit)
 	if i.Label != "" {
-		label = " :" + i.Label
+		s.WriteString(" :")
+		s.WriteString(i.Label)
 	}
-	if i.Repr != "" {
-		val = i.Repr
-	} else {
-		val = Format(i.Val)
-	}
-	return val + i.Unit + label
+	return s.String()
 }
 
-type OpEnv struct {
-	*Stack[Item]
-	Op    Op
-	State state.State
-	Err   error
-	Info  string
-}
-
-func (e *OpEnv) PushVal(vals ...any) {
-	for _, val := range vals {
-		e.Push(Item{Val: val})
-	}
-}
-
-func (e *OpEnv) Label(l string) {
-	item := e.Stack.Pop()
-	item.Label = l
-	e.Stack.Push(item)
-}
-
-func (e *OpEnv) Unit(u string) {
-	item := e.Stack.Pop()
-	item.Unit = u
-	e.Stack.Push(item)
+type Calc interface {
+	Push(Item)
+	Pop() Item
+	Items() []Item
+	SetItems([]Item)
+	Len() int
+	String() string
+	State(string) (any, bool)
+	NewState(string, any)
+	Notify(string)
+	Raise(error)
 }
 
 type Op struct {
-	Name      string
-	Overloads string
-	Virtual   bool
+	Name  string
+	Funcs []Func
+	Macro []scan.Token
+}
+
+type Func struct {
 	Params    []Type
 	VarParam  Type
 	Returns   []Type
 	VarReturn Type
-	Func      func(*OpEnv)
-	Macro     []scan.Token
+	Eval      func(Calc)
 }
 
 type Macro struct {

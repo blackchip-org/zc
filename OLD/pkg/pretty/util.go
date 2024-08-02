@@ -1,11 +1,12 @@
 package pretty
 
 import (
-	"cmp"
 	"strings"
+
+	"golang.org/x/exp/constraints"
 )
 
-func Max[T cmp.Ordered](a T, b T) T {
+func Max[T constraints.Ordered](a T, b T) T {
 	if a > b {
 		return a
 	}

@@ -5,6 +5,7 @@ import (
 	"embed"
 	"fmt"
 	"io/fs"
+	"log"
 	"path"
 	"slices"
 	"strings"
@@ -58,7 +59,7 @@ func loadDef(dir string, f fs.DirEntry) (VolDef, error) {
 	def.Overview = string(data)
 
 	if def.Name == "" {
-		panic("no volume name in file: " + filename)
+		log.Panicf("no volume name in %v", filename)
 	}
 
 	if def.Ident == "" {
