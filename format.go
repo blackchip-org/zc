@@ -46,7 +46,7 @@ func EscapeString(str string) string {
 func FormatItems(items []Item) []string {
 	strs := make([]string, len(items))
 	for i, item := range items {
-		strs[i] = item.Val()
+		strs[i] = item.String()
 	}
 	return strs
 }

@@ -11,3 +11,9 @@
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`clear`](ops/stack.md#clear): Clear
+
+## l
+- [`label`](ops/anno.md#label): Attach label
+
+## u
+- [`unit`](ops/anno.md#unit): Attach unit

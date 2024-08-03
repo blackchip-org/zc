@@ -105,7 +105,7 @@ func genOps(vols []zc.VolDef) {
 				fmt.Fprintf(f, "},\n") // End Func
 			}
 			fmt.Fprintf(f, "},\n") // End Funcs
-			fmt.Fprintf(f, "}")    // End Op
+			fmt.Fprintf(f, "}\n")  // End Op
 		}
 		fmt.Fprintf(f, ")\n")
 	}

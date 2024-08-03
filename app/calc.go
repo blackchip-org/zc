@@ -6,12 +6,13 @@ import (
 )
 
 type Calc struct {
-	Catalog *zc.Catalog
-	Notice  string
-	Error   error
-	items   []zc.Item
-	pos     int
-	state   map[string]any
+	Catalog  *zc.Catalog
+	Notice   string
+	Error    error
+	Listener zc.Listener
+	items    []zc.Item
+	pos      int
+	state    map[string]any
 }
 
 func NewCalc() *Calc {
@@ -28,6 +29,9 @@ func (c *Calc) Push(item zc.Item) {
 	} else {
 		c.items = append(c.items, item)
 	}
+	if c.Listener != nil {
+		c.Listener(zc.NewStackEvent(c, "push"))
+	}
 	c.pos++
 }
 
@@ -36,6 +40,9 @@ func (c *Calc) Pop() zc.Item {
 		panic(zc.ErrStackEmpty)
 	}
 	c.pos--
+	if c.Listener != nil {
+		c.Listener(zc.NewStackEvent(c, "pop"))
+	}
 	return c.items[c.pos]
 }
 
@@ -121,7 +128,12 @@ func (c *Calc) evalName(name string) {
 		c.Raise(zc.ErrArgMismatch(name))
 		return
 	}
+
+	if c.Listener != nil {
+		c.Listener(zc.NewOpEvent(name))
+	}
 	fn.Eval(c)
+
 	if !c.isTypeMatch(fn.Returns, fn.VarReturn) {
 		panic("return mismatch: " + name)
 	}
