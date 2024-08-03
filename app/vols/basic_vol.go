@@ -11,6 +11,7 @@ var Basic = zc.Vol{
 	Name: "basic",
 	Ops: []zc.Op{
 		ops.Add,
+		ops.DivI,
 	},
 	Macros: []zc.Macro{
 		{Name: "a", Expr: "add"},

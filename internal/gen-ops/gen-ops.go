@@ -24,7 +24,7 @@ var typeMap map[string]string = map[string]string{
 	// zc.Complex.AppName(): "Complex",
 	// zc.Decimal.AppName(): "Decimal",
 	// zc.Float64.AppName(): "Float64",
-	// zc.Int.AppName():     "Int",
+	zc.Int.AppName(): "Int",
 	// zc.Int8.AppName():    "Int8",
 	// zc.Int32.AppName():   "Int32",
 	// zc.Int64.AppName():   "Int64",

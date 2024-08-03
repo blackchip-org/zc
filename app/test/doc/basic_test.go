@@ -14,3 +14,17 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 	c.Eval("c 6 2 a")
 	c.AssertStack("8")
 }
+
+func TestOpDocs_Basic_DivI(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 12 5 div/i")
+	c.AssertStack("2")
+}
+
+func TestOpDocs_Basic_DivI_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6 0 div/i")
+	c.AssertError("div/i: division by zero")
+}

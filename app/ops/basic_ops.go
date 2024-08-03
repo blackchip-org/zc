@@ -18,4 +18,14 @@ var (
 			},
 		},
 	}
+	DivI = zc.Op{
+		Name: "div/i",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.DivBigInt,
+			},
+		},
+	}
 )

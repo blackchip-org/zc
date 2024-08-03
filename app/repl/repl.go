@@ -84,7 +84,7 @@ func (r *Repl) ReadLine() (string, error) {
 }
 
 func (r *Repl) evalLine(toks []scan.Token) error {
-	r.Calc.Error = nil
+	r.Calc.Err = nil
 	for _, tok := range toks {
 		var mac []scan.Token
 		if tok.Type == zc.TokenName {
@@ -96,7 +96,7 @@ func (r *Repl) evalLine(toks []scan.Token) error {
 			r.Calc.EvalToken(tok)
 		}
 	}
-	return r.Calc.Error
+	return r.Calc.Err
 }
 
 func (r *Repl) Eval(line string) error {

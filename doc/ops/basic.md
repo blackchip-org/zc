@@ -6,9 +6,10 @@ Basic calculator
 
 ## Index
 
-| Operation           | Description
-|---------------------|------------
-| [`add, a, +`](#add) | Addition   
+| Operation           | Description     
+|---------------------|-----------------
+| [`add, a, +`](#add) | Addition        
+| [`div/i`](#divi)    | Integer Division
 
 
 ## Operations
@@ -29,3 +30,19 @@ Example:
 | Input     | Stack
 |-----------|------
 | `c 6 2 a` | `8`  
+
+### div/i
+
+Divides *x* by *y*. If *y* is zero, a 'division by zero'
+error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input          | Stack
+|----------------|------
+| `c 12 5 div/i` | `2`  

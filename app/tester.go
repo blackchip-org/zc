@@ -24,8 +24,8 @@ func (c *CalcTester) Eval(line string) {
 	c.t.Logf("%v> %v\n", zc.ProgName, line)
 	c.Calc.Eval(line)
 
-	if c.Calc.Error != nil {
-		c.t.Logf("(!) %v\n", c.Calc.Error)
+	if c.Calc.Err != nil {
+		c.t.Logf("(!) %v\n", c.Calc.Err)
 	}
 	if c.Calc.Notice != "" {
 		c.t.Logf("(?) %v", c.Calc.Notice)
@@ -40,7 +40,7 @@ func (c *CalcTester) AssertStack(vals ...any) {
 	fmtWant := zc.FormatList(zc.Strings(vals...))
 	fmtHave := c.Calc.String()
 
-	if c.Calc.Error != nil {
+	if c.Calc.Err != nil {
 		c.t.Fatalf("(FAIL) unexpected error")
 	}
 	if c.Calc.Notice != "" {
@@ -53,7 +53,7 @@ func (c *CalcTester) AssertStack(vals ...any) {
 
 func (c *CalcTester) AssertError(err string) {
 	c.t.Helper()
-	if c.Calc.Error == nil || c.Calc.Error.Error() != err {
+	if c.Calc.Err == nil || c.Calc.Err.Error() != err {
 		c.t.Fatalf("(FAIL) expected error: %v", err)
 	}
 }

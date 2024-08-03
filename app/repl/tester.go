@@ -33,8 +33,8 @@ func (r *ReplTester) Eval(line string) {
 	if r.Repl.Error() != nil {
 		r.t.Logf("(!) %v\n", r.Repl.Error())
 	}
-	if r.Calc.Error != nil {
-		r.t.Logf("(!) %v\n", r.Calc.Error)
+	if r.Calc.Err != nil {
+		r.t.Logf("(!) %v\n", r.Calc.Err)
 	}
 	if r.Calc.Notice != "" {
 		r.t.Logf("(?) %v", r.Calc.Notice)

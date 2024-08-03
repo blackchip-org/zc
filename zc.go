@@ -55,6 +55,8 @@ type Calc interface {
 	NewState(string, any)
 	Notify(string)
 	Raise(error)
+	Label(string)
+	Unit(string)
 }
 
 type Op struct {

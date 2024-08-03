@@ -8,7 +8,7 @@ import (
 type Calc struct {
 	Catalog  *zc.Catalog
 	Notice   string
-	Error    error
+	Err      error
 	Listener zc.Listener
 	items    []zc.Item
 	pos      int
@@ -77,25 +77,37 @@ func (c *Calc) Notify(msg string) {
 }
 
 func (c *Calc) Raise(err error) {
-	if c.Error == nil {
-		c.Error = err
+	if c.Err == nil {
+		c.Err = err
 	}
+}
+
+func (c *Calc) Label(label string) {
+	item := c.Pop()
+	item.Label = label
+	c.Push(item)
+}
+
+func (c *Calc) Unit(unit string) {
+	item := c.Pop()
+	item.Unit = unit
+	c.Push(item)
 }
 
 func (c *Calc) Eval(line string) error {
 	toks := zc.ScanWords(line)
 	for _, tok := range toks {
-		if c.Error != nil {
-			return c.Error
+		if c.Err != nil {
+			return c.Err
 		}
 		c.EvalToken(tok)
 	}
-	return c.Error
+	return c.Err
 }
 
 func (c *Calc) EvalToken(toks ...scan.Token) {
 	for _, tok := range toks {
-		if c.Error != nil {
+		if c.Err != nil {
 			return
 		}
 		switch tok.Type {
@@ -134,8 +146,12 @@ func (c *Calc) evalName(name string) {
 	}
 	fn.Eval(c)
 
-	if !c.isTypeMatch(fn.Returns, fn.VarReturn) {
-		panic("return mismatch: " + name)
+	if c.Err == nil {
+		if !c.isTypeMatch(fn.Returns, fn.VarReturn) {
+			panic("return mismatch: " + name)
+		}
+	} else {
+		c.Err = zc.ErrOp(name, c.Err)
 	}
 }
 

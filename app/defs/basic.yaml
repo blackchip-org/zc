@@ -15,3 +15,21 @@ ops:
   example:
   - i: c 6 2 a
     o: [8]
+
+- name: div/i
+  title: Integer Division
+  funcs:
+  - name: DivBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    Divides *x* by *y*. If *y* is zero, a 'division by zero'
+    error is raised.
+  example:
+  - i: c 12 5 div/i
+    o: [2]
+  tests:
+  - name: Zero
+    test:
+      - i: 6 0 div/i
+        error: "div/i: division by zero"

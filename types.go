@@ -3,11 +3,13 @@ package zc
 import (
 	"fmt"
 	"math/big"
+	"strconv"
 )
 
 var (
 	Any    = AnyType{}
 	BigInt = BigIntType{}
+	Int    = IntType{}
 	String = StringType{}
 )
 
@@ -78,6 +80,39 @@ func (t BigIntType) Parse(str string) (any, bool) {
 func (t BigIntType) Format(a any) string {
 	v := t.As(a)
 	return v.String()
+}
+
+// ----------------------------------------------------------------------------
+type IntType struct{}
+
+func (t IntType) AppName() string { return "Int/s" }
+func (t IntType) GoName() string  { return "int" }
+
+func (t IntType) As(a any) int {
+	v, ok := a.(int)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t IntType) Push(c Calc, val int) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t IntType) Pop(c Calc) int {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t IntType) Parse(str string) (any, bool) {
+	str = PreParseNumber(str)
+	i64, err := strconv.ParseInt(str, 0, 0)
+	return int(i64), err == nil
+}
+
+func (t IntType) Format(a any) string {
+	v := t.As(a)
+	return strconv.FormatInt(int64(v), 10)
 }
 
 // ----------------------------------------------------------------------------
