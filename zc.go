@@ -6,6 +6,8 @@ import (
 	"github.com/blackchip-org/scan"
 )
 
+const ProgName = "zc"
+
 type Type interface {
 	AppName() string
 	GoName() string

@@ -37,14 +37,14 @@ func (c *Catalog) AddMacro(name string, mac string) {
 	c.ops[name] = op
 }
 
-// func (c *Catalog) AddVol(vols ...Vol) {
-// 	for _, vol := range vols {
-// 		c.AddOp(vol.Ops...)
-// 		for _, mac := range vol.Macros {
-
-// 		}
-// 	}
-// }
+func (c *Catalog) AddVol(vols ...Vol) {
+	for _, vol := range vols {
+		c.AddOp(vol.Ops...)
+		for _, mac := range vol.Macros {
+			c.AddMacro(mac.Name, mac.Expr)
+		}
+	}
+}
 
 func (c *Catalog) OpFor(name string) (Op, bool) {
 	op, ok := c.ops[name]

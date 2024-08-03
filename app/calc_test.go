@@ -7,7 +7,7 @@ import (
 )
 
 func TestStack(t *testing.T) {
-	c := NewCalc(nil)
+	c := NewCalc()
 	tests := []struct {
 		op    func()
 		stack string

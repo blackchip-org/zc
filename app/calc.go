@@ -14,10 +14,10 @@ type Calc struct {
 	state   map[string]any
 }
 
-func NewCalc(cat *zc.Catalog) *Calc {
+func NewCalc() *Calc {
 	c := &Calc{
 		state:   make(map[string]any),
-		Catalog: cat,
+		Catalog: mainCatalog,
 	}
 	return c
 }
@@ -107,23 +107,30 @@ func (c *Calc) evalValue(val string) {
 }
 
 func (c *Calc) evalName(name string) {
-	ops, ok := c.Catalog.OpFor(name)
+	op, ok := c.Catalog.OpFor(name)
 	if !ok {
 		c.Raise(zc.ErrNoSuchOp(name))
 		return
 	}
-	fn, ok := c.ResolveOp(ops)
+	if len(op.Macro) > 0 {
+		c.EvalToken(op.Macro...)
+		return
+	}
+	fn, ok := c.ResolveOp(op)
 	if !ok {
 		c.Raise(zc.ErrArgMismatch(name))
 		return
 	}
 	fn.Eval(c)
+	if !c.isTypeMatch(fn.Returns, fn.VarReturn) {
+		panic("return mismatch: " + name)
+	}
 }
 
 func (c *Calc) ResolveOp(op zc.Op) (zc.Func, bool) {
 	for _, fn := range op.Funcs {
 		if c.isTypeMatch(fn.Params, fn.VarParam) {
-			c.convert(fn.Params)
+			c.convert(fn.Params, fn.VarParam)
 			return fn, true
 		}
 	}
@@ -171,6 +178,13 @@ func (c *Calc) convertArg(index int, param zc.Type) {
 	c.items[c.pos-index-1] = zc.Item{TypeVal: conv, Type: param}
 }
 
-func (c *Calc) convert(def []zc.Type) bool {
-
+func (c *Calc) convert(params []zc.Type, varParam zc.Type) {
+	for i, param := range params {
+		c.convertArg(i, param)
+	}
+	if varParam != nil {
+		for i := len(params); i < c.pos; i++ {
+			c.convertArg(i, varParam)
+		}
+	}
 }

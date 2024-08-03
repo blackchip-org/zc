@@ -1,0 +1,18 @@
+name: stack
+title: Stack operations
+category: calc
+
+ops:
+- name: clear
+  aliases: [c]
+  title: Clear
+  funcs:
+  - name: Clear
+    params: [Any*]
+  desc: |-
+    Clears all items from the stack.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: c
+    o: []

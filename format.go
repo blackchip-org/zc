@@ -90,3 +90,11 @@ func Quote(str string) string {
 	}
 	return quote + s.Emit().Val + quote
 }
+
+func Strings(xs ...any) []string {
+	strs := make([]string, len(xs))
+	for i, x := range xs {
+		strs[i] = fmt.Sprint(x)
+	}
+	return strs
+}

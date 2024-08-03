@@ -1,10 +1,12 @@
 package zc
 
 import (
+	"fmt"
 	"math/big"
 )
 
 var (
+	Any    = AnyType{}
 	BigInt = BigIntType{}
 	String = StringType{}
 )
@@ -16,6 +18,21 @@ var (
 	//ratPool  = newPool[big.Rat](poolSize)
 )
 
+// ----------------------------------------------------------------------------
+type AnyType struct{}
+
+func (t AnyType) AppName() string { return "Any" }
+func (t AnyType) GoName() string  { return "any" }
+
+func (t AnyType) Parse(str string) (any, bool) {
+	return str, true
+}
+
+func (t AnyType) Format(a any) string {
+	return fmt.Sprint(a)
+}
+
+// ----------------------------------------------------------------------------
 type BigIntType struct{}
 
 func (t BigIntType) AppName() string { return "Int" }
@@ -63,6 +80,7 @@ func (t BigIntType) Format(a any) string {
 	return v.String()
 }
 
+// ----------------------------------------------------------------------------
 type StringType struct{}
 
 func (t StringType) AppName() string { return "Text" }
