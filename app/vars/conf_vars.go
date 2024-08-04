@@ -12,6 +12,11 @@ import (
 const ConfID = "conf"
 
 const (
+	DefaultPrec         = 16
+	DefaultRoundingMode = big.ToNearestEven
+)
+
+const (
 	RoundingModeCeil     = "ceil"
 	RoundingModeDown     = "down"
 	RoundingModeFloor    = "floor"
@@ -68,12 +73,12 @@ func (d *Conf) SetRoundingMode(rm string) error {
 func ForConf(state coll.State) *Conf {
 	dv, ok := state.Var(ConfID)
 	if !ok {
-		context := apd.BaseContext.WithPrecision(16)
+		context := apd.BaseContext.WithPrecision(DefaultPrec)
 		dec := &Conf{
 			DecMath:      context,
-			RoundingMode: big.ToNearestEven,
+			RoundingMode: DefaultRoundingMode,
 		}
-		dec.DecMath.Rounding = DecRounder(dec.RoundingMode)
+		dec.DecMath.Rounding = DecRounder(DefaultRoundingMode)
 		state.NewVar(ConfID, dec)
 		dv = dec
 	}

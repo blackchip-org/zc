@@ -51,7 +51,7 @@ Example:
 
 ### div
 
-Divides *x* by *y*. If *y* is zero, a 'division by zero' error is raised.
+Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
 
 Aliases: `d`, `/`
 
@@ -74,7 +74,7 @@ Example:
 ### div.mod
 
 The quotient *quo* and remainder *mod* when dividing *x* by *y* using
-Euclidean division.
+Euclidean division. If *y* is zero, a division by zero error is raised.
 
 Alias: `dm`
 
@@ -93,7 +93,7 @@ Example:
 ### div.rem
 
 The quotient *quo* and remainder *rem* when dividing *x* by *y* using
-truncated division.
+truncated division. If *y* is zero, a division by zero error is raised.
 
 Alias: `dr`
 
@@ -113,7 +113,7 @@ Example:
 
 Divides *x* by *y* using
 [Euclidean division](https://en.wikipedia.org/wiki/Euclidean_division).
-If *y* is zero, a 'division by zero' error is raised.
+If *y* is zero, a division by zero error is raised.
 
 Stack effects:
 ```
@@ -128,7 +128,7 @@ Example:
 
 ### mod
 
-The modulus when *x* is divided by *y*. If *y* is zero, a 'division by zero'
+The modulus when *x* is divided by *y*. If *y* is zero, a division by zero
 error is raised.
 
 Stack effects:
@@ -188,7 +188,13 @@ Example:
 
 ### pow
 
-Raises *x* to the power of *y*.
+Raises *x* to the power of *y*. If *x* is negative and -1 < *y* < 1,
+an invalid operation error is raised. Certain values are errors when
+using a decimal number and are not when using an integer. For example:
+
+| *x* | *y* | Int | Decimal |
+| 0 | 0 | 1 | invalid operation |
+| 0 | -1 | 1 | infinity |
 
 Alias: `**`
 

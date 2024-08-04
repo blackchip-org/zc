@@ -18,4 +18,14 @@ var (
 			},
 		},
 	}
+	FactorialF = zc.Op{
+		Name: "factorial/f",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint},
+				Returns: []zc.Type{zc.BigFloat},
+				Eval:    funcs.FactBigFloat,
+			},
+		},
+	}
 )

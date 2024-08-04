@@ -44,7 +44,7 @@ ops:
     params: [x:Complex, y:Complex]
     returns: [Complex]
   desc: |-
-    Divides *x* by *y*. If *y* is zero, a 'division by zero' error is raised.
+    Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
   example:
   - i: c 12 4 d
     o: [3]
@@ -73,7 +73,7 @@ ops:
   desc: |-
     Divides *x* by *y* using
     [Euclidean division](https://en.wikipedia.org/wiki/Euclidean_division).
-    If *y* is zero, a 'division by zero' error is raised.
+    If *y* is zero, a division by zero error is raised.
   example:
   - i: -21 4 div/i
     o: [-6]
@@ -92,12 +92,17 @@ ops:
     returns: [quo:Int, mod:Int]
   desc: |-
     The quotient *quo* and remainder *mod* when dividing *x* by *y* using
-    Euclidean division.
+    Euclidean division. If *y* is zero, a division by zero error is raised.
   example:
   - i: c -21 4 div.mod
     o: ["-6 :quo", "3 :mod"]
   - i: c -21 4 div.rem
     o: ["-5 :quo", "-1 :rem"]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 div.mod
+      error: "div.mod: division by zero"
 
 - name: div.rem
   aliases: [dr]
@@ -108,12 +113,17 @@ ops:
     returns: [quo:Int, rem:Int]
   desc: |-
     The quotient *quo* and remainder *rem* when dividing *x* by *y* using
-    truncated division.
+    truncated division. If *y* is zero, a division by zero error is raised.
   example:
   - i: c -21 4 div.mod
     o: ["-6 :quo", "3 :mod"]
   - i: c -21 4 div.rem
     o: ["-5 :quo", "-1 :rem"]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 div.rem
+      error: "div.rem: division by zero"
 
 - name: mul
   title: Multiplication
@@ -149,7 +159,7 @@ ops:
     params: [x:Int, y:Int]
     returns: [Int]
   desc: |-
-    The modulus when *x* is divided by *y*. If *y* is zero, a 'division by zero'
+    The modulus when *x* is divided by *y*. If *y* is zero, a division by zero
     error is raised.
   example:
   - i: c -21 4 mod
@@ -204,7 +214,14 @@ ops:
   - name: PowComplex
     params: [x:Complex, y:Complex]
     returns: [Complex]
-  desc: Raises *x* to the power of *y*.
+  desc: |-
+    Raises *x* to the power of *y*. If *x* is negative and -1 < *y* < 1,
+    an invalid operation error is raised. Certain values are errors when
+    using a decimal number and are not when using an integer. For example:
+
+    | *x* | *y* | Int | Decimal |
+    | 0 | 0 | 1 | invalid operation |
+    | 0 | -1 | 1 | infinity |
   example:
   - i: c 6 2 pow
     o: [36]

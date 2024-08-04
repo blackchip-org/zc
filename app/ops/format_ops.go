@@ -27,9 +27,9 @@ var (
 		Name: "scientific.notation",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.SciDecimal,
+				Params:  []zc.Type{zc.BigFloat},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.SciBigFloat,
 			},
 		},
 	}

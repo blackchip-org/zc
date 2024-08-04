@@ -43,9 +43,9 @@ ops:
   aliases: [sci]
   title: Scientific Notation
   funcs:
-  - name: SciDecimal
-    params: [x:Dec]
-    returns: [x:Dec]
+  - name: SciBigFloat
+    params: [x:Float]
+    returns: [x:Text]
   desc: |-
     Formats *x* using scientific notation
   example:

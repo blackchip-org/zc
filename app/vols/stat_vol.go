@@ -11,8 +11,10 @@ var Stat = zc.Vol{
 	Name: "stat",
 	Ops: []zc.Op{
 		ops.Factorial,
+		ops.FactorialF,
 	},
 	Macros: []zc.Macro{
 		{Name: "fact", Expr: "factorial"},
+		{Name: "fact/f", Expr: "factorial/f"},
 	},
 }

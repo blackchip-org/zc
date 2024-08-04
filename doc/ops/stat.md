@@ -6,9 +6,10 @@ Statistical calculations
 
 ## Index
 
-| Operation                       | Description
-|---------------------------------|------------
-| [`factorial, fact`](#factorial) |            
+| Operation                            | Description
+|--------------------------------------|------------
+| [`factorial, fact`](#factorial)      | Factorial  
+| [`factorial/f, fact/f`](#factorialf) | Factorial  
 
 
 ## Operations
@@ -31,3 +32,22 @@ Example:
 |-------------|----------
 | `c 3 fact`  | `6`      
 | `c 10 fact` | `3628800`
+
+### factorial/f
+
+The product of all positive integers less than or equal to *n*. If *n* is
+negative, an invalid argument error is raised.
+
+Alias: `fact/f`
+
+Stack effects:
+```
+( x:Int/u -- Float )
+```
+
+Example:
+
+| Input         | Stack    
+|---------------|----------
+| `c 3 fact/f`  | `6`      
+| `c 10 fact/f` | `3628800`

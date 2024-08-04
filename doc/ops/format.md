@@ -48,7 +48,7 @@ Alias: `sci`
 
 Stack effects:
 ```
-( x:Dec -- x:Dec )
+( x:Float -- x:Text )
 ```
 
 Example:

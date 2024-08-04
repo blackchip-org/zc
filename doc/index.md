@@ -29,7 +29,8 @@
 
 ## f
 - [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
-- `factorial`
+- [`factorial`](ops/stat.md#factorial): Factorial
+  - [`factorial/f`](ops/stat.md#factorialf): Factorial
 
 ## l
 - [`label`](ops/anno.md#label): Attach label

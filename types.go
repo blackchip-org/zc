@@ -12,30 +12,32 @@ import (
 )
 
 var (
-	Any     = AnyType{}
-	BigInt  = BigIntType{}
-	Complex = ComplexType{}
-	Decimal = DecimalType{}
-	Float64 = Float64Type{}
-	Int     = IntType{}
-	Int8    = Int8Type{}
-	Int16   = Int16Type{}
-	Int32   = Int32Type{}
-	Int64   = Int64Type{}
-	Rat     = RatType{}
-	String  = StringType{}
-	Uint    = UintType{}
-	Uint8   = Uint8Type{}
-	Uint16  = Uint16Type{}
-	Uint32  = Uint32Type{}
-	Uint64  = Uint64Type{}
+	Any      = AnyType{}
+	BigFloat = BigFloatType{}
+	BigInt   = BigIntType{}
+	Complex  = ComplexType{}
+	Decimal  = DecimalType{}
+	Float64  = Float64Type{}
+	Int      = IntType{}
+	Int8     = Int8Type{}
+	Int16    = Int16Type{}
+	Int32    = Int32Type{}
+	Int64    = Int64Type{}
+	Rat      = RatType{}
+	String   = StringType{}
+	Uint     = UintType{}
+	Uint8    = Uint8Type{}
+	Uint16   = Uint16Type{}
+	Uint32   = Uint32Type{}
+	Uint64   = Uint64Type{}
 )
 
 var (
-	poolSize = 8
-	decPool  = coll.NewPool[apd.Decimal](poolSize)
-	intPool  = coll.NewPool[big.Int](poolSize)
-	ratPool  = coll.NewPool[big.Rat](poolSize)
+	poolSize  = 8
+	decPool   = coll.NewPool[apd.Decimal](poolSize)
+	floatPool = coll.NewPool[big.Float](poolSize)
+	intPool   = coll.NewPool[big.Int](poolSize)
+	ratPool   = coll.NewPool[big.Rat](poolSize)
 )
 
 // ----------------------------------------------------------------------------
@@ -54,6 +56,62 @@ func (t AnyType) Format(a any) string {
 
 func (t AnyType) Dup(a any) any {
 	return a
+}
+
+// ----------------------------------------------------------------------------
+type BigFloatType struct{}
+
+func (t BigFloatType) AppName() string { return "Float" }
+func (t BigFloatType) GoName() string  { return "*big.Float" }
+
+func (t BigFloatType) New() *big.Float {
+	f := floatPool.New()
+	f.SetPrec(53)
+	return f
+}
+
+func (t BigFloatType) Recycle(vals ...*big.Float) {
+	for _, val := range vals {
+		floatPool.Recycle(val)
+	}
+}
+
+func (t BigFloatType) As(a any) *big.Float {
+	v, ok := a.(*big.Float)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t BigFloatType) Push(c Calc, val *big.Float) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t BigFloatType) Pop(c Calc) *big.Float {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t BigFloatType) Parse(_ coll.State, str string) (any, bool, error) {
+	str = PreParseDecimal(str)
+	v := t.New()
+	_, ok := v.SetString(str)
+	if !ok {
+		t.Recycle(v)
+		return nil, false, nil
+	}
+	return v, true, nil
+}
+
+func (t BigFloatType) Format(a any) string {
+	v := t.As(a)
+	return FormatExponent(v.Text('g', 16))
+}
+
+func (t BigFloatType) Dup(a any) any {
+	i := t.New()
+	i.Set(t.As(a))
+	return i
 }
 
 // ----------------------------------------------------------------------------
@@ -225,7 +283,7 @@ func (t DecimalType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Float64Type struct{}
 
-func (t Float64Type) AppName() string { return "Float" }
+func (t Float64Type) AppName() string { return "Float/64" }
 func (t Float64Type) GoName() string  { return "float64" }
 
 func (t Float64Type) As(a any) float64 {

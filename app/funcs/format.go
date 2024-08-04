@@ -69,3 +69,11 @@ func SciDecimal(c zc.Calc) {
 	zc.String.Push(c, str)
 	c.SetUnit(unit)
 }
+
+func SciBigFloat(c zc.Calc) {
+	unit := c.Unit()
+	x := zc.BigFloat.Pop(c)
+	str := zc.FormatExponent(x.Text('e', -1))
+	zc.String.Push(c, str)
+	c.SetUnit(unit)
+}
