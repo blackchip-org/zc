@@ -41,7 +41,7 @@ func TestPreParseFloat(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			out := PreParseFloat(test.in)
+			out := PreParseDecimal(test.in)
 			if out != test.out {
 				t.Fatalf("\n have: %v \n want: %v", out, test.out)
 			}

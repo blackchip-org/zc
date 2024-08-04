@@ -1,6 +1,8 @@
 package app
 
 import (
+	"fmt"
+
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/pkg/coll"
@@ -63,8 +65,8 @@ func (c *Calc) NewVar(name string, a any) {
 	c.state[name] = a
 }
 
-func (c *Calc) Notify(msg string) {
-	c.Notice = msg
+func (c *Calc) Notify(format string, args ...any) {
+	c.Notice = fmt.Sprintf(format, args...)
 }
 
 func (c *Calc) Raise(err error) {
@@ -117,6 +119,7 @@ func (c *Calc) Eval(line string) error {
 }
 
 func (c *Calc) EvalToken(toks ...scan.Token) {
+	c.Notice = ""
 	for _, tok := range toks {
 		if c.Err != nil {
 			return

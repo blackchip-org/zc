@@ -12,6 +12,7 @@ var Basic = zc.Vol{
 	Ops: []zc.Op{
 		ops.Add,
 		ops.Div,
+		ops.DivMod,
 		ops.DivRem,
 		ops.DivI,
 		ops.Mod,
@@ -28,6 +29,7 @@ var Basic = zc.Vol{
 		{Name: "+", Expr: "add"},
 		{Name: "d", Expr: "div"},
 		{Name: "/", Expr: "div"},
+		{Name: "dm", Expr: "div.mod"},
 		{Name: "dr", Expr: "div.rem"},
 		{Name: "m", Expr: "mul"},
 		{Name: "*", Expr: "mul"},

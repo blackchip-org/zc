@@ -53,6 +53,16 @@ var (
 			},
 		},
 	}
+	DivMod = zc.Op{
+		Name: "div.mod",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt, zc.BigInt},
+				Eval:    funcs.DivModBigInt,
+			},
+		},
+	}
 	DivRem = zc.Op{
 		Name: "div.rem",
 		Funcs: []zc.Func{

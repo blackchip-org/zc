@@ -6,21 +6,22 @@ Basic calculator
 
 ## Index
 
-| Operation                | Description            
-|--------------------------|------------------------
-| [`add, a, +`](#add)      | Addition               
-| [`div, d, /`](#div)      | Division               
-| [`div.rem, dr`](#divrem) | Division with remainder
-| [`div/i`](#divi)         | Integer division       
-| [`mod`](#mod)            | Modulus                
-| [`mul, m, *`](#mul)      | Multiplication         
-| [`neg`](#neg)            | Negation               
-| [`pow, **`](#pow)        | Exponentiation         
-| [`rem, %`](#rem)         | Remainder              
-| [`sign`](#sign)          | Sign                   
-| [`sq`](#sq)              | Square of a number     
-| [`sqrt`](#sqrt)          | Square Root            
-| [`sub, s, -`](#sub)      | Subtraction            
+| Operation                | Description               
+|--------------------------|---------------------------
+| [`add, a, +`](#add)      | Addition                  
+| [`div, d, /`](#div)      | Division                  
+| [`div.mod, dm`](#divmod) | Division with modulus     
+| [`div.rem, dr`](#divrem) | Division with remainder   
+| [`div/i`](#divi)         | Euclidean integer division
+| [`mod`](#mod)            | Modulus                   
+| [`mul, m, *`](#mul)      | Multiplication            
+| [`neg`](#neg)            | Negation                  
+| [`pow, **`](#pow)        | Exponentiation            
+| [`rem, %`](#rem)         | Remainder                 
+| [`sign`](#sign)          | Sign                      
+| [`sq`](#sq)              | Square of a number        
+| [`sqrt`](#sqrt)          | Square Root               
+| [`sub, s, -`](#sub)      | Subtraction               
 
 
 ## Operations
@@ -70,6 +71,25 @@ Example:
 | `c 1/4 4 div`      | `1/16`    
 | `c 12+12i 4+12i d` | `1.2-0.6i`
 
+### div.mod
+
+The quotient *quo* and remainder *mod* when dividing *x* by *y* using
+Euclidean division.
+
+Alias: `dm`
+
+Stack effects:
+```
+( x:Int y:Int -- quo:Int mod:Int )
+```
+
+Example:
+
+| Input             | Stack               
+|-------------------|---------------------
+| `c -21 4 div.mod` | `-6 :quo \| 3 :mod` 
+| `c -21 4 div.rem` | `-5 :quo \| -1 :rem`
+
 ### div.rem
 
 The quotient *quo* and remainder *rem* when dividing *x* by *y* using
@@ -84,14 +104,16 @@ Stack effects:
 
 Example:
 
-| Input           | Stack               
-|-----------------|---------------------
-| `-21 4 div.rem` | `-5 :quo \| -1 :rem`
+| Input             | Stack               
+|-------------------|---------------------
+| `c -21 4 div.mod` | `-6 :quo \| 3 :mod` 
+| `c -21 4 div.rem` | `-5 :quo \| -1 :rem`
 
 ### div/i
 
-Divides *x* by *y*. If *y* is zero, a 'division by zero'
-error is raised.
+Divides *x* by *y* using
+[Euclidean division](https://en.wikipedia.org/wiki/Euclidean_division).
+If *y* is zero, a 'division by zero' error is raised.
 
 Stack effects:
 ```
@@ -100,9 +122,9 @@ Stack effects:
 
 Example:
 
-| Input          | Stack
-|----------------|------
-| `c 12 5 div/i` | `2`  
+| Input         | Stack
+|---------------|------
+| `-21 4 div/i` | `-6` 
 
 ### mod
 

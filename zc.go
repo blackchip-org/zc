@@ -60,7 +60,7 @@ type Calc interface {
 	String() string
 	Var(string) (any, bool)
 	NewVar(string, any)
-	Notify(string)
+	Notify(string, ...any)
 	Raise(error)
 	Label() string
 	Unit() string

@@ -10,7 +10,7 @@ import (
 
 func RoundComplex(c zc.Calc) {
 	var zero apd.Decimal
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	p := zc.Int32.Pop(c)
 	x := zc.Complex.Pop(c)
 
@@ -23,7 +23,7 @@ func RoundComplex(c zc.Calc) {
 	// places after the decimal point
 	r := zc.Decimal.New()
 	r.SetFloat64(real(x))
-	_, err := s.Context.Quantize(r, r, -p)
+	_, err := d.Quantize(r, r, -p)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -31,7 +31,7 @@ func RoundComplex(c zc.Calc) {
 
 	i := zc.Decimal.New()
 	i.SetFloat64(imag(x))
-	_, err = s.Context.Quantize(i, i, -p)
+	_, err = d.Quantize(i, i, -p)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -46,7 +46,7 @@ func RoundComplex(c zc.Calc) {
 }
 
 func RoundDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	p := zc.Int32.Pop(c)
 	x := zc.Decimal.Pop(c)
 
@@ -54,7 +54,7 @@ func RoundDecimal(c zc.Calc) {
 	// places after the decimal point
 	p = -p
 
-	_, err := s.Context.Quantize(x, x, p)
+	_, err := d.Quantize(x, x, p)
 	if err != nil {
 		c.Raise(err)
 		return

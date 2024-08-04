@@ -7,6 +7,7 @@
 | Volume                  | Description             
 |-------------------------|-------------------------
 | [basic](ops/basic.md)   | Basic calculator        
+| [conf](ops/conf.md)     | General configuration   
 | [format](ops/format.md) | Value formatting        
 | [stack](ops/stack.md)   | Stack operations        
 | [stat](ops/stat.md)     | Statistical calculations

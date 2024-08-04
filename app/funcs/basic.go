@@ -26,12 +26,12 @@ func AddComplex(c zc.Calc) {
 }
 
 func AddDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
 
-	_, err := s.Context.Add(x, x, y)
+	_, err := d.Add(x, x, y)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -63,12 +63,12 @@ func DivBigInt(c zc.Calc) {
 }
 
 func DivDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
 
-	cond, err := s.Context.Quo(x, x, y)
+	cond, err := d.Quo(x, x, y)
 	if cond.DivisionByZero() {
 		c.Raise(zc.ErrDivisionByZero)
 		return
@@ -153,12 +153,12 @@ func MulComplex(c zc.Calc) {
 }
 
 func MulDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
 
-	_, err := s.Context.Mul(x, x, y)
+	_, err := d.Mul(x, x, y)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -188,9 +188,9 @@ func NegComplex(c zc.Calc) {
 }
 
 func NegDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	x := zc.Decimal.Pop(c)
-	_, err := s.Context.Neg(x, x)
+	_, err := d.Neg(x, x)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -221,12 +221,12 @@ func PowComplex(c zc.Calc) {
 }
 
 func PowDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
 
-	_, err := s.Context.Pow(x, x, y)
+	_, err := d.Pow(x, x, y)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -250,7 +250,7 @@ func RemBigInt(c zc.Calc) {
 }
 
 func RemDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
@@ -259,7 +259,7 @@ func RemDecimal(c zc.Calc) {
 		c.Raise(zc.ErrDivisionByZero)
 		return
 	}
-	_, err := s.Context.Rem(x, x, y)
+	_, err := d.Rem(x, x, y)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -307,14 +307,14 @@ func SqrtComplex(c zc.Calc) {
 
 func SqrtDecimal(c zc.Calc) {
 	var zero apd.Decimal
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	x := zc.Decimal.Pop(c)
 	if x.Cmp(&zero) < 0 {
 		c.Raise(zc.ErrInvalidArg("%v < 0", x.String()))
 		return
 	}
 
-	_, err := s.Context.Sqrt(x, x)
+	_, err := d.Sqrt(x, x)
 	if err != nil {
 		c.Raise(err)
 		return
@@ -339,12 +339,12 @@ func SubComplex(c zc.Calc) {
 }
 
 func SubDecimal(c zc.Calc) {
-	s := vars.ForDec(c)
+	d := vars.ForConf(c).DecMath
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
 
-	_, err := s.Context.Sub(x, x, y)
+	_, err := d.Sub(x, x, y)
 	if err != nil {
 		c.Raise(err)
 		return

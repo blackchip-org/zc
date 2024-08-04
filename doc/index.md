@@ -20,8 +20,10 @@
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
 - [`div`](ops/basic.md#div): Division
-  - [`div/i`](ops/basic.md#divi): Integer division
+  - [`div/i`](ops/basic.md#divi): Euclidean integer division
+- [`div.mod`](ops/basic.md#divmod): Division with modulus
 - [`div.rem`](ops/basic.md#divrem): Division with remainder
+- [`dm`](ops/basic.md#divmod): Alias for [div.mod](ops/basic.md#divmod)
 - [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
 - [`dup`](ops/stack.md#dup): Duplicate
 
@@ -47,6 +49,8 @@
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
 - [`rem`](ops/basic.md#rem): Remainder
 - [`round`](ops/format.md#round): Round number
+- [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
+- [`rounding.mode?`](ops/conf.md#roundingmode): Gets the default rounding mode
 
 ## s
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)

@@ -195,8 +195,8 @@ func genTest(f *os.File, name string, test []zc.Expect) {
 		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
 		if e.Error != "" {
 			fmt.Fprintf(f, "c.AssertError(\"%v\")\n", e.Error)
-		} else if e.Info != "" {
-			fmt.Fprintf(f, "c.AssertInfo(\"%v\")\n", e.Info)
+		} else if e.Notice != "" {
+			fmt.Fprintf(f, "c.AssertNotice(\"%v\")\n", e.Notice)
 		} else {
 			fmt.Fprintf(f, "c.AssertStack(")
 			for i, out := range e.Output {
@@ -327,8 +327,8 @@ func genOpExample(f *os.File, expected []zc.Expect) {
 	tab.Heading("Input", "Stack")
 	for _, ex := range expected {
 		i := "`" + ex.Input + "`"
-		if ex.Info != "" {
-			tab.Row(i, "*"+ex.Info+"*")
+		if ex.Notice != "" {
+			tab.Row(i, "*"+ex.Notice+"*")
 		} else if ex.Error != "" {
 			tab.Row(i, "_"+ex.Error+"_")
 		} else if len(ex.Output) == 0 {

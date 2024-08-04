@@ -85,7 +85,7 @@ func PreParseInt(str string) string {
 	return s.Emit().Val
 }
 
-func PreParseFloat(str string) string {
+func PreParseDecimal(str string) string {
 	s := scan.NewScannerFromString("", str)
 	for s.HasMore() {
 		switch {

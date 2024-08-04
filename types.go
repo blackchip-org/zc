@@ -133,7 +133,7 @@ func (t ComplexType) Pop(c Calc) complex128 {
 }
 
 func (t ComplexType) Parse(_ coll.State, str string) (any, bool, error) {
-	str = PreParseFloat(str)
+	str = PreParseDecimal(str)
 	c, err := strconv.ParseComplex(str, 128)
 	return c, err == nil, nil
 }
@@ -189,10 +189,10 @@ func (t DecimalType) Pop(c Calc) *apd.Decimal {
 }
 
 func (t DecimalType) Parse(state coll.State, str string) (any, bool, error) {
-	dec := vars.ForDec(state)
-	str = PreParseFloat(str)
+	dec := vars.ForConf(state)
+	str = PreParseDecimal(str)
 	v := t.New()
-	_, cond, err := dec.Context.SetString(v, str)
+	_, cond, err := dec.DecMath.SetString(v, str)
 	switch {
 	case cond.Overflow() || (err != nil && err.Error() == "exponent out of range"):
 		t.Recycle(v)
@@ -245,7 +245,7 @@ func (t Float64Type) Pop(c Calc) float64 {
 }
 
 func (t Float64Type) Parse(_ coll.State, str string) (any, bool, error) {
-	str = PreParseFloat(str)
+	str = PreParseDecimal(str)
 	f64, err := strconv.ParseFloat(str, 64)
 	return f64, err == nil, nil
 }

@@ -38,7 +38,7 @@ type Expect struct {
 	Input  string   `yaml:"i"`
 	Output []string `yaml:"o"`
 	Error  string   `yaml:"error"`
-	Info   string   `yaml:"info"`
+	Notice string   `yaml:"notice"`
 }
 
 type Test struct {

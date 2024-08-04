@@ -65,22 +65,39 @@ ops:
         error: "div: division by zero"
 
 - name: div/i
-  title: Integer division
+  title: Euclidean integer division
   funcs:
   - name: DivBigInt
     params: [x:Int, y:Int]
     returns: [Int]
   desc: |-
-    Divides *x* by *y*. If *y* is zero, a 'division by zero'
-    error is raised.
+    Divides *x* by *y* using
+    [Euclidean division](https://en.wikipedia.org/wiki/Euclidean_division).
+    If *y* is zero, a 'division by zero' error is raised.
   example:
-  - i: c 12 5 div/i
-    o: [2]
+  - i: -21 4 div/i
+    o: [-6]
   tests:
   - name: Zero
     test:
       - i: 6 0 div/i
         error: "div/i: division by zero"
+
+- name: div.mod
+  aliases: [dm]
+  title: Division with modulus
+  funcs:
+  - name: DivModBigInt
+    params: [x:Int, y:Int]
+    returns: [quo:Int, mod:Int]
+  desc: |-
+    The quotient *quo* and remainder *mod* when dividing *x* by *y* using
+    Euclidean division.
+  example:
+  - i: c -21 4 div.mod
+    o: ["-6 :quo", "3 :mod"]
+  - i: c -21 4 div.rem
+    o: ["-5 :quo", "-1 :rem"]
 
 - name: div.rem
   aliases: [dr]
@@ -93,7 +110,9 @@ ops:
     The quotient *quo* and remainder *rem* when dividing *x* by *y* using
     truncated division.
   example:
-  - i: -21 4 div.rem
+  - i: c -21 4 div.mod
+    o: ["-6 :quo", "3 :mod"]
+  - i: c -21 4 div.rem
     o: ["-5 :quo", "-1 :rem"]
 
 - name: mul
