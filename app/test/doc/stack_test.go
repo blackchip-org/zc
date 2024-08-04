@@ -17,3 +17,13 @@ func TestOpDocs_Stack_Clear(t *testing.T) {
 	c.Eval("c")
 	c.AssertStack()
 }
+
+func TestOpDocs_Stack_Dup(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("10")
+	c.AssertStack("10")
+
+	c.Eval("dup")
+	c.AssertStack("10", "10")
+}

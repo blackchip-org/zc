@@ -12,7 +12,7 @@ var (
 		Name: "label",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.Any, zc.String},
+				Params:  []zc.Type{zc.String, zc.Any},
 				Returns: []zc.Type{zc.Any},
 				Eval:    funcs.Label,
 			},
@@ -22,7 +22,7 @@ var (
 		Name: "unit",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.Any, zc.String},
+				Params:  []zc.Type{zc.String, zc.Any},
 				Returns: []zc.Type{zc.Any},
 				Eval:    funcs.Unit,
 			},

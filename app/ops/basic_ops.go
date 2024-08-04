@@ -16,6 +16,51 @@ var (
 				Returns: []zc.Type{zc.BigInt},
 				Eval:    funcs.AddBigInt,
 			},
+			{
+				Params:  []zc.Type{zc.Decimal, zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.AddDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Rat, zc.Rat},
+				Returns: []zc.Type{zc.Rat},
+				Eval:    funcs.AddRat,
+			},
+			{
+				Params:  []zc.Type{zc.Complex, zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.AddComplex,
+			},
+		},
+	}
+	Div = zc.Op{
+		Name: "div",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Decimal, zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.DivDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Rat, zc.Rat},
+				Returns: []zc.Type{zc.Rat},
+				Eval:    funcs.DivRat,
+			},
+			{
+				Params:  []zc.Type{zc.Complex, zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.DivComplex,
+			},
+		},
+	}
+	DivRem = zc.Op{
+		Name: "div.rem",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt, zc.BigInt},
+				Eval:    funcs.QuoRemBigInt,
+			},
 		},
 	}
 	DivI = zc.Op{
@@ -25,6 +70,160 @@ var (
 				Params:  []zc.Type{zc.BigInt, zc.BigInt},
 				Returns: []zc.Type{zc.BigInt},
 				Eval:    funcs.DivBigInt,
+			},
+		},
+	}
+	Mod = zc.Op{
+		Name: "mod",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.ModBigInt,
+			},
+		},
+	}
+	Mul = zc.Op{
+		Name: "mul",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.MulBigInt,
+			},
+			{
+				Params:  []zc.Type{zc.Decimal, zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.MulDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Rat, zc.Rat},
+				Returns: []zc.Type{zc.Rat},
+				Eval:    funcs.MulRat,
+			},
+			{
+				Params:  []zc.Type{zc.Complex, zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.MulComplex,
+			},
+		},
+	}
+	Neg = zc.Op{
+		Name: "neg",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.NegBigInt,
+			},
+			{
+				Params:  []zc.Type{zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.NegDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Rat},
+				Returns: []zc.Type{zc.Rat},
+				Eval:    funcs.NegRat,
+			},
+			{
+				Params:  []zc.Type{zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.NegComplex,
+			},
+		},
+	}
+	Pow = zc.Op{
+		Name: "pow",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.PowBigInt,
+			},
+			{
+				Params:  []zc.Type{zc.Decimal, zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.PowDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Complex, zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.PowComplex,
+			},
+		},
+	}
+	Rem = zc.Op{
+		Name: "rem",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.RemBigInt,
+			},
+		},
+	}
+	Sign = zc.Op{
+		Name: "sign",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt},
+				Returns: []zc.Type{zc.Int},
+				Eval:    funcs.SignBigInt,
+			},
+			{
+				Params:  []zc.Type{zc.Decimal},
+				Returns: []zc.Type{zc.Int},
+				Eval:    funcs.SignDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Rat, zc.Rat},
+				Returns: []zc.Type{zc.Rat},
+				Eval:    funcs.SignRat,
+			},
+		},
+	}
+	Sq = zc.Op{
+		Name:  "sq",
+		Funcs: []zc.Func{},
+	}
+	Sqrt = zc.Op{
+		Name: "sqrt",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.SqrtDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.SqrtComplex,
+			},
+		},
+	}
+	Sub = zc.Op{
+		Name: "sub",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigInt, zc.BigInt},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.SubBigInt,
+			},
+			{
+				Params:  []zc.Type{zc.Decimal, zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.SubDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Rat, zc.Rat},
+				Returns: []zc.Type{zc.Rat},
+				Eval:    funcs.SubRat,
+			},
+			{
+				Params:  []zc.Type{zc.Complex, zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.SubComplex,
 			},
 		},
 	}

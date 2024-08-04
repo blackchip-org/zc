@@ -7,13 +7,12 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var Stack = zc.Vol{
-	Name: "stack",
+var Stat = zc.Vol{
+	Name: "stat",
 	Ops: []zc.Op{
-		ops.Clear,
-		ops.Dup,
+		ops.Factorial,
 	},
 	Macros: []zc.Macro{
-		{Name: "c", Expr: "clear"},
+		{Name: "fact", Expr: "factorial"},
 	},
 }

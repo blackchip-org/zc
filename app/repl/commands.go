@@ -68,8 +68,8 @@ func redo(r *Repl, _ []scan.Token) error {
 	if len(r.redoStack) == 0 {
 		return fmt.Errorf("redo stack is empty")
 	}
-	r.undoStack = append([][]zc.Item{slices.Clone(r.Calc.Items())}, r.undoStack...)
-	r.Calc.SetItems(r.redoStack[0])
+	r.undoStack = append([][]zc.Item{slices.Clone(r.Calc.Stack())}, r.undoStack...)
+	r.Calc.SetStack(r.redoStack[0])
 	r.redoStack = r.redoStack[1:]
 	return nil
 }
@@ -93,8 +93,8 @@ func undo(r *Repl, _ []scan.Token) error {
 	if len(r.undoStack) == 0 {
 		return fmt.Errorf("undo stack is empty")
 	}
-	r.redoStack = append([][]zc.Item{slices.Clone(r.Calc.Items())}, r.redoStack...)
-	r.Calc.SetItems(r.undoStack[0])
+	r.redoStack = append([][]zc.Item{slices.Clone(r.Calc.Stack())}, r.redoStack...)
+	r.Calc.SetStack(r.undoStack[0])
 	r.undoStack = r.undoStack[1:]
 	return nil
 }

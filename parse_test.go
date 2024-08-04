@@ -17,7 +17,7 @@ func TestPreParseNumber(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			out := PreParseNumber(test.in)
+			out := PreParseInt(test.in)
 			if out != test.out {
 				t.Fatalf("\n have: %v \n want: %v", out, test.out)
 			}

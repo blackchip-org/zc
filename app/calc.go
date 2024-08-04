@@ -46,11 +46,11 @@ func (c *Calc) Pop() zc.Item {
 	return c.items[c.pos]
 }
 
-func (c *Calc) Items() []zc.Item {
+func (c *Calc) Stack() []zc.Item {
 	return c.items[:c.pos]
 }
 
-func (c *Calc) SetItems(items []zc.Item) {
+func (c *Calc) SetStack(items []zc.Item) {
 	c.items = items
 	c.pos = len(c.items)
 }
@@ -60,15 +60,15 @@ func (c *Calc) Len() int {
 }
 
 func (c *Calc) String() string {
-	return zc.FormatList(zc.FormatItems(c.Items()))
+	return zc.FormatList(zc.FormatItems(c.Stack()))
 }
 
-func (c *Calc) State(name string) (any, bool) {
+func (c *Calc) Var(name string) (any, bool) {
 	s, ok := c.state[name]
 	return s, ok
 }
 
-func (c *Calc) NewState(name string, a any) {
+func (c *Calc) NewVar(name string, a any) {
 	c.state[name] = a
 }
 
@@ -82,16 +82,32 @@ func (c *Calc) Raise(err error) {
 	}
 }
 
-func (c *Calc) Label(label string) {
-	item := c.Pop()
-	item.Label = label
-	c.Push(item)
+func (c *Calc) Label() string {
+	if c.pos == 0 {
+		panic(zc.ErrStackEmpty)
+	}
+	return c.items[c.pos-1].Label
 }
 
-func (c *Calc) Unit(unit string) {
-	item := c.Pop()
-	item.Unit = unit
-	c.Push(item)
+func (c *Calc) Unit() string {
+	if c.pos == 0 {
+		panic(zc.ErrStackEmpty)
+	}
+	return c.items[c.pos-1].Unit
+}
+
+func (c *Calc) SetLabel(label string) {
+	if c.pos == 0 {
+		panic(zc.ErrStackEmpty)
+	}
+	c.items[c.pos-1].Label = label
+}
+
+func (c *Calc) SetUnit(unit string) {
+	if c.pos == 0 {
+		panic(zc.ErrStackEmpty)
+	}
+	c.items[c.pos-1].Unit = unit
 }
 
 func (c *Calc) Eval(line string) error {
@@ -135,9 +151,13 @@ func (c *Calc) evalName(name string) {
 		c.EvalToken(op.Macro...)
 		return
 	}
-	fn, ok := c.ResolveOp(op)
-	if !ok {
-		c.Raise(zc.ErrArgMismatch(name))
+	fn, ok, err := c.ResolveOp(op)
+	switch {
+	case err != nil:
+		c.Raise(zc.ErrOp(name, err))
+		return
+	case !ok:
+		c.Raise(zc.ErrOp(name, c.errTypeMismatch(op)))
 		return
 	}
 
@@ -147,7 +167,12 @@ func (c *Calc) evalName(name string) {
 	fn.Eval(c)
 
 	if c.Err == nil {
-		if !c.isTypeMatch(fn.Returns, fn.VarReturn) {
+		ok, err := c.isFuncMatch(fn.Returns, fn.VarReturn)
+		switch {
+		case err != nil:
+			c.Raise(zc.ErrOp(name, err))
+			return
+		case !ok:
 			panic("return mismatch: " + name)
 		}
 	} else {
@@ -155,43 +180,55 @@ func (c *Calc) evalName(name string) {
 	}
 }
 
-func (c *Calc) ResolveOp(op zc.Op) (zc.Func, bool) {
+func (c *Calc) ResolveOp(op zc.Op) (zc.Func, bool, error) {
 	for _, fn := range op.Funcs {
-		if c.isTypeMatch(fn.Params, fn.VarParam) {
+		ok, err := c.isFuncMatch(fn.Params, fn.VarParam)
+		switch {
+		case err != nil:
+			return zc.Func{}, false, err
+		case ok:
 			c.convert(fn.Params, fn.VarParam)
-			return fn, true
+			return fn, true, nil
 		}
 	}
-	return zc.Func{}, false
+	return zc.Func{}, false, nil
 }
 
-func (c *Calc) isTypeMatch(params []zc.Type, varParam zc.Type) bool {
+func (c *Calc) isFuncMatch(params []zc.Type, varParam zc.Type) (bool, error) {
 	if c.Len() < len(params) {
-		return false
+		return false, nil
 	}
 
 	for i, param := range params {
-		if !c.isParamMatch(i, param) {
-			return false
+		ok, err := c.isParamMatch(i, param)
+		switch {
+		case err != nil:
+			return false, err
+		case !ok:
+			return false, nil
 		}
 	}
 	if varParam != nil {
 		for i := len(params); i < c.pos; i++ {
-			if !c.isParamMatch(i, varParam) {
-				return false
+			ok, err := c.isParamMatch(i, varParam)
+			switch {
+			case err != nil:
+				return false, err
+			case !ok:
+				return false, nil
 			}
 		}
 	}
-	return true
+	return true, nil
 }
 
-func (c *Calc) isParamMatch(index int, param zc.Type) bool {
+func (c *Calc) isParamMatch(index int, param zc.Type) (bool, error) {
 	arg := c.items[c.pos-index-1]
 	if arg.Type == param {
-		return true
+		return true, nil
 	}
-	_, ok := param.Parse(arg.Val())
-	return ok
+	_, ok, err := param.Parse(c, arg.Val())
+	return ok, err
 }
 
 func (c *Calc) convertArg(index int, param zc.Type) {
@@ -199,8 +236,8 @@ func (c *Calc) convertArg(index int, param zc.Type) {
 	if arg.Type == param {
 		return
 	}
-	conv, ok := param.Parse(arg.Val())
-	if !ok {
+	conv, ok, err := param.Parse(c, arg.Val())
+	if !ok || err != nil {
 		panic("unexpected: should be correct type")
 	}
 	c.items[c.pos-index-1] = zc.Item{TypeVal: conv, Type: param}
@@ -215,4 +252,30 @@ func (c *Calc) convert(params []zc.Type, varParam zc.Type) {
 			c.convertArg(i, varParam)
 		}
 	}
+}
+
+func (c *Calc) errTypeMismatch(op zc.Op) error {
+	for i := 0; i < c.pos; i++ {
+		arg := c.items[c.pos-i-1]
+		good := false
+		for _, fn := range op.Funcs {
+			var param zc.Type
+			if i >= len(fn.Params) {
+				param = fn.VarParam
+			} else {
+				param = fn.Params[i]
+			}
+			if param == nil {
+				continue
+			}
+			if ok, _ := c.isParamMatch(i, param); ok {
+				good = true
+				break
+			}
+		}
+		if !good {
+			return zc.ErrUnexpectedType(arg.Val())
+		}
+	}
+	panic("unexpected")
 }

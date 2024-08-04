@@ -102,7 +102,7 @@ func (r *Repl) evalLine(toks []scan.Token) error {
 func (r *Repl) Eval(line string) error {
 	r.notice = ""
 	r.err = nil
-	prev := slices.Clone(r.Calc.Items())
+	prev := slices.Clone(r.Calc.Stack())
 
 	if r.EndQuote != "" {
 		if strings.TrimSpace(line) == r.EndQuote {
@@ -309,7 +309,7 @@ func Run(c *app.Calc) {
 		}
 		ansi.Write(ansi.ClearScreen)
 
-		prev := slices.Clone(c.Items())
+		prev := slices.Clone(c.Stack())
 		err = r.Eval(line)
 		if err == errQuit {
 			break
@@ -325,11 +325,11 @@ func Run(c *app.Calc) {
 				fmt.Fprintln(r.Out)
 			}
 		} else {
-			r.Calc.SetItems(prev)
+			r.Calc.SetStack(prev)
 		}
 		ansi.Write(ansi.Reset)
 
-		for i, val := range r.Calc.Items() {
+		for i, val := range r.Calc.Stack() {
 			color := ansi.LightBlue
 			if i == r.Calc.Len()-1 {
 				color = ansi.Bold
@@ -354,7 +354,7 @@ func Run(c *app.Calc) {
 			}
 		}
 	}
-	for _, item := range c.Items() {
+	for _, item := range c.Stack() {
 		fmt.Println(item)
 	}
 	fmt.Println()

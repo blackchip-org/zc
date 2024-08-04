@@ -9,6 +9,7 @@ Stack operations
 | Operation            | Description
 |----------------------|------------
 | [`clear, c`](#clear) | Clear      
+| [`dup`](#dup)        | Duplicate  
 
 
 ## Operations
@@ -30,3 +31,19 @@ Example:
 |---------|--------------
 | `1 2 3` | `1 \| 2 \| 3`
 | `c`     |              
+
+### dup
+
+Duplicates the top value on the stack
+
+Stack effects:
+```
+( x:Any -- x:Any x:Any )
+```
+
+Example:
+
+| Input | Stack     
+|-------|-----------
+| `10`  | `10`      
+| `dup` | `10 \| 10`

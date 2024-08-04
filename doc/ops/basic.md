@@ -6,10 +6,21 @@ Basic calculator
 
 ## Index
 
-| Operation           | Description     
-|---------------------|-----------------
-| [`add, a, +`](#add) | Addition        
-| [`div/i`](#divi)    | Integer Division
+| Operation                | Description            
+|--------------------------|------------------------
+| [`add, a, +`](#add)      | Addition               
+| [`div, d, /`](#div)      | Division               
+| [`div.rem, dr`](#divrem) | Division with remainder
+| [`div/i`](#divi)         | Integer division       
+| [`mod`](#mod)            | Modulus                
+| [`mul, m, *`](#mul)      | Multiplication         
+| [`neg`](#neg)            | Negation               
+| [`pow, **`](#pow)        | Exponentiation         
+| [`rem, %`](#rem)         | Remainder              
+| [`sign`](#sign)          | Sign                   
+| [`sq`](#sq)              | Square of a number     
+| [`sqrt`](#sqrt)          | Square Root            
+| [`sub, s, -`](#sub)      | Subtraction            
 
 
 ## Operations
@@ -23,13 +34,59 @@ Aliases: `a`, `+`
 Stack effects:
 ```
 ( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat -- Rat )
+( x:Complex y:Complex -- Complex )
 ```
 
 Example:
 
-| Input     | Stack
-|-----------|------
-| `c 6 2 a` | `8`  
+| Input           | Stack 
+|-----------------|-------
+| `c 6 2 a`       | `8`   
+| `c 1.1 2.2 a`   | `3.3` 
+| `c 1/2 1/4 add` | `3/4` 
+| `c 6+6i 2+2i a` | `8+8i`
+
+### div
+
+Divides *x* by *y*. If *y* is zero, a 'division by zero' error is raised.
+
+Aliases: `d`, `/`
+
+Stack effects:
+```
+( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat -- Rat )
+( x:Complex y:Complex -- Complex )
+```
+
+Example:
+
+| Input              | Stack     
+|--------------------|-----------
+| `c 12 4 d`         | `3`       
+| `c 11 2 d`         | `5.5`     
+| `c 1/4 4 div`      | `1/16`    
+| `c 12+12i 4+12i d` | `1.2-0.6i`
+
+### div.rem
+
+The quotient *quo* and remainder *rem* when dividing *x* by *y* using
+truncated division.
+
+Alias: `dr`
+
+Stack effects:
+```
+( x:Int y:Int -- quo:Int rem:Int )
+```
+
+Example:
+
+| Input           | Stack               
+|-----------------|---------------------
+| `-21 4 div.rem` | `-5 :quo \| -1 :rem`
 
 ### div/i
 
@@ -46,3 +103,179 @@ Example:
 | Input          | Stack
 |----------------|------
 | `c 12 5 div/i` | `2`  
+
+### mod
+
+The modulus when *x* is divided by *y*. If *y* is zero, a 'division by zero'
+error is raised.
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input         | Stack
+|---------------|------
+| `c -21 4 mod` | `3`  
+| `c -21 4 rem` | `-1` 
+
+### mul
+
+Multiplies *x* by *y*.
+
+Aliases: `m`, `*`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat -- Rat )
+( x:Complex y:Complex -- Complex )
+```
+
+Example:
+
+| Input           | Stack   
+|-----------------|---------
+| `c 6 2 mul`     | `12`    
+| `c 6.6 2.2 mul` | `14.52` 
+| `c 1/16 4 mul`  | `1/4`   
+| `c 2+3i 4+4i m` | `-4+20i`
+
+### neg
+
+Changes the sign of *x*.
+
+Stack effects:
+```
+( x:Int -- Int )
+( x:Dec -- Dec )
+( x:Rat -- Rat )
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input | Stack
+|-------|------
+| `-6`  | `-6` 
+| `neg` | `6`  
+| `neg` | `-6` 
+
+### pow
+
+Raises *x* to the power of *y*.
+
+Alias: `**`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+( x:Complex y:Complex -- Complex )
+```
+
+Example:
+
+| Input                     | Stack        
+|---------------------------|--------------
+| `c 6 2 pow`               | `36`         
+| `c 6.6 2.2 pow 2 round`   | `63.53`      
+| `c 6+6i 2+2i pow 2 round` | `13.57-6.32i`
+
+### rem
+
+The remainder when *x* is divided by *y*. If *y* is zero, a
+'division by zero' error is raised.
+
+Alias: `%`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+```
+
+Example:
+
+| Input         | Stack
+|---------------|------
+| `c -21 4 mod` | `3`  
+| `c -21 4 rem` | `-1` 
+
+### sign
+
+Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+if *x* is zero.
+
+Stack effects:
+```
+( x:Int -- Int/s )
+( x:Dec -- Int/s )
+( x:Rat y:Rat -- Rat )
+```
+
+Example:
+
+| Input       | Stack
+|-------------|------
+| `c -6 sign` | `-1` 
+| `c 6 sign`  | `1`  
+| `c 0 sign`  | `0`  
+
+### sq
+
+The square of a number, x²
+
+Macro definition:
+```
+def sq dup mul
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `3 sq` | `9`  
+
+### sqrt
+
+The square root of *x*. If *x* is not Complex and is less than zero, an
+'invalid argument' error is raised.
+
+Stack effects:
+```
+( x:Dec -- Dec )
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input           | Stack 
+|-----------------|-------
+| `c 1.5625 sqrt` | `1.25`
+| `c -4+0i sqrt`  | `0+2i`
+
+### sub
+
+Subtracts the value of *y* from *x*
+
+Aliases: `s`, `-`
+
+Stack effects:
+```
+( x:Int y:Int -- Int )
+( x:Dec y:Dec -- Dec )
+( x:Rat y:Rat -- Rat )
+( x:Complex y:Complex -- x:Complex )
+```
+
+Example:
+
+| Input             | Stack 
+|-------------------|-------
+| `c 6 2 sub`       | `4`   
+| `c 6.6 2.2 sub`   | `4.4` 
+| `c 3/4 1/2 sub`   | `1/4` 
+| `c 6+6i 2+2i sub` | `4+4i`

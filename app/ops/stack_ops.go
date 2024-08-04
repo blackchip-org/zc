@@ -19,4 +19,14 @@ var (
 			},
 		},
 	}
+	Dup = zc.Op{
+		Name: "dup",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Any},
+				Returns: []zc.Type{zc.Any, zc.Any},
+				Eval:    funcs.Dup,
+			},
+		},
+	}
 )

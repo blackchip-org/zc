@@ -16,3 +16,16 @@ ops:
     o: [1, 2, 3]
   - i: c
     o: []
+
+- name: dup
+  title: Duplicate
+  funcs:
+  - name: Dup
+    params: [x:Any]
+    returns: [x:Any, x:Any]
+  desc: Duplicates the top value on the stack
+  example:
+  - i: 10
+    o: [10]
+  - i: dup
+    o: [10, 10]

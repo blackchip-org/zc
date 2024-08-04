@@ -19,22 +19,22 @@ import (
 )
 
 var typeMap map[string]string = map[string]string{
-	zc.Any.AppName():    "Any",
-	zc.BigInt.AppName(): "BigInt",
-	// zc.Complex.AppName(): "Complex",
-	// zc.Decimal.AppName(): "Decimal",
-	// zc.Float64.AppName(): "Float64",
-	zc.Int.AppName(): "Int",
-	// zc.Int8.AppName():    "Int8",
-	// zc.Int32.AppName():   "Int32",
-	// zc.Int64.AppName():   "Int64",
-	// zc.Rat.AppName():     "Rat",
-	zc.String.AppName(): "String",
-	// zc.Uint.AppName():    "Uint",
-	// zc.Uint8.AppName():   "Uint8",
-	// zc.Uint16.AppName():  "Uint16",
-	// zc.Uint32.AppName():  "Uint32",
-	// zc.Uint64.AppName():  "Uint64",
+	zc.Any.AppName():     "Any",
+	zc.BigInt.AppName():  "BigInt",
+	zc.Complex.AppName(): "Complex",
+	zc.Decimal.AppName(): "Decimal",
+	zc.Float64.AppName(): "Float64",
+	zc.Int.AppName():     "Int",
+	zc.Int8.AppName():    "Int8",
+	zc.Int32.AppName():   "Int32",
+	zc.Int64.AppName():   "Int64",
+	zc.Rat.AppName():     "Rat",
+	zc.String.AppName():  "String",
+	zc.Uint.AppName():    "Uint",
+	zc.Uint8.AppName():   "Uint8",
+	zc.Uint16.AppName():  "Uint16",
+	zc.Uint32.AppName():  "Uint32",
+	zc.Uint64.AppName():  "Uint64",
 }
 
 type ValDef struct {
@@ -508,6 +508,8 @@ func parseValDoc(v string) ValDef {
 func genValList(f *os.File, name string, varName string, vals []string) {
 	fmt.Fprintf(f, "%v: []zc.Type{", name)
 
+	vals = slices.Clone(vals)
+	slices.Reverse(vals)
 	var var_ string
 	var list []string
 	for _, v := range vals {

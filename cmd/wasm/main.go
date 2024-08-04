@@ -41,7 +41,7 @@ func zcEval() js.Func {
 			err = r.Error().Error()
 		}
 
-		items := c.Items()
+		items := c.Stack()
 		for _, item := range items {
 			stack = append(stack, map[string]any{
 				"value": valueOf(item),
@@ -66,7 +66,7 @@ func zcStackLen() js.Func {
 func zcStack() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) any {
 		var stack []any
-		for _, item := range c.Items() {
+		for _, item := range c.Stack() {
 			stack = append(stack, map[string]any{
 				"value": valueOf(item),
 				"label": item.Label,
@@ -93,7 +93,7 @@ func zcSetStack() js.Func {
 			panic("zcSetStack: invalid number of arguments")
 		}
 		jsStack := args[0]
-		c.SetItems([]zc.Item{})
+		c.SetStack([]zc.Item{})
 		for i := 0; i < jsStack.Length(); i++ {
 			item := jsStack.Index(i)
 			val := item.Get("value")

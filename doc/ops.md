@@ -4,10 +4,12 @@
 
 
 ## Calculator Operations
-| Volume                | Description     
-|-----------------------|-----------------
-| [basic](ops/basic.md) | Basic calculator
-| [stack](ops/stack.md) | Stack operations
+| Volume                  | Description             
+|-------------------------|-------------------------
+| [basic](ops/basic.md)   | Basic calculator        
+| [format](ops/format.md) | Value formatting        
+| [stack](ops/stack.md)   | Stack operations        
+| [stat](ops/stat.md)     | Statistical calculations
 
 
 

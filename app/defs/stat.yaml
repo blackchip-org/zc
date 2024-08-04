@@ -1,0 +1,19 @@
+name: stat
+title: Statistical calculations
+category: calc
+
+ops:
+- name: factorial
+  aliases: [fact]
+  funcs:
+  - name: Fact
+    params: [x:Int/u]
+    returns: [Int]
+  desc: |-
+    The product of all positive integers less than or equal to *n*. If *n* is
+    negative, an invalid argument error is raised.
+  example:
+  - i: c 3 fact
+    o: [6]
+  - i: c 10 fact
+    o: [3628800]

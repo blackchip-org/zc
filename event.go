@@ -21,7 +21,7 @@ type StackEvent struct {
 func NewStackEvent(c Calc, type_ string) StackEvent {
 	return StackEvent{
 		type_: type_,
-		stack: slices.Clone(c.Items()),
+		stack: slices.Clone(c.Stack()),
 	}
 }
 

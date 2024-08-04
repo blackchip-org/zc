@@ -2,7 +2,12 @@
 
 # Index
 
+- [`%`](ops/basic.md#rem): Alias for [rem](ops/basic.md#rem)
+- [`*`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
+- [`**`](ops/basic.md#pow): Alias for [pow](ops/basic.md#pow)
 - [`+`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
+- [`-`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
+- [`/`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
 
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
@@ -12,8 +17,45 @@
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`clear`](ops/stack.md#clear): Clear
 
+## d
+- [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- [`div`](ops/basic.md#div): Division
+  - [`div/i`](ops/basic.md#divi): Integer division
+- [`div.rem`](ops/basic.md#divrem): Division with remainder
+- [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
+- [`dup`](ops/stack.md#dup): Duplicate
+
+## f
+- [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
+- `factorial`
+
 ## l
 - [`label`](ops/anno.md#label): Attach label
+
+## m
+- [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
+- [`mod`](ops/basic.md#mod): Modulus
+- [`mul`](ops/basic.md#mul): Multiplication
+
+## n
+- [`neg`](ops/basic.md#neg): Negation
+
+## p
+- [`pow`](ops/basic.md#pow): Exponentiation
+
+## r
+- [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
+- [`rem`](ops/basic.md#rem): Remainder
+- [`round`](ops/format.md#round): Round number
+
+## s
+- [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
+- [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
+- [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
+- [`sign`](ops/basic.md#sign): Sign
+- [`sq`](ops/basic.md#sq): Square of a number
+- [`sqrt`](ops/basic.md#sqrt): Square Root
+- [`sub`](ops/basic.md#sub): Subtraction
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit

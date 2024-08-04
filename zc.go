@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/scan"
+	"github.com/blackchip-org/zc/v6/pkg/coll"
 )
 
 const ProgName = "zc"
@@ -11,8 +12,9 @@ const ProgName = "zc"
 type Type interface {
 	AppName() string
 	GoName() string
-	Parse(string) (any, bool)
+	Parse(coll.State, string) (any, bool, error)
 	Format(any) string
+	Dup(any) any
 }
 
 type Item struct {
@@ -44,19 +46,26 @@ func (i Item) String() string {
 	return s.String()
 }
 
+type State interface {
+	State(string) (any, bool)
+	NewState(string, any)
+}
+
 type Calc interface {
 	Push(Item)
 	Pop() Item
-	Items() []Item
-	SetItems([]Item)
+	Stack() []Item
+	SetStack([]Item)
 	Len() int
 	String() string
-	State(string) (any, bool)
-	NewState(string, any)
+	Var(string) (any, bool)
+	NewVar(string, any)
 	Notify(string)
 	Raise(error)
-	Label(string)
-	Unit(string)
+	Label() string
+	Unit() string
+	SetLabel(string)
+	SetUnit(string)
 }
 
 type Op struct {

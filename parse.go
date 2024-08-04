@@ -72,7 +72,7 @@ func isAltExponent(s *scan.Scanner) bool {
 	return (s.This == 'x' || s.This == '×') && s.Next == '1' && s.Peek(2) == '0'
 }
 
-func PreParseNumber(str string) string {
+func PreParseInt(str string) string {
 	s := scan.NewScannerFromString("", str)
 	for s.HasMore() {
 		switch {

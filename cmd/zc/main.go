@@ -46,7 +46,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("(!) %v", err)
 	}
-	for _, item := range c.Items() {
+	for _, item := range c.Stack() {
 		fmt.Println(item)
 	}
 	if c.Notice != "" {

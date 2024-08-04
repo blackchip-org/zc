@@ -3,6 +3,7 @@ package zc
 import (
 	"fmt"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/blackchip-org/scan"
 )
@@ -97,4 +98,48 @@ func Strings(xs ...any) []string {
 		strs[i] = fmt.Sprint(x)
 	}
 	return strs
+}
+
+func FormatExponent(str string) string {
+	s := scan.NewScannerFromString("", str)
+
+	// Keep everything before the exponent
+	scan.Until(s, scan.Rune('E', 'e'), s.Keep)
+
+	// If no more, we didn't see the exponent
+	if !s.HasMore() {
+		return str
+	}
+
+	// We did see the exponent. Always write this out in lower case.
+	s.Val.WriteRune('e')
+	s.Skip()
+
+	// Omit positive signs but keep the negative ones
+	if s.This == '+' {
+		s.Skip()
+	}
+
+	// Remove all leading zeros
+	for s.This == '0' && s.Next != scan.EndOfText {
+		s.Skip()
+	}
+
+	// Actual digits of the exponent
+	scan.While(s, scan.IsAny, s.Keep)
+	return s.Emit().Val
+}
+
+func Abbr(str string) string {
+	if len(str) < 80 {
+		return str
+	}
+	var abbr strings.Builder
+	i := 0
+	for i < 80 {
+		r, w := utf8.DecodeRuneInString(str[i:])
+		abbr.WriteRune(r)
+		i += w
+	}
+	return abbr.String() + "…"
 }
