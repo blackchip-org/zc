@@ -31,6 +31,11 @@ func (s *Stack[T]) Items() []T {
 	return s.items[:s.pos]
 }
 
+func (s *Stack[T]) SetItems(items []T) {
+	s.items = items
+	s.pos = len(s.items)
+}
+
 func (s *Stack[T]) Len() int {
 	return s.pos
 }

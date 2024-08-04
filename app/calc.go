@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/pkg/coll"
 )
 
 type Calc struct {
@@ -10,8 +11,7 @@ type Calc struct {
 	Notice   string
 	Err      error
 	Listener zc.Listener
-	items    []zc.Item
-	pos      int
+	stack    coll.Stack[zc.Item]
 	state    map[string]any
 }
 
@@ -24,39 +24,30 @@ func NewCalc() *Calc {
 }
 
 func (c *Calc) Push(item zc.Item) {
-	if c.pos < len(c.items) {
-		c.items[c.pos] = item
-	} else {
-		c.items = append(c.items, item)
-	}
+	c.stack.Push(item)
 	if c.Listener != nil {
 		c.Listener(zc.NewStackEvent(c, "push"))
 	}
-	c.pos++
 }
 
 func (c *Calc) Pop() zc.Item {
-	if c.pos == 0 {
-		panic(zc.ErrStackEmpty)
-	}
-	c.pos--
+	item := c.stack.Pop()
 	if c.Listener != nil {
 		c.Listener(zc.NewStackEvent(c, "pop"))
 	}
-	return c.items[c.pos]
+	return item
 }
 
 func (c *Calc) Stack() []zc.Item {
-	return c.items[:c.pos]
+	return c.stack.Items()
 }
 
 func (c *Calc) SetStack(items []zc.Item) {
-	c.items = items
-	c.pos = len(c.items)
+	c.stack.SetItems(items)
 }
 
 func (c *Calc) Len() int {
-	return c.pos
+	return c.stack.Len()
 }
 
 func (c *Calc) String() string {
@@ -83,31 +74,35 @@ func (c *Calc) Raise(err error) {
 }
 
 func (c *Calc) Label() string {
-	if c.pos == 0 {
+	if c.stack.Len() == 0 {
 		panic(zc.ErrStackEmpty)
 	}
-	return c.items[c.pos-1].Label
+	return c.stack.Get(0).Label
 }
 
 func (c *Calc) Unit() string {
-	if c.pos == 0 {
+	if c.stack.Len() == 0 {
 		panic(zc.ErrStackEmpty)
 	}
-	return c.items[c.pos-1].Unit
+	return c.stack.Get(0).Unit
 }
 
 func (c *Calc) SetLabel(label string) {
-	if c.pos == 0 {
+	if c.stack.Len() == 0 {
 		panic(zc.ErrStackEmpty)
 	}
-	c.items[c.pos-1].Label = label
+	item := c.stack.Get(0)
+	item.Label = label
+	c.stack.Set(0, item)
 }
 
 func (c *Calc) SetUnit(unit string) {
-	if c.pos == 0 {
+	if c.stack.Len() == 0 {
 		panic(zc.ErrStackEmpty)
 	}
-	c.items[c.pos-1].Unit = unit
+	item := c.stack.Get(0)
+	item.Unit = unit
+	c.stack.Set(0, item)
 }
 
 func (c *Calc) Eval(line string) error {
@@ -209,7 +204,7 @@ func (c *Calc) isFuncMatch(params []zc.Type, varParam zc.Type) (bool, error) {
 		}
 	}
 	if varParam != nil {
-		for i := len(params); i < c.pos; i++ {
+		for i := len(params); i < c.stack.Len(); i++ {
 			ok, err := c.isParamMatch(i, varParam)
 			switch {
 			case err != nil:
@@ -223,7 +218,7 @@ func (c *Calc) isFuncMatch(params []zc.Type, varParam zc.Type) (bool, error) {
 }
 
 func (c *Calc) isParamMatch(index int, param zc.Type) (bool, error) {
-	arg := c.items[c.pos-index-1]
+	arg := c.stack.Get(index)
 	if arg.Type == param {
 		return true, nil
 	}
@@ -232,7 +227,7 @@ func (c *Calc) isParamMatch(index int, param zc.Type) (bool, error) {
 }
 
 func (c *Calc) convertArg(index int, param zc.Type) {
-	arg := c.items[c.pos-index-1]
+	arg := c.stack.Get(index)
 	if arg.Type == param {
 		return
 	}
@@ -240,7 +235,7 @@ func (c *Calc) convertArg(index int, param zc.Type) {
 	if !ok || err != nil {
 		panic("unexpected: should be correct type")
 	}
-	c.items[c.pos-index-1] = zc.Item{TypeVal: conv, Type: param}
+	c.stack.Set(index, zc.Item{TypeVal: conv, Type: param})
 }
 
 func (c *Calc) convert(params []zc.Type, varParam zc.Type) {
@@ -248,15 +243,15 @@ func (c *Calc) convert(params []zc.Type, varParam zc.Type) {
 		c.convertArg(i, param)
 	}
 	if varParam != nil {
-		for i := len(params); i < c.pos; i++ {
+		for i := len(params); i < c.stack.Len(); i++ {
 			c.convertArg(i, varParam)
 		}
 	}
 }
 
 func (c *Calc) errTypeMismatch(op zc.Op) error {
-	for i := 0; i < c.pos; i++ {
-		arg := c.items[c.pos-i-1]
+	for i := 0; i < c.stack.Len(); i++ {
+		arg := c.stack.Get(i)
 		good := false
 		for _, fn := range op.Funcs {
 			var param zc.Type
