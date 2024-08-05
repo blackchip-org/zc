@@ -246,7 +246,11 @@ func genOpDocs(vols []zc.VolDef) {
 
 			fmtNames := strings.Join(names, ", ")
 			entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
-			tab.Row(entry, op.Title)
+			title := op.Title
+			if op.Subtitle != "" {
+				title += ", " + op.Subtitle
+			}
+			tab.Row(entry, title)
 		}
 		fmt.Fprint(f, tab.Format())
 		fmt.Fprintln(f)
@@ -373,6 +377,9 @@ func genIndex(vols []zc.VolDef) {
 				title := vol.Subtitle
 				if title == "" {
 					title = op.Title
+					if op.Subtitle != "" {
+						title = op.Subtitle
+					}
 				}
 				e := entry{
 					name:   op.Name,

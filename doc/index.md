@@ -32,7 +32,7 @@
 ## f
 - [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
 - [`factorial`](ops/stat.md#factorial): Factorial
-  - [`factorial/f`](ops/stat.md#factorialf): Factorial
+  - [`factorial/f`](ops/stat.md#factorialf): floating point
 
 ## l
 - [`label`](ops/anno.md#label): Attach label

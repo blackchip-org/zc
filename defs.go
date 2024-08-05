@@ -1,15 +1,16 @@
 package zc
 
 type OpDef struct {
-	Name    string    `yaml:"name"`
-	Ident   string    `yaml:"ident"`
-	Aliases []string  `yaml:"aliases"`
-	Title   string    `yaml:"title"`
-	Funcs   []FuncDef `yaml:"funcs"`
-	Macro   string    `yaml:"macro"`
-	Desc    string    `yaml:"desc"`
-	Example []Expect  `yaml:"example"`
-	Tests   []Test    `yaml:"tests"`
+	Name     string    `yaml:"name"`
+	Ident    string    `yaml:"ident"`
+	Aliases  []string  `yaml:"aliases"`
+	Title    string    `yaml:"title"`
+	Subtitle string    `yaml:"subtitle"`
+	Funcs    []FuncDef `yaml:"funcs"`
+	Macro    string    `yaml:"macro"`
+	Desc     string    `yaml:"desc"`
+	Example  []Expect  `yaml:"example"`
+	Tests    []Test    `yaml:"tests"`
 }
 
 type FuncDef struct {

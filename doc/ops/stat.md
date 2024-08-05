@@ -6,10 +6,10 @@ Statistical calculations
 
 ## Index
 
-| Operation                            | Description
-|--------------------------------------|------------
-| [`factorial, fact`](#factorial)      | Factorial  
-| [`factorial/f, fact/f`](#factorialf) | Factorial  
+| Operation                            | Description              
+|--------------------------------------|--------------------------
+| [`factorial, fact`](#factorial)      | Factorial                
+| [`factorial/f, fact/f`](#factorialf) | Factorial, floating point
 
 
 ## Operations

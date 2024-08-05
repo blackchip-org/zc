@@ -22,6 +22,7 @@ ops:
 - name: factorial/f
   aliases: [fact/f]
   title: Factorial
+  subtitle: floating point
   funcs:
   - name: FactBigFloat
     params: [x:Int/u]
