@@ -7,10 +7,6 @@ import (
 	"strings"
 )
 
-// func ErrArgMismatch(name string) error {
-// 	return fmt.Errorf("argument mismatch for operation: %v", name)
-// }
-
 var ErrDivisionByZero = errors.New("division by zero")
 
 func ErrInfinity(sign int) error {
@@ -35,6 +31,7 @@ func ErrNoSuchOp(name string) error {
 }
 
 var ErrNotANumber = errors.New("not a number")
+var ErrNotEnoughArgs = errors.New("not enough arguments")
 
 func ErrOp(name string, err error) error {
 	return fmt.Errorf("%v: %v", name, err)

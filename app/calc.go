@@ -275,5 +275,5 @@ func (c *Calc) errTypeMismatch(op zc.Op) error {
 			return zc.ErrUnexpectedType(arg.Val())
 		}
 	}
-	panic("unexpected")
+	return zc.ErrNotEnoughArgs
 }

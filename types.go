@@ -2,6 +2,7 @@ package zc
 
 import (
 	"fmt"
+	"math"
 	"math/big"
 	"strconv"
 
@@ -295,7 +296,16 @@ func (t Float64Type) As(a any) float64 {
 }
 
 func (t Float64Type) Push(c Calc, val float64) {
-	c.Push(Item{TypeVal: val, Type: t})
+	switch {
+	case math.IsNaN(val):
+		c.Raise(ErrNotANumber)
+	case math.IsInf(val, 1):
+		c.Raise(ErrInfinity(1))
+	case math.IsInf(val, -1):
+		c.Raise(ErrInfinity(-1))
+	default:
+		c.Push(Item{TypeVal: val, Type: t})
+	}
 }
 
 func (t Float64Type) Pop(c Calc) float64 {
