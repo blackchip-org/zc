@@ -11,12 +11,25 @@
 
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
+- [`abs`](ops/sci.md#abs): Absolute value
+- [`acos`](ops/sci.md#acos): Inverse cosine
+- [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
   - [`add/f`](ops/basic_Float.md#addf): floating point
+- [`asin`](ops/sci.md#asin): Inverse sine
+- [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
+- [`atan`](ops/sci.md#atan): Inverse tangent
+- [`atan2`](ops/sci.md#atan2): Inverse tangent
+- [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
+- [`cb`](ops/sci.md#cb): Cube of a number
+- [`cbrt`](ops/sci.md#cbrt): Cube root
+- [`ceil`](ops/sci.md#ceil): Ceiling
 - [`clear`](ops/stack.md#clear): Clear
+- [`cos`](ops/sci.md#cos): Cosine
+- [`cosh`](ops/sci.md#cosh): Hyperbolic cosine
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
@@ -29,13 +42,19 @@
 - [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
 - [`dup`](ops/stack.md#dup): Duplicate
 
+## e
+- [`exp`](ops/sci.md#exp): Natural exponential
+
 ## f
 - [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
 - [`factorial`](ops/stat.md#factorial): Factorial
   - [`factorial/f`](ops/stat.md#factorialf): floating point
+- [`floor`](ops/sci.md#floor): Floor
 
 ## l
 - [`label`](ops/anno.md#label): Attach label
+- [`log`](ops/sci.md#log): Natural logarithm
+- [`log10`](ops/sci.md#log10): Decimal logarithm
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
@@ -63,11 +82,17 @@
 - [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/f`](ops/basic_Float.md#signf): floating point
+- [`sin`](ops/sci.md#sin): Sine
+- [`sinh`](ops/sci.md#sinh): Hyperbolic sine
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/basic_Float.md#subf): floating point
+
+## t
+- [`tan`](ops/sci.md#tan): Tangent
+- [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit

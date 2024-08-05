@@ -15,6 +15,7 @@ func init() {
 		vols.BasicFloat,
 		vols.Conf,
 		vols.Format,
+		vols.Sci,
 		vols.Stack,
 		vols.Stat,
 	)
