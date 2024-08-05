@@ -12,6 +12,7 @@
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`add`](ops/basic.md#add): Addition
+  - [`add/f`](ops/basic_Float.md#addf): floating point
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
@@ -20,6 +21,7 @@
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
 - [`div`](ops/basic.md#div): Division
+  - [`div/f`](ops/basic_Float.md#divf): floating point
   - [`div/i`](ops/basic.md#divi): Euclidean integer division
 - [`div.mod`](ops/basic.md#divmod): Division with modulus
 - [`div.rem`](ops/basic.md#divrem): Division with remainder
@@ -39,9 +41,11 @@
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
+  - [`mul/f`](ops/basic_Float.md#mulf): floating point
 
 ## n
 - [`neg`](ops/basic.md#neg): Negation
+  - [`neg/f`](ops/basic_Float.md#negf): floating point
 
 ## p
 - [`pow`](ops/basic.md#pow): Exponentiation
@@ -58,9 +62,12 @@
 - [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
 - [`sign`](ops/basic.md#sign): Sign
+  - [`sign/f`](ops/basic_Float.md#signf): floating point
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
+  - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
 - [`sub`](ops/basic.md#sub): Subtraction
+  - [`sub/f`](ops/basic_Float.md#subf): floating point
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit

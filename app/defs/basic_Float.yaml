@@ -1,0 +1,109 @@
+name: basic/Float
+title: Basic calculator
+subtitle: floating point
+category: calc
+
+ops:
+- name: add/f
+  title: Addition
+  funcs:
+  - name: AddBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Float/128]
+  desc: Adds *x* to *y*.
+  example:
+  - i: 1.1 2.2 add/f
+    o: [3.3000000000000000000000000000000002]
+
+- name: div/f
+  title: Division
+  funcs:
+  - name: DivBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Float/128]
+  desc: |-
+    Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
+  example:
+  - i: 4 2 div/f
+    o: [2]
+  tests:
+  - name: Thirds
+    test:
+      - i: 2 3 div/f
+        o: [0.6666666666666666666666666666666666]
+  - name: Zero
+    test:
+      - i: 6.6 0 div/f
+        error: "div/f: division by zero"
+
+- name: mul/f
+  title: Multiplication
+  funcs:
+  - name: MulBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Float/128]
+  desc: Multiplies *x* by *y*.
+  example:
+  - i: 1.1 2.2 mul/f
+    o: [2.4200000000000000000000000000000003]
+
+- name: neg/f
+  title: Negation
+  funcs:
+  - name: NegBigFloat
+    params: [x:Float/128]
+    returns: [Float/128]
+  desc: Changes the sign of *x*.
+  example:
+  - i: -6
+    o: [-6]
+  - i: neg/f
+    o: [6]
+  - i: neg/f
+    o: [-6]
+
+- name: sign/f
+  title: Sign
+  funcs:
+  - name: SignBigFloat
+    params: [x:Float/128]
+    returns: [Int/s]
+  desc: |-
+    Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+    if *x* is zero.
+  example:
+  - i: c -6 sign/f
+    o: [-1]
+  - i: c 6 sign/f
+    o: [1]
+  - i: c 0 sign/f
+    o: [0]
+
+- name: sqrt/f
+  title: Square Root
+  funcs:
+  - name: SqrtBigFloat
+    params: [x:Float/128]
+    returns: [Float/128]
+  desc: |-
+    The square root of *x*. If *x* is not Complex and is less than zero, an
+    'invalid argument' error is raised.
+  example:
+  - i: 1.5625 sqrt/f
+    o: [1.25]
+  tests:
+    - name: Negative
+      test:
+      - i: -1 sqrt/f
+        error: "sqrt/f: invalid argument, -1 < 0"
+
+- name: sub/f
+  title: Subtraction
+  funcs:
+  - name: SubBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Float/128]
+  desc: Subtracts the value of *y* from *x*
+  example:
+  - i: 3.3 2.2 sub/f
+    o: [1.0999999999999999999999999999999997]

@@ -58,7 +58,7 @@ ops:
   - name: Thirds
     test:
       - i: 2 3 div
-        o: [0.6666666666666667]
+        o: [0.6666666666666666666666666667]
   - name: Zero
     test:
       - i: 6.6 0 div

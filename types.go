@@ -61,12 +61,12 @@ func (t AnyType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type BigFloatType struct{}
 
-func (t BigFloatType) AppName() string { return "Float" }
+func (t BigFloatType) AppName() string { return "Float/128" }
 func (t BigFloatType) GoName() string  { return "*big.Float" }
 
 func (t BigFloatType) New() *big.Float {
 	f := floatPool.New()
-	f.SetPrec(53)
+	f.SetPrec(113)
 	return f
 }
 
@@ -105,7 +105,7 @@ func (t BigFloatType) Parse(_ coll.State, str string) (any, bool, error) {
 
 func (t BigFloatType) Format(a any) string {
 	v := t.As(a)
-	return FormatExponent(v.Text('g', 16))
+	return FormatExponent(v.Text('g', -1))
 }
 
 func (t BigFloatType) Dup(a any) any {
@@ -247,10 +247,10 @@ func (t DecimalType) Pop(c Calc) *apd.Decimal {
 }
 
 func (t DecimalType) Parse(state coll.State, str string) (any, bool, error) {
-	dec := vars.ForConf(state)
+	d := vars.ForConf(state).DecMath
 	str = PreParseDecimal(str)
 	v := t.New()
-	_, cond, err := dec.DecMath.SetString(v, str)
+	_, cond, err := d.SetString(v, str)
 	switch {
 	case cond.Overflow() || (err != nil && err.Error() == "exponent out of range"):
 		t.Recycle(v)

@@ -12,7 +12,7 @@ func TestOpDocs_Format_Round(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("200000 3 div")
-	c.AssertStack("66666.66666666667")
+	c.AssertStack("66666.66666666666666666666667")
 
 	c.Eval("3 round")
 	c.AssertStack("66666.667")

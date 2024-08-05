@@ -42,12 +42,12 @@ Alias: `fact/f`
 
 Stack effects:
 ```
-( x:Int/u -- Float )
+( x:Int/u -- Float/128 )
 ```
 
 Example:
 
-| Input         | Stack    
-|---------------|----------
-| `c 3 fact/f`  | `6`      
-| `c 10 fact/f` | `3628800`
+| Input         | Stack     
+|---------------|-----------
+| `c 3 fact/f`  | `6`       
+| `c 10 fact/f` | `3.6288e6`

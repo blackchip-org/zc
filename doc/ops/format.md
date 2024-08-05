@@ -33,12 +33,12 @@ Stack effects:
 
 Example:
 
-| Input          | Stack              
-|----------------|--------------------
-| `200000 3 div` | `66666.66666666667`
-| `3 round`      | `66666.667`        
-| `0 round`      | `66667`            
-| `-3 round`     | `67000`            
+| Input          | Stack                          
+|----------------|--------------------------------
+| `200000 3 div` | `66666.66666666666666666666667`
+| `3 round`      | `66666.667`                    
+| `0 round`      | `66667`                        
+| `-3 round`     | `67000`                        
 
 ### scientific.notation
 
@@ -48,7 +48,7 @@ Alias: `sci`
 
 Stack effects:
 ```
-( x:Float -- x:Text )
+( x:Float/128 -- x:Text )
 ```
 
 Example:

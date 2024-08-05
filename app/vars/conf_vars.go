@@ -12,7 +12,7 @@ import (
 const ConfID = "conf"
 
 const (
-	DefaultPrec         = 16
+	DefaultPrec         = 28
 	DefaultRoundingMode = big.ToNearestEven
 )
 

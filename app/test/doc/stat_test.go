@@ -25,5 +25,5 @@ func TestOpDocs_Stat_FactorialF(t *testing.T) {
 	c.AssertStack("6")
 
 	c.Eval("c 10 fact/f")
-	c.AssertStack("3628800")
+	c.AssertStack("3.6288e6")
 }

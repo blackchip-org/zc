@@ -12,6 +12,7 @@ func init() {
 	mainCatalog.AddVol(
 		vols.Anno,
 		vols.Basic,
+		vols.BasicFloat,
 		vols.Conf,
 		vols.Format,
 		vols.Stack,

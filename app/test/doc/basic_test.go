@@ -44,7 +44,7 @@ func TestOpDocs_Basic_Div_Thirds(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 3 div")
-	c.AssertStack("0.6666666666666667")
+	c.AssertStack("0.6666666666666666666666666667")
 }
 
 func TestOpDocs_Basic_Div_Zero(t *testing.T) {

@@ -25,7 +25,7 @@ ops:
   funcs:
   - name: FactBigFloat
     params: [x:Int/u]
-    returns: [Float]
+    returns: [Float/128]
   desc: |-
     The product of all positive integers less than or equal to *n*. If *n* is
     negative, an invalid argument error is raised.
@@ -33,4 +33,4 @@ ops:
   - i: c 3 fact/f
     o: [6]
   - i: c 10 fact/f
-    o: [3628800]
+    o: [3.6288e6]
