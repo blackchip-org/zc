@@ -19,6 +19,16 @@ var (
 			},
 		},
 	}
+	Drop = zc.Op{
+		Name: "drop",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Any},
+				Returns: []zc.Type{},
+				Eval:    funcs.Drop,
+			},
+		},
+	}
 	Dup = zc.Op{
 		Name: "dup",
 		Funcs: []zc.Func{
@@ -26,6 +36,16 @@ var (
 				Params:  []zc.Type{zc.Any},
 				Returns: []zc.Type{zc.Any, zc.Any},
 				Eval:    funcs.Dup,
+			},
+		},
+	}
+	Tuck = zc.Op{
+		Name: "tuck",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Any, zc.Any},
+				Returns: []zc.Type{zc.BigInt, zc.Any, zc.BigInt},
+				Eval:    funcs.Tuck,
 			},
 		},
 	}

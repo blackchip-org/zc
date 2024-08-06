@@ -9,6 +9,7 @@
 | [basic](ops/basic.md)   | Basic calculator        
 | [conf](ops/conf.md)     | General configuration   
 | [format](ops/format.md) | Value formatting        
+| [prog](ops/prog.md)     | Programmer's calculator 
 | [sci](ops/sci.md)       | Scientific calculator   
 | [stack](ops/stack.md)   | Stack operations        
 | [stat](ops/stat.md)     | Statistical calculations

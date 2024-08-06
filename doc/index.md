@@ -16,11 +16,18 @@
 - [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
   - [`add/f`](ops/basic_Float.md#addf): floating point
+- [`and`](ops/prog.md#and): Bitwise and
 - [`asin`](ops/sci.md#asin): Inverse sine
 - [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
 - [`atan`](ops/sci.md#atan): Inverse tangent
 - [`atan2`](ops/sci.md#atan2): Inverse tangent
 - [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
+
+## b
+- [`bin`](ops/prog.md#bin): Binary conversion
+- [`bit`](ops/prog.md#bit): Bit value
+- [`bits`](ops/prog.md#bits): Bit length
+- [`bytes`](ops/prog.md#bytes): Byte length
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
@@ -34,6 +41,7 @@
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- [`dec`](ops/prog.md#dec): Decimal conversion
 - [`div`](ops/basic.md#div): Division
   - [`div/f`](ops/basic_Float.md#divf): floating point
   - [`div/i`](ops/basic.md#divi): Euclidean integer division
@@ -41,6 +49,7 @@
 - [`div.rem`](ops/basic.md#divrem): Division with remainder
 - [`dm`](ops/basic.md#divmod): Alias for [div.mod](ops/basic.md#divmod)
 - [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
+- [`drop`](ops/stack.md#drop): Drop
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## e
@@ -53,12 +62,17 @@
   - [`factorial/f`](ops/stat.md#factorialf): floating point
 - [`floor`](ops/basic.md#floor): Floor
 
+## h
+- [`hex`](ops/prog.md#hex): Hexadecimal conversion
+
 ## l
 - [`label`](ops/anno.md#label): Attach label
+- [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`log`](ops/basic.md#log): Natural logarithm
   - [`log/f`](ops/basic_Float.md#logf): floating point
 - [`log10`](ops/basic.md#log10): Decimal logarithm
   - [`log10/f`](ops/basic_Float.md#log10f): floating point
+- [`lsh`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
@@ -69,6 +83,11 @@
 ## n
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/f`](ops/basic_Float.md#negf): floating point
+- [`not`](ops/prog.md#not): Bitwise not
+
+## o
+- [`oct`](ops/prog.md#oct): Octal conversion
+- [`or`](ops/prog.md#or): Bitwise or
 
 ## p
 - [`pow`](ops/basic.md#pow): Exponentiation
@@ -76,9 +95,11 @@
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
 - [`rem`](ops/basic.md#rem): Remainder
+- [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`round`](ops/format.md#round): Round number
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
 - [`rounding.mode?`](ops/conf.md#roundingmode): Gets the default rounding mode
+- [`rsh`](ops/prog.md#rightshift): Alias for [right.shift](ops/prog.md#rightshift)
 
 ## s
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
@@ -97,6 +118,10 @@
 ## t
 - [`tan`](ops/sci.md#tan): Tangent
 - [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
+- [`tuck`](ops/stack.md#tuck): Copy top and place below
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit
+
+## x
+- [`xor`](ops/prog.md#xor): Bitwise exclusive or

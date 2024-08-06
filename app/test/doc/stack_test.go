@@ -18,6 +18,16 @@ func TestOpDocs_Stack_Clear(t *testing.T) {
 	c.AssertStack()
 }
 
+func TestOpDocs_Stack_Drop(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("drop")
+	c.AssertStack("1", "2")
+}
+
 func TestOpDocs_Stack_Dup(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -26,4 +36,23 @@ func TestOpDocs_Stack_Dup(t *testing.T) {
 
 	c.Eval("dup")
 	c.AssertStack("10", "10")
+}
+
+func TestOpDocs_Stack_Tuck(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2")
+	c.AssertStack("1", "2")
+
+	c.Eval("tuck")
+	c.AssertStack("2", "1", "2")
+
+	c.Eval("add")
+	c.AssertStack("2", "3")
+
+	c.Eval("tuck add")
+	c.AssertStack("3", "5")
+
+	c.Eval("tuck add")
+	c.AssertStack("5", "8")
 }

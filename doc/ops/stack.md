@@ -6,10 +6,12 @@ Stack operations
 
 ## Index
 
-| Operation            | Description
-|----------------------|------------
-| [`clear, c`](#clear) | Clear      
-| [`dup`](#dup)        | Duplicate  
+| Operation            | Description             
+|----------------------|-------------------------
+| [`clear, c`](#clear) | Clear                   
+| [`drop`](#drop)      | Drop                    
+| [`dup`](#dup)        | Duplicate               
+| [`tuck`](#tuck)      | Copy top and place below
 
 
 ## Operations
@@ -32,6 +34,23 @@ Example:
 | `1 2 3` | `1 \| 2 \| 3`
 | `c`     |              
 
+### drop
+
+Remove the top item from the stack. An item can also be dropped by
+entering in a blank line.
+
+Stack effects:
+```
+( Any --  )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `drop`  | `1 \| 2`     
+
 ### dup
 
 Duplicates the top value on the stack
@@ -47,3 +66,26 @@ Example:
 |-------|-----------
 | `10`  | `10`      
 | `dup` | `10 \| 10`
+
+### tuck
+
+Duplicates the top item on the stack, *y*, and places it below *x*.
+
+This operation can be useful for a calculation when accumulating a value
+which would otherwise be consumed by another operation. The example
+below shows using `tuck` to calculate fibonacci numbers.
+
+Stack effects:
+```
+( x:Any y:Any -- y:Int x:Any y:Int )
+```
+
+Example:
+
+| Input      | Stack        
+|------------|--------------
+| `1 2`      | `1 \| 2`     
+| `tuck`     | `2 \| 1 \| 2`
+| `add`      | `2 \| 3`     
+| `tuck add` | `3 \| 5`     
+| `tuck add` | `5 \| 8`     
