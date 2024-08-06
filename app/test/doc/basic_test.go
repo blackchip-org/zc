@@ -41,6 +41,13 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 	c.AssertStack("8+8i")
 }
 
+func TestOpDocs_Basic_Cb(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("3 cb")
+	c.AssertStack("27")
+}
+
 func TestOpDocs_Basic_Cbrt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -150,11 +157,18 @@ func TestOpDocs_Basic_Floor(t *testing.T) {
 	c.AssertStack("6")
 }
 
-func TestOpDocs_Basic_Ln(t *testing.T) {
+func TestOpDocs_Basic_Log(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("7.5 ln 4 round")
+	c.Eval("7.5 log 4 round")
 	c.AssertStack("2.0149")
+}
+
+func TestOpDocs_Basic_Log_Complex(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("7.5i log 4 round")
+	c.AssertStack("2.0149+1.5708i")
 }
 
 func TestOpDocs_Basic_Log10(t *testing.T) {

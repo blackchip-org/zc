@@ -126,29 +126,6 @@ ops:
   - i: 2 cosh 5 round
     o: [3.7622]
 
-- name: cb
-  title: Cube of a number
-  macro: dup dup mul mul
-  desc: |-
-    The cube of a number, x³
-  example:
-  - i: 3 cb
-    o: [27]
-
-- name: log
-  title: Natural logarithm
-  funcs:
-  - name: LogFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
-  - name: LogComplex
-    params: [x:Complex]
-    returns: [Complex]
-  desc: Natural logarithm of *x*.
-  example:
-  - i: 8 log 5 round
-    o: [2.07944]
-
 - name: sin
   title: Sine
   funcs:

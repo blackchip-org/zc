@@ -60,6 +60,13 @@ func TestOpDocs_BasicFloat_ExpF(t *testing.T) {
 	c.AssertStack("7.38906")
 }
 
+func TestOpDocs_BasicFloat_LogF(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("8 log/f 5 round")
+	c.AssertStack("2.07944")
+}
+
 func TestOpDocs_BasicFloat_Log10F(t *testing.T) {
 	c := app.NewCalcTester(t)
 

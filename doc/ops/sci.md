@@ -15,10 +15,8 @@ Scientific calculator
 | [`atan`](#atan)   | Inverse tangent           
 | [`atan2`](#atan2) | Inverse tangent           
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
-| [`cb`](#cb)       | Cube of a number          
 | [`cos`](#cos)     | Cosine                    
 | [`cosh`](#cosh)   | Hyperbolic cosine         
-| [`log`](#log)     | Natural logarithm         
 | [`sin`](#sin)     | Sine                      
 | [`sinh`](#sinh)   | Hyperbolic sine           
 | [`tan`](#tan)     | Tangent                   
@@ -138,21 +136,6 @@ Example:
 |---------------------|----------
 | `0.5 atanh 5 round` | `0.54931`
 
-### cb
-
-The cube of a number, x³
-
-Macro definition:
-```
-def cb dup dup mul mul
-```
-
-Example:
-
-| Input  | Stack
-|--------|------
-| `3 cb` | `27` 
-
 ### cos
 
 Cosine of *x* in radians.
@@ -184,22 +167,6 @@ Example:
 | Input            | Stack   
 |------------------|---------
 | `2 cosh 5 round` | `3.7622`
-
-### log
-
-Natural logarithm of *x*.
-
-Stack effects:
-```
-( x:Float/64 -- Float/64 )
-( x:Complex -- Complex )
-```
-
-Example:
-
-| Input           | Stack    
-|-----------------|----------
-| `8 log 5 round` | `2.07944`
 
 ### sin
 

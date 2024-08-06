@@ -10,6 +10,7 @@ Basic calculator
 |--------------------------|---------------------------
 | [`abs`](#abs)            | Absolute value            
 | [`add, a, +`](#add)      | Addition                  
+| [`cb`](#cb)              | Cube of a number          
 | [`cbrt`](#cbrt)          | Cube root                 
 | [`ceil`](#ceil)          | Ceiling                   
 | [`div, d, /`](#div)      | Division                  
@@ -18,7 +19,7 @@ Basic calculator
 | [`div/i`](#divi)         | Euclidean integer division
 | [`exp`](#exp)            | Natural exponential       
 | [`floor`](#floor)        | Floor                     
-| [`ln`](#ln)              | Natural logarithm         
+| [`log`](#log)            | Natural logarithm         
 | [`log10`](#log10)        | Decimal logarithm         
 | [`mod`](#mod)            | Modulus                   
 | [`mul, m, *`](#mul)      | Multiplication            
@@ -80,6 +81,21 @@ Example:
 | `c 1.1 2.2 a`   | `3.3` 
 | `c 1/2 1/4 add` | `3/4` 
 | `c 6+6i 2+2i a` | `8+8i`
+
+### cb
+
+Cube of a nubmer, x³
+
+Macro definition:
+```
+def cb dup dup mul mul
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `3 cb` | `27` 
 
 ### cbrt
 
@@ -221,20 +237,21 @@ Example:
 |--------------|------
 | `6.12 floor` | `6`  
 
-### ln
+### log
 
 Natural logarithm of *x*.
 
 Stack effects:
 ```
 ( x:Dec -- Dec )
+( x:Complex -- Complex )
 ```
 
 Example:
 
-| Input            | Stack   
-|------------------|---------
-| `7.5 ln 4 round` | `2.0149`
+| Input             | Stack   
+|-------------------|---------
+| `7.5 log 4 round` | `2.0149`
 
 ### log10
 

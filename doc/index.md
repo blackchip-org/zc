@@ -24,7 +24,7 @@
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
-- [`cb`](ops/sci.md#cb): Cube of a number
+- [`cb`](ops/basic.md#cb): Cube of a number
 - [`cbrt`](ops/basic.md#cbrt): Cube root
   - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
 - [`ceil`](ops/basic.md#ceil): Ceiling
@@ -55,8 +55,8 @@
 
 ## l
 - [`label`](ops/anno.md#label): Attach label
-- [`ln`](ops/basic.md#ln): Natural logarithm
-- [`log`](ops/sci.md#log): Natural logarithm
+- [`log`](ops/basic.md#log): Natural logarithm
+  - [`log/f`](ops/basic_Float.md#logf): floating point
 - [`log10`](ops/basic.md#log10): Decimal logarithm
   - [`log10/f`](ops/basic_Float.md#log10f): floating point
 

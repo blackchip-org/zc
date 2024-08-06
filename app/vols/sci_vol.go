@@ -19,13 +19,10 @@ var Sci = zc.Vol{
 		ops.Atanh,
 		ops.Cos,
 		ops.Cosh,
-		ops.Log,
 		ops.Sin,
 		ops.Sinh,
 		ops.Tan,
 		ops.Tanh,
 	},
-	Macros: []zc.Macro{
-		{Name: "cb", Expr: "dup dup mul mul"},
-	},
+	Macros: []zc.Macro{},
 }

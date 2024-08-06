@@ -12,6 +12,7 @@ Basic calculator
 | [`cbrt/f`](#cbrtf)   | Cube root, 64-bit floating point
 | [`div/f`](#divf)     | Division                        
 | [`exp/f`](#expf)     | Natural exponential             
+| [`log/f`](#logf)     | Natural logarithm               
 | [`log10/f`](#log10f) | Decimal logarithm               
 | [`mul/f`](#mulf)     | Multiplication                  
 | [`neg/f`](#negf)     | Negation                        
@@ -83,6 +84,21 @@ Example:
 | Input             | Stack    
 |-------------------|----------
 | `2 exp/f 5 round` | `7.38906`
+
+### log/f
+
+Natural logarithm of *x*.
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input             | Stack    
+|-------------------|----------
+| `8 log/f 5 round` | `2.07944`
 
 ### log10/f
 

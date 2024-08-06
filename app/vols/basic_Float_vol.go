@@ -14,6 +14,7 @@ var BasicFloat = zc.Vol{
 		ops.CbrtF,
 		ops.DivF,
 		ops.ExpF,
+		ops.LogF,
 		ops.Log10F,
 		ops.MulF,
 		ops.NegF,

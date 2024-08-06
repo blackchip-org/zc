@@ -48,6 +48,16 @@ var (
 			},
 		},
 	}
+	LogF = zc.Op{
+		Name: "log/f",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.LogFloat64,
+			},
+		},
+	}
 	Log10F = zc.Op{
 		Name: "log10/f",
 		Funcs: []zc.Func{

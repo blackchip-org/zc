@@ -53,6 +53,10 @@ var (
 			},
 		},
 	}
+	Cb = zc.Op{
+		Name:  "cb",
+		Funcs: []zc.Func{},
+	}
 	Cbrt = zc.Op{
 		Name: "cbrt",
 		Funcs: []zc.Func{
@@ -148,13 +152,18 @@ var (
 			},
 		},
 	}
-	Ln = zc.Op{
-		Name: "ln",
+	Log = zc.Op{
+		Name: "log",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Decimal},
 				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.LnDecimal,
+				Eval:    funcs.LogDecimal,
+			},
+			{
+				Params:  []zc.Type{zc.Complex},
+				Returns: []zc.Type{zc.Complex},
+				Eval:    funcs.LogComplex,
 			},
 		},
 	}

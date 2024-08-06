@@ -241,7 +241,7 @@ func FloorDecimal(c zc.Calc) {
 }
 
 // ----------------------------------------------------------------------------
-func LnDecimal(c zc.Calc) {
+func LogDecimal(c zc.Calc) {
 	d := vars.ForConf(c).DecMath
 	x := zc.Decimal.Pop(c)
 	_, err := d.Ln(x, x)
@@ -250,6 +250,18 @@ func LnDecimal(c zc.Calc) {
 		return
 	}
 	zc.Decimal.Push(c, x)
+}
+
+func LogFloat64(c zc.Calc) {
+	x := zc.Float64.Pop(c)
+	z := math.Log(x)
+	zc.Float64.Push(c, z)
+}
+
+func LogComplex(c zc.Calc) {
+	x := zc.Complex.Pop(c)
+	z := cmplx.Log(x)
+	zc.Complex.Push(c, z)
 }
 
 // ----------------------------------------------------------------------------

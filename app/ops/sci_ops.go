@@ -108,10 +108,6 @@ var (
 			},
 		},
 	}
-	Cb = zc.Op{
-		Name:  "cb",
-		Funcs: []zc.Func{},
-	}
 	Cos = zc.Op{
 		Name: "cos",
 		Funcs: []zc.Func{
@@ -139,21 +135,6 @@ var (
 				Params:  []zc.Type{zc.Complex},
 				Returns: []zc.Type{zc.Complex},
 				Eval:    funcs.CoshComplex,
-			},
-		},
-	}
-	Log = zc.Op{
-		Name: "log",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Float64},
-				Returns: []zc.Type{zc.Float64},
-				Eval:    funcs.LogFloat64,
-			},
-			{
-				Params:  []zc.Type{zc.Complex},
-				Returns: []zc.Type{zc.Complex},
-				Eval:    funcs.LogComplex,
 			},
 		},
 	}

@@ -68,6 +68,17 @@ ops:
   - i: 2 exp/f 5 round
     o: [7.38906]
 
+- name: log/f
+  title: Natural logarithm
+  funcs:
+  - name: LogFloat64
+    params: [x:Float/64]
+    returns: [Float/64]
+  desc: Natural logarithm of *x*.
+  example:
+  - i: 8 log/f 5 round
+    o: [2.07944]
+
 - name: log10/f
   title: Decimal logarithm
   funcs:

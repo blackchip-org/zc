@@ -58,6 +58,14 @@ ops:
   - i: c 6+6i 2+2i a
     o: [8+8i]
 
+- name: cb
+  title: Cube of a number
+  macro: dup dup mul mul
+  desc: Cube of a nubmer, x³
+  example:
+  - i: 3 cb
+    o: [27]
+
 - name: cbrt
   title: Cube root
   funcs:
@@ -205,16 +213,24 @@ ops:
   - i: 6.12 floor
     o: [6]
 
-- name: ln 
+- name: log
   title: Natural logarithm
   funcs: 
-  - name: LnDecimal
+  - name: LogDecimal
     params: [x:Dec]
     returns: [Dec]
+  - name: LogComplex
+    params: [x:Complex]
+    returns: [Complex]
   desc: Natural logarithm of *x*. 
   example:
-  - i: 7.5 ln 4 round
+  - i: 7.5 log 4 round
     o: [2.0149]
+  tests:
+  - name: Complex
+    test:
+      - i: 7.5i log 4 round
+        o: [2.0149+1.5708i]
 
 - name: log10
   title: Decimal logarithm

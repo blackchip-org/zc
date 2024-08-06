@@ -20,7 +20,7 @@ var Basic = zc.Vol{
 		ops.DivI,
 		ops.Exp,
 		ops.Floor,
-		ops.Ln,
+		ops.Log,
 		ops.Log10,
 		ops.Mod,
 		ops.Mul,
@@ -34,6 +34,7 @@ var Basic = zc.Vol{
 	Macros: []zc.Macro{
 		{Name: "a", Expr: "add"},
 		{Name: "+", Expr: "add"},
+		{Name: "cb", Expr: "dup dup mul mul"},
 		{Name: "d", Expr: "div"},
 		{Name: "/", Expr: "div"},
 		{Name: "dm", Expr: "div.mod"},

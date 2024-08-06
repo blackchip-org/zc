@@ -57,13 +57,6 @@ func TestOpDocs_Sci_Atanh(t *testing.T) {
 	c.AssertStack("0.54931")
 }
 
-func TestOpDocs_Sci_Cb(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("3 cb")
-	c.AssertStack("27")
-}
-
 func TestOpDocs_Sci_Cos(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -76,13 +69,6 @@ func TestOpDocs_Sci_Cosh(t *testing.T) {
 
 	c.Eval("2 cosh 5 round")
 	c.AssertStack("3.7622")
-}
-
-func TestOpDocs_Sci_Log(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("8 log 5 round")
-	c.AssertStack("2.07944")
 }
 
 func TestOpDocs_Sci_Sin(t *testing.T) {

@@ -127,19 +127,6 @@ func CotComplex(c zc.Calc) {
 }
 
 // ----------------------------------------------------------------------------
-func LogFloat64(c zc.Calc) {
-	x := zc.Float64.Pop(c)
-	z := math.Log(x)
-	zc.Float64.Push(c, z)
-}
-
-func LogComplex(c zc.Calc) {
-	x := zc.Complex.Pop(c)
-	z := cmplx.Log(x)
-	zc.Complex.Push(c, z)
-}
-
-// ----------------------------------------------------------------------------
 func SinFloat64(c zc.Calc) {
 	x := zc.Float64.Pop(c)
 	z := math.Sin(x)
