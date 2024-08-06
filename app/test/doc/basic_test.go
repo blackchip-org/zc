@@ -8,6 +8,23 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
+func TestOpDocs_Basic_Abs(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-6 abs")
+	c.AssertStack("6")
+
+	c.Eval("c 2+2i abs 5 round")
+	c.AssertStack("2.82843")
+}
+
+func TestOpDocs_Basic_Abs_Dec(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-6.6 abs")
+	c.AssertStack("6.6")
+}
+
 func TestOpDocs_Basic_Add(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -22,6 +39,23 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 
 	c.Eval("c 6+6i 2+2i a")
 	c.AssertStack("8+8i")
+}
+
+func TestOpDocs_Basic_Cbrt(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("27")
+	c.AssertStack("27")
+
+	c.Eval("cbrt")
+	c.AssertStack("3")
+}
+
+func TestOpDocs_Basic_Ceil(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.6 ceil")
+	c.AssertStack("7")
 }
 
 func TestOpDocs_Basic_Div(t *testing.T) {
@@ -100,6 +134,34 @@ func TestOpDocs_Basic_DivI_Zero(t *testing.T) {
 
 	c.Eval("6 0 div/i")
 	c.AssertError("div/i: division by zero")
+}
+
+func TestOpDocs_Basic_Exp(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 exp 5 round")
+	c.AssertStack("7.38906")
+}
+
+func TestOpDocs_Basic_Floor(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.12 floor")
+	c.AssertStack("6")
+}
+
+func TestOpDocs_Basic_Ln(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("7.5 ln 4 round")
+	c.AssertStack("2.0149")
+}
+
+func TestOpDocs_Basic_Log10(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("50 log10 5 round")
+	c.AssertStack("1.69897")
 }
 
 func TestOpDocs_Basic_Mod(t *testing.T) {

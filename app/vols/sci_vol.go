@@ -10,7 +10,6 @@ import (
 var Sci = zc.Vol{
 	Name: "sci",
 	Ops: []zc.Op{
-		ops.Abs,
 		ops.Acos,
 		ops.Acosh,
 		ops.Asin,
@@ -18,14 +17,9 @@ var Sci = zc.Vol{
 		ops.Atan,
 		ops.Atan2,
 		ops.Atanh,
-		ops.Cbrt,
-		ops.Ceil,
 		ops.Cos,
 		ops.Cosh,
-		ops.Exp,
-		ops.Floor,
 		ops.Log,
-		ops.Log10,
 		ops.Sin,
 		ops.Sinh,
 		ops.Tan,

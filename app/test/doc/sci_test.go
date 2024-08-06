@@ -8,23 +8,6 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_Sci_Abs(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("-6 abs")
-	c.AssertStack("6")
-
-	c.Eval("c 2+2i abs 5 round")
-	c.AssertStack("2.82843")
-}
-
-func TestOpDocs_Sci_Abs_Dec(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("-6.6 abs")
-	c.AssertStack("6.6")
-}
-
 func TestOpDocs_Sci_Acos(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -81,23 +64,6 @@ func TestOpDocs_Sci_Cb(t *testing.T) {
 	c.AssertStack("27")
 }
 
-func TestOpDocs_Sci_Cbrt(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("27")
-	c.AssertStack("27")
-
-	c.Eval("cbrt")
-	c.AssertStack("3")
-}
-
-func TestOpDocs_Sci_Ceil(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6.6 ceil")
-	c.AssertStack("7")
-}
-
 func TestOpDocs_Sci_Cos(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -112,32 +78,11 @@ func TestOpDocs_Sci_Cosh(t *testing.T) {
 	c.AssertStack("3.7622")
 }
 
-func TestOpDocs_Sci_Exp(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("2 exp 5 round")
-	c.AssertStack("7.38906")
-}
-
-func TestOpDocs_Sci_Floor(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6.12 floor")
-	c.AssertStack("6")
-}
-
 func TestOpDocs_Sci_Log(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("8 log 5 round")
 	c.AssertStack("2.07944")
-}
-
-func TestOpDocs_Sci_Log10(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("50 log10 5 round")
-	c.AssertStack("1.69897")
 }
 
 func TestOpDocs_Sci_Sin(t *testing.T) {

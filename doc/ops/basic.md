@@ -8,11 +8,18 @@ Basic calculator
 
 | Operation                | Description               
 |--------------------------|---------------------------
+| [`abs`](#abs)            | Absolute value            
 | [`add, a, +`](#add)      | Addition                  
+| [`cbrt`](#cbrt)          | Cube root                 
+| [`ceil`](#ceil)          | Ceiling                   
 | [`div, d, /`](#div)      | Division                  
 | [`div.mod, dm`](#divmod) | Division with modulus     
 | [`div.rem, dr`](#divrem) | Division with remainder   
 | [`div/i`](#divi)         | Euclidean integer division
+| [`exp`](#exp)            | Natural exponential       
+| [`floor`](#floor)        | Floor                     
+| [`ln`](#ln)              | Natural logarithm         
+| [`log10`](#log10)        | Decimal logarithm         
 | [`mod`](#mod)            | Modulus                   
 | [`mul, m, *`](#mul)      | Multiplication            
 | [`neg`](#neg)            | Negation                  
@@ -29,6 +36,27 @@ Basic calculator
 
 
 ## Operations
+
+### abs
+
+If *x* is less than zero, the negated value of *x*, otherwise *p0*.
+
+For complex numbers, the distance of *x* from zero on the complex
+plane.
+
+Stack effects:
+```
+( x:Int -- Int )
+( x:Dec -- Dec )
+( x:Complex -- Float/64 )
+```
+
+Example:
+
+| Input                | Stack    
+|----------------------|----------
+| `-6 abs`             | `6`      
+| `c 2+2i abs 5 round` | `2.82843`
 
 ### add
 
@@ -52,6 +80,38 @@ Example:
 | `c 1.1 2.2 a`   | `3.3` 
 | `c 1/2 1/4 add` | `3/4` 
 | `c 6+6i 2+2i a` | `8+8i`
+
+### cbrt
+
+The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Stack effects:
+```
+( x:Dec -- Dec )
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `27`   | `27` 
+| `cbrt` | `3`  
+
+### ceil
+
+The nearest integer value greater than or equal to *x*.
+
+Stack effects:
+```
+( x:Dec -- x:Dec )
+```
+
+Example:
+
+| Input      | Stack
+|------------|------
+| `6.6 ceil` | `7`  
 
 ### div
 
@@ -129,6 +189,68 @@ Example:
 | Input         | Stack
 |---------------|------
 | `-21 4 div/i` | `-6` 
+
+### exp
+
+Natural exponential of *x*.
+
+Stack effects:
+```
+( x:Dec -- Dec )
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input           | Stack    
+|-----------------|----------
+| `2 exp 5 round` | `7.38906`
+
+### floor
+
+The nearest integer value less than or equal to *x*.
+
+Stack effects:
+```
+( x:Dec -- x:Dec )
+```
+
+Example:
+
+| Input        | Stack
+|--------------|------
+| `6.12 floor` | `6`  
+
+### ln
+
+Natural logarithm of *x*.
+
+Stack effects:
+```
+( x:Dec -- Dec )
+```
+
+Example:
+
+| Input            | Stack   
+|------------------|---------
+| `7.5 ln 4 round` | `2.0149`
+
+### log10
+
+Natural logarithm of *x*.
+
+Stack effects:
+```
+( x:Dec -- Dec )
+( x:Complex -- Complex )
+```
+
+Example:
+
+| Input              | Stack    
+|--------------------|----------
+| `50 log10 5 round` | `1.69897`
 
 ### mod
 

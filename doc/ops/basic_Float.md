@@ -6,15 +6,18 @@ Basic calculator
 
 ## Index
 
-| Operation          | Description   
-|--------------------|---------------
-| [`add/f`](#addf)   | Addition      
-| [`div/f`](#divf)   | Division      
-| [`mul/f`](#mulf)   | Multiplication
-| [`neg/f`](#negf)   | Negation      
-| [`sign/f`](#signf) | Sign          
-| [`sqrt/f`](#sqrtf) | Square Root   
-| [`sub/f`](#subf)   | Subtraction   
+| Operation            | Description                     
+|----------------------|---------------------------------
+| [`add/f`](#addf)     | Addition                        
+| [`cbrt/f`](#cbrtf)   | Cube root, 64-bit floating point
+| [`div/f`](#divf)     | Division                        
+| [`exp/f`](#expf)     | Natural exponential             
+| [`log10/f`](#log10f) | Decimal logarithm               
+| [`mul/f`](#mulf)     | Multiplication                  
+| [`neg/f`](#negf)     | Negation                        
+| [`sign/f`](#signf)   | Sign                            
+| [`sqrt/f`](#sqrtf)   | Square Root                     
+| [`sub/f`](#subf)     | Subtraction                     
 
 
 ## Operations
@@ -34,6 +37,23 @@ Example:
 |-----------------|---------------------------------------
 | `1.1 2.2 add/f` | `3.3000000000000000000000000000000002`
 
+### cbrt/f
+
+The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input            | Stack         
+|------------------|---------------
+| `76332.940488`   | `76332.940488`
+| `cbrt/f 2 round` | `42.42`       
+
 ### div/f
 
 Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
@@ -48,6 +68,36 @@ Example:
 | Input       | Stack
 |-------------|------
 | `4 2 div/f` | `2`  
+
+### exp/f
+
+Natural exponential of *x*.
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input             | Stack    
+|-------------------|----------
+| `2 exp/f 5 round` | `7.38906`
+
+### log10/f
+
+Natural logarithm of *x*.
+
+Stack effects:
+```
+( x:Float/64 -- Float/64 )
+```
+
+Example:
+
+| Input                | Stack    
+|----------------------|----------
+| `50 log10/f 5 round` | `1.69897`
 
 ### mul/f
 

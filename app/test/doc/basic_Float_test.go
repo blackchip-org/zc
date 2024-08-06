@@ -15,6 +15,23 @@ func TestOpDocs_BasicFloat_AddF(t *testing.T) {
 	c.AssertStack("3.3000000000000000000000000000000002")
 }
 
+func TestOpDocs_BasicFloat_CbrtF(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("76332.940488")
+	c.AssertStack("76332.940488")
+
+	c.Eval("cbrt/f 2 round")
+	c.AssertStack("42.42")
+}
+
+func TestOpDocs_BasicFloat_CbrtF_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-1 cbrt/f")
+	c.AssertError("cbrt/f: invalid argument, -1 < 0")
+}
+
 func TestOpDocs_BasicFloat_DivF(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -34,6 +51,20 @@ func TestOpDocs_BasicFloat_DivF_Zero(t *testing.T) {
 
 	c.Eval("6.6 0 div/f")
 	c.AssertError("div/f: division by zero")
+}
+
+func TestOpDocs_BasicFloat_ExpF(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 exp/f 5 round")
+	c.AssertStack("7.38906")
+}
+
+func TestOpDocs_BasicFloat_Log10F(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("50 log10/f 5 round")
+	c.AssertStack("1.69897")
 }
 
 func TestOpDocs_BasicFloat_MulF(t *testing.T) {

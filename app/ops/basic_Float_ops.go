@@ -18,6 +18,16 @@ var (
 			},
 		},
 	}
+	CbrtF = zc.Op{
+		Name: "cbrt/f",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.CbrtFloat64,
+			},
+		},
+	}
 	DivF = zc.Op{
 		Name: "div/f",
 		Funcs: []zc.Func{
@@ -25,6 +35,26 @@ var (
 				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
 				Returns: []zc.Type{zc.BigFloat},
 				Eval:    funcs.DivBigFloat,
+			},
+		},
+	}
+	ExpF = zc.Op{
+		Name: "exp/f",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.ExpFloat64,
+			},
+		},
+	}
+	Log10F = zc.Op{
+		Name: "log10/f",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.Log10Float64,
 			},
 		},
 	}

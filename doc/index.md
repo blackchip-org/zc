@@ -11,7 +11,7 @@
 
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
-- [`abs`](ops/sci.md#abs): Absolute value
+- [`abs`](ops/basic.md#abs): Absolute value
 - [`acos`](ops/sci.md#acos): Inverse cosine
 - [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
@@ -25,8 +25,9 @@
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`cb`](ops/sci.md#cb): Cube of a number
-- [`cbrt`](ops/sci.md#cbrt): Cube root
-- [`ceil`](ops/sci.md#ceil): Ceiling
+- [`cbrt`](ops/basic.md#cbrt): Cube root
+  - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
+- [`ceil`](ops/basic.md#ceil): Ceiling
 - [`clear`](ops/stack.md#clear): Clear
 - [`cos`](ops/sci.md#cos): Cosine
 - [`cosh`](ops/sci.md#cosh): Hyperbolic cosine
@@ -43,18 +44,21 @@
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## e
-- [`exp`](ops/sci.md#exp): Natural exponential
+- [`exp`](ops/basic.md#exp): Natural exponential
+  - [`exp/f`](ops/basic_Float.md#expf): floating point
 
 ## f
 - [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
 - [`factorial`](ops/stat.md#factorial): Factorial
   - [`factorial/f`](ops/stat.md#factorialf): floating point
-- [`floor`](ops/sci.md#floor): Floor
+- [`floor`](ops/basic.md#floor): Floor
 
 ## l
 - [`label`](ops/anno.md#label): Attach label
+- [`ln`](ops/basic.md#ln): Natural logarithm
 - [`log`](ops/sci.md#log): Natural logarithm
-- [`log10`](ops/sci.md#log10): Decimal logarithm
+- [`log10`](ops/basic.md#log10): Decimal logarithm
+  - [`log10/f`](ops/basic_Float.md#log10f): floating point
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)

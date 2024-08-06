@@ -8,7 +8,6 @@ Scientific calculator
 
 | Operation         | Description               
 |-------------------|---------------------------
-| [`abs`](#abs)     | Absolute value            
 | [`acos`](#acos)   | Inverse cosine            
 | [`acosh`](#acosh) | Inverse hyperbolic cosine 
 | [`asin`](#asin)   | Inverse sine              
@@ -17,14 +16,9 @@ Scientific calculator
 | [`atan2`](#atan2) | Inverse tangent           
 | [`atanh`](#atanh) | Inverse hyperbolic tangent
 | [`cb`](#cb)       | Cube of a number          
-| [`cbrt`](#cbrt)   | Cube root                 
-| [`ceil`](#ceil)   | Ceiling                   
 | [`cos`](#cos)     | Cosine                    
 | [`cosh`](#cosh)   | Hyperbolic cosine         
-| [`exp`](#exp)     | Natural exponential       
-| [`floor`](#floor) | Floor                     
 | [`log`](#log)     | Natural logarithm         
-| [`log10`](#log10) | Decimal logarithm         
 | [`sin`](#sin)     | Sine                      
 | [`sinh`](#sinh)   | Hyperbolic sine           
 | [`tan`](#tan)     | Tangent                   
@@ -32,27 +26,6 @@ Scientific calculator
 
 
 ## Operations
-
-### abs
-
-If *x* is less than zero, the negated value of *x*, otherwise *p0*.
-
-For complex numbers, the distance of *x* from zero on the complex
-plane.
-
-Stack effects:
-```
-( x:Int -- Int )
-( x:Dec -- Dec )
-( x:Complex -- Float/64 )
-```
-
-Example:
-
-| Input                | Stack    
-|----------------------|----------
-| `-6 abs`             | `6`      
-| `c 2+2i abs 5 round` | `2.82843`
 
 ### acos
 
@@ -180,38 +153,6 @@ Example:
 |--------|------
 | `3 cb` | `27` 
 
-### cbrt
-
-The cube root of *x*. If *x* is less than zero, an 'invalid argument'
-error is raised.
-
-Stack effects:
-```
-( x:Dec -- Dec )
-```
-
-Example:
-
-| Input  | Stack
-|--------|------
-| `27`   | `27` 
-| `cbrt` | `3`  
-
-### ceil
-
-The nearest integer value greater than or equal to *x*.
-
-Stack effects:
-```
-( x:Dec -- x:Dec )
-```
-
-Example:
-
-| Input      | Stack
-|------------|------
-| `6.6 ceil` | `7`  
-
 ### cos
 
 Cosine of *x* in radians.
@@ -244,37 +185,6 @@ Example:
 |------------------|---------
 | `2 cosh 5 round` | `3.7622`
 
-### exp
-
-Natural exponential of *x*.
-
-Stack effects:
-```
-( x:Dec -- Dec )
-( x:Complex -- Complex )
-```
-
-Example:
-
-| Input           | Stack    
-|-----------------|----------
-| `2 exp 5 round` | `7.38906`
-
-### floor
-
-The nearest integer value less than or equal to *x*.
-
-Stack effects:
-```
-( x:Dec -- x:Dec )
-```
-
-Example:
-
-| Input        | Stack
-|--------------|------
-| `6.12 floor` | `6`  
-
 ### log
 
 Natural logarithm of *x*.
@@ -290,22 +200,6 @@ Example:
 | Input           | Stack    
 |-----------------|----------
 | `8 log 5 round` | `2.07944`
-
-### log10
-
-Natural logarithm of *x*.
-
-Stack effects:
-```
-( x:Dec -- Dec )
-( x:Complex -- Complex )
-```
-
-Example:
-
-| Input              | Stack    
-|--------------------|----------
-| `50 log10 5 round` | `1.69897`
 
 ### sin
 

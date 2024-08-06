@@ -11,7 +11,10 @@ var BasicFloat = zc.Vol{
 	Name: "basic/Float",
 	Ops: []zc.Op{
 		ops.AddF,
+		ops.CbrtF,
 		ops.DivF,
+		ops.ExpF,
+		ops.Log10F,
 		ops.MulF,
 		ops.NegF,
 		ops.SignF,

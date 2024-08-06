@@ -8,26 +8,6 @@ import (
 )
 
 var (
-	Abs = zc.Op{
-		Name: "abs",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.BigInt},
-				Returns: []zc.Type{zc.BigInt},
-				Eval:    funcs.AbsBigInt,
-			},
-			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.AbsDecimal,
-			},
-			{
-				Params:  []zc.Type{zc.Complex},
-				Returns: []zc.Type{zc.Float64},
-				Eval:    funcs.AbsComplex,
-			},
-		},
-	}
 	Acos = zc.Op{
 		Name: "acos",
 		Funcs: []zc.Func{
@@ -132,26 +112,6 @@ var (
 		Name:  "cb",
 		Funcs: []zc.Func{},
 	}
-	Cbrt = zc.Op{
-		Name: "cbrt",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.CbrtDecimal,
-			},
-		},
-	}
-	Ceil = zc.Op{
-		Name: "ceil",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.CeilDecimal,
-			},
-		},
-	}
 	Cos = zc.Op{
 		Name: "cos",
 		Funcs: []zc.Func{
@@ -182,31 +142,6 @@ var (
 			},
 		},
 	}
-	Exp = zc.Op{
-		Name: "exp",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.ExpDecimal,
-			},
-			{
-				Params:  []zc.Type{zc.Complex},
-				Returns: []zc.Type{zc.Complex},
-				Eval:    funcs.ExpComplex,
-			},
-		},
-	}
-	Floor = zc.Op{
-		Name: "floor",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.FloorDecimal,
-			},
-		},
-	}
 	Log = zc.Op{
 		Name: "log",
 		Funcs: []zc.Func{
@@ -219,21 +154,6 @@ var (
 				Params:  []zc.Type{zc.Complex},
 				Returns: []zc.Type{zc.Complex},
 				Eval:    funcs.LogComplex,
-			},
-		},
-	}
-	Log10 = zc.Op{
-		Name: "log10",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.Log10Decimal,
-			},
-			{
-				Params:  []zc.Type{zc.Complex},
-				Returns: []zc.Type{zc.Complex},
-				Eval:    funcs.Log10Complex,
 			},
 		},
 	}

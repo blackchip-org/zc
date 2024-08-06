@@ -3,6 +3,34 @@ title: Basic calculator
 category: calc
 
 ops:
+- name: abs
+  title: Absolute value
+  funcs:
+  - name: AbsBigInt 
+    params: [x:Int]
+    returns: [Int]
+  - name: AbsDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  - name: AbsComplex
+    params: [x:Complex]
+    returns: [Float/64]
+  desc: |-
+    If *x* is less than zero, the negated value of *x*, otherwise *p0*.
+
+    For complex numbers, the distance of *x* from zero on the complex
+    plane.
+  example:
+  - i: -6 abs
+    o: [6]
+  - i: c 2+2i abs 5 round
+    o: [2.82843]
+  tests:
+  - name: Dec
+    test:
+    - i: -6.6 abs
+      o: [6.6]
+
 - name: add
   aliases: [a, "+"]
   title: Addition
@@ -29,6 +57,33 @@ ops:
     o: [3/4]
   - i: c 6+6i 2+2i a
     o: [8+8i]
+
+- name: cbrt
+  title: Cube root
+  funcs:
+  - name: CbrtDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 27
+    o: [27]
+  - i: cbrt
+    o: [3]
+
+- name: ceil
+  title: Ceiling
+  funcs:
+  - name: CeilDecimal
+    params: [x:Dec]
+    returns: [x:Dec]
+  desc: |-
+    The nearest integer value greater than or equal to *x*.
+  example:
+  - i: 6.6 ceil
+    o: [7]
 
 - name: div
   aliases: [d, "/"]
@@ -124,6 +179,56 @@ ops:
     test:
     - i: 6 0 div.rem
       error: "div.rem: division by zero"
+
+- name: exp
+  title: Natural exponential
+  funcs:
+  - name: ExpDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  - name: ExpComplex
+    params: [x:Complex]
+    returns: [Complex]
+  desc: Natural exponential of *x*.
+  example:
+  - i: 2 exp 5 round
+    o: [7.38906]
+
+- name: floor
+  title: Floor
+  funcs:
+  - name: FloorDecimal
+    params: [x:Dec]
+    returns: [x:Dec]
+  desc: The nearest integer value less than or equal to *x*.
+  example:
+  - i: 6.12 floor
+    o: [6]
+
+- name: ln 
+  title: Natural logarithm
+  funcs: 
+  - name: LnDecimal
+    params: [x:Dec]
+    returns: [Dec]
+  desc: Natural logarithm of *x*. 
+  example:
+  - i: 7.5 ln 4 round
+    o: [2.0149]
+
+- name: log10
+  title: Decimal logarithm
+  funcs:
+  - name: Log10Decimal
+    params: [x:Dec]
+    returns: [Dec]
+  - name: Log10Complex
+    params: [x:Complex]
+    returns: [Complex]
+  desc: Natural logarithm of *x*.
+  example:
+  - i: 50 log10 5 round
+    o: [1.69897]
 
 - name: mul
   title: Multiplication

@@ -10,11 +10,18 @@ import (
 var Basic = zc.Vol{
 	Name: "basic",
 	Ops: []zc.Op{
+		ops.Abs,
 		ops.Add,
+		ops.Cbrt,
+		ops.Ceil,
 		ops.Div,
 		ops.DivMod,
 		ops.DivRem,
 		ops.DivI,
+		ops.Exp,
+		ops.Floor,
+		ops.Ln,
+		ops.Log10,
 		ops.Mod,
 		ops.Mul,
 		ops.Neg,
