@@ -60,6 +60,25 @@ func (c *Decimal) Ceil() {
 	c.update(c.Ctx.Ceil(x, x))
 }
 
+func (c *Decimal) Clear() {
+	c.Flags = 0
+	c.Err = nil
+}
+
+func (c *Decimal) Cmp() int {
+	y := c.Pop()
+	x := c.Pop()
+	c.pool.Recycle(x, y)
+	return x.Cmp(y)
+}
+
+func (c *Decimal) CmpTotal() int {
+	y := c.Pop()
+	x := c.Pop()
+	c.pool.Recycle(x, y)
+	return x.CmpTotal(y)
+}
+
 func (c *Decimal) Exp() {
 	if c.Err != nil {
 		return
@@ -92,6 +111,13 @@ func (c Decimal) Log10() {
 	c.update(c.Ctx.Log10(x, x))
 }
 
+func (c *Decimal) Modf() {
+	y := c.Pop()
+	x := c.Top()
+	x.Modf(x, y)
+	c.pool.Recycle(y)
+}
+
 func (c *Decimal) Mul() {
 	if c.Err != nil {
 		return
@@ -122,6 +148,16 @@ func (c Decimal) PopString() string {
 	return c.Pop().String()
 }
 
+func (c Decimal) Pow() {
+	if c.Err != nil {
+		return
+	}
+	y := c.Pop()
+	x := c.Top()
+	c.update(c.Ctx.Pow(x, x, y))
+	c.pool.Recycle(y)
+}
+
 func (c Decimal) PushFloat64(f float64) {
 	if c.Err != nil {
 		return
@@ -135,15 +171,124 @@ func (c Decimal) PushFloat64(f float64) {
 	}
 }
 
-func (c Decimal) PushInt(i int) {
-	c.PushInt64(int64(i))
+func (c Decimal) PushInt(vals ...int) {
+	if c.Err != nil {
+		return
+	}
+	for _, val := range vals {
+		c.PushInt64(int64(val))
+	}
 }
 
-func (c Decimal) PushInt64(i int64) {
+func (c Decimal) PushInt64(vals ...int64) {
+	if c.Err != nil {
+		return
+	}
+	for _, val := range vals {
+		d := c.pool.New()
+		d.SetInt64(val)
+		c.Push(d)
+	}
+}
+
+func (c Decimal) PushString(s string) {
 	if c.Err != nil {
 		return
 	}
 	d := c.pool.New()
-	d.SetInt64(i)
-	c.Push(d)
+	if _, _, err := c.Ctx.SetString(d, s); err != nil {
+		c.pool.Recycle(d)
+		c.update(0, err)
+	} else {
+		c.Push(d)
+	}
+}
+
+func (c Decimal) Quantize(exp int32) {
+	if c.Err != nil {
+		return
+	}
+	x := c.Top()
+	c.update(c.Ctx.Quantize(x, x, exp))
+}
+
+func (c Decimal) Quo() {
+	if c.Err != nil {
+		return
+	}
+	y := c.Pop()
+	x := c.Top()
+	c.update(c.Ctx.Quo(x, x, y))
+	c.pool.Recycle(y)
+}
+
+func (c Decimal) QuoInteger() {
+	if c.Err != nil {
+		return
+	}
+	y := c.Pop()
+	x := c.Top()
+	c.update(c.Ctx.QuoInteger(x, x, y))
+	c.pool.Recycle(y)
+}
+
+func (c Decimal) Reduce() {
+	if c.Err != nil {
+		return
+	}
+	x := c.Top()
+	_, cond, err := c.Ctx.Reduce(x, x)
+	c.update(cond, err)
+}
+
+func (c Decimal) Rem() {
+	if c.Err != nil {
+		return
+	}
+	y := c.Pop()
+	x := c.Top()
+	c.update(c.Ctx.Rem(x, x, y))
+	c.pool.Recycle(y)
+}
+
+func (c Decimal) Round() {
+	if c.Err != nil {
+		return
+	}
+	x := c.Top()
+	c.update(c.Ctx.Round(x, x))
+}
+
+func (c Decimal) RoundToIntegeralExact() {
+	if c.Err != nil {
+		return
+	}
+	x := c.Top()
+	c.update(c.Ctx.RoundToIntegralExact(x, x))
+}
+
+func (c Decimal) RoundToIntegeralValue() {
+	if c.Err != nil {
+		return
+	}
+	x := c.Top()
+	c.update(c.Ctx.RoundToIntegralValue(x, x))
+}
+
+func (c Decimal) Sqrt(exp int32) {
+	if c.Err != nil {
+		return
+	}
+	x := c.Top()
+	c.update(c.Ctx.Quantize(x, x, exp))
+}
+
+func (c Decimal) Sub() {
+	if c.Err != nil {
+		return
+	}
+	y := c.Pop()
+	x := c.Top()
+	c.update(c.Ctx.Sub(x, x, y))
+	c.pool.Recycle(y)
 }

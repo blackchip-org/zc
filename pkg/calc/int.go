@@ -49,13 +49,15 @@ func (c *BigInt) Binomial(n, k int64) {
 
 func (c *BigInt) Cmp() int {
 	y := c.Pop()
-	x := c.Top()
+	x := c.Pop()
+	c.pool.Recycle(x, y)
 	return x.Cmp(y)
 }
 
 func (c *BigInt) CmpAbs() int {
 	y := c.Pop()
-	x := c.Top()
+	x := c.Pop()
+	c.pool.Recycle(x, y)
 	return x.CmpAbs(y)
 }
 
