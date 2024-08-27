@@ -18,10 +18,12 @@ func (c *Catalog) AddOp(ops ...Op) {
 		if len(op.Funcs) == 0 {
 			panic(fmt.Errorf("no funcs for op: %v", op.Name))
 		}
-		if _, ok := c.ops[op.Name]; ok {
-			panic(fmt.Errorf("duplicate op: %v", op.Name))
+		if prevOp, ok := c.ops[op.Name]; ok {
+			prevOp.Funcs = append(prevOp.Funcs, op.Funcs...)
+			c.ops[prevOp.Name] = prevOp
+		} else {
+			c.ops[op.Name] = op
 		}
-		c.ops[op.Name] = op
 	}
 }
 

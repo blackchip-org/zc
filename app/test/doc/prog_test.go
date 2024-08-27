@@ -8,7 +8,7 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_Prog_And(t *testing.T) {
+func TestOpDocs_Prog_AndBigInt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0b1100")
@@ -61,7 +61,7 @@ func TestOpDocs_Prog_Bytes(t *testing.T) {
 	c.AssertStack("2")
 }
 
-func TestOpDocs_Prog_Dec(t *testing.T) {
+func TestOpDocs_Prog_DecBigInt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0xf")
@@ -91,7 +91,7 @@ func TestOpDocs_Prog_LeftShift(t *testing.T) {
 	c.AssertStack("0b1000")
 }
 
-func TestOpDocs_Prog_Not(t *testing.T) {
+func TestOpDocs_Prog_NotBigInt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0b101")
@@ -111,7 +111,7 @@ func TestOpDocs_Prog_Oct(t *testing.T) {
 	c.AssertStack("0o17")
 }
 
-func TestOpDocs_Prog_Or(t *testing.T) {
+func TestOpDocs_Prog_OrBigInt(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0b1100")

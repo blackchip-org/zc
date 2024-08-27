@@ -16,6 +16,7 @@
 - [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
   - [`add/f`](ops/basic_Float.md#addf): floating point
+- [`and`](ops/bool.md#and): Logical conjunction
 - [`and`](ops/prog.md#and): Bitwise and
 - [`asin`](ops/sci.md#asin): Inverse sine
 - [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
@@ -38,6 +39,7 @@
   - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
 - [`ceil`](ops/basic.md#ceil): Ceiling
 - [`clear`](ops/stack.md#clear): Clear
+- [`cmyk-rgb`](ops/color.md#cmyk-rgb): CMYK to RGB
 - [`cos`](ops/sci.md#cos): Cosine
 - [`cosh`](ops/sci.md#cosh): Hyperbolic cosine
 
@@ -55,6 +57,7 @@
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## e
+- [`eval`](ops/hof.md#eval): Evaluate top of stack
 - [`exp`](ops/basic.md#exp): Natural exponential
   - [`exp/f`](ops/basic_Float.md#expf): floating point
 
@@ -63,6 +66,7 @@
 - [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
 - [`factorial`](ops/stat.md#factorial): Factorial
   - [`factorial/f`](ops/stat.md#factorialf): floating point
+- [`false`](ops/bool.md#false): False
 - [`floor`](ops/basic.md#floor): Floor
 - [`ft-m`](ops/len.md#ft-m): Feet to meters
 - [`ft-mi`](ops/len.md#ft-mi): Feet to miles
@@ -75,6 +79,7 @@
 
 ## h
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
+- [`hsl-rgb`](ops/color.md#hsl-rgb): HSL to RGB
 
 ## i
 - [`in-mm`](ops/len.md#in-mm): Inches to millimeters
@@ -103,6 +108,7 @@
 - [`m-km`](ops/len.md#m-km): Meters to kilometers
 - [`m-nmi`](ops/len.md#m-nmi): Meters to nautical miles
 - [`m-yd`](ops/len.md#m-yd): Meters to yards
+- [`map`](ops/hof.md#map): Apply an operation
 - [`mi-ft`](ops/len.md#mi-ft): Miles to feet
 - [`mi-km`](ops/len.md#mi-km): Miles to kilometers
 - [`mi-nmi`](ops/len.md#mi-nmi): Miles to nautical miles
@@ -116,10 +122,12 @@
   - [`neg/f`](ops/basic_Float.md#negf): floating point
 - [`nmi-km`](ops/len.md#nmi-km): Nautical miles to kilometers
 - [`nmi-m`](ops/len.md#nmi-m): Nautical miles to meters
+- [`not`](ops/bool.md#not): Negation
 - [`not`](ops/prog.md#not): Bitwise not
 
 ## o
 - [`oct`](ops/prog.md#oct): Octal conversion
+- [`or`](ops/bool.md#or): Logical disjunction
 - [`or`](ops/prog.md#or): Bitwise or
 - [`oz-g`](ops/mass.md#oz-g): Ounces to grams
 - [`ozt-g`](ops/mass.md#ozt-g): Troy ounces to grams
@@ -130,6 +138,8 @@
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
 - [`rem`](ops/basic.md#rem): Remainder
+- [`rgb-cmyk`](ops/color.md#rgb-cmyk): RGB to CMYK
+- [`rgb-hsl`](ops/color.md#rgb-hsl): RGB to HSL
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`round`](ops/format.md#round): Round number
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
@@ -153,6 +163,7 @@
 ## t
 - [`tan`](ops/sci.md#tan): Tangent
 - [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
+- [`true`](ops/bool.md#true): True
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
 
 ## u

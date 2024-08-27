@@ -26,9 +26,12 @@
 
 
 ## Library
-| Volume              | Description
-|---------------------|------------
-| [anno](ops/anno.md) | Annotations
+| Volume                | Description           
+|-----------------------|-----------------------
+| [anno](ops/anno.md)   | Annotations           
+| [bool](ops/bool.md)   | Boolean operations    
+| [color](ops/color.md) | Color conversions     
+| [hof](ops/hof.md)     | Higher order functions
 
 
 

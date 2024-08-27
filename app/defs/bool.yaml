@@ -1,0 +1,68 @@
+name: bool
+title: Boolean operations
+category: lib
+
+ops:
+- name: and
+  ident: AndBool
+  title: Logical conjunction
+  funcs:
+  - name: AndBool
+    params: [x:Bool, y:Bool]
+    returns: [Bool]
+  desc: The logical conjunction of *x* and *y*.
+  example:
+  - i: c true true and 
+    o: [true]
+  - i: c true false and 
+    o: [false]
+  - i: c false false and 
+    o: [false]
+
+- name: false
+  title: False 
+  macro: /false 
+  desc: Places `false` on the stack
+  example:
+  - i: false 
+    o: [false]
+
+- name: not
+  ident: NotBool
+  title: Negation
+  funcs:
+  - name: NotBool
+    params: [x:Bool]
+    returns: [Bool]
+  desc: Negates *x*.
+  example:
+  - i: true not 
+    o: [false]
+  - i: not 
+    o: [true]
+
+- name: or
+  ident: OrBool
+  title: Logical disjunction
+  funcs:
+  - name: OrBool
+    params: [x:Bool, y:Bool]
+    returns: [Bool]
+  desc: The logical disjunction of *x* and *y*.
+  example:
+  - i: c true true or
+    o: [true]
+  - i: c true false or 
+    o: [true]
+  - i: c false false or 
+    o: [false]
+
+- name: true
+  title: True 
+  macro: /true 
+  desc: Places `true` on the stack
+  example:
+  - i: true
+    o: [true]
+
+  

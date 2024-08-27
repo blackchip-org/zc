@@ -122,7 +122,7 @@ func Rsh(c zc.Calc) {
 	zc.BigInt.Push(c, x)
 }
 
-func XorBigInt(c zc.Calc) {
+func Xor(c zc.Calc) {
 	y := zc.BigInt.Pop(c)
 	x := zc.BigInt.Pop(c)
 	x.Xor(x, y)

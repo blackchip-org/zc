@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	And = zc.Op{
+	AndBigInt = zc.Op{
 		Name: "and",
 		Funcs: []zc.Func{
 			{
@@ -58,7 +58,7 @@ var (
 			},
 		},
 	}
-	Dec = zc.Op{
+	DecBigInt = zc.Op{
 		Name: "dec",
 		Funcs: []zc.Func{
 			{
@@ -88,7 +88,7 @@ var (
 			},
 		},
 	}
-	Not = zc.Op{
+	NotBigInt = zc.Op{
 		Name: "not",
 		Funcs: []zc.Func{
 			{
@@ -108,7 +108,7 @@ var (
 			},
 		},
 	}
-	Or = zc.Op{
+	OrBigInt = zc.Op{
 		Name: "or",
 		Funcs: []zc.Func{
 			{
@@ -134,7 +134,7 @@ var (
 			{
 				Params:  []zc.Type{zc.BigInt, zc.BigInt},
 				Returns: []zc.Type{zc.BigInt},
-				Eval:    funcs.XorBigInt,
+				Eval:    funcs.Xor,
 			},
 		},
 	}

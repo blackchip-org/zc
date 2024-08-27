@@ -1,0 +1,28 @@
+name: hof
+title: Higher order functions
+category: lib 
+
+ops:
+- name: eval 
+  title: Evaluate top of stack 
+  funcs:
+  - name: Eval 
+    params: [expr:Text, Any*]
+    returns: [Any*]
+  desc: Evaluate *expr* as if it was input to the calculator. 
+  example:
+  - i: "'1 2 add' eval"
+    o: [3]
+
+- name: map 
+  title: Apply an operation 
+  funcs:
+  - name: Map 
+    params: [expr:Text, Any*]
+    returns: [Any*]
+  desc: Apply the expression, *expr*, to each item on the stack. 
+  example:
+  - i: 1 2 3 4 5
+    o: [1, 2, 3, 4, 5]
+  - i: "[2 mul] map"
+    o: [2, 4, 6, 8, 10]

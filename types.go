@@ -5,6 +5,7 @@ import (
 	"math"
 	"math/big"
 	"strconv"
+	"strings"
 
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/app/vars"
@@ -16,6 +17,7 @@ var (
 	Any      = AnyType{}
 	BigFloat = BigFloatType{}
 	BigInt   = BigIntType{}
+	Bool     = BoolType{}
 	Complex  = ComplexType{}
 	Decimal  = DecimalType{}
 	Float64  = Float64Type{}
@@ -167,6 +169,52 @@ func (t BigIntType) Dup(a any) any {
 	i := t.New()
 	i.Set(t.As(a))
 	return i
+}
+
+// ----------------------------------------------------------------------------
+type BoolType struct{}
+
+func (t BoolType) AppName() string { return "Bool" }
+func (t BoolType) GoName() string  { return "bool" }
+
+func (t BoolType) As(a any) bool {
+	v, ok := a.(bool)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t BoolType) Push(c Calc, val bool) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t BoolType) Pop(c Calc) bool {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t BoolType) Parse(_ coll.State, str string) (any, bool, error) {
+	istr := strings.ToLower(str)
+	switch istr {
+	case "true":
+		return true, true, nil
+	case "false":
+		return false, true, nil
+	default:
+		return false, false, nil
+	}
+}
+
+func (t BoolType) Format(a any) string {
+	b := t.As(a)
+	if b {
+		return "true"
+	}
+	return "false"
+}
+
+func (t BoolType) Dup(a any) any {
+	return a
 }
 
 // ----------------------------------------------------------------------------

@@ -69,6 +69,8 @@ type Calc interface {
 	Unit() string
 	SetLabel(string)
 	SetUnit(string)
+	Eval(string) error
+	New() Calc
 }
 
 type Op struct {

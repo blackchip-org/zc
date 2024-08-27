@@ -107,6 +107,10 @@ func (c *Calc) SetUnit(unit string) {
 	c.stack.Set(0, item)
 }
 
+func (c *Calc) New() zc.Calc {
+	return NewCalc()
+}
+
 func (c *Calc) Eval(line string) error {
 	toks := zc.ScanWords(line)
 	for _, tok := range toks {
