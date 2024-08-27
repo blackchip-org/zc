@@ -1,0 +1,37 @@
+name: temp
+title: Temperature conversions
+category: unit
+
+ops:
+- name: c-f
+  title: Celsius to Fahrenheit
+  macro: 9 5 div mul 32 add /°F unit
+  desc: Convert Celsius to Fahrenheit
+  example:
+  - i: 20 c-f
+    o: ["68 °F"]
+
+- name: c-k
+  title: Celsius to Kelvin
+  macro: 273.15 add /K unit
+  desc: Convert Celsius to Kelvin
+  example:
+  - i: 100 c-k
+    o: ["373.15 K"]
+
+- name: f-c
+  title: Fahrenheit to Celsius
+  macro: 32 sub 5 9 div mul /°C unit
+  desc: Convert Fahrenheit to Celsius
+  example:
+  - i: 68 f-c 2 round
+    o: ["20 °C"]
+
+- name: k-c
+  title: Kelvin to Celsius
+  macro: 273.15 sub /°C unit
+  desc: Convert Kelvin to Celsius
+  exammple:
+  - i: 373.15 k-c 
+    o: ["100 °C"]
+

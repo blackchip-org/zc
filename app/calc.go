@@ -238,7 +238,7 @@ func (c *Calc) convertArg(index int, param zc.Type) {
 	if !ok || err != nil {
 		panic("unexpected: should be correct type")
 	}
-	c.stack.Set(index, zc.Item{TypeVal: conv, Type: param})
+	c.stack.Set(index, zc.Item{TypeVal: conv, Type: param, Unit: arg.Unit, Label: arg.Label})
 }
 
 func (c *Calc) convert(params []zc.Type, varParam zc.Type) {

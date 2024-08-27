@@ -31,6 +31,8 @@
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
+- [`c-f`](ops/temp.md#c-f): Celsius to Fahrenheit
+- [`c-k`](ops/temp.md#c-k): Celsius to Kelvin
 - [`cb`](ops/basic.md#cb): Cube of a number
 - [`cbrt`](ops/basic.md#cbrt): Cube root
   - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
@@ -57,16 +59,37 @@
   - [`exp/f`](ops/basic_Float.md#expf): floating point
 
 ## f
+- [`f-c`](ops/temp.md#f-c): Fahrenheit to Celsius
 - [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
 - [`factorial`](ops/stat.md#factorial): Factorial
   - [`factorial/f`](ops/stat.md#factorialf): floating point
 - [`floor`](ops/basic.md#floor): Floor
+- [`ft-m`](ops/len.md#ft-m): Feet to meters
+- [`ft-mi`](ops/len.md#ft-mi): Feet to miles
+- [`ft-yd`](ops/len.md#ft-yd): Feet to yards
+
+## g
+- [`g-kg`](ops/mass.md#g-kg): Grams to kilograms
+- [`g-oz`](ops/mass.md#g-oz): Grams to ounces
+- [`g-ozt`](ops/mass.md#g-ozt): Grams to troy ounces
 
 ## h
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
 
+## i
+- [`in-mm`](ops/len.md#in-mm): Inches to millimeters
+
+## k
+- [`k-c`](ops/temp.md#k-c): Kelvin to Celsius
+- [`kg-g`](ops/mass.md#kg-g): Kilograms to grams
+- [`kg-lb`](ops/mass.md#kg-lb): Kilograms to pounds
+- [`km-m`](ops/len.md#km-m): Kilometers to meters
+- [`km-mi`](ops/len.md#km-mi): Kilometers to miles
+- [`km-nmi`](ops/len.md#km-nmi): Kilometers to nautical miles
+
 ## l
 - [`label`](ops/anno.md#label): Attach label
+- [`lb-kg`](ops/mass.md#lb-kg): Pounds to kilograms
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`log`](ops/basic.md#log): Natural logarithm
   - [`log/f`](ops/basic_Float.md#logf): floating point
@@ -76,6 +99,14 @@
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
+- [`m-ft`](ops/len.md#m-ft): Meters to feet
+- [`m-km`](ops/len.md#m-km): Meters to kilometers
+- [`m-nmi`](ops/len.md#m-nmi): Meters to nautical miles
+- [`m-yd`](ops/len.md#m-yd): Meters to yards
+- [`mi-ft`](ops/len.md#mi-ft): Miles to feet
+- [`mi-km`](ops/len.md#mi-km): Miles to kilometers
+- [`mi-nmi`](ops/len.md#mi-nmi): Miles to nautical miles
+- [`mm-in`](ops/len.md#mm-in): Millimeters to inches
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/f`](ops/basic_Float.md#mulf): floating point
@@ -83,11 +114,15 @@
 ## n
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/f`](ops/basic_Float.md#negf): floating point
+- [`nmi-km`](ops/len.md#nmi-km): Nautical miles to kilometers
+- [`nmi-m`](ops/len.md#nmi-m): Nautical miles to meters
 - [`not`](ops/prog.md#not): Bitwise not
 
 ## o
 - [`oct`](ops/prog.md#oct): Octal conversion
 - [`or`](ops/prog.md#or): Bitwise or
+- [`oz-g`](ops/mass.md#oz-g): Ounces to grams
+- [`ozt-g`](ops/mass.md#ozt-g): Troy ounces to grams
 
 ## p
 - [`pow`](ops/basic.md#pow): Exponentiation
@@ -125,3 +160,7 @@
 
 ## x
 - [`xor`](ops/prog.md#xor): Bitwise exclusive or
+
+## y
+- [`yd-ft`](ops/len.md#yd-ft): Yards to feet
+- [`yd-m`](ops/len.md#yd-m): Yards to meters

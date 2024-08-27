@@ -15,9 +15,12 @@ func init() {
 		vols.BasicFloat,
 		vols.Conf,
 		vols.Format,
+		vols.Len,
+		vols.Mass,
 		vols.Prog,
 		vols.Sci,
 		vols.Stack,
 		vols.Stat,
+		vols.Temp,
 	)
 }

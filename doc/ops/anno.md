@@ -41,7 +41,7 @@ Stack effects:
 
 Example:
 
-| Input       | Stack  
-|-------------|--------
-| `42`        | `42`   
-| `/°F unit`  | `42°F` 
+| Input       | Stack   
+|-------------|---------
+| `42`        | `42`    
+| `/°F unit`  | `42 °F` 

@@ -9,7 +9,7 @@ func TestItemString(t *testing.T) {
 	}{
 		{Item{TypeVal: "123", Type: String}, "123"},
 		{Item{TypeVal: "123\n456", Type: String}, "123\\n456"},
-		{Item{TypeVal: "123", Unit: "m", Type: String}, "123m"},
+		{Item{TypeVal: "123", Unit: "m", Type: String}, "123 m"},
 		{Item{TypeVal: "123", Label: "label", Type: String}, "123 :label"},
 	}
 

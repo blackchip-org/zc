@@ -38,7 +38,10 @@ func (i Item) Val() string {
 func (i Item) String() string {
 	var s strings.Builder
 	s.WriteString(EscapeString(i.Val()))
-	s.WriteString(i.Unit)
+	if i.Unit != "" {
+		s.WriteRune(' ')
+		s.WriteString(i.Unit)
+	}
 	if i.Label != "" {
 		s.WriteString(" :")
 		s.WriteString(i.Label)

@@ -25,5 +25,5 @@ func TestOpDocs_Anno_Unit(t *testing.T) {
 	c.AssertStack("42")
 
 	c.Eval("/°F unit")
-	c.AssertStack("42°F")
+	c.AssertStack("42 °F")
 }

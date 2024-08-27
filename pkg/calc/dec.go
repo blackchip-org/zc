@@ -68,15 +68,22 @@ func (c *Decimal) Ceil() {
 }
 
 func (c *Decimal) Cmp() int {
-	y := c.stack.Get(-1)
-	x := c.stack.Top()
+	y := c.stack.Pop()
+	x := c.stack.Pop()
 	return x.Cmp(y)
 }
 
 func (c *Decimal) CmpTotal() int {
-	y := c.stack.Get(-1)
-	x := c.stack.Top()
+	y := c.stack.Pop()
+	x := c.stack.Pop()
 	return x.CmpTotal(y)
+}
+
+func (c *Decimal) Dup() {
+	x1 := c.stack.Top()
+	x2 := c.pool.New()
+	x2.Set(x1)
+	c.stack.Push(x2)
 }
 
 func (c *Decimal) Exp() {

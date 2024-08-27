@@ -1,0 +1,156 @@
+name: len
+title: Length conversions
+category: unit
+
+ops:
+- name: ft-m
+  title: Feet to meters
+  macro: 0.3048 mul /m unit
+  desc: Convert value from feet to meters
+  example:
+  - i: 1000 ft-m 
+    o: ["304.8 m"]
+
+- name: ft-mi
+  title: Feet to miles 
+  macro: 5280 div /mi unit
+  desc: Convert feet to miles. 
+  example:
+  - i: 2640 ft-mi 
+    o: ["0.5 mi"]
+
+- name: ft-yd
+  title: Feet to yards
+  macro: 3 div /yd unit
+  desc: Convert feet to yards
+  example:
+  - i: 300 ft-yd
+    o: ["100 yd"]
+
+- name: in-mm
+  title: Inches to millimeters
+  macro: 25.4 mul /mm unit 
+  desc: Convert inches to millimeters
+  example:
+  - i: 100 in-mm
+    o: ["2540 mm"]
+
+- name: km-m
+  title: Kilometers to meters
+  macro: 1000 mul /m unit
+  desc: Convert kilometers to meters
+  example:
+  - i: 6378.137 km-m 
+    o: ["6378137 m"]
+
+- name: km-mi
+  title: Kilometers to miles
+  macro: 0.62137119 mul /mi unit
+  desc: Convert kilometers to miles
+  example:
+  - i: 100 km-mi 2 round 
+    o: ["62.14 mi"]
+  
+- name: km-nmi
+  title: Kilometers to nautical miles
+  macro: 0.539957 mul /nmi unit
+  desc: Convert kilometers to nautical miles
+  example:
+  - i: 100 km-nmi 2 round
+    o: ["54 nmi"]
+
+- name: m-ft
+  title: Meters to feet
+  macro: 0.3048 div /ft unit
+  desc: Convert meters to feet
+  example:
+  - i: 304.8 m-ft 2 round 
+    o: ["1000 ft"]
+
+- name: m-km
+  title: Meters to kilometers
+  macro: 1000 div /km unit
+  desc: Convert meters to kilometers
+  example:
+  - i: 6378137 m-km
+    o: ["6378.137 km"]
+
+- name: m-nmi
+  title: Meters to nautical miles
+  macro: 0.000539957 mul /nmi unit
+  desc: Convert meters to nautical miles
+  example:
+  - i: 100,000 m-nmi 2 round
+    o: ["54 nmi"]
+
+- name: m-yd
+  title: Meters to yards
+  macro: 0.9144 div /yd unit
+  desc: Convert meters to yards 
+  example:
+  - i: 91.44 m-yd 2 round
+    o: ["100 yd"]
+
+- name: mi-ft
+  title: Miles to feet
+  macro: 5280 mul /ft unit
+  desc: Convert miles to feet
+  example:
+  - i: 0.5 mi-ft
+    o: ["2640 ft"]
+
+- name: mi-km
+  title: Miles to kilometers
+  macro: 1.609344 mul /km unit
+  desc: Convert miles to kilometers
+  example:
+  - i: 100 mi-km 2 round
+    o: ["160.93 km"]
+
+- name: mi-nmi
+  title: Miles to nautical miles
+  macro: 0.868976 mul /nmi unit
+  desc: Convert miles to nautical miles
+  example:
+  - i: 100 mi-nmi 2 round
+    o: ["86.9 nmi"]
+
+- name: mm-in
+  title: Millimeters to inches
+  macro: 25.4 div /in unit
+  desc: Convert millimeters to inches
+  example:
+  - i: 2540 mm-in 2 round
+    o: ["100 in"]
+
+- name: nmi-km 
+  title: Nautical miles to kilometers
+  macro: 1.852 mul /km unit
+  desc: Convert nautical miles to kilometers
+  example:
+  - i: 100 nmi-km 
+    o: ["185.2 km"]
+
+- name: nmi-m 
+  title: Nautical miles to meters
+  macro: 1852 mul /m unit
+  desc: Convert nautical miles to meters
+  example:
+  - i: 100 nmi-m 
+    o: ["185200 m"]
+
+- name: yd-ft
+  title: Yards to feet
+  macro: 3 mul /ft unit
+  desc: Convert yards to feet
+  example:
+  - i: 100 yd-ft
+    o: ["300 ft"]
+
+- name: yd-m
+  title: Yards to meters
+  macro: 0.9144 mul /m unit
+  desc: Convert yards to meters
+  example:
+  - i: 100 yd-m 
+    o: ["91.44 m"]

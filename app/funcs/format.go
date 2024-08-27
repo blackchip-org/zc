@@ -48,6 +48,7 @@ func RoundComplex(c zc.Calc) {
 func RoundDecimal(c zc.Calc) {
 	d := vars.ForConf(c).DecMath
 	p := zc.Int32.Pop(c)
+	u := c.Unit()
 	x := zc.Decimal.Pop(c)
 
 	// For Quantize this needs to be the opposite. -3 is to round to three
@@ -60,6 +61,7 @@ func RoundDecimal(c zc.Calc) {
 		return
 	}
 	zc.Decimal.Push(c, x)
+	c.SetUnit(u)
 }
 
 func SciDecimal(c zc.Calc) {

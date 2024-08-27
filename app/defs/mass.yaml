@@ -1,0 +1,69 @@
+name: mass
+title: Mass conversions
+category: unit
+
+ops: 
+- name: g-kg
+  title: Grams to kilograms
+  macro: 1000 div /kg unit
+  desc: Convert grams to kilograms
+  example:
+  - i: 52124 g-kg
+    o: ["52.124 kg"]
+
+- name: g-oz
+  title: Grams to ounces
+  macro: 1 28.349523125 div mul /oz unit
+  desc: Convert grams to ounces
+  example:
+  - i: 2834.95 g-oz 2 round
+    o: ["100 oz"]
+
+- name: g-ozt
+  title: Grams to troy ounces
+  macro: 1 31.1034768 div mul [oz t] unit 
+  desc: Convert grams to troy ounces
+  example:
+  - i: 326.59 g-ozt 2 round
+    o: ["10.5 oz t"]
+
+- name: kg-g
+  title: Kilograms to grams
+  macro: 1000 mul /kg unit
+  desc: Convert kilograms to grams
+  example:
+  - i: 52.124 kg-g
+    o: ["52124 kg"]
+
+- name: kg-lb
+  title: Kilograms to pounds
+  macro: 1 0.45359237 div mul /lb unit 
+  desc: Convert kilograms to pounds
+  example:
+  - i: 45.36 kg-lb 2 round
+    o: ["100 lb"]
+
+- name: lb-kg
+  title: Pounds to kilograms
+  macro: 0.45359237 mul /kg unit
+  desc: Convert pounds to kilograms
+  example:
+  - i: 100 lb-kg 2 round
+    o: ["45.36 kg"] 
+
+- name: oz-g
+  title: Ounces to grams
+  macro: 28.349523125 mul /g unit
+  desc: Convert ounces to grams
+  example:
+  - i: 100 oz-g 2 round
+    o: ["2834.95 g"]
+
+- name: ozt-g
+  title: Troy ounces to grams
+  macro: 31.1034768 mul /g unit
+  desc: Convert troy ounces to grams
+  example:
+  - i: 10.5 ozt-g 2 round
+    o: ["326.59 g"]
+

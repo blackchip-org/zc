@@ -271,7 +271,7 @@ func colorize(color string, item zc.Item) string {
 
 	if item.Unit != "" {
 		ansi.Fprint(&b, ansi.DarkGray)
-		fmt.Fprintf(&b, item.Unit)
+		fmt.Fprintf(&b, " %s", item.Unit)
 	}
 
 	if item.Label != "" {
