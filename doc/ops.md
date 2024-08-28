@@ -26,13 +26,15 @@
 
 
 ## Library
-| Volume                | Description           
-|-----------------------|-----------------------
-| [anno](ops/anno.md)   | Annotations           
-| [bool](ops/bool.md)   | Boolean operations    
-| [cmp](ops/cmp.md)     | Comparisions          
-| [color](ops/color.md) | Color conversions     
-| [hof](ops/hof.md)     | Higher order functions
+| Volume                | Description             
+|-----------------------|-------------------------
+| [anno](ops/anno.md)   | Annotations             
+| [bool](ops/bool.md)   | Boolean operations      
+| [cmp](ops/cmp.md)     | Comparisions            
+| [color](ops/color.md) | Color conversions       
+| [hof](ops/hof.md)     | Higher order functions  
+| [rand](ops/rand.md)   | Random number generation
+| [seq](ops/seq.md)     | Numeric sequences       
 
 
 

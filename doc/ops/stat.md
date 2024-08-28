@@ -10,6 +10,7 @@ Statistical calculations
 |--------------------------------------|--------------------------
 | [`factorial, fact`](#factorial)      | Factorial                
 | [`factorial/f, fact/f`](#factorialf) | Factorial, floating point
+| [`sum`](#sum)                        | Summation                
 
 
 ## Operations
@@ -51,3 +52,19 @@ Example:
 |---------------|-----------
 | `c 3 fact/f`  | `6`       
 | `c 10 fact/f` | `3.6288e6`
+
+### sum
+
+The sum of all items on the stack.
+
+Macro definition:
+```
+def sum /add fold
+```
+
+Example:
+
+| Input       | Stack                  
+|-------------|------------------------
+| `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
+| `sum`       | `15`                   

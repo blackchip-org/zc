@@ -35,6 +35,10 @@ var (
 	Uint64   = Uint64Type{}
 )
 
+const (
+	PrecFloat128 = 113
+)
+
 var (
 	poolSize  = 8
 	decPool   = coll.NewPool[apd.Decimal](poolSize)

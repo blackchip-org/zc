@@ -34,7 +34,7 @@ func TestOpDocs_Hof_Filter(t *testing.T) {
 	c.Eval("1 2 3 4 5 6")
 	c.AssertStack("1", "2", "3", "4", "5", "6")
 
-	c.Eval("[2 mod 0 eq] filter")
+	c.Eval("[2 rem 0 eq] filter")
 	c.AssertStack("2", "4", "6")
 }
 

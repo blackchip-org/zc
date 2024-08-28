@@ -45,7 +45,7 @@ ops:
   example:
   - i: 1 2 3 4 5 6
     o: [1, 2, 3, 4, 5, 6]
-  - i: "[2 mod 0 eq] filter"
+  - i: "[2 rem 0 eq] filter"
     o: [2, 4, 6]
 
 - name: fold

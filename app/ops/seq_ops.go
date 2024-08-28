@@ -8,28 +8,35 @@ import (
 )
 
 var (
-	Factorial = zc.Op{
-		Name: "factorial",
+	Fibonacci = zc.Op{
+		Name: "fibonacci",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Uint},
 				Returns: []zc.Type{zc.BigInt},
-				Eval:    funcs.Fact,
+				Eval:    funcs.Fibonacci,
 			},
 		},
 	}
-	FactorialF = zc.Op{
-		Name: "factorial/f",
+	FibonacciF = zc.Op{
+		Name: "fibonacci/f",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Uint},
 				Returns: []zc.Type{zc.BigFloat},
-				Eval:    funcs.FactBigFloat,
+				Eval:    funcs.FibonacciBigFloat,
 			},
 		},
 	}
-	Sum = zc.Op{
-		Name:  "sum",
-		Funcs: []zc.Func{},
+	Sequence = zc.Op{
+		Name: "sequence",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.BigInt, zc.BigInt},
+				Returns:   []zc.Type{},
+				VarReturn: zc.BigInt,
+				Eval:      funcs.Sequence,
+			},
+		},
 	}
 )

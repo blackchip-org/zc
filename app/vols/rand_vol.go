@@ -7,15 +7,17 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var Stat = zc.Vol{
-	Name: "stat",
+var Rand = zc.Vol{
+	Name: "rand",
 	Ops: []zc.Op{
-		ops.Factorial,
-		ops.FactorialF,
+		ops.Rand,
+		ops.RandSeed,
+		ops.RandSeedGet,
+		ops.RandTake,
+		ops.RandI,
+		ops.Roll,
 	},
 	Macros: []zc.Macro{
-		{Name: "fact", Expr: "factorial"},
-		{Name: "fact/f", Expr: "factorial/f"},
-		{Name: "sum", Expr: "/add fold"},
+		{Name: "rand/f", Expr: "rand"},
 	},
 }

@@ -1,0 +1,93 @@
+name: rand
+title: Random number generation
+category: lib 
+
+ops:
+- name: rand
+  aliases: [rand/f]
+  title: Random float
+  funcs:
+  - name: Rand
+    return: [Float/64]
+  desc: Random floating point number between 0 and 1. 
+  example:
+  - i: 1 rand.seed
+    notice: seed set to 1
+  - i: rand
+    o: [0.23842319087387442]
+
+- name: rand/i
+  title: Random integer
+  funcs: 
+  - name: RandInt
+    params: [n:Int/s]
+    returns: [Int/s]
+  desc: Random integer between 1 and *n*. 
+  example:
+  - i: 1 rand.seed
+    notice: seed set to 1
+  - i: 10 rand/i
+    o: [6]
+
+- name: rand.seed
+  title: Sets the random number seed
+  funcs:
+  - name: RandSeed
+    params: [s:Int]
+  desc: Sets the random number generator seed to *s*. 
+  example:
+  - i: c 1 rand.seed
+    notice: seed set to 1
+  - i: 10 rand/i
+    o: [6]
+  - i: c 2 rand.seed 10 rand/i
+    o: [7]
+  - i: c 1 rand.seed 10 rand/i 
+    o: [6]
+
+- name: rand.seed?
+  title: Gets the random number seed
+  funcs:
+  - name: RandSeedGet
+    returns: [s:Int]
+  desc: Gets the random number generator seed.
+  example:
+  - i: c 42 rand.seed
+    notice: seed set to 42
+  - i: rand.seed?
+    o: [42]
+
+- name: rand.take 
+  title: Select a random item from the stack
+  funcs:
+  - name: RandTake
+    params: [Any*]
+    returns: [Any]
+  desc: |-
+    Takes a random item from the stack while clearing the remaining items.
+  example:
+  - i: 1 rand.seed
+    notice: seed set to 1
+  - i: 1 2 3 4 5 6
+    o: [1, 2, 3, 4, 5, 6]
+  - i: rand.take
+    o: [4]
+   
+- name: roll
+  title: Dice roller
+  funcs:
+  - name: Roll
+    params: [Text]
+    returns: [Int/s*]
+  desc: |-
+    Rolls dice as specified by *dice* in standard dice notation. The argument
+    *dice* may start with the number of dice to roll, followed by the literal
+    character `d`, and then the number of faces found on each die. For example,
+    use `3d6` to roll three six sided dice.
+  example:
+  - i: 1 rand.seed
+    notice: seed set to 1
+  - i: 3d6 roll
+    o: [4, 1, 5]
+  - i: sum
+    o: [10]

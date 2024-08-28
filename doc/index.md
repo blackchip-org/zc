@@ -69,6 +69,9 @@
 - [`factorial`](ops/stat.md#factorial): Factorial
   - [`factorial/f`](ops/stat.md#factorialf): floating point
 - [`false`](ops/bool.md#false): False
+- [`fib`](ops/seq.md#fibonacci): Alias for [fibonacci](ops/seq.md#fibonacci)
+- [`fibonacci`](ops/seq.md#fibonacci): Fibonacci sequence
+  - [`fibonacci/f`](ops/seq.md#fibonaccif): floating point
 - [`filter`](ops/hof.md#filter): Filter items in the stack
 - [`floor`](ops/basic.md#floor): Floor
 - [`fold`](ops/hof.md#fold): Reduce items to a single value
@@ -147,12 +150,19 @@
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
+- [`rand`](ops/rand.md#rand): Random float
+  - [`rand/i`](ops/rand.md#randi): Random integer
+- [`rand.seed`](ops/rand.md#randseed): Sets the random number seed
+- [`rand.seed?`](ops/rand.md#randseed): Gets the random number seed
+- [`rand.take`](ops/rand.md#randtake): Select a random item from the stack
+- [`rand/f`](ops/rand.md#rand): Alias for [rand](ops/rand.md#rand)
 - [`reduce`](ops/hof.md#fold): Alias for [fold](ops/hof.md#fold)
 - [`rem`](ops/basic.md#rem): Remainder
 - [`repeat`](ops/hof.md#repeat): Repeat the execution of an operation
 - [`rgb-cmyk`](ops/color.md#rgb-cmyk): RGB to CMYK
 - [`rgb-hsl`](ops/color.md#rgb-hsl): RGB to HSL
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
+- [`roll`](ops/rand.md#roll): Dice roller
 - [`round`](ops/format.md#round): Round number
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
 - [`rounding.mode?`](ops/conf.md#roundingmode): Gets the default rounding mode
@@ -162,6 +172,8 @@
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
+- [`seq`](ops/seq.md#sequence): Alias for [sequence](ops/seq.md#sequence)
+- [`sequence`](ops/seq.md#sequence): Sequence of integers
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/f`](ops/basic_Float.md#signf): floating point
 - [`sin`](ops/sci.md#sin): Sine
@@ -171,6 +183,7 @@
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/basic_Float.md#subf): floating point
+- [`sum`](ops/stat.md#sum): Summation
 - [`sw`](ops/stack.md#swap): Alias for [swap](ops/stack.md#swap)
 - [`swap`](ops/stack.md#swap): Swap top two items on the stack
 

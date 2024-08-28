@@ -7,15 +7,16 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var Stat = zc.Vol{
-	Name: "stat",
+var Seq = zc.Vol{
+	Name: "seq",
 	Ops: []zc.Op{
-		ops.Factorial,
-		ops.FactorialF,
+		ops.Fibonacci,
+		ops.FibonacciF,
+		ops.Sequence,
 	},
 	Macros: []zc.Macro{
-		{Name: "fact", Expr: "factorial"},
-		{Name: "fact/f", Expr: "factorial/f"},
-		{Name: "sum", Expr: "/add fold"},
+		{Name: "fib", Expr: "fibonacci"},
+		{Name: "fib/f", Expr: "fibonacci/f"},
+		{Name: "seq", Expr: "sequence"},
 	},
 }

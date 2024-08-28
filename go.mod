@@ -1,6 +1,6 @@
 module github.com/blackchip-org/zc/v6
 
-go 1.21
+go 1.22
 
 require (
 	github.com/blackchip-org/scan v0.2.0

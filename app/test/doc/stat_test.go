@@ -27,3 +27,13 @@ func TestOpDocs_Stat_FactorialF(t *testing.T) {
 	c.Eval("c 10 fact/f")
 	c.AssertStack("3.6288e6")
 }
+
+func TestOpDocs_Stat_Sum(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4 5")
+	c.AssertStack("1", "2", "3", "4", "5")
+
+	c.Eval("sum")
+	c.AssertStack("15")
+}
