@@ -6,12 +6,14 @@ Stack operations
 
 ## Index
 
-| Operation            | Description             
-|----------------------|-------------------------
-| [`clear, c`](#clear) | Clear                   
-| [`drop`](#drop)      | Drop                    
-| [`dup`](#dup)        | Duplicate               
-| [`tuck`](#tuck)      | Copy top and place below
+| Operation            | Description                    
+|----------------------|--------------------------------
+| [`clear, c`](#clear) | Clear                          
+| [`drop`](#drop)      | Drop                           
+| [`dup`](#dup)        | Duplicate                      
+| [`n`](#n)            | Number of items on the stack   
+| [`swap, sw`](#swap)  | Swap top two items on the stack
+| [`tuck`](#tuck)      | Copy top and place below       
 
 
 ## Operations
@@ -66,6 +68,40 @@ Example:
 |-------|-----------
 | `10`  | `10`      
 | `dup` | `10 \| 10`
+
+### n
+
+Returns the number of items currently on the stack
+
+Stack effects:
+```
+(  -- x:Int/u )
+```
+
+Example:
+
+| Input         | Stack                  
+|---------------|------------------------
+| `/a /b /c /d` | `a \| b \| c \| d`     
+| `n`           | `a \| b \| c \| d \| 4`
+
+### swap
+
+Swaps the position of *x* and *y*.
+
+Alias: `sw`
+
+Stack effects:
+```
+( x:Any y:Any -- y:Any x:Any )
+```
+
+Example:
+
+| Input  | Stack   
+|--------|---------
+| `1 2`  | `1 \| 2`
+| `swap` | `2 \| 1`
 
 ### tuck
 

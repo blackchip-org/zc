@@ -18,6 +18,7 @@
   - [`add/f`](ops/basic_Float.md#addf): floating point
 - [`and`](ops/bool.md#and): Logical conjunction
 - [`and`](ops/prog.md#and): Bitwise and
+- [`apply`](ops/hof.md#apply): Apply a function using arguments on stack
 - [`asin`](ops/sci.md#asin): Inverse sine
 - [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
 - [`atan`](ops/sci.md#atan): Inverse tangent
@@ -57,6 +58,7 @@
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## e
+- [`eq`](ops/cmp.md#eq): Equal
 - [`eval`](ops/hof.md#eval): Evaluate top of stack
 - [`exp`](ops/basic.md#exp): Natural exponential
   - [`exp/f`](ops/basic_Float.md#expf): floating point
@@ -67,7 +69,9 @@
 - [`factorial`](ops/stat.md#factorial): Factorial
   - [`factorial/f`](ops/stat.md#factorialf): floating point
 - [`false`](ops/bool.md#false): False
+- [`filter`](ops/hof.md#filter): Filter items in the stack
 - [`floor`](ops/basic.md#floor): Floor
+- [`fold`](ops/hof.md#fold): Reduce items to a single value
 - [`ft-m`](ops/len.md#ft-m): Feet to meters
 - [`ft-mi`](ops/len.md#ft-mi): Feet to miles
 - [`ft-yd`](ops/len.md#ft-yd): Feet to yards
@@ -76,6 +80,8 @@
 - [`g-kg`](ops/mass.md#g-kg): Grams to kilograms
 - [`g-oz`](ops/mass.md#g-oz): Grams to ounces
 - [`g-ozt`](ops/mass.md#g-ozt): Grams to troy ounces
+- [`gt`](ops/cmp.md#gt): Greater than
+- [`gte`](ops/cmp.md#gte): Greater than or equal
 
 ## h
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
@@ -101,6 +107,8 @@
 - [`log10`](ops/basic.md#log10): Decimal logarithm
   - [`log10/f`](ops/basic_Float.md#log10f): floating point
 - [`lsh`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
+- [`lt`](ops/cmp.md#lt): Less than
+- [`lte`](ops/cmp.md#lte): Less than or equal
 
 ## m
 - [`m`](ops/basic.md#mul): Alias for [mul](ops/basic.md#mul)
@@ -118,8 +126,10 @@
   - [`mul/f`](ops/basic_Float.md#mulf): floating point
 
 ## n
+- [`n`](ops/stack.md#n): Number of items on the stack
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/f`](ops/basic_Float.md#negf): floating point
+- [`neq`](ops/cmp.md#neq): Not equal
 - [`nmi-km`](ops/len.md#nmi-km): Nautical miles to kilometers
 - [`nmi-m`](ops/len.md#nmi-m): Nautical miles to meters
 - [`not`](ops/bool.md#not): Negation
@@ -137,7 +147,9 @@
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
+- [`reduce`](ops/hof.md#fold): Alias for [fold](ops/hof.md#fold)
 - [`rem`](ops/basic.md#rem): Remainder
+- [`repeat`](ops/hof.md#repeat): Repeat the execution of an operation
 - [`rgb-cmyk`](ops/color.md#rgb-cmyk): RGB to CMYK
 - [`rgb-hsl`](ops/color.md#rgb-hsl): RGB to HSL
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
@@ -159,6 +171,8 @@
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/basic_Float.md#subf): floating point
+- [`sw`](ops/stack.md#swap): Alias for [swap](ops/stack.md#swap)
+- [`swap`](ops/stack.md#swap): Swap top two items on the stack
 
 ## t
 - [`tan`](ops/sci.md#tan): Tangent

@@ -18,6 +18,10 @@ func Dup(c zc.Calc) {
 	c.Push(x2)
 }
 
+func N(c zc.Calc) {
+	zc.Uint.Push(c, uint(c.Len()))
+}
+
 func Rotate(c zc.Calc) {
 	z := c.Pop()
 	y := c.Pop()
@@ -25,6 +29,13 @@ func Rotate(c zc.Calc) {
 	c.Push(z)
 	c.Push(x)
 	c.Push(y)
+}
+
+func Swap(c zc.Calc) {
+	y := c.Pop()
+	x := c.Pop()
+	c.Push(y)
+	c.Push(x)
 }
 
 func Tuck(c zc.Calc) {

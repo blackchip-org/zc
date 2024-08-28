@@ -1,0 +1,318 @@
+name: cmp
+title: Comparisions
+category: lib
+
+ops:
+- name: eq
+  title: Equal
+  funcs:
+  - name: EqBigInt
+    params: [x:Int, y:Int]
+    returns: [Bool]
+  - name: EqDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Bool]
+  - name: EqBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Bool]
+  - name: EqRat
+    params: [x:Rat, y:Rat]
+    returns: [Bool]
+  - name: EqComplex
+    params: [x:Complex, y:Complex]
+    returns: [Bool]
+  - name: EqString
+    params: [x:Text, y:Text]
+    returns: [Bool]
+  desc: Returns true if *x* and *y* are equal. 
+  example:
+  - i: c 5 5 eq 
+    o: [true]
+  - i: c 4 5 eq 
+    o: [false]
+  tests:
+  - name: Dec
+    test:
+    - i: c 5.5 5.5 eq
+      o: [true]
+    - i: c 4.4 5.5 eq
+      o: [false]
+  - name: Rat
+    test:
+    - i: c 1/2 1/2 eq
+      o: [true]
+    - i: c 1/3 1/2 eq
+      o: [false]
+  - name: Complex
+    test:
+    - i: c 5+5i 5+5i eq
+      o: [true]
+    - i: c 4+4i 5+5i eq
+      o: [false]
+  - name: String
+    test:
+    - i: c /e /e eq 
+      o: [true]
+    - i: c /d /e eq
+      o: [false]
+
+- name: gt
+  title: Greater than
+  funcs:
+  - name: GtBigInt
+    params: [x:Int, y:Int]
+    returns: [Bool]
+  - name: GtDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Bool]
+  - name: GtBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Bool]
+  - name: GtRat
+    params: [x:Rat, y:Rat]
+    returns: [Bool]
+  - name: GtString
+    params: [x:Text, y:Text]
+    returns: [Bool]
+  desc: Returns true if *x* is greater than *y*. 
+  example:
+  - i: c 6 5 gt 
+    o: [true]
+  - i: c 5 5 gt
+    o: [false]
+  - i: c 4 5 gt 
+    o: [false]
+  tests:
+  - name: Dec
+    test:
+    - i: c 6.5 5.5 gt
+      o: [true]
+    - i: c 5.5 5.5 gt
+      o: [false]
+    - i: c 4.4 5.5 gt
+      o: [false]
+  - name: Rat
+    test:
+    - i: c 2/3 1/2 gt
+      o: [true]
+    - i: c 1/2 1/2 gt
+      o: [false]
+    - i: c 1/3 1/2 gt
+      o: [false]
+  - name: String
+    test:
+    - i: c /f /e gt
+      o: [true]
+    - i: c /e /e gt 
+      o: [false]
+    - i: c /d /e gt
+      o: [false]
+
+- name: gte
+  title: Greater than or equal
+  funcs:
+  - name: GteBigInt
+    params: [x:Int, y:Int]
+    returns: [Bool]
+  - name: GteDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Bool]
+  - name: GteBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Bool]
+  - name: GteRat
+    params: [x:Rat, y:Rat]
+    returns: [Bool]
+  - name: GteString
+    params: [x:Text, y:Text]
+    returns: [Bool]
+  desc: Returns true if *x* is greater than or equal to *y*. 
+  example:
+  - i: c 6 5 gte 
+    o: [true]
+  - i: c 5 5 gte
+    o: [true]
+  - i: c 4 5 gte 
+    o: [false]
+  tests:
+  - name: Dec
+    test:
+    - i: c 6.5 5.5 gte
+      o: [true]
+    - i: c 5.5 5.5 gte
+      o: [true]
+    - i: c 4.4 5.5 gte
+      o: [false]
+  - name: Rat
+    test:
+    - i: c 2/3 1/2 gte
+      o: [true]
+    - i: c 1/2 1/2 gte
+      o: [true]
+    - i: c 1/3 1/2 gte
+      o: [false]
+  - name: String
+    test:
+    - i: c /f /e gte
+      o: [true]
+    - i: c /e /e gte
+      o: [true]
+    - i: c /d /e gte
+      o: [false]
+
+- name: lt
+  title: Less than
+  funcs:
+  - name: LtBigInt
+    params: [x:Int, y:Int]
+    returns: [Bool]
+  - name: LtDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Bool]
+  - name: LtBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Bool]
+  - name: LtRat
+    params: [x:Rat, y:Rat]
+    returns: [Bool]
+  - name: LtString
+    params: [x:Text, y:Text]
+    returns: [Bool]
+  desc: Returns true if *x* is less than *y*. 
+  example:
+  - i: c 6 5 lt 
+    o: [false]
+  - i: c 5 5 lt
+    o: [false]
+  - i: c 4 5 lt 
+    o: [true]
+  tests:
+  - name: Dec
+    test:
+    - i: c 6.5 5.5 lt
+      o: [false]
+    - i: c 5.5 5.5 lt
+      o: [false]
+    - i: c 4.4 5.5 lt
+      o: [true]
+  - name: Rat
+    test:
+    - i: c 2/3 1/2 lt
+      o: [false]
+    - i: c 1/2 1/2 lt
+      o: [false]
+    - i: c 1/3 1/2 lt
+      o: [true]
+  - name: String
+    test:
+    - i: c /f /e lt
+      o: [false]
+    - i: c /e /e lt 
+      o: [false]
+    - i: c /d /e lt
+      o: [true]
+
+- name: lte
+  title: Less than or equal
+  funcs:
+  - name: LteBigInt
+    params: [x:Int, y:Int]
+    returns: [Bool]
+  - name: LteDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Bool]
+  - name: LteBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Bool]
+  - name: LteRat
+    params: [x:Rat, y:Rat]
+    returns: [Bool]
+  - name: LteString
+    params: [x:Text, y:Text]
+    returns: [Bool]
+  desc: Returns true if *x* is less than or equal to *y*. 
+  example:
+  - i: c 6 5 lte 
+    o: [false]
+  - i: c 5 5 lte
+    o: [true]
+  - i: c 4 5 lte 
+    o: [true]
+  tests:
+  - name: Dec
+    test:
+    - i: c 6.5 5.5 lte
+      o: [false]
+    - i: c 5.5 5.5 lte
+      o: [true]
+    - i: c 4.4 5.5 lte
+      o: [true]
+  - name: Rat
+    test:
+    - i: c 2/3 1/2 lte
+      o: [false]
+    - i: c 1/2 1/2 lte
+      o: [true]
+    - i: c 1/3 1/2 lte
+      o: [true]
+  - name: String
+    test:
+    - i: c /f /e lte
+      o: [false]
+    - i: c /e /e lte 
+      o: [true]
+    - i: c /d /e lte
+      o: [true]
+
+- name: neq
+  title: Not equal
+  funcs:
+  - name: NeqBigInt
+    params: [x:Int, y:Int]
+    returns: [Bool]
+  - name: NeqDecimal
+    params: [x:Dec, y:Dec]
+    returns: [Bool]
+  - name: NeqBigFloat
+    params: [x:Float/128, y:Float/128]
+    returns: [Bool]
+  - name: NeqRat
+    params: [x:Rat, y:Rat]
+    returns: [Bool]
+  - name: NeqComplex
+    params: [x:Complex, y:Complex]
+    returns: [Bool]
+  - name: NeqString
+    params: [x:Text, y:Text]
+    returns: [Bool]
+  desc: Returns true if *x* and *y* are not equal. 
+  example:
+  - i: c 5 5 neq 
+    o: [false]
+  - i: c 4 5 neq 
+    o: [true]
+  tests:
+  - name: Dec
+    test:
+    - i: c 5.5 5.5 neq
+      o: [false]
+    - i: c 4.4 5.5 neq
+      o: [true]
+  - name: Rat
+    test:
+    - i: c 1/2 1/2 neq
+      o: [false]
+    - i: c 1/3 1/2 neq
+      o: [true]
+  - name: Complex
+    test:
+    - i: c 5+5i 5+5i neq
+      o: [false]
+    - i: c 4+4i 5+5i neq
+      o: [true]
+  - name: String
+    test:
+    - i: c /e /e neq 
+      o: [false]
+    - i: c /d /e neq
+      o: [true]

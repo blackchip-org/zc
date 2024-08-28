@@ -3,6 +3,25 @@ title: Higher order functions
 category: lib 
 
 ops:
+- name: apply
+  title: Apply a function using arguments on stack
+  funcs:
+  - name: Apply 
+    params: [args:Any*, expr:Text, n:Int/u32]
+    returns: [Any*]
+  desc: |- 
+    Evaluates the expression in *fn* by first popping *nargs* off the stack and
+    pushing them back as a single argument. This is useful for higher order
+    functions, like map, where some of the arguments are from existing results
+    found on the stack.
+  example:
+  - i: 1 2 3 4
+    o: [1, 2, 3, 4]
+  - i: n 
+    o: [1, 2, 3, 4, 4]
+  - i: "[swap sub] [map] 2 apply" 
+    o: [3, 2, 1, 0]
+
 - name: eval 
   title: Evaluate top of stack 
   funcs:
@@ -13,6 +32,37 @@ ops:
   example:
   - i: "'1 2 add' eval"
     o: [3]
+
+- name: filter 
+  title: Filter items in the stack
+  funcs:
+  - name: Filter 
+    params: [Any*, expr:Text]
+    returns: [Any*]
+  desc: |-
+    Filter the stack by keeping items that are true when evaluated by 
+    expression *expr*.
+  example:
+  - i: 1 2 3 4 5 6
+    o: [1, 2, 3, 4, 5, 6]
+  - i: "[2 mod 0 eq] filter"
+    o: [2, 4, 6]
+
+- name: fold
+  aliases: [reduce]
+  title: Reduce items to a single value
+  funcs:
+  - name: Fold
+    params: [Any*, expr:Text]
+    returns: [Any*]
+  desc: |-
+    Reduce the stack to a single value using the expression *expr*. An
+    invalid argument error is raised if *expr* does not reduce.
+  example:
+  - i: 1 2 3 4 5
+    o: [1, 2, 3, 4, 5]
+  - i: /add fold
+    o: [15]
 
 - name: map 
   title: Apply an operation 
@@ -26,3 +76,16 @@ ops:
     o: [1, 2, 3, 4, 5]
   - i: "[2 mul] map"
     o: [2, 4, 6, 8, 10]
+
+- name: repeat 
+  title: Repeat the execution of an operation
+  funcs:
+  - name: Repeat
+    params: [Any*, expr:Text, n:Int/u]
+    return: [Any*]
+  desc: Repeat execution of expression *expr* for *n* times.
+  example:
+  - i: 1
+    o: [1]
+  - i: "[2 mul] 8 repeat"
+    o: [256]

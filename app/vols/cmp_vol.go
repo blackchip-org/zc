@@ -7,17 +7,15 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var Hof = zc.Vol{
-	Name: "hof",
+var Cmp = zc.Vol{
+	Name: "cmp",
 	Ops: []zc.Op{
-		ops.Apply,
-		ops.Eval,
-		ops.Filter,
-		ops.Fold,
-		ops.Map,
-		ops.Repeat,
+		ops.Eq,
+		ops.Gt,
+		ops.Gte,
+		ops.Lt,
+		ops.Lte,
+		ops.Neq,
 	},
-	Macros: []zc.Macro{
-		{Name: "reduce", Expr: "fold"},
-	},
+	Macros: []zc.Macro{},
 }

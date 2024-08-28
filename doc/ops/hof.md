@@ -4,19 +4,39 @@
 
 Higher order functions
 
-## Overview
-
-TODO: Incomplete 
-
 ## Index
 
-| Operation       | Description          
-|-----------------|----------------------
-| [`eval`](#eval) | Evaluate top of stack
-| [`map`](#map)   | Apply an operation   
+| Operation               | Description                              
+|-------------------------|------------------------------------------
+| [`apply`](#apply)       | Apply a function using arguments on stack
+| [`eval`](#eval)         | Evaluate top of stack                    
+| [`filter`](#filter)     | Filter items in the stack                
+| [`fold, reduce`](#fold) | Reduce items to a single value           
+| [`map`](#map)           | Apply an operation                       
+| [`repeat`](#repeat)     | Repeat the execution of an operation     
 
 
 ## Operations
+
+### apply
+
+Evaluates the expression in *fn* by first popping *nargs* off the stack and
+pushing them back as a single argument. This is useful for higher order
+functions, like map, where some of the arguments are from existing results
+found on the stack.
+
+Stack effects:
+```
+( args:Any* expr:Text n:Int/u32 -- Any* )
+```
+
+Example:
+
+| Input                      | Stack                  
+|----------------------------|------------------------
+| `1 2 3 4`                  | `1 \| 2 \| 3 \| 4`     
+| `n`                        | `1 \| 2 \| 3 \| 4 \| 4`
+| `[swap sub] [map] 2 apply` | `3 \| 2 \| 1 \| 0`     
 
 ### eval
 
@@ -33,6 +53,42 @@ Example:
 |------------------|------
 | `'1 2 add' eval` | `3`  
 
+### filter
+
+Filter the stack by keeping items that are true when evaluated by 
+expression *expr*.
+
+Stack effects:
+```
+( Any* expr:Text -- Any* )
+```
+
+Example:
+
+| Input                 | Stack                       
+|-----------------------|-----------------------------
+| `1 2 3 4 5 6`         | `1 \| 2 \| 3 \| 4 \| 5 \| 6`
+| `[2 mod 0 eq] filter` | `2 \| 4 \| 6`               
+
+### fold
+
+Reduce the stack to a single value using the expression *expr*. An
+invalid argument error is raised if *expr* does not reduce.
+
+Alias: `reduce`
+
+Stack effects:
+```
+( Any* expr:Text -- Any* )
+```
+
+Example:
+
+| Input       | Stack                  
+|-------------|------------------------
+| `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
+| `/add fold` | `15`                   
+
 ### map
 
 Apply the expression, *expr*, to each item on the stack.
@@ -48,3 +104,19 @@ Example:
 |---------------|-------------------------
 | `1 2 3 4 5`   | `1 \| 2 \| 3 \| 4 \| 5` 
 | `[2 mul] map` | `2 \| 4 \| 6 \| 8 \| 10`
+
+### repeat
+
+Repeat execution of expression *expr* for *n* times.
+
+Stack effects:
+```
+( Any* expr:Text n:Int/u --  )
+```
+
+Example:
+
+| Input              | Stack
+|--------------------|------
+| `1`                | `1`  
+| `[2 mul] 8 repeat` | `256`

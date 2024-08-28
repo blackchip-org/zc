@@ -30,6 +30,7 @@
 |-----------------------|-----------------------
 | [anno](ops/anno.md)   | Annotations           
 | [bool](ops/bool.md)   | Boolean operations    
+| [cmp](ops/cmp.md)     | Comparisions          
 | [color](ops/color.md) | Color conversions     
 | [hof](ops/hof.md)     | Higher order functions
 

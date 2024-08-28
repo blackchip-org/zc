@@ -8,6 +8,18 @@ import (
 )
 
 var (
+	Apply = zc.Op{
+		Name: "apply",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.Uint32, zc.String},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Apply,
+			},
+		},
+	}
 	Eval = zc.Op{
 		Name: "eval",
 		Funcs: []zc.Func{
@@ -20,6 +32,30 @@ var (
 			},
 		},
 	}
+	Filter = zc.Op{
+		Name: "filter",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.String},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Filter,
+			},
+		},
+	}
+	Fold = zc.Op{
+		Name: "fold",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.String},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Fold,
+			},
+		},
+	}
 	Map = zc.Op{
 		Name: "map",
 		Funcs: []zc.Func{
@@ -29,6 +65,17 @@ var (
 				Returns:   []zc.Type{},
 				VarReturn: zc.Any,
 				Eval:      funcs.Map,
+			},
+		},
+	}
+	Repeat = zc.Op{
+		Name: "repeat",
+		Funcs: []zc.Func{
+			{
+				Params:   []zc.Type{zc.Uint, zc.String},
+				VarParam: zc.Any,
+				Returns:  []zc.Type{},
+				Eval:     funcs.Repeat,
 			},
 		},
 	}

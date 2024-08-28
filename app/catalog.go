@@ -14,6 +14,7 @@ func init() {
 		vols.Basic,
 		vols.BasicFloat,
 		vols.Bool,
+		vols.Cmp,
 		vols.Color,
 		vols.Conf,
 		vols.Format,

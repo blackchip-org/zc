@@ -38,6 +38,26 @@ func TestOpDocs_Stack_Dup(t *testing.T) {
 	c.AssertStack("10", "10")
 }
 
+func TestOpDocs_Stack_N(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("/a /b /c /d")
+	c.AssertStack("a", "b", "c", "d")
+
+	c.Eval("n")
+	c.AssertStack("a", "b", "c", "d", "4")
+}
+
+func TestOpDocs_Stack_Swap(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2")
+	c.AssertStack("1", "2")
+
+	c.Eval("swap")
+	c.AssertStack("2", "1")
+}
+
 func TestOpDocs_Stack_Tuck(t *testing.T) {
 	c := app.NewCalcTester(t)
 

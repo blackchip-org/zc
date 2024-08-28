@@ -8,11 +8,44 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
+func TestOpDocs_Hof_Apply(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4")
+	c.AssertStack("1", "2", "3", "4")
+
+	c.Eval("n")
+	c.AssertStack("1", "2", "3", "4", "4")
+
+	c.Eval("[swap sub] [map] 2 apply")
+	c.AssertStack("3", "2", "1", "0")
+}
+
 func TestOpDocs_Hof_Eval(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("'1 2 add' eval")
 	c.AssertStack("3")
+}
+
+func TestOpDocs_Hof_Filter(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4 5 6")
+	c.AssertStack("1", "2", "3", "4", "5", "6")
+
+	c.Eval("[2 mod 0 eq] filter")
+	c.AssertStack("2", "4", "6")
+}
+
+func TestOpDocs_Hof_Fold(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4 5")
+	c.AssertStack("1", "2", "3", "4", "5")
+
+	c.Eval("/add fold")
+	c.AssertStack("15")
 }
 
 func TestOpDocs_Hof_Map(t *testing.T) {
@@ -23,4 +56,14 @@ func TestOpDocs_Hof_Map(t *testing.T) {
 
 	c.Eval("[2 mul] map")
 	c.AssertStack("2", "4", "6", "8", "10")
+}
+
+func TestOpDocs_Hof_Repeat(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1")
+	c.AssertStack("1")
+
+	c.Eval("[2 mul] 8 repeat")
+	c.AssertStack("256")
 }

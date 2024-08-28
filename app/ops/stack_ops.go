@@ -39,6 +39,26 @@ var (
 			},
 		},
 	}
+	N = zc.Op{
+		Name: "n",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.Uint},
+				Eval:    funcs.N,
+			},
+		},
+	}
+	Swap = zc.Op{
+		Name: "swap",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Any, zc.Any},
+				Returns: []zc.Type{zc.Any, zc.Any},
+				Eval:    funcs.Swap,
+			},
+		},
+	}
 	Tuck = zc.Op{
 		Name: "tuck",
 		Funcs: []zc.Func{

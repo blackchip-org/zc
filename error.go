@@ -26,6 +26,8 @@ func ErrInvalidArg(format string, args ...any) error {
 	return fmt.Errorf("invalid argument, %v", fmt.Sprintf(format, args...))
 }
 
+var ErrNoReturnValues = errors.New("no return values")
+
 func ErrNoSuchOp(name string) error {
 	return fmt.Errorf("no such operation: %v", name)
 }
