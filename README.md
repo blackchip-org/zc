@@ -193,7 +193,17 @@ To perform a 128-bit floating-point operation, use `add/f` instead:
 
 | Input              | Stack
 |--------------------|-------------------
-| `1.1 2.2 add/f`   | `3.3000000000000000000000000000000002`
+| `1.1 2.2 add/f`    | `3.3000000000000000000000000000000002`
+
+Use either `round` or `r` to round to a certain number of digits after the
+decimal point:
+
+<!-- test: Round -->
+
+| Input              | Stack
+|--------------------|-------------------
+| `1.1 2.2 add/f`    | `3.3000000000000000000000000000000002`
+| `2 round`          | `3.3`
 
 Enter fractions in `a/b` notation:
 

@@ -45,7 +45,8 @@ var rules = scan.NewRuleSet(
 		WithOptionalTerminator(true),
 	scan.NewStrRule('[', ']').
 		WithType(TokenValue).
-		WithOptionalTerminator(true),
+		WithOptionalTerminator(true).
+		WithNesting(true),
 	valueRule{},
 	slashValueRule{},
 	scan.NewWhileRule(scan.Not(scan.IsSpace), TokenName),
