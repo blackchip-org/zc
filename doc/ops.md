@@ -35,6 +35,7 @@
 | [hof](ops/hof.md)     | Higher order functions  
 | [rand](ops/rand.md)   | Random number generation
 | [seq](ops/seq.md)     | Numeric sequences       
+| [text](ops/text.md)   | Text operations         
 
 
 

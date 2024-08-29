@@ -50,7 +50,7 @@ var (
 	DocDir    = path.Join(RootDir, "doc")
 	DocOpsDir = path.Join(DocDir, "ops")
 	OpsDir    = path.Join(RootDir, "app", "ops")
-	TestDir   = path.Join(RootDir, "app", "test", "doc")
+	TestDir   = path.Join(RootDir, "app", "test", "ops")
 	VolDir    = path.Join(RootDir, "app", "vols")
 )
 

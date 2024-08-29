@@ -4,8 +4,9 @@ ops() {
     set -x
     rm -rf app/ops/* doc/ops/* app/vols/* app/test/doc/*
     go generate internal/gen-ops/gen-ops.go
-    goimports -w app/ops/*.go app/vols/*.go app/test/doc/*
-    gofmt -w     app/ops/*.go app/vols/*.go app/test/doc/*
+    go generate internal/gen-doc-tests/gen-doc-tests.go
+    goimports -w app/ops/*.go app/vols/*.go app/test/docs/* app/test/ops/*
+    gofmt -w     app/ops/*.go app/vols/*.go app/test/docs/* app/test/ops/*
 }
 
 test() {

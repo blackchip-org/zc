@@ -28,5 +28,6 @@ func init() {
 		vols.Stack,
 		vols.Stat,
 		vols.Temp,
+		vols.Text,
 	)
 }

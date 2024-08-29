@@ -105,6 +105,7 @@
 - [`label`](ops/anno.md#label): Attach label
 - [`lb-kg`](ops/mass.md#lb-kg): Pounds to kilograms
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
+- [`len`](ops/text.md#len): Length of text in characters
 - [`log`](ops/basic.md#log): Natural logarithm
   - [`log/f`](ops/basic_Float.md#logf): floating point
 - [`log10`](ops/basic.md#log10): Decimal logarithm

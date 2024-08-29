@@ -6,11 +6,11 @@ Numeric sequences
 
 ## Index
 
-| Operation                           | Description                        
-|-------------------------------------|------------------------------------
-| [`fibonacci, fib`](#fibonacci)      | Fibonacci sequence                 
-| [`fibonacci/f, fib/f`](#fibonaccif) | Fibonancci sequence, floating point
-| [`sequence, seq`](#sequence)        | Sequence of integers               
+| Operation                           | Description                       
+|-------------------------------------|-----------------------------------
+| [`fibonacci, fib`](#fibonacci)      | Fibonacci sequence                
+| [`fibonacci/f, fib/f`](#fibonaccif) | Fibonacci sequence, floating point
+| [`sequence, seq`](#sequence)        | Sequence of integers              
 
 
 ## Operations
@@ -35,6 +35,9 @@ Example:
 ### fibonacci/f
 
 Calculates the *n*th element in the Fibonacci sequence. 
+
+This operation is quicker than `fibonacci` when computing large values 
+when an exact number is not required and some error is acceptable. 
 
 Alias: `fib/f`
 
