@@ -7,9 +7,11 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/blackchip-org/dms"
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/app/vars"
 	"github.com/blackchip-org/zc/v6/pkg/coll"
+	"github.com/blackchip-org/zc/v6/types"
 	"github.com/cockroachdb/apd/v3"
 )
 
@@ -20,6 +22,7 @@ var (
 	Bool     = BoolType{}
 	Complex  = ComplexType{}
 	Decimal  = DecimalType{}
+	DMS      = DMSType{}
 	Float64  = Float64Type{}
 	Int      = IntType{}
 	Int8     = Int8Type{}
@@ -37,6 +40,7 @@ var (
 
 const (
 	PrecFloat128 = 113
+	PrecDec      = vars.DefaultPrec
 )
 
 var (
@@ -331,6 +335,51 @@ func (t DecimalType) Dup(a any) any {
 	d := t.New()
 	d.Set(t.As(a))
 	return d
+}
+
+// ----------------------------------------------------------------------------
+type DMSType struct{}
+
+func (t DMSType) AppName() string { return "DMS" }
+func (t DMSType) GoName() string  { return "types.DMS" }
+
+func (t DMSType) As(a any) types.DMS {
+	v, ok := a.(types.DMS)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t DMSType) Push(c Calc, val types.DMS) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t DMSType) Pop(c Calc) types.DMS {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t DMSType) Parse(state coll.State, str string) (any, bool, error) {
+	conf := vars.ForConf(state)
+	p := dms.NewDefaultParser()
+	f, err := p.ParseFields(str)
+	if err != nil {
+		return nil, false, nil
+	}
+	d, err := types.NewDMSFromFields(conf.DecMath, f)
+	if err != nil {
+		return nil, false, nil
+	}
+	return d, true, nil
+}
+
+func (t DMSType) Format(a any) string {
+	d := t.As(a)
+	return types.FormatDMS(d, dms.SecUnit, -1)
+}
+
+func (t DMSType) Dup(a any) any {
+	return a
 }
 
 // ----------------------------------------------------------------------------

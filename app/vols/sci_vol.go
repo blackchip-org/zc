@@ -24,5 +24,7 @@ var Sci = zc.Vol{
 		ops.Tan,
 		ops.Tanh,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "pi", Expr: "3.14159265358979323846264338327950288419716939937510582097494459"},
+	},
 }

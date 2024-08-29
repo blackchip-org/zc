@@ -147,7 +147,6 @@ ops:
         error: "div/i: division by zero"
 
 - name: div.mod
-  aliases: [dm]
   title: Division with modulus
   funcs:
   - name: DivModBigInt

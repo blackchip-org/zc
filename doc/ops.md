@@ -28,6 +28,7 @@
 ## Library
 | Volume                | Description             
 |-----------------------|-------------------------
+| [angle](ops/angle.md) | Angular calculations    
 | [anno](ops/anno.md)   | Annotations             
 | [bool](ops/bool.md)   | Boolean operations      
 | [cmp](ops/cmp.md)     | Comparisions            

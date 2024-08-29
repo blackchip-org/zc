@@ -46,13 +46,24 @@
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- [`dd`](ops/angle.md#dec): Alias for [dec](ops/angle.md#dec)
+- [`dec`](ops/angle.md#dec): Degree angle to decimal degrees
 - [`dec`](ops/prog.md#dec): Decimal conversion
+- [`deg-rad`](ops/angle.md#deg-rad): Convert degrees to radians
+- `deg.min`
+- [`deg.min.round`](ops/angle.md#degminround): Degree angle to degrees and rounded minutes
+- [`deg.min.sec`](ops/angle.md#degminsec): Degree angle to degrees, minutes and seconds
+- [`deg.min.sec.round`](ops/angle.md#degminsecround): Degree angle to degrees, minutes, and rounded seconds
 - [`div`](ops/basic.md#div): Division
   - [`div/f`](ops/basic_Float.md#divf): floating point
   - [`div/i`](ops/basic.md#divi): Euclidean integer division
 - [`div.mod`](ops/basic.md#divmod): Division with modulus
 - [`div.rem`](ops/basic.md#divrem): Division with remainder
-- [`dm`](ops/basic.md#divmod): Alias for [div.mod](ops/basic.md#divmod)
+- [`dm`](ops/angle.md#degmin): Alias for [deg.min](ops/angle.md#degmin)
+- [`dmr`](ops/angle.md#degminround): Alias for [deg.min.round](ops/angle.md#degminround)
+- [`dms`](ops/angle.md#degminsec): Alias for [deg.min.sec](ops/angle.md#degminsec)
+- [`dms?`](ops/angle.md#dms): Can parse as a decimal degree?
+- [`dmsr`](ops/angle.md#degminsecround): Alias for [deg.min.sec.round](ops/angle.md#degminsecround)
 - [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
 - [`drop`](ops/stack.md#drop): Drop
 - [`dup`](ops/stack.md#dup): Duplicate
@@ -124,6 +135,7 @@
 - [`mi-ft`](ops/len.md#mi-ft): Miles to feet
 - [`mi-km`](ops/len.md#mi-km): Miles to kilometers
 - [`mi-nmi`](ops/len.md#mi-nmi): Miles to nautical miles
+- [`minutes`](ops/angle.md#minutes): Degree angle to minutes
 - [`mm-in`](ops/len.md#mm-in): Millimeters to inches
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
@@ -147,10 +159,12 @@
 - [`ozt-g`](ops/mass.md#ozt-g): Troy ounces to grams
 
 ## p
+- [`pi`](ops/sci.md#pi): Circumference to diameter ratio
 - [`pow`](ops/basic.md#pow): Exponentiation
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
+- [`rad-deg`](ops/angle.md#rad-deg): Convert radians to degrees
 - [`rand`](ops/rand.md#rand): Random float
   - [`rand/i`](ops/rand.md#randi): Random integer
 - [`rand.seed`](ops/rand.md#randseed): Sets the random number seed
@@ -173,6 +187,8 @@
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
+- [`seconds`](ops/angle.md#seconds): Degree angle to seconds
+- [`secs`](ops/angle.md#seconds): Alias for [seconds](ops/angle.md#seconds)
 - [`seq`](ops/seq.md#sequence): Alias for [sequence](ops/seq.md#sequence)
 - [`sequence`](ops/seq.md#sequence): Sequence of integers
 - [`sign`](ops/basic.md#sign): Sign

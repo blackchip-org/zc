@@ -1,0 +1,124 @@
+name: angle
+title: Angular calculations
+category: lib
+
+ops:
+- name: dec
+  aliases: [dd]
+  title: Degree angle to decimal degrees
+  funcs:
+  - name: DecDMS  
+    params: [x:DMS]
+    returns: [Dec]
+  desc: |-
+    Convert the angle *x* in any degree format to decimal degrees. 
+  example:
+  - i: 10d7m24.24s dec
+    o: [10.1234]
+
+- name: deg.min
+  aliases: [dm]
+  funcs:
+  - name: DegMin
+    params: [x:DMS]
+    returns: [DMS]
+  desc: |-
+    Convert the angle *x* in any degree format to degrees and minutes. 
+  example:
+  - i: 10.1234 dm
+    o: [10° 7.404′]
+
+- name: deg.min.round
+  aliases: [dmr]
+  title: Degree angle to degrees and rounded minutes
+  funcs:
+  - name: DegMinRound
+    params: [x:DMS, p:Int/u]
+    returns: [DMS]
+  desc: |-
+    Convert the angle *x* in any degree format to degrees and minutes rounded
+    to *p* places. 
+  example:
+  - i: 12.57611 3 dmr
+    o: [12° 34.567′]
+
+- name: deg.min.sec 
+  aliases: [dms]
+  title: Degree angle to degrees, minutes and seconds
+  funcs:
+  - name: DegMinSec
+    params: [x:DMS]
+    returns: [DMS]
+  desc: |-
+    Convert the angle *x* in any degree format to degrees, minutes, and 
+    seconds. 
+  example:
+  - i: -76.856944 dms 
+    o: [-76° 51′ 24.9984″]
+
+- name: deg.min.sec.round
+  aliases: [dmsr]
+  title: Degree angle to degrees, minutes, and rounded seconds 
+  funcs:
+  - name: DegMinSecRound
+    params: [x:DMS, p:Int/u]
+    returns: [DMS]
+  desc: 
+    Convert the angle *x* in any degree format to degrees, minutes, and 
+    seconds rounded to *p* places. 
+  example:
+  - i: -76.856944 0 dmsr 
+    o: [-76° 51′ 25″]
+
+- name: dms?
+  title: Can parse as a decimal degree?
+  funcs:
+  - name: DMSIs
+    params: [x:Text]
+    returns: [Bool]
+  desc: Returns true if *x* can be parsed as an angle in decimal degrees. 
+  example:
+  - i: "c [10° 30′ 45″] dms?"
+    o: [true]
+  - i: "c [10  30  45 ] dms?"
+    o: [false]
+
+- name: deg-rad
+  title: Convert degrees to radians
+  macro: pi 180 div mul 
+  desc: Converts an angle from degrees to radians. 
+  example:
+  - i: 90 deg-rad 7 round
+    o: [1.5707963]
+
+- name: minutes
+  alises: [mins]
+  title: Degree angle to minutes 
+  funcs: 
+  - name: MinutesDMS
+    params: [x:DMS]
+    returns: [Dec]
+  desc: Converts the angle *x* in any degree format to minutes. 
+  example:
+  - i: 10d30m minutes 
+    o: [630]
+
+- name: rad-deg 
+  title: Convert radians to degrees
+  macro: 180 pi div mul 
+  dsec: Converts an angle from radians to degrees.
+  example:
+  - i:  1.570796327 rad-deg 7 round
+    o: [90]
+
+- name: seconds
+  aliases: [secs]
+  title: Degree angle to seconds
+  funcs:
+  - name: SecondsDMS
+    params: [x:DMS]
+    returns: [Dec]
+  desc: Converts the angle *x* in any degree format to seconds.
+  example:
+  - i: 10d30m seconds 
+    o: [37800]

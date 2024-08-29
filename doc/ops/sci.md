@@ -6,21 +6,22 @@ Scientific calculator
 
 ## Index
 
-| Operation         | Description               
-|-------------------|---------------------------
-| [`acos`](#acos)   | Inverse cosine            
-| [`acosh`](#acosh) | Inverse hyperbolic cosine 
-| [`asin`](#asin)   | Inverse sine              
-| [`asinh`](#asinh) | Inverse hyperbolic sine   
-| [`atan`](#atan)   | Inverse tangent           
-| [`atan2`](#atan2) | Inverse tangent           
-| [`atanh`](#atanh) | Inverse hyperbolic tangent
-| [`cos`](#cos)     | Cosine                    
-| [`cosh`](#cosh)   | Hyperbolic cosine         
-| [`sin`](#sin)     | Sine                      
-| [`sinh`](#sinh)   | Hyperbolic sine           
-| [`tan`](#tan)     | Tangent                   
-| [`tanh`](#tanh)   | Hyperbolic tangent        
+| Operation         | Description                    
+|-------------------|--------------------------------
+| [`acos`](#acos)   | Inverse cosine                 
+| [`acosh`](#acosh) | Inverse hyperbolic cosine      
+| [`asin`](#asin)   | Inverse sine                   
+| [`asinh`](#asinh) | Inverse hyperbolic sine        
+| [`atan`](#atan)   | Inverse tangent                
+| [`atan2`](#atan2) | Inverse tangent                
+| [`atanh`](#atanh) | Inverse hyperbolic tangent     
+| [`cos`](#cos)     | Cosine                         
+| [`cosh`](#cosh)   | Hyperbolic cosine              
+| [`pi`](#pi)       | Circumference to diameter ratio
+| [`sin`](#sin)     | Sine                           
+| [`sinh`](#sinh)   | Hyperbolic sine                
+| [`tan`](#tan)     | Tangent                        
+| [`tanh`](#tanh)   | Hyperbolic tangent             
 
 
 ## Operations
@@ -167,6 +168,21 @@ Example:
 | Input            | Stack   
 |------------------|---------
 | `2 cosh 5 round` | `3.7622`
+
+### pi
+
+The ratio between a cirlce's circumference to its diameter.
+
+Macro definition:
+```
+def pi 3.14159265358979323846264338327950288419716939937510582097494459
+```
+
+Example:
+
+| Input | Stack                                                             
+|-------|-------------------------------------------------------------------
+| `pi`  | `3.14159265358979323846264338327950288419716939937510582097494459`
 
 ### sin
 

@@ -138,6 +138,10 @@ var (
 			},
 		},
 	}
+	Pi = zc.Op{
+		Name:  "pi",
+		Funcs: []zc.Func{},
+	}
 	Sin = zc.Op{
 		Name: "sin",
 		Funcs: []zc.Func{

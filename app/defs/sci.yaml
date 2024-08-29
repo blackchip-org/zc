@@ -126,6 +126,14 @@ ops:
   - i: 2 cosh 5 round
     o: [3.7622]
 
+- name: pi 
+  title: Circumference to diameter ratio
+  macro: 3.14159265358979323846264338327950288419716939937510582097494459
+  desc: The ratio between a cirlce's circumference to its diameter. 
+  example:
+  - i: pi 
+    o: [3.14159265358979323846264338327950288419716939937510582097494459]
+
 - name: sin
   title: Sine
   funcs:

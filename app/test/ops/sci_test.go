@@ -71,6 +71,13 @@ func TestOpDocs_Sci_Cosh(t *testing.T) {
 	c.AssertStack("3.7622")
 }
 
+func TestOpDocs_Sci_Pi(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("pi")
+	c.AssertStack("3.14159265358979323846264338327950288419716939937510582097494459")
+}
+
 func TestOpDocs_Sci_Sin(t *testing.T) {
 	c := app.NewCalcTester(t)
 

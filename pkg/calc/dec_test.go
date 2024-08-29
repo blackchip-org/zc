@@ -355,3 +355,15 @@ func TestDecimalSub(t *testing.T) {
 		t.Fatalf("\n have: %v \n want: %v", have, want)
 	}
 }
+
+func TestDecimalTrunc(t *testing.T) {
+	c := NewDecimal()
+	c.PushString("3.9")
+	c.Trunc()
+
+	have := c.PopString()
+	want := "3"
+	if have != want {
+		t.Fatalf("\n have: %v \n want: %v", have, want)
+	}
+}

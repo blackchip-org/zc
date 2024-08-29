@@ -14,7 +14,7 @@ Basic calculator
 | [`cbrt`](#cbrt)          | Cube root                 
 | [`ceil`](#ceil)          | Ceiling                   
 | [`div, d, /`](#div)      | Division                  
-| [`div.mod, dm`](#divmod) | Division with modulus     
+| [`div.mod`](#divmod)     | Division with modulus     
 | [`div.rem, dr`](#divrem) | Division with remainder   
 | [`div/i`](#divi)         | Euclidean integer division
 | [`exp`](#exp)            | Natural exponential       
@@ -155,8 +155,6 @@ Example:
 
 The quotient *quo* and remainder *mod* when dividing *x* by *y* using
 Euclidean division. If *y* is zero, a division by zero error is raised.
-
-Alias: `dm`
 
 Stack effects:
 ```
