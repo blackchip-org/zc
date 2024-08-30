@@ -17,6 +17,7 @@ Scientific calculator
 | [`atanh`](#atanh) | Inverse hyperbolic tangent     
 | [`cos`](#cos)     | Cosine                         
 | [`cosh`](#cosh)   | Hyperbolic cosine              
+| [`e`](#e)         | Euler's number                 
 | [`pi`](#pi)       | Circumference to diameter ratio
 | [`sin`](#sin)     | Sine                           
 | [`sinh`](#sinh)   | Hyperbolic sine                
@@ -168,6 +169,21 @@ Example:
 | Input            | Stack   
 |------------------|---------
 | `2 cosh 5 round` | `3.7622`
+
+### e
+
+Euler's number, the natural logarithm base.
+
+Macro definition:
+```
+def e 2.71828182845904523536028747135266249775724709369995957496696763
+```
+
+Example:
+
+| Input | Stack                                                             
+|-------|-------------------------------------------------------------------
+| `e`   | `2.71828182845904523536028747135266249775724709369995957496696763`
 
 ### pi
 

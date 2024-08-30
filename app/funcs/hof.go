@@ -67,17 +67,16 @@ func Fold(c zc.Calc) {
 
 func Map(c zc.Calc) {
 	var rs []zc.Item
-	opName := zc.String.Pop(c)
-	for _, a := range c.Stack() {
+	expr := zc.String.Pop(c)
+	for _, a := range zc.DupItems(c.Stack()) {
 		dc := c.New()
 		dc.Push(a)
-		if err := dc.Eval(opName); err != nil {
+		if err := dc.Eval(expr); err != nil {
 			c.Raise(err)
 			return
 		}
 		if dc.Len() > 0 {
 			rs = append(rs, dc.Pop())
-
 		}
 	}
 	c.SetStack(rs)

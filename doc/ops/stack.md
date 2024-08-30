@@ -6,14 +6,26 @@ Stack operations
 
 ## Index
 
-| Operation            | Description                    
-|----------------------|--------------------------------
-| [`clear, c`](#clear) | Clear                          
-| [`drop`](#drop)      | Drop                           
-| [`dup`](#dup)        | Duplicate                      
-| [`n`](#n)            | Number of items on the stack   
-| [`swap, sw`](#swap)  | Swap top two items on the stack
-| [`tuck`](#tuck)      | Copy top and place below       
+| Operation                     | Description                            
+|-------------------------------|----------------------------------------
+| [`clear, c`](#clear)          | Clear                                  
+| [`copy`](#copy)               | Copy all items to temporary stack      
+| [`down`](#down)               | Rotate stack downward                  
+| [`drop`](#drop)               | Drop                                   
+| [`dup`](#dup)                 | Duplicate                              
+| [`flip`](#flip)               | Flip the main and temporary stacks     
+| [`load, ld`](#load)           | Loads a stack from memory              
+| [`n`](#n)                     | Number of items on the stack           
+| [`pop`](#pop)                 | Pops item from the temporary stack     
+| [`pop.all, popa`](#popall)    | Pops all items from the temporary stack
+| [`push`](#push)               | Push top item to the temporary stack   
+| [`push.all, pusha`](#pushall) | Push all items to the temporary stac   
+| [`store, st`](#store)         | Store stack to memory                  
+| [`swap, sw`](#swap)           | Swap top two items on the stack        
+| [`take`](#take)               | Take elements from the stack           
+| [`top`](#top)                 | Take the top item from the stack       
+| [`tuck`](#tuck)               | Copy top and place below               
+| [`up`](#up)                   | Rotate stack upwards                   
 
 
 ## Operations
@@ -35,6 +47,44 @@ Example:
 |---------|--------------
 | `1 2 3` | `1 \| 2 \| 3`
 | `c`     |              
+
+### copy
+
+Pushes all items on the main stack to the temporary stack while preserving
+the contents of the main stack. 
+
+Stack effects:
+```
+( Any* -- Any* )
+```
+
+Example:
+
+| Input          | Stack                       
+|----------------|-----------------------------
+| `1 2 3`        | `1 \| 2 \| 3`               
+| `copy pop.all` | `1 \| 2 \| 3 \| 1 \| 2 \| 3`
+
+### down
+
+Rotate items on the stack by moving downward.
+
+In the interactive calculator, the top of the stack is towards the bottom of
+the terminal so downward means seeing all items moves toward the bottom. The
+top of the stack wraps around to be the bottom of the stack.
+
+Stack effects:
+```
+( Any* -- Any* )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `down`  | `3 \| 1 \| 2`
+| `down`  | `2 \| 3 \| 1`
 
 ### drop
 
@@ -69,6 +119,46 @@ Example:
 | `10`  | `10`      
 | `dup` | `10 \| 10`
 
+### flip
+
+Flip the stacks so that the main stack becomes the temporary stack and the
+temporary stack becomes the main stack. 
+
+Stack effects:
+```
+( Any* -- Any* )
+```
+
+Example:
+
+| Input      | Stack        
+|------------|--------------
+| `1 2 3`    | `1 \| 2 \| 3`
+| `push.all` |              
+| `4 5 6`    | `4 \| 5 \| 6`
+| `flip`     | `1 \| 2 \| 3`
+| `flip`     | `4 \| 5 \| 6`
+
+### load
+
+Pushes the items found at memory location *m* to the main stack. A
+empty memory error is raised if nothing has been stored at that location. 
+
+Alias: `ld`
+
+Stack effects:
+```
+( m:Text -- Any* )
+```
+
+Example:
+
+| Input     | Stack                       
+|-----------|-----------------------------
+| `1 2 3`   | `1 \| 2 \| 3`               
+| `/foo st` | *stored*                    
+| `/foo ld` | `1 \| 2 \| 3 \| 1 \| 2 \| 3`
+
 ### n
 
 Returns the number of items currently on the stack
@@ -84,6 +174,112 @@ Example:
 |---------------|------------------------
 | `/a /b /c /d` | `a \| b \| c \| d`     
 | `n`           | `a \| b \| c \| d \| 4`
+
+### pop
+
+Pops an item from the temporary stack and places it on the main stack. An
+empty stack error is raised if there are no items on the temporary stack. 
+
+Stack effects:
+```
+(  -- Any )
+```
+
+Example:
+
+| Input  | Stack             
+|--------|-------------------
+| `1 2`  | `1 \| 2`          
+| `push` | `1`               
+| `3 4`  | `1 \| 3 \| 4`     
+| `pop`  | `1 \| 3 \| 4 \| 2`
+
+### pop.all
+
+Removes all items from the temporary stack and pushes them to the main
+stack. An empty stack error is raised if the temporary stack has no 
+items. 
+
+Alias: `popa`
+
+Stack effects:
+```
+(  --  )
+```
+
+Example:
+
+| Input      | Stack                       
+|------------|-----------------------------
+| `1 2 3`    | `1 \| 2 \| 3`               
+| `push.all` |                             
+| `4 5 6`    | `4 \| 5 \| 6`               
+| `pop.all`  | `4 \| 5 \| 6 \| 1 \| 2 \| 3`
+
+### push
+
+Removes the top item from the main stack and pushes it to the temporary 
+stack. An empty stack error is raised if there are no items on the 
+main stack. 
+
+Stack effects:
+```
+( Any --  )
+```
+
+Example:
+
+| Input  | Stack             
+|--------|-------------------
+| `1 2`  | `1 \| 2`          
+| `push` | `1`               
+| `3 4`  | `1 \| 3 \| 4`     
+| `pop`  | `1 \| 3 \| 4 \| 2`
+
+### push.all
+
+Removes all items from the main stack and pushes them to the temporary
+stack. An empty stack error is raised if there are no items on the main 
+stack. 
+
+To preserve the contents of the main stack, use the `copy` operation
+instead. 
+
+Alias: `pusha`
+
+Stack effects:
+```
+( Any* --  )
+```
+
+Example:
+
+| Input      | Stack                       
+|------------|-----------------------------
+| `1 2 3`    | `1 \| 2 \| 3`               
+| `push.all` |                             
+| `4 5 6`    | `4 \| 5 \| 6`               
+| `pop.all`  | `4 \| 5 \| 6 \| 1 \| 2 \| 3`
+
+### store
+
+Store the contents of the main stack to memory location *m*. The contents
+of the main stack are preserved with this operation. 
+
+Alias: `st`
+
+Stack effects:
+```
+( Any* m:Text -- Any* )
+```
+
+Example:
+
+| Input     | Stack                       
+|-----------|-----------------------------
+| `1 2 3`   | `1 \| 2 \| 3`               
+| `/foo st` | *stored*                    
+| `/foo ld` | `1 \| 2 \| 3 \| 1 \| 2 \| 3`
 
 ### swap
 
@@ -102,6 +298,40 @@ Example:
 |--------|---------
 | `1 2`  | `1 \| 2`
 | `swap` | `2 \| 1`
+
+### take
+
+Take the top *n* elements from the stack and discard the rest. If *n*
+is equal to or greater than the number of items on the stack, the stack
+is left unchanged. 
+
+Stack effects:
+```
+( Any* n:Int/u -- Any* )
+```
+
+Example:
+
+| Input       | Stack                  
+|-------------|------------------------
+| `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
+| `2 take`    | `4 \| 5`               
+
+### top
+
+Take the top element from the stack and discard the rest.
+
+Macro definition:
+```
+def top 1 take
+```
+
+Example:
+
+| Input       | Stack                  
+|-------------|------------------------
+| `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
+| `top`       | `5`                    
 
 ### tuck
 
@@ -125,3 +355,24 @@ Example:
 | `add`      | `2 \| 3`     
 | `tuck add` | `3 \| 5`     
 | `tuck add` | `5 \| 8`     
+
+### up
+
+Rotate items on the stack by moving upward.
+
+In the interactive calculator, the top of the stack is towards the bottom of
+the terminal so upwards means seeing all items move toward the top. The
+bottom of the stack wraps around to be the top of the stack.
+
+Stack effects:
+```
+( Any* -- Any* )
+```
+
+Example:
+
+| Input   | Stack        
+|---------|--------------
+| `1 2 3` | `1 \| 2 \| 3`
+| `up`    | `2 \| 3 \| 1`
+| `up`    | `3 \| 1 \| 2`

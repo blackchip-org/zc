@@ -33,6 +33,7 @@
 | [bool](ops/bool.md)   | Boolean operations      
 | [cmp](ops/cmp.md)     | Comparisions            
 | [color](ops/color.md) | Color conversions       
+| [geo](ops/geo.md)     | Geo-spatial calculations
 | [hof](ops/hof.md)     | Higher order functions  
 | [rand](ops/rand.md)   | Random number generation
 | [seq](ops/seq.md)     | Numeric sequences       
@@ -41,7 +42,8 @@
 
 
 ## Tables
-| Volume | Description
-|--------|------------
+| Volume              | Description                    
+|---------------------|--------------------------------
+| [epsg](ops/epsg.md) | EPSG Geodetic Parameter Dataset
 
 

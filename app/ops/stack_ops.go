@@ -19,6 +19,30 @@ var (
 			},
 		},
 	}
+	Copy = zc.Op{
+		Name: "copy",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Copy,
+			},
+		},
+	}
+	Down = zc.Op{
+		Name: "down",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Down,
+			},
+		},
+	}
 	Drop = zc.Op{
 		Name: "drop",
 		Funcs: []zc.Func{
@@ -39,6 +63,29 @@ var (
 			},
 		},
 	}
+	Flip = zc.Op{
+		Name: "flip",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Flip,
+			},
+		},
+	}
+	Load = zc.Op{
+		Name: "load",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.String},
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Load,
+			},
+		},
+	}
 	N = zc.Op{
 		Name: "n",
 		Funcs: []zc.Func{
@@ -46,6 +93,59 @@ var (
 				Params:  []zc.Type{},
 				Returns: []zc.Type{zc.Uint},
 				Eval:    funcs.N,
+			},
+		},
+	}
+	Pop = zc.Op{
+		Name: "pop",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.Any},
+				Eval:    funcs.Pop,
+			},
+		},
+	}
+	PopAll = zc.Op{
+		Name: "pop.all",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{},
+				Eval:    funcs.PopAll,
+			},
+		},
+	}
+	Push = zc.Op{
+		Name: "push",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Any},
+				Returns: []zc.Type{},
+				Eval:    funcs.Push,
+			},
+		},
+	}
+	PushAll = zc.Op{
+		Name: "push.all",
+		Funcs: []zc.Func{
+			{
+				Params:   []zc.Type{},
+				VarParam: zc.Any,
+				Returns:  []zc.Type{},
+				Eval:     funcs.PushAll,
+			},
+		},
+	}
+	Store = zc.Op{
+		Name: "store",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.String},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Store,
 			},
 		},
 	}
@@ -59,6 +159,22 @@ var (
 			},
 		},
 	}
+	Take = zc.Op{
+		Name: "take",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.Uint},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Take,
+			},
+		},
+	}
+	Top = zc.Op{
+		Name:  "top",
+		Funcs: []zc.Func{},
+	}
 	Tuck = zc.Op{
 		Name: "tuck",
 		Funcs: []zc.Func{
@@ -66,6 +182,18 @@ var (
 				Params:  []zc.Type{zc.Any, zc.Any},
 				Returns: []zc.Type{zc.BigInt, zc.Any, zc.BigInt},
 				Eval:    funcs.Tuck,
+			},
+		},
+	}
+	Up = zc.Op{
+		Name: "up",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Up,
 			},
 		},
 	}

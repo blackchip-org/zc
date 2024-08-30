@@ -8,6 +8,20 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
+func TestOpDocs_Stat_Average(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 100 25 75 average")
+	c.AssertStack("50")
+}
+
+func TestOpDocs_Stat_Average_Empty(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("average")
+	c.AssertError("div: division undefined")
+}
+
 func TestOpDocs_Stat_Factorial(t *testing.T) {
 	c := app.NewCalcTester(t)
 

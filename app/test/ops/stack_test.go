@@ -18,6 +18,29 @@ func TestOpDocs_Stack_Clear(t *testing.T) {
 	c.AssertStack()
 }
 
+func TestOpDocs_Stack_Copy(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("copy pop.all")
+	c.AssertStack("1", "2", "3", "1", "2", "3")
+}
+
+func TestOpDocs_Stack_Down(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("down")
+	c.AssertStack("3", "1", "2")
+
+	c.Eval("down")
+	c.AssertStack("2", "3", "1")
+}
+
 func TestOpDocs_Stack_Drop(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -38,6 +61,38 @@ func TestOpDocs_Stack_Dup(t *testing.T) {
 	c.AssertStack("10", "10")
 }
 
+func TestOpDocs_Stack_Flip(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("push.all")
+	c.AssertStack()
+
+	c.Eval("4 5 6")
+	c.AssertStack("4", "5", "6")
+
+	c.Eval("flip")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("flip")
+	c.AssertStack("4", "5", "6")
+}
+
+func TestOpDocs_Stack_Load(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("/foo st")
+	c.AssertNotice("stored")
+
+	c.Eval("/foo ld")
+	c.AssertStack("1", "2", "3", "1", "2", "3")
+}
+
 func TestOpDocs_Stack_N(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -48,6 +103,83 @@ func TestOpDocs_Stack_N(t *testing.T) {
 	c.AssertStack("a", "b", "c", "d", "4")
 }
 
+func TestOpDocs_Stack_Pop(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2")
+	c.AssertStack("1", "2")
+
+	c.Eval("push")
+	c.AssertStack("1")
+
+	c.Eval("3 4")
+	c.AssertStack("1", "3", "4")
+
+	c.Eval("pop")
+	c.AssertStack("1", "3", "4", "2")
+}
+
+func TestOpDocs_Stack_PopAll(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("push.all")
+	c.AssertStack()
+
+	c.Eval("4 5 6")
+	c.AssertStack("4", "5", "6")
+
+	c.Eval("pop.all")
+	c.AssertStack("4", "5", "6", "1", "2", "3")
+}
+
+func TestOpDocs_Stack_Push(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2")
+	c.AssertStack("1", "2")
+
+	c.Eval("push")
+	c.AssertStack("1")
+
+	c.Eval("3 4")
+	c.AssertStack("1", "3", "4")
+
+	c.Eval("pop")
+	c.AssertStack("1", "3", "4", "2")
+}
+
+func TestOpDocs_Stack_PushAll(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("push.all")
+	c.AssertStack()
+
+	c.Eval("4 5 6")
+	c.AssertStack("4", "5", "6")
+
+	c.Eval("pop.all")
+	c.AssertStack("4", "5", "6", "1", "2", "3")
+}
+
+func TestOpDocs_Stack_Store(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("/foo st")
+	c.AssertNotice("stored")
+
+	c.Eval("/foo ld")
+	c.AssertStack("1", "2", "3", "1", "2", "3")
+}
+
 func TestOpDocs_Stack_Swap(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -56,6 +188,33 @@ func TestOpDocs_Stack_Swap(t *testing.T) {
 
 	c.Eval("swap")
 	c.AssertStack("2", "1")
+}
+
+func TestOpDocs_Stack_Take(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4 5")
+	c.AssertStack("1", "2", "3", "4", "5")
+
+	c.Eval("2 take")
+	c.AssertStack("4", "5")
+}
+
+func TestOpDocs_Stack_Take_NoChange(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4 5 10 take")
+	c.AssertStack("1", "2", "3", "4", "5")
+}
+
+func TestOpDocs_Stack_Top(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4 5")
+	c.AssertStack("1", "2", "3", "4", "5")
+
+	c.Eval("top")
+	c.AssertStack("5")
 }
 
 func TestOpDocs_Stack_Tuck(t *testing.T) {
@@ -75,4 +234,17 @@ func TestOpDocs_Stack_Tuck(t *testing.T) {
 
 	c.Eval("tuck add")
 	c.AssertStack("5", "8")
+}
+
+func TestOpDocs_Stack_Up(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3")
+	c.AssertStack("1", "2", "3")
+
+	c.Eval("up")
+	c.AssertStack("2", "3", "1")
+
+	c.Eval("up")
+	c.AssertStack("3", "1", "2")
 }

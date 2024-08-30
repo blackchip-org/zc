@@ -14,21 +14,26 @@ type Calc struct {
 	Err      error
 	Listener zc.Listener
 	stack    coll.Stack[zc.Item]
+	temp     coll.Stack[zc.Item]
+	mem      map[string][]zc.Item
 	state    map[string]any
 }
 
 func NewCalc() *Calc {
 	c := &Calc{
 		state:   make(map[string]any),
+		mem:     make(map[string][]zc.Item),
 		Catalog: mainCatalog,
 	}
 	return c
 }
 
-func (c *Calc) Push(item zc.Item) {
-	c.stack.Push(item)
-	if c.Listener != nil {
-		c.Listener(zc.NewStackEvent(c, "push"))
+func (c *Calc) Push(items ...zc.Item) {
+	for _, item := range items {
+		c.stack.Push(item)
+		if c.Listener != nil {
+			c.Listener(zc.NewStackEvent(c, "push"))
+		}
 	}
 }
 
@@ -46,6 +51,14 @@ func (c *Calc) Stack() []zc.Item {
 
 func (c *Calc) SetStack(items []zc.Item) {
 	c.stack.SetItems(items)
+}
+
+func (c *Calc) Temp() []zc.Item {
+	return c.temp.Items()
+}
+
+func (c *Calc) SetTemp(items []zc.Item) {
+	c.temp.SetItems(items)
 }
 
 func (c *Calc) Len() int {
@@ -108,7 +121,30 @@ func (c *Calc) SetUnit(unit string) {
 }
 
 func (c *Calc) New() zc.Calc {
-	return NewCalc()
+	c2 := NewCalc()
+	c2.mem = c.mem
+	return c2
+}
+
+func (c *Calc) Store(name string) {
+	c.mem[name] = zc.DupItems(c.Stack())
+}
+
+func (c *Calc) Load(name string) {
+	s, ok := c.mem[name]
+	if !ok {
+		c.Raise(zc.ErrMemoryEmpty(name))
+		return
+	}
+	c.Push(s...)
+}
+
+func (c *Calc) Reset() {
+	c.stack.Clear()
+	c.temp.Clear()
+	clear(c.mem)
+	clear(c.state)
+	c.Notify("reset")
 }
 
 func (c *Calc) Eval(line string) error {

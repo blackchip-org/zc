@@ -421,7 +421,9 @@ func (t Float64Type) Parse(_ coll.State, str string) (any, bool, error) {
 
 func (t Float64Type) Format(a any) string {
 	v := t.As(a)
-	return strconv.FormatFloat(v, 'g', -1, 64)
+	f := strconv.FormatFloat(v, 'g', -1, 64)
+	f = FormatExponent(f)
+	return f
 }
 
 func (t Float64Type) Dup(a any) any {

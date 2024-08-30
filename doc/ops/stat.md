@@ -8,12 +8,31 @@ Statistical calculations
 
 | Operation                            | Description              
 |--------------------------------------|--------------------------
+| [`average, avg`](#average)           | Average                  
 | [`factorial, fact`](#factorial)      | Factorial                
 | [`factorial/f, fact/f`](#factorialf) | Factorial, floating point
 | [`sum`](#sum)                        | Summation                
 
 
 ## Operations
+
+### average
+
+The average, or aritmetic mean, of the values on the stack. A division 
+undefined error is raised if the stack is empty.
+
+Alias: `avg`
+
+Macro definition:
+```
+def average n push sum pop div
+```
+
+Example:
+
+| Input                 | Stack
+|-----------------------|------
+| `0 100 25 75 average` | `50` 
 
 ### factorial
 
@@ -59,7 +78,7 @@ The sum of all items on the stack.
 
 Macro definition:
 ```
-def sum /add fold
+def sum 0 /add fold
 ```
 
 Example:

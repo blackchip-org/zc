@@ -183,3 +183,224 @@ func TestQuote(t *testing.T) {
 	c.Eval("EOF")
 	c.AssertStack("3", "2 3 add")
 }
+
+func TestAnnoHaversine(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("1 1 2 2")
+	c.AssertStack("1", "1", "2", "2")
+
+	c.Eval("haversine")
+	c.AssertStack("157225.4320380729 m")
+
+	c.Eval("m-km 2 round")
+	c.AssertStack("157.23 km")
+}
+
+func TestAnnoUnit(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("123")
+	c.AssertStack("123")
+
+	c.Eval("/m unit")
+	c.AssertStack("123 m")
+}
+
+func TestAnnoLabel(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("42")
+	c.AssertStack("42")
+
+	c.Eval("[the answer] label")
+	c.AssertStack("42 :the answer")
+}
+
+func TestAnnoDiscard(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("123 /m unit")
+	c.AssertStack("123 m")
+
+	c.Eval("20 sub")
+	c.AssertStack("103")
+}
+
+func TestTax(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("$123")
+	c.AssertStack("$123")
+
+	c.Eval("dup")
+	c.AssertStack("$123", "$123")
+
+	c.Eval("0.05")
+	c.AssertStack("$123", "$123", "0.05")
+
+	c.Eval("mul")
+	c.AssertStack("$123", "6.15")
+
+	c.Eval("add")
+	c.AssertStack("129.15")
+}
+
+func TestTaxMacro(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("def tax dup 0.05 mul")
+	c.AssertNotice("macro 'tax' defined")
+
+	c.Eval("$123")
+	c.AssertStack("$123")
+
+	c.Eval("tax add")
+	c.AssertStack("129.15")
+}
+
+func TestBulk(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("def = top f-c 2 round")
+	c.AssertNotice("macro '=' defined")
+
+	c.Eval("32 =")
+	c.AssertStack("0 °C")
+
+	c.Eval("68 =")
+	c.AssertStack("20 °C")
+
+	c.Eval("100 =")
+	c.AssertStack("37.78 °C")
+}
+
+func TestRPS(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("1 rand.seed")
+	c.AssertNotice("seed set to 1")
+
+	c.Eval("def .rps c 'rock' 'paper' 'scissors' rand.take")
+	c.AssertNotice("macro '.rps' defined")
+
+	c.Eval(".rps")
+	c.AssertStack("paper")
+
+	c.Eval(".rps")
+	c.AssertStack("rock")
+}
+
+func TestOverride(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("def pi 'Yum")
+	c.AssertNotice("macro 'pi' overrides")
+
+	c.Eval("pi")
+	c.AssertStack("Yum")
+
+	c.Eval("def pi")
+	c.AssertNotice("macro 'pi' undefined")
+
+	c.Eval("pi 5 r")
+	c.AssertStack("Yum", "3.14159")
+}
+
+func TestMap(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("1 2 3 4 5")
+	c.AssertStack("1", "2", "3", "4", "5")
+
+	c.Eval("[2 mul")
+	c.AssertStack("1", "2", "3", "4", "5", "2 mul")
+
+	c.Eval("map")
+	c.AssertStack("2", "4", "6", "8", "10")
+}
+
+func TestFold(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("1 2 3 4 5")
+	c.AssertStack("1", "2", "3", "4", "5")
+
+	c.Eval("[add")
+	c.AssertStack("1", "2", "3", "4", "5", "add")
+
+	c.Eval("fold")
+	c.AssertStack("15")
+}
+
+func TestAverage(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("2 4 4 4 5 5 7 9")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("n")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9", "8")
+
+	c.Eval("push")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("sum")
+	c.AssertStack("40")
+
+	c.Eval("pop")
+	c.AssertStack("40", "8")
+
+	c.Eval("div")
+	c.AssertStack("5")
+}
+
+func TestStddev(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("2 4 4 4 5 5 7 9")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("/data st")
+	c.AssertNotice("stored")
+
+	c.Eval("avg")
+	c.AssertStack("5")
+
+	c.Eval("/av st")
+	c.AssertNotice("stored")
+
+	c.Eval("c /data ld")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("[/av ld sub sq] map")
+	c.AssertStack("9", "1", "1", "1", "0", "0", "4", "16")
+
+	c.Eval("avg sqrt")
+	c.AssertStack("2")
+}
+
+func TestStddevTemp(t *testing.T) {
+	c := repl.NewReplTester(t)
+
+	c.Eval("2 4 4 4 5 5 7 9")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("copy")
+	c.AssertNotice("copied")
+
+	c.Eval("avg")
+	c.AssertStack("5")
+
+	c.Eval("popa")
+	c.AssertStack("5", "2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("up")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9", "5")
+
+	c.Eval("[sub sq] /map 2 apply")
+	c.AssertStack("9", "1", "1", "1", "0", "0", "4", "16")
+
+	c.Eval("avg sqrt")
+	c.AssertStack("2")
+}

@@ -7,6 +7,7 @@ require (
 	github.com/blackchip-org/scan v0.2.0
 	github.com/cockroachdb/apd/v3 v3.2.1
 	github.com/peterh/liner v1.2.2
+	github.com/twpayne/go-proj/v10 v10.2.0
 	golang.org/x/sys v0.22.0
 	gopkg.in/yaml.v3 v3.0.1
 )

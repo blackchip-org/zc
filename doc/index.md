@@ -24,6 +24,8 @@
 - [`atan`](ops/sci.md#atan): Inverse tangent
 - [`atan2`](ops/sci.md#atan2): Inverse tangent
 - [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
+- [`average`](ops/stat.md#average): Average
+- [`avg`](ops/stat.md#average): Alias for [average](ops/stat.md#average)
 
 ## b
 - [`bin`](ops/prog.md#bin): Binary conversion
@@ -41,6 +43,7 @@
 - [`ceil`](ops/basic.md#ceil): Ceiling
 - [`clear`](ops/stack.md#clear): Clear
 - [`cmyk-rgb`](ops/color.md#cmyk-rgb): CMYK to RGB
+- [`copy`](ops/stack.md#copy): Copy all items to temporary stack
 - [`cos`](ops/sci.md#cos): Cosine
 - [`cosh`](ops/sci.md#cosh): Hyperbolic cosine
 
@@ -64,11 +67,17 @@
 - [`dms`](ops/angle.md#degminsec): Alias for [deg.min.sec](ops/angle.md#degminsec)
 - [`dms?`](ops/angle.md#dms): Can parse as a decimal degree?
 - [`dmsr`](ops/angle.md#degminsecround): Alias for [deg.min.sec.round](ops/angle.md#degminsecround)
+- [`down`](ops/stack.md#down): Rotate stack downward
 - [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
 - [`drop`](ops/stack.md#drop): Drop
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## e
+- [`e`](ops/sci.md#e): Euler's number
+- [`earth.radius`](ops/geo.md#earthradius): Mean radius of the Earth
+- [`earth.radius.equatorial`](ops/geo.md#earthradiusequatorial): Equatorial radius of the Earth
+- [`earth.radius.polar`](ops/geo.md#earthradiuspolar): Polar radius of the Earth
+- [`epsg.utm`](ops/epsg.md#epsgutm): Universal Transverse Mercator (WGS-84)
 - [`eq`](ops/cmp.md#eq): Equal
 - [`eval`](ops/hof.md#eval): Evaluate top of stack
 - [`exp`](ops/basic.md#exp): Natural exponential
@@ -84,6 +93,7 @@
 - [`fibonacci`](ops/seq.md#fibonacci): Fibonacci sequence
   - [`fibonacci/f`](ops/seq.md#fibonaccif): floating point
 - [`filter`](ops/hof.md#filter): Filter items in the stack
+- [`flip`](ops/stack.md#flip): Flip the main and temporary stacks
 - [`floor`](ops/basic.md#floor): Floor
 - [`fold`](ops/hof.md#fold): Reduce items to a single value
 - [`ft-m`](ops/len.md#ft-m): Feet to meters
@@ -98,6 +108,7 @@
 - [`gte`](ops/cmp.md#gte): Greater than or equal
 
 ## h
+- [`haversine`](ops/geo.md#haversine): Great circle distance between two points
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
 - [`hsl-rgb`](ops/color.md#hsl-rgb): HSL to RGB
 
@@ -115,8 +126,10 @@
 ## l
 - [`label`](ops/anno.md#label): Attach label
 - [`lb-kg`](ops/mass.md#lb-kg): Pounds to kilograms
+- [`ld`](ops/stack.md#load): Alias for [load](ops/stack.md#load)
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`len`](ops/text.md#len): Length of text in characters
+- [`load`](ops/stack.md#load): Loads a stack from memory
 - [`log`](ops/basic.md#log): Natural logarithm
   - [`log/f`](ops/basic_Float.md#logf): floating point
 - [`log10`](ops/basic.md#log10): Decimal logarithm
@@ -160,7 +173,14 @@
 
 ## p
 - [`pi`](ops/sci.md#pi): Circumference to diameter ratio
+- [`pop`](ops/stack.md#pop): Pops item from the temporary stack
+- [`pop.all`](ops/stack.md#popall): Pops all items from the temporary stack
+- [`popa`](ops/stack.md#popall): Alias for [pop.all](ops/stack.md#popall)
 - [`pow`](ops/basic.md#pow): Exponentiation
+- [`proj`](ops/geo.md#proj): Transform coordinate
+- [`push`](ops/stack.md#push): Push top item to the temporary stack
+- [`push.all`](ops/stack.md#pushall): Push all items to the temporary stac
+- [`pusha`](ops/stack.md#pushall): Alias for [push.all](ops/stack.md#pushall)
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
@@ -198,6 +218,8 @@
 - [`sq`](ops/basic.md#sq): Square of a number
 - [`sqrt`](ops/basic.md#sqrt): Square Root
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
+- [`st`](ops/stack.md#store): Alias for [store](ops/stack.md#store)
+- [`store`](ops/stack.md#store): Store stack to memory
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/basic_Float.md#subf): floating point
 - [`sum`](ops/stat.md#sum): Summation
@@ -205,13 +227,16 @@
 - [`swap`](ops/stack.md#swap): Swap top two items on the stack
 
 ## t
+- [`take`](ops/stack.md#take): Take elements from the stack
 - [`tan`](ops/sci.md#tan): Tangent
 - [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
+- [`top`](ops/stack.md#top): Take the top item from the stack
 - [`true`](ops/bool.md#true): True
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit
+- [`up`](ops/stack.md#up): Rotate stack upwards
 
 ## x
 - [`xor`](ops/prog.md#xor): Bitwise exclusive or

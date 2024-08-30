@@ -6,6 +6,30 @@ func Clear(c zc.Calc) {
 	c.SetStack([]zc.Item{})
 }
 
+func Copy(c zc.Calc) {
+	if c.Len() == 0 {
+		c.Raise(zc.ErrStackEmpty)
+		return
+	}
+	s := zc.DupItems(c.Stack())
+	t := c.Temp()
+	t = append(t, s...)
+	c.SetTemp(t)
+	c.Notify("copied")
+}
+
+func Down(c zc.Calc) {
+	if c.Len() == 0 {
+		c.Raise(zc.ErrStackEmpty)
+		return
+	}
+	if c.Len() == 1 {
+		return
+	}
+	x := c.Pop()
+	c.SetStack(append([]zc.Item{x}, c.Stack()...))
+}
+
 func Drop(c zc.Calc) {
 	c.Pop()
 }
@@ -18,8 +42,67 @@ func Dup(c zc.Calc) {
 	c.Push(x2)
 }
 
+func Load(c zc.Calc) {
+	n := zc.String.Pop(c)
+	c.Load(n)
+}
+
+func Flip(c zc.Calc) {
+	s := c.Stack()
+	t := c.Temp()
+	c.SetStack(t)
+	c.SetTemp(s)
+}
+
 func N(c zc.Calc) {
 	zc.Uint.Push(c, uint(c.Len()))
+}
+
+func Pop(c zc.Calc) {
+	t := c.Temp()
+	if len(t) == 0 {
+		c.Raise(zc.ErrStackEmpty)
+		return
+	}
+	l := len(t)
+	top, t := t[l-1], t[:l-1]
+	c.Push(top)
+	c.SetTemp(t)
+}
+
+func PopAll(c zc.Calc) {
+	s := c.Stack()
+	t := c.Temp()
+	if len(t) == 0 {
+		c.Raise(zc.ErrStackEmpty)
+		return
+	}
+	s = append(s, t...)
+	c.SetStack(s)
+	c.SetTemp([]zc.Item{})
+}
+
+func Push(c zc.Calc) {
+	if c.Len() == 0 {
+		c.Raise(zc.ErrStackEmpty)
+		return
+	}
+	x := c.Pop()
+	t := c.Temp()
+	t = append(t, x)
+	c.SetTemp(t)
+}
+
+func PushAll(c zc.Calc) {
+	if c.Len() == 0 {
+		c.Raise(zc.ErrStackEmpty)
+		return
+	}
+	s := c.Stack()
+	t := c.Temp()
+	t = append(t, s...)
+	c.SetTemp(t)
+	c.SetStack([]zc.Item{})
 }
 
 func Rotate(c zc.Calc) {
@@ -31,11 +114,27 @@ func Rotate(c zc.Calc) {
 	c.Push(y)
 }
 
+func Store(c zc.Calc) {
+	n := zc.String.Pop(c)
+	c.Store(n)
+	c.Notify("stored")
+}
+
 func Swap(c zc.Calc) {
 	y := c.Pop()
 	x := c.Pop()
 	c.Push(y)
 	c.Push(x)
+}
+
+func Take(c zc.Calc) {
+	n := int(zc.Uint.Pop(c))
+	s := c.Stack()
+	l := len(s)
+	if n > l {
+		n = l
+	}
+	c.SetStack(s[l-n:])
 }
 
 func Tuck(c zc.Calc) {
@@ -45,4 +144,9 @@ func Tuck(c zc.Calc) {
 	c.Push(zc.Item{TypeVal: z, Type: y.Type})
 	c.Push(x)
 	c.Push(y)
+}
+
+func Up(c zc.Calc) {
+	s := c.Stack()
+	c.SetStack(append(s[1:], s[0]))
 }

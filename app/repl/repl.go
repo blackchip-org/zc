@@ -102,7 +102,7 @@ func (r *Repl) evalLine(toks []scan.Token) error {
 func (r *Repl) Eval(line string) error {
 	r.notice = ""
 	r.err = nil
-	prev := slices.Clone(r.Calc.Stack())
+	prev := zc.DupItems(r.Calc.Stack())
 
 	if r.EndQuote != "" {
 		if strings.TrimSpace(line) == r.EndQuote {

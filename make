@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+GOFLAGS="-tags proj"
+
 ops() {
     set -x
     rm -rf app/ops/* doc/ops/* app/vols/* app/test/doc/*
@@ -11,7 +13,7 @@ ops() {
 
 test() {
     set -x
-    go test $@ ./...
+    go test $GOFLAGS $@ ./...
 }
 
 bench() {

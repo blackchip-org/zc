@@ -9,6 +9,10 @@ import (
 
 var ErrDivisionByZero = errors.New("division by zero")
 
+func ErrFeatureNotSupported(name string) error {
+	return fmt.Errorf("feature not supported: %v", name)
+}
+
 func ErrInfinity(sign int) error {
 	var inf string
 	switch {
@@ -24,6 +28,10 @@ func ErrInfinity(sign int) error {
 
 func ErrInvalidArg(format string, args ...any) error {
 	return fmt.Errorf("invalid argument, %v", fmt.Sprintf(format, args...))
+}
+
+func ErrMemoryEmpty(name string) error {
+	return fmt.Errorf("memory empty: %v", name)
 }
 
 var ErrNoReturnValues = errors.New("no return values")

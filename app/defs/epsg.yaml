@@ -1,0 +1,22 @@
+name: epsg
+title: EPSG Geodetic Parameter Dataset
+category: tab
+
+ops:
+- name: epsg.utm 
+  title: Universal Transverse Mercator (WGS-84)
+  funcs:
+  - name: UTM 
+    params: [x:Text]
+    returns: [Text]
+  desc: |-
+    The EPGS code for the given UTM zone *x*. The zone should be a number
+    between 1 and 60 inclusive and followed by a hemisphere designator of
+    'n' or 's'.
+  example:
+  - i: 17n epsg.utm
+    o: [EPSG:32617]
+
+table:
+- [epsg.web-mercator, "'EPSG:3857'",   "Web Mercator, EPSG:3857"]
+- [epsg.wgs-84,       "'EPSG:4326'",   "World Geodetic System of 1984, EPSG:4326"]

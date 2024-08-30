@@ -3,6 +3,22 @@ title: Statistical calculations
 category: calc
 
 ops:
+- name: average
+  aliases: [avg]
+  title: Average
+  macro: n push sum pop div 
+  desc: |- 
+    The average, or aritmetic mean, of the values on the stack. A division 
+    undefined error is raised if the stack is empty.
+  example:
+  - i: 0 100 25 75 average
+    o: [50]
+  tests:
+  - name: Empty
+    test: 
+    - i: average
+      error: "div: division undefined"
+
 - name: factorial
   aliases: [fact]
   title: Factorial
@@ -38,7 +54,7 @@ ops:
 
 - name: sum
   title: Summation
-  macro: /add fold
+  macro: 0 /add fold
   desc: The sum of all items on the stack. 
   example:
   - i: 1 2 3 4 5

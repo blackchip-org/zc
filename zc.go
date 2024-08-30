@@ -35,6 +35,15 @@ func (i Item) Val() string {
 	return str
 }
 
+func (i Item) Dup() Item {
+	return Item{
+		TypeVal: i.Type.Dup(i.TypeVal),
+		Type:    i.Type,
+		Unit:    i.Unit,
+		Label:   i.Label,
+	}
+}
+
 func (i Item) String() string {
 	var s strings.Builder
 	s.WriteString(EscapeString(i.Val()))
@@ -49,13 +58,21 @@ func (i Item) String() string {
 	return s.String()
 }
 
+func DupItems(items []Item) []Item {
+	items2 := make([]Item, len(items))
+	for i, item := range items {
+		items2[i] = item.Dup()
+	}
+	return items2
+}
+
 type State interface {
 	State(string) (any, bool)
 	NewState(string, any)
 }
 
 type Calc interface {
-	Push(Item)
+	Push(...Item)
 	Pop() Item
 	Stack() []Item
 	SetStack([]Item)
@@ -71,6 +88,11 @@ type Calc interface {
 	SetUnit(string)
 	Eval(string) error
 	New() Calc
+	Temp() []Item
+	SetTemp([]Item)
+	Store(string)
+	Load(string)
+	Reset()
 }
 
 type Op struct {

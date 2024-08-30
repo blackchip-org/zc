@@ -21,12 +21,13 @@ type FuncDef struct {
 }
 
 type VolDef struct {
-	Name     string  `yaml:"name"`
-	Ident    string  `yaml:"ident"`
-	Title    string  `yaml:"title"`
-	Subtitle string  `yaml:"subtitle"`
-	Category string  `yaml:"category"`
-	Ops      []OpDef `yaml:"ops"`
+	Name     string     `yaml:"name"`
+	Ident    string     `yaml:"ident"`
+	Title    string     `yaml:"title"`
+	Subtitle string     `yaml:"subtitle"`
+	Category string     `yaml:"category"`
+	Ops      []OpDef    `yaml:"ops"`
+	Table    [][]string `yaml:"table"`
 	Overview string
 }
 

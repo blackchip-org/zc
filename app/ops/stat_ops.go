@@ -8,6 +8,10 @@ import (
 )
 
 var (
+	Average = zc.Op{
+		Name:  "average",
+		Funcs: []zc.Func{},
+	}
 	Factorial = zc.Op{
 		Name: "factorial",
 		Funcs: []zc.Func{

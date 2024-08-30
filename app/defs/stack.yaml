@@ -17,6 +17,41 @@ ops:
   - i: c
     o: []
 
+- name: copy 
+  title: Copy all items to temporary stack 
+  funcs:
+  - name: Copy 
+    params: [Any*]
+    returns: [Any*]
+  desc: |-
+    Pushes all items on the main stack to the temporary stack while preserving
+    the contents of the main stack. 
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: copy pop.all
+    o: [1, 2, 3, 1, 2, 3]
+
+- name: down
+  title: Rotate stack downward
+  funcs:
+  - name: Down
+    params: [Any*]
+    returns: [Any*]
+  desc: |-
+    Rotate items on the stack by moving downward.
+
+    In the interactive calculator, the top of the stack is towards the bottom of
+    the terminal so downward means seeing all items moves toward the bottom. The
+    top of the stack wraps around to be the bottom of the stack.
+  example:
+  - i: 1 2 3 
+    o: [1, 2, 3]
+  - i: down 
+    o: [3, 1, 2]
+  - i: down 
+    o: [2, 3, 1]
+
 - name: drop
   title: Drop
   funcs:
@@ -44,6 +79,125 @@ ops:
   - i: dup
     o: [10, 10]
 
+- name: flip
+  title: Flip the main and temporary stacks
+  funcs:
+  - name: Flip
+    params: [Any*]
+    returns: [Any*]
+  desc: |-
+    Flip the stacks so that the main stack becomes the temporary stack and the
+    temporary stack becomes the main stack. 
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: push.all
+    o: []
+  - i: 4 5 6
+    o: [4, 5, 6]
+  - i: flip
+    o: [1, 2, 3]
+  - i: flip
+    o: [4, 5, 6]
+
+- name: load
+  aliases: [ld]
+  title: Loads a stack from memory 
+  funcs:
+  - name: Load
+    params: [m:Text]
+    returns: [Any*]
+  desc: |-
+    Pushes the items found at memory location *m* to the main stack. A
+    empty memory error is raised if nothing has been stored at that location. 
+  example:
+  - i: 1 2 3 
+    o: [1, 2, 3]
+  - i: /foo st
+    notice: stored
+  - i: /foo ld
+    o: [1, 2, 3, 1, 2, 3]
+
+- name: push 
+  title: Push top item to the temporary stack
+  funcs:
+  - name: Push
+    params: [Any]
+  desc: |-
+    Removes the top item from the main stack and pushes it to the temporary 
+    stack. An empty stack error is raised if there are no items on the 
+    main stack. 
+  example:
+  - i: 1 2 
+    o: [1, 2]
+  - i: push
+    o: [1]
+  - i: 3 4 
+    o: [1, 3, 4]
+  - i: pop
+    o: [1, 3, 4, 2]
+
+- name: push.all
+  aliases: [pusha]
+  title: Push all items to the temporary stac
+  funcs:
+  - name: PushAll
+    params: [Any*]
+  desc: |-
+    Removes all items from the main stack and pushes them to the temporary
+    stack. An empty stack error is raised if there are no items on the main 
+    stack. 
+    
+    To preserve the contents of the main stack, use the `copy` operation
+    instead. 
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: push.all
+    o: []
+  - i: 4 5 6
+    o: [4, 5, 6]
+  - i: pop.all
+    o: [4, 5, 6, 1, 2, 3]
+
+- name: pop
+  title: Pops item from the temporary stack 
+  funcs:
+  - name: Pop
+    returns: [Any]
+  desc: |-
+    Pops an item from the temporary stack and places it on the main stack. An
+    empty stack error is raised if there are no items on the temporary stack. 
+  example:
+  - i: 1 2 
+    o: [1, 2]
+  - i: push
+    o: [1]
+  - i: 3 4 
+    o: [1, 3, 4]
+  - i: pop
+    o: [1, 3, 4, 2]
+
+- name: pop.all
+  aliases: [popa]
+  title: Pops all items from the temporary stack
+  funcs:
+  - name: PopAll
+    retuns: [Any*]
+  desc: |-
+    Removes all items from the temporary stack and pushes them to the main
+    stack. An empty stack error is raised if the temporary stack has no 
+    items. 
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: push.all
+    o: []
+  - i: 4 5 6
+    o: [4, 5, 6]
+  - i: pop.all
+    o: [4, 5, 6, 1, 2, 3]
+  
 - name: n
   title: Number of items on the stack 
   funcs:
@@ -55,6 +209,24 @@ ops:
     o: ['a', 'b', 'c', 'd']
   - i: n 
     o: ['a', 'b', 'c', 'd', 4]
+
+- name: store
+  aliases: [st]
+  title: Store stack to memory 
+  funcs:
+  - name: Store
+    params: [Any*, m:Text]
+    returns: [Any*]
+  desc: |-
+    Store the contents of the main stack to memory location *m*. The contents
+    of the main stack are preserved with this operation. 
+  example:
+  - i: 1 2 3 
+    o: [1, 2, 3]
+  - i: /foo st
+    notice: stored
+  - i: /foo ld
+    o: [1, 2, 3, 1, 2, 3]
 
 - name: swap 
   aliases: [sw]
@@ -69,6 +241,37 @@ ops:
     o: [1, 2]
   - i: swap
     o: [2, 1]
+
+- name: take 
+  title: Take elements from the stack
+  funcs:
+  - name: Take 
+    params: [Any*, n:Int/u]
+    returns: [Any*]
+  desc: |- 
+    Take the top *n* elements from the stack and discard the rest. If *n*
+    is equal to or greater than the number of items on the stack, the stack
+    is left unchanged. 
+  example:
+  - i: 1 2 3 4 5 
+    o: [1, 2, 3, 4, 5]
+  - i: 2 take
+    o: [4, 5]
+  tests:
+  - name: NoChange
+    test:
+    - i: 1 2 3 4 5 10 take
+      o: [1, 2, 3, 4, 5]
+
+- name: top
+  title: Take the top item from the stack 
+  macro: 1 take 
+  desc: Take the top element from the stack and discard the rest. 
+  example:
+  - i: 1 2 3 4 5 
+    o: [1, 2, 3, 4, 5]
+  - i: top
+    o: [5]
 
 - name: tuck
   title: Copy top and place below
@@ -93,3 +296,23 @@ ops:
     o: [3, 5]
   - i: tuck add
     o: [5, 8]
+
+- name: up
+  title: Rotate stack upwards
+  funcs:
+  - name: Up
+    params: [Any*]
+    returns: [Any*]
+  desc: |-
+    Rotate items on the stack by moving upward.
+
+    In the interactive calculator, the top of the stack is towards the bottom of
+    the terminal so upwards means seeing all items move toward the top. The
+    bottom of the stack wraps around to be the top of the stack.
+  example:
+  - i: 1 2 3
+    o: [1, 2, 3]
+  - i: up
+    o: [2, 3, 1]
+  - i: up
+    o: [3, 1, 2]

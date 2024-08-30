@@ -134,26 +134,31 @@ func genVols(vols []zc.VolDef) {
 
 		fmt.Fprintf(f, "var %v = zc.Vol{\n", vol.Ident)
 		fmt.Fprintf(f, "Name: \"%v\",\n", vol.Name)
-		if len(vol.Ops) > 0 {
-			fmt.Fprintf(f, "Ops: []zc.Op{\n")
-			for _, o := range vol.Ops {
-				if o.Macro != "" {
-					continue
-				}
-				fmt.Fprintf(f, "ops.%v,\n", o.Ident)
+
+		fmt.Fprintf(f, "Ops: []zc.Op{\n")
+		for _, o := range vol.Ops {
+			if o.Macro != "" {
+				continue
 			}
-			fmt.Fprintf(f, "},\n")
-			fmt.Fprintf(f, "Macros: []zc.Macro{\n")
-			for _, o := range vol.Ops {
-				if o.Macro != "" {
-					fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", o.Name, o.Macro)
-				}
-				for _, a := range o.Aliases {
-					fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", a, o.Name)
-				}
-			}
-			fmt.Fprintf(f, "},\n")
+			fmt.Fprintf(f, "ops.%v,\n", o.Ident)
 		}
+		fmt.Fprintf(f, "},\n")
+		fmt.Fprintf(f, "Macros: []zc.Macro{\n")
+		for _, o := range vol.Ops {
+			if o.Macro != "" {
+				fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", o.Name, o.Macro)
+			}
+			for _, a := range o.Aliases {
+				fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", a, o.Name)
+			}
+		}
+		for _, row := range vol.Table {
+			if len(row) != 3 {
+				log.Fatalf("expected 3 columns in row, got: %v", row)
+			}
+			fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", row[0], row[1])
+		}
+		fmt.Fprintf(f, "},\n")
 		fmt.Fprintf(f, "}\n")
 	}
 }
@@ -238,24 +243,41 @@ func genOpDocs(vols []zc.VolDef) {
 
 		fmt.Fprintf(f, "## Index\n\n")
 
-		tab := pretty.NewMarkdownTable(2)
-		tab.Heading("Operation", "Description")
+		if len(vol.Ops) > 0 {
+			tab := pretty.NewMarkdownTable(2)
+			tab.Heading("Operation", "Description")
 
-		for _, op := range vol.Ops {
-			var names []string
-			names = append(names, op.Name)
-			names = append(names, op.Aliases...)
+			for _, op := range vol.Ops {
+				var names []string
+				names = append(names, op.Name)
+				names = append(names, op.Aliases...)
 
-			fmtNames := strings.Join(names, ", ")
-			entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
-			title := op.Title
-			if op.Subtitle != "" {
-				title += ", " + op.Subtitle
+				fmtNames := strings.Join(names, ", ")
+				entry := fmt.Sprintf("[`%v`](#%v)", fmtNames, anchor(op.Name))
+				title := op.Title
+				if op.Subtitle != "" {
+					title += ", " + op.Subtitle
+				}
+				tab.Row(entry, title)
 			}
-			tab.Row(entry, title)
+			fmt.Fprint(f, tab.Format())
+			fmt.Fprintln(f)
 		}
-		fmt.Fprint(f, tab.Format())
-		fmt.Fprintln(f)
+
+		if len(vol.Table) > 0 {
+			tab := pretty.NewMarkdownTable(3)
+			tab.Heading("Name", "Value", "Description")
+			for _, row := range vol.Table {
+				if len(row) != 3 {
+					log.Fatalf("expected 3 row entries, got: %v", row)
+				}
+				row[0] = "`" + row[0] + "`"
+				row[1] = "`" + row[1] + "`"
+				tab.Row(row...)
+			}
+			fmt.Fprint(f, tab.Format())
+			fmt.Fprintln(f)
+		}
 
 		// Find related volumes
 		var rels []zc.VolDef

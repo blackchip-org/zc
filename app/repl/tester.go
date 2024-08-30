@@ -1,6 +1,7 @@
 package repl
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/blackchip-org/zc/v6"
@@ -11,17 +12,15 @@ import (
 type ReplTester struct {
 	Calc *app.Calc
 	Repl *Repl
-	ct   *app.CalcTester
 	t    *testing.T
 }
 
 func NewReplTester(t *testing.T) *ReplTester {
 	ansi.Enabled = false
-	ct := app.NewCalcTester(t)
+	calc := app.NewCalc()
 	return &ReplTester{
-		Calc: ct.Calc,
-		Repl: New(ct.Calc),
-		ct:   ct,
+		Calc: calc,
+		Repl: New(calc),
 		t:    t,
 	}
 }
@@ -33,29 +32,40 @@ func (r *ReplTester) Eval(line string) {
 	if r.Repl.Error() != nil {
 		r.t.Logf("(!) %v\n", r.Repl.Error())
 	}
-	if r.Calc.Err != nil {
-		r.t.Logf("(!) %v\n", r.Calc.Err)
-	}
-	if r.Calc.Notice != "" {
-		r.t.Logf("(?) %v", r.Calc.Notice)
+	if r.Repl.Notice() != "" {
+		r.t.Logf("(?) %v", r.Repl.Notice())
 	}
 	r.t.Logf("%v\n", r.Calc.String())
 }
 
 func (r *ReplTester) AssertStack(vals ...any) {
 	r.t.Helper()
-	r.ct.AssertStack(vals...)
+
+	fmtWant := zc.FormatList(zc.Strings(vals...))
+	fmtHave := r.Calc.String()
+
+	if r.Repl.Error() != nil {
+		r.t.Fatalf("(FAIL) unexpected error")
+	}
+	if r.Repl.Notice() != "" {
+		r.t.Fatalf("(FAIL) unexpected notice")
+	}
+	if !reflect.DeepEqual(fmtHave, fmtWant) {
+		r.t.Fatalf("(FAIL) expected: %v", fmtWant)
+	}
 }
 
-func (r *ReplTester) AssertError(err string) {
+func (r *ReplTester) AssertError(msg string) {
 	r.t.Helper()
-	if r.Repl.Error().Error() == err {
-		return
+	err := r.Repl.Error()
+	if err == nil || err.Error() != msg {
+		r.t.Fatalf("(FAIL) expected error: %v", msg)
 	}
-	r.ct.AssertError(err)
 }
 
 func (r *ReplTester) AssertNotice(notice string) {
 	r.t.Helper()
-	r.ct.AssertNotice(notice)
+	if r.Repl.Notice() != notice {
+		r.t.Fatalf("(FAIL) expected notice: %v", notice)
+	}
 }

@@ -282,8 +282,254 @@ Each line is considered a separate value when using `quote`. For example:
 | `2 3 add`       | `3 \| 2 3 add`
 | `EOF`           | `3 \| 2 3 add`
 
+## Annotations
 
-## TODO
+Values on the stack may have annotations to provide some additional
+metadata. For example, distance calculations and conversions annotate
+the value with the unit of measure:
+
+<!-- test: AnnoHaversine -->
+
+| Input                 | Stack
+|-----------------------|---------------------|
+| `1 1 2 2`             | `1 \| 1 \| 2 \| 2`
+| `haversine`           | `157225.4320380729 m`
+| `m-km 2 round`        | `157.23 km`
+
+A unit annotation can manually be attached to a value using `unit`:
+
+<!-- test: AnnoUnit -->
+
+| Input                 | Stack
+|-----------------------|---------------------|
+| `123`                 | `123`
+| `/m unit`             | `123 m`
+
+A label can be attached using `label`:
+
+<!-- test: AnnoLabel -->
+
+| Input                 | Stack
+|-----------------------|---------------------|
+| `42`                  | `42`
+| `[the answer] label ` | `42 :the answer`
+
+
+Annotations are typically discarded when a value is popped off the stack:
+
+<!-- test: AnnoDiscard -->
+
+| Input                 | Stack
+|-----------------------|---------------------|
+| `123 /m unit`         | `123 m`
+| `20 sub`              | `103`
+
+## Macros
+
+Let's say that you commonly have to compute a sales tax that is 5%. To
+compute the sales tax on something that costs $123:
+
+<!-- test: Tax -->
+
+| Input               | Stack
+|---------------------|-------------------
+| `$123`              | `$123`
+| `dup`               | `$123 \| $123`
+| `0.05`              | `$123 \| $123 \| 0.05`
+| `mul`               | `$123 \| 6.15`
+| `add`               | `129.15`
+
+Repeated use of this pattern can be used with a macro:
+
+<!-- test: TaxMacro -->
+
+| Input                    | Stack
+|--------------------------|-------------------
+| `def tax dup 0.05 mul  ` | *macro 'tax' defined*
+| `$123`                   | `$123`
+| `tax add`                | `129.15`
+
+The name of `=` is reserved for your macro use in bulk operations:
+
+<!-- test: Bulk -->
+
+| Input                     | Stack
+|---------------------------|-------------------
+| `def = top f-c 2 round`   | *macro '=' defined*
+| `32 =`                    | `0 °C`
+| `68 =`                    | `20 °C`
+| `100 =`                   | `37.78 °C`
+
+No operations start with a `.` character and can be used for macro names. Play
+a game of rock, paper, scissors:
+
+<!-- test: RPS -->
+
+| Input                                              | Stack
+|----------------------------------------------------|-------------------
+| `1 rand.seed`                                      | *seed set to 1*
+| `def .rps c 'rock' 'paper' 'scissors' rand.take`   | *macro '.rps' defined*
+| `.rps`                                             | `paper`
+| `.rps`                                             | `rock`
+
+Macros can also be used to override calculator operations. Undefine the
+macro by using `def` without an expression.
+
+<!-- test: Override -->
+
+| Input          | Stack
+|----------------|----------------------------
+| `def pi 'Yum`  | *macro 'pi' overrides*
+| `pi`           | `Yum`
+| `def pi`       | *macro 'pi' undefined*
+| `pi 5 r`       | `Yum \| 3.14159`
+
+## Higher order functions
+
+The `map` operation can be used to apply a function to each item on the stack.
+To use this operation, the top element of the stack should be an expression
+to evaluate. Place this expression on the stack using quotes to prevent
+immediate evaluation. For example, to double all numbers on the stack:
+
+<!-- test: Map -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `1 2 3 4 5`         | `1 \| 2 \| 3 \| 4 \| 5`
+| `[2 mul`            | `1 \| 2 \| 3 \| 4 \| 5 \| 2 mul`
+| `map`               | `2 \| 4 \| 6 \| 8 \| 10`
+
+The `fold` function can be used to reduce all items in the stack to a single
+value. For example, to sum all the numbers on the stack:
+
+<!-- test: Fold -->
+
+| Input               | Stack
+|---------------------|---------------------|
+| `1 2 3 4 5`         | `1 \| 2 \| 3 \| 4 \| 5`
+| `[add`              | `1 \| 2 \| 3 \| 4 \| 5 \| add`
+| `fold`              | `15`
+
+Additional higher-order functions can be found in the [hof](doc/ops/hof.md)
+reference.
+
+## Temporary Stack and Memory
+
+It is sometimes convenient to store values in a temporary stack during 
+a calcuation. The `push` operation removes the top item in the main stack 
+and pushes it to the temproary stack. The `pop` operation does the inverse. 
+For example, to compute an average, first get the length of the stack,
+push that to the temporary stack, sum the values, pop the length and then 
+divide:
+
+<!-- test: Average -->
+
+| Input                     | Stack
+|---------------------------|---------------------|
+| `2 4 4 4 5 5 7 9`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `n`                       | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9 \| 8`
+| `push`                    | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `sum`                     | `40`
+| `pop`                     | `40 \| 8`
+| `div`                     | `5`
+
+The `push.all` and `pop.all` operations transfers all items from one stack
+to the other. Use the `flip` operation to flip between the stacks. 
+
+Items on the main stack can also be stored to a named memory location to be 
+recalled at a later time. Use `store` to copy the stack to memory and `load`
+to recall it. 
+
+Let's manually compute the population standard deviation found in the example on
+the [Wikipedia](https://en.wikipedia.org/wiki/Standard_deviation) page. The
+average of the all the data points must first be computed and then deviations
+from that average are calculated. This time the predefined `average` operation
+is used. The data is first entered into the calculator and then the stack is
+saved with the name of `data`. The average is then computed and stored with the
+name of `av`. The data points are then recalled from memory and the deviations
+from the average are calculated for each value. The standard deviation is then
+simply the square root of the average deviation.
+
+<!-- test: Stddev -->
+
+| Input                     | Stack
+|---------------------------|---------------------|
+| `2 4 4 4 5 5 7 9`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `/data st`                | *stored*
+| `avg`                     | `5`
+| `/av st`                  | *stored*
+| `c /data ld`              | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `[/av ld sub sq] map`     | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
+| `avg sqrt`                | `2`
+
+The same calcuation can be done using the temporary stack like this:
+
+<!-- test: StddevTemp -->
+
+| Input                     | Stack
+|---------------------------|---------------------|
+| `2 4 4 4 5 5 7 9`         | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `copy`                    | *copied*
+| `avg`                     | `5`
+| `popa`                    | `5 \| 2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `up`                      | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9 \| 5`
+| `[sub sq] /map 2 apply`   | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
+| `avg sqrt`                | `2`
+
+## Commands
+
+These commands are available when running the calculator interactively:
+
+| Command      | Description
+|--------------|------------------------------------
+| *blank line* | Remove the first item from stack
+| `def`        | Define a macro
+| `redo`       | Redo the last undo
+| `quit`       | Print the final stack and return to shell
+| `quote`      | Add each line to the stack until delimiter is found
+| `undo`, `u`  | Undo the last line entered
+
+## Command line
+
+Any arguments found on the command line are passed to the calculator for a
+one-time evaluation:
+
+    $ zc 2 3 add
+    5
+
+Using quotes from the command line can be tricky since they are interpreted by
+the shell:
+
+    $ zc 'foo' len
+    (!) unknown operation: foo
+
+In this case, wrap the expression with quotes and then use square brackets
+for foo:
+
+    $ zc '[foo] len'
+    3
+
+Use a single argument of `-` to read from standard input:
+
+    $ echo "2 3 add" | zc -
+    5
+
+## External Libraries
+
+Some features of the calculator use external C libraries. The current
+release binaries do not include these external libraries and using one
+of these operations will raise a "feature not supported" error.
+
+To use these features, install the necessary dependencies and build
+locally using `make`. See the credits below for more information.
+
+## Credits
+
+- Fixed point math provided by https://github.com/cockroachdb/apd
+- CLI auto completion and history provided by https://github.com/peterh/liner
+- Geospatial transformations provided by https://github.com/twpayne/go-proj
+- Emoji JSON file provided by https://github.com/muan/unicode-emoji-json
+- Terminal demo created with https://github.com/faressoft/terminalizer
 
 ## License
 
