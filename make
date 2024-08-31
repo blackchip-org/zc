@@ -2,15 +2,15 @@
 
 GOFLAGS="-tags proj"
 
-GEN_DIRS="app/ops doc/ops app/vols app/test/doc app/test/ops"
+GEN_GO="app/ops/*.go app/vols/*.go app/test/docs/*.go app/test/ops/*.go"
+GEN_MD="doc/ops/*.md"
 
 ops() {
-    set -x
-    rm -rf app/ops/* doc/ops/* app/vols/* app/test/doc/*
+    rm -rf $GEN_GO $GEN_MD
     go generate internal/gen-ops/gen-ops.go
     go generate internal/gen-doc-tests/gen-doc-tests.go
-    goimports -w app/ops/*.go app/vols/*.go app/test/docs/* app/test/ops/*
-    gofmt -w     app/ops/*.go app/vols/*.go app/test/docs/* app/test/ops/*
+    goimports -w $GEN_GO
+    gofmt     -w $GEN_GO
 }
 
 test() {
