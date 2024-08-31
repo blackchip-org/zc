@@ -26,6 +26,7 @@ type VolDef struct {
 	Title    string     `yaml:"title"`
 	Subtitle string     `yaml:"subtitle"`
 	Category string     `yaml:"category"`
+	NoIndex  bool       `yaml:"no-index"`
 	Ops      []OpDef    `yaml:"ops"`
 	Table    [][]string `yaml:"table"`
 	Overview string

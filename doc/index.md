@@ -24,6 +24,7 @@
 - [`atan`](ops/sci.md#atan): Inverse tangent
 - [`atan2`](ops/sci.md#atan2): Inverse tangent
 - [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
+- [`atto`](ops/si.md): SI prefix a, 1e-18
 - [`average`](ops/stat.md#average): Average
 - [`avg`](ops/stat.md#average): Alias for [average](ops/stat.md#average)
 
@@ -41,6 +42,7 @@
 - [`cbrt`](ops/basic.md#cbrt): Cube root
   - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
 - [`ceil`](ops/basic.md#ceil): Ceiling
+- [`centi`](ops/si.md): SI prefix c, 1e-02
 - [`clear`](ops/stack.md#clear): Clear
 - [`cmyk-rgb`](ops/color.md#cmyk-rgb): CMYK to RGB
 - [`copy`](ops/stack.md#copy): Copy all items to temporary stack
@@ -52,6 +54,8 @@
 - [`dd`](ops/angle.md#dec): Alias for [dec](ops/angle.md#dec)
 - [`dec`](ops/angle.md#dec): Degree angle to decimal degrees
 - [`dec`](ops/prog.md#dec): Decimal conversion
+- [`deca`](ops/si.md): SI prefix da, 1e01
+- [`deci`](ops/si.md): SI prefix d, 1e-01
 - [`deg-rad`](ops/angle.md#deg-rad): Convert degrees to radians
 - `deg.min`
 - [`deg.min.round`](ops/angle.md#degminround): Degree angle to degrees and rounded minutes
@@ -78,8 +82,12 @@
 - [`earth.radius.equatorial`](ops/geo.md#earthradiusequatorial): Equatorial radius of the Earth
 - [`earth.radius.polar`](ops/geo.md#earthradiuspolar): Polar radius of the Earth
 - [`epsg.utm`](ops/epsg.md#epsgutm): Universal Transverse Mercator (WGS-84)
+- [`epsg.web-mercator`](ops/epsg.md): Web Mercator, EPSG:3857
+- [`epsg.wgs-84`](ops/epsg.md): World Geodetic System of 1984, EPSG:4326
 - [`eq`](ops/cmp.md#eq): Equal
 - [`eval`](ops/hof.md#eval): Evaluate top of stack
+- [`exa`](ops/si.md): SI prefix E, 1e18
+- [`exbi`](ops/iec.md): IEC prefix EI, 2^60
 - [`exp`](ops/basic.md#exp): Natural exponential
   - [`exp/f`](ops/basic_Float.md#expf): floating point
 
@@ -89,6 +97,7 @@
 - [`factorial`](ops/stat.md#factorial): Factorial
   - [`factorial/f`](ops/stat.md#factorialf): floating point
 - [`false`](ops/bool.md#false): False
+- [`femto`](ops/si.md): SI prefix f, 1e-15
 - [`fib`](ops/seq.md#fibonacci): Alias for [fibonacci](ops/seq.md#fibonacci)
 - [`fibonacci`](ops/seq.md#fibonacci): Fibonacci sequence
   - [`fibonacci/f`](ops/seq.md#fibonaccif): floating point
@@ -104,11 +113,14 @@
 - [`g-kg`](ops/mass.md#g-kg): Grams to kilograms
 - [`g-oz`](ops/mass.md#g-oz): Grams to ounces
 - [`g-ozt`](ops/mass.md#g-ozt): Grams to troy ounces
+- [`gibi`](ops/iec.md): IEC prefix Gi, 2^30
+- [`giga`](ops/si.md): SI prefix G, 1e09
 - [`gt`](ops/cmp.md#gt): Greater than
 - [`gte`](ops/cmp.md#gte): Greater than or equal
 
 ## h
 - [`haversine`](ops/geo.md#haversine): Great circle distance between two points
+- [`hecto`](ops/si.md): SI prefix h, 1e02
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
 - [`hsl-rgb`](ops/color.md#hsl-rgb): HSL to RGB
 
@@ -119,6 +131,8 @@
 - [`k-c`](ops/temp.md#k-c): Kelvin to Celsius
 - [`kg-g`](ops/mass.md#kg-g): Kilograms to grams
 - [`kg-lb`](ops/mass.md#kg-lb): Kilograms to pounds
+- [`kibi`](ops/iec.md): IEC prefix Ki, 2^10
+- [`kilo`](ops/si.md): SI prefix k, 1e03
 - [`km-m`](ops/len.md#km-m): Kilometers to meters
 - [`km-mi`](ops/len.md#km-mi): Kilometers to miles
 - [`km-nmi`](ops/len.md#km-nmi): Kilometers to nautical miles
@@ -145,9 +159,13 @@
 - [`m-nmi`](ops/len.md#m-nmi): Meters to nautical miles
 - [`m-yd`](ops/len.md#m-yd): Meters to yards
 - [`map`](ops/hof.md#map): Apply an operation
+- [`mebi`](ops/iec.md): IEC prefix Mi, 2^20
+- [`mega`](ops/si.md): SI prefix M, 1e06
 - [`mi-ft`](ops/len.md#mi-ft): Miles to feet
 - [`mi-km`](ops/len.md#mi-km): Miles to kilometers
 - [`mi-nmi`](ops/len.md#mi-nmi): Miles to nautical miles
+- [`micro`](ops/si.md): SI prefix μ, 1e-06
+- [`milli`](ops/si.md): SI prefix m, 1e-03
 - [`minutes`](ops/angle.md#minutes): Degree angle to minutes
 - [`mm-in`](ops/len.md#mm-in): Millimeters to inches
 - [`mod`](ops/basic.md#mod): Modulus
@@ -156,6 +174,7 @@
 
 ## n
 - [`n`](ops/stack.md#n): Number of items on the stack
+- [`nano`](ops/si.md): SI prefix n, 1e-09
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/f`](ops/basic_Float.md#negf): floating point
 - [`neq`](ops/cmp.md#neq): Not equal
@@ -172,7 +191,10 @@
 - [`ozt-g`](ops/mass.md#ozt-g): Troy ounces to grams
 
 ## p
+- [`pebi`](ops/iec.md): IEC prefix Pi, 2^50
+- [`peta`](ops/si.md): SI prefix P, 1e15
 - [`pi`](ops/sci.md#pi): Circumference to diameter ratio
+- [`pico`](ops/si.md): SI prefix p, 1e-12
 - [`pop`](ops/stack.md#pop): Pops item from the temporary stack
 - [`pop.all`](ops/stack.md#popall): Pops all items from the temporary stack
 - [`popa`](ops/stack.md#popall): Alias for [pop.all](ops/stack.md#popall)
@@ -181,6 +203,10 @@
 - [`push`](ops/stack.md#push): Push top item to the temporary stack
 - [`push.all`](ops/stack.md#pushall): Push all items to the temporary stack
 - [`pusha`](ops/stack.md#pushall): Alias for [push.all](ops/stack.md#pushall)
+
+## q
+- [`quecto`](ops/si.md): SI prefix q, 1e-30
+- [`quetta`](ops/si.md): SI prefix Q, 1e30
 
 ## r
 - [`r`](ops/format.md#round): Alias for [round](ops/format.md#round)
@@ -200,6 +226,8 @@
 - [`rgb-hsl`](ops/color.md#rgb-hsl): RGB to HSL
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`roll`](ops/rand.md#roll): Dice roller
+- [`ronna`](ops/si.md): SI prefix R, 1e27
+- [`ronto`](ops/si.md): SI prefix r, 1e-27
 - [`rot`](ops/stack.md#rotate): Alias for [rotate](ops/stack.md#rotate)
 - [`rotate`](ops/stack.md#rotate): Rotate top three items
 - [`round`](ops/format.md#round): Round number
@@ -234,6 +262,8 @@
 - [`take`](ops/stack.md#take): Take elements from the stack
 - [`tan`](ops/sci.md#tan): Tangent
 - [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
+- [`tebi`](ops/iec.md): IEC prefix Ti, 2^40
+- [`terra`](ops/si.md): SI prefix T, 1e12
 - [`top`](ops/stack.md#top): Take the top item from the stack
 - [`true`](ops/bool.md#true): True
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
@@ -248,3 +278,9 @@
 ## y
 - [`yd-ft`](ops/len.md#yd-ft): Yards to feet
 - [`yd-m`](ops/len.md#yd-m): Yards to meters
+- [`yocto`](ops/si.md): SI prefix y, 1e-24
+- [`yotta`](ops/si.md): SI prefix Y, 1e24
+
+## z
+- [`zepto`](ops/si.md): SI prefix z, 1e-21
+- [`zetta`](ops/si.md): SI prefix Z, 1e21

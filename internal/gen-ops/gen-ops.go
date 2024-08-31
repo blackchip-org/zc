@@ -281,9 +281,11 @@ func genOpDocs(vols []zc.VolDef) {
 				if len(row) != cols {
 					log.Fatalf("expected %v row entries, got: %v", cols, row)
 				}
-				row[0] = "`" + row[0] + "`"
-				row[1] = "`" + row[1] + "`"
-				tab.Row(row...)
+
+				drow := slices.Clone(row)
+				drow[0] = "`" + drow[0] + "`"
+				drow[1] = "`" + drow[1] + "`"
+				tab.Row(drow...)
 			}
 			fmt.Fprint(f, tab.Format())
 			fmt.Fprintln(f)
@@ -403,6 +405,9 @@ func genIndex(vols []zc.VolDef) {
 	subs := make(map[string][]entry)
 
 	for _, vol := range vols {
+		if vol.NoIndex {
+			continue
+		}
 		for _, op := range vol.Ops {
 			names[op.Name] = struct{}{}
 			slash := strings.Index(op.Name, "/")
@@ -439,6 +444,21 @@ func genIndex(vols []zc.VolDef) {
 				}
 				entries = append(entries, e2)
 			}
+		}
+		for _, row := range vol.Table {
+			name := row[0]
+			var title string
+			if len(row) == 3 {
+				title = row[2]
+			} else {
+				title = row[1]
+			}
+			e := entry{
+				name:   name,
+				anchor: volAnchor(vol),
+				title:  title,
+			}
+			entries = append(entries, e)
 		}
 	}
 
@@ -583,6 +603,10 @@ func typeNameFor(p string) string {
 func opsAnchor(vol zc.VolDef, op zc.OpDef) string {
 	name := anchor(op.Name)
 	return fmt.Sprintf("ops/%v.md#%v", fileNameFor(vol.Name), name)
+}
+
+func volAnchor(vol zc.VolDef) string {
+	return fmt.Sprintf("ops/%v.md", fileNameFor(vol.Name))
 }
 
 func anchor(s string) string {

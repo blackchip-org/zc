@@ -47,5 +47,7 @@
 | [emoji](ops/emoji.md)   | Unicode emoji characters       
 | [entity](ops/entity.md) | HTML entity characters         
 | [epsg](ops/epsg.md)     | EPSG Geodetic Parameter Dataset
+| [iec](ops/iec.md)       | IEC binary prefixes            
+| [si](ops/si.md)         | International System of Units  
 
 
