@@ -7,8 +7,11 @@ GEN_MD="doc/ops/*.md"
 
 ops() {
     rm -rf $GEN_GO $GEN_MD
-    go generate internal/gen-ops/gen-ops.go
-    go generate internal/gen-doc-tests/gen-doc-tests.go
+    (
+        set -x
+        go generate internal/gen-ops/gen-ops.go
+        go generate internal/gen-doc-tests/gen-doc-tests.go
+    )
     goimports -w $GEN_GO
     gofmt     -w $GEN_GO
 }
@@ -56,6 +59,10 @@ case "$1" in
     emoji)
         set -x
         go generate internal/gen-emoji/gen-emoji.go
+        ;;
+    entity)
+        set -x
+        go generate internal/gen-entity/gen-entity.go
         ;;
     *)
         echo "error: invalid command: $1"
