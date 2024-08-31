@@ -153,8 +153,8 @@ func genVols(vols []zc.VolDef) {
 			}
 		}
 		for _, row := range vol.Table {
-			if len(row) != 3 {
-				log.Fatalf("expected 3 columns in row, got: %v", row)
+			if len(row) < 2 || len(row) > 3 {
+				log.Fatalf("expected 2 or 3 columns in row, got: %v", row)
 			}
 			fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", row[0], row[1])
 		}
@@ -265,11 +265,21 @@ func genOpDocs(vols []zc.VolDef) {
 		}
 
 		if len(vol.Table) > 0 {
-			tab := pretty.NewMarkdownTable(3)
-			tab.Heading("Name", "Value", "Description")
+			cols := len(vol.Table[0])
+			if cols < 2 || cols > 3 {
+				log.Fatalf("expected 2 or 3 row entries, got: %v", cols)
+			}
+
+			tab := pretty.NewMarkdownTable(cols)
+			if cols == 3 {
+				tab.Heading("Name", "Value", "Description")
+			} else {
+				tab.Heading("Name", "Value")
+			}
+
 			for _, row := range vol.Table {
-				if len(row) != 3 {
-					log.Fatalf("expected 3 row entries, got: %v", row)
+				if len(row) != cols {
+					log.Fatalf("expected %v row entries, got: %v", cols, row)
 				}
 				row[0] = "`" + row[0] + "`"
 				row[1] = "`" + row[1] + "`"

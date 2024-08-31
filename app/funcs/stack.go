@@ -1,6 +1,10 @@
 package funcs
 
-import "github.com/blackchip-org/zc/v6"
+import (
+	"slices"
+
+	"github.com/blackchip-org/zc/v6"
+)
 
 func Clear(c zc.Calc) {
 	c.SetStack([]zc.Item{})
@@ -42,16 +46,16 @@ func Dup(c zc.Calc) {
 	c.Push(x2)
 }
 
-func Load(c zc.Calc) {
-	n := zc.String.Pop(c)
-	c.Load(n)
-}
-
 func Flip(c zc.Calc) {
 	s := c.Stack()
 	t := c.Temp()
 	c.SetStack(t)
 	c.SetTemp(s)
+}
+
+func Load(c zc.Calc) {
+	n := zc.String.Pop(c)
+	c.Load(n)
 }
 
 func N(c zc.Calc) {
@@ -103,6 +107,12 @@ func PushAll(c zc.Calc) {
 	t = append(t, s...)
 	c.SetTemp(t)
 	c.SetStack([]zc.Item{})
+}
+
+func Reverse(c zc.Calc) {
+	s := c.Stack()
+	slices.Reverse(s)
+	c.SetStack(s)
 }
 
 func Rotate(c zc.Calc) {

@@ -3,10 +3,10 @@ title: EPSG Geodetic Parameter Dataset
 category: tab
 
 ops:
-- name: epsg.utm 
+- name: epsg.utm
   title: Universal Transverse Mercator (WGS-84)
   funcs:
-  - name: UTM 
+  - name: UTM
     params: [x:Text]
     returns: [Text]
   desc: |-

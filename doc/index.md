@@ -179,7 +179,7 @@
 - [`pow`](ops/basic.md#pow): Exponentiation
 - [`proj`](ops/geo.md#proj): Transform coordinate
 - [`push`](ops/stack.md#push): Push top item to the temporary stack
-- [`push.all`](ops/stack.md#pushall): Push all items to the temporary stac
+- [`push.all`](ops/stack.md#pushall): Push all items to the temporary stack
 - [`pusha`](ops/stack.md#pushall): Alias for [push.all](ops/stack.md#pushall)
 
 ## r
@@ -194,10 +194,14 @@
 - [`reduce`](ops/hof.md#fold): Alias for [fold](ops/hof.md#fold)
 - [`rem`](ops/basic.md#rem): Remainder
 - [`repeat`](ops/hof.md#repeat): Repeat the execution of an operation
+- [`rev`](ops/stack.md#reverse): Alias for [reverse](ops/stack.md#reverse)
+- [`reverse`](ops/stack.md#reverse): Reverse stack
 - [`rgb-cmyk`](ops/color.md#rgb-cmyk): RGB to CMYK
 - [`rgb-hsl`](ops/color.md#rgb-hsl): RGB to HSL
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`roll`](ops/rand.md#roll): Dice roller
+- [`rot`](ops/stack.md#rotate): Alias for [rotate](ops/stack.md#rotate)
+- [`rotate`](ops/stack.md#rotate): Rotate top three items
 - [`round`](ops/format.md#round): Round number
 - [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
 - [`rounding.mode?`](ops/conf.md#roundingmode): Gets the default rounding mode

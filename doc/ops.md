@@ -42,8 +42,9 @@
 
 
 ## Tables
-| Volume              | Description                    
-|---------------------|--------------------------------
-| [epsg](ops/epsg.md) | EPSG Geodetic Parameter Dataset
+| Volume                | Description                    
+|-----------------------|--------------------------------
+| [emoji](ops/emoji.md) | Unicode emoji characters       
+| [epsg](ops/epsg.md)   | EPSG Geodetic Parameter Dataset
 
 

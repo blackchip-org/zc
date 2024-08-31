@@ -19,7 +19,9 @@ Stack operations
 | [`pop`](#pop)                 | Pops item from the temporary stack     
 | [`pop.all, popa`](#popall)    | Pops all items from the temporary stack
 | [`push`](#push)               | Push top item to the temporary stack   
-| [`push.all, pusha`](#pushall) | Push all items to the temporary stac   
+| [`push.all, pusha`](#pushall) | Push all items to the temporary stack  
+| [`reverse, rev`](#reverse)    | Reverse stack                          
+| [`rotate, rot`](#rotate)      | Rotate top three items                 
 | [`store, st`](#store)         | Store stack to memory                  
 | [`swap, sw`](#swap)           | Swap top two items on the stack        
 | [`take`](#take)               | Take elements from the stack           
@@ -51,7 +53,7 @@ Example:
 ### copy
 
 Pushes all items on the main stack to the temporary stack while preserving
-the contents of the main stack. 
+the contents of the main stack.
 
 Stack effects:
 ```
@@ -122,7 +124,7 @@ Example:
 ### flip
 
 Flip the stacks so that the main stack becomes the temporary stack and the
-temporary stack becomes the main stack. 
+temporary stack becomes the main stack.
 
 Stack effects:
 ```
@@ -142,7 +144,7 @@ Example:
 ### load
 
 Pushes the items found at memory location *m* to the main stack. A
-empty memory error is raised if nothing has been stored at that location. 
+empty memory error is raised if nothing has been stored at that location.
 
 Alias: `ld`
 
@@ -178,7 +180,7 @@ Example:
 ### pop
 
 Pops an item from the temporary stack and places it on the main stack. An
-empty stack error is raised if there are no items on the temporary stack. 
+empty stack error is raised if there are no items on the temporary stack.
 
 Stack effects:
 ```
@@ -197,8 +199,8 @@ Example:
 ### pop.all
 
 Removes all items from the temporary stack and pushes them to the main
-stack. An empty stack error is raised if the temporary stack has no 
-items. 
+stack. An empty stack error is raised if the temporary stack has no
+items.
 
 Alias: `popa`
 
@@ -218,9 +220,9 @@ Example:
 
 ### push
 
-Removes the top item from the main stack and pushes it to the temporary 
-stack. An empty stack error is raised if there are no items on the 
-main stack. 
+Removes the top item from the main stack and pushes it to the temporary
+stack. An empty stack error is raised if there are no items on the
+main stack.
 
 Stack effects:
 ```
@@ -239,11 +241,11 @@ Example:
 ### push.all
 
 Removes all items from the main stack and pushes them to the temporary
-stack. An empty stack error is raised if there are no items on the main 
-stack. 
+stack. An empty stack error is raised if there are no items on the main
+stack.
 
 To preserve the contents of the main stack, use the `copy` operation
-instead. 
+instead.
 
 Alias: `pusha`
 
@@ -261,10 +263,47 @@ Example:
 | `4 5 6`    | `4 \| 5 \| 6`               
 | `pop.all`  | `4 \| 5 \| 6 \| 1 \| 2 \| 3`
 
+### reverse
+
+Reverses the elements on the stack.
+
+Alias: `rev`
+
+Stack effects:
+```
+( Any* -- Any* )
+```
+
+Example:
+
+| Input       | Stack                  
+|-------------|------------------------
+| `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
+| `reverse`   | `5 \| 4 \| 3 \| 2 \| 1`
+
+### rotate
+
+Rotates the top three items on the stack, *x*, *y*, and *z*, so that *y*
+is on top and *z* is behind *x* and *y*.
+
+Alias: `rot`
+
+Stack effects:
+```
+( x:Any y:Any z:Any -- z:Any x:Any y:Any )
+```
+
+Example:
+
+| Input     | Stack             
+|-----------|-------------------
+| `1 2 3 4` | `1 \| 2 \| 3 \| 4`
+| `rotate`  | `1 \| 4 \| 2 \| 3`
+
 ### store
 
 Store the contents of the main stack to memory location *m*. The contents
-of the main stack are preserved with this operation. 
+of the main stack are preserved with this operation.
 
 Alias: `st`
 
@@ -303,7 +342,7 @@ Example:
 
 Take the top *n* elements from the stack and discard the rest. If *n*
 is equal to or greater than the number of items on the stack, the stack
-is left unchanged. 
+is left unchanged.
 
 Stack effects:
 ```

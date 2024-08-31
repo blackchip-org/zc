@@ -2,6 +2,8 @@
 
 GOFLAGS="-tags proj"
 
+GEN_DIRS="app/ops doc/ops app/vols app/test/doc app/test/ops"
+
 ops() {
     set -x
     rm -rf app/ops/* doc/ops/* app/vols/* app/test/doc/*
@@ -50,6 +52,10 @@ case "$1" in
     wasm)
         (ops)
         (wasm)
+        ;;
+    emoji)
+        set -x
+        go generate internal/gen-emoji/gen-emoji.go
         ;;
     *)
         echo "error: invalid command: $1"

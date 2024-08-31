@@ -415,11 +415,11 @@ reference.
 
 ## Temporary Stack and Memory
 
-It is sometimes convenient to store values in a temporary stack during 
-a calcuation. The `push` operation removes the top item in the main stack 
-and pushes it to the temproary stack. The `pop` operation does the inverse. 
+It is sometimes convenient to store values in a temporary stack during
+a calcuation. The `push` operation removes the top item in the main stack
+and pushes it to the temproary stack. The `pop` operation does the inverse.
 For example, to compute an average, first get the length of the stack,
-push that to the temporary stack, sum the values, pop the length and then 
+push that to the temporary stack, sum the values, pop the length and then
 divide:
 
 <!-- test: Average -->
@@ -434,11 +434,11 @@ divide:
 | `div`                     | `5`
 
 The `push.all` and `pop.all` operations transfers all items from one stack
-to the other. Use the `flip` operation to flip between the stacks. 
+to the other. Use the `flip` operation to flip between the stacks.
 
-Items on the main stack can also be stored to a named memory location to be 
+Items on the main stack can also be stored to a named memory location to be
 recalled at a later time. Use `store` to copy the stack to memory and `load`
-to recall it. 
+to recall it.
 
 Let's manually compute the population standard deviation found in the example on
 the [Wikipedia](https://en.wikipedia.org/wiki/Standard_deviation) page. The
@@ -520,8 +520,12 @@ Some features of the calculator use external C libraries. The current
 release binaries do not include these external libraries and using one
 of these operations will raise a "feature not supported" error.
 
-To use these features, install the necessary dependencies and build
-locally using `make`. See the credits below for more information.
+### Ubuntu
+
+For coordinate transform support, build with the `proj` tag and install proj
+with:
+
+    sudo apt install libproj-dev
 
 ## Credits
 

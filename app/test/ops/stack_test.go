@@ -167,6 +167,26 @@ func TestOpDocs_Stack_PushAll(t *testing.T) {
 	c.AssertStack("4", "5", "6", "1", "2", "3")
 }
 
+func TestOpDocs_Stack_Reverse(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4 5")
+	c.AssertStack("1", "2", "3", "4", "5")
+
+	c.Eval("reverse")
+	c.AssertStack("5", "4", "3", "2", "1")
+}
+
+func TestOpDocs_Stack_Rotate(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("1 2 3 4")
+	c.AssertStack("1", "2", "3", "4")
+
+	c.Eval("rotate")
+	c.AssertStack("1", "4", "2", "3")
+}
+
 func TestOpDocs_Stack_Store(t *testing.T) {
 	c := app.NewCalcTester(t)
 

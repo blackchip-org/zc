@@ -24,7 +24,7 @@ Angular calculations
 
 ### dec
 
-Convert the angle *x* in any degree format to decimal degrees. 
+Convert the angle *x* in any degree format to decimal degrees.
 
 Alias: `dd`
 
@@ -56,7 +56,7 @@ Example:
 
 ### deg.min
 
-Convert the angle *x* in any degree format to degrees and minutes. 
+Convert the angle *x* in any degree format to degrees and minutes.
 
 Alias: `dm`
 
@@ -74,7 +74,7 @@ Example:
 ### deg.min.round
 
 Convert the angle *x* in any degree format to degrees and minutes rounded
-to *p* places. 
+to *p* places.
 
 Alias: `dmr`
 
@@ -91,8 +91,8 @@ Example:
 
 ### deg.min.sec
 
-Convert the angle *x* in any degree format to degrees, minutes, and 
-seconds. 
+Convert the angle *x* in any degree format to degrees, minutes, and
+seconds.
 
 Alias: `dms`
 

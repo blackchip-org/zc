@@ -137,6 +137,28 @@ var (
 			},
 		},
 	}
+	Reverse = zc.Op{
+		Name: "reverse",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.Any,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Any,
+				Eval:      funcs.Reverse,
+			},
+		},
+	}
+	Rotate = zc.Op{
+		Name: "rotate",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Any, zc.Any, zc.Any},
+				Returns: []zc.Type{zc.Any, zc.Any, zc.Any},
+				Eval:    funcs.Rotate,
+			},
+		},
+	}
 	Store = zc.Op{
 		Name: "store",
 		Funcs: []zc.Func{
