@@ -1879,5 +1879,3 @@ Unicode emoji characters
 | `:zombie:`                                    | `🧟`                           
 | `:zzz:`                                       | `💤`                           
 
-
-## Operations

@@ -25,6 +25,7 @@ var typeMap map[string]string = map[string]string{
 	zc.Bool.AppName():     "Bool",
 	zc.Complex.AppName():  "Complex",
 	zc.Decimal.AppName():  "Decimal",
+	zc.Duration.AppName(): "Duration",
 	zc.DMS.AppName():      "DMS",
 	zc.Float64.AppName():  "Float64",
 	zc.Int.AppName():      "Int",
@@ -314,10 +315,12 @@ func genOpDocs(vols []zc.VolDef) {
 			fmt.Fprintf(f, "\n")
 		}
 
-		fmt.Fprintf(f, "\n## Operations\n")
+		if len(vol.Ops) > 0 {
+			fmt.Fprintf(f, "\n## Operations\n")
 
-		for _, op := range vol.Ops {
-			genOpDoc(f, op)
+			for _, op := range vol.Ops {
+				genOpDoc(f, op)
+			}
 		}
 	}
 }

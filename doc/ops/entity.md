@@ -2098,5 +2098,3 @@ HTML entity characters
 | `&zopf;`                            | `𝕫`     
 | `&zscr;`                            | `𝓏`     
 
-
-## Operations

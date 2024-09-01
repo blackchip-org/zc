@@ -15,5 +15,3 @@ IEC binary prefixes
 | `pebi` | `2 50 pow` | IEC prefix Pi, 2^50
 | `exbi` | `2 60 pow` | IEC prefix EI, 2^60
 
-
-## Operations

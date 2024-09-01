@@ -5,7 +5,7 @@ GOFLAGS="-tags proj"
 GEN_GO="app/ops/*.go app/vols/*.go app/test/docs/*.go app/test/ops/*.go"
 GEN_MD="doc/ops/*.md"
 
-ops() {
+function ops {
     rm -rf $GEN_GO $GEN_MD
     (
         set -x
@@ -14,26 +14,12 @@ ops() {
     )
     goimports -w $GEN_GO
     gofmt     -w $GEN_GO
-}
 
-test() {
-    set -x
-    go test $GOFLAGS $@ ./...
-}
-
-bench() {
-    set -x
-    go test $@ -benchmem -run=^$  -bench . github.com/blackchip-org/zc/v6/bench
-}
-
-wasm() {
-    set -x
-    GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
 }
 
 case "$1" in
     ops)
-        (ops)
+        ops
         ;;
     run)
         shift
@@ -45,16 +31,19 @@ case "$1" in
     test)
         shift
         (ops)
-        (test $@)
+        set -x
+        go test $GOFLAGS $@ ./...
         ;;
     bench)
         shift
         (ops)
-        (bench $@)
+        set -x
+        go test $@ -benchmem -run=^$  -bench . github.com/blackchip-org/zc/v6/bench
         ;;
     wasm)
         (ops)
-        (wasm)
+        set -x
+        GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
         ;;
     emoji)
         set -x
@@ -63,6 +52,10 @@ case "$1" in
     entity)
         set -x
         go generate internal/gen-entity/gen-entity.go
+        ;;
+    tz)
+        set -x
+        go generate internal/gen-tz/gen-tz.go
         ;;
     *)
         echo "error: invalid command: $1"

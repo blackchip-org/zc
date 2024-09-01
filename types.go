@@ -6,6 +6,7 @@ import (
 	"math/big"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/blackchip-org/dms"
 	"github.com/blackchip-org/scan"
@@ -23,6 +24,7 @@ var (
 	Complex  = ComplexType{}
 	Decimal  = DecimalType{}
 	DMS      = DMSType{}
+	Duration = DurationType{}
 	Float64  = Float64Type{}
 	Int      = IntType{}
 	Int8     = Int8Type{}
@@ -379,6 +381,79 @@ func (t DMSType) Format(a any) string {
 }
 
 func (t DMSType) Dup(a any) any {
+	return a
+}
+
+// ----------------------------------------------------------------------------
+type DurationType struct{}
+
+func (t DurationType) AppName() string { return "Duration" }
+func (t DurationType) GoName() string  { return "time.Duration" }
+
+func (t DurationType) As(a any) time.Duration {
+	v, ok := a.(time.Duration)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t DurationType) Push(c Calc, val time.Duration) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t DurationType) Pop(c Calc) time.Duration {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t DurationType) Parse(_ coll.State, str string) (any, bool, error) {
+	s := scan.NewScannerFromString("", str)
+	for s.HasMore() {
+		if scan.IsSpace(s.This) {
+			s.Skip()
+		} else {
+			s.Keep()
+		}
+	}
+	d, err := time.ParseDuration(s.Emit().Val)
+	if err != nil {
+		return time.Duration(0), false, nil
+	}
+	return d, true, nil
+}
+
+func (t DurationType) Format(a any) string {
+	s := scan.NewScannerFromString("", a.(time.Duration).String())
+	var hrs, min, sec string
+	for s.HasMore() {
+		switch s.This {
+		case 'h':
+			hrs = strings.TrimSpace(s.Emit().Val)
+			s.Discard()
+		case 'm':
+			min = strings.TrimSpace(s.Emit().Val)
+			s.Discard()
+		case 's':
+			sec = strings.TrimSpace(s.Emit().Val)
+			s.Discard()
+		default:
+			s.Keep()
+		}
+	}
+	var fields []string
+	if hrs != "" && hrs != "0" {
+		fields = append(fields, hrs+"h")
+	}
+	if min != "" && min != "0" {
+		fields = append(fields, min+"m")
+	}
+	if sec != "" && sec != "0" {
+		fields = append(fields, sec+"s")
+	}
+	return strings.Join(fields, " ")
+}
+
+func (t DurationType) Dup(a any) any {
 	return a
 }
 

@@ -33,5 +33,3 @@ International System of Units
 | `ronto`  | `1e-27` | SI prefix r, 1e-27 
 | `quecto` | `1e-30` | SI prefix q, 1e-30 
 
-
-## Operations
