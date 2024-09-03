@@ -10,10 +10,11 @@ import (
 const ProgName = "zc"
 
 type Type interface {
+	Name() string
 	AppName() string
 	GoName() string
 	Parse(coll.State, string) (any, bool, error)
-	Format(any) string
+	Format(coll.State, any) string
 	Dup(any) any
 }
 
@@ -28,7 +29,7 @@ type Item struct {
 func (i Item) Val() string {
 	var str string
 	if i.val == "" {
-		str = i.Type.Format(i.TypeVal)
+		str = i.Type.Format(coll.NullState, i.TypeVal)
 	} else {
 		str = i.val
 	}

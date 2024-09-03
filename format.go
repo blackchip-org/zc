@@ -75,14 +75,18 @@ func FormatList(vals []string) string {
 func Quote(str string) string {
 	quote := ""
 	s := scan.NewScannerFromString("", str)
+
+	if !IsValuePrefix(s.This, s.Next) {
+		quote = `'`
+	}
 	for s.HasMore() {
 		switch {
 		case s.This == ' ':
-			quote = `"`
+			quote = `'`
 			s.Keep()
-		case s.This == '"':
-			quote = `"`
-			s.Val.WriteString(`\"`)
+		case s.This == '\'':
+			quote = `'`
+			s.Val.WriteString(`\'`)
 			s.Skip()
 		default:
 			s.Val.WriteString(Escape(s.This))

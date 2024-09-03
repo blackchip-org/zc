@@ -1,0 +1,93 @@
+name: time
+title: Date, time, and duration operations
+category: lib
+setup:
+- "'Jan 2 2006 15:04:05 -0700 MST' now="
+- "'MST' local.zone="
+
+ops:
+- name: add
+  title: Time or duration addition
+  ident: AddTime
+  funcs:
+  - name: AddDuration
+    params: [x:Duration, y:Duration]
+    returns: [Duration]
+  - name: AddDurationDateTime
+    params: [x:Duration, y:DateTime]
+    returns: [DateTime]
+  - name: AddDateTimeDuration
+    params: [x:DateTime, x:Duration]
+    returns: [DateTime]
+  desc: Adds a duration and time or adds two durations.
+  example:
+  - i: c 3:30pm 2h +
+    o: [Mon Jan 2 2006 5:30:00pm -0700 MST]
+  - i: c 2h30m 45m +
+    o: [3h 15m]
+  tests:
+  - name: DurationTime
+    test:
+    - i: 2h 3:30pm +
+      o: [Mon Jan 2 2006 5:30:00pm -0700 MST]
+
+- name: local.zone=
+  title: Sets the local time zone
+  funcs:
+  - name: LocalZoneSet
+    params: [z:Text]
+  desc: |-
+    Sets the local time zone to *z*. An invalid argument error is raised
+    if the time zone is not recognized.
+  example:
+    - i: now time
+      o: [3:04:05pm -0700 MST]
+    - i: c /est local.zone=
+      notice: local time zone is now 'EST'
+    - i: now time
+      o: [5:04:05pm -0500 EST]
+    - i: c /Asia/Jakarta local.zone=
+      notice: local time zone is now 'Asia/Jakarta'
+    - i: now time
+      o: [5:04:05am +0700 WIB]
+
+- name: now
+  title: Current date and time
+  funcs:
+  - name: Now
+    returns: [DateTime]
+  desc: |-
+    The current date and time. If `now=` has been called, that date and
+    time will be returned instead.
+  example:
+  - i: now
+    o: ["Mon Jan 2 2006 3:04:05pm -0700 MST"]
+
+- name: now=
+  title: Override now value
+  funcs:
+  - name: NowSet
+    params: [x:DateTime]
+  desc: |-
+    Override the value returned by `now`. Useful for to mocking current time
+    while testing.
+  example:
+  - i: "'Nov 5 1955 01:22"
+    o: ["Nov 5 1955 01:22"]
+  - i: now=
+    notice: "now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'"
+  - i: now
+    o: [Sat Nov 5 1955 1:22:00am -0700 MST]
+
+- name: time
+  title: Formats to a common time layout
+  funcs:
+  - name: Time
+    params: [x:DateTime]
+    returns: [Time]
+  desc: |-
+    Formats a date/time with the common time layout. Date information, if any,
+    is discarded.
+  example:
+  - i: "'2006-01-02T15:04:05 UTC' time"
+    o: [3:04:05pm UTC]

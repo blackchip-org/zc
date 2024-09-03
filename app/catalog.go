@@ -36,5 +36,6 @@ func init() {
 		vols.Stat,
 		vols.Temp,
 		vols.Text,
+		vols.Time,
 	)
 }

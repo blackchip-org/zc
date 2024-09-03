@@ -26,18 +26,19 @@
 
 
 ## Library
-| Volume                | Description             
-|-----------------------|-------------------------
-| [angle](ops/angle.md) | Angular calculations    
-| [anno](ops/anno.md)   | Annotations             
-| [bool](ops/bool.md)   | Boolean operations      
-| [cmp](ops/cmp.md)     | Comparisions            
-| [color](ops/color.md) | Color conversions       
-| [geo](ops/geo.md)     | Geo-spatial calculations
-| [hof](ops/hof.md)     | Higher order functions  
-| [rand](ops/rand.md)   | Random number generation
-| [seq](ops/seq.md)     | Numeric sequences       
-| [text](ops/text.md)   | Text operations         
+| Volume                | Description                        
+|-----------------------|------------------------------------
+| [angle](ops/angle.md) | Angular calculations               
+| [anno](ops/anno.md)   | Annotations                        
+| [bool](ops/bool.md)   | Boolean operations                 
+| [cmp](ops/cmp.md)     | Comparisions                       
+| [color](ops/color.md) | Color conversions                  
+| [geo](ops/geo.md)     | Geo-spatial calculations           
+| [hof](ops/hof.md)     | Higher order functions             
+| [rand](ops/rand.md)   | Random number generation           
+| [seq](ops/seq.md)     | Numeric sequences                  
+| [text](ops/text.md)   | Text operations                    
+| [time](ops/time.md)   | Date, time, and duration operations
 
 
 

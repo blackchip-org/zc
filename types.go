@@ -12,6 +12,7 @@ import (
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/app/vars"
 	"github.com/blackchip-org/zc/v6/pkg/coll"
+	"github.com/blackchip-org/zc/v6/pkg/ptime"
 	"github.com/blackchip-org/zc/v6/types"
 	"github.com/cockroachdb/apd/v3"
 )
@@ -22,6 +23,8 @@ var (
 	BigInt   = BigIntType{}
 	Bool     = BoolType{}
 	Complex  = ComplexType{}
+	Date     = DateType{}
+	DateTime = DateTimeType{}
 	Decimal  = DecimalType{}
 	DMS      = DMSType{}
 	Duration = DurationType{}
@@ -33,12 +36,26 @@ var (
 	Int64    = Int64Type{}
 	Rat      = RatType{}
 	String   = StringType{}
+	Time     = TimeType{}
 	Uint     = UintType{}
 	Uint8    = Uint8Type{}
 	Uint16   = Uint16Type{}
 	Uint32   = Uint32Type{}
 	Uint64   = Uint64Type{}
 )
+
+var Types []Type = []Type{
+	Any,
+	BigFloat, BigInt, Bool,
+	Complex,
+	Date, DateTime, Decimal, DMS, Duration,
+	Float64,
+	Int, Int8, Int16, Int32, Int64,
+	Rat,
+	String,
+	Time,
+	Uint, Uint8, Uint16, Uint32, Uint64,
+}
 
 const (
 	PrecFloat128 = 113
@@ -56,6 +73,7 @@ var (
 // ----------------------------------------------------------------------------
 type AnyType struct{}
 
+func (t AnyType) Name() string    { return "Any" }
 func (t AnyType) AppName() string { return "Any" }
 func (t AnyType) GoName() string  { return "any" }
 
@@ -63,7 +81,7 @@ func (t AnyType) Parse(_ coll.State, str string) (any, bool, error) {
 	return str, true, nil
 }
 
-func (t AnyType) Format(a any) string {
+func (t AnyType) Format(_ coll.State, a any) string {
 	return fmt.Sprint(a)
 }
 
@@ -74,6 +92,7 @@ func (t AnyType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type BigFloatType struct{}
 
+func (t BigFloatType) Name() string    { return "BigFloat" }
 func (t BigFloatType) AppName() string { return "Float/128" }
 func (t BigFloatType) GoName() string  { return "*big.Float" }
 
@@ -116,7 +135,7 @@ func (t BigFloatType) Parse(_ coll.State, str string) (any, bool, error) {
 	return v, true, nil
 }
 
-func (t BigFloatType) Format(a any) string {
+func (t BigFloatType) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return FormatExponent(v.Text('g', -1))
 }
@@ -130,6 +149,7 @@ func (t BigFloatType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type BigIntType struct{}
 
+func (t BigIntType) Name() string    { return "BigInt" }
 func (t BigIntType) AppName() string { return "Int" }
 func (t BigIntType) GoName() string  { return "*big.Int" }
 
@@ -170,7 +190,7 @@ func (t BigIntType) Parse(_ coll.State, str string) (any, bool, error) {
 	return v, true, nil
 }
 
-func (t BigIntType) Format(a any) string {
+func (t BigIntType) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return v.String()
 }
@@ -184,6 +204,7 @@ func (t BigIntType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type BoolType struct{}
 
+func (t BoolType) Name() string    { return "Bool" }
 func (t BoolType) AppName() string { return "Bool" }
 func (t BoolType) GoName() string  { return "bool" }
 
@@ -215,7 +236,7 @@ func (t BoolType) Parse(_ coll.State, str string) (any, bool, error) {
 	}
 }
 
-func (t BoolType) Format(a any) string {
+func (t BoolType) Format(_ coll.State, a any) string {
 	b := t.As(a)
 	if b {
 		return "true"
@@ -230,6 +251,7 @@ func (t BoolType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type ComplexType struct{}
 
+func (t ComplexType) Name() string    { return "Complex" }
 func (t ComplexType) AppName() string { return "Complex" }
 func (t ComplexType) GoName() string  { return "complex128" }
 
@@ -255,7 +277,7 @@ func (t ComplexType) Parse(_ coll.State, str string) (any, bool, error) {
 	return c, err == nil, nil
 }
 
-func (t ComplexType) Format(a any) string {
+func (t ComplexType) Format(_ coll.State, a any) string {
 	f := strconv.FormatComplex(t.As(a), 'f', -1, 128)
 	f = f[1 : len(f)-1]
 	return f
@@ -268,6 +290,7 @@ func (t ComplexType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type DecimalType struct{}
 
+func (t DecimalType) Name() string    { return "Decimal" }
 func (t DecimalType) AppName() string { return "Dec" }
 func (t DecimalType) GoName() string  { return "*apd.Decimal" }
 
@@ -324,11 +347,10 @@ func (t DecimalType) Parse(state coll.State, str string) (any, bool, error) {
 	return v, true, nil
 }
 
-func (t DecimalType) Format(a any) string {
+func (t DecimalType) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	v.Reduce(v)
 	f := v.Text('f')
-	//f = RemoveTrailingZeros(f)
 	f = FormatExponent(f)
 	return f
 }
@@ -340,8 +362,105 @@ func (t DecimalType) Dup(a any) any {
 }
 
 // ----------------------------------------------------------------------------
+type DateType struct{}
+
+func (t DateType) Name() string    { return "Date" }
+func (t DateType) AppName() string { return "Date" }
+func (t DateType) GoName() string  { return "time.Time" }
+
+func (t DateType) As(a any) time.Time {
+	v, ok := a.(time.Time)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t DateType) Push(c Calc, val time.Time) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t DateType) Pop(c Calc) time.Time {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t DateType) Parse(state coll.State, str string) (any, bool, error) {
+	v := vars.ForTime(state)
+	pt := ptime.For(v.Locale)
+
+	parsed, err := pt.ParseDate(str)
+	if err != nil {
+		return nil, false, nil
+	}
+	tm, err := pt.Time(parsed, v.Now())
+	if err != nil {
+		return nil, false, nil
+	}
+	return tm, true, nil
+}
+
+func (t DateType) Format(state coll.State, a any) string {
+	v := vars.ForTime(state)
+	pt := ptime.For(v.Locale)
+	return pt.Format(v.DateLayout, t.As(a))
+}
+
+func (t DateType) Dup(a any) any {
+	return a
+}
+
+// ----------------------------------------------------------------------------
+type DateTimeType struct{}
+
+func (t DateTimeType) Name() string    { return "DateTime" }
+func (t DateTimeType) AppName() string { return "DateTime" }
+func (t DateTimeType) GoName() string  { return "time.Time" }
+
+func (t DateTimeType) As(a any) time.Time {
+	v, ok := a.(time.Time)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t DateTimeType) Push(c Calc, val time.Time) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t DateTimeType) Pop(c Calc) time.Time {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t DateTimeType) Parse(state coll.State, str string) (any, bool, error) {
+	v := vars.ForTime(state)
+	pt := ptime.For(v.Locale)
+
+	parsed, err := pt.Parse(str)
+	if err != nil {
+		return nil, false, nil
+	}
+	tm, err := pt.Time(parsed, v.Now())
+	if err != nil {
+		return nil, false, nil
+	}
+	return tm, true, nil
+}
+
+func (t DateTimeType) Format(state coll.State, a any) string {
+	v := vars.ForTime(state)
+	pt := ptime.For(v.Locale)
+	return pt.Format(v.DateTimeLayout, t.As(a))
+}
+
+func (t DateTimeType) Dup(a any) any {
+	return a
+}
+
+// ----------------------------------------------------------------------------
 type DMSType struct{}
 
+func (t DMSType) Name() string    { return "DMS" }
 func (t DMSType) AppName() string { return "DMS" }
 func (t DMSType) GoName() string  { return "types.DMS" }
 
@@ -375,7 +494,7 @@ func (t DMSType) Parse(state coll.State, str string) (any, bool, error) {
 	return d, true, nil
 }
 
-func (t DMSType) Format(a any) string {
+func (t DMSType) Format(_ coll.State, a any) string {
 	d := t.As(a)
 	return types.FormatDMS(d, dms.SecUnit, -1)
 }
@@ -387,6 +506,7 @@ func (t DMSType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type DurationType struct{}
 
+func (t DurationType) Name() string    { return "Duration" }
 func (t DurationType) AppName() string { return "Duration" }
 func (t DurationType) GoName() string  { return "time.Duration" }
 
@@ -422,7 +542,7 @@ func (t DurationType) Parse(_ coll.State, str string) (any, bool, error) {
 	return d, true, nil
 }
 
-func (t DurationType) Format(a any) string {
+func (t DurationType) Format(_ coll.State, a any) string {
 	s := scan.NewScannerFromString("", a.(time.Duration).String())
 	var hrs, min, sec string
 	for s.HasMore() {
@@ -460,6 +580,7 @@ func (t DurationType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Float64Type struct{}
 
+func (t Float64Type) Name() string    { return "Float64" }
 func (t Float64Type) AppName() string { return "Float/64" }
 func (t Float64Type) GoName() string  { return "float64" }
 
@@ -494,7 +615,7 @@ func (t Float64Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return f64, err == nil, nil
 }
 
-func (t Float64Type) Format(a any) string {
+func (t Float64Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	f := strconv.FormatFloat(v, 'g', -1, 64)
 	f = FormatExponent(f)
@@ -508,6 +629,7 @@ func (t Float64Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type IntType struct{}
 
+func (t IntType) Name() string    { return "Int" }
 func (t IntType) AppName() string { return "Int/s" }
 func (t IntType) GoName() string  { return "int" }
 
@@ -533,7 +655,7 @@ func (t IntType) Parse(_ coll.State, str string) (any, bool, error) {
 	return int(i64), err == nil, nil
 }
 
-func (t IntType) Format(a any) string {
+func (t IntType) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatInt(int64(v), 10)
 }
@@ -545,6 +667,7 @@ func (t IntType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Int8Type struct{}
 
+func (t Int8Type) Name() string    { return "Int8" }
 func (t Int8Type) AppName() string { return "Int/s8" }
 func (t Int8Type) GoName() string  { return "int8" }
 
@@ -570,7 +693,7 @@ func (t Int8Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return int8(i64), err == nil, nil
 }
 
-func (t Int8Type) Format(a any) string {
+func (t Int8Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatInt(int64(v), 10)
 }
@@ -582,6 +705,7 @@ func (t Int8Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Int16Type struct{}
 
+func (t Int16Type) Name() string    { return "Int16" }
 func (t Int16Type) AppName() string { return "Int/s16" }
 func (t Int16Type) GoName() string  { return "int16" }
 
@@ -607,7 +731,7 @@ func (t Int16Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return int16(i64), err == nil, nil
 }
 
-func (t Int16Type) Format(a any) string {
+func (t Int16Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatInt(int64(v), 10)
 }
@@ -619,6 +743,7 @@ func (t Int16Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Int32Type struct{}
 
+func (t Int32Type) Name() string    { return "Int32" }
 func (t Int32Type) AppName() string { return "Int/s32" }
 func (t Int32Type) GoName() string  { return "int32" }
 
@@ -644,7 +769,7 @@ func (t Int32Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return int32(i64), err == nil, nil
 }
 
-func (t Int32Type) Format(a any) string {
+func (t Int32Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatInt(int64(v), 10)
 }
@@ -656,6 +781,7 @@ func (t Int32Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Int64Type struct{}
 
+func (t Int64Type) Name() string    { return "Int64" }
 func (t Int64Type) AppName() string { return "Int/s64" }
 func (t Int64Type) GoName() string  { return "int64" }
 
@@ -681,7 +807,7 @@ func (t Int64Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return int32(i64), err == nil, nil
 }
 
-func (t Int64Type) Format(a any) string {
+func (t Int64Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatInt(int64(v), 10)
 }
@@ -693,6 +819,7 @@ func (t Int64Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type RatType struct{}
 
+func (t RatType) Name() string    { return "Rat" }
 func (t RatType) AppName() string { return "Rat" }
 func (t RatType) GoName() string  { return "*big.Rat" }
 
@@ -727,7 +854,7 @@ func (t RatType) Parse(_ coll.State, str string) (any, bool, error) {
 	return parseRat(str)
 }
 
-func (t RatType) Format(a any) string {
+func (t RatType) Format(_ coll.State, a any) string {
 	r := t.As(a)
 	n := r.Num().Int64()
 	d := r.Denom().Int64()
@@ -752,6 +879,7 @@ func (t RatType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type StringType struct{}
 
+func (t StringType) Name() string    { return "String" }
 func (t StringType) AppName() string { return "Text" }
 func (t StringType) GoName() string  { return "string" }
 
@@ -776,7 +904,7 @@ func (t StringType) Parse(_ coll.State, str string) (any, bool, error) {
 	return str, true, nil
 }
 
-func (t StringType) Format(a any) string {
+func (t StringType) Format(_ coll.State, a any) string {
 	return t.As(a)
 }
 
@@ -785,8 +913,57 @@ func (t StringType) Dup(a any) any {
 }
 
 // ----------------------------------------------------------------------------
+type TimeType struct{}
+
+func (t TimeType) Name() string    { return "Time" }
+func (t TimeType) AppName() string { return "Time" }
+func (t TimeType) GoName() string  { return "time.Time" }
+
+func (t TimeType) As(a any) time.Time {
+	v, ok := a.(time.Time)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t TimeType) Push(c Calc, val time.Time) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t TimeType) Pop(c Calc) time.Time {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t TimeType) Parse(state coll.State, str string) (any, bool, error) {
+	v := vars.ForTime(state)
+	pt := ptime.For(v.Locale)
+
+	parsed, err := pt.ParseTime(str)
+	if err != nil {
+		return nil, false, nil
+	}
+	tm, err := pt.Time(parsed, v.Now())
+	if err != nil {
+		return nil, false, nil
+	}
+	return tm, true, nil
+}
+
+func (t TimeType) Format(state coll.State, a any) string {
+	v := vars.ForTime(state)
+	pt := ptime.For(v.Locale)
+	return pt.Format(v.TimeLayout, t.As(a))
+}
+
+func (t TimeType) Dup(a any) any {
+	return a
+}
+
+// ----------------------------------------------------------------------------
 type UintType struct{}
 
+func (t UintType) Name() string    { return "Uint" }
 func (t UintType) AppName() string { return "Int/u" }
 func (t UintType) GoName() string  { return "uint" }
 
@@ -812,7 +989,7 @@ func (t UintType) Parse(_ coll.State, str string) (any, bool, error) {
 	return uint(i64), err == nil, nil
 }
 
-func (t UintType) Format(a any) string {
+func (t UintType) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatUint(uint64(v), 10)
 }
@@ -824,6 +1001,7 @@ func (t UintType) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Uint8Type struct{}
 
+func (t Uint8Type) Name() string    { return "Uint8" }
 func (t Uint8Type) AppName() string { return "Int/u8" }
 func (t Uint8Type) GoName() string  { return "uint8" }
 
@@ -849,7 +1027,7 @@ func (t Uint8Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return uint8(i64), err == nil, nil
 }
 
-func (t Uint8Type) Format(a any) string {
+func (t Uint8Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatUint(uint64(v), 10)
 }
@@ -861,6 +1039,7 @@ func (t Uint8Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Uint16Type struct{}
 
+func (t Uint16Type) Name() string    { return "Uint16" }
 func (t Uint16Type) AppName() string { return "Int/u16" }
 func (t Uint16Type) GoName() string  { return "uint16" }
 
@@ -886,7 +1065,7 @@ func (t Uint16Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return uint16(i64), err == nil, nil
 }
 
-func (t Uint16Type) Format(a any) string {
+func (t Uint16Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatUint(uint64(v), 10)
 }
@@ -898,6 +1077,7 @@ func (t Uint16Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Uint32Type struct{}
 
+func (t Uint32Type) Name() string    { return "Uint32" }
 func (t Uint32Type) AppName() string { return "Int/u32" }
 func (t Uint32Type) GoName() string  { return "uint32" }
 
@@ -923,7 +1103,7 @@ func (t Uint32Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return uint32(i64), err == nil, nil
 }
 
-func (t Uint32Type) Format(a any) string {
+func (t Uint32Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatUint(uint64(v), 10)
 }
@@ -935,6 +1115,7 @@ func (t Uint32Type) Dup(a any) any {
 // ----------------------------------------------------------------------------
 type Uint64Type struct{}
 
+func (t Uint64Type) Name() string    { return "Uint64" }
 func (t Uint64Type) AppName() string { return "Int/u64" }
 func (t Uint64Type) GoName() string  { return "uint64" }
 
@@ -960,7 +1141,7 @@ func (t Uint64Type) Parse(_ coll.State, str string) (any, bool, error) {
 	return uint32(i64), err == nil, nil
 }
 
-func (t Uint64Type) Format(a any) string {
+func (t Uint64Type) Format(_ coll.State, a any) string {
 	v := t.As(a)
 	return strconv.FormatUint(uint64(v), 10)
 }

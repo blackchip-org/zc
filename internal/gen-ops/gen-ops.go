@@ -18,27 +18,13 @@ import (
 	"github.com/blackchip-org/zc/v6/pkg/pretty"
 )
 
-var typeMap map[string]string = map[string]string{
-	zc.Any.AppName():      "Any",
-	zc.BigInt.AppName():   "BigInt",
-	zc.BigFloat.AppName(): "BigFloat",
-	zc.Bool.AppName():     "Bool",
-	zc.Complex.AppName():  "Complex",
-	zc.Decimal.AppName():  "Decimal",
-	zc.Duration.AppName(): "Duration",
-	zc.DMS.AppName():      "DMS",
-	zc.Float64.AppName():  "Float64",
-	zc.Int.AppName():      "Int",
-	zc.Int8.AppName():     "Int8",
-	zc.Int32.AppName():    "Int32",
-	zc.Int64.AppName():    "Int64",
-	zc.Rat.AppName():      "Rat",
-	zc.String.AppName():   "String",
-	zc.Uint.AppName():     "Uint",
-	zc.Uint8.AppName():    "Uint8",
-	zc.Uint16.AppName():   "Uint16",
-	zc.Uint32.AppName():   "Uint32",
-	zc.Uint64.AppName():   "Uint64",
+var typeMap map[string]string
+
+func init() {
+	typeMap = make(map[string]string)
+	for _, t := range zc.Types {
+		typeMap[t.AppName()] = t.Name()
+	}
 }
 
 type ValDef struct {
@@ -188,18 +174,27 @@ func genTests(vols []zc.VolDef) {
 
 		for _, op := range vol.Ops {
 			if len(op.Example) > 0 {
-				genTest(f, vol.Ident+"_"+op.Ident, op.Example)
+				genTest(f, vol.Ident+"_"+op.Ident, vol.Setup, op.Example)
 			}
 			for _, test := range op.Tests {
-				genTest(f, vol.Ident+"_"+op.Ident+"_"+test.Name, test.Test)
+				genTest(f, vol.Ident+"_"+op.Ident+"_"+test.Name, vol.Setup, test.Test)
 			}
 		}
 	}
 }
 
-func genTest(f *os.File, name string, test []zc.Expect) {
+func genTest(f *os.File, name string, setup []string, test []zc.Expect) {
 	fmt.Fprintf(f, "func TestOpDocs_%v(t *testing.T) {\n", name)
 	fmt.Fprintf(f, "c := app.NewCalcTester(t)\n")
+
+	if len(setup) > 0 {
+		fmt.Fprintln(f)
+		for _, s := range setup {
+			fmt.Fprintf(f, "c.Eval(\"%v\")\n", s)
+		}
+		fmt.Fprintln(f)
+	}
+
 	for _, e := range test {
 		fmt.Fprintf(f, "\nc.Eval(\"%v\")\n", e.Input)
 		if e.Error != "" {

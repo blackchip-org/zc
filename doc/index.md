@@ -16,6 +16,8 @@
 - [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
   - [`add/f`](ops/basic_Float.md#addf): floating point
+- [`add`](ops/time.md#add): Time or duration addition
+  - [`add/f`](ops/basic_Float.md#addf): floating point
 - [`and`](ops/bool.md#and): Logical conjunction
 - [`and`](ops/prog.md#and): Bitwise and
 - [`apply`](ops/hof.md#apply): Apply a function using arguments on stack
@@ -144,6 +146,7 @@
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`len`](ops/text.md#len): Length of text in characters
 - [`load`](ops/stack.md#load): Loads a stack from memory
+- [`local.zone=`](ops/time.md#localzone): Sets the local time zone
 - [`log`](ops/basic.md#log): Natural logarithm
   - [`log/f`](ops/basic_Float.md#logf): floating point
 - [`log10`](ops/basic.md#log10): Decimal logarithm
@@ -182,6 +185,8 @@
 - [`nmi-m`](ops/len.md#nmi-m): Nautical miles to meters
 - [`not`](ops/bool.md#not): Negation
 - [`not`](ops/prog.md#not): Bitwise not
+- [`now`](ops/time.md#now): Current date and time
+- [`now=`](ops/time.md#now): Override now value
 
 ## o
 - [`oct`](ops/prog.md#oct): Octal conversion
@@ -264,6 +269,7 @@
 - [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
 - [`tebi`](ops/iec.md): IEC prefix Ti, 2^40
 - [`terra`](ops/si.md): SI prefix T, 1e12
+- [`time`](ops/time.md#time): Formats to a common time layout
 - [`top`](ops/stack.md#top): Take the top item from the stack
 - [`true`](ops/bool.md#true): True
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
