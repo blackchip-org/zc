@@ -53,6 +53,11 @@
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- [`date`](ops/time.md#date): Formats to a common date layout
+- [`date.time`](ops/time.md#datetime): Formats to a common date/time layout
+- [`date.time?`](ops/time.md#datetime): Parses text as a date/time
+- [`date?`](ops/time.md#date): Parses text as a date
+- [`day.year`](ops/time.md#dayyear): Day of year
 - [`dd`](ops/angle.md#dec): Alias for [dec](ops/angle.md#dec)
 - [`dec`](ops/angle.md#dec): Degree angle to decimal degrees
 - [`dec`](ops/prog.md#dec): Decimal conversion
@@ -74,8 +79,11 @@
 - [`dms?`](ops/angle.md#dms): Can parse as a decimal degree?
 - [`dmsr`](ops/angle.md#degminsecround): Alias for [deg.min.sec.round](ops/angle.md#degminsecround)
 - [`down`](ops/stack.md#down): Rotate stack downward
+- [`doy`](ops/time.md#dayyear): Alias for [day.year](ops/time.md#dayyear)
 - [`dr`](ops/basic.md#divrem): Alias for [div.rem](ops/basic.md#divrem)
 - [`drop`](ops/stack.md#drop): Drop
+- [`dt`](ops/time.md#datetime): Alias for [date.time](ops/time.md#datetime)
+- [`dt?`](ops/time.md#datetime): Alias for [date.time?](ops/time.md#datetime)
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## e
@@ -124,6 +132,7 @@
 - [`haversine`](ops/geo.md#haversine): Great circle distance between two points
 - [`hecto`](ops/si.md): SI prefix h, 1e02
 - [`hex`](ops/prog.md#hex): Hexadecimal conversion
+- [`hours`](ops/time.md#hours): Convert to hours
 - [`hsl-rgb`](ops/color.md#hsl-rgb): HSL to RGB
 
 ## i
@@ -146,6 +155,7 @@
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`len`](ops/text.md#len): Length of text in characters
 - [`load`](ops/stack.md#load): Loads a stack from memory
+- [`local.zone`](ops/time.md#localzone): Name of the local time zone
 - [`local.zone=`](ops/time.md#localzone): Sets the local time zone
 - [`log`](ops/basic.md#log): Natural logarithm
   - [`log/f`](ops/basic_Float.md#logf): floating point
@@ -169,7 +179,9 @@
 - [`mi-nmi`](ops/len.md#mi-nmi): Miles to nautical miles
 - [`micro`](ops/si.md): SI prefix μ, 1e-06
 - [`milli`](ops/si.md): SI prefix m, 1e-03
+- [`mins`](ops/angle.md#minutes): Alias for [minutes](ops/angle.md#minutes)
 - [`minutes`](ops/angle.md#minutes): Degree angle to minutes
+- [`minutes`](ops/time.md#minutes): Convert to minutes
 - [`mm-in`](ops/len.md#mm-in): Millimeters to inches
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
@@ -186,6 +198,8 @@
 - [`not`](ops/bool.md#not): Negation
 - [`not`](ops/prog.md#not): Bitwise not
 - [`now`](ops/time.md#now): Current date and time
+- [`now-`](ops/time.md#nowreset): Alias for [now.reset](ops/time.md#nowreset)
+- [`now.reset`](ops/time.md#nowreset): Cancels override of now
 - [`now=`](ops/time.md#now): Override now value
 
 ## o
@@ -245,6 +259,7 @@
 - [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
 - [`seconds`](ops/angle.md#seconds): Degree angle to seconds
+- [`seconds`](ops/time.md#seconds): Convert to seconds
 - [`secs`](ops/angle.md#seconds): Alias for [seconds](ops/angle.md#seconds)
 - [`seq`](ops/seq.md#sequence): Alias for [sequence](ops/seq.md#sequence)
 - [`sequence`](ops/seq.md#sequence): Sequence of integers
@@ -259,6 +274,8 @@
 - [`store`](ops/stack.md#store): Store stack to memory
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/basic_Float.md#subf): floating point
+- [`sub`](ops/time.md#sub): Time or duration subtraction
+  - [`sub/f`](ops/basic_Float.md#subf): floating point
 - [`sum`](ops/stat.md#sum): Summation
 - [`sw`](ops/stack.md#swap): Alias for [swap](ops/stack.md#swap)
 - [`swap`](ops/stack.md#swap): Swap top two items on the stack
@@ -270,9 +287,12 @@
 - [`tebi`](ops/iec.md): IEC prefix Ti, 2^40
 - [`terra`](ops/si.md): SI prefix T, 1e12
 - [`time`](ops/time.md#time): Formats to a common time layout
+- [`time.zone`](ops/time.md#timezone): Converts time to another time zone
+- [`time?`](ops/time.md#time): Parses text as a time
 - [`top`](ops/stack.md#top): Take the top item from the stack
 - [`true`](ops/bool.md#true): True
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
+- [`tz`](ops/time.md#timezone): Alias for [time.zone](ops/time.md#timezone)
 
 ## u
 - [`unit`](ops/anno.md#unit): Attach unit

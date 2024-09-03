@@ -37,5 +37,6 @@ func init() {
 		vols.Temp,
 		vols.Text,
 		vols.Time,
+		vols.Tz,
 	)
 }

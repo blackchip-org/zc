@@ -16,8 +16,8 @@ var Angle = zc.Vol{
 		ops.DegMinSec,
 		ops.DegMinSecRound,
 		ops.DmsGet,
-		ops.Minutes,
-		ops.Seconds,
+		ops.MinutesDMS,
+		ops.SecondsDMS,
 	},
 	Macros: []zc.Macro{
 		{Name: "dd", Expr: "dec"},
@@ -26,6 +26,7 @@ var Angle = zc.Vol{
 		{Name: "dmr", Expr: "deg.min.round"},
 		{Name: "dms", Expr: "deg.min.sec"},
 		{Name: "dmsr", Expr: "deg.min.sec.round"},
+		{Name: "mins", Expr: "minutes"},
 		{Name: "rad-deg", Expr: "180 pi div mul"},
 		{Name: "secs", Expr: "seconds"},
 	},

@@ -60,7 +60,7 @@ func TestOpDocs_Angle_DmsGet(t *testing.T) {
 	c.AssertStack("false")
 }
 
-func TestOpDocs_Angle_Minutes(t *testing.T) {
+func TestOpDocs_Angle_MinutesDMS(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("10d30m minutes")
@@ -74,7 +74,7 @@ func TestOpDocs_Angle_RadDeg(t *testing.T) {
 	c.AssertStack("90")
 }
 
-func TestOpDocs_Angle_Seconds(t *testing.T) {
+func TestOpDocs_Angle_SecondsDMS(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("10d30m seconds")

@@ -61,7 +61,7 @@ func main() {
 	fmt.Fprintf(ftz, "table:\n")
 
 	for _, name := range names {
-		fmt.Fprintf(ftz, "- [\"%v\", \"%v\"]\n", name, zoneMap[name])
+		fmt.Fprintf(ftz, "- [\"tz.%v\", \"'%v'\"]\n", name, zoneMap[name])
 	}
 }
 

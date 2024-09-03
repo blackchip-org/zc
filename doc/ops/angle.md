@@ -15,7 +15,7 @@ Angular calculations
 | [`deg.min.sec, dms`](#degminsec)             | Degree angle to degrees, minutes and seconds         
 | [`deg.min.sec.round, dmsr`](#degminsecround) | Degree angle to degrees, minutes, and rounded seconds
 | [`dms?`](#dms)                               | Can parse as a decimal degree?                       
-| [`minutes`](#minutes)                        | Degree angle to minutes                              
+| [`minutes, mins`](#minutes)                  | Degree angle to minutes                              
 | [`rad-deg`](#rad-deg)                        | Convert radians to degrees                           
 | [`seconds, secs`](#seconds)                  | Degree angle to seconds                              
 
@@ -143,6 +143,8 @@ Example:
 ### minutes
 
 Converts the angle *x* in any degree format to minutes.
+
+Alias: `mins`
 
 Stack effects:
 ```

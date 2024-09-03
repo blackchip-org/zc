@@ -92,7 +92,8 @@ ops:
     o: [1.5707963]
 
 - name: minutes
-  alises: [mins]
+  aliases: [mins]
+  ident: MinutesDMS
   title: Degree angle to minutes
   funcs:
   - name: MinutesDMS
@@ -113,6 +114,7 @@ ops:
 
 - name: seconds
   aliases: [secs]
+  ident: SecondsDMS
   title: Degree angle to seconds
   funcs:
   - name: SecondsDMS

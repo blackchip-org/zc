@@ -6,13 +6,26 @@ Date, time, and duration operations
 
 ## Index
 
-| Operation                   | Description                    
-|-----------------------------|--------------------------------
-| [`add`](#add)               | Time or duration addition      
-| [`local.zone=`](#localzone) | Sets the local time zone       
-| [`now`](#now)               | Current date and time          
-| [`now=`](#now)              | Override now value             
-| [`time`](#time)             | Formats to a common time layout
+| Operation                      | Description                         
+|--------------------------------|-------------------------------------
+| [`add`](#add)                  | Time or duration addition           
+| [`date`](#date)                | Formats to a common date layout     
+| [`date.time, dt`](#datetime)   | Formats to a common date/time layout
+| [`date.time?, dt?`](#datetime) | Parses text as a date/time          
+| [`date?`](#date)               | Parses text as a date               
+| [`day.year, doy`](#dayyear)    | Day of year                         
+| [`hours`](#hours)              | Convert to hours                    
+| [`local.zone`](#localzone)     | Name of the local time zone         
+| [`local.zone=`](#localzone)    | Sets the local time zone            
+| [`minutes`](#minutes)          | Convert to minutes                  
+| [`now`](#now)                  | Current date and time               
+| [`now.reset, now-`](#nowreset) | Cancels override of now             
+| [`now=`](#now)                 | Override now value                  
+| [`seconds`](#seconds)          | Convert to seconds                  
+| [`sub`](#sub)                  | Time or duration subtraction        
+| [`time`](#time)                | Formats to a common time layout     
+| [`time.zone, tz`](#timezone)   | Converts time to another time zone  
+| [`time?`](#time)               | Parses text as a time               
 
 
 ## Operations
@@ -35,6 +48,121 @@ Example:
 | `c 3:30pm 2h +` | `Mon Jan 2 2006 5:30:00pm -0700 MST`
 | `c 2h30m 45m +` | `3h 15m`                            
 
+### date
+
+Formats date/time *x* to a common date layout. Time information, if
+present, is discarded.
+
+Stack effects:
+```
+( x:DateTime -- Date )
+```
+
+Example:
+
+| Input                            | Stack           
+|----------------------------------|-----------------
+| `'2006-01-02T15:04:05 UTC' date` | `Mon Jan 2 2006`
+
+### date.time
+
+Formats *x* to a common date/time layout.
+
+Alias: `dt`
+
+Stack effects:
+```
+( x:DateTime -- DateTime )
+```
+
+Example:
+
+| Input                                 | Stack                         
+|---------------------------------------|-------------------------------
+| `'2006-01-02T15:04:05 UTC' date.time` | `Mon Jan 2 2006 3:04:05pm UTC`
+
+### date.time?
+
+Parses *x* as a date/time and returns `true` on success and `false` on
+failure.
+
+Alias: `dt?`
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                             | Stack  
+|-----------------------------------|--------
+| `c '25 Jan 24 3:43pm' date.time?` | `true` 
+| `c '32 Sun 24 3:78pm' date.time?` | `false`
+
+### date?
+
+Parses *x* as a date and returns `true` on success and `false` on failure.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                 | Stack  
+|-----------------------|--------
+| `c '25 Jan 24' date?` | `true` 
+| `c '32 Sun 24' date?` | `false`
+
+### day.year
+
+Day of the year for the given date *x*.
+
+Alias: `doy`
+
+Stack effects:
+```
+( x:DateTime -- Int/s )
+```
+
+Example:
+
+| Input            | Stack
+|------------------|------
+| `2006-03-15 doy` | `74` 
+
+### hours
+
+Converts the duration *x* into hours.
+
+Stack effects:
+```
+( x:Duration -- Float/64 )
+```
+
+Example:
+
+| Input                     | Stack    
+|---------------------------|----------
+| `10h20m30s hours 2 round` | `10.34 h`
+
+### local.zone
+
+The name of the local time zone.
+
+Stack effects:
+```
+(  -- zone:Text )
+```
+
+Example:
+
+| Input        | Stack           
+|--------------|-----------------
+| `local.zone` | `MST :time zone`
+
 ### local.zone=
 
 Sets the local time zone to *z*. An invalid argument error is raised
@@ -55,6 +183,21 @@ Example:
 | `c /Asia/Jakarta local.zone=` | *local time zone is now 'Asia/Jakarta'*
 | `now time`                    | `5:04:05am +0700 WIB`                  
 
+### minutes
+
+Converts the duration *x* into minutes.
+
+Stack effects:
+```
+( x:Duration -- Float/64 )
+```
+
+Example:
+
+| Input                       | Stack    
+|-----------------------------|----------
+| `10h20m30s minutes 2 round` | `620.5 m`
+
 ### now
 
 The current date and time. If `now=` has been called, that date and
@@ -70,6 +213,19 @@ Example:
 | Input | Stack                               
 |-------|-------------------------------------
 | `now` | `Mon Jan 2 2006 3:04:05pm -0700 MST`
+
+### now.reset
+
+If the value returned by `now` has been mocked out with `now.set`, this
+resets `now` to returning the actual time.
+
+Alias: `now-`
+
+Stack effects:
+```
+(  --  )
+```
+
 
 ### now=
 
@@ -89,10 +245,44 @@ Example:
 | `now=`              | *now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'*
 | `now`               | `Sat Nov 5 1955 1:22:00am -0700 MST`             
 
+### seconds
+
+Converts the duration *x* into seconds.
+
+Stack effects:
+```
+( x:Duration -- Float/64 )
+```
+
+Example:
+
+| Input                       | Stack    
+|-----------------------------|----------
+| `10h20m30s seconds 2 round` | `37230 s`
+
+### sub
+
+Subtracts a duration from a time or subtracts two durations.
+
+Stack effects:
+```
+( x:Duration y:Duration -- Duration )
+( x:DateTime y:Duration -- DateTime )
+( x:DateTime y:DateTime -- Duration )
+```
+
+Example:
+
+| Input                 | Stack                               
+|-----------------------|-------------------------------------
+| `c 3:30pm 2h sub`     | `Mon Jan 2 2006 1:30:00pm -0700 MST`
+| `c 2h30m 45m sub`     | `1h 45m`                            
+| `c 3:30pm 1:30pm sub` | `2h`                                
+
 ### time
 
-Formats a date/time with the common time layout. Date information, if any,
-is discarded.
+Formats date/time *x* to a common time layout. Date information, if
+present, is discarded.
 
 Stack effects:
 ```
@@ -104,3 +294,39 @@ Example:
 | Input                            | Stack          
 |----------------------------------|----------------
 | `'2006-01-02T15:04:05 UTC' time` | `3:04:05pm UTC`
+
+### time.zone
+
+Converts the date/time *x* into time zone *z*. An illegal argument error
+is raised if *z* is an unrecognized time zone.
+
+Alias: `tz`
+
+Stack effects:
+```
+( x:DateTime z:Text -- DateTime )
+```
+
+Example:
+
+| Input                | Stack                               
+|----------------------|-------------------------------------
+| `now`                | `Mon Jan 2 2006 3:04:05pm -0700 MST`
+| `/PST tz`            | `Mon Jan 2 2006 2:04:05pm -0800 PST`
+| `tz.jakarta.asia tz` | `Tue Jan 3 2006 5:04:05am +0700 WIB`
+
+### time?
+
+Parses *x* as a time and returns `true` on success and `false` on failure.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input              | Stack  
+|--------------------|--------
+| `c '3:45pm' time?` | `true` 
+| `c '3:65pm' time?` | `false`

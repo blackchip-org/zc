@@ -31,6 +31,95 @@ ops:
     - i: 2h 3:30pm +
       o: [Mon Jan 2 2006 5:30:00pm -0700 MST]
 
+- name: date
+  title: Formats to a common date layout
+  funcs:
+  - name: Date
+    params: [x:DateTime]
+    returns: [Date]
+  desc: |-
+    Formats date/time *x* to a common date layout. Time information, if
+    present, is discarded.
+  example:
+  - i: "'2006-01-02T15:04:05 UTC' date"
+    o: [Mon Jan 2 2006]
+
+- name: date?
+  title: Parses text as a date
+  funcs:
+  - name: DateIs
+    params: [x:Text]
+    returns: [Bool]
+  desc: |-
+    Parses *x* as a date and returns `true` on success and `false` on failure.
+  example:
+  - i: "c '25 Jan 24' date?"
+    o: [true]
+  - i: "c '32 Sun 24' date?"
+    o: [false]
+
+- name: date.time
+  aliases: [dt]
+  title: Formats to a common date/time layout
+  funcs:
+  - name: DateTime
+    params: [x:DateTime]
+    returns: [DateTime]
+  desc: Formats *x* to a common date/time layout.
+  example:
+  - i: "'2006-01-02T15:04:05 UTC' date.time"
+    o: [Mon Jan 2 2006 3:04:05pm UTC]
+
+- name: date.time?
+  aliases: ["dt?"]
+  title: Parses text as a date/time
+  funcs:
+  - name: DateTimeIs
+    params: [x:Text]
+    returns: [Bool]
+  desc: |-
+    Parses *x* as a date/time and returns `true` on success and `false` on
+    failure.
+  example:
+  - i: "c '25 Jan 24 3:43pm' date.time?"
+    o: [true]
+  - i: "c '32 Sun 24 3:78pm' date.time?"
+    o: [false]
+
+- name: day.year
+  aliases: [doy]
+  title: Day of year
+  funcs:
+  - name: DayYear
+    params: [x:DateTime]
+    returns: [Int/s]
+  desc: Day of the year for the given date *x*.
+  example:
+  - i: 2006-03-15 doy
+    o: [74]
+
+- name: hours
+  title: Convert to hours
+  funcs:
+  - name: Hours
+    params: [x:Duration]
+    returns: [Float/64]
+  desc: Converts the duration *x* into hours.
+  example:
+  - i: 10h20m30s hours 2 round
+    o: [10.34 h]
+
+- name: local.zone
+  title: Name of the local time zone
+  funcs:
+  - name: LocalZone
+    returns: [zone:Text]
+  desc: |-
+    The name of the local time zone.
+  example:
+  - i: local.zone
+    o: [MST :time zone]
+
 - name: local.zone=
   title: Sets the local time zone
   funcs:
@@ -50,6 +139,18 @@ ops:
       notice: local time zone is now 'Asia/Jakarta'
     - i: now time
       o: [5:04:05am +0700 WIB]
+
+- name: minutes
+  title: Convert to minutes
+  ident: MinutesTime
+  funcs:
+  - name: MinutesTime
+    params: [x:Duration]
+    returns: [Float/64]
+  desc: Converts the duration *x* into minutes.
+  example:
+  - i: 10h20m30s minutes 2 round
+    o: [620.5 m]
 
 - name: now
   title: Current date and time
@@ -79,6 +180,49 @@ ops:
   - i: now
     o: [Sat Nov 5 1955 1:22:00am -0700 MST]
 
+- name: now.reset
+  aliases: [now-]
+  title: Cancels override of now
+  funcs:
+  - name: NowReset
+  desc: |-
+    If the value returned by `now` has been mocked out with `now.set`, this
+    resets `now` to returning the actual time.
+
+- name: seconds
+  title: Convert to seconds
+  ident: SecondsTime
+  funcs:
+  - name: SecondsTime
+    params: [x:Duration]
+    returns: [Float/64]
+  desc: Converts the duration *x* into seconds.
+  example:
+  - i: 10h20m30s seconds 2 round
+    o: [37230 s]
+
+- name: sub
+  title: Time or duration subtraction
+  ident: SubTime
+  funcs:
+  - name: SubDuration
+    params: [x:Duration, y:Duration]
+    returns: [Duration]
+  - name: SubDateTimeDuration
+    params: [x:DateTime, y:Duration]
+    returns: [DateTime]
+  - name: SubDateTime
+    params: [x:DateTime, y:DateTime]
+    returns: [Duration]
+  desc: Subtracts a duration from a time or subtracts two durations.
+  example:
+  - i: c 3:30pm 2h sub
+    o: [Mon Jan 2 2006 1:30:00pm -0700 MST]
+  - i: c 2h30m 45m sub
+    o: [1h 45m]
+  - i: c 3:30pm 1:30pm sub
+    o: [2h]
+
 - name: time
   title: Formats to a common time layout
   funcs:
@@ -86,8 +230,40 @@ ops:
     params: [x:DateTime]
     returns: [Time]
   desc: |-
-    Formats a date/time with the common time layout. Date information, if any,
-    is discarded.
+    Formats date/time *x* to a common time layout. Date information, if
+    present, is discarded.
   example:
   - i: "'2006-01-02T15:04:05 UTC' time"
     o: [3:04:05pm UTC]
+
+- name: time?
+  title: Parses text as a time
+  funcs:
+  - name: TimeIs
+    params: [x:Text]
+    returns: [Bool]
+  desc: |-
+    Parses *x* as a time and returns `true` on success and `false` on failure.
+  example:
+  - i: "c '3:45pm' time?"
+    o: [true]
+  - i: "c '3:65pm' time?"
+    o: [false]
+
+- name: time.zone
+  aliases: [tz]
+  title: Converts time to another time zone
+  funcs:
+  - name: TimeZone
+    params: [x:DateTime, z:Text]
+    returns: [DateTime]
+  desc: |-
+    Converts the date/time *x* into time zone *z*. An illegal argument error
+    is raised if *z* is an unrecognized time zone.
+  example:
+  - i: now
+    o: [Mon Jan 2 2006 3:04:05pm -0700 MST]
+  - i: /PST tz
+    o: [Mon Jan 2 2006 2:04:05pm -0800 PST]
+  - i: "tz.jakarta.asia tz"
+    o: [Tue Jan 3 2006 5:04:05am +0700 WIB]

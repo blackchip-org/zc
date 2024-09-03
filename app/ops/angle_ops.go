@@ -72,7 +72,7 @@ var (
 			},
 		},
 	}
-	Minutes = zc.Op{
+	MinutesDMS = zc.Op{
 		Name: "minutes",
 		Funcs: []zc.Func{
 			{
@@ -86,7 +86,7 @@ var (
 		Name:  "rad-deg",
 		Funcs: []zc.Func{},
 	}
-	Seconds = zc.Op{
+	SecondsDMS = zc.Op{
 		Name: "seconds",
 		Funcs: []zc.Func{
 			{

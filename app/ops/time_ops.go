@@ -28,6 +28,76 @@ var (
 			},
 		},
 	}
+	Date = zc.Op{
+		Name: "date",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.DateTime},
+				Returns: []zc.Type{zc.Date},
+				Eval:    funcs.Date,
+			},
+		},
+	}
+	DateTime = zc.Op{
+		Name: "date.time",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.DateTime},
+				Returns: []zc.Type{zc.DateTime},
+				Eval:    funcs.DateTime,
+			},
+		},
+	}
+	DateTimeGet = zc.Op{
+		Name: "date.time?",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.DateTimeIs,
+			},
+		},
+	}
+	DateGet = zc.Op{
+		Name: "date?",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.DateIs,
+			},
+		},
+	}
+	DayYear = zc.Op{
+		Name: "day.year",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.DateTime},
+				Returns: []zc.Type{zc.Int},
+				Eval:    funcs.DayYear,
+			},
+		},
+	}
+	Hours = zc.Op{
+		Name: "hours",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Duration},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.Hours,
+			},
+		},
+	}
+	LocalZone = zc.Op{
+		Name: "local.zone",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.LocalZone,
+			},
+		},
+	}
 	LocalZoneSet = zc.Op{
 		Name: "local.zone=",
 		Funcs: []zc.Func{
@@ -35,6 +105,16 @@ var (
 				Params:  []zc.Type{zc.String},
 				Returns: []zc.Type{},
 				Eval:    funcs.LocalZoneSet,
+			},
+		},
+	}
+	MinutesTime = zc.Op{
+		Name: "minutes",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Duration},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.MinutesTime,
 			},
 		},
 	}
@@ -48,6 +128,16 @@ var (
 			},
 		},
 	}
+	NowReset = zc.Op{
+		Name: "now.reset",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{},
+				Eval:    funcs.NowReset,
+			},
+		},
+	}
 	NowSet = zc.Op{
 		Name: "now=",
 		Funcs: []zc.Func{
@@ -58,6 +148,36 @@ var (
 			},
 		},
 	}
+	SecondsTime = zc.Op{
+		Name: "seconds",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Duration},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.SecondsTime,
+			},
+		},
+	}
+	SubTime = zc.Op{
+		Name: "sub",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Duration, zc.Duration},
+				Returns: []zc.Type{zc.Duration},
+				Eval:    funcs.SubDuration,
+			},
+			{
+				Params:  []zc.Type{zc.Duration, zc.DateTime},
+				Returns: []zc.Type{zc.DateTime},
+				Eval:    funcs.SubDateTimeDuration,
+			},
+			{
+				Params:  []zc.Type{zc.DateTime, zc.DateTime},
+				Returns: []zc.Type{zc.Duration},
+				Eval:    funcs.SubDateTime,
+			},
+		},
+	}
 	Time = zc.Op{
 		Name: "time",
 		Funcs: []zc.Func{
@@ -65,6 +185,26 @@ var (
 				Params:  []zc.Type{zc.DateTime},
 				Returns: []zc.Type{zc.Time},
 				Eval:    funcs.Time,
+			},
+		},
+	}
+	TimeZone = zc.Op{
+		Name: "time.zone",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String, zc.DateTime},
+				Returns: []zc.Type{zc.DateTime},
+				Eval:    funcs.TimeZone,
+			},
+		},
+	}
+	TimeGet = zc.Op{
+		Name: "time?",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.TimeIs,
 			},
 		},
 	}
