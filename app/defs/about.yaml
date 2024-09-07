@@ -1,0 +1,10 @@
+name: about
+title: About this calculator
+category: calc
+
+ops:
+- name: version
+  title: Calculator version
+  funcs:
+  - name: Version
+  desc: Calculator version

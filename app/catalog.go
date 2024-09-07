@@ -10,6 +10,7 @@ var mainCatalog *zc.Catalog
 func init() {
 	mainCatalog = zc.NewCatalog()
 	mainCatalog.AddVol(
+		vols.About,
 		vols.Angle,
 		vols.Anno,
 		vols.Basic,

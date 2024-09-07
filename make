@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 GOFLAGS="-tags proj"
-
 GEN_GO="app/ops/*.go app/vols/*.go app/test/docs/*.go app/test/ops/*.go"
 GEN_MD="doc/ops/*.md"
 
@@ -11,15 +10,24 @@ function ops {
         set -x
         go generate internal/gen-ops/gen-ops.go
         go generate internal/gen-doc-tests/gen-doc-tests.go
+        go generate internal/gen-about/gen-about.go
     )
     goimports -w $GEN_GO
     gofmt     -w $GEN_GO
+}
 
+function install {
+    ops
+    set -x
+    go install $GOFLAGS ./...
 }
 
 case "$1" in
     ops)
         ops
+        ;;
+    install)
+        install
         ;;
     run)
         shift
@@ -58,7 +66,6 @@ case "$1" in
         go generate internal/gen-tz/gen-tz.go
         ;;
     *)
-        echo "error: invalid command: $1"
-        exit 1
+        install
         ;;
 esac

@@ -298,6 +298,9 @@
 - [`unit`](ops/anno.md#unit): Attach unit
 - [`up`](ops/stack.md#up): Rotate stack upwards
 
+## v
+- [`version`](ops/about.md#version): Calculator version
+
 ## x
 - [`xor`](ops/prog.md#xor): Bitwise exclusive or
 

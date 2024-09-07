@@ -58,7 +58,7 @@ function submit(tag) {
     if (result.error !== '') {
         output.push(`<li class='error'>(!) ${result.error}</li>`)
     } else if (result.notice !== '') {
-        output.push(`<li class='notice'>${result.info}</li>`)
+        output.push(`<li class='notice'>${result.notice}</li>`)
     } else {
         output.push(`<li class='notice'>&nbsp;</li>`)
     }

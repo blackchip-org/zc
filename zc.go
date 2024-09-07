@@ -7,8 +7,6 @@ import (
 	"github.com/blackchip-org/zc/v6/pkg/coll"
 )
 
-const ProgName = "zc"
-
 type Type interface {
 	Name() string
 	AppName() string

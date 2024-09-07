@@ -6,6 +6,7 @@
 ## Calculator Operations
 | Volume                  | Description             
 |-------------------------|-------------------------
+| [about](ops/about.md)   | About this calculator   
 | [basic](ops/basic.md)   | Basic calculator        
 | [conf](ops/conf.md)     | General configuration   
 | [format](ops/format.md) | Value formatting        
