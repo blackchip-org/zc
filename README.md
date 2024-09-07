@@ -8,7 +8,7 @@ TODO
 
 Use tab to auto-complete. First tab completes an operation name as much as
 possible. Next tab shows matching candidates. When using on a mobile device, use
-the "?" button to emulate pressing the tab button twice.
+the "tab" button to emulate pressing the tab button twice.
 
 Example use:
 

@@ -4,8 +4,8 @@ var histPos = -1
 
 var tabs = 0
 
-function submit() {
-    let line = document.querySelector("#input").value
+function submit(tag) {
+    let line = document.querySelector(tag).value
     let result = ''
     histPos = -1
     if (line.trim() === "") {
@@ -64,14 +64,20 @@ function submit() {
     }
 
     document.querySelector("#output").innerHTML = `<ul>${output.join('\n')}</ul>`
-    document.querySelector("#input").value = ""
+    document.querySelector(tag).value = ""
 
     let qEnd = zcQuoteEnd()
     let prompt = document.querySelector("#prompt")
     if (qEnd !== "") {
         prompt.innerHTML = "…&nbsp;" + qEnd + "&gt;"
+        document.querySelector("#input").className = "hidden"
+        document.querySelector("#multi-input").className = "input"
+        document.querySelector("#multi-input").focus()
     } else {
         prompt.innerHTML = "zc&nbsp;&gt;"
+        document.querySelector("#input").className = "input"
+        document.querySelector("#input").focus()
+        document.querySelector("#multi-input").className = "hidden"
     }
 }
 
@@ -153,7 +159,7 @@ function init() {
     if (expr) {
         let e = document.querySelector("#input")
         e.value = expr
-        submit()
+        submit("#input")
         e.value = expr
         e.selectionStart = e.selectionEnd = expr.length
         e.focus()
@@ -164,8 +170,20 @@ window.onload = function() {
     document.querySelector("#input").onkeypress = function(evt) {
         let keyCode = evt.code || evt.key
         if (keyCode === 'Enter') {
-            submit()
+            submit("#input")
             evt.preventDefault()
+        }
+    }
+
+    document.querySelector("#multi-input").onkeypress = function(evt) {
+        let keyCode = evt.code || evt.key
+        if (keyCode === 'Enter') {
+            let line = document.querySelector("#multi-input").value
+            let qEnd = zcQuoteEnd()
+            if (line == qEnd || line.endsWith("\n" + qEnd)) {
+                submit("#multi-input")
+                evt.preventDefault()
+            }
         }
     }
 
