@@ -35,6 +35,7 @@ var (
 	Int32    = Int32Type{}
 	Int64    = Int64Type{}
 	Rat      = RatType{}
+	Real     = RealType{}
 	String   = StringType{}
 	Time     = TimeType{}
 	Uint     = UintType{}
@@ -51,7 +52,7 @@ var Types []Type = []Type{
 	Date, DateTime, Decimal, DMS, Duration,
 	Float64,
 	Int, Int8, Int16, Int32, Int64,
-	Rat,
+	Rat, Real,
 	String,
 	Time,
 	Uint, Uint8, Uint16, Uint32, Uint64,
@@ -874,6 +875,61 @@ func (t RatType) Dup(a any) any {
 	r := t.New()
 	r.Set(t.As(a))
 	return r
+}
+
+// ----------------------------------------------------------------------------
+type RealType struct{}
+
+func (t RealType) Name() string    { return "Real" }
+func (t RealType) AppName() string { return "Real" }
+func (t RealType) GoName() string  { return "<none>" }
+
+func (t RealType) Parse(s coll.State, str string) (any, bool, error) {
+	d, ok, err := Decimal.Parse(s, str)
+	if ok {
+		return d, ok, err
+	}
+	f, ok, err := BigFloat.Parse(s, str)
+	if ok {
+		return f, ok, err
+	}
+	i, ok, err := BigInt.Parse(s, str)
+	if ok {
+		return i, ok, err
+	}
+	r, ok, err := Rat.Parse(s, str)
+	if ok {
+		return r, ok, err
+	}
+	return nil, false, nil
+}
+
+func (t RealType) Format(s coll.State, a any) string {
+	switch a.(type) {
+	case *apd.Decimal:
+		return Decimal.Format(s, a)
+	case *big.Float:
+		return BigFloat.Format(s, a)
+	case *big.Int:
+		return BigInt.Format(s, a)
+	case *big.Rat:
+		return Rat.Format(s, a)
+	}
+	panic("invalid type")
+}
+
+func (t RealType) Dup(a any) any {
+	switch a.(type) {
+	case *apd.Decimal:
+		return Decimal.Dup(a)
+	case *big.Float:
+		return BigFloat.Dup(a)
+	case *big.Int:
+		return BigInt.Dup(a)
+	case *big.Rat:
+		return Rat.Dup(a)
+	}
+	panic("invalid type")
 }
 
 // ----------------------------------------------------------------------------

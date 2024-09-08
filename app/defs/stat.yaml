@@ -42,12 +42,64 @@ ops:
     The product of all items on the stack. If there are no items on the stack,
     a one is placed on the stack.
 
+- name: standard.dev.pop
+  aliases: [stdev.p]
+  title: Population standard deviation
+  macro: var.p sqrt
+  desc: Standard deviation of the stack where it contains the entire population
+  example:
+  - i: 2 4 4 4 5 5 7 9
+    o: [2, 4, 4, 4, 5, 5, 7, 9]
+  - i: stdev.p
+    o: [2]
+
+- name: standard.dev.samp
+  aliases: [stdev.s]
+  title: Population standard deviation
+  macro: var.s sqrt
+  desc: Standard deviation of the stack where it contains the entire population
+  example:
+  - i: 2 4 4 4 5 5 7 9
+    o: [2, 4, 4, 4, 5, 5, 7, 9]
+  - i: stdev.s 2 round
+    o: [2.14]
+
 - name: sum
   title: Summation
   macro: 0 /add fold
-  desc: The sum of all items on the stack.
+  desc: |-
+    The sum of all items on the stack. If there are no items on the stack,
+    a zero is placed on the stack.
   example:
   - i: 1 2 3 4 5
     o: [1, 2, 3, 4, 5]
   - i: sum
     o: [15]
+
+- name: variance.pop
+  aliases: [var.p]
+  title: Population variance
+  funcs:
+  - name: VariancePop
+    params: [Real*]
+    returns: [Real]
+  desc: Variance of the stack where it contains the entire population.
+  example:
+  - i: 2 4 4 4 5 5 7 9
+    o: [2, 4, 4, 4, 5, 5, 7, 9]
+  - i: var.p
+    o: [4]
+
+- name: variance.samp
+  aliases: [var.s]
+  title: Sample variance
+  funcs:
+  - name: VarianceSamp
+    params: [Real*]
+    returns: [Real]
+  desc: Variance of the stack where it contains a sample of the population.
+  example:
+  - i: 2 4 4 4 5 5 7 9
+    o: [2, 4, 4, 4, 5, 5, 7, 9]
+  - i: var.s 2 round
+    o: [4.57]

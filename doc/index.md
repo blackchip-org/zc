@@ -276,6 +276,10 @@
 - [`square`](ops/basic.md#square): Square of a number
 - [`square.root`](ops/basic.md#squareroot): Square Root
 - [`st`](ops/stack.md#store): Alias for [store](ops/stack.md#store)
+- [`standard.dev.pop`](ops/stat.md#standarddevpop): Population standard deviation
+- [`standard.dev.samp`](ops/stat.md#standarddevsamp): Population standard deviation
+- [`stdev.p`](ops/stat.md#standarddevpop): Alias for [standard.dev.pop](ops/stat.md#standarddevpop)
+- [`stdev.s`](ops/stat.md#standarddevsamp): Alias for [standard.dev.samp](ops/stat.md#standarddevsamp)
 - [`store`](ops/stack.md#store): Store stack to memory
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/basic_Float.md#subf): floating point
@@ -305,6 +309,10 @@
 - [`up`](ops/stack.md#up): Rotate stack upwards
 
 ## v
+- [`var.p`](ops/stat.md#variancepop): Alias for [variance.pop](ops/stat.md#variancepop)
+- [`var.s`](ops/stat.md#variancesamp): Alias for [variance.samp](ops/stat.md#variancesamp)
+- [`variance.pop`](ops/stat.md#variancepop): Population variance
+- [`variance.samp`](ops/stat.md#variancesamp): Sample variance
 - [`version`](ops/about.md#version): Calculator version
 
 ## x

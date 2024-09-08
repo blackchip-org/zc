@@ -6,12 +6,16 @@ Statistical calculations
 
 ## Index
 
-| Operation                       | Description
-|---------------------------------|------------
-| [`average, avg`](#average)      | Average    
-| [`factorial, fact`](#factorial) | Factorial  
-| [`prod`](#prod)                 |            
-| [`sum`](#sum)                   | Summation  
+| Operation                                        | Description                  
+|--------------------------------------------------|------------------------------
+| [`average, avg`](#average)                       | Average                      
+| [`factorial, fact`](#factorial)                  | Factorial                    
+| [`prod`](#prod)                                  |                              
+| [`standard.dev.pop, stdev.p`](#standarddevpop)   | Population standard deviation
+| [`standard.dev.samp, stdev.s`](#standarddevsamp) | Population standard deviation
+| [`sum`](#sum)                                    | Summation                    
+| [`variance.pop, var.p`](#variancepop)            | Population variance          
+| [`variance.samp, var.s`](#variancesamp)          | Sample variance              
 
 
 ## Operations
@@ -64,9 +68,46 @@ def prod 1 /mul fold
 ```
 
 
+### standard.dev.pop
+
+Standard deviation of the stack where it contains the entire population
+
+Alias: `stdev.p`
+
+Macro definition:
+```
+def standard.dev.pop var.p sqrt
+```
+
+Example:
+
+| Input             | Stack                                 
+|-------------------|---------------------------------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `stdev.p`         | `2`                                   
+
+### standard.dev.samp
+
+Standard deviation of the stack where it contains the entire population
+
+Alias: `stdev.s`
+
+Macro definition:
+```
+def standard.dev.samp var.s sqrt
+```
+
+Example:
+
+| Input             | Stack                                 
+|-------------------|---------------------------------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `stdev.s 2 round` | `2.14`                                
+
 ### sum
 
-The sum of all items on the stack.
+The sum of all items on the stack. If there are no items on the stack,
+a zero is placed on the stack.
 
 Macro definition:
 ```
@@ -79,3 +120,39 @@ Example:
 |-------------|------------------------
 | `1 2 3 4 5` | `1 \| 2 \| 3 \| 4 \| 5`
 | `sum`       | `15`                   
+
+### variance.pop
+
+Variance of the stack where it contains the entire population.
+
+Alias: `var.p`
+
+Stack effects:
+```
+( Real* -- Real )
+```
+
+Example:
+
+| Input             | Stack                                 
+|-------------------|---------------------------------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `var.p`           | `4`                                   
+
+### variance.samp
+
+Variance of the stack where it contains a sample of the population.
+
+Alias: `var.s`
+
+Stack effects:
+```
+( Real* -- Real )
+```
+
+Example:
+
+| Input             | Stack                                 
+|-------------------|---------------------------------------
+| `2 4 4 4 5 5 7 9` | `2 \| 4 \| 4 \| 4 \| 5 \| 5 \| 7 \| 9`
+| `var.s 2 round`   | `4.57`                                

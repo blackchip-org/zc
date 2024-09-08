@@ -8,6 +8,11 @@ import (
 	"github.com/blackchip-org/zc/v6/pkg/coll"
 )
 
+type frame struct {
+	temp []zc.Item
+	mem  map[string][]zc.Item
+}
+
 type Calc struct {
 	Catalog  *zc.Catalog
 	Notice   string

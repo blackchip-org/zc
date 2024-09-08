@@ -11,12 +11,20 @@ var Stat = zc.Vol{
 	Name: "stat",
 	Ops: []zc.Op{
 		ops.Factorial,
+		ops.VariancePop,
+		ops.VarianceSamp,
 	},
 	Macros: []zc.Macro{
 		{Name: "average", Expr: "n push sum pop div"},
 		{Name: "avg", Expr: "average"},
 		{Name: "fact", Expr: "factorial"},
 		{Name: "prod", Expr: "1 /mul fold"},
+		{Name: "standard.dev.pop", Expr: "var.p sqrt"},
+		{Name: "stdev.p", Expr: "standard.dev.pop"},
+		{Name: "standard.dev.samp", Expr: "var.s sqrt"},
+		{Name: "stdev.s", Expr: "standard.dev.samp"},
 		{Name: "sum", Expr: "0 /add fold"},
+		{Name: "var.p", Expr: "variance.pop"},
+		{Name: "var.s", Expr: "variance.samp"},
 	},
 }

@@ -32,6 +32,26 @@ func TestOpDocs_Stat_Factorial(t *testing.T) {
 	c.AssertStack("3628800")
 }
 
+func TestOpDocs_Stat_StandardDevPop(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 4 4 4 5 5 7 9")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("stdev.p")
+	c.AssertStack("2")
+}
+
+func TestOpDocs_Stat_StandardDevSamp(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 4 4 4 5 5 7 9")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("stdev.s 2 round")
+	c.AssertStack("2.14")
+}
+
 func TestOpDocs_Stat_Sum(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -40,4 +60,24 @@ func TestOpDocs_Stat_Sum(t *testing.T) {
 
 	c.Eval("sum")
 	c.AssertStack("15")
+}
+
+func TestOpDocs_Stat_VariancePop(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 4 4 4 5 5 7 9")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("var.p")
+	c.AssertStack("4")
+}
+
+func TestOpDocs_Stat_VarianceSamp(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 4 4 4 5 5 7 9")
+	c.AssertStack("2", "4", "4", "4", "5", "5", "7", "9")
+
+	c.Eval("var.s 2 round")
+	c.AssertStack("4.57")
 }

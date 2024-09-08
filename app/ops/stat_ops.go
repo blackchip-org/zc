@@ -26,8 +26,38 @@ var (
 		Name:  "prod",
 		Funcs: []zc.Func{},
 	}
+	StandardDevPop = zc.Op{
+		Name:  "standard.dev.pop",
+		Funcs: []zc.Func{},
+	}
+	StandardDevSamp = zc.Op{
+		Name:  "standard.dev.samp",
+		Funcs: []zc.Func{},
+	}
 	Sum = zc.Op{
 		Name:  "sum",
 		Funcs: []zc.Func{},
+	}
+	VariancePop = zc.Op{
+		Name: "variance.pop",
+		Funcs: []zc.Func{
+			{
+				Params:   []zc.Type{},
+				VarParam: zc.Real,
+				Returns:  []zc.Type{zc.Real},
+				Eval:     funcs.VariancePop,
+			},
+		},
+	}
+	VarianceSamp = zc.Op{
+		Name: "variance.samp",
+		Funcs: []zc.Func{
+			{
+				Params:   []zc.Type{},
+				VarParam: zc.Real,
+				Returns:  []zc.Type{zc.Real},
+				Eval:     funcs.VarianceSamp,
+			},
+		},
 	}
 )
