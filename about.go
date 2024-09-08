@@ -6,5 +6,5 @@ const (
 	ProgName = "zc"
 	Version = "v6.0.0-beta1"
 	BuildDate = "8 Sep 2024"
-	Commit = "be809c7"
+	Commit = "8d1c43f"
 )

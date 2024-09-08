@@ -12,7 +12,7 @@ var (
 		Name: "dec",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.DMS},
+				Params:  []zc.Type{zc.AngleDMS},
 				Returns: []zc.Type{zc.Decimal},
 				Eval:    funcs.DecDMS,
 			},
@@ -26,8 +26,8 @@ var (
 		Name: "deg.min",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.DMS},
-				Returns: []zc.Type{zc.DMS},
+				Params:  []zc.Type{zc.AngleDMS},
+				Returns: []zc.Type{zc.AngleDMS},
 				Eval:    funcs.DegMin,
 			},
 		},
@@ -36,8 +36,8 @@ var (
 		Name: "deg.min.round",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.Uint, zc.DMS},
-				Returns: []zc.Type{zc.DMS},
+				Params:  []zc.Type{zc.Uint, zc.AngleDMS},
+				Returns: []zc.Type{zc.AngleDMS},
 				Eval:    funcs.DegMinRound,
 			},
 		},
@@ -46,8 +46,8 @@ var (
 		Name: "deg.min.sec",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.DMS},
-				Returns: []zc.Type{zc.DMS},
+				Params:  []zc.Type{zc.AngleDMS},
+				Returns: []zc.Type{zc.AngleDMS},
 				Eval:    funcs.DegMinSec,
 			},
 		},
@@ -56,8 +56,8 @@ var (
 		Name: "deg.min.sec.round",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.Uint, zc.DMS},
-				Returns: []zc.Type{zc.DMS},
+				Params:  []zc.Type{zc.Uint, zc.AngleDMS},
+				Returns: []zc.Type{zc.AngleDMS},
 				Eval:    funcs.DegMinSecRound,
 			},
 		},
@@ -76,7 +76,7 @@ var (
 		Name: "minutes",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.DMS},
+				Params:  []zc.Type{zc.AngleDMS},
 				Returns: []zc.Type{zc.Decimal},
 				Eval:    funcs.MinutesDMS,
 			},
@@ -90,7 +90,7 @@ var (
 		Name: "seconds",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.DMS},
+				Params:  []zc.Type{zc.AngleDMS},
 				Returns: []zc.Type{zc.Decimal},
 				Eval:    funcs.SecondsDMS,
 			},

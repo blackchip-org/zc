@@ -53,6 +53,11 @@ func Flip(c zc.Calc) {
 	c.SetTemp(s)
 }
 
+func Label(c zc.Calc) {
+	l := zc.String.Pop(c)
+	c.SetLabel(l)
+}
+
 func Load(c zc.Calc) {
 	n := zc.String.Pop(c)
 	c.Load(n)
@@ -154,6 +159,11 @@ func Tuck(c zc.Calc) {
 	c.Push(zc.Item{TypeVal: z, Type: y.Type})
 	c.Push(x)
 	c.Push(y)
+}
+
+func Unit(c zc.Calc) {
+	u := zc.String.Pop(c)
+	c.SetUnit(u)
 }
 
 func Up(c zc.Calc) {

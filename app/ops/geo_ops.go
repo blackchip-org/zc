@@ -24,7 +24,7 @@ var (
 		Name: "haversine",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.DMS, zc.DMS, zc.DMS, zc.DMS},
+				Params:  []zc.Type{zc.AngleDMS, zc.AngleDMS, zc.AngleDMS, zc.AngleDMS},
 				Returns: []zc.Type{zc.Float64},
 				Eval:    funcs.Haversine,
 			},

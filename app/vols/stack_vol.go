@@ -16,6 +16,7 @@ var Stack = zc.Vol{
 		ops.Drop,
 		ops.Dup,
 		ops.Flip,
+		ops.Label,
 		ops.Load,
 		ops.Pop,
 		ops.PopAll,
@@ -28,6 +29,7 @@ var Stack = zc.Vol{
 		ops.Swap,
 		ops.Take,
 		ops.Tuck,
+		ops.Unit,
 		ops.Up,
 	},
 	Macros: []zc.Macro{

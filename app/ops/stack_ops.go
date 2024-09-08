@@ -75,6 +75,16 @@ var (
 			},
 		},
 	}
+	Label = zc.Op{
+		Name: "label",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String, zc.Any},
+				Returns: []zc.Type{zc.Any},
+				Eval:    funcs.Label,
+			},
+		},
+	}
 	Load = zc.Op{
 		Name: "load",
 		Funcs: []zc.Func{
@@ -204,6 +214,16 @@ var (
 				Params:  []zc.Type{zc.Any, zc.Any},
 				Returns: []zc.Type{zc.BigInt, zc.Any, zc.BigInt},
 				Eval:    funcs.Tuck,
+			},
+		},
+	}
+	Unit = zc.Op{
+		Name: "unit",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String, zc.Any},
+				Returns: []zc.Type{zc.Any},
+				Eval:    funcs.Unit,
 			},
 		},
 	}

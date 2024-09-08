@@ -80,6 +80,16 @@ func TestOpDocs_Stack_Flip(t *testing.T) {
 	c.AssertStack("4", "5", "6")
 }
 
+func TestOpDocs_Stack_Label(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("42")
+	c.AssertStack("42")
+
+	c.Eval("/answer label")
+	c.AssertStack("42 :answer")
+}
+
 func TestOpDocs_Stack_Load(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -254,6 +264,16 @@ func TestOpDocs_Stack_Tuck(t *testing.T) {
 
 	c.Eval("tuck add")
 	c.AssertStack("5", "8")
+}
+
+func TestOpDocs_Stack_Unit(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("42")
+	c.AssertStack("42")
+
+	c.Eval("/°F unit")
+	c.AssertStack("42 °F")
 }
 
 func TestOpDocs_Stack_Up(t *testing.T) {

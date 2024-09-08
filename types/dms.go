@@ -9,14 +9,14 @@ import (
 	"github.com/cockroachdb/apd/v3"
 )
 
-type DMS struct {
+type AngleDMS struct {
 	ctx *apd.Context
 	deg apd.Decimal
 	min apd.Decimal
 	sec apd.Decimal
 }
 
-func NewDMS(ctx *apd.Context, deg, min, sec *apd.Decimal) DMS {
+func NewAngleDMS(ctx *apd.Context, deg, min, sec *apd.Decimal) AngleDMS {
 	dc := calc.NewDecimal()
 	dc.Ctx = ctx
 
@@ -60,39 +60,39 @@ func NewDMS(ctx *apd.Context, deg, min, sec *apd.Decimal) DMS {
 	nmin := dc.Load("min").PushInt(sign).Mul().Reduce().Pop()
 	nsec := dc.Load("sec").PushInt(sign).Mul().Reduce().Pop()
 
-	return DMS{ctx: ctx}.Add(DMS{ctx: ctx, deg: *ndeg, min: *nmin, sec: *nsec})
+	return AngleDMS{ctx: ctx}.Add(AngleDMS{ctx: ctx, deg: *ndeg, min: *nmin, sec: *nsec})
 }
 
-func NewDMSFromFields(c *apd.Context, f dms.Fields) (DMS, error) {
+func NewAngleDMSFromFields(c *apd.Context, f dms.Fields) (AngleDMS, error) {
 	if f.Deg == "" {
 		f.Deg = "0"
 	}
 	deg, _, err := apd.NewFromString(f.Deg)
 	if err != nil {
-		return DMS{}, fmt.Errorf("invalid degrees: %v", f.Deg)
+		return AngleDMS{}, fmt.Errorf("invalid degrees: %v", f.Deg)
 	}
 	if f.Min == "" {
 		f.Min = "0"
 	}
 	min, _, err := apd.NewFromString(f.Min)
 	if err != nil {
-		return DMS{}, fmt.Errorf("invalid minutes: %v", f.Min)
+		return AngleDMS{}, fmt.Errorf("invalid minutes: %v", f.Min)
 	}
 	if f.Sec == "" {
 		f.Sec = "0"
 	}
 	sec, _, err := apd.NewFromString(f.Sec)
 	if err != nil {
-		return DMS{}, fmt.Errorf("invalid seconds: %v", f.Sec)
+		return AngleDMS{}, fmt.Errorf("invalid seconds: %v", f.Sec)
 	}
 
 	if dms.Sign(f.Hemi) < 0 {
 		deg.Neg(deg)
 	}
-	return NewDMS(c, deg, min, sec), nil
+	return NewAngleDMS(c, deg, min, sec), nil
 }
 
-func NewDMSFromFloat(c *apd.Context, d, m, s float64) DMS {
+func NewAngleDMSFromFloat(c *apd.Context, d, m, s float64) AngleDMS {
 	var deg, min, sec apd.Decimal
 	if _, err := deg.SetFloat64(d); err != nil {
 		panic(err)
@@ -103,17 +103,17 @@ func NewDMSFromFloat(c *apd.Context, d, m, s float64) DMS {
 	if _, err := sec.SetFloat64(s); err != nil {
 		panic(err)
 	}
-	return NewDMS(c, &deg, &min, &sec)
+	return NewAngleDMS(c, &deg, &min, &sec)
 }
 
-func (d DMS) String() string {
+func (d AngleDMS) String() string {
 	var amin, asec apd.Decimal
 	amin.Abs(&d.min)
 	asec.Abs(&d.sec)
 	return fmt.Sprintf("(%v,%v,%v)", d.deg, amin, asec)
 }
 
-func (d DMS) Add(d2 DMS) DMS {
+func (d AngleDMS) Add(d2 AngleDMS) AngleDMS {
 	dc := calc.NewDecimal()
 	dc.Ctx = d.ctx
 
@@ -131,7 +131,7 @@ func (d DMS) Add(d2 DMS) DMS {
 	return d
 }
 
-func (d DMS) DMS() (*apd.Decimal, *apd.Decimal, *apd.Decimal) {
+func (d AngleDMS) DMS() (*apd.Decimal, *apd.Decimal, *apd.Decimal) {
 	var deg, min, sec apd.Decimal
 
 	deg.Set(&d.deg)
@@ -140,7 +140,7 @@ func (d DMS) DMS() (*apd.Decimal, *apd.Decimal, *apd.Decimal) {
 	return &deg, &min, &sec
 }
 
-func (d DMS) Degrees() *apd.Decimal {
+func (d AngleDMS) Degrees() *apd.Decimal {
 	dc := calc.NewDecimal()
 	dc.Ctx = d.ctx
 
@@ -151,7 +151,7 @@ func (d DMS) Degrees() *apd.Decimal {
 	return dc.Pop()
 }
 
-func (d DMS) Minutes() *apd.Decimal {
+func (d AngleDMS) Minutes() *apd.Decimal {
 	dc := calc.NewDecimal()
 	dc.Ctx = d.ctx
 
@@ -162,7 +162,7 @@ func (d DMS) Minutes() *apd.Decimal {
 	return dc.Pop()
 }
 
-func (d DMS) Seconds() *apd.Decimal {
+func (d AngleDMS) Seconds() *apd.Decimal {
 	dc := calc.NewDecimal()
 	dc.Ctx = d.ctx
 
@@ -173,7 +173,7 @@ func (d DMS) Seconds() *apd.Decimal {
 	return dc.Pop()
 }
 
-func FormatDMS(d DMS, to dms.Unit, places int) string {
+func FormatAngleDMS(d AngleDMS, to dms.Unit, places int) string {
 	deg, min, sec := d.DMS()
 	var buf strings.Builder
 

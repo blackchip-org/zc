@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -25,15 +26,19 @@ func main() {
 	files := []string{
 		"README.md",
 	}
-	dirs := []string{}
+	dirs := []string{
+		"app/defs",
+	}
 
 	for _, dir := range dirs {
-		entries, err := os.ReadDir(dir)
+		entries, err := os.ReadDir(path.Join(RootDir, dir))
 		if err != nil {
 			log.Fatal(err)
 		}
 		for _, entry := range entries {
-			files = append(files, path.Join(dir, entry.Name()))
+			if strings.HasSuffix(entry.Name(), ".md") {
+				files = append(files, path.Join(dir, entry.Name()))
+			}
 		}
 	}
 
@@ -52,7 +57,7 @@ func genTestsForFile(name string) {
 	}
 	defer in.Close()
 
-	outName := strings.ReplaceAll(name, ".", "_") + "_test.go"
+	outName := strings.ReplaceAll(filepath.Base(name), ".", "_") + "_test.go"
 	out, err := os.Create(path.Join(TestDir, outName))
 	if err != nil {
 		log.Fatal(err)

@@ -12,7 +12,6 @@ func init() {
 	mainCatalog.AddVol(
 		vols.About,
 		vols.Angle,
-		vols.Anno,
 		vols.Basic,
 		vols.BasicFloat,
 		vols.Bool,

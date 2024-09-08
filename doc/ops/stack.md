@@ -14,6 +14,7 @@ Stack operations
 | [`drop`](#drop)               | Drop                                   
 | [`dup`](#dup)                 | Duplicate                              
 | [`flip`](#flip)               | Flip the main and temporary stacks     
+| [`label`](#label)             | Attach label                           
 | [`load, ld`](#load)           | Loads a stack from memory              
 | [`pop`](#pop)                 | Pops item from the temporary stack     
 | [`pop.all, popa`](#popall)    | Pops all items from the temporary stack
@@ -27,6 +28,7 @@ Stack operations
 | [`take`](#take)               | Take elements from the stack           
 | [`top`](#top)                 | Take the top item from the stack       
 | [`tuck`](#tuck)               | Copy top and place below               
+| [`unit`](#unit)               | Attach unit                            
 | [`up`](#up)                   | Rotate stack upwards                   
 
 
@@ -140,6 +142,22 @@ Example:
 | `4 5 6`    | `4 \| 5 \| 6`
 | `flip`     | `1 \| 2 \| 3`
 | `flip`     | `4 \| 5 \| 6`
+
+### label
+
+Attaches a label *l* to *x*.
+
+Stack effects:
+```
+( x:Any l:Text -- x:Any )
+```
+
+Example:
+
+| Input           | Stack       
+|-----------------|-------------
+| `42`            | `42`        
+| `/answer label` | `42 :answer`
 
 ### load
 
@@ -396,6 +414,22 @@ Example:
 | `add`      | `2 \| 3`     
 | `tuck add` | `3 \| 5`     
 | `tuck add` | `5 \| 8`     
+
+### unit
+
+Attaches a unit *u* to *x*.
+
+Stack effects:
+```
+( x:Any u:Text -- x:Any )
+```
+
+Example:
+
+| Input       | Stack   
+|-------------|---------
+| `42`        | `42`    
+| `/°F unit`  | `42 °F` 
 
 ### up
 

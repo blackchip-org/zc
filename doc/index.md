@@ -150,7 +150,7 @@
 - [`km-nmi`](ops/len.md#km-nmi): Kilometers to nautical miles
 
 ## l
-- [`label`](ops/anno.md#label): Attach label
+- [`label`](ops/stack.md#label): Attach label
 - [`lb-kg`](ops/mass.md#lb-kg): Pounds to kilograms
 - [`ld`](ops/stack.md#load): Alias for [load](ops/stack.md#load)
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
@@ -305,7 +305,7 @@
 - [`tz`](ops/time.md#timezone): Alias for [time.zone](ops/time.md#timezone)
 
 ## u
-- [`unit`](ops/anno.md#unit): Attach unit
+- [`unit`](ops/stack.md#unit): Attach unit
 - [`up`](ops/stack.md#up): Rotate stack upwards
 
 ## v

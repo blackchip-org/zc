@@ -10,7 +10,7 @@ ops:
   subtitle: angle
   funcs:
   - name: DecDMS
-    params: [x:DMS]
+    params: [x:Angle/DMS]
     returns: [Dec]
   desc: |-
     Convert the angle *x* in any degree format to decimal degrees.
@@ -22,8 +22,8 @@ ops:
   aliases: [dm]
   funcs:
   - name: DegMin
-    params: [x:DMS]
-    returns: [DMS]
+    params: [x:Angle/DMS]
+    returns: [Angle/DMS]
   desc: |-
     Convert the angle *x* in any degree format to degrees and minutes.
   example:
@@ -35,8 +35,8 @@ ops:
   title: Degree angle to degrees and rounded minutes
   funcs:
   - name: DegMinRound
-    params: [x:DMS, p:Int/u]
-    returns: [DMS]
+    params: [x:Angle/DMS, p:Int/u]
+    returns: [Angle/DMS]
   desc: |-
     Convert the angle *x* in any degree format to degrees and minutes rounded
     to *p* places.
@@ -49,8 +49,8 @@ ops:
   title: Degree angle to degrees, minutes and seconds
   funcs:
   - name: DegMinSec
-    params: [x:DMS]
-    returns: [DMS]
+    params: [x:Angle/DMS]
+    returns: [Angle/DMS]
   desc: |-
     Convert the angle *x* in any degree format to degrees, minutes, and
     seconds.
@@ -63,8 +63,8 @@ ops:
   title: Degree angle to degrees, minutes, and rounded seconds
   funcs:
   - name: DegMinSecRound
-    params: [x:DMS, p:Int/u]
-    returns: [DMS]
+    params: [x:Angle/DMS, p:Int/u]
+    returns: [Angle/DMS]
   desc:
     Convert the angle *x* in any degree format to degrees, minutes, and
     seconds rounded to *p* places.
@@ -99,7 +99,7 @@ ops:
   title: Degree angle to minutes
   funcs:
   - name: MinutesDMS
-    params: [x:DMS]
+    params: [x:Angle/DMS]
     returns: [Dec]
   desc: Converts the angle *x* in any degree format to minutes.
   example:
@@ -120,7 +120,7 @@ ops:
   title: Degree angle to seconds
   funcs:
   - name: SecondsDMS
-    params: [x:DMS]
+    params: [x:Angle/DMS]
     returns: [Dec]
   desc: Converts the angle *x* in any degree format to seconds.
   example:

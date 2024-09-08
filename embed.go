@@ -49,13 +49,12 @@ func loadDef(dir string, f fs.DirEntry) (VolDef, error) {
 		return def, fmt.Errorf("%v: %v", filename, err)
 	}
 
-	// overview := strings.TrimSuffix(f.Name(), ".yaml") + ".md"
-	// overviewFile := path.Join(dir, overview)
-	// data, err = Defs.ReadFile(overviewFile)
-	// if err != nil {
-	// 	return def, err
-	// }
-	// def.Overview = string(data)
+	overview := strings.TrimSuffix(f.Name(), ".yaml") + ".md"
+	overviewFile := path.Join(dir, overview)
+	data, err = Defs.ReadFile(overviewFile)
+	if err == nil {
+		def.Overview = string(data)
+	}
 
 	if def.Name == "" {
 		panic("no volume name in file: " + filename)
@@ -88,7 +87,7 @@ func loadDef(dir string, f fs.DirEntry) (VolDef, error) {
 	slices.SortFunc(def.Ops, func(a OpDef, b OpDef) int {
 		return cmp.Compare(a.Name, b.Name)
 	})
-	return def, err
+	return def, nil
 }
 
 func identFor(v string) string {

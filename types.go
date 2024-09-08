@@ -18,6 +18,7 @@ import (
 )
 
 var (
+	AngleDMS = AngleDMSType{}
 	Any      = AnyType{}
 	BigFloat = BigFloatType{}
 	BigInt   = BigIntType{}
@@ -26,7 +27,6 @@ var (
 	Date     = DateType{}
 	DateTime = DateTimeType{}
 	Decimal  = DecimalType{}
-	DMS      = DMSType{}
 	Duration = DurationType{}
 	Float64  = Float64Type{}
 	Int      = IntType{}
@@ -49,7 +49,7 @@ var Types []Type = []Type{
 	Any,
 	BigFloat, BigInt, Bool,
 	Complex,
-	Date, DateTime, Decimal, DMS, Duration,
+	Date, DateTime, Decimal, AngleDMS, Duration,
 	Float64,
 	Int, Int8, Int16, Int32, Int64,
 	Rat, Real,
@@ -70,6 +70,52 @@ var (
 	intPool   = coll.NewPool[big.Int](poolSize)
 	ratPool   = coll.NewPool[big.Rat](poolSize)
 )
+
+// ----------------------------------------------------------------------------
+type AngleDMSType struct{}
+
+func (t AngleDMSType) Name() string    { return "AngleDMS" }
+func (t AngleDMSType) AppName() string { return "Angle/DMS" }
+func (t AngleDMSType) GoName() string  { return "types.AngleDMS" }
+
+func (t AngleDMSType) As(a any) types.AngleDMS {
+	v, ok := a.(types.AngleDMS)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t AngleDMSType) Push(c Calc, val types.AngleDMS) {
+	c.Push(Item{TypeVal: val, Type: t})
+}
+
+func (t AngleDMSType) Pop(c Calc) types.AngleDMS {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t AngleDMSType) Parse(state coll.State, str string) (any, bool, error) {
+	conf := vars.ForReal(state)
+	p := dms.NewDefaultParser()
+	f, err := p.ParseFields(str)
+	if err != nil {
+		return nil, false, nil
+	}
+	d, err := types.NewAngleDMSFromFields(conf.DecMath, f)
+	if err != nil {
+		return nil, false, nil
+	}
+	return d, true, nil
+}
+
+func (t AngleDMSType) Format(_ coll.State, a any) string {
+	d := t.As(a)
+	return types.FormatAngleDMS(d, dms.SecUnit, -1)
+}
+
+func (t AngleDMSType) Dup(a any) any {
+	return a
+}
 
 // ----------------------------------------------------------------------------
 type AnyType struct{}
@@ -455,52 +501,6 @@ func (t DateTimeType) Format(state coll.State, a any) string {
 }
 
 func (t DateTimeType) Dup(a any) any {
-	return a
-}
-
-// ----------------------------------------------------------------------------
-type DMSType struct{}
-
-func (t DMSType) Name() string    { return "DMS" }
-func (t DMSType) AppName() string { return "DMS" }
-func (t DMSType) GoName() string  { return "types.DMS" }
-
-func (t DMSType) As(a any) types.DMS {
-	v, ok := a.(types.DMS)
-	if !ok {
-		panic(ErrWrongGoType(t, a))
-	}
-	return v
-}
-
-func (t DMSType) Push(c Calc, val types.DMS) {
-	c.Push(Item{TypeVal: val, Type: t})
-}
-
-func (t DMSType) Pop(c Calc) types.DMS {
-	return t.As(c.Pop().TypeVal)
-}
-
-func (t DMSType) Parse(state coll.State, str string) (any, bool, error) {
-	conf := vars.ForReal(state)
-	p := dms.NewDefaultParser()
-	f, err := p.ParseFields(str)
-	if err != nil {
-		return nil, false, nil
-	}
-	d, err := types.NewDMSFromFields(conf.DecMath, f)
-	if err != nil {
-		return nil, false, nil
-	}
-	return d, true, nil
-}
-
-func (t DMSType) Format(_ coll.State, a any) string {
-	d := t.As(a)
-	return types.FormatDMS(d, dms.SecUnit, -1)
-}
-
-func (t DMSType) Dup(a any) any {
 	return a
 }
 

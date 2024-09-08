@@ -34,7 +34,7 @@ def earth.radius 6,371,000 /m unit
 
 The equatorial radius of the Earth in meters.
 
-Source: 
+Source:
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 
 Macro definition:
@@ -69,7 +69,7 @@ and New York, NY:
 
 Stack effects:
 ```
-( lat1:DMS lon1:DMS lat2:DMS lon2:DMS -- Float/64 )
+( lat1:Angle/DMS lon1:Angle/DMS lat2:Angle/DMS lon2:Angle/DMS -- Float/64 )
 ```
 
 Example:
@@ -85,11 +85,11 @@ Example:
 ### proj
 
 Transform coordinate (*p0*, *p1*) in coordinate system *s* to a coordinate
-in system *t*. The order of the coordinates is defined by the coordinate 
+in system *t*. The order of the coordinates is defined by the coordinate
 system and it may be (lat, lon) or (x, y).
 
 This operation is only availabe when zc is compiled with the 'proj' build
-tag and is unavailable in the web browser version. 
+tag and is unavailable in the web browser version.
 
 Stack effects:
 ```

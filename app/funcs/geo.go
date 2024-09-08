@@ -10,25 +10,25 @@ import (
 const EarthRadius = 6371000
 
 func Haversine(c zc.Calc) {
-	lon2, err := zc.DMS.Pop(c).Degrees().Float64()
+	lon2, err := zc.AngleDMS.Pop(c).Degrees().Float64()
 	if err != nil {
 		c.Raise(err)
 		return
 	}
 
-	lat2, err := zc.DMS.Pop(c).Degrees().Float64()
+	lat2, err := zc.AngleDMS.Pop(c).Degrees().Float64()
 	if err != nil {
 		c.Raise(err)
 		return
 	}
 
-	lon1, err := zc.DMS.Pop(c).Degrees().Float64()
+	lon1, err := zc.AngleDMS.Pop(c).Degrees().Float64()
 	if err != nil {
 		c.Raise(err)
 		return
 	}
 
-	lat1, err := zc.DMS.Pop(c).Degrees().Float64()
+	lat1, err := zc.AngleDMS.Pop(c).Degrees().Float64()
 	if err != nil {
 		c.Raise(err)
 		return
