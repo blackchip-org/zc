@@ -6,14 +6,16 @@ Comparisions
 
 ## Index
 
-| Operation     | Description          
-|---------------|----------------------
-| [`eq`](#eq)   | Equal                
-| [`gt`](#gt)   | Greater than         
-| [`gte`](#gte) | Greater than or equal
-| [`lt`](#lt)   | Less than            
-| [`lte`](#lte) | Less than or equal   
-| [`neq`](#neq) | Not equal            
+| Operation          | Description          
+|--------------------|----------------------
+| [`eq`](#eq)        | Equal                
+| [`gt`](#gt)        | Greater than         
+| [`gte`](#gte)      | Greater than or equal
+| [`lt`](#lt)        | Less than            
+| [`lte`](#lte)      | Less than or equal   
+| [`neq`](#neq)      | Not equal            
+| [`sort`](#sort)    | Sort stack           
+| [`sort/t`](#sortt) | Sort stack as text   
 
 
 ## Operations
@@ -143,3 +145,41 @@ Example:
 |-------------|--------
 | `c 5 5 neq` | `false`
 | `c 4 5 neq` | `true` 
+
+### sort
+
+Sorts all items on the stack in ascending order. The entire stack must
+be of a similar type or able to be converted to a similar type. If no
+numeric common type can be found, items are sorted as text.
+
+Stack effects:
+```
+( Dec* -- Dec* )
+( Int* -- Int* )
+( Rat* -- Rat* )
+( Float/128* -- Float/128* )
+( Text* -- Text* )
+```
+
+Example:
+
+| Input                                   | Stack                               
+|-----------------------------------------|-------------------------------------
+| `c 4 2.5 1.75 sort`                     | `1.75 \| 2.5 \| 4`                  
+| `c 4 5/2 1.75 sort`                     | `1 3/4 \| 2 1/2 \| 4`               
+| `c 4 5/2 'one and three quarters' sort` | `4 \| 5/2 \| one and three quarters`
+
+### sort/t
+
+Sorts the stack by their values as text.
+
+Stack effects:
+```
+( Text* -- Text* )
+```
+
+Example:
+
+| Input               | Stack             
+|---------------------|-------------------
+| `01.1 2 003 sort/t` | `003 \| 01.1 \| 2`

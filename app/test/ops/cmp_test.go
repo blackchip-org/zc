@@ -315,3 +315,23 @@ func TestOpDocs_Cmp_Neq_String(t *testing.T) {
 	c.Eval("c /d /e neq")
 	c.AssertStack("true")
 }
+
+func TestOpDocs_Cmp_Sort(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 4 2.5 1.75 sort")
+	c.AssertStack("1.75", "2.5", "4")
+
+	c.Eval("c 4 5/2 1.75 sort")
+	c.AssertStack("1 3/4", "2 1/2", "4")
+
+	c.Eval("c 4 5/2 'one and three quarters' sort")
+	c.AssertStack("4", "5/2", "one and three quarters")
+}
+
+func TestOpDocs_Cmp_SortT(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("01.1 2 003 sort/t")
+	c.AssertStack("003", "01.1", "2")
+}

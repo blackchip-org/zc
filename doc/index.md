@@ -270,6 +270,8 @@
 - [`sin`](ops/trig.md#sin): Sine
 - [`sinh`](ops/trig.md#sinh): Hyperbolic sine
 - [`size`](ops/stack.md#size): Number of items on the stack
+- [`sort`](ops/cmp.md#sort): Sort stack
+  - [`sort/t`](ops/cmp.md#sortt): Sort stack as text
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point

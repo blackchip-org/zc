@@ -24,11 +24,11 @@ ops:
   - name: EqString
     params: [x:Text, y:Text]
     returns: [Bool]
-  desc: Returns true if *x* and *y* are equal. 
+  desc: Returns true if *x* and *y* are equal.
   example:
-  - i: c 5 5 eq 
+  - i: c 5 5 eq
     o: [true]
-  - i: c 4 5 eq 
+  - i: c 4 5 eq
     o: [false]
   tests:
   - name: Dec
@@ -51,7 +51,7 @@ ops:
       o: [false]
   - name: String
     test:
-    - i: c /e /e eq 
+    - i: c /e /e eq
       o: [true]
     - i: c /d /e eq
       o: [false]
@@ -74,13 +74,13 @@ ops:
   - name: GtString
     params: [x:Text, y:Text]
     returns: [Bool]
-  desc: Returns true if *x* is greater than *y*. 
+  desc: Returns true if *x* is greater than *y*.
   example:
-  - i: c 6 5 gt 
+  - i: c 6 5 gt
     o: [true]
   - i: c 5 5 gt
     o: [false]
-  - i: c 4 5 gt 
+  - i: c 4 5 gt
     o: [false]
   tests:
   - name: Dec
@@ -103,7 +103,7 @@ ops:
     test:
     - i: c /f /e gt
       o: [true]
-    - i: c /e /e gt 
+    - i: c /e /e gt
       o: [false]
     - i: c /d /e gt
       o: [false]
@@ -126,13 +126,13 @@ ops:
   - name: GteString
     params: [x:Text, y:Text]
     returns: [Bool]
-  desc: Returns true if *x* is greater than or equal to *y*. 
+  desc: Returns true if *x* is greater than or equal to *y*.
   example:
-  - i: c 6 5 gte 
+  - i: c 6 5 gte
     o: [true]
   - i: c 5 5 gte
     o: [true]
-  - i: c 4 5 gte 
+  - i: c 4 5 gte
     o: [false]
   tests:
   - name: Dec
@@ -178,13 +178,13 @@ ops:
   - name: LtString
     params: [x:Text, y:Text]
     returns: [Bool]
-  desc: Returns true if *x* is less than *y*. 
+  desc: Returns true if *x* is less than *y*.
   example:
-  - i: c 6 5 lt 
+  - i: c 6 5 lt
     o: [false]
   - i: c 5 5 lt
     o: [false]
-  - i: c 4 5 lt 
+  - i: c 4 5 lt
     o: [true]
   tests:
   - name: Dec
@@ -207,7 +207,7 @@ ops:
     test:
     - i: c /f /e lt
       o: [false]
-    - i: c /e /e lt 
+    - i: c /e /e lt
       o: [false]
     - i: c /d /e lt
       o: [true]
@@ -230,13 +230,13 @@ ops:
   - name: LteString
     params: [x:Text, y:Text]
     returns: [Bool]
-  desc: Returns true if *x* is less than or equal to *y*. 
+  desc: Returns true if *x* is less than or equal to *y*.
   example:
-  - i: c 6 5 lte 
+  - i: c 6 5 lte
     o: [false]
   - i: c 5 5 lte
     o: [true]
-  - i: c 4 5 lte 
+  - i: c 4 5 lte
     o: [true]
   tests:
   - name: Dec
@@ -259,7 +259,7 @@ ops:
     test:
     - i: c /f /e lte
       o: [false]
-    - i: c /e /e lte 
+    - i: c /e /e lte
       o: [true]
     - i: c /d /e lte
       o: [true]
@@ -285,11 +285,11 @@ ops:
   - name: NeqString
     params: [x:Text, y:Text]
     returns: [Bool]
-  desc: Returns true if *x* and *y* are not equal. 
+  desc: Returns true if *x* and *y* are not equal.
   example:
-  - i: c 5 5 neq 
+  - i: c 5 5 neq
     o: [false]
-  - i: c 4 5 neq 
+  - i: c 4 5 neq
     o: [true]
   tests:
   - name: Dec
@@ -312,7 +312,49 @@ ops:
       o: [true]
   - name: String
     test:
-    - i: c /e /e neq 
+    - i: c /e /e neq
       o: [false]
     - i: c /d /e neq
       o: [true]
+
+- name: sort
+  title: Sort stack
+  funcs:
+  - name: SortDecimal
+    params: [Dec*]
+    returns: [Dec*]
+  - name: SortBigInt
+    params: [Int*]
+    returns: [Int*]
+  - name: SortRat
+    params: [Rat*]
+    returns: [Rat*]
+  - name: SortBigFloat
+    params: [Float/128*]
+    returns: [Float/128*]
+  - name: SortString
+    params: [Text*]
+    returns: [Text*]
+  desc: |-
+    Sorts all items on the stack in ascending order. The entire stack must
+    be of a similar type or able to be converted to a similar type. If no
+    numeric common type can be found, items are sorted as text.
+  example:
+  - i: c 4 2.5 1.75 sort
+    o: [1.75, 2.5, 4]
+  - i: c 4 5/2 1.75 sort
+    o: ["1 3/4", "2 1/2", 4]
+  - i: "c 4 5/2 'one and three quarters' sort"
+    o: [4, 5/2, 'one and three quarters']
+
+- name: sort/t
+  title: Sort stack as text
+  subtitle: text sort
+  funcs:
+  - name: SortString
+    params: [Text*]
+    returns: [Text*]
+  desc: Sorts the stack by their values as text.
+  example:
+  - i: 01.1 2 003 sort/t
+    o: [003, 01.1, 2]

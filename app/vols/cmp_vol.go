@@ -16,6 +16,8 @@ var Cmp = zc.Vol{
 		ops.Lt,
 		ops.Lte,
 		ops.Neq,
+		ops.Sort,
+		ops.SortT,
 	},
 	Macros: []zc.Macro{},
 }

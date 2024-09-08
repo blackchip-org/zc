@@ -1,6 +1,11 @@
 package funcs
 
-import "github.com/blackchip-org/zc/v6"
+import (
+	"cmp"
+	"slices"
+
+	"github.com/blackchip-org/zc/v6"
+)
 
 // ----------------------------------------------------------------------------
 func EqBigInt(c zc.Calc) {
@@ -198,4 +203,46 @@ func NeqString(c zc.Calc) {
 	y := zc.String.Pop(c)
 	x := zc.String.Pop(c)
 	zc.Bool.Push(c, x != y)
+}
+
+// ----------------------------------------------------------------------------
+
+func SortBigInt(c zc.Calc) {
+	s := c.Stack()
+	slices.SortStableFunc(s, func(a, b zc.Item) int {
+		return zc.BigInt.As(a.TypeVal).Cmp(zc.BigInt.As(b.TypeVal))
+	})
+	c.SetStack(s)
+}
+
+func SortBigFloat(c zc.Calc) {
+	s := c.Stack()
+	slices.SortStableFunc(s, func(a, b zc.Item) int {
+		return zc.BigFloat.As(a.TypeVal).Cmp(zc.BigFloat.As(b.TypeVal))
+	})
+	c.SetStack(s)
+}
+
+func SortDecimal(c zc.Calc) {
+	s := c.Stack()
+	slices.SortStableFunc(s, func(a, b zc.Item) int {
+		return zc.Decimal.As(a.TypeVal).Cmp(zc.Decimal.As(b.TypeVal))
+	})
+	c.SetStack(s)
+}
+
+func SortRat(c zc.Calc) {
+	s := c.Stack()
+	slices.SortStableFunc(s, func(a, b zc.Item) int {
+		return zc.Rat.As(a.TypeVal).Cmp(zc.Rat.As(b.TypeVal))
+	})
+	c.SetStack(s)
+}
+
+func SortString(c zc.Calc) {
+	s := c.Stack()
+	slices.SortStableFunc(s, func(a, b zc.Item) int {
+		return cmp.Compare(zc.String.As(a.TypeVal), zc.String.As(b.TypeVal))
+	})
+	c.SetStack(s)
 }

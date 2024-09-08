@@ -198,4 +198,56 @@ var (
 			},
 		},
 	}
+	Sort = zc.Op{
+		Name: "sort",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.Decimal,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Decimal,
+				Eval:      funcs.SortDecimal,
+			},
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.BigInt,
+				Returns:   []zc.Type{},
+				VarReturn: zc.BigInt,
+				Eval:      funcs.SortBigInt,
+			},
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.Rat,
+				Returns:   []zc.Type{},
+				VarReturn: zc.Rat,
+				Eval:      funcs.SortRat,
+			},
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.BigFloat,
+				Returns:   []zc.Type{},
+				VarReturn: zc.BigFloat,
+				Eval:      funcs.SortBigFloat,
+			},
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.String,
+				Returns:   []zc.Type{},
+				VarReturn: zc.String,
+				Eval:      funcs.SortString,
+			},
+		},
+	}
+	SortT = zc.Op{
+		Name: "sort/t",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{},
+				VarParam:  zc.String,
+				Returns:   []zc.Type{},
+				VarReturn: zc.String,
+				Eval:      funcs.SortString,
+			},
+		},
+	}
 )
