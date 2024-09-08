@@ -22,15 +22,9 @@ var (
 			},
 		},
 	}
-	FactorialF = zc.Op{
-		Name: "factorial/f",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Uint},
-				Returns: []zc.Type{zc.BigFloat},
-				Eval:    funcs.FactBigFloat,
-			},
-		},
+	Prod = zc.Op{
+		Name:  "prod",
+		Funcs: []zc.Func{},
 	}
 	Sum = zc.Op{
 		Name:  "sum",

@@ -10,7 +10,7 @@ import (
 var Angle = zc.Vol{
 	Name: "angle",
 	Ops: []zc.Op{
-		ops.Dec,
+		ops.DecAngle,
 		ops.DegMin,
 		ops.DegMinRound,
 		ops.DegMinSec,

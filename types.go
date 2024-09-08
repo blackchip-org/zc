@@ -329,7 +329,7 @@ func (t DecimalType) Pop(c Calc) *apd.Decimal {
 }
 
 func (t DecimalType) Parse(state coll.State, str string) (any, bool, error) {
-	d := vars.ForConf(state).DecMath
+	d := vars.ForReal(state).DecMath
 	str = PreParseDecimal(str)
 	v := t.New()
 	_, cond, err := d.SetString(v, str)
@@ -481,7 +481,7 @@ func (t DMSType) Pop(c Calc) types.DMS {
 }
 
 func (t DMSType) Parse(state coll.State, str string) (any, bool, error) {
-	conf := vars.ForConf(state)
+	conf := vars.ForReal(state)
 	p := dms.NewDefaultParser()
 	f, err := p.ParseFields(str)
 	if err != nil {

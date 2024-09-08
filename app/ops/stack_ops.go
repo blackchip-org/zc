@@ -86,16 +86,6 @@ var (
 			},
 		},
 	}
-	N = zc.Op{
-		Name: "n",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{},
-				Returns: []zc.Type{zc.Uint},
-				Eval:    funcs.N,
-			},
-		},
-	}
 	Pop = zc.Op{
 		Name: "pop",
 		Funcs: []zc.Func{
@@ -156,6 +146,16 @@ var (
 				Params:  []zc.Type{zc.Any, zc.Any, zc.Any},
 				Returns: []zc.Type{zc.Any, zc.Any, zc.Any},
 				Eval:    funcs.Rotate,
+			},
+		},
+	}
+	Size = zc.Op{
+		Name: "size",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.Uint},
+				Eval:    funcs.Size,
 			},
 		},
 	}

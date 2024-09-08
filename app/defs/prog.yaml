@@ -50,35 +50,36 @@ ops:
     - i: 2 bit
       o: [1]
 
-- name: bits
+- name: bit.len
   title: Bit length
   funcs:
-  - name: Bits
+  - name: BitLen
     params: [x:Int]
     returns:  [x:Int/s]
   desc: Length of *x* in bits.
   example:
   - i: 0b11111
     o: [0b11111]
-  - i: bits
+  - i: bit.len
     o: [5]
 
-- name: bytes
+- name: byte.len
   title: Byte length
   funcs:
-  - name: Bytes
+  - name: ByteLen
     params: [x:Int]
     returns:  [x:Int/s]
   desc: Length of *x* in bytes.
   example:
   - i: 0x1ff
     o: [0x1ff]
-  - i: bytes
+  - i: byte.len
     o: [2]
 
 - name: dec
   ident: DecBigInt
   title: Decimal conversion
+  subtitle: integer (programmer's calculator)
   funcs:
   - name: DecBigInt
     params: [x:Int]

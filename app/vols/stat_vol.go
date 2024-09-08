@@ -11,13 +11,12 @@ var Stat = zc.Vol{
 	Name: "stat",
 	Ops: []zc.Op{
 		ops.Factorial,
-		ops.FactorialF,
 	},
 	Macros: []zc.Macro{
 		{Name: "average", Expr: "n push sum pop div"},
 		{Name: "avg", Expr: "average"},
 		{Name: "fact", Expr: "factorial"},
-		{Name: "fact/f", Expr: "factorial/f"},
+		{Name: "prod", Expr: "1 /mul fold"},
 		{Name: "sum", Expr: "0 /add fold"},
 	},
 }

@@ -1,9 +1,26 @@
-name: conf
-title: General configuration
-category: calc
+name: real
+title: Real numbers (decimal and floating point)
+category: lib
 
 ops:
-- name: rounding.mode=
+- name: dec
+  title: Convert to decimal
+  funcs:
+  - name: Dec
+    params: [x:Dec]
+    returns: [Dec]
+  - name: DecRat
+    params: [x:Rat]
+    returns: [Dec]
+  desc: |-
+    Converts a number into a decimal value.
+  example:
+  - i: c 0xff dec
+    o: [255]
+  - i: c 1/2 dec
+    o: [0.5]
+
+- name: rounding.mode
   title: Sets the default rounding mode
   funcs:
   - name: RoundingModeSet
@@ -23,7 +40,7 @@ ops:
     o: ['half.even']
   - i: c 5.55 1 round
     o: [5.6]
-  - i: /down rounding.mode=
+  - i: /down rounding.mode
     notice: rounding mode set to down
   - i: c 5.55 1 round
     o: [5.5]
@@ -44,3 +61,20 @@ ops:
   example:
   - i: rounding.mode?
     o: ['half.even']
+
+- name: trunc
+  title: Truncate
+  funcs:
+  - name: Trunc
+    params: [x:Dec]
+    returns: [Dec]
+  desc: |-
+    Truncates the number *x* which is the same as rounding to an integer
+    value towards zero.
+  example:
+  - i: c 3.9 trunc
+    o: [3]
+  - i: c -3.9 trunc
+    o: [-3]
+
+

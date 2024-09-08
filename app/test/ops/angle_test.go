@@ -8,7 +8,7 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_Angle_Dec(t *testing.T) {
+func TestOpDocs_Angle_DecAngle(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("10d7m24.24s dec")

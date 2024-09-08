@@ -198,18 +198,6 @@ ops:
   - i: pop.all
     o: [4, 5, 6, 1, 2, 3]
 
-- name: n
-  title: Number of items on the stack
-  funcs:
-  - name: N
-    returns: [x:Int/u]
-  desc: Returns the number of items currently on the stack
-  example:
-  - i: /a /b /c /d
-    o: ['a', 'b', 'c', 'd']
-  - i: n
-    o: ['a', 'b', 'c', 'd', 4]
-
 - name: reverse
   aliases: [rev]
   title: Reverse stack
@@ -239,6 +227,19 @@ ops:
     o: [1, 2, 3, 4]
   - i: rotate
     o: [1, 4, 2, 3]
+
+- name: size
+  aliases: [n]
+  title: Number of items on the stack
+  funcs:
+  - name: Size
+    returns: [x:Int/u]
+  desc: Returns the number of items currently on the stack
+  example:
+  - i: /a /b /c /d
+    o: ['a', 'b', 'c', 'd']
+  - i: n
+    o: ['a', 'b', 'c', 'd', 4]
 
 - name: store
   aliases: [st]

@@ -5,7 +5,9 @@ category: lib
 ops:
 - name: dec
   aliases: [dd]
+  ident: DecAngle
   title: Degree angle to decimal degrees
+  subtitle: angle
   funcs:
   - name: DecDMS
     params: [x:DMS]

@@ -462,7 +462,7 @@ simply the square root of the average deviation.
 | `[/av ld sub sq] map`     | `9 \| 1 \| 1 \| 1 \| 0 \| 0 \| 4 \| 16`
 | `avg sqrt`                | `2`
 
-The same calcuation can be done using the temporary stack like this:
+The same calculation can be done using the temporary stack like this:
 
 <!-- test: StddevTemp -->
 
@@ -485,6 +485,7 @@ These commands are available when running the calculator interactively:
 | *blank line* | Remove the first item from stack
 | `def`        | Define a macro
 | `redo`       | Redo the last undo
+| `reset`      | Clear stacks, memory, and all state
 | `quit`       | Print the final stack and return to shell
 | `quote`      | Add each line to the stack until delimiter is found
 | `undo`, `u`  | Undo the last line entered

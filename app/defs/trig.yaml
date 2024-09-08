@@ -1,5 +1,5 @@
-name: sci
-title: Scientific calculator
+name: trig
+title: Trigonometric functions
 category: calc
 
 ops:
@@ -125,22 +125,6 @@ ops:
   example:
   - i: 2 cosh 5 round
     o: [3.7622]
-
-- name: e 
-  title: Euler's number
-  macro: 2.71828182845904523536028747135266249775724709369995957496696763
-  desc: Euler's number, the natural logarithm base.
-  example:
-  - i: e
-    o: [2.71828182845904523536028747135266249775724709369995957496696763]
-
-- name: pi 
-  title: Circumference to diameter ratio
-  macro: 3.14159265358979323846264338327950288419716939937510582097494459
-  desc: The ratio between a cirlce's circumference to its diameter. 
-  example:
-  - i: pi 
-    o: [3.14159265358979323846264338327950288419716939937510582097494459]
 
 - name: sin
   title: Sine

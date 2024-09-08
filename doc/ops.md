@@ -4,16 +4,16 @@
 
 
 ## Calculator Operations
-| Volume                  | Description             
-|-------------------------|-------------------------
-| [about](ops/about.md)   | About this calculator   
-| [basic](ops/basic.md)   | Basic calculator        
-| [conf](ops/conf.md)     | General configuration   
-| [format](ops/format.md) | Value formatting        
-| [prog](ops/prog.md)     | Programmer's calculator 
-| [sci](ops/sci.md)       | Scientific calculator   
-| [stack](ops/stack.md)   | Stack operations        
-| [stat](ops/stat.md)     | Statistical calculations
+| Volume                  | Description                    
+|-------------------------|--------------------------------
+| [about](ops/about.md)   | About this calculator          
+| [basic](ops/basic.md)   | Basic calculator               
+| [const](ops/const.md)   | Standard mathematical constants
+| [format](ops/format.md) | Value formatting               
+| [prog](ops/prog.md)     | Programmer's calculator        
+| [stack](ops/stack.md)   | Stack operations               
+| [stat](ops/stat.md)     | Statistical calculations       
+| [trig](ops/trig.md)     | Trigonometric functions        
 
 
 
@@ -27,19 +27,20 @@
 
 
 ## Library
-| Volume                | Description                        
-|-----------------------|------------------------------------
-| [angle](ops/angle.md) | Angular calculations               
-| [anno](ops/anno.md)   | Annotations                        
-| [bool](ops/bool.md)   | Boolean operations                 
-| [cmp](ops/cmp.md)     | Comparisions                       
-| [color](ops/color.md) | Color conversions                  
-| [geo](ops/geo.md)     | Geo-spatial calculations           
-| [hof](ops/hof.md)     | Higher order functions             
-| [rand](ops/rand.md)   | Random number generation           
-| [seq](ops/seq.md)     | Numeric sequences                  
-| [text](ops/text.md)   | Text operations                    
-| [time](ops/time.md)   | Date, time, and duration operations
+| Volume                | Description                              
+|-----------------------|------------------------------------------
+| [angle](ops/angle.md) | Angular calculations                     
+| [anno](ops/anno.md)   | Annotations                              
+| [bool](ops/bool.md)   | Boolean operations                       
+| [cmp](ops/cmp.md)     | Comparisions                             
+| [color](ops/color.md) | Color conversions                        
+| [geo](ops/geo.md)     | Geo-spatial calculations                 
+| [hof](ops/hof.md)     | Higher order functions                   
+| [rand](ops/rand.md)   | Random number generation                 
+| [real](ops/real.md)   | Real numbers (decimal and floating point)
+| [seq](ops/seq.md)     | Numeric sequences                        
+| [text](ops/text.md)   | Text operations                          
+| [time](ops/time.md)   | Date, time, and duration operations      
 
 
 

@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	Dec = zc.Op{
+	DecAngle = zc.Op{
 		Name: "dec",
 		Funcs: []zc.Func{
 			{

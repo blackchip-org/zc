@@ -18,7 +18,7 @@ func init() {
 		vols.Bool,
 		vols.Cmp,
 		vols.Color,
-		vols.Conf,
+		vols.Const,
 		vols.Emoji,
 		vols.Entity,
 		vols.Epsg,
@@ -30,7 +30,7 @@ func init() {
 		vols.Mass,
 		vols.Prog,
 		vols.Rand,
-		vols.Sci,
+		vols.Real,
 		vols.Seq,
 		vols.Si,
 		vols.Stack,
@@ -38,6 +38,7 @@ func init() {
 		vols.Temp,
 		vols.Text,
 		vols.Time,
+		vols.Trig,
 		vols.Tz,
 	)
 }

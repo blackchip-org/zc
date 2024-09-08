@@ -6,19 +6,19 @@ Statistical calculations
 
 ## Index
 
-| Operation                            | Description              
-|--------------------------------------|--------------------------
-| [`average, avg`](#average)           | Average                  
-| [`factorial, fact`](#factorial)      | Factorial                
-| [`factorial/f, fact/f`](#factorialf) | Factorial, floating point
-| [`sum`](#sum)                        | Summation                
+| Operation                       | Description
+|---------------------------------|------------
+| [`average, avg`](#average)      | Average    
+| [`factorial, fact`](#factorial) | Factorial  
+| [`prod`](#prod)                 |            
+| [`sum`](#sum)                   | Summation  
 
 
 ## Operations
 
 ### average
 
-The average, or aritmetic mean, of the values on the stack. A division 
+The average, or aritmetic mean, of the values on the stack. A division
 undefined error is raised if the stack is empty.
 
 Alias: `avg`
@@ -53,24 +53,16 @@ Example:
 | `c 3 fact`  | `6`      
 | `c 10 fact` | `3628800`
 
-### factorial/f
+### prod
 
-The product of all positive integers less than or equal to *n*. If *n* is
-negative, an invalid argument error is raised.
+The product of all items on the stack. If there are no items on the stack,
+a one is placed on the stack.
 
-Alias: `fact/f`
-
-Stack effects:
+Macro definition:
 ```
-( x:Int/u -- Float/128 )
+def prod 1 /mul fold
 ```
 
-Example:
-
-| Input         | Stack     
-|---------------|-----------
-| `c 3 fact/f`  | `6`       
-| `c 10 fact/f` | `3.6288e6`
 
 ### sum
 

@@ -12,8 +12,8 @@
 ## a
 - [`a`](ops/basic.md#add): Alias for [add](ops/basic.md#add)
 - [`abs`](ops/basic.md#abs): Absolute value
-- [`acos`](ops/sci.md#acos): Inverse cosine
-- [`acosh`](ops/sci.md#acosh): Inverse hyperbolic cosine
+- [`acos`](ops/trig.md#acos): Inverse cosine
+- [`acosh`](ops/trig.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
   - [`add/f`](ops/basic_Float.md#addf): floating point
 - [`add`](ops/time.md#add): Time or duration addition
@@ -21,11 +21,11 @@
 - [`and`](ops/bool.md#and): Logical conjunction
 - [`and`](ops/prog.md#and): Bitwise and
 - [`apply`](ops/hof.md#apply): Apply a function using arguments on stack
-- [`asin`](ops/sci.md#asin): Inverse sine
-- [`asinh`](ops/sci.md#asinh): Inverse hyperbolic sine
-- [`atan`](ops/sci.md#atan): Inverse tangent
-- [`atan2`](ops/sci.md#atan2): Inverse tangent
-- [`atanh`](ops/sci.md#atanh): Inverse hyperbolic tangent
+- [`asin`](ops/trig.md#asin): Inverse sine
+- [`asinh`](ops/trig.md#asinh): Inverse hyperbolic sine
+- [`atan`](ops/trig.md#atan): Inverse tangent
+- [`atan2`](ops/trig.md#atan2): Inverse tangent
+- [`atanh`](ops/trig.md#atanh): Inverse hyperbolic tangent
 - [`atto`](ops/si.md): SI prefix a, 1e-18
 - [`average`](ops/stat.md#average): Average
 - [`avg`](ops/stat.md#average): Alias for [average](ops/stat.md#average)
@@ -33,23 +33,25 @@
 ## b
 - [`bin`](ops/prog.md#bin): Binary conversion
 - [`bit`](ops/prog.md#bit): Bit value
-- [`bits`](ops/prog.md#bits): Bit length
-- [`bytes`](ops/prog.md#bytes): Byte length
+- [`bit.len`](ops/prog.md#bitlen): Bit length
+- [`byte.len`](ops/prog.md#bytelen): Byte length
 
 ## c
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`c-f`](ops/temp.md#c-f): Celsius to Fahrenheit
 - [`c-k`](ops/temp.md#c-k): Celsius to Kelvin
-- [`cb`](ops/basic.md#cb): Cube of a number
-- [`cbrt`](ops/basic.md#cbrt): Cube root
+- [`cb`](ops/basic.md#cube): Alias for [cube](ops/basic.md#cube)
+- [`cbrt`](ops/basic.md#cuberoot): Alias for [cube.root](ops/basic.md#cuberoot)
   - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
 - [`ceil`](ops/basic.md#ceil): Ceiling
 - [`centi`](ops/si.md): SI prefix c, 1e-02
 - [`clear`](ops/stack.md#clear): Clear
 - [`cmyk-rgb`](ops/color.md#cmyk-rgb): CMYK to RGB
 - [`copy`](ops/stack.md#copy): Copy all items to temporary stack
-- [`cos`](ops/sci.md#cos): Cosine
-- [`cosh`](ops/sci.md#cosh): Hyperbolic cosine
+- [`cos`](ops/trig.md#cos): Cosine
+- [`cosh`](ops/trig.md#cosh): Hyperbolic cosine
+- [`cube`](ops/basic.md#cube): Cube of a number
+- [`cube.root`](ops/basic.md#cuberoot): Cube root
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
@@ -58,9 +60,9 @@
 - [`date.time?`](ops/time.md#datetime): Parses text as a date/time
 - [`date?`](ops/time.md#date): Parses text as a date
 - [`day.year`](ops/time.md#dayyear): Day of year
-- [`dd`](ops/angle.md#dec): Alias for [dec](ops/angle.md#dec)
-- [`dec`](ops/angle.md#dec): Degree angle to decimal degrees
-- [`dec`](ops/prog.md#dec): Decimal conversion
+- [`dec`](ops/real.md#dec): Convert to decimal
+  - [`dec`](ops/angle.md#dec): angle
+  - [`dec`](ops/prog.md#dec): integer (programmer's calculator)
 - [`deca`](ops/si.md): SI prefix da, 1e01
 - [`deci`](ops/si.md): SI prefix d, 1e-01
 - [`deg-rad`](ops/angle.md#deg-rad): Convert degrees to radians
@@ -87,7 +89,7 @@
 - [`dup`](ops/stack.md#dup): Duplicate
 
 ## e
-- [`e`](ops/sci.md#e): Euler's number
+- [`e`](ops/const.md#e): Euler's number
 - [`earth.radius`](ops/geo.md#earthradius): Mean radius of the Earth
 - [`earth.radius.equatorial`](ops/geo.md#earthradiusequatorial): Equatorial radius of the Earth
 - [`earth.radius.polar`](ops/geo.md#earthradiuspolar): Polar radius of the Earth
@@ -105,7 +107,6 @@
 - [`f-c`](ops/temp.md#f-c): Fahrenheit to Celsius
 - [`fact`](ops/stat.md#factorial): Alias for [factorial](ops/stat.md#factorial)
 - [`factorial`](ops/stat.md#factorial): Factorial
-  - [`factorial/f`](ops/stat.md#factorialf): floating point
 - [`false`](ops/bool.md#false): False
 - [`femto`](ops/si.md): SI prefix f, 1e-15
 - [`fib`](ops/seq.md#fibonacci): Alias for [fibonacci](ops/seq.md#fibonacci)
@@ -188,7 +189,7 @@
   - [`mul/f`](ops/basic_Float.md#mulf): floating point
 
 ## n
-- [`n`](ops/stack.md#n): Number of items on the stack
+- [`n`](ops/stack.md#size): Alias for [size](ops/stack.md#size)
 - [`nano`](ops/si.md): SI prefix n, 1e-09
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/f`](ops/basic_Float.md#negf): floating point
@@ -212,12 +213,13 @@
 ## p
 - [`pebi`](ops/iec.md): IEC prefix Pi, 2^50
 - [`peta`](ops/si.md): SI prefix P, 1e15
-- [`pi`](ops/sci.md#pi): Circumference to diameter ratio
+- [`pi`](ops/const.md#pi): Circumference to diameter ratio
 - [`pico`](ops/si.md): SI prefix p, 1e-12
 - [`pop`](ops/stack.md#pop): Pops item from the temporary stack
 - [`pop.all`](ops/stack.md#popall): Pops all items from the temporary stack
 - [`popa`](ops/stack.md#popall): Alias for [pop.all](ops/stack.md#popall)
 - [`pow`](ops/basic.md#pow): Exponentiation
+- `prod`
 - [`proj`](ops/geo.md#proj): Transform coordinate
 - [`push`](ops/stack.md#push): Push top item to the temporary stack
 - [`push.all`](ops/stack.md#pushall): Push all items to the temporary stack
@@ -250,8 +252,8 @@
 - [`rot`](ops/stack.md#rotate): Alias for [rotate](ops/stack.md#rotate)
 - [`rotate`](ops/stack.md#rotate): Rotate top three items
 - [`round`](ops/format.md#round): Round number
-- [`rounding.mode=`](ops/conf.md#roundingmode): Sets the default rounding mode
-- [`rounding.mode?`](ops/conf.md#roundingmode): Gets the default rounding mode
+- [`rounding.mode`](ops/real.md#roundingmode): Sets the default rounding mode
+- [`rounding.mode?`](ops/real.md#roundingmode): Gets the default rounding mode
 - [`rsh`](ops/prog.md#rightshift): Alias for [right.shift](ops/prog.md#rightshift)
 
 ## s
@@ -265,11 +267,14 @@
 - [`sequence`](ops/seq.md#sequence): Sequence of integers
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/f`](ops/basic_Float.md#signf): floating point
-- [`sin`](ops/sci.md#sin): Sine
-- [`sinh`](ops/sci.md#sinh): Hyperbolic sine
-- [`sq`](ops/basic.md#sq): Square of a number
-- [`sqrt`](ops/basic.md#sqrt): Square Root
+- [`sin`](ops/trig.md#sin): Sine
+- [`sinh`](ops/trig.md#sinh): Hyperbolic sine
+- [`size`](ops/stack.md#size): Number of items on the stack
+- [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
+- [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
+- [`square`](ops/basic.md#square): Square of a number
+- [`square.root`](ops/basic.md#squareroot): Square Root
 - [`st`](ops/stack.md#store): Alias for [store](ops/stack.md#store)
 - [`store`](ops/stack.md#store): Store stack to memory
 - [`sub`](ops/basic.md#sub): Subtraction
@@ -282,8 +287,8 @@
 
 ## t
 - [`take`](ops/stack.md#take): Take elements from the stack
-- [`tan`](ops/sci.md#tan): Tangent
-- [`tanh`](ops/sci.md#tanh): Hyperbolic tangent
+- [`tan`](ops/trig.md#tan): Tangent
+- [`tanh`](ops/trig.md#tanh): Hyperbolic tangent
 - [`tebi`](ops/iec.md): IEC prefix Ti, 2^40
 - [`terra`](ops/si.md): SI prefix T, 1e12
 - [`time`](ops/time.md#time): Formats to a common time layout
@@ -291,6 +296,7 @@
 - [`time?`](ops/time.md#time): Parses text as a time
 - [`top`](ops/stack.md#top): Take the top item from the stack
 - [`true`](ops/bool.md#true): True
+- [`trunc`](ops/real.md#trunc): Truncate
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
 - [`tz`](ops/time.md#timezone): Alias for [time.zone](ops/time.md#timezone)
 

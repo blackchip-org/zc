@@ -6,21 +6,21 @@ Programmer's calculator
 
 ## Index
 
-| Operation                         | Description           
-|-----------------------------------|-----------------------
-| [`and`](#and)                     | Bitwise and           
-| [`bin`](#bin)                     | Binary conversion     
-| [`bit`](#bit)                     | Bit value             
-| [`bits`](#bits)                   | Bit length            
-| [`bytes`](#bytes)                 | Byte length           
-| [`dec`](#dec)                     | Decimal conversion    
-| [`hex`](#hex)                     | Hexadecimal conversion
-| [`left.shift, lsh`](#leftshift)   | Shift bits left       
-| [`not`](#not)                     | Bitwise not           
-| [`oct`](#oct)                     | Octal conversion      
-| [`or`](#or)                       | Bitwise or            
-| [`right.shift, rsh`](#rightshift) | Shift bits right      
-| [`xor`](#xor)                     | Bitwise exclusive or  
+| Operation                         | Description                                          
+|-----------------------------------|------------------------------------------------------
+| [`and`](#and)                     | Bitwise and                                          
+| [`bin`](#bin)                     | Binary conversion                                    
+| [`bit`](#bit)                     | Bit value                                            
+| [`bit.len`](#bitlen)              | Bit length                                           
+| [`byte.len`](#bytelen)            | Byte length                                          
+| [`dec`](#dec)                     | Decimal conversion, integer (programmer's calculator)
+| [`hex`](#hex)                     | Hexadecimal conversion                               
+| [`left.shift, lsh`](#leftshift)   | Shift bits left                                      
+| [`not`](#not)                     | Bitwise not                                          
+| [`oct`](#oct)                     | Octal conversion                                     
+| [`or`](#or)                       | Bitwise or                                           
+| [`right.shift, rsh`](#rightshift) | Shift bits right                                     
+| [`xor`](#xor)                     | Bitwise exclusive or                                 
 
 
 ## Operations
@@ -74,7 +74,7 @@ Example:
 | `0b100` | `0b100`
 | `2 bit` | `1`    
 
-### bits
+### bit.len
 
 Length of *x* in bits.
 
@@ -88,9 +88,9 @@ Example:
 | Input     | Stack    
 |-----------|----------
 | `0b11111` | `0b11111`
-| `bits`    | `5`      
+| `bit.len` | `5`      
 
-### bytes
+### byte.len
 
 Length of *x* in bytes.
 
@@ -101,10 +101,10 @@ Stack effects:
 
 Example:
 
-| Input   | Stack  
-|---------|--------
-| `0x1ff` | `0x1ff`
-| `bytes` | `2`    
+| Input      | Stack  
+|------------|--------
+| `0x1ff`    | `0x1ff`
+| `byte.len` | `2`    
 
 ### dec
 

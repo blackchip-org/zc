@@ -93,16 +93,6 @@ func TestOpDocs_Stack_Load(t *testing.T) {
 	c.AssertStack("1", "2", "3", "1", "2", "3")
 }
 
-func TestOpDocs_Stack_N(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("/a /b /c /d")
-	c.AssertStack("a", "b", "c", "d")
-
-	c.Eval("n")
-	c.AssertStack("a", "b", "c", "d", "4")
-}
-
 func TestOpDocs_Stack_Pop(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -185,6 +175,16 @@ func TestOpDocs_Stack_Rotate(t *testing.T) {
 
 	c.Eval("rotate")
 	c.AssertStack("1", "4", "2", "3")
+}
+
+func TestOpDocs_Stack_Size(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("/a /b /c /d")
+	c.AssertStack("a", "b", "c", "d")
+
+	c.Eval("n")
+	c.AssertStack("a", "b", "c", "d", "4")
 }
 
 func TestOpDocs_Stack_Store(t *testing.T) {

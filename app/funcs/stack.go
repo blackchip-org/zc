@@ -58,10 +58,6 @@ func Load(c zc.Calc) {
 	c.Load(n)
 }
 
-func N(c zc.Calc) {
-	zc.Uint.Push(c, uint(c.Len()))
-}
-
 func Pop(c zc.Calc) {
 	t := c.Temp()
 	if len(t) == 0 {
@@ -122,6 +118,10 @@ func Rotate(c zc.Calc) {
 	c.Push(z)
 	c.Push(x)
 	c.Push(y)
+}
+
+func Size(c zc.Calc) {
+	zc.Uint.Push(c, uint(c.Len()))
 }
 
 func Store(c zc.Calc) {

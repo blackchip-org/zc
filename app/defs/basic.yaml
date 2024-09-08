@@ -6,7 +6,7 @@ ops:
 - name: abs
   title: Absolute value
   funcs:
-  - name: AbsBigInt 
+  - name: AbsBigInt
     params: [x:Int]
     returns: [Int]
   - name: AbsDecimal
@@ -58,7 +58,8 @@ ops:
   - i: c 6+6i 2+2i a
     o: [8+8i]
 
-- name: cb
+- name: cube
+  aliases: [cb]
   title: Cube of a number
   macro: dup dup mul mul
   desc: Cube of a nubmer, x³
@@ -66,7 +67,8 @@ ops:
   - i: 3 cb
     o: [27]
 
-- name: cbrt
+- name: cube.root
+  aliases: [cbrt]
   title: Cube root
   funcs:
   - name: CbrtDecimal
@@ -214,14 +216,14 @@ ops:
 
 - name: log
   title: Natural logarithm
-  funcs: 
+  funcs:
   - name: LogDecimal
     params: [x:Dec]
     returns: [Dec]
   - name: LogComplex
     params: [x:Complex]
     returns: [Complex]
-  desc: Natural logarithm of *x*. 
+  desc: Natural logarithm of *x*.
   example:
   - i: 7.5 log 4 round
     o: [2.0149]
@@ -244,6 +246,26 @@ ops:
   example:
   - i: 50 log10 5 round
     o: [1.69897]
+
+- name: mod
+  title: Modulus
+  funcs:
+  - name: ModBigInt
+    params: [x:Int, y:Int]
+    returns: [Int]
+  desc: |-
+    The modulus when *x* is divided by *y*. If *y* is zero, a division by zero
+    error is raised.
+  example:
+  - i: c -21 4 mod
+    o: [3]
+  - i: c -21 4 rem
+    o: [-1]
+  tests:
+  - name: Zero
+    test:
+    - i: 6 0 mod
+      error: "mod: division by zero"
 
 - name: mul
   title: Multiplication
@@ -271,26 +293,6 @@ ops:
     o: [1/4]
   - i: c 2+3i 4+4i m
     o: [-4+20i]
-
-- name: mod
-  title: Modulus
-  funcs:
-  - name: ModBigInt
-    params: [x:Int, y:Int]
-    returns: [Int]
-  desc: |-
-    The modulus when *x* is divided by *y*. If *y* is zero, a division by zero
-    error is raised.
-  example:
-  - i: c -21 4 mod
-    o: [3]
-  - i: c -21 4 rem
-    o: [-1]
-  tests:
-  - name: Zero
-    test:
-    - i: 6 0 mod
-      error: "mod: division by zero"
 
 - name: neg
   title: Negation
@@ -421,7 +423,8 @@ ops:
     - i: -6.4 sign
       o: [-1]
 
-- name: sq
+- name: square
+  aliases: [sq]
   title: Square of a number
   macro: dup mul
   desc: |-
@@ -430,7 +433,8 @@ ops:
   - i: 3 sq
     o: [9]
 
-- name: sqrt
+- name: square.root
+  aliases: [sqrt]
   title: Square Root
   funcs:
   - name: SqrtDecimal
@@ -451,7 +455,7 @@ ops:
     - name: Negative
       test:
       - i: -1 sqrt
-        error: "sqrt: invalid argument, -1 < 0"
+        error: "square.root: invalid argument, -1 < 0"
 
 - name: sub
   aliases: [s, '-']

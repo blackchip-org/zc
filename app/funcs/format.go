@@ -10,7 +10,7 @@ import (
 
 func RoundComplex(c zc.Calc) {
 	var zero apd.Decimal
-	d := vars.ForConf(c).DecMath
+	d := vars.ForReal(c).DecMath
 	p := zc.Int32.Pop(c)
 	x := zc.Complex.Pop(c)
 
@@ -46,7 +46,7 @@ func RoundComplex(c zc.Calc) {
 }
 
 func RoundDecimal(c zc.Calc) {
-	d := vars.ForConf(c).DecMath
+	d := vars.ForReal(c).DecMath
 	p := zc.Int32.Pop(c)
 	u := c.Unit()
 	x := zc.Decimal.Pop(c)

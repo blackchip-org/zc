@@ -4,26 +4,11 @@ package vols
 
 import (
 	"github.com/blackchip-org/zc/v6"
-	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var Sci = zc.Vol{
-	Name: "sci",
-	Ops: []zc.Op{
-		ops.Acos,
-		ops.Acosh,
-		ops.Asin,
-		ops.Asinh,
-		ops.Atan,
-		ops.Atan2,
-		ops.Atanh,
-		ops.Cos,
-		ops.Cosh,
-		ops.Sin,
-		ops.Sinh,
-		ops.Tan,
-		ops.Tanh,
-	},
+var Const = zc.Vol{
+	Name: "const",
+	Ops:  []zc.Op{},
 	Macros: []zc.Macro{
 		{Name: "e", Expr: "2.71828182845904523536028747135266249775724709369995957496696763"},
 		{Name: "pi", Expr: "3.14159265358979323846264338327950288419716939937510582097494459"},

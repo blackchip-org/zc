@@ -6,30 +6,30 @@ Basic calculator
 
 ## Index
 
-| Operation                | Description               
-|--------------------------|---------------------------
-| [`abs`](#abs)            | Absolute value            
-| [`add, a, +`](#add)      | Addition                  
-| [`cb`](#cb)              | Cube of a number          
-| [`cbrt`](#cbrt)          | Cube root                 
-| [`ceil`](#ceil)          | Ceiling                   
-| [`div, d, /`](#div)      | Division                  
-| [`div.mod`](#divmod)     | Division with modulus     
-| [`div.rem, dr`](#divrem) | Division with remainder   
-| [`div/i`](#divi)         | Euclidean integer division
-| [`exp`](#exp)            | Natural exponential       
-| [`floor`](#floor)        | Floor                     
-| [`log`](#log)            | Natural logarithm         
-| [`log10`](#log10)        | Decimal logarithm         
-| [`mod`](#mod)            | Modulus                   
-| [`mul, m, *`](#mul)      | Multiplication            
-| [`neg`](#neg)            | Negation                  
-| [`pow, **`](#pow)        | Exponentiation            
-| [`rem, %`](#rem)         | Remainder                 
-| [`sign`](#sign)          | Sign                      
-| [`sq`](#sq)              | Square of a number        
-| [`sqrt`](#sqrt)          | Square Root               
-| [`sub, s, -`](#sub)      | Subtraction               
+| Operation                          | Description               
+|------------------------------------|---------------------------
+| [`abs`](#abs)                      | Absolute value            
+| [`add, a, +`](#add)                | Addition                  
+| [`ceil`](#ceil)                    | Ceiling                   
+| [`cube, cb`](#cube)                | Cube of a number          
+| [`cube.root, cbrt`](#cuberoot)     | Cube root                 
+| [`div, d, /`](#div)                | Division                  
+| [`div.mod`](#divmod)               | Division with modulus     
+| [`div.rem, dr`](#divrem)           | Division with remainder   
+| [`div/i`](#divi)                   | Euclidean integer division
+| [`exp`](#exp)                      | Natural exponential       
+| [`floor`](#floor)                  | Floor                     
+| [`log`](#log)                      | Natural logarithm         
+| [`log10`](#log10)                  | Decimal logarithm         
+| [`mod`](#mod)                      | Modulus                   
+| [`mul, m, *`](#mul)                | Multiplication            
+| [`neg`](#neg)                      | Negation                  
+| [`pow, **`](#pow)                  | Exponentiation            
+| [`rem, %`](#rem)                   | Remainder                 
+| [`sign`](#sign)                    | Sign                      
+| [`square, sq`](#square)            | Square of a number        
+| [`square.root, sqrt`](#squareroot) | Square Root               
+| [`sub, s, -`](#sub)                | Subtraction               
 
 ## Related Volumes
 
@@ -82,38 +82,6 @@ Example:
 | `c 1/2 1/4 add` | `3/4` 
 | `c 6+6i 2+2i a` | `8+8i`
 
-### cb
-
-Cube of a nubmer, x³
-
-Macro definition:
-```
-def cb dup dup mul mul
-```
-
-Example:
-
-| Input  | Stack
-|--------|------
-| `3 cb` | `27` 
-
-### cbrt
-
-The cube root of *x*. If *x* is less than zero, an 'invalid argument'
-error is raised.
-
-Stack effects:
-```
-( x:Dec -- Dec )
-```
-
-Example:
-
-| Input  | Stack
-|--------|------
-| `27`   | `27` 
-| `cbrt` | `3`  
-
 ### ceil
 
 The nearest integer value greater than or equal to *x*.
@@ -128,6 +96,42 @@ Example:
 | Input      | Stack
 |------------|------
 | `6.6 ceil` | `7`  
+
+### cube
+
+Cube of a nubmer, x³
+
+Alias: `cb`
+
+Macro definition:
+```
+def cube dup dup mul mul
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `3 cb` | `27` 
+
+### cube.root
+
+The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+error is raised.
+
+Alias: `cbrt`
+
+Stack effects:
+```
+( x:Dec -- Dec )
+```
+
+Example:
+
+| Input  | Stack
+|--------|------
+| `27`   | `27` 
+| `cbrt` | `3`  
 
 ### div
 
@@ -393,13 +397,15 @@ Example:
 | `c 6 sign`  | `1`  
 | `c 0 sign`  | `0`  
 
-### sq
+### square
 
 The square of a number, x²
 
+Alias: `sq`
+
 Macro definition:
 ```
-def sq dup mul
+def square dup mul
 ```
 
 Example:
@@ -408,10 +414,12 @@ Example:
 |--------|------
 | `3 sq` | `9`  
 
-### sqrt
+### square.root
 
 The square root of *x*. If *x* is not Complex and is less than zero, an
 'invalid argument' error is raised.
+
+Alias: `sqrt`
 
 Stack effects:
 ```

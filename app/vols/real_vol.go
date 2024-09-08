@@ -7,11 +7,13 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var Conf = zc.Vol{
-	Name: "conf",
+var Real = zc.Vol{
+	Name: "real",
 	Ops: []zc.Op{
-		ops.RoundingModeSet,
+		ops.Dec,
+		ops.RoundingMode,
 		ops.RoundingModeGet,
+		ops.Trunc,
 	},
 	Macros: []zc.Macro{},
 }

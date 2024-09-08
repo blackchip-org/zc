@@ -8,105 +8,91 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_Sci_Acos(t *testing.T) {
+func TestOpDocs_Trig_Acos(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0.5 acos 5 round")
 	c.AssertStack("1.0472")
 }
 
-func TestOpDocs_Sci_Acosh(t *testing.T) {
+func TestOpDocs_Trig_Acosh(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 acosh 5 round")
 	c.AssertStack("1.31696")
 }
 
-func TestOpDocs_Sci_Asin(t *testing.T) {
+func TestOpDocs_Trig_Asin(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0.5 asin 5 round")
 	c.AssertStack("0.5236")
 }
 
-func TestOpDocs_Sci_Asinh(t *testing.T) {
+func TestOpDocs_Trig_Asinh(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 asinh 5 round")
 	c.AssertStack("1.44364")
 }
 
-func TestOpDocs_Sci_Atan(t *testing.T) {
+func TestOpDocs_Trig_Atan(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0.5 atan 5 round")
 	c.AssertStack("0.46365")
 }
 
-func TestOpDocs_Sci_Atan2(t *testing.T) {
+func TestOpDocs_Trig_Atan2(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("1 2 atan2 5 round")
 	c.AssertStack("0.46365")
 }
 
-func TestOpDocs_Sci_Atanh(t *testing.T) {
+func TestOpDocs_Trig_Atanh(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0.5 atanh 5 round")
 	c.AssertStack("0.54931")
 }
 
-func TestOpDocs_Sci_Cos(t *testing.T) {
+func TestOpDocs_Trig_Cos(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 cos 5 round")
 	c.AssertStack("-0.41615")
 }
 
-func TestOpDocs_Sci_Cosh(t *testing.T) {
+func TestOpDocs_Trig_Cosh(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 cosh 5 round")
 	c.AssertStack("3.7622")
 }
 
-func TestOpDocs_Sci_E(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("e")
-	c.AssertStack("2.71828182845904523536028747135266249775724709369995957496696763")
-}
-
-func TestOpDocs_Sci_Pi(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("pi")
-	c.AssertStack("3.14159265358979323846264338327950288419716939937510582097494459")
-}
-
-func TestOpDocs_Sci_Sin(t *testing.T) {
+func TestOpDocs_Trig_Sin(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 sin 5 round")
 	c.AssertStack("0.9093")
 }
 
-func TestOpDocs_Sci_Sinh(t *testing.T) {
+func TestOpDocs_Trig_Sinh(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 sinh 5 round")
 	c.AssertStack("3.62686")
 }
 
-func TestOpDocs_Sci_Tan(t *testing.T) {
+func TestOpDocs_Trig_Tan(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 tan 5 round")
 	c.AssertStack("-2.18504")
 }
 
-func TestOpDocs_Sci_Tanh(t *testing.T) {
+func TestOpDocs_Trig_Tanh(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("2 tanh 5 round")

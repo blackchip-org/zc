@@ -53,20 +53,6 @@ var (
 			},
 		},
 	}
-	Cb = zc.Op{
-		Name:  "cb",
-		Funcs: []zc.Func{},
-	}
-	Cbrt = zc.Op{
-		Name: "cbrt",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Decimal},
-				Returns: []zc.Type{zc.Decimal},
-				Eval:    funcs.CbrtDecimal,
-			},
-		},
-	}
 	Ceil = zc.Op{
 		Name: "ceil",
 		Funcs: []zc.Func{
@@ -74,6 +60,20 @@ var (
 				Params:  []zc.Type{zc.Decimal},
 				Returns: []zc.Type{zc.Decimal},
 				Eval:    funcs.CeilDecimal,
+			},
+		},
+	}
+	Cube = zc.Op{
+		Name:  "cube",
+		Funcs: []zc.Func{},
+	}
+	CubeRoot = zc.Op{
+		Name: "cube.root",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Decimal},
+				Returns: []zc.Type{zc.Decimal},
+				Eval:    funcs.CbrtDecimal,
 			},
 		},
 	}
@@ -292,12 +292,12 @@ var (
 			},
 		},
 	}
-	Sq = zc.Op{
-		Name:  "sq",
+	Square = zc.Op{
+		Name:  "square",
 		Funcs: []zc.Func{},
 	}
-	Sqrt = zc.Op{
-		Name: "sqrt",
+	SquareRoot = zc.Op{
+		Name: "square.root",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Decimal},

@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+const (
+	NoticeInexact = "inexact"
+)
+
 var ErrDivisionByZero = errors.New("division by zero")
 
 func ErrFeatureNotSupported(name string) error {

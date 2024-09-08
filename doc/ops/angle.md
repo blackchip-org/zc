@@ -8,7 +8,7 @@ Angular calculations
 
 | Operation                                    | Description                                          
 |----------------------------------------------|------------------------------------------------------
-| [`dec, dd`](#dec)                            | Degree angle to decimal degrees                      
+| [`dec, dd`](#dec)                            | Degree angle to decimal degrees, angle               
 | [`deg-rad`](#deg-rad)                        | Convert degrees to radians                           
 | [`deg.min, dm`](#degmin)                     |                                                      
 | [`deg.min.round, dmr`](#degminround)         | Degree angle to degrees and rounded minutes          

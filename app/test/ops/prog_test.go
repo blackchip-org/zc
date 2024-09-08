@@ -41,23 +41,23 @@ func TestOpDocs_Prog_Bit(t *testing.T) {
 	c.AssertStack("1")
 }
 
-func TestOpDocs_Prog_Bits(t *testing.T) {
+func TestOpDocs_Prog_BitLen(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0b11111")
 	c.AssertStack("0b11111")
 
-	c.Eval("bits")
+	c.Eval("bit.len")
 	c.AssertStack("5")
 }
 
-func TestOpDocs_Prog_Bytes(t *testing.T) {
+func TestOpDocs_Prog_ByteLen(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0x1ff")
 	c.AssertStack("0x1ff")
 
-	c.Eval("bytes")
+	c.Eval("byte.len")
 	c.AssertStack("2")
 }
 

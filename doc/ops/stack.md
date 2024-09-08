@@ -15,13 +15,13 @@ Stack operations
 | [`dup`](#dup)                 | Duplicate                              
 | [`flip`](#flip)               | Flip the main and temporary stacks     
 | [`load, ld`](#load)           | Loads a stack from memory              
-| [`n`](#n)                     | Number of items on the stack           
 | [`pop`](#pop)                 | Pops item from the temporary stack     
 | [`pop.all, popa`](#popall)    | Pops all items from the temporary stack
 | [`push`](#push)               | Push top item to the temporary stack   
 | [`push.all, pusha`](#pushall) | Push all items to the temporary stack  
 | [`reverse, rev`](#reverse)    | Reverse stack                          
 | [`rotate, rot`](#rotate)      | Rotate top three items                 
+| [`size, n`](#size)            | Number of items on the stack           
 | [`store, st`](#store)         | Store stack to memory                  
 | [`swap, sw`](#swap)           | Swap top two items on the stack        
 | [`take`](#take)               | Take elements from the stack           
@@ -161,22 +161,6 @@ Example:
 | `/foo st` | *stored*                    
 | `/foo ld` | `1 \| 2 \| 3 \| 1 \| 2 \| 3`
 
-### n
-
-Returns the number of items currently on the stack
-
-Stack effects:
-```
-(  -- x:Int/u )
-```
-
-Example:
-
-| Input         | Stack                  
-|---------------|------------------------
-| `/a /b /c /d` | `a \| b \| c \| d`     
-| `n`           | `a \| b \| c \| d \| 4`
-
 ### pop
 
 Pops an item from the temporary stack and places it on the main stack. An
@@ -299,6 +283,24 @@ Example:
 |-----------|-------------------
 | `1 2 3 4` | `1 \| 2 \| 3 \| 4`
 | `rotate`  | `1 \| 4 \| 2 \| 3`
+
+### size
+
+Returns the number of items currently on the stack
+
+Alias: `n`
+
+Stack effects:
+```
+(  -- x:Int/u )
+```
+
+Example:
+
+| Input         | Stack                  
+|---------------|------------------------
+| `/a /b /c /d` | `a \| b \| c \| d`     
+| `n`           | `a \| b \| c \| d \| 4`
 
 ### store
 

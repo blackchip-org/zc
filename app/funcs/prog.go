@@ -43,14 +43,14 @@ func Bit(c zc.Calc) {
 	zc.BigInt.Recycle(x)
 }
 
-func Bits(c zc.Calc) {
+func BitLen(c zc.Calc) {
 	x := zc.BigInt.Pop(c)
 	b := x.BitLen()
 	zc.Int.Push(c, b)
 	zc.BigInt.Recycle(x)
 }
 
-func Bytes(c zc.Calc) {
+func ByteLen(c zc.Calc) {
 	x := zc.BigInt.Pop(c)
 	b := int(math.Ceil(float64(x.BitLen()) / 8.0))
 	zc.Int.Push(c, b)

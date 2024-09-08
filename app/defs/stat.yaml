@@ -6,16 +6,16 @@ ops:
 - name: average
   aliases: [avg]
   title: Average
-  macro: n push sum pop div 
-  desc: |- 
-    The average, or aritmetic mean, of the values on the stack. A division 
+  macro: n push sum pop div
+  desc: |-
+    The average, or aritmetic mean, of the values on the stack. A division
     undefined error is raised if the stack is empty.
   example:
   - i: 0 100 25 75 average
     o: [50]
   tests:
   - name: Empty
-    test: 
+    test:
     - i: average
       error: "div: division undefined"
 
@@ -35,29 +35,19 @@ ops:
   - i: c 10 fact
     o: [3628800]
 
-- name: factorial/f
-  aliases: [fact/f]
-  title: Factorial
-  subtitle: floating point
-  funcs:
-  - name: FactBigFloat
-    params: [x:Int/u]
-    returns: [Float/128]
+- name: prod
+  tile: Product
+  macro: 1 /mul fold
   desc: |-
-    The product of all positive integers less than or equal to *n*. If *n* is
-    negative, an invalid argument error is raised.
-  example:
-  - i: c 3 fact/f
-    o: [6]
-  - i: c 10 fact/f
-    o: [3.6288e6]
+    The product of all items on the stack. If there are no items on the stack,
+    a one is placed on the stack.
 
 - name: sum
   title: Summation
   macro: 0 /add fold
-  desc: The sum of all items on the stack. 
+  desc: The sum of all items on the stack.
   example:
   - i: 1 2 3 4 5
     o: [1, 2, 3, 4, 5]
   - i: sum
-    o: [15] 
+    o: [15]

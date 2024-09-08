@@ -38,23 +38,23 @@ var (
 			},
 		},
 	}
-	Bits = zc.Op{
-		Name: "bits",
+	BitLen = zc.Op{
+		Name: "bit.len",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.BigInt},
 				Returns: []zc.Type{zc.Int},
-				Eval:    funcs.Bits,
+				Eval:    funcs.BitLen,
 			},
 		},
 	}
-	Bytes = zc.Op{
-		Name: "bytes",
+	ByteLen = zc.Op{
+		Name: "byte.len",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.BigInt},
 				Returns: []zc.Type{zc.Int},
-				Eval:    funcs.Bytes,
+				Eval:    funcs.ByteLen,
 			},
 		},
 	}

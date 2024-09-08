@@ -9,7 +9,7 @@ import (
 	"github.com/cockroachdb/apd/v3"
 )
 
-const ConfID = "conf"
+const RealID = "real"
 
 const (
 	DefaultPrec         = 28
@@ -25,12 +25,12 @@ const (
 	RoundingModeUp       = "up"
 )
 
-type Conf struct {
+type Real struct {
 	DecMath      *apd.Context
 	RoundingMode big.RoundingMode
 }
 
-func (d *Conf) GetRoundingMode() string {
+func (d *Real) GetRoundingMode() string {
 	switch d.RoundingMode {
 	case big.ToPositiveInf:
 		return RoundingModeCeil
@@ -49,7 +49,7 @@ func (d *Conf) GetRoundingMode() string {
 	}
 }
 
-func (d *Conf) SetRoundingMode(rm string) error {
+func (d *Real) SetRoundingMode(rm string) error {
 	switch rm {
 	case RoundingModeCeil:
 		d.RoundingMode = big.ToPositiveInf
@@ -70,19 +70,19 @@ func (d *Conf) SetRoundingMode(rm string) error {
 	return nil
 }
 
-func ForConf(state coll.State) *Conf {
-	dv, ok := state.Var(ConfID)
+func ForReal(state coll.State) *Real {
+	dv, ok := state.Var(RealID)
 	if !ok {
 		context := apd.BaseContext.WithPrecision(DefaultPrec)
-		dec := &Conf{
+		dec := &Real{
 			DecMath:      context,
 			RoundingMode: DefaultRoundingMode,
 		}
 		dec.DecMath.Rounding = DecRounder(DefaultRoundingMode)
-		state.NewVar(ConfID, dec)
+		state.NewVar(RealID, dec)
 		dv = dec
 	}
-	return dv.(*Conf)
+	return dv.(*Real)
 }
 
 func DecRounder(rm big.RoundingMode) apd.Rounder {

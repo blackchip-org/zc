@@ -41,14 +41,21 @@ func TestOpDocs_Basic_Add(t *testing.T) {
 	c.AssertStack("8+8i")
 }
 
-func TestOpDocs_Basic_Cb(t *testing.T) {
+func TestOpDocs_Basic_Ceil(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.6 ceil")
+	c.AssertStack("7")
+}
+
+func TestOpDocs_Basic_Cube(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("3 cb")
 	c.AssertStack("27")
 }
 
-func TestOpDocs_Basic_Cbrt(t *testing.T) {
+func TestOpDocs_Basic_CubeRoot(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("27")
@@ -56,13 +63,6 @@ func TestOpDocs_Basic_Cbrt(t *testing.T) {
 
 	c.Eval("cbrt")
 	c.AssertStack("3")
-}
-
-func TestOpDocs_Basic_Ceil(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6.6 ceil")
-	c.AssertStack("7")
 }
 
 func TestOpDocs_Basic_Div(t *testing.T) {
@@ -316,14 +316,14 @@ func TestOpDocs_Basic_Sign_Decimal(t *testing.T) {
 	c.AssertStack("-1")
 }
 
-func TestOpDocs_Basic_Sq(t *testing.T) {
+func TestOpDocs_Basic_Square(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("3 sq")
 	c.AssertStack("9")
 }
 
-func TestOpDocs_Basic_Sqrt(t *testing.T) {
+func TestOpDocs_Basic_SquareRoot(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 1.5625 sqrt")
@@ -333,11 +333,11 @@ func TestOpDocs_Basic_Sqrt(t *testing.T) {
 	c.AssertStack("0+2i")
 }
 
-func TestOpDocs_Basic_Sqrt_Negative(t *testing.T) {
+func TestOpDocs_Basic_SquareRoot_Negative(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("-1 sqrt")
-	c.AssertError("sqrt: invalid argument, -1 < 0")
+	c.AssertError("square.root: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_Basic_Sub(t *testing.T) {

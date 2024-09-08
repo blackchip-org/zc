@@ -100,3 +100,25 @@ func TestCommonPrefix(t *testing.T) {
 		})
 	}
 }
+
+func TestReset(t *testing.T) {
+	r := NewReplTester(t)
+	// fill stack
+	r.Eval("1 2 3")
+	// fill temp stack
+	r.Eval("copy")
+	// set mem location
+	r.Eval("/tmp store")
+	// set state
+	r.Eval("/down rounding.mode")
+	r.Eval("reset")
+
+	r.AssertNotice("reset")
+	r.AssertStack()
+	r.Eval("flip")
+	r.AssertStack()
+	r.Eval("/tmp load")
+	r.AssertError("load: memory empty: tmp")
+	r.Eval("rounding.mode?")
+	r.AssertStack("half.even")
+}

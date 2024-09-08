@@ -18,6 +18,7 @@ func init() {
 		"def":   def,
 		"drop":  drop,
 		"redo":  redo,
+		"reset": reset,
 		"u":     undo,
 		"quit":  quit,
 		"quote": quote,
@@ -71,6 +72,12 @@ func redo(r *Repl, _ []scan.Token) error {
 	r.undoStack = append([][]zc.Item{slices.Clone(r.Calc.Stack())}, r.undoStack...)
 	r.Calc.SetStack(r.redoStack[0])
 	r.redoStack = r.redoStack[1:]
+	return nil
+}
+
+func reset(r *Repl, _ []scan.Token) error {
+	r.Calc.Reset()
+	r.Calc.Notify("reset")
 	return nil
 }
 

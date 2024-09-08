@@ -138,14 +138,6 @@ var (
 			},
 		},
 	}
-	E = zc.Op{
-		Name:  "e",
-		Funcs: []zc.Func{},
-	}
-	Pi = zc.Op{
-		Name:  "pi",
-		Funcs: []zc.Func{},
-	}
 	Sin = zc.Op{
 		Name: "sin",
 		Funcs: []zc.Func{

@@ -65,7 +65,8 @@ func (r *ReplTester) AssertError(msg string) {
 
 func (r *ReplTester) AssertNotice(notice string) {
 	r.t.Helper()
-	if r.Repl.Notice() != notice {
+	if r.Repl.notice != notice {
 		r.t.Fatalf("(FAIL) expected notice: %v", notice)
 	}
+	r.Repl.notice = ""
 }

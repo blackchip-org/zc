@@ -427,6 +427,16 @@ func genIndex(vols []zc.VolDef) {
 				entries = append(entries, e)
 				subs[prefix] = entries
 				continue
+			} else if op.Subtitle != "" {
+				e := entry{
+					name:   op.Name,
+					anchor: opsAnchor(vol, op),
+					title:  op.Subtitle,
+				}
+				entries := subs[op.Name]
+				entries = append(entries, e)
+				subs[op.Name] = entries
+				continue
 			}
 			e := entry{
 				name:   op.Name,

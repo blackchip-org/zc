@@ -16,6 +16,12 @@ function ops {
     gofmt     -w $GEN_GO
 }
 
+function wasm {
+    (ops)
+    set -x
+    GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
+}
+
 function install {
     ops
     set -x
@@ -34,6 +40,8 @@ case "$1" in
         go run cmd/zc/main.go $@
         ;;
     serve)
+        (wasm)
+        set -x
     	go run cmd/server/main.go
         ;;
     test)
@@ -49,9 +57,7 @@ case "$1" in
         go test $@ -benchmem -run=^$  -bench . github.com/blackchip-org/zc/v6/bench
         ;;
     wasm)
-        (ops)
-        set -x
-        GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
+        wasm
         ;;
     emoji)
         set -x
