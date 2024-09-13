@@ -40,6 +40,7 @@
 - [`c`](ops/stack.md#clear): Alias for [clear](ops/stack.md#clear)
 - [`c-f`](ops/temp.md#c-f): Celsius to Fahrenheit
 - [`c-k`](ops/temp.md#c-k): Celsius to Kelvin
+- [`cat`](ops/text.md#concat): Alias for [concat](ops/text.md#concat)
 - [`cb`](ops/basic.md#cube): Alias for [cube](ops/basic.md#cube)
 - [`cbrt`](ops/basic.md#cuberoot): Alias for [cube.root](ops/basic.md#cuberoot)
   - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
@@ -47,9 +48,12 @@
 - [`centi`](ops/si.md): SI prefix c, 1e-02
 - [`clear`](ops/stack.md#clear): Clear
 - [`cmyk-rgb`](ops/color.md#cmyk-rgb): CMYK to RGB
+- `code.point-text`
+- `concat`
 - [`copy`](ops/stack.md#copy): Copy all items to temporary stack
 - [`cos`](ops/trig.md#cos): Cosine
 - [`cosh`](ops/trig.md#cosh): Hyperbolic cosine
+- [`cp-text`](ops/text.md#codepoint-text): Alias for [code.point-text](ops/text.md#codepoint-text)
 - [`cube`](ops/basic.md#cube): Cube of a number
 - [`cube.root`](ops/basic.md#cuberoot): Cube root
 
@@ -138,6 +142,10 @@
 
 ## i
 - [`in-mm`](ops/len.md#in-mm): Inches to millimeters
+- [`int-data`](ops/int.md#int-data): Converts integer to big-endian bytes
+
+## j
+- [`join`](ops/text.md#join): Join two text values
 
 ## k
 - [`k-c`](ops/temp.md#k-c): Kelvin to Celsius
@@ -153,6 +161,7 @@
 - [`label`](ops/stack.md#label): Attach label
 - [`lb-kg`](ops/mass.md#lb-kg): Pounds to kilograms
 - [`ld`](ops/stack.md#load): Alias for [load](ops/stack.md#load)
+- [`left`](ops/text.md#left): Subset from left
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`len`](ops/text.md#len): Length of text in characters
 - [`load`](ops/stack.md#load): Loads a stack from memory
@@ -162,6 +171,7 @@
   - [`log/f`](ops/basic_Float.md#logf): floating point
 - [`log10`](ops/basic.md#log10): Decimal logarithm
   - [`log10/f`](ops/basic_Float.md#log10f): floating point
+- [`lower`](ops/text.md#lower): Lowercase
 - [`lsh`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
 - [`lt`](ops/cmp.md#lt): Less than
 - [`lte`](ops/cmp.md#lte): Less than or equal
@@ -173,6 +183,7 @@
 - [`m-nmi`](ops/len.md#m-nmi): Meters to nautical miles
 - [`m-yd`](ops/len.md#m-yd): Meters to yards
 - [`map`](ops/hof.md#map): Apply an operation
+- [`md5`](ops/crypto.md#md5): MD5 hash function
 - [`mebi`](ops/iec.md): IEC prefix Mi, 2^20
 - [`mega`](ops/si.md): SI prefix M, 1e06
 - [`mi-ft`](ops/len.md#mi-ft): Miles to feet
@@ -245,12 +256,15 @@
 - [`reverse`](ops/stack.md#reverse): Reverse stack
 - [`rgb-cmyk`](ops/color.md#rgb-cmyk): RGB to CMYK
 - [`rgb-hsl`](ops/color.md#rgb-hsl): RGB to HSL
+- [`right`](ops/text.md#right): Subset from right
 - [`right.shift`](ops/prog.md#rightshift): Shift bits right
 - [`roll`](ops/rand.md#roll): Dice roller
 - [`ronna`](ops/si.md): SI prefix R, 1e27
 - [`ronto`](ops/si.md): SI prefix r, 1e-27
 - [`rot`](ops/stack.md#rotate): Alias for [rotate](ops/stack.md#rotate)
+- [`rot13`](ops/crypto.md#rotate13): Alias for [rotate.13](ops/crypto.md#rotate13)
 - [`rotate`](ops/stack.md#rotate): Rotate top three items
+- [`rotate.13`](ops/crypto.md#rotate13): Rotate characters by 13
 - [`round`](ops/format.md#round): Round number
 - [`rounding.mode`](ops/real.md#roundingmode): Sets the default rounding mode
 - [`rounding.mode?`](ops/real.md#roundingmode): Gets the default rounding mode
@@ -265,13 +279,24 @@
 - [`secs`](ops/angle.md#seconds): Alias for [seconds](ops/angle.md#seconds)
 - [`seq`](ops/seq.md#sequence): Alias for [sequence](ops/seq.md#sequence)
 - [`sequence`](ops/seq.md#sequence): Sequence of integers
+- [`sha1`](ops/crypto.md#sha1): SHA-1 hash function
+- [`sha1.hmac`](ops/crypto.md#sha1hmac): SHA-1 keyed hash function
+- [`sha224`](ops/crypto.md#sha224): SHA-224 hash function
+- [`sha224.hmac`](ops/crypto.md#sha224hmac): SHA-224 keyed hash function
+- [`sha256`](ops/crypto.md#sha256): SHA-256 hash function
+- [`sha256.hmac`](ops/crypto.md#sha256hmac): SHA-256 keyed hash function
+- [`sha384`](ops/crypto.md#sha384): SHA-384 hash function
+- [`sha384.hmac`](ops/crypto.md#sha384hmac): SHA-384 keyed hash function
+- [`sha512`](ops/crypto.md#sha512): SHA-512 hash function
+- [`sha512.hmac`](ops/crypto.md#sha512hmac): SHA-512 keyed hash function
 - [`sign`](ops/basic.md#sign): Sign
   - [`sign/f`](ops/basic_Float.md#signf): floating point
 - [`sin`](ops/trig.md#sin): Sine
 - [`sinh`](ops/trig.md#sinh): Hyperbolic sine
 - [`size`](ops/stack.md#size): Number of items on the stack
 - [`sort`](ops/cmp.md#sort): Sort stack
-  - [`sort/t`](ops/cmp.md#sortt): Sort stack as text
+  - [`sort/t`](ops/cmp.md#sortt): text sort
+- [`split`](ops/text.md#split): Split text
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
   - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
@@ -297,6 +322,10 @@
 - [`tanh`](ops/trig.md#tanh): Hyperbolic tangent
 - [`tebi`](ops/iec.md): IEC prefix Ti, 2^40
 - [`terra`](ops/si.md): SI prefix T, 1e12
+- [`text-code.point`](ops/text.md#text-codepoint): Convert text to Unicode code points
+- [`text-cp`](ops/text.md#text-codepoint): Alias for [text-code.point](ops/text.md#text-codepoint)
+- [`text-data`](ops/text.md#text-data): Convert text to data
+- [`text-utf8`](ops/text.md#text-utf8): Convert text to UTF-8 bytes
 - [`time`](ops/time.md#time): Formats to a common time layout
 - [`time.zone`](ops/time.md#timezone): Converts time to another time zone
 - [`time?`](ops/time.md#time): Parses text as a time
@@ -309,6 +338,8 @@
 ## u
 - [`unit`](ops/stack.md#unit): Attach unit
 - [`up`](ops/stack.md#up): Rotate stack upwards
+- [`upper`](ops/text.md#upper): Uppercase
+- [`utf8-text`](ops/text.md#utf8-text): Convert UTF-8 bytes to text
 
 ## v
 - [`var.p`](ops/stat.md#variancepop): Alias for [variance.pop](ops/stat.md#variancepop)

@@ -1,0 +1,152 @@
+name: crypto
+title: Cryptographic functions
+category: lib
+
+ops:
+- name: md5
+  title: MD5 hash function
+  funcs:
+  - name: Md5
+    params: [x:Data]
+    returns: [Data]
+  desc: Hash *x* with the MD5 function
+  example:
+  - i: "'Behind the tree!' text-data md5"
+    o: ["data: bbce0fb98a6a1b308e589d1408968ac2"]
+
+- name: sha1
+  title: SHA-1 hash function
+  funcs:
+  - name: Sha1
+    params: [x:Data]
+    returns: [Data]
+  desc: Hash *x* with the SHA-1 hash function
+  example:
+  - i: "'Behind the tree!' text-data sha1"
+    o: ["data: da6e7f530a9b42a679944f0c9fc0f86ae5534450"]
+
+- name: sha1.hmac
+  title: SHA-1 keyed hash function
+  funcs:
+  - name: Sha1Hmac
+    params: [x:Data, k:Data]
+    returns: [Data]
+  desc: Hash *x* with key *k* using the SHA-1 function
+  example:
+  - i: "'Behind the tree!' /swordfish"
+    o: ["Behind the tree!", "swordfish"]
+  - i: /text-data map sha1.hmac
+    o: ["data: 75859001097e8ad6907a879d340170ef571c8e5c"]
+
+- name: sha224
+  title: SHA-224 hash function
+  funcs:
+  - name: Sha224
+    params: [x:Data]
+    returns: [Data]
+  desc: Hash *x* with the SHA-224 hash function
+  example:
+  - i: "'Behind the tree!' text-data sha224"
+    o: ["data: 15eac2f886e0e09a44ce08da58f3386b707885150d6142d1a6e7c608"]
+
+- name: sha224.hmac
+  title: SHA-224 keyed hash function
+  funcs:
+  - name: Sha224Hmac
+    params: [x:Data, k:Data]
+    returns: [Data]
+  desc: Hash *x* with key *k* using the SHA-224 function
+  example:
+  - i: "'Behind the tree!' /swordfish"
+    o: ["Behind the tree!", "swordfish"]
+  - i: /text-data map sha224.hmac
+    o: ["data: 30ecbacd9aedf890b796eb79032105382ce323f18835f9bbb3867c4a"]
+
+- name: sha256
+  title: SHA-256 hash function
+  funcs:
+  - name: Sha256
+    params: [x:Data]
+    returns: [Data]
+  desc: Hash *x* with the SHA-256 hash function
+  example:
+  - i: "'Behind the tree!' text-data sha256"
+    o: ["data: 5e19fc5f8ec2aabccef7970385bb9151a421f398d048ced2b2c86757aafebfc3"]
+
+- name: sha256.hmac
+  title: SHA-256 keyed hash function
+  funcs:
+  - name: Sha256Hmac
+    params: [x:Data, k:Data]
+    returns: [Data]
+  desc: Hash *x* with key *k* using the SHA-256 function
+  example:
+  - i: "'Behind the tree!' /swordfish"
+    o: ["Behind the tree!", "swordfish"]
+  - i: /text-data map sha256.hmac
+    o: ["data: 0155d56d7485e9db843792ff48b97a1a96ae0655a92ad7c2324d71ed0410b907"]
+
+- name: sha384
+  title: SHA-384 hash function
+  funcs:
+  - name: Sha384
+    params: [x:Data]
+    returns: [Data]
+  desc: Hash *x* with the SHA-384 hash function
+  example:
+  - i: "'Behind the tree!' text-data sha384"
+    o: ["data: 54489c547782d201bb0c8c2c81e77e034695067c98087bd949d13de752dd3843323c7244c1d15776ad52093598420dca"]
+
+- name: sha384.hmac
+  title: SHA-384 keyed hash function
+  funcs:
+  - name: Sha384Hmac
+    params: [x:Data, k:Data]
+    returns: [Data]
+  desc: Hash *x* with key *k* using the SHA-384 function
+  example:
+  - i: "'Behind the tree!' /swordfish"
+    o: ["Behind the tree!", "swordfish"]
+  - i: /text-data map sha384.hmac
+    o: ["data: 401d0de7dd5cdf1ed82002cc1a696ec8d3d636b0388b89cc6f33ec4b237382a16b976f4773c3b0a3979392289a0ceaf9"]
+
+- name: sha512
+  title: SHA-512 hash function
+  funcs:
+  - name: Sha512
+    params: [x:Data]
+    returns: [Data]
+  desc: Hash *x* with the SHA-512 hash function
+  example:
+  - i: "'Behind the tree!' text-data sha512"
+    o: ["data: 431777a80ed22c45b4fe0dc8c7e3a07d8d20df3b796a39068f2fc6f57cd69b6c60f4a6e3151189b97a1ad2fe5888c255e93f28c1e6c9b6f0241b10c34f8f9e86"]
+
+- name: sha512.hmac
+  title: SHA-512 keyed hash function
+  funcs:
+  - name: Sha512Hmac
+    params: [x:Data, k:Data]
+    returns: [Data]
+  desc: Hash *x* with key *k* using the SHA-512 function
+  example:
+  - i: "'Behind the tree!' /swordfish"
+    o: ["Behind the tree!", "swordfish"]
+  - i: /text-data map sha512.hmac
+    o: ["data: 8e4074cf371bc7e83cd508e9a3d4c0ecd9e014aa808f3234b05de26ddad9895ad6d375651b3ac8231806ccd0b9cd477f3df024c1ecd75032a0e827e7f2f98fcf"]
+
+- name: rotate.13
+  aliases: [rot13]
+  title: Rotate characters by 13
+  funcs:
+  - name: Rotate13
+    params: [x:Text]
+    returns: [Text]
+  desc: |-
+    Rotate all characters in *x* by 13 positions. This is a simple method to
+    create spoiler text that is unreadable at first glance, but can easily
+    be decrypted manually.
+  example:
+  - i: "'Behind the tree!' rot13"
+    o: [Oruvaq gur gerr!]
+  - i: rot13
+    o: [Behind the tree!]

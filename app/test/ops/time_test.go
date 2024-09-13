@@ -104,7 +104,7 @@ func TestOpDocs_Time_LocalZone(t *testing.T) {
 	c.Eval("'MST' local.zone=")
 
 	c.Eval("local.zone")
-	c.AssertStack("MST :time zone")
+	c.AssertStack("time zone: MST")
 }
 
 func TestOpDocs_Time_LocalZoneSet(t *testing.T) {

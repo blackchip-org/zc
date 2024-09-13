@@ -169,8 +169,8 @@ Example:
 
 | Input             | Stack               
 |-------------------|---------------------
-| `c -21 4 div.mod` | `-6 :quo \| 3 :mod` 
-| `c -21 4 div.rem` | `-5 :quo \| -1 :rem`
+| `c -21 4 div.mod` | `quo: -6 \| mod: 3` 
+| `c -21 4 div.rem` | `quo: -5 \| rem: -1`
 
 ### div.rem
 
@@ -188,8 +188,8 @@ Example:
 
 | Input             | Stack               
 |-------------------|---------------------
-| `c -21 4 div.mod` | `-6 :quo \| 3 :mod` 
-| `c -21 4 div.rem` | `-5 :quo \| -1 :rem`
+| `c -21 4 div.mod` | `quo: -6 \| mod: 3` 
+| `c -21 4 div.rem` | `quo: -5 \| rem: -1`
 
 ### div/i
 

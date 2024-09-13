@@ -87,7 +87,7 @@ func TestOpDocs_Stack_Label(t *testing.T) {
 	c.AssertStack("42")
 
 	c.Eval("/answer label")
-	c.AssertStack("42 :answer")
+	c.AssertStack("answer: 42")
 }
 
 func TestOpDocs_Stack_Load(t *testing.T) {

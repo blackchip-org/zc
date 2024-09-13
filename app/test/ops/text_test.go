@@ -8,6 +8,43 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
+func TestOpDocs_Text_CodePointText(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0x41 0x42 0x1f18e /cp-text map")
+	c.AssertStack("A", "B", "🆎")
+}
+
+func TestOpDocs_Text_Concat(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("/f /o /o /cat fold")
+	c.AssertStack("foo")
+}
+
+func TestOpDocs_Text_Join(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("128 8 74 2")
+	c.AssertStack("128", "8", "74", "2")
+
+	c.Eval("'/. join' fold")
+	c.AssertStack("128.8.74.2")
+}
+
+func TestOpDocs_Text_Left(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("'abcdef")
+	c.AssertStack("abcdef")
+
+	c.Eval("4 left")
+	c.AssertStack("abcd")
+
+	c.Eval("-1 left")
+	c.AssertStack("abc")
+}
+
 func TestOpDocs_Text_Len(t *testing.T) {
 	c := app.NewCalcTester(t)
 
@@ -16,4 +53,78 @@ func TestOpDocs_Text_Len(t *testing.T) {
 
 	c.Eval("c '🥇🥈🥉👏' len")
 	c.AssertStack("4")
+}
+
+func TestOpDocs_Text_Lower(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("'AbCd")
+	c.AssertStack("AbCd")
+
+	c.Eval("lower")
+	c.AssertStack("abcd")
+}
+
+func TestOpDocs_Text_Right(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("'abcdef")
+	c.AssertStack("abcdef")
+
+	c.Eval("4 right")
+	c.AssertStack("cdef")
+
+	c.Eval("-1 right")
+	c.AssertStack("def")
+}
+
+func TestOpDocs_Text_Split(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("128.8.74.2")
+	c.AssertStack("128.8.74.2")
+
+	c.Eval("/. split")
+	c.AssertStack("128", "8", "74", "2")
+}
+
+func TestOpDocs_Text_TextCodePoint(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("/AB🆎 text-cp /hex map")
+	c.AssertStack("0x41", "0x42", "0x1f18e")
+}
+
+func TestOpDocs_Text_TextData(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("/ABC text-data")
+	c.AssertStack("data: 414243")
+}
+
+func TestOpDocs_Text_TextUtf8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("54° text-utf8")
+	c.AssertStack("data: 3534c2b0")
+}
+
+func TestOpDocs_Text_Upper(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("'AbCd")
+	c.AssertStack("AbCd")
+
+	c.Eval("upper")
+	c.AssertStack("ABCD")
+}
+
+func TestOpDocs_Text_Utf8Text(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0x3534c2b0 int-data")
+	c.AssertStack("data: 3534c2b0")
+
+	c.Eval("utf8-text")
+	c.AssertStack("54°")
 }

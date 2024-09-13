@@ -3,6 +3,65 @@ title: Text operations
 category: lib
 
 ops:
+- name: concat
+  aliases: [cat]
+  funcs:
+  - name: Concat
+    params: [x:Text, y:Text]
+    returns: [Text]
+  desc: Concatenates *x* and *y*.
+  example:
+  - i: /f /o /o /cat fold
+    o: [foo]
+
+- name: code.point-text
+  aliases: [cp-text]
+  funcs:
+  - name: CodePointToText
+    params: [x:Int/s32]
+    returns: [Text]
+  desc: Convert the code point *x* to text.
+  example:
+  - i: 0x41 0x42 0x1f18e /cp-text map
+    o: [A, B, 🆎]
+
+- name: join
+  title: Join two text values
+  funcs:
+  - name: Join
+    params: [x:Text, y:Text, s:Text]
+    returns: [Text]
+  desc: |-
+    Concatenates *x* and *y* separated by *s*
+  example:
+    - i: 128 8 74 2
+      o: [128, 8, 74, 2]
+    - i: "'/. join' fold"
+      o: [128.8.74.2]
+
+- name: left
+  title: Subset from left
+  funcs:
+  - name: Left
+    params: [s:Text, n:Int/s]
+    returns: [s:Text]
+  desc: |-
+    Subset of *n* characters of *x* taken from the left.
+
+    If *n* is positive, *m* characters are taken from the left. If *n* is
+    negative, characters are taken from the left until there are *n* characters
+    remaining. If *n* is zero, *s* is returned without change.
+
+    If the absolute value of *n* is greater then then length of *s*, an
+    index out of range error is raised.
+  example:
+  - i: "'abcdef"
+    o: [abcdef]
+  - i: 4 left
+    o: [abcd]
+  - i: -1 left
+    o: [abc]
+
 - name: len
   title: Length of text in characters
   funcs:
@@ -16,3 +75,111 @@ ops:
   - i: "c '🥇🥈🥉👏' len"
     o: [4]
 
+- name: lower
+  title: Lowercase
+  funcs:
+  - name: Lower
+    params: [x:Text]
+    returns: [Text]
+  desc: Converts the text *x* to lowercase.
+  example:
+  - i: "'AbCd"
+    o: [AbCd]
+  - i: lower
+    o: [abcd]
+
+- name: right
+  title: Subset from right
+  funcs:
+  - name: Right
+    params: [x:Text, n:Int/s]
+    returns: [Text]
+  desc: |-
+    Subset of *n* characters of *x* taken from the right.
+
+    If *n* is positive, *n* characters are taken from the right. If *n* is
+    negative, characters are taken from the right until there are *n* characters
+    remaining. If *n* is zero, *s* is returned without change.
+
+    If the absolute value of *n* is greater then then length of *s*, an
+    index out of range error is raised.
+  example:
+  - i: "'abcdef"
+    o: [abcdef]
+  - i: 4 right
+    o: [cdef]
+  - i: -1 right
+    o: [def]
+
+- name: split
+  title: Split text
+  funcs:
+  - name: Split
+    params: [x:Text, s:Text]
+    returns: [Text]
+  desc: Split *x* into multiple text values where separated by *s*.
+  example:
+  - i: 128.8.74.2
+    o: [128.8.74.2]
+  - i: /. split
+    o: [128, 8, 74, 2]
+
+- name: text-code.point
+  aliases: [text-cp]
+  title: Convert text to Unicode code points
+  funcs:
+  - name: TextToCodePoints
+    params: [x:Text]
+    returns: [Int/s32*]
+  desc: Convert all text in *x* to Unicode code points.
+  example:
+  - i: "/AB🆎 text-cp /hex map"
+    o: [0x41, 0x42, 0x1f18e]
+
+- name: text-data
+  title: Convert text to data
+  funcs:
+  - name: TextToData
+    params: [x:Text]
+    returns: [Data]
+  desc: Converts the text *x* into its byte representation.
+  example:
+  - i: /ABC text-data
+    o: ["data: 414243"]
+
+- name: text-utf8
+  title: Convert text to UTF-8 bytes
+  funcs:
+  - name: TextToUtf8
+    params: [x:Text]
+    returns: [Data]
+  desc: Converts the text *x* into UTF-8.
+  example:
+  - i: 54° text-utf8
+    o: ["data: 3534c2b0"]
+
+- name: upper
+  title: Uppercase
+  funcs:
+  - name: Upper
+    params: [x:Text]
+    returns: [Text]
+  desc: Converts *x* to uppercase.
+  example:
+  - i: "'AbCd"
+    o: [AbCd]
+  - i: upper
+    o: [ABCD]
+
+- name: utf8-text
+  title: Convert UTF-8 bytes to text
+  funcs:
+  - name: Utf8ToText
+    params: [x:Data]
+    returns: [Text]
+  desc: Converts the UTF-8 data in *x* into text.
+  example:
+  - i: 0x3534c2b0 int-data
+    o: ["data: 3534c2b0"]
+  - i: utf8-text
+    o: [54°]

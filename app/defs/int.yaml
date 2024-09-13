@@ -1,0 +1,17 @@
+name: int
+title: Integer values
+category: lib
+
+ops:
+- name: int-data
+  title: Converts integer to big-endian bytes
+  funcs:
+  - name: IntToData
+    params: [x:Int]
+    returns: [Data]
+  desc: |-
+    Converts the integer *x* to its binary representation in big-endian
+    order.
+  example:
+  - i: 0x1234 int-data
+    o: ["data: 1234"]

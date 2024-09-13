@@ -8,6 +8,46 @@ import (
 )
 
 var (
+	CodePointText = zc.Op{
+		Name: "code.point-text",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int32},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.CodePointToText,
+			},
+		},
+	}
+	Concat = zc.Op{
+		Name: "concat",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String, zc.String},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Concat,
+			},
+		},
+	}
+	Join = zc.Op{
+		Name: "join",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String, zc.String, zc.String},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Join,
+			},
+		},
+	}
+	Left = zc.Op{
+		Name: "left",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int, zc.String},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Left,
+			},
+		},
+	}
 	Len = zc.Op{
 		Name: "len",
 		Funcs: []zc.Func{
@@ -15,6 +55,87 @@ var (
 				Params:  []zc.Type{zc.String},
 				Returns: []zc.Type{zc.Int},
 				Eval:    funcs.Len,
+			},
+		},
+	}
+	Lower = zc.Op{
+		Name: "lower",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Lower,
+			},
+		},
+	}
+	Right = zc.Op{
+		Name: "right",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int, zc.String},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Right,
+			},
+		},
+	}
+	Split = zc.Op{
+		Name: "split",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String, zc.String},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Split,
+			},
+		},
+	}
+	TextCodePoint = zc.Op{
+		Name: "text-code.point",
+		Funcs: []zc.Func{
+			{
+				Params:    []zc.Type{zc.String},
+				Returns:   []zc.Type{},
+				VarReturn: zc.Int32,
+				Eval:      funcs.TextToCodePoints,
+			},
+		},
+	}
+	TextData = zc.Op{
+		Name: "text-data",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Data},
+				Eval:    funcs.TextToData,
+			},
+		},
+	}
+	TextUtf8 = zc.Op{
+		Name: "text-utf8",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Data},
+				Eval:    funcs.TextToUtf8,
+			},
+		},
+	}
+	Upper = zc.Op{
+		Name: "upper",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Upper,
+			},
+		},
+	}
+	Utf8Text = zc.Op{
+		Name: "utf8-text",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Data},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.Utf8ToText,
 			},
 		},
 	}

@@ -6,12 +6,98 @@ Text operations
 
 ## Index
 
-| Operation     | Description                 
-|---------------|-----------------------------
-| [`len`](#len) | Length of text in characters
+| Operation                                     | Description                        
+|-----------------------------------------------|------------------------------------
+| [`code.point-text, cp-text`](#codepoint-text) |                                    
+| [`concat, cat`](#concat)                      |                                    
+| [`join`](#join)                               | Join two text values               
+| [`left`](#left)                               | Subset from left                   
+| [`len`](#len)                                 | Length of text in characters       
+| [`lower`](#lower)                             | Lowercase                          
+| [`right`](#right)                             | Subset from right                  
+| [`split`](#split)                             | Split text                         
+| [`text-code.point, text-cp`](#text-codepoint) | Convert text to Unicode code points
+| [`text-data`](#text-data)                     | Convert text to data               
+| [`text-utf8`](#text-utf8)                     | Convert text to UTF-8 bytes        
+| [`upper`](#upper)                             | Uppercase                          
+| [`utf8-text`](#utf8-text)                     | Convert UTF-8 bytes to text        
 
 
 ## Operations
+
+### code.point-text
+
+Convert the code point *x* to text.
+
+Alias: `cp-text`
+
+Stack effects:
+```
+( x:Int/s32 -- Text )
+```
+
+Example:
+
+| Input                            | Stack           
+|----------------------------------|-----------------
+| `0x41 0x42 0x1f18e /cp-text map` | `A \| B \| 🆎`   
+
+### concat
+
+Concatenates *x* and *y*.
+
+Alias: `cat`
+
+Stack effects:
+```
+( x:Text y:Text -- Text )
+```
+
+Example:
+
+| Input                | Stack
+|----------------------|------
+| `/f /o /o /cat fold` | `foo`
+
+### join
+
+Concatenates *x* and *y* separated by *s*
+
+Stack effects:
+```
+( x:Text y:Text s:Text -- Text )
+```
+
+Example:
+
+| Input            | Stack                
+|------------------|----------------------
+| `128 8 74 2`     | `128 \| 8 \| 74 \| 2`
+| `'/. join' fold` | `128.8.74.2`         
+
+### left
+
+Subset of *n* characters of *x* taken from the left.
+
+If *n* is positive, *m* characters are taken from the left. If *n* is
+negative, characters are taken from the left until there are *n* characters
+remaining. If *n* is zero, *s* is returned without change.
+
+If the absolute value of *n* is greater then then length of *s*, an
+index out of range error is raised.
+
+Stack effects:
+```
+( s:Text n:Int/s -- s:Text )
+```
+
+Example:
+
+| Input     | Stack   
+|-----------|---------
+| `'abcdef` | `abcdef`
+| `4 left`  | `abcd`  
+| `-1 left` | `abc`   
 
 ### len
 
@@ -28,3 +114,138 @@ Example:
 |----------------------------|------
 | `c 'abcd' len`             | `4`  
 | `c '🥇🥈🥉👏' len`             | `4`  
+
+### lower
+
+Converts the text *x* to lowercase.
+
+Stack effects:
+```
+( x:Text -- Text )
+```
+
+Example:
+
+| Input   | Stack 
+|---------|-------
+| `'AbCd` | `AbCd`
+| `lower` | `abcd`
+
+### right
+
+Subset of *n* characters of *x* taken from the right.
+
+If *n* is positive, *n* characters are taken from the right. If *n* is
+negative, characters are taken from the right until there are *n* characters
+remaining. If *n* is zero, *s* is returned without change.
+
+If the absolute value of *n* is greater then then length of *s*, an
+index out of range error is raised.
+
+Stack effects:
+```
+( x:Text n:Int/s -- Text )
+```
+
+Example:
+
+| Input      | Stack   
+|------------|---------
+| `'abcdef`  | `abcdef`
+| `4 right`  | `cdef`  
+| `-1 right` | `def`   
+
+### split
+
+Split *x* into multiple text values where separated by *s*.
+
+Stack effects:
+```
+( x:Text s:Text -- Text )
+```
+
+Example:
+
+| Input        | Stack                
+|--------------|----------------------
+| `128.8.74.2` | `128.8.74.2`         
+| `/. split`   | `128 \| 8 \| 74 \| 2`
+
+### text-code.point
+
+Convert all text in *x* to Unicode code points.
+
+Alias: `text-cp`
+
+Stack effects:
+```
+( x:Text -- Int/s32* )
+```
+
+Example:
+
+| Input                      | Stack                    
+|----------------------------|--------------------------
+| `/AB🆎 text-cp /hex map`    | `0x41 \| 0x42 \| 0x1f18e`
+
+### text-data
+
+Converts the text *x* into its byte representation.
+
+Stack effects:
+```
+( x:Text -- Data )
+```
+
+Example:
+
+| Input            | Stack         
+|------------------|---------------
+| `/ABC text-data` | `data: 414243`
+
+### text-utf8
+
+Converts the text *x* into UTF-8.
+
+Stack effects:
+```
+( x:Text -- Data )
+```
+
+Example:
+
+| Input            | Stack           
+|------------------|-----------------
+| `54° text-utf8`  | `data: 3534c2b0`
+
+### upper
+
+Converts *x* to uppercase.
+
+Stack effects:
+```
+( x:Text -- Text )
+```
+
+Example:
+
+| Input   | Stack 
+|---------|-------
+| `'AbCd` | `AbCd`
+| `upper` | `ABCD`
+
+### utf8-text
+
+Converts the UTF-8 data in *x* into text.
+
+Stack effects:
+```
+( x:Data -- Text )
+```
+
+Example:
+
+| Input                 | Stack           
+|-----------------------|-----------------
+| `0x3534c2b0 int-data` | `data: 3534c2b0`
+| `utf8-text`           | `54°`           

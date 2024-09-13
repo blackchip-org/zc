@@ -1,6 +1,7 @@
 package zc
 
 import (
+	"bytes"
 	"fmt"
 	"math"
 	"math/big"
@@ -24,6 +25,7 @@ var (
 	BigInt   = BigIntType{}
 	Bool     = BoolType{}
 	Complex  = ComplexType{}
+	Data     = DataType{}
 	Date     = DateType{}
 	DateTime = DateTimeType{}
 	Decimal  = DecimalType{}
@@ -49,7 +51,7 @@ var Types []Type = []Type{
 	Any,
 	BigFloat, BigInt, Bool,
 	Complex,
-	Date, DateTime, Decimal, AngleDMS, Duration,
+	Data, Date, DateTime, Decimal, AngleDMS, Duration,
 	Float64,
 	Int, Int8, Int16, Int32, Int64,
 	Rat, Real,
@@ -65,6 +67,7 @@ const (
 
 var (
 	poolSize  = 8
+	dataPool  = coll.NewPool[bytes.Buffer](poolSize)
 	decPool   = coll.NewPool[apd.Decimal](poolSize)
 	floatPool = coll.NewPool[big.Float](poolSize)
 	intPool   = coll.NewPool[big.Int](poolSize)
@@ -332,6 +335,62 @@ func (t ComplexType) Format(_ coll.State, a any) string {
 
 func (t ComplexType) Dup(a any) any {
 	return a
+}
+
+// ----------------------------------------------------------------------------
+type DataType struct{}
+
+func (t DataType) Name() string    { return "Data" }
+func (t DataType) AppName() string { return "Data" }
+func (t DataType) GoName() string  { return "*bytes.Buffer" }
+
+func (t DataType) New() *bytes.Buffer {
+	d := dataPool.New()
+	d.Reset()
+	return d
+}
+
+func (t DataType) Recycle(vals ...*bytes.Buffer) {
+	for _, val := range vals {
+		dataPool.Recycle(val)
+	}
+}
+
+func (t DataType) As(a any) *bytes.Buffer {
+	v, ok := a.(*bytes.Buffer)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t DataType) Push(c Calc, val *bytes.Buffer) {
+	c.Push(Item{TypeVal: val, Type: t})
+	c.SetLabel(LabelData)
+}
+
+func (t DataType) Pop(c Calc) *bytes.Buffer {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t DataType) Parse(_ coll.State, str string) (any, bool, error) {
+	return nil, false, nil
+}
+
+func (t DataType) Format(_ coll.State, a any) string {
+	var s strings.Builder
+	bytes := t.As(a).Bytes()
+	for _, b := range bytes {
+		fmt.Fprintf(&s, "%02x", b)
+	}
+	return s.String()
+}
+
+func (t DataType) Dup(a any) any {
+	d := t.New()
+	d.Reset()
+	d.Write(t.As(a).Bytes())
+	return d
 }
 
 // ----------------------------------------------------------------------------
@@ -949,7 +1008,6 @@ func (t StringType) As(a any) string {
 
 func (t StringType) Push(c Calc, val string) {
 	c.Push(Item{TypeVal: val, Type: t})
-
 }
 
 func (t StringType) Pop(c Calc) string {

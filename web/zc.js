@@ -82,12 +82,13 @@ function submit(tag) {
 }
 
 function annotate(l) {
-    let text = l.value
+    let text = ""
+    if ( l.label ) {
+        text = `${text} <span class='label'>${l.label}: </span>`
+    }
+    text += l.value
     if ( l.unit) {
         text = `${text}${unit}`
-    }
-    if ( l.label ) {
-        text = `${text} <span class='label'>:${l.label}</span>`
     }
     return text
 }

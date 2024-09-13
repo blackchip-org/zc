@@ -45,14 +45,14 @@ func (i Item) Dup() Item {
 
 func (i Item) String() string {
 	var s strings.Builder
+	if i.Label != "" {
+		s.WriteString(i.Label)
+		s.WriteString(": ")
+	}
 	s.WriteString(EscapeString(i.Val()))
 	if i.Unit != "" {
 		s.WriteRune(' ')
 		s.WriteString(i.Unit)
-	}
-	if i.Label != "" {
-		s.WriteString(" :")
-		s.WriteString(i.Label)
 	}
 	return s.String()
 }

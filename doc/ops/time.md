@@ -161,7 +161,7 @@ Example:
 
 | Input        | Stack           
 |--------------|-----------------
-| `local.zone` | `MST :time zone`
+| `local.zone` | `time zone: MST`
 
 ### local.zone=
 

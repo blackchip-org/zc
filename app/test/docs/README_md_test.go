@@ -214,7 +214,7 @@ func TestAnnoLabel(t *testing.T) {
 	c.AssertStack("42")
 
 	c.Eval("[the answer] label")
-	c.AssertStack("42 :the answer")
+	c.AssertStack("the answer: 42")
 }
 
 func TestAnnoDiscard(t *testing.T) {

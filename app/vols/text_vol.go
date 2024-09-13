@@ -10,7 +10,23 @@ import (
 var Text = zc.Vol{
 	Name: "text",
 	Ops: []zc.Op{
+		ops.CodePointText,
+		ops.Concat,
+		ops.Join,
+		ops.Left,
 		ops.Len,
+		ops.Lower,
+		ops.Right,
+		ops.Split,
+		ops.TextCodePoint,
+		ops.TextData,
+		ops.TextUtf8,
+		ops.Upper,
+		ops.Utf8Text,
 	},
-	Macros: []zc.Macro{},
+	Macros: []zc.Macro{
+		{Name: "cp-text", Expr: "code.point-text"},
+		{Name: "cat", Expr: "concat"},
+		{Name: "text-cp", Expr: "text-code.point"},
+	},
 }

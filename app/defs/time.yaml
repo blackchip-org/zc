@@ -118,7 +118,7 @@ ops:
     The name of the local time zone.
   example:
   - i: local.zone
-    o: [MST :time zone]
+    o: ["time zone: MST"]
 
 - name: local.zone=
   title: Sets the local time zone

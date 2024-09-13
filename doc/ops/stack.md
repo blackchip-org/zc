@@ -157,7 +157,7 @@ Example:
 | Input           | Stack       
 |-----------------|-------------
 | `42`            | `42`        
-| `/answer label` | `42 :answer`
+| `/answer label` | `answer: 42`
 
 ### load
 

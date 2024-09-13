@@ -111,7 +111,7 @@ ops:
   - i: 42
     o: [42]
   - i: /answer label
-    o: ["42 :answer"]
+    o: ["answer: 42"]
 
 - name: load
   aliases: [ld]

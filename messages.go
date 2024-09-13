@@ -11,10 +11,18 @@ const (
 	NoticeInexact = "inexact"
 )
 
+const (
+	LabelData = "data"
+)
+
 var ErrDivisionByZero = errors.New("division by zero")
 
 func ErrFeatureNotSupported(name string) error {
 	return fmt.Errorf("feature not supported: %v", name)
+}
+
+func ErrIndexOutOfRange(i int) error {
+	return fmt.Errorf("index out of range: %v", i)
 }
 
 func ErrInfinity(sign int) error {

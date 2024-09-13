@@ -99,10 +99,10 @@ func TestOpDocs_Basic_DivMod(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c -21 4 div.mod")
-	c.AssertStack("-6 :quo", "3 :mod")
+	c.AssertStack("quo: -6", "mod: 3")
 
 	c.Eval("c -21 4 div.rem")
-	c.AssertStack("-5 :quo", "-1 :rem")
+	c.AssertStack("quo: -5", "rem: -1")
 }
 
 func TestOpDocs_Basic_DivMod_Zero(t *testing.T) {
@@ -116,10 +116,10 @@ func TestOpDocs_Basic_DivRem(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c -21 4 div.mod")
-	c.AssertStack("-6 :quo", "3 :mod")
+	c.AssertStack("quo: -6", "mod: 3")
 
 	c.Eval("c -21 4 div.rem")
-	c.AssertStack("-5 :quo", "-1 :rem")
+	c.AssertStack("quo: -5", "rem: -1")
 }
 
 func TestOpDocs_Basic_DivRem_Zero(t *testing.T) {

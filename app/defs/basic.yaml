@@ -159,9 +159,9 @@ ops:
     Euclidean division. If *y* is zero, a division by zero error is raised.
   example:
   - i: c -21 4 div.mod
-    o: ["-6 :quo", "3 :mod"]
+    o: ["quo: -6", "mod: 3"]
   - i: c -21 4 div.rem
-    o: ["-5 :quo", "-1 :rem"]
+    o: ["quo: -5", "rem: -1"]
   tests:
   - name: Zero
     test:
@@ -180,9 +180,9 @@ ops:
     truncated division. If *y* is zero, a division by zero error is raised.
   example:
   - i: c -21 4 div.mod
-    o: ["-6 :quo", "3 :mod"]
+    o: ["quo: -6", "mod: 3"]
   - i: c -21 4 div.rem
-    o: ["-5 :quo", "-1 :rem"]
+    o: ["quo: -5", "rem: -1"]
   tests:
   - name: Zero
     test:

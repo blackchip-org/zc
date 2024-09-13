@@ -312,7 +312,7 @@ A label can be attached using `label`:
 | Input                 | Stack
 |-----------------------|---------------------|
 | `42`                  | `42`
-| `[the answer] label ` | `42 :the answer`
+| `[the answer] label ` | `the answer: 42`
 
 
 Annotations are typically discarded when a value is popped off the stack:
