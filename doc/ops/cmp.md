@@ -28,7 +28,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Bool )
 ( x:Dec y:Dec -- Bool )
-( x:Float/128 y:Float/128 -- Bool )
+( x:Float/q y:Float/q -- Bool )
 ( x:Rat y:Rat -- Bool )
 ( x:Complex y:Complex -- Bool )
 ( x:Text y:Text -- Bool )
@@ -49,7 +49,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Bool )
 ( x:Dec y:Dec -- Bool )
-( x:Float/128 y:Float/128 -- Bool )
+( x:Float/q y:Float/q -- Bool )
 ( x:Rat y:Rat -- Bool )
 ( x:Text y:Text -- Bool )
 ```
@@ -70,7 +70,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Bool )
 ( x:Dec y:Dec -- Bool )
-( x:Float/128 y:Float/128 -- Bool )
+( x:Float/q y:Float/q -- Bool )
 ( x:Rat y:Rat -- Bool )
 ( x:Text y:Text -- Bool )
 ```
@@ -91,7 +91,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Bool )
 ( x:Dec y:Dec -- Bool )
-( x:Float/128 y:Float/128 -- Bool )
+( x:Float/q y:Float/q -- Bool )
 ( x:Rat y:Rat -- Bool )
 ( x:Text y:Text -- Bool )
 ```
@@ -112,7 +112,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Bool )
 ( x:Dec y:Dec -- Bool )
-( x:Float/128 y:Float/128 -- Bool )
+( x:Float/q y:Float/q -- Bool )
 ( x:Rat y:Rat -- Bool )
 ( x:Text y:Text -- Bool )
 ```
@@ -133,7 +133,7 @@ Stack effects:
 ```
 ( x:Int y:Int -- Bool )
 ( x:Dec y:Dec -- Bool )
-( x:Float/128 y:Float/128 -- Bool )
+( x:Float/q y:Float/q -- Bool )
 ( x:Rat y:Rat -- Bool )
 ( x:Complex y:Complex -- Bool )
 ( x:Text y:Text -- Bool )
@@ -157,7 +157,7 @@ Stack effects:
 ( Dec* -- Dec* )
 ( Int* -- Int* )
 ( Rat* -- Rat* )
-( Float/128* -- Float/128* )
+( Float/q* -- Float/q* )
 ( Text* -- Text* )
 ```
 

@@ -34,6 +34,7 @@
 | [cmp](ops/cmp.md)       | Comparisions                             
 | [color](ops/color.md)   | Color conversions                        
 | [crypto](ops/crypto.md) | Cryptographic functions                  
+| [float](ops/float.md)   | Floating-point values                    
 | [geo](ops/geo.md)       | Geo-spatial calculations                 
 | [hof](ops/hof.md)       | Higher order functions                   
 | [int](ops/int.md)       | Integer values                           

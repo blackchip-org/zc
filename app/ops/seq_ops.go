@@ -18,16 +18,6 @@ var (
 			},
 		},
 	}
-	FibonacciF = zc.Op{
-		Name: "fibonacci/f",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.Uint},
-				Returns: []zc.Type{zc.BigFloat},
-				Eval:    funcs.FibonacciBigFloat,
-			},
-		},
-	}
 	Sequence = zc.Op{
 		Name: "sequence",
 		Funcs: []zc.Func{

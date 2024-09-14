@@ -6,6 +6,7 @@ type OpDef struct {
 	Aliases  []string  `yaml:"aliases"`
 	Title    string    `yaml:"title"`
 	Subtitle string    `yaml:"subtitle"`
+	Stub     bool      `yaml:"stub"`
 	Funcs    []FuncDef `yaml:"funcs"`
 	Macro    string    `yaml:"macro"`
 	Desc     string    `yaml:"desc"`

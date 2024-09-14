@@ -12,7 +12,7 @@ var Real = zc.Vol{
 	Ops: []zc.Op{
 		ops.Dec,
 		ops.RoundingMode,
-		ops.RoundingModeGet,
+		ops.RoundingModeQ,
 		ops.Trunc,
 	},
 	Macros: []zc.Macro{},

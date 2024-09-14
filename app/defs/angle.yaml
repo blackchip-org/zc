@@ -20,6 +20,7 @@ ops:
 
 - name: deg.min
   aliases: [dm]
+  title: Degree angle to degrees and minutes
   funcs:
   - name: DegMin
     params: [x:Angle/DMS]
@@ -118,6 +119,7 @@ ops:
   aliases: [secs]
   ident: SecondsDMS
   title: Degree angle to seconds
+  subtitle: degree angle to seconds
   funcs:
   - name: SecondsDMS
     params: [x:Angle/DMS]

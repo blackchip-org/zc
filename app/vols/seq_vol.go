@@ -11,12 +11,10 @@ var Seq = zc.Vol{
 	Name: "seq",
 	Ops: []zc.Op{
 		ops.Fibonacci,
-		ops.FibonacciF,
 		ops.Sequence,
 	},
 	Macros: []zc.Macro{
 		{Name: "fib", Expr: "fibonacci"},
-		{Name: "fib/f", Expr: "fibonacci/f"},
 		{Name: "seq", Expr: "sequence"},
 	},
 }

@@ -15,7 +15,7 @@ var Angle = zc.Vol{
 		ops.DegMinRound,
 		ops.DegMinSec,
 		ops.DegMinSecRound,
-		ops.DmsGet,
+		ops.DmsQ,
 		ops.MinutesDMS,
 		ops.SecondsDMS,
 	},

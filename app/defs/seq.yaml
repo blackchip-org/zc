@@ -7,31 +7,14 @@ ops:
   aliases: [fib]
   title: Fibonacci sequence
   funcs:
-  - name: Fibonacci 
+  - name: Fibonacci
     params: [n:Int/u]
     returns: [Int]
   desc: |-
-    Calculates the *n*th element in the Fibonacci sequence. 
+    Calculates the *n*th element in the Fibonacci sequence.
   example:
   - i: 1 5 seq /fib map
     o: [1, 1, 2, 3, 5]
-
-- name: fibonacci/f
-  aliases: [fib/f]
-  title: Fibonacci sequence
-  subtitle: floating point
-  funcs:
-  - name: FibonacciBigFloat
-    params: [n:Int/u]
-    returns: [Float/128]
-  desc: |-
-    Calculates the *n*th element in the Fibonacci sequence. 
-
-    This operation is quicker than `fibonacci` when computing large values 
-    when an exact number is not required and some error is acceptable. 
-  example:
-  - i: 300 fib/f
-    o: [2.2223224462942044552973989346191002e62]
 
 - name: sequence
   aliases: [seq]
@@ -41,10 +24,10 @@ ops:
     params: [start:Int, end:Int]
     returns: [Int*]
   desc: |-
-    Places all integers from *start* to *end* on to the stack. If *start* is 
+    Places all integers from *start* to *end* on to the stack. If *start* is
     greater than *end*, the list of integers is in decreasing order.
   example:
-  - i: c 4 8 seq 
+  - i: c 4 8 seq
     o: [4, 5, 6, 7, 8]
   - i: c 8 4 seq
     o: [8, 7, 6, 5, 4]

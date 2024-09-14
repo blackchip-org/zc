@@ -108,12 +108,12 @@ func identFor(v string) string {
 			s.Skip()
 			s.Val.WriteRune(unicode.ToUpper(s.This))
 			s.Skip()
-		case s.This == '?' && s.Next == scan.EndOfText:
+		case s.This == '?':
 			s.Skip()
-			s.Val.WriteString("Get")
-		case s.This == '=' && s.Next == scan.EndOfText:
+			s.Val.WriteString("Q")
+		case s.This == '=':
 			s.Skip()
-			s.Val.WriteString("Set")
+			s.Val.WriteString("E")
 		default:
 			s.Keep()
 		}

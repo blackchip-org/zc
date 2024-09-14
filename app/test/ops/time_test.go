@@ -51,7 +51,7 @@ func TestOpDocs_Time_DateTime(t *testing.T) {
 	c.AssertStack("Mon Jan 2 2006 3:04:05pm UTC")
 }
 
-func TestOpDocs_Time_DateTimeGet(t *testing.T) {
+func TestOpDocs_Time_DateTimeQ(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("'Jan 2 2006 15:04:05 -0700 MST' now=")
@@ -64,7 +64,7 @@ func TestOpDocs_Time_DateTimeGet(t *testing.T) {
 	c.AssertStack("false")
 }
 
-func TestOpDocs_Time_DateGet(t *testing.T) {
+func TestOpDocs_Time_DateQ(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("'Jan 2 2006 15:04:05 -0700 MST' now=")
@@ -107,7 +107,7 @@ func TestOpDocs_Time_LocalZone(t *testing.T) {
 	c.AssertStack("time zone: MST")
 }
 
-func TestOpDocs_Time_LocalZoneSet(t *testing.T) {
+func TestOpDocs_Time_LocalZoneE(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("'Jan 2 2006 15:04:05 -0700 MST' now=")
@@ -149,7 +149,7 @@ func TestOpDocs_Time_Now(t *testing.T) {
 	c.AssertStack("Mon Jan 2 2006 3:04:05pm -0700 MST")
 }
 
-func TestOpDocs_Time_NowSet(t *testing.T) {
+func TestOpDocs_Time_NowE(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("'Jan 2 2006 15:04:05 -0700 MST' now=")
@@ -217,7 +217,7 @@ func TestOpDocs_Time_TimeZone(t *testing.T) {
 	c.AssertStack("Tue Jan 3 2006 5:04:05am +0700 WIB")
 }
 
-func TestOpDocs_Time_TimeGet(t *testing.T) {
+func TestOpDocs_Time_TimeQ(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("'Jan 2 2006 15:04:05 -0700 MST' now=")

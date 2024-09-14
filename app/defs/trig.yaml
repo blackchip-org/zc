@@ -7,8 +7,8 @@ ops:
   title: Inverse cosine
   funcs:
   - name: AcosFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: AcosComplex
     params: [x:Complex]
     returns: [Complex]
@@ -21,8 +21,8 @@ ops:
   title: Inverse hyperbolic cosine
   funcs:
   - name: AcoshFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: AcoshComplex
     params: [x:Complex]
     returns: [Complex]
@@ -35,8 +35,8 @@ ops:
   title: Inverse sine
   funcs:
   - name: AsinFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: AsinComplex
     params: [x:Complex]
     returns: [Complex]
@@ -49,8 +49,8 @@ ops:
   title: Inverse hyperbolic sine
   funcs:
   - name: AsinhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: AsinhComplex
     params: [x:Complex]
     returns: [Complex]
@@ -63,8 +63,8 @@ ops:
   title: Inverse tangent
   funcs:
   - name: AtanFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: AtanComplex
     params: [x:Complex]
     returns: [Complex]
@@ -77,8 +77,8 @@ ops:
   title: Inverse tangent
   funcs:
   - name: Atan2Float64
-    params: [x:Float/64, y:Float/64]
-    returns: [Float/64]
+    params: [x:Float, y:Float]
+    returns: [Float]
   desc: Inverse tangent of *x/y* in radians.
   example:
   - i: 1 2 atan2 5 round
@@ -88,8 +88,8 @@ ops:
   title: Inverse hyperbolic tangent
   funcs:
   - name: AtanhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: AtanhComplex
     params: [x:Complex]
     returns: [Complex]
@@ -102,8 +102,8 @@ ops:
   title: Cosine
   funcs:
   - name: CosFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: CosComplex
     params: [x:Complex]
     returns: [Complex]
@@ -116,8 +116,8 @@ ops:
   title: Hyperbolic cosine
   funcs:
   - name: CoshFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: CoshComplex
     params: [x:Complex]
     returns: [Complex]
@@ -130,8 +130,8 @@ ops:
   title: Sine
   funcs:
   - name: SinFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: SinComplex
     params: [x:Complex]
     returns: [Complex]
@@ -145,8 +145,8 @@ ops:
   title: Hyperbolic sine
   funcs:
   - name: SinhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: SinhComplex
     params: [x:Complex]
     returns: [Complex]
@@ -160,8 +160,8 @@ ops:
   title: Tangent
   funcs:
   - name: TanFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: TanComplex
     params: [x:Complex]
     returns: [Complex]
@@ -175,8 +175,8 @@ ops:
   title: Hyperbolic tangent
   funcs:
   - name: TanhFloat64
-    params: [x:Float/64]
-    returns: [Float/64]
+    params: [x:Float]
+    returns: [Float]
   - name: TanhComplex
     params: [x:Complex]
     returns: [Complex]

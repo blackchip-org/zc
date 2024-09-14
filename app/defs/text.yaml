@@ -5,6 +5,7 @@ category: lib
 ops:
 - name: concat
   aliases: [cat]
+  title: Concatenation
   funcs:
   - name: Concat
     params: [x:Text, y:Text]
@@ -16,6 +17,7 @@ ops:
 
 - name: code.point-text
   aliases: [cp-text]
+  title: Unicode code point to text
   funcs:
   - name: CodePointToText
     params: [x:Int/s32]

@@ -187,13 +187,13 @@ Real number math uses fixed point math when possible:
 |----------------|-------------------
 | `1.1 2.2 a`    | `3.3`
 
-To perform a 128-bit floating-point operation, use `add/f` instead:
+To perform double precision floating-point operation, use `add/f` instead:
 
 <!-- test: Float -->
 
 | Input              | Stack
 |--------------------|-------------------
-| `1.1 2.2 add/f`    | `3.3000000000000000000000000000000002`
+| `1.1 2.2 add/f`    | `3.3000000000000003`
 
 Use either `round` or `r` to round to a certain number of digits after the
 decimal point:
@@ -202,7 +202,7 @@ decimal point:
 
 | Input              | Stack
 |--------------------|-------------------
-| `1.1 2.2 add/f`    | `3.3000000000000000000000000000000002`
+| `1.1 2.2 add/f`    | `3.3000000000000003`
 | `2 round`          | `3.3`
 
 Enter fractions in `a/b` notation:

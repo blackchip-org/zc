@@ -15,13 +15,6 @@ func TestOpDocs_Seq_Fibonacci(t *testing.T) {
 	c.AssertStack("1", "1", "2", "3", "5")
 }
 
-func TestOpDocs_Seq_FibonacciF(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("300 fib/f")
-	c.AssertStack("2.2223224462942044552973989346191002e62")
-}
-
 func TestOpDocs_Seq_Sequence(t *testing.T) {
 	c := app.NewCalcTester(t)
 

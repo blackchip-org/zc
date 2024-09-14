@@ -34,7 +34,7 @@ func TestOpDocs_Rand_RandSeed(t *testing.T) {
 	c.AssertStack("6")
 }
 
-func TestOpDocs_Rand_RandSeedGet(t *testing.T) {
+func TestOpDocs_Rand_RandSeedQ(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 42 rand.seed")

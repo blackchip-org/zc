@@ -28,7 +28,7 @@ var (
 			},
 		},
 	}
-	RandSeedGet = zc.Op{
+	RandSeedQ = zc.Op{
 		Name: "rand.seed?",
 		Funcs: []zc.Func{
 			{

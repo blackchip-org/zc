@@ -22,6 +22,13 @@ func TestOpDocs_Stat_Average_Empty(t *testing.T) {
 	c.AssertError("div: division undefined")
 }
 
+func TestOpDocs_Stat_Binomial(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("4 2 binomial")
+	c.AssertStack("6")
+}
+
 func TestOpDocs_Stat_Factorial(t *testing.T) {
 	c := app.NewCalcTester(t)
 

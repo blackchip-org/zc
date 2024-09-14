@@ -5,6 +5,14 @@ import (
 	"github.com/blackchip-org/zc/v6/pkg/calc"
 )
 
+func Binomial(c zc.Calc) {
+	k := zc.Int64.Pop(c)
+	n := zc.Int64.Pop(c)
+	coeff := zc.BigInt.New()
+	coeff.Binomial(n, k)
+	zc.BigInt.Push(c, coeff)
+}
+
 func Fact(c zc.Calc) {
 	ic := calc.NewBigInt()
 	n := zc.Uint.Pop(c)

@@ -69,7 +69,7 @@ and New York, NY:
 
 Stack effects:
 ```
-( lat1:Angle/DMS lon1:Angle/DMS lat2:Angle/DMS lon2:Angle/DMS -- Float/64 )
+( lat1:Angle/DMS lon1:Angle/DMS lat2:Angle/DMS lon2:Angle/DMS -- Float )
 ```
 
 Example:
@@ -93,7 +93,7 @@ tag and is unavailable in the web browser version.
 
 Stack effects:
 ```
-( p0:Float/64 p1:Float/64 s:Text t:Text -- Float/64 Float/64 )
+( p0:Float p1:Float s:Text t:Text -- Float Float )
 ```
 
 Example:

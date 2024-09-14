@@ -9,6 +9,7 @@ Statistical calculations
 | Operation                                        | Description                  
 |--------------------------------------------------|------------------------------
 | [`average, avg`](#average)                       | Average                      
+| [`binomial`](#binomial)                          | Binomial coefficient         
 | [`factorial, fact`](#factorial)                  | Factorial                    
 | [`prod`](#prod)                                  |                              
 | [`standard.dev.pop, stdev.p`](#standarddevpop)   | Population standard deviation
@@ -37,6 +38,21 @@ Example:
 | Input                 | Stack
 |-----------------------|------
 | `0 100 25 75 average` | `50` 
+
+### binomial
+
+Binomial coefficient where *k* elements are chosen from a set of *n*.
+
+Stack effects:
+```
+( n:Int/s64 k:Int/s64 -- Int )
+```
+
+Example:
+
+| Input          | Stack
+|----------------|------
+| `4 2 binomial` | `6`  
 
 ### factorial
 

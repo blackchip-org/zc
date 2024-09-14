@@ -12,9 +12,29 @@ var (
 		Name: "add/f",
 		Funcs: []zc.Func{
 			{
+				Params:  []zc.Type{zc.Float64, zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.AddFloat64,
+			},
+		},
+	}
+	AddQ = zc.Op{
+		Name: "add/q",
+		Funcs: []zc.Func{
+			{
 				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
 				Returns: []zc.Type{zc.BigFloat},
 				Eval:    funcs.AddBigFloat,
+			},
+		},
+	}
+	AddSf = zc.Op{
+		Name: "add/sf",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float32, zc.Float32},
+				Returns: []zc.Type{zc.Float32},
+				Eval:    funcs.AddFloat32,
 			},
 		},
 	}
@@ -32,9 +52,29 @@ var (
 		Name: "div/f",
 		Funcs: []zc.Func{
 			{
+				Params:  []zc.Type{zc.Float64, zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.DivFloat64,
+			},
+		},
+	}
+	DivQ = zc.Op{
+		Name: "div/q",
+		Funcs: []zc.Func{
+			{
 				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
 				Returns: []zc.Type{zc.BigFloat},
 				Eval:    funcs.DivBigFloat,
+			},
+		},
+	}
+	DivSf = zc.Op{
+		Name: "div/sf",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float32, zc.Float32},
+				Returns: []zc.Type{zc.Float32},
+				Eval:    funcs.DivFloat32,
 			},
 		},
 	}
@@ -72,14 +112,44 @@ var (
 		Name: "mul/f",
 		Funcs: []zc.Func{
 			{
+				Params:  []zc.Type{zc.Float64, zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.MulFloat64,
+			},
+		},
+	}
+	MulQ = zc.Op{
+		Name: "mul/q",
+		Funcs: []zc.Func{
+			{
 				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
 				Returns: []zc.Type{zc.BigFloat},
 				Eval:    funcs.MulBigFloat,
 			},
 		},
 	}
+	MulSf = zc.Op{
+		Name: "mul/sf",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float32, zc.Float32},
+				Returns: []zc.Type{zc.Float32},
+				Eval:    funcs.MulFloat32,
+			},
+		},
+	}
 	NegF = zc.Op{
 		Name: "neg/f",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.NegFloat64,
+			},
+		},
+	}
+	NegQ = zc.Op{
+		Name: "neg/q",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.BigFloat},
@@ -92,14 +162,24 @@ var (
 		Name: "sign/f",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{zc.BigFloat},
+				Params:  []zc.Type{zc.Float64},
 				Returns: []zc.Type{zc.Int},
-				Eval:    funcs.SignBigFloat,
+				Eval:    funcs.SignFloat64,
 			},
 		},
 	}
 	SqrtF = zc.Op{
 		Name: "sqrt/f",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.SqrtFloat64,
+			},
+		},
+	}
+	SqrtQ = zc.Op{
+		Name: "sqrt/q",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.BigFloat},
@@ -112,9 +192,29 @@ var (
 		Name: "sub/f",
 		Funcs: []zc.Func{
 			{
+				Params:  []zc.Type{zc.Float64, zc.Float64},
+				Returns: []zc.Type{zc.Float64},
+				Eval:    funcs.SubFloat64,
+			},
+		},
+	}
+	SubQ = zc.Op{
+		Name: "sub/q",
+		Funcs: []zc.Func{
+			{
 				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
 				Returns: []zc.Type{zc.BigFloat},
 				Eval:    funcs.SubBigFloat,
+			},
+		},
+	}
+	SubSf = zc.Op{
+		Name: "sub/sf",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Float32, zc.Float32},
+				Returns: []zc.Type{zc.Float32},
+				Eval:    funcs.SubFloat32,
 			},
 		},
 	}

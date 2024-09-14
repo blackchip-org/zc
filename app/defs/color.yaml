@@ -1,26 +1,26 @@
 name: color
 title: Color conversions
-category: lib 
+category: lib
 
 ops:
 - name: cmyk-rgb
-  title: CMYK to RGB 
+  title: CMYK to RGB
   funcs:
   - name: CMYKToRGB
     params: [c:Int/u8, m:Int/u8, y:Int/u8, k:Int/u8]
     returns: [r:Int/u8, g:Int/u8, b:Int/u8]
-  desc: Converts a color from the CMYK to RGB color space. 
-  example: 
-  - i: 0 127 191 127 cmyk-rgb 
+  desc: Converts a color from the CMYK to RGB color space.
+  example:
+  - i: 0 127 191 127 cmyk-rgb
     o: [128, 64, 32]
 
-- name: hsl-rgb 
-  title: HSL to RGB 
+- name: hsl-rgb
+  title: HSL to RGB
   funcs:
-  - name: HSLToRGB  
-    params: [h:Float/64, s:Float/64, l:Float/64]
+  - name: HSLToRGB
+    params: [h:Float, s:Float, l:Float]
     returns: [r:Int/u8, g:Int/u8, b:Int/u8]
-  desc: Converts a color from the HSL to RGB color space. 
+  desc: Converts a color from the HSL to RGB color space.
   example:
   - i: 20 0.6 0.314 hsl-rgb
     o: [128, 64, 32]
@@ -31,19 +31,19 @@ ops:
   - name: RGBToCMYK
     params: [r:Int/u8, g:Int/u8, b:Int/u8]
     returns: [c:Int/u8, m:Int/u8, y:Int/u8, k:Int/u8]
-  desc: Converts a color from the RGB to CMYK color space. 
+  desc: Converts a color from the RGB to CMYK color space.
   example:
   - i: 128 64 32 rgb-cmyk
     o: [0, 127, 191, 127]
 
-- name: rgb-hsl 
-  title: RGB to HSL 
+- name: rgb-hsl
+  title: RGB to HSL
   funcs:
   - name: RGBToHSL
     params: [r:Int/u8, g:Int/u8, b:Int/u8]
-    returns: [h:Float/64, s:Float/64, l:Float/64]
-  desc: Converts a color from the RGB to HSL color space. 
+    returns: [h:Float, s:Float, l:Float]
+  desc: Converts a color from the RGB to HSL color space.
   example:
-  - i: 128 64 32 rgb-hsl [3 round] map 
+  - i: 128 64 32 rgb-hsl [3 round] map
     o: [20, 0.6, 0.314]
 

@@ -37,7 +37,7 @@ Converts a color from the HSL to RGB color space.
 
 Stack effects:
 ```
-( h:Float/64 s:Float/64 l:Float/64 -- r:Int/u8 g:Int/u8 b:Int/u8 )
+( h:Float s:Float l:Float -- r:Int/u8 g:Int/u8 b:Int/u8 )
 ```
 
 Example:
@@ -67,7 +67,7 @@ Converts a color from the RGB to HSL color space.
 
 Stack effects:
 ```
-( r:Int/u8 g:Int/u8 b:Int/u8 -- h:Float/64 s:Float/64 l:Float/64 )
+( r:Int/u8 g:Int/u8 b:Int/u8 -- h:Float s:Float l:Float )
 ```
 
 Example:

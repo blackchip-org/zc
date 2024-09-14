@@ -50,7 +50,7 @@ func TestOpDocs_Angle_DegMinSecRound(t *testing.T) {
 	c.AssertStack("-76° 51′ 25″")
 }
 
-func TestOpDocs_Angle_DmsGet(t *testing.T) {
+func TestOpDocs_Angle_DmsQ(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c [10° 30′ 45″] dms?")

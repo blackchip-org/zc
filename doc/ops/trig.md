@@ -31,7 +31,7 @@ Inverse cosine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -47,7 +47,7 @@ Inverse hyperbolic cosine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -63,7 +63,7 @@ Inverse sine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -79,7 +79,7 @@ Inverse hyperbolic sine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -95,7 +95,7 @@ Inverse tangent of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -111,7 +111,7 @@ Inverse tangent of *x/y* in radians.
 
 Stack effects:
 ```
-( x:Float/64 y:Float/64 -- Float/64 )
+( x:Float y:Float -- Float )
 ```
 
 Example:
@@ -126,7 +126,7 @@ Inverse hyperbolic tangent of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -142,7 +142,7 @@ Cosine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -158,7 +158,7 @@ Hyperbolic cosine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -174,7 +174,7 @@ Sine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -190,7 +190,7 @@ Hyperbolic sine of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -206,7 +206,7 @@ Tangent of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 
@@ -222,7 +222,7 @@ Hyperbolic tangent of *x* in radians.
 
 Stack effects:
 ```
-( x:Float/64 -- Float/64 )
+( x:Float -- Float )
 ( x:Complex -- Complex )
 ```
 

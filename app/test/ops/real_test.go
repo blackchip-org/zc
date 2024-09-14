@@ -34,7 +34,7 @@ func TestOpDocs_Real_RoundingMode(t *testing.T) {
 	c.AssertStack("5.5")
 }
 
-func TestOpDocs_Real_RoundingModeGet(t *testing.T) {
+func TestOpDocs_Real_RoundingModeQ(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("rounding.mode?")

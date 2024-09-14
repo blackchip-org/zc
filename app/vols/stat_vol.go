@@ -10,6 +10,7 @@ import (
 var Stat = zc.Vol{
 	Name: "stat",
 	Ops: []zc.Op{
+		ops.Binomial,
 		ops.Factorial,
 		ops.VariancePop,
 		ops.VarianceSamp,

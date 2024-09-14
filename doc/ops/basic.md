@@ -31,10 +31,6 @@ Basic calculator
 | [`square.root, sqrt`](#squareroot) | Square Root               
 | [`sub, s, -`](#sub)                | Subtraction               
 
-## Related Volumes
-
-- [basic/Float](basic_Float.md)
-
 
 ## Operations
 
@@ -49,7 +45,7 @@ Stack effects:
 ```
 ( x:Int -- Int )
 ( x:Dec -- Dec )
-( x:Complex -- Float/64 )
+( x:Complex -- Float )
 ```
 
 Example:

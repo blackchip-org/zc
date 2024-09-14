@@ -33,7 +33,7 @@ var (
 			},
 		},
 	}
-	RoundingModeGet = zc.Op{
+	RoundingModeQ = zc.Op{
 		Name: "rounding.mode?",
 		Funcs: []zc.Func{
 			{

@@ -27,26 +27,6 @@ func Fibonacci(c zc.Calc) {
 	}
 }
 
-func FibonacciBigFloat(c zc.Calc) {
-	n := zc.Uint.Pop(c)
-	switch {
-	case n == 0:
-		zc.BigFloat.Push(c, big.NewFloat(0))
-	case n == 1:
-		zc.BigFloat.Push(c, big.NewFloat(1))
-	default:
-		fc := calc.NewBigFloatWithPrec(zc.PrecFloat128)
-		fc.PushInt(0)
-		fc.PushInt(1)
-		for i := uint(2); i <= n; i++ {
-			fc.Dup()
-			fc.Rotate()
-			fc.Add()
-		}
-		zc.BigFloat.Push(c, fc.Pop())
-	}
-}
-
 func Sequence(c zc.Calc) {
 	to := zc.BigInt.Pop(c)
 	from := zc.BigInt.Pop(c)

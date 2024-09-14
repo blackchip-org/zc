@@ -15,9 +15,33 @@
 - [`acos`](ops/trig.md#acos): Inverse cosine
 - [`acosh`](ops/trig.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
-  - [`add/f`](ops/basic_Float.md#addf): floating point
+  - [`add/f`](ops/float.md#addf): double precision floating-point
+  - [`add/q`](ops/float.md#addq): quad precision floating-point
+  - [`add/s`](ops/int.md#adds): signed architecture sized integer
+  - [`add/s16`](ops/int.md#adds16): signed 16-bit integer
+  - [`add/s32`](ops/int.md#adds32): signed 32-bit integer
+  - [`add/s64`](ops/int.md#adds64): signed 64-bit integer
+  - [`add/s8`](ops/int.md#adds8): signed 8-bit integer
+  - [`add/sf`](ops/float.md#addsf): single precision floating-point
+  - [`add/u`](ops/int.md#addu): unsigned architecture sized integer
+  - [`add/u16`](ops/int.md#addu16): unsigned 16-bit integer
+  - [`add/u32`](ops/int.md#addu32): unsigned 32-bit integer
+  - [`add/u64`](ops/int.md#addu64): unsigned 64-bit integer
+  - [`add/u8`](ops/int.md#addu8): unsigned 8-bit integer
 - [`add`](ops/time.md#add): Time or duration addition
-  - [`add/f`](ops/basic_Float.md#addf): floating point
+  - [`add/f`](ops/float.md#addf): double precision floating-point
+  - [`add/q`](ops/float.md#addq): quad precision floating-point
+  - [`add/s`](ops/int.md#adds): signed architecture sized integer
+  - [`add/s16`](ops/int.md#adds16): signed 16-bit integer
+  - [`add/s32`](ops/int.md#adds32): signed 32-bit integer
+  - [`add/s64`](ops/int.md#adds64): signed 64-bit integer
+  - [`add/s8`](ops/int.md#adds8): signed 8-bit integer
+  - [`add/sf`](ops/float.md#addsf): single precision floating-point
+  - [`add/u`](ops/int.md#addu): unsigned architecture sized integer
+  - [`add/u16`](ops/int.md#addu16): unsigned 16-bit integer
+  - [`add/u32`](ops/int.md#addu32): unsigned 32-bit integer
+  - [`add/u64`](ops/int.md#addu64): unsigned 64-bit integer
+  - [`add/u8`](ops/int.md#addu8): unsigned 8-bit integer
 - [`and`](ops/bool.md#and): Logical conjunction
 - [`and`](ops/prog.md#and): Bitwise and
 - [`apply`](ops/hof.md#apply): Apply a function using arguments on stack
@@ -32,6 +56,7 @@
 
 ## b
 - [`bin`](ops/prog.md#bin): Binary conversion
+- [`binomial`](ops/stat.md#binomial): Binomial coefficient
 - [`bit`](ops/prog.md#bit): Bit value
 - [`bit.len`](ops/prog.md#bitlen): Bit length
 - [`byte.len`](ops/prog.md#bytelen): Byte length
@@ -43,13 +68,13 @@
 - [`cat`](ops/text.md#concat): Alias for [concat](ops/text.md#concat)
 - [`cb`](ops/basic.md#cube): Alias for [cube](ops/basic.md#cube)
 - [`cbrt`](ops/basic.md#cuberoot): Alias for [cube.root](ops/basic.md#cuberoot)
-  - [`cbrt/f`](ops/basic_Float.md#cbrtf): floating point
+  - [`cbrt/f`](ops/float.md#cbrtf): double precision floating point
 - [`ceil`](ops/basic.md#ceil): Ceiling
 - [`centi`](ops/si.md): SI prefix c, 1e-02
 - [`clear`](ops/stack.md#clear): Clear
 - [`cmyk-rgb`](ops/color.md#cmyk-rgb): CMYK to RGB
-- `code.point-text`
-- `concat`
+- [`code.point-text`](ops/text.md#codepoint-text): Unicode code point to text
+- [`concat`](ops/text.md#concat): Concatenation
 - [`copy`](ops/stack.md#copy): Copy all items to temporary stack
 - [`cos`](ops/trig.md#cos): Cosine
 - [`cosh`](ops/trig.md#cosh): Hyperbolic cosine
@@ -59,6 +84,7 @@
 
 ## d
 - [`d`](ops/basic.md#div): Alias for [div](ops/basic.md#div)
+- [`data-int`](ops/int.md#data-int): Converts big-endian bytes to an integer
 - [`date`](ops/time.md#date): Formats to a common date layout
 - [`date.time`](ops/time.md#datetime): Formats to a common date/time layout
 - [`date.time?`](ops/time.md#datetime): Parses text as a date/time
@@ -70,13 +96,15 @@
 - [`deca`](ops/si.md): SI prefix da, 1e01
 - [`deci`](ops/si.md): SI prefix d, 1e-01
 - [`deg-rad`](ops/angle.md#deg-rad): Convert degrees to radians
-- `deg.min`
+- [`deg.min`](ops/angle.md#degmin): Degree angle to degrees and minutes
 - [`deg.min.round`](ops/angle.md#degminround): Degree angle to degrees and rounded minutes
 - [`deg.min.sec`](ops/angle.md#degminsec): Degree angle to degrees, minutes and seconds
 - [`deg.min.sec.round`](ops/angle.md#degminsecround): Degree angle to degrees, minutes, and rounded seconds
 - [`div`](ops/basic.md#div): Division
-  - [`div/f`](ops/basic_Float.md#divf): floating point
+  - [`div/f`](ops/float.md#divf): double precision floating-point
   - [`div/i`](ops/basic.md#divi): Euclidean integer division
+  - [`div/q`](ops/float.md#divq): quad precision floating-point
+  - [`div/sf`](ops/float.md#divsf): sigle precision floating-point
 - [`div.mod`](ops/basic.md#divmod): Division with modulus
 - [`div.rem`](ops/basic.md#divrem): Division with remainder
 - [`dm`](ops/angle.md#degmin): Alias for [deg.min](ops/angle.md#degmin)
@@ -105,7 +133,7 @@
 - [`exa`](ops/si.md): SI prefix E, 1e18
 - [`exbi`](ops/iec.md): IEC prefix EI, 2^60
 - [`exp`](ops/basic.md#exp): Natural exponential
-  - [`exp/f`](ops/basic_Float.md#expf): floating point
+  - [`exp/f`](ops/float.md#expf): Natural exponential
 
 ## f
 - [`f-c`](ops/temp.md#f-c): Fahrenheit to Celsius
@@ -115,7 +143,6 @@
 - [`femto`](ops/si.md): SI prefix f, 1e-15
 - [`fib`](ops/seq.md#fibonacci): Alias for [fibonacci](ops/seq.md#fibonacci)
 - [`fibonacci`](ops/seq.md#fibonacci): Fibonacci sequence
-  - [`fibonacci/f`](ops/seq.md#fibonaccif): floating point
 - [`filter`](ops/hof.md#filter): Filter items in the stack
 - [`flip`](ops/stack.md#flip): Flip the main and temporary stacks
 - [`floor`](ops/basic.md#floor): Floor
@@ -143,6 +170,17 @@
 ## i
 - [`in-mm`](ops/len.md#in-mm): Inches to millimeters
 - [`int-data`](ops/int.md#int-data): Converts integer to big-endian bytes
+- [`int?`](ops/int.md#int): Parses an integer
+  - [`int?/s`](ops/int.md#ints): Parses a signed architecture-sized integer
+  - [`int?/s16`](ops/int.md#ints16): Parses a signed 16-bit integer
+  - [`int?/s32`](ops/int.md#ints32): Parses a signed 32-bit integer
+  - [`int?/s64`](ops/int.md#ints64): Parses a signed 64-bit integer
+  - [`int?/s8`](ops/int.md#ints8): Parses a signed 8-bit integer
+  - [`int?/u`](ops/int.md#intu): Parses a unsigned architecture-sized integer
+  - [`int?/u16`](ops/int.md#intu16): Parses a unsigned 16-bit integer
+  - [`int?/u32`](ops/int.md#intu32): Parses a unsigned 32-bit integer
+  - [`int?/u64`](ops/int.md#intu64): Parses a unsigned 64-bit integer
+  - [`int?/u8`](ops/int.md#intu8): Parses a unsigned 8-bit integer
 
 ## j
 - [`join`](ops/text.md#join): Join two text values
@@ -168,9 +206,9 @@
 - [`local.zone`](ops/time.md#localzone): Name of the local time zone
 - [`local.zone=`](ops/time.md#localzone): Sets the local time zone
 - [`log`](ops/basic.md#log): Natural logarithm
-  - [`log/f`](ops/basic_Float.md#logf): floating point
+  - [`log/f`](ops/float.md#logf): Natural logarithm
 - [`log10`](ops/basic.md#log10): Decimal logarithm
-  - [`log10/f`](ops/basic_Float.md#log10f): floating point
+  - [`log10/f`](ops/float.md#log10f): Decimal logarithm
 - [`lower`](ops/text.md#lower): Lowercase
 - [`lsh`](ops/prog.md#leftshift): Alias for [left.shift](ops/prog.md#leftshift)
 - [`lt`](ops/cmp.md#lt): Less than
@@ -183,6 +221,17 @@
 - [`m-nmi`](ops/len.md#m-nmi): Meters to nautical miles
 - [`m-yd`](ops/len.md#m-yd): Meters to yards
 - [`map`](ops/hof.md#map): Apply an operation
+- `max.int`: Maximum integer values
+  - [`max.int/s`](ops/int.md#maxints): Maximum signed architecture sized integer
+  - [`max.int/s16`](ops/int.md#maxints16): Maximum signed 16-bit integer
+  - [`max.int/s32`](ops/int.md#maxints32): Maximum signed 32-bit integer
+  - [`max.int/s64`](ops/int.md#maxints64): Maximum signed 64-bit integer
+  - [`max.int/s8`](ops/int.md#maxints8): Maximum signed 8-bit integer
+  - [`max.int/u`](ops/int.md#maxintu): Maximum unsigned architecture sized integer
+  - [`max.int/u16`](ops/int.md#maxintu16): Maximum unsigned 16-bit integer
+  - [`max.int/u32`](ops/int.md#maxintu32): Maximum unsigned 32-bit integer
+  - [`max.int/u64`](ops/int.md#maxintu64): Maximum unsigned 64-bit integer
+  - [`max.int/u8`](ops/int.md#maxintu8): Maximum unsigned 8-bit integer
 - [`md5`](ops/crypto.md#md5): MD5 hash function
 - [`mebi`](ops/iec.md): IEC prefix Mi, 2^20
 - [`mega`](ops/si.md): SI prefix M, 1e06
@@ -191,19 +240,28 @@
 - [`mi-nmi`](ops/len.md#mi-nmi): Miles to nautical miles
 - [`micro`](ops/si.md): SI prefix μ, 1e-06
 - [`milli`](ops/si.md): SI prefix m, 1e-03
+- `min.int`: Minimum integer values
+  - [`min.int/s`](ops/int.md#minints): Minimum signed architecture sized integer
+  - [`min.int/s16`](ops/int.md#minints16): Minimum signed 16-bit integer
+  - [`min.int/s32`](ops/int.md#minints32): Minimum signed 32-bit integer
+  - [`min.int/s64`](ops/int.md#minints64): Minimum signed 64-bit integer
+  - [`min.int/s8`](ops/int.md#minints8): Minimum signed 8-bit integer
 - [`mins`](ops/angle.md#minutes): Alias for [minutes](ops/angle.md#minutes)
 - [`minutes`](ops/angle.md#minutes): Degree angle to minutes
 - [`minutes`](ops/time.md#minutes): Convert to minutes
 - [`mm-in`](ops/len.md#mm-in): Millimeters to inches
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
-  - [`mul/f`](ops/basic_Float.md#mulf): floating point
+  - [`mul/f`](ops/float.md#mulf): double precision floating-point
+  - [`mul/q`](ops/float.md#mulq): quad precision floating-point
+  - [`mul/sf`](ops/float.md#mulsf): single precision floating-point
 
 ## n
 - [`n`](ops/stack.md#size): Alias for [size](ops/stack.md#size)
 - [`nano`](ops/si.md): SI prefix n, 1e-09
 - [`neg`](ops/basic.md#neg): Negation
-  - [`neg/f`](ops/basic_Float.md#negf): floating point
+  - [`neg/f`](ops/float.md#negf): double precision floating-point
+  - [`neg/q`](ops/float.md#negq): quad precision floating-point
 - [`neq`](ops/cmp.md#neq): Not equal
 - [`nmi-km`](ops/len.md#nmi-km): Nautical miles to kilometers
 - [`nmi-m`](ops/len.md#nmi-m): Nautical miles to meters
@@ -274,9 +332,8 @@
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
-- [`seconds`](ops/angle.md#seconds): Degree angle to seconds
-- [`seconds`](ops/time.md#seconds): Convert to seconds
-- [`secs`](ops/angle.md#seconds): Alias for [seconds](ops/angle.md#seconds)
+- [`seconds`](ops/time.md#seconds): Convert time to seconds
+  - [`seconds`](ops/angle.md#seconds): degree angle to seconds
 - [`seq`](ops/seq.md#sequence): Alias for [sequence](ops/seq.md#sequence)
 - [`sequence`](ops/seq.md#sequence): Sequence of integers
 - [`sha1`](ops/crypto.md#sha1): SHA-1 hash function
@@ -290,7 +347,7 @@
 - [`sha512`](ops/crypto.md#sha512): SHA-512 hash function
 - [`sha512.hmac`](ops/crypto.md#sha512hmac): SHA-512 keyed hash function
 - [`sign`](ops/basic.md#sign): Sign
-  - [`sign/f`](ops/basic_Float.md#signf): floating point
+  - [`sign/f`](ops/float.md#signf): double precision floating-point
 - [`sin`](ops/trig.md#sin): Sine
 - [`sinh`](ops/trig.md#sinh): Hyperbolic sine
 - [`size`](ops/stack.md#size): Number of items on the stack
@@ -299,7 +356,8 @@
 - [`split`](ops/text.md#split): Split text
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
-  - [`sqrt/f`](ops/basic_Float.md#sqrtf): floating point
+  - [`sqrt/f`](ops/float.md#sqrtf): double precision floating-point
+  - [`sqrt/q`](ops/float.md#sqrtq): quad precision floating-point
 - [`square`](ops/basic.md#square): Square of a number
 - [`square.root`](ops/basic.md#squareroot): Square Root
 - [`st`](ops/stack.md#store): Alias for [store](ops/stack.md#store)
@@ -309,9 +367,33 @@
 - [`stdev.s`](ops/stat.md#standarddevsamp): Alias for [standard.dev.samp](ops/stat.md#standarddevsamp)
 - [`store`](ops/stack.md#store): Store stack to memory
 - [`sub`](ops/basic.md#sub): Subtraction
-  - [`sub/f`](ops/basic_Float.md#subf): floating point
+  - [`sub/f`](ops/float.md#subf): double precision floating-point
+  - [`sub/q`](ops/float.md#subq): quad precision floating-point
+  - [`sub/s`](ops/int.md#subs): signed architecture sized integer
+  - [`sub/s16`](ops/int.md#subs16): signed 16-bit integer
+  - [`sub/s32`](ops/int.md#subs32): signed 32-bit integer
+  - [`sub/s64`](ops/int.md#subs64): signed 64-bit integer
+  - [`sub/s8`](ops/int.md#subs8): signed 8-bit integer
+  - [`sub/sf`](ops/float.md#subsf): single precision floating-point
+  - [`sub/u`](ops/int.md#subu): unsigned architecture sized integer
+  - [`sub/u16`](ops/int.md#subu16): unsigned 16-bit integer
+  - [`sub/u32`](ops/int.md#subu32): unsigned 32-bit integer
+  - [`sub/u64`](ops/int.md#subu64): unsigned 64-bit integer
+  - [`sub/u8`](ops/int.md#subu8): unsigned 8-bit integer
 - [`sub`](ops/time.md#sub): Time or duration subtraction
-  - [`sub/f`](ops/basic_Float.md#subf): floating point
+  - [`sub/f`](ops/float.md#subf): double precision floating-point
+  - [`sub/q`](ops/float.md#subq): quad precision floating-point
+  - [`sub/s`](ops/int.md#subs): signed architecture sized integer
+  - [`sub/s16`](ops/int.md#subs16): signed 16-bit integer
+  - [`sub/s32`](ops/int.md#subs32): signed 32-bit integer
+  - [`sub/s64`](ops/int.md#subs64): signed 64-bit integer
+  - [`sub/s8`](ops/int.md#subs8): signed 8-bit integer
+  - [`sub/sf`](ops/float.md#subsf): single precision floating-point
+  - [`sub/u`](ops/int.md#subu): unsigned architecture sized integer
+  - [`sub/u16`](ops/int.md#subu16): unsigned 16-bit integer
+  - [`sub/u32`](ops/int.md#subu32): unsigned 32-bit integer
+  - [`sub/u64`](ops/int.md#subu64): unsigned 64-bit integer
+  - [`sub/u8`](ops/int.md#subu8): unsigned 8-bit integer
 - [`sum`](ops/stat.md#sum): Summation
 - [`sw`](ops/stack.md#swap): Alias for [swap](ops/stack.md#swap)
 - [`swap`](ops/stack.md#swap): Swap top two items on the stack

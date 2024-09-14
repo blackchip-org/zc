@@ -4,14 +4,289 @@
 
 Integer values
 
+## Overview
+
+An integer value is a number that can either be a:
+
+- `Int`; or
+- `Int/s`, `Int/s64`, `Int/s32`, `Int/s16`, `Int/s8`; or
+- `Int/u`, `Int/u64`, `Int/u32`, `Int/u16`, `Int/u8`
+
+A `Int` is an integer of an arbitrary size and support is provided by the
+math/big package in the gol standard library. The calculator prefers working
+with `Int` values whenever an operation can use a function in this library.
+
+The `Int/s` and `Int/u` series of types are signed and unsigned integers of a
+specific size and are used when an underlying implementation of an operation
+needs that type.
+
+Integer values first remove formatting characters when parsing. Those
+characters are:
+
+- Thousand separators (`,`, `_`, ` `)
+- Currency symbols (`$`, `€`, `¥`)
+
+For example, the following all parse to the same value:
+
+<!-- test: IntParse -->
+
+| Input               | Stack
+|---------------------|-------------
+| `c 12,345 dec`      | `12345`
+| `c 12_345 dec`      | `12345`
+| `c '12_345' dec`    | `12345`
+| `c $12,345 dec`     | `12345`
+| `c 12,345$ dec`     | `12345`
+
+Integers may have a radix prefix of:
+
+- `0b`: binary number, base 2
+- `0o`: octal number, base 8
+- `0x`: hexadecimal number, base 16
+
+For example, all of the following are the same value:
+
+<!-- test: IntRadix -->
+
+| Input               | Stack
+|---------------------|-------------
+| `c 0b11111111 dec`  | `255`
+| `c 0o377 dec`       | `255`
+| `c 0xff dec`        | `255`
+
 ## Index
 
-| Operation               | Description                         
-|-------------------------|-------------------------------------
-| [`int-data`](#int-data) | Converts integer to big-endian bytes
+| Operation                   | Description                                     
+|-----------------------------|-------------------------------------------------
+| [`add/s`](#adds)            | Addition, signed architecture sized integer     
+| [`add/s16`](#adds16)        | Addition, signed 16-bit integer                 
+| [`add/s32`](#adds32)        | Addition, signed 32-bit integer                 
+| [`add/s64`](#adds64)        | Addition, signed 64-bit integer                 
+| [`add/s8`](#adds8)          | Addition, signed 8-bit integer                  
+| [`add/u`](#addu)            | Addition, unsigned architecture sized integer   
+| [`add/u16`](#addu16)        | Addition, unsigned 16-bit integer               
+| [`add/u32`](#addu32)        | Addition, unsigned 32-bit integer               
+| [`add/u64`](#addu64)        | Addition, unsigned 64-bit integer               
+| [`add/u8`](#addu8)          | Addition, unsigned 8-bit integer                
+| [`data-int`](#data-int)     | Converts big-endian bytes to an integer         
+| [`int-data`](#int-data)     | Converts integer to big-endian bytes            
+| [`int?`](#int)              | Parses an integer                               
+| [`int?/s`](#ints)           | Parses a signed architecture-sized integer      
+| [`int?/s16`](#ints16)       | Parses a signed 16-bit integer                  
+| [`int?/s32`](#ints32)       | Parses a signed 32-bit integer                  
+| [`int?/s64`](#ints64)       | Parses a signed 64-bit integer                  
+| [`int?/s8`](#ints8)         | Parses a signed 8-bit integer                   
+| [`int?/u`](#intu)           | Parses a unsigned architecture-sized integer    
+| [`int?/u16`](#intu16)       | Parses a unsigned 16-bit integer                
+| [`int?/u32`](#intu32)       | Parses a unsigned 32-bit integer                
+| [`int?/u64`](#intu64)       | Parses a unsigned 64-bit integer                
+| [`int?/u8`](#intu8)         | Parses a unsigned 8-bit integer                 
+| [`max.int`](#maxint)        | Maximum integer values                          
+| [`max.int/s`](#maxints)     | Maximum signed architecture sized integer       
+| [`max.int/s16`](#maxints16) | Maximum signed 16-bit integer                   
+| [`max.int/s32`](#maxints32) | Maximum signed 32-bit integer                   
+| [`max.int/s64`](#maxints64) | Maximum signed 64-bit integer                   
+| [`max.int/s8`](#maxints8)   | Maximum signed 8-bit integer                    
+| [`max.int/u`](#maxintu)     | Maximum unsigned architecture sized integer     
+| [`max.int/u16`](#maxintu16) | Maximum unsigned 16-bit integer                 
+| [`max.int/u32`](#maxintu32) | Maximum unsigned 32-bit integer                 
+| [`max.int/u64`](#maxintu64) | Maximum unsigned 64-bit integer                 
+| [`max.int/u8`](#maxintu8)   | Maximum unsigned 8-bit integer                  
+| [`min.int`](#minint)        | Minimum integer values                          
+| [`min.int/s`](#minints)     | Minimum signed architecture sized integer       
+| [`min.int/s16`](#minints16) | Minimum signed 16-bit integer                   
+| [`min.int/s32`](#minints32) | Minimum signed 32-bit integer                   
+| [`min.int/s64`](#minints64) | Minimum signed 64-bit integer                   
+| [`min.int/s8`](#minints8)   | Minimum signed 8-bit integer                    
+| [`sub/s`](#subs)            | Subtraction, signed architecture sized integer  
+| [`sub/s16`](#subs16)        | Subtraction, signed 16-bit integer              
+| [`sub/s32`](#subs32)        | Subtraction, signed 32-bit integer              
+| [`sub/s64`](#subs64)        | Subtraction, signed 64-bit integer              
+| [`sub/s8`](#subs8)          | Subtraction, signed 8-bit integer               
+| [`sub/u`](#subu)            | Subtraction, unsigned architecture sized integer
+| [`sub/u16`](#subu16)        | Subtraction, unsigned 16-bit integer            
+| [`sub/u32`](#subu32)        | Subtraction, unsigned 32-bit integer            
+| [`sub/u64`](#subu64)        | Subtraction, unsigned 64-bit integer            
+| [`sub/u8`](#subu8)          | Subtraction, unsigned 8-bit integer             
 
 
 ## Operations
+
+### add/s
+
+Adds *x* and *y* using signed architecture sized integers that wraparound
+on overflow or underflow.
+
+Stack effects:
+```
+( x:Int/s y:Int/s -- x:Int/s )
+```
+
+Example:
+
+| Input                            | Stack 
+|----------------------------------|-------
+| `max.int/s 1 add/s min.int/s eq` | `true`
+
+### add/s16
+
+Adds *x* and *y* using signed 16-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/s16 y:Int/s16 -- x:Int/s16 )
+```
+
+Example:
+
+| Input             | Stack   
+|-------------------|---------
+| `32767 1 add/s16` | `-32768`
+
+### add/s32
+
+Adds *x* and *y* using signed 32-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/s32 y:Int/s32 -- x:Int/s32 )
+```
+
+Example:
+
+| Input                  | Stack        
+|------------------------|--------------
+| `2147483647 1 add/s32` | `-2147483648`
+
+### add/s64
+
+Adds *x* and *y* using signed 64-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/s64 y:Int/s64 -- x:Int/s64 )
+```
+
+Example:
+
+| Input                           | Stack                 
+|---------------------------------|-----------------------
+| `9223372036854775807 1 add/s64` | `-9223372036854775808`
+
+### add/s8
+
+Adds *x* and *y* using signed 8-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/s8 y:Int/s8 -- x:Int/s8 )
+```
+
+Example:
+
+| Input          | Stack 
+|----------------|-------
+| `127 1 add/s8` | `-128`
+
+### add/u
+
+Adds *x* and *y* using unsigned architecture sized integers that wraparound
+on overflow or underflow.
+
+Stack effects:
+```
+( x:Int/u y:Int/u -- x:Int/u )
+```
+
+Example:
+
+| Input                    | Stack 
+|--------------------------|-------
+| `max.int/u 1 add/u 0 eq` | `true`
+
+### add/u16
+
+Adds *x* and *y* using unsigned 16-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/u16 y:Int/u16 -- x:Int/u16 )
+```
+
+Example:
+
+| Input             | Stack
+|-------------------|------
+| `65535 1 add/u16` | `0`  
+
+### add/u32
+
+Adds *x* and *y* using unsigned 32-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/u32 y:Int/u32 -- x:Int/u32 )
+```
+
+Example:
+
+| Input                  | Stack
+|------------------------|------
+| `4294967295 1 add/u32` | `0`  
+
+### add/u64
+
+Adds *x* and *y* using unsigned 64-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/u64 y:Int/u64 -- x:Int/u64 )
+```
+
+Example:
+
+| Input                            | Stack
+|----------------------------------|------
+| `18446744073709551615 1 add/u64` | `0`  
+
+### add/u8
+
+Adds *x* and *y* using unsigned 8-bit integers that wraparound on overflow
+or underflow.
+
+Stack effects:
+```
+( x:Int/u8 y:Int/u8 -- x:Int/u8 )
+```
+
+Example:
+
+| Input          | Stack
+|----------------|------
+| `255 1 add/u8` | `0`  
+
+### data-int
+
+Converts big-endian bytes into an integer.
+
+Stack effects:
+```
+( x:Data -- Int )
+```
+
+Example:
+
+| Input             | Stack       
+|-------------------|-------------
+| `0x1234 int-data` | `data: 1234`
+| `data-int hex`    | `0x1234`    
 
 ### int-data
 
@@ -28,3 +303,599 @@ Example:
 | Input             | Stack       
 |-------------------|-------------
 | `0x1234 int-data` | `data: 1234`
+
+### int?
+
+Parses *x* and evaluates to `true` if the *x* is an integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input          | Stack  
+|----------------|--------
+| `c 1,234 int?` | `true` 
+| `c 1.234 int?` | `false`
+
+### int?/s
+
+Parses *x* and evaluates to `true` if the *x* is a valid signed
+architecture-sized integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                           | Stack  
+|---------------------------------|--------
+| `c 1,234 int?/s`                | `true` 
+| `c 20000000000000000000 int?/s` | `false`
+
+### int?/s16
+
+Parses *x* and evaluates to `true` if the *x* is a valid signed 16-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                | Stack  
+|----------------------|--------
+| `c 10,000 int?/s16`  | `true` 
+| `c 100,000 int?/s16` | `false`
+
+### int?/s32
+
+Parses *x* and evaluates to `true` if the *x* is a valid signed 32-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                       | Stack  
+|-----------------------------|--------
+| `c 1,000,000,000 int?/s32`  | `true` 
+| `c 10,000,000,000 int?/s32` | `false`
+
+### int?/s64
+
+Parses *x* and evaluates to `true` if the *x* is a valid signed 64-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                                   | Stack  
+|-----------------------------------------|--------
+| `c 1,000,000,000,000,000,000 int?/s64`  | `true` 
+| `c 10,000,000,000,000,000,000 int?/s64` | `false`
+
+### int?/s8
+
+Parses *x* and evaluates to `true` if the *x* is a valid signed 8-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input           | Stack  
+|-----------------|--------
+| `c 100 int?/s8` | `true` 
+| `c 200 int?/s8` | `false`
+
+### int?/u
+
+Parses *x* and evaluates to `true` if the *x* is a valid unsigned
+architecture-sized integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                                 | Stack  
+|---------------------------------------|--------
+| `c 1,234 int?/u`                      | `true` 
+| `c 20,000,000,000,000,000,000 int?/u` | `false`
+
+### int?/u16
+
+Parses *x* and evaluates to `true` if the *x* is a valid unsigned 16-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                | Stack  
+|----------------------|--------
+| `c 10,000 int?/u16`  | `true` 
+| `c 100,000 int?/u16` | `false`
+
+### int?/u32
+
+Parses *x* and evaluates to `true` if the *x* is a valid unsigned 32-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                       | Stack  
+|-----------------------------|--------
+| `c 1,000,000,000 int?/u32`  | `true` 
+| `c 10,000,000,000 int?/u32` | `false`
+
+### int?/u64
+
+Parses *x* and evaluates to `true` if the *x* is a valid unsigned 64-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input                                    | Stack  
+|------------------------------------------|--------
+| `c 10,000,000,000,000,000,000 int?/u64`  | `true` 
+| `c 100,000,000,000,000,000,000 int?/u64` | `false`
+
+### int?/u8
+
+Parses *x* and evaluates to `true` if the *x* is a valid unsigned 8-bit
+integer.
+
+Stack effects:
+```
+( x:Text -- Bool )
+```
+
+Example:
+
+| Input           | Stack  
+|-----------------|--------
+| `c 200 int?/u8` | `true` 
+| `c 300 int?/u8` | `false`
+
+### max.int
+
+
+
+
+### max.int/s
+
+For 32-bit architectures this is `max.int/s32`, and for 64-bit
+architectures this is `max.int/s64`.
+
+Stack effects:
+```
+(  -- Int/s )
+```
+
+Example:
+
+| Input                            | Stack 
+|----------------------------------|-------
+| `max.int/s 1 add/s min.int/s eq` | `true`
+
+### max.int/s16
+
+Maximum signed 16-bit integer.
+
+Macro definition:
+```
+def max.int/s16 32767
+```
+
+Example:
+
+| Input               | Stack  
+|---------------------|--------
+| `max.int/s16`       | `32767`
+| `1 15 lsh 1 sub eq` | `true` 
+
+### max.int/s32
+
+Maximum signed 32-bit integer.
+
+Macro definition:
+```
+def max.int/s32 2147483647
+```
+
+Example:
+
+| Input               | Stack       
+|---------------------|-------------
+| `max.int/s32`       | `2147483647`
+| `1 31 lsh 1 sub eq` | `true`      
+
+### max.int/s64
+
+Maximum signed 64-bit integer.
+
+Macro definition:
+```
+def max.int/s64 9223372036854775807
+```
+
+Example:
+
+| Input               | Stack                
+|---------------------|----------------------
+| `max.int/s64`       | `9223372036854775807`
+| `1 63 lsh 1 sub eq` | `true`               
+
+### max.int/s8
+
+Maximum signed 8-bit integer.
+
+Macro definition:
+```
+def max.int/s8 127
+```
+
+Example:
+
+| Input              | Stack 
+|--------------------|-------
+| `max.int/s8`       | `127` 
+| `1 7 lsh 1 sub eq` | `true`
+
+### max.int/u
+
+For 32-bit architectures this is `max.int/u32`, and for 64-bit
+architectures this is `max.int/u64`.
+
+Stack effects:
+```
+(  -- Int/u )
+```
+
+Example:
+
+| Input                    | Stack 
+|--------------------------|-------
+| `max.int/u 1 add/u 0 eq` | `true`
+
+### max.int/u16
+
+Maximum unsigned 16-bit integer.
+
+Macro definition:
+```
+def max.int/u16 65535
+```
+
+Example:
+
+| Input               | Stack  
+|---------------------|--------
+| `max.int/u16`       | `65535`
+| `1 16 lsh 1 sub eq` | `true` 
+
+### max.int/u32
+
+Maximum unsigned 32-bit integer.
+
+Macro definition:
+```
+def max.int/u32 4294967295
+```
+
+Example:
+
+| Input               | Stack       
+|---------------------|-------------
+| `max.int/u32`       | `4294967295`
+| `1 32 lsh 1 sub eq` | `true`      
+
+### max.int/u64
+
+Maximum unsigned 64-bit integer.
+
+Macro definition:
+```
+def max.int/u64 18446744073709551615
+```
+
+Example:
+
+| Input               | Stack                 
+|---------------------|-----------------------
+| `max.int/u64`       | `18446744073709551615`
+| `1 64 lsh 1 sub eq` | `true`                
+
+### max.int/u8
+
+Maximum unsigned 8-bit integer.
+
+Macro definition:
+```
+def max.int/u8 255
+```
+
+Example:
+
+| Input              | Stack 
+|--------------------|-------
+| `max.int/u8`       | `255` 
+| `1 8 lsh 1 sub eq` | `true`
+
+### min.int
+
+
+
+
+### min.int/s
+
+For 32-bit architectures this is `min.int/s32`, and for 64-bit
+architectures this is `min.int/s64`.
+
+Stack effects:
+```
+(  -- Int/s )
+```
+
+Example:
+
+| Input                                | Stack 
+|--------------------------------------|-------
+| `min.int/s64 1 sub/s max.int/s64 eq` | `true`
+
+### min.int/s16
+
+Minimum signed 16-bit integer.
+
+Macro definition:
+```
+def min.int/s16 -32768
+```
+
+Example:
+
+| Input          | Stack   
+|----------------|---------
+| `min.int/s16`  | `-32768`
+| `-1 15 lsh eq` | `true`  
+
+### min.int/s32
+
+Minimum signed 32-bit integer.
+
+Macro definition:
+```
+def min.int/s32 -2147483648
+```
+
+Example:
+
+| Input          | Stack        
+|----------------|--------------
+| `min.int/s32`  | `-2147483648`
+| `-1 31 lsh eq` | `true`       
+
+### min.int/s64
+
+Minimum signed 64-bit integer.
+
+Macro definition:
+```
+def min.int/s64 -9223372036854775808
+```
+
+Example:
+
+| Input          | Stack                 
+|----------------|-----------------------
+| `min.int/s64`  | `-9223372036854775808`
+| `-1 63 lsh eq` | `true`                
+
+### min.int/s8
+
+Minimum signed 8-bit integer.
+
+Macro definition:
+```
+def min.int/s8 -128
+```
+
+Example:
+
+| Input         | Stack 
+|---------------|-------
+| `min.int/s8`  | `-128`
+| `-1 7 lsh eq` | `true`
+
+### sub/s
+
+Subtracts *y* and *x* using signed architecture sized integers that
+wraparound on overflow or underflow.
+
+Stack effects:
+```
+( x:Int/s y:Int/s -- x:Int/s )
+```
+
+Example:
+
+| Input                            | Stack 
+|----------------------------------|-------
+| `min.int/s 1 sub/s max.int/s eq` | `true`
+
+### sub/s16
+
+Subtracts *y* and *x* using signed 16-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/s16 y:Int/s16 -- x:Int/s16 )
+```
+
+Example:
+
+| Input              | Stack  
+|--------------------|--------
+| `-32768 1 sub/s16` | `32767`
+
+### sub/s32
+
+Subtracts *y* and *x* using signed 32-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/s32 y:Int/s32 -- x:Int/s32 )
+```
+
+Example:
+
+| Input                   | Stack       
+|-------------------------|-------------
+| `-2147483648 1 sub/s32` | `2147483647`
+
+### sub/s64
+
+Subtracts *y* and *x* using signed 64-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/s64 y:Int/s64 -- x:Int/s64 )
+```
+
+Example:
+
+| Input                            | Stack                
+|----------------------------------|----------------------
+| `-9223372036854775808 1 sub/s64` | `9223372036854775807`
+
+### sub/s8
+
+Subtracts *y* and *x* using signed 8-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/s8 y:Int/s8 -- x:Int/s8 )
+```
+
+Example:
+
+| Input           | Stack
+|-----------------|------
+| `-128 1 sub/s8` | `127`
+
+### sub/u
+
+Subtracts *y* and *x* using unsigned architecture sized integers that
+wraparound on overflow or underflow.
+
+Stack effects:
+```
+( x:Int/u y:Int/u -- x:Int/u )
+```
+
+Example:
+
+| Input                    | Stack 
+|--------------------------|-------
+| `0 1 sub/u max.int/u eq` | `true`
+
+### sub/u16
+
+Subtracts *y* and *x* using unsigned 16-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/u16 y:Int/u16 -- x:Int/u16 )
+```
+
+Example:
+
+| Input         | Stack  
+|---------------|--------
+| `0 1 sub/u16` | `65535`
+
+### sub/u32
+
+Subtracts *y* and *x* using unsigned 32-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/u32 y:Int/u32 -- x:Int/u32 )
+```
+
+Example:
+
+| Input         | Stack       
+|---------------|-------------
+| `0 1 sub/u32` | `4294967295`
+
+### sub/u64
+
+Subtracts *y* and *x* using unsigned 64-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/u64 y:Int/u64 -- x:Int/u64 )
+```
+
+Example:
+
+| Input         | Stack                 
+|---------------|-----------------------
+| `0 1 sub/u64` | `18446744073709551615`
+
+### sub/u8
+
+Subtracts *y* and *x* using unsigned 8-bit integers that wraparound on
+overflow or underflow.
+
+Stack effects:
+```
+( x:Int/u8 y:Int/u8 -- x:Int/u8 )
+```
+
+Example:
+
+| Input        | Stack
+|--------------|------
+| `0 1 sub/u8` | `255`

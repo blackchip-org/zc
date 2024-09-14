@@ -6,18 +6,17 @@ Numeric sequences
 
 ## Index
 
-| Operation                           | Description                       
-|-------------------------------------|-----------------------------------
-| [`fibonacci, fib`](#fibonacci)      | Fibonacci sequence                
-| [`fibonacci/f, fib/f`](#fibonaccif) | Fibonacci sequence, floating point
-| [`sequence, seq`](#sequence)        | Sequence of integers              
+| Operation                      | Description         
+|--------------------------------|---------------------
+| [`fibonacci, fib`](#fibonacci) | Fibonacci sequence  
+| [`sequence, seq`](#sequence)   | Sequence of integers
 
 
 ## Operations
 
 ### fibonacci
 
-Calculates the *n*th element in the Fibonacci sequence. 
+Calculates the *n*th element in the Fibonacci sequence.
 
 Alias: `fib`
 
@@ -32,29 +31,9 @@ Example:
 |--------------------|------------------------
 | `1 5 seq /fib map` | `1 \| 1 \| 2 \| 3 \| 5`
 
-### fibonacci/f
-
-Calculates the *n*th element in the Fibonacci sequence. 
-
-This operation is quicker than `fibonacci` when computing large values 
-when an exact number is not required and some error is acceptable. 
-
-Alias: `fib/f`
-
-Stack effects:
-```
-( n:Int/u -- Float/128 )
-```
-
-Example:
-
-| Input       | Stack                                    
-|-------------|------------------------------------------
-| `300 fib/f` | `2.2223224462942044552973989346191002e62`
-
 ### sequence
 
-Places all integers from *start* to *end* on to the stack. If *start* is 
+Places all integers from *start* to *end* on to the stack. If *start* is
 greater than *end*, the list of integers is in decreasing order.
 
 Alias: `seq`

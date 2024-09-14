@@ -14,7 +14,7 @@ ops:
     returns: [Dec]
   - name: AbsComplex
     params: [x:Complex]
-    returns: [Float/64]
+    returns: [Float]
   desc: |-
     If *x* is less than zero, the negated value of *x*, otherwise *p0*.
 

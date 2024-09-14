@@ -8,8 +8,8 @@ Text operations
 
 | Operation                                     | Description                        
 |-----------------------------------------------|------------------------------------
-| [`code.point-text, cp-text`](#codepoint-text) |                                    
-| [`concat, cat`](#concat)                      |                                    
+| [`code.point-text, cp-text`](#codepoint-text) | Unicode code point to text         
+| [`concat, cat`](#concat)                      | Concatenation                      
 | [`join`](#join)                               | Join two text values               
 | [`left`](#left)                               | Subset from left                   
 | [`len`](#len)                                 | Length of text in characters       

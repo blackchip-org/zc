@@ -81,6 +81,9 @@ func genOps(vols []zc.VolDef) {
 
 		fmt.Fprintf(f, "var (\n")
 		for _, op := range vol.Ops {
+			if op.Stub {
+				continue
+			}
 			fmt.Fprintf(f, "%v = zc.Op{\n", op.Ident)
 			fmt.Fprintf(f, "Name: \"%v\",\n", op.Name)
 			fmt.Fprintf(f, "Funcs: []zc.Func{\n")
@@ -124,7 +127,7 @@ func genVols(vols []zc.VolDef) {
 
 		fmt.Fprintf(f, "Ops: []zc.Op{\n")
 		for _, o := range vol.Ops {
-			if o.Macro != "" {
+			if o.Macro != "" || o.Stub {
 				continue
 			}
 			fmt.Fprintf(f, "ops.%v,\n", o.Ident)
@@ -132,6 +135,9 @@ func genVols(vols []zc.VolDef) {
 		fmt.Fprintf(f, "},\n")
 		fmt.Fprintf(f, "Macros: []zc.Macro{\n")
 		for _, o := range vol.Ops {
+			if o.Stub {
+				continue
+			}
 			if o.Macro != "" {
 				fmt.Fprintf(f, "{Name: \"%v\", Expr: \"%v\"},\n", o.Name, o.Macro)
 			}
@@ -438,6 +444,14 @@ func genIndex(vols []zc.VolDef) {
 				subs[op.Name] = entries
 				continue
 			}
+			if op.Stub {
+				e := entry{
+					name:  op.Name,
+					title: op.Title,
+				}
+				entries = append(entries, e)
+				continue
+			}
 			e := entry{
 				name:   op.Name,
 				anchor: opsAnchor(vol, op),
@@ -495,7 +509,9 @@ func genIndex(vols []zc.VolDef) {
 			fmt.Fprintf(f, "\n## %c\n", ch)
 		}
 
-		if e.title != "" {
+		if e.anchor == "" {
+			fmt.Fprintf(f, "- `%v`: %v\n", e.name, e.title)
+		} else if e.title != "" {
 			fmt.Fprintf(f, "- [`%v`](%v): %v\n", e.name, e.anchor, e.title)
 		} else {
 			fmt.Fprintf(f, "- `%v`\n", e.name)

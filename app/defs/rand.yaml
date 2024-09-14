@@ -1,6 +1,6 @@
 name: rand
 title: Random number generation
-category: lib 
+category: lib
 
 ops:
 - name: rand
@@ -8,8 +8,8 @@ ops:
   title: Random float
   funcs:
   - name: Rand
-    return: [Float/64]
-  desc: Random floating point number between 0 and 1. 
+    return: [Float]
+  desc: Random floating point number between 0 and 1.
   example:
   - i: 1 rand.seed
     notice: seed set to 1
@@ -18,11 +18,11 @@ ops:
 
 - name: rand/i
   title: Random integer
-  funcs: 
+  funcs:
   - name: RandInt
     params: [n:Int/s]
     returns: [Int/s]
-  desc: Random integer between 1 and *n*. 
+  desc: Random integer between 1 and *n*.
   example:
   - i: 1 rand.seed
     notice: seed set to 1
@@ -34,7 +34,7 @@ ops:
   funcs:
   - name: RandSeed
     params: [s:Int]
-  desc: Sets the random number generator seed to *s*. 
+  desc: Sets the random number generator seed to *s*.
   example:
   - i: c 1 rand.seed
     notice: seed set to 1
@@ -42,7 +42,7 @@ ops:
     o: [6]
   - i: c 2 rand.seed 10 rand/i
     o: [7]
-  - i: c 1 rand.seed 10 rand/i 
+  - i: c 1 rand.seed 10 rand/i
     o: [6]
 
 - name: rand.seed?
@@ -57,7 +57,7 @@ ops:
   - i: rand.seed?
     o: [42]
 
-- name: rand.take 
+- name: rand.take
   title: Select a random item from the stack
   funcs:
   - name: RandTake
@@ -72,7 +72,7 @@ ops:
     o: [1, 2, 3, 4, 5, 6]
   - i: rand.take
     o: [4]
-   
+
 - name: roll
   title: Dice roller
   funcs:

@@ -12,6 +12,16 @@ var (
 		Name:  "average",
 		Funcs: []zc.Func{},
 	}
+	Binomial = zc.Op{
+		Name: "binomial",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int64, zc.Int64},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.Binomial,
+			},
+		},
+	}
 	Factorial = zc.Op{
 		Name: "factorial",
 		Funcs: []zc.Func{

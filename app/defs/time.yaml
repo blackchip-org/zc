@@ -103,7 +103,7 @@ ops:
   funcs:
   - name: Hours
     params: [x:Duration]
-    returns: [Float/64]
+    returns: [Float]
   desc: Converts the duration *x* into hours.
   example:
   - i: 10h20m30s hours 2 round
@@ -146,7 +146,7 @@ ops:
   funcs:
   - name: MinutesTime
     params: [x:Duration]
-    returns: [Float/64]
+    returns: [Float]
   desc: Converts the duration *x* into minutes.
   example:
   - i: 10h20m30s minutes 2 round
@@ -190,12 +190,12 @@ ops:
     resets `now` to returning the actual time.
 
 - name: seconds
-  title: Convert to seconds
+  title: Convert time to seconds
   ident: SecondsTime
   funcs:
   - name: SecondsTime
     params: [x:Duration]
-    returns: [Float/64]
+    returns: [Float]
   desc: Converts the duration *x* into seconds.
   example:
   - i: 10h20m30s seconds 2 round

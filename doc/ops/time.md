@@ -21,7 +21,7 @@ Date, time, and duration operations
 | [`now`](#now)                  | Current date and time               
 | [`now.reset, now-`](#nowreset) | Cancels override of now             
 | [`now=`](#now)                 | Override now value                  
-| [`seconds`](#seconds)          | Convert to seconds                  
+| [`seconds`](#seconds)          | Convert time to seconds             
 | [`sub`](#sub)                  | Time or duration subtraction        
 | [`time`](#time)                | Formats to a common time layout     
 | [`time.zone, tz`](#timezone)   | Converts time to another time zone  
@@ -139,7 +139,7 @@ Converts the duration *x* into hours.
 
 Stack effects:
 ```
-( x:Duration -- Float/64 )
+( x:Duration -- Float )
 ```
 
 Example:
@@ -189,7 +189,7 @@ Converts the duration *x* into minutes.
 
 Stack effects:
 ```
-( x:Duration -- Float/64 )
+( x:Duration -- Float )
 ```
 
 Example:
@@ -251,7 +251,7 @@ Converts the duration *x* into seconds.
 
 Stack effects:
 ```
-( x:Duration -- Float/64 )
+( x:Duration -- Float )
 ```
 
 Example:

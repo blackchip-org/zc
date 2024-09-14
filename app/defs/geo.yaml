@@ -35,7 +35,7 @@ ops:
   funcs:
   - name: Haversine
     params: [lat1:Angle/DMS, lon1:Angle/DMS, lat2:Angle/DMS, lon2:Angle/DMS]
-    returns: [Float/64]
+    returns: [Float]
   desc: |-
     Calculates the great circle distance between (*lat0*, *lon0*) and
     (*lat1*, *lon1*) using the haversine formula.
@@ -61,8 +61,8 @@ ops:
   title: Transform coordinate
   funcs:
   - name: Proj
-    params: [p0:Float/64, p1:Float/64, s:Text, t:Text]
-    returns: [Float/64, Float/64]
+    params: [p0:Float, p1:Float, s:Text, t:Text]
+    returns: [Float, Float]
   desc: |-
     Transform coordinate (*p0*, *p1*) in coordinate system *s* to a coordinate
     in system *t*. The order of the coordinates is defined by the coordinate

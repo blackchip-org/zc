@@ -7,20 +7,30 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var BasicFloat = zc.Vol{
-	Name: "basic/Float",
+var Float = zc.Vol{
+	Name: "float",
 	Ops: []zc.Op{
 		ops.AddF,
+		ops.AddQ,
+		ops.AddSf,
 		ops.CbrtF,
 		ops.DivF,
+		ops.DivQ,
+		ops.DivSf,
 		ops.ExpF,
 		ops.LogF,
 		ops.Log10F,
 		ops.MulF,
+		ops.MulQ,
+		ops.MulSf,
 		ops.NegF,
+		ops.NegQ,
 		ops.SignF,
 		ops.SqrtF,
+		ops.SqrtQ,
 		ops.SubF,
+		ops.SubQ,
+		ops.SubSf,
 	},
 	Macros: []zc.Macro{},
 }

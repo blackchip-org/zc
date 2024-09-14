@@ -40,14 +40,14 @@ entering values manually. All of the following parse to the same value:
 |----------------------------------------------|------------------------------------------------------
 | [`dec, dd`](#dec)                            | Degree angle to decimal degrees, angle               
 | [`deg-rad`](#deg-rad)                        | Convert degrees to radians                           
-| [`deg.min, dm`](#degmin)                     |                                                      
+| [`deg.min, dm`](#degmin)                     | Degree angle to degrees and minutes                  
 | [`deg.min.round, dmr`](#degminround)         | Degree angle to degrees and rounded minutes          
 | [`deg.min.sec, dms`](#degminsec)             | Degree angle to degrees, minutes and seconds         
 | [`deg.min.sec.round, dmsr`](#degminsecround) | Degree angle to degrees, minutes, and rounded seconds
 | [`dms?`](#dms)                               | Can parse as a decimal degree?                       
 | [`minutes, mins`](#minutes)                  | Degree angle to minutes                              
 | [`rad-deg`](#rad-deg)                        | Convert radians to degrees                           
-| [`seconds, secs`](#seconds)                  | Degree angle to seconds                              
+| [`seconds, secs`](#seconds)                  | Degree angle to seconds, degree angle to seconds     
 
 
 ## Operations

@@ -8,6 +8,116 @@ import (
 )
 
 var (
+	AddS = zc.Op{
+		Name: "add/s",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int, zc.Int},
+				Returns: []zc.Type{zc.Int},
+				Eval:    funcs.AddInt,
+			},
+		},
+	}
+	AddS16 = zc.Op{
+		Name: "add/s16",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int16, zc.Int16},
+				Returns: []zc.Type{zc.Int16},
+				Eval:    funcs.AddInt16,
+			},
+		},
+	}
+	AddS32 = zc.Op{
+		Name: "add/s32",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int32, zc.Int32},
+				Returns: []zc.Type{zc.Int32},
+				Eval:    funcs.AddInt32,
+			},
+		},
+	}
+	AddS64 = zc.Op{
+		Name: "add/s64",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int64, zc.Int64},
+				Returns: []zc.Type{zc.Int64},
+				Eval:    funcs.AddInt64,
+			},
+		},
+	}
+	AddS8 = zc.Op{
+		Name: "add/s8",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int8, zc.Int8},
+				Returns: []zc.Type{zc.Int8},
+				Eval:    funcs.AddInt8,
+			},
+		},
+	}
+	AddU = zc.Op{
+		Name: "add/u",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint, zc.Uint},
+				Returns: []zc.Type{zc.Uint},
+				Eval:    funcs.AddUint,
+			},
+		},
+	}
+	AddU16 = zc.Op{
+		Name: "add/u16",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint16, zc.Uint16},
+				Returns: []zc.Type{zc.Uint16},
+				Eval:    funcs.AddUint16,
+			},
+		},
+	}
+	AddU32 = zc.Op{
+		Name: "add/u32",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint32, zc.Uint32},
+				Returns: []zc.Type{zc.Uint32},
+				Eval:    funcs.AddUint32,
+			},
+		},
+	}
+	AddU64 = zc.Op{
+		Name: "add/u64",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint64, zc.Uint64},
+				Returns: []zc.Type{zc.Uint64},
+				Eval:    funcs.AddUint64,
+			},
+		},
+	}
+	AddU8 = zc.Op{
+		Name: "add/u8",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint8, zc.Uint8},
+				Returns: []zc.Type{zc.Uint8},
+				Eval:    funcs.AddUint8,
+			},
+		},
+	}
+	DataInt = zc.Op{
+		Name: "data-int",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Data},
+				Returns: []zc.Type{zc.BigInt},
+				Eval:    funcs.DataToInt,
+			},
+		},
+	}
 	IntData = zc.Op{
 		Name: "int-data",
 		Funcs: []zc.Func{
@@ -15,6 +125,294 @@ var (
 				Params:  []zc.Type{zc.BigInt},
 				Returns: []zc.Type{zc.Data},
 				Eval:    funcs.IntToData,
+			},
+		},
+	}
+	IntQ = zc.Op{
+		Name: "int?",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.BigIntIs,
+			},
+		},
+	}
+	IntQS = zc.Op{
+		Name: "int?/s",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.IntIs,
+			},
+		},
+	}
+	IntQS16 = zc.Op{
+		Name: "int?/s16",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Int16Is,
+			},
+		},
+	}
+	IntQS32 = zc.Op{
+		Name: "int?/s32",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Int32Is,
+			},
+		},
+	}
+	IntQS64 = zc.Op{
+		Name: "int?/s64",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Int64Is,
+			},
+		},
+	}
+	IntQS8 = zc.Op{
+		Name: "int?/s8",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Int8Is,
+			},
+		},
+	}
+	IntQU = zc.Op{
+		Name: "int?/u",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.UintIs,
+			},
+		},
+	}
+	IntQU16 = zc.Op{
+		Name: "int?/u16",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Uint16Is,
+			},
+		},
+	}
+	IntQU32 = zc.Op{
+		Name: "int?/u32",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Uint32Is,
+			},
+		},
+	}
+	IntQU64 = zc.Op{
+		Name: "int?/u64",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Uint64Is,
+			},
+		},
+	}
+	IntQU8 = zc.Op{
+		Name: "int?/u8",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.String},
+				Returns: []zc.Type{zc.Bool},
+				Eval:    funcs.Uint8Is,
+			},
+		},
+	}
+	MaxIntS = zc.Op{
+		Name: "max.int/s",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.Int},
+				Eval:    funcs.MaxInt,
+			},
+		},
+	}
+	MaxIntS16 = zc.Op{
+		Name:  "max.int/s16",
+		Funcs: []zc.Func{},
+	}
+	MaxIntS32 = zc.Op{
+		Name:  "max.int/s32",
+		Funcs: []zc.Func{},
+	}
+	MaxIntS64 = zc.Op{
+		Name:  "max.int/s64",
+		Funcs: []zc.Func{},
+	}
+	MaxIntS8 = zc.Op{
+		Name:  "max.int/s8",
+		Funcs: []zc.Func{},
+	}
+	MaxIntU = zc.Op{
+		Name: "max.int/u",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.Uint},
+				Eval:    funcs.MaxUint,
+			},
+		},
+	}
+	MaxIntU16 = zc.Op{
+		Name:  "max.int/u16",
+		Funcs: []zc.Func{},
+	}
+	MaxIntU32 = zc.Op{
+		Name:  "max.int/u32",
+		Funcs: []zc.Func{},
+	}
+	MaxIntU64 = zc.Op{
+		Name:  "max.int/u64",
+		Funcs: []zc.Func{},
+	}
+	MaxIntU8 = zc.Op{
+		Name:  "max.int/u8",
+		Funcs: []zc.Func{},
+	}
+	MinIntS = zc.Op{
+		Name: "min.int/s",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.Int},
+				Eval:    funcs.MinInt,
+			},
+		},
+	}
+	MinIntS16 = zc.Op{
+		Name:  "min.int/s16",
+		Funcs: []zc.Func{},
+	}
+	MinIntS32 = zc.Op{
+		Name:  "min.int/s32",
+		Funcs: []zc.Func{},
+	}
+	MinIntS64 = zc.Op{
+		Name:  "min.int/s64",
+		Funcs: []zc.Func{},
+	}
+	MinIntS8 = zc.Op{
+		Name:  "min.int/s8",
+		Funcs: []zc.Func{},
+	}
+	SubS = zc.Op{
+		Name: "sub/s",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int, zc.Int},
+				Returns: []zc.Type{zc.Int},
+				Eval:    funcs.SubInt,
+			},
+		},
+	}
+	SubS16 = zc.Op{
+		Name: "sub/s16",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int16, zc.Int16},
+				Returns: []zc.Type{zc.Int16},
+				Eval:    funcs.SubInt16,
+			},
+		},
+	}
+	SubS32 = zc.Op{
+		Name: "sub/s32",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int32, zc.Int32},
+				Returns: []zc.Type{zc.Int32},
+				Eval:    funcs.SubInt32,
+			},
+		},
+	}
+	SubS64 = zc.Op{
+		Name: "sub/s64",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int64, zc.Int64},
+				Returns: []zc.Type{zc.Int64},
+				Eval:    funcs.SubInt64,
+			},
+		},
+	}
+	SubS8 = zc.Op{
+		Name: "sub/s8",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Int8, zc.Int8},
+				Returns: []zc.Type{zc.Int8},
+				Eval:    funcs.SubInt8,
+			},
+		},
+	}
+	SubU = zc.Op{
+		Name: "sub/u",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint, zc.Uint},
+				Returns: []zc.Type{zc.Uint},
+				Eval:    funcs.SubUint,
+			},
+		},
+	}
+	SubU16 = zc.Op{
+		Name: "sub/u16",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint16, zc.Uint16},
+				Returns: []zc.Type{zc.Uint16},
+				Eval:    funcs.SubUint16,
+			},
+		},
+	}
+	SubU32 = zc.Op{
+		Name: "sub/u32",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint32, zc.Uint32},
+				Returns: []zc.Type{zc.Uint32},
+				Eval:    funcs.SubUint32,
+			},
+		},
+	}
+	SubU64 = zc.Op{
+		Name: "sub/u64",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint64, zc.Uint64},
+				Returns: []zc.Type{zc.Uint64},
+				Eval:    funcs.SubUint64,
+			},
+		},
+	}
+	SubU8 = zc.Op{
+		Name: "sub/u8",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint8, zc.Uint8},
+				Returns: []zc.Type{zc.Uint8},
+				Eval:    funcs.SubUint8,
 			},
 		},
 	}

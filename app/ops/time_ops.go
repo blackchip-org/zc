@@ -48,7 +48,7 @@ var (
 			},
 		},
 	}
-	DateTimeGet = zc.Op{
+	DateTimeQ = zc.Op{
 		Name: "date.time?",
 		Funcs: []zc.Func{
 			{
@@ -58,7 +58,7 @@ var (
 			},
 		},
 	}
-	DateGet = zc.Op{
+	DateQ = zc.Op{
 		Name: "date?",
 		Funcs: []zc.Func{
 			{
@@ -98,7 +98,7 @@ var (
 			},
 		},
 	}
-	LocalZoneSet = zc.Op{
+	LocalZoneE = zc.Op{
 		Name: "local.zone=",
 		Funcs: []zc.Func{
 			{
@@ -138,7 +138,7 @@ var (
 			},
 		},
 	}
-	NowSet = zc.Op{
+	NowE = zc.Op{
 		Name: "now=",
 		Funcs: []zc.Func{
 			{
@@ -198,7 +198,7 @@ var (
 			},
 		},
 	}
-	TimeGet = zc.Op{
+	TimeQ = zc.Op{
 		Name: "time?",
 		Funcs: []zc.Func{
 			{

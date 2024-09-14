@@ -62,7 +62,7 @@ var (
 			},
 		},
 	}
-	DmsGet = zc.Op{
+	DmsQ = zc.Op{
 		Name: "dms?",
 		Funcs: []zc.Func{
 			{

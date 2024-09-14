@@ -31,6 +31,7 @@ var (
 	Decimal  = DecimalType{}
 	Duration = DurationType{}
 	Float64  = Float64Type{}
+	Float32  = Float32Type{}
 	Int      = IntType{}
 	Int8     = Int8Type{}
 	Int16    = Int16Type{}
@@ -52,7 +53,7 @@ var Types []Type = []Type{
 	BigFloat, BigInt, Bool,
 	Complex,
 	Data, Date, DateTime, Decimal, AngleDMS, Duration,
-	Float64,
+	Float64, Float32,
 	Int, Int8, Int16, Int32, Int64,
 	Rat, Real,
 	String,
@@ -143,7 +144,7 @@ func (t AnyType) Dup(a any) any {
 type BigFloatType struct{}
 
 func (t BigFloatType) Name() string    { return "BigFloat" }
-func (t BigFloatType) AppName() string { return "Float/128" }
+func (t BigFloatType) AppName() string { return "Float/q" }
 func (t BigFloatType) GoName() string  { return "*big.Float" }
 
 func (t BigFloatType) New() *big.Float {
@@ -641,7 +642,7 @@ func (t DurationType) Dup(a any) any {
 type Float64Type struct{}
 
 func (t Float64Type) Name() string    { return "Float64" }
-func (t Float64Type) AppName() string { return "Float/64" }
+func (t Float64Type) AppName() string { return "Float" }
 func (t Float64Type) GoName() string  { return "float64" }
 
 func (t Float64Type) As(a any) float64 {
@@ -683,6 +684,56 @@ func (t Float64Type) Format(_ coll.State, a any) string {
 }
 
 func (t Float64Type) Dup(a any) any {
+	return a
+}
+
+// ----------------------------------------------------------------------------
+type Float32Type struct{}
+
+func (t Float32Type) Name() string    { return "Float32" }
+func (t Float32Type) AppName() string { return "Float/s" }
+func (t Float32Type) GoName() string  { return "float32" }
+
+func (t Float32Type) As(a any) float32 {
+	v, ok := a.(float32)
+	if !ok {
+		panic(ErrWrongGoType(t, a))
+	}
+	return v
+}
+
+func (t Float32Type) Push(c Calc, val float32) {
+	val64 := float64(val)
+	switch {
+	case math.IsNaN(val64):
+		c.Raise(ErrNotANumber)
+	case math.IsInf(val64, 1):
+		c.Raise(ErrInfinity(1))
+	case math.IsInf(val64, -1):
+		c.Raise(ErrInfinity(-1))
+	default:
+		c.Push(Item{TypeVal: val, Type: t})
+	}
+}
+
+func (t Float32Type) Pop(c Calc) float32 {
+	return t.As(c.Pop().TypeVal)
+}
+
+func (t Float32Type) Parse(_ coll.State, str string) (any, bool, error) {
+	str = PreParseDecimal(str)
+	f64, err := strconv.ParseFloat(str, 32)
+	return float32(f64), err == nil, nil
+}
+
+func (t Float32Type) Format(_ coll.State, a any) string {
+	v := t.As(a)
+	f := strconv.FormatFloat(float64(v), 'g', -1, 32)
+	f = FormatExponent(f)
+	return f
+}
+
+func (t Float32Type) Dup(a any) any {
 	return a
 }
 
@@ -864,7 +915,7 @@ func (t Int64Type) Pop(c Calc) int64 {
 func (t Int64Type) Parse(_ coll.State, str string) (any, bool, error) {
 	str = PreParseInt(str)
 	i64, err := strconv.ParseInt(str, 0, 64)
-	return int32(i64), err == nil, nil
+	return int64(i64), err == nil, nil
 }
 
 func (t Int64Type) Format(_ coll.State, a any) string {
@@ -1252,7 +1303,7 @@ func (t Uint64Type) Pop(c Calc) uint64 {
 func (t Uint64Type) Parse(_ coll.State, str string) (any, bool, error) {
 	str = PreParseInt(str)
 	i64, err := strconv.ParseUint(str, 0, 64)
-	return uint32(i64), err == nil, nil
+	return uint64(i64), err == nil, nil
 }
 
 func (t Uint64Type) Format(_ coll.State, a any) string {

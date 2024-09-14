@@ -89,14 +89,14 @@ func TestFloat(t *testing.T) {
 	c := repl.NewReplTester(t)
 
 	c.Eval("1.1 2.2 add/f")
-	c.AssertStack("3.3000000000000000000000000000000002")
+	c.AssertStack("3.3000000000000003")
 }
 
 func TestRound(t *testing.T) {
 	c := repl.NewReplTester(t)
 
 	c.Eval("1.1 2.2 add/f")
-	c.AssertStack("3.3000000000000000000000000000000002")
+	c.AssertStack("3.3000000000000003")
 
 	c.Eval("2 round")
 	c.AssertStack("3.3")

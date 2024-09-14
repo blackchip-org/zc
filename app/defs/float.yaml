@@ -1,0 +1,308 @@
+name: float
+title: Floating-point values
+category: lib
+
+ops:
+- name: add/q
+  title: Addition
+  subtitle: quad precision floating-point
+  funcs:
+  - name: AddBigFloat
+    params: [x:Float/q, y:Float/q]
+    returns: [Float/q]
+  desc: Adds *x* to *y* using quad precision floating-point numbers.
+  example:
+  - i: 1.1 2.2 add/q
+    o: [3.3000000000000000000000000000000002]
+
+- name: add/f
+  title: Addition
+  subtitle: double precision floating-point
+  funcs:
+  - name: AddFloat64
+    params: [x:Float, y:Float]
+    returns: [Float]
+  desc: Adds *x* to *y* using double precision floating-point numbers.
+  example:
+  - i: 1.1 2.2 add/f
+    o: [3.3000000000000003]
+
+- name: add/sf
+  title: Addition
+  subtitle: single precision floating-point
+  funcs:
+  - name: AddFloat32
+    params: [x:Float/s, y:Float/s]
+    returns: [Float/s]
+  desc: Adds *x* to *y* using single precision floating-point numbers.
+  example:
+  - i: 1.1 2.2 add/sf
+    o: [3.3000002]
+
+- name: cbrt/f
+  title: Cube root
+  subtitle: double precision floating point
+  funcs:
+  - name: CbrtFloat64
+    params: [x:Float]
+    returns: [Float]
+  desc: |-
+    The cube root of *x*. If *x* is less than zero, an 'invalid argument'
+    error is raised.
+  example:
+  - i: 76332.940488
+    o: [76332.940488]
+  - i: cbrt/f 2 round
+    o: [42.42]
+  tests:
+  - name: Zero
+    test:
+    - i: -1 cbrt/f
+      error: "cbrt/f: invalid argument, -1 < 0"
+
+- name: div/q
+  title: Division
+  subtitle: quad precision floating-point
+  funcs:
+  - name: DivBigFloat
+    params: [x:Float/q, y:Float/q]
+    returns: [Float/q]
+  desc: |-
+    Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
+  example:
+  - i: 2 3 div/q
+    o: [0.6666666666666666666666666666666666]
+  tests:
+  - name: Zero
+    test:
+      - i: 6.6 0 div/q
+        error: "div/q: division by zero"
+
+- name: div/f
+  title: Division
+  subtitle: double precision floating-point
+  funcs:
+  - name: DivFloat64
+    params: [x:Float, y:Float]
+    returns: [Float]
+  desc: |-
+    Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
+  example:
+    - i: 2 3 div/f
+      o: [0.6666666666666666]
+  tests:
+  - name: Zero
+    test:
+      - i: 6.6 0 div/f
+        error: "div/f: division by zero"
+
+- name: div/sf
+  title: Division
+  subtitle: sigle precision floating-point
+  funcs:
+  - name: DivFloat32
+    params: [x:Float/s, y:Float/s]
+    returns: [Float/s]
+  desc: |-
+    Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
+  example:
+    - i: 2 3 div/sf
+      o: [0.6666667]
+  tests:
+  - name: Zero
+    test:
+      - i: 6.6 0 div/sf
+        error: "div/sf: division by zero"
+
+- name: exp/f
+  title: Natural exponential
+  funcs:
+  - name: ExpFloat64
+    params: [x:Float]
+    returns: [Float]
+  desc: Natural exponential of *x*.
+  example:
+  - i: 2 exp/f 5 round
+    o: [7.38906]
+
+- name: log/f
+  title: Natural logarithm
+  funcs:
+  - name: LogFloat64
+    params: [x:Float]
+    returns: [Float]
+  desc: Natural logarithm of *x*.
+  example:
+  - i: 8 log/f 5 round
+    o: [2.07944]
+
+- name: log10/f
+  title: Decimal logarithm
+  funcs:
+  - name: Log10Float64
+    params: [x:Float]
+    returns: [Float]
+  desc: Natural logarithm of *x*.
+  example:
+  - i: 50 log10/f 5 round
+    o: [1.69897]
+
+- name: mul/q
+  title: Multiplication
+  subtitle: quad precision floating-point
+  funcs:
+  - name: MulBigFloat
+    params: [x:Float/q, y:Float/q]
+    returns: [Float/q]
+  desc: Multiplies *x* by *y* using quad precision floating-point.
+  example:
+  - i: 1.1 2.2 mul/q
+    o: [2.4200000000000000000000000000000003]
+
+- name: mul/f
+  title: Multiplication
+  subtitle: double precision floating-point
+  funcs:
+  - name: MulFloat64
+    params: [x:Float, y:Float]
+    returns: [Float]
+  desc: Multiplies *x* by *y* using double precision floating-point.
+  example:
+  - i: 1.1 2.2 mul/f
+    o: [2.4200000000000004]
+
+- name: mul/sf
+  title: Multiplication
+  subtitle: single precision floating-point
+  funcs:
+  - name: MulFloat32
+    params: [x:Float/s, y:Float/s]
+    returns: [Float/s]
+  desc: Multiplies *x* by *y* using single precision floating-point.
+  example:
+  - i: 1.1 2.2 mul/sf
+    o: [2.42]
+
+- name: neg/q
+  title: Negation
+  subtitle: quad precision floating-point
+  funcs:
+  - name: NegBigFloat
+    params: [x:Float/q]
+    returns: [Float/q]
+  desc: Changes the sign of *x*.
+  example:
+  - i: -6
+    o: [-6]
+  - i: neg/q
+    o: [6]
+  - i: neg/q
+    o: [-6]
+
+- name: neg/f
+  title: Negation
+  subtitle: double precision floating-point
+  funcs:
+  - name: NegFloat64
+    params: [x:Float]
+    returns: [Float]
+  desc: Changes the sign of *x*.
+  example:
+  - i: -6
+    o: [-6]
+  - i: neg/f
+    o: [6]
+  - i: neg/f
+    o: [-6]
+
+- name: sign/f
+  title: Sign
+  subtitle: double precision floating-point
+  funcs:
+  - name: SignFloat64
+    params: [x:Float]
+    returns: [Int/s]
+  desc: |-
+    Places `-1` on the stack if *x* is negative, `1` if *x* is positive, or `0`
+    if *x* is zero.
+  example:
+  - i: c -6 sign/f
+    o: [-1]
+  - i: c 6 sign/f
+    o: [1]
+  - i: c 0 sign/f
+    o: [0]
+
+- name: sqrt/q
+  title: Square Root
+  subtitle: quad precision floating-point
+  funcs:
+  - name: SqrtBigFloat
+    params: [x:Float/q]
+    returns: [Float/q]
+  desc: |-
+    The square root of *x*. If *x* is not Complex and is less than zero, an
+    invalid argument error is raised.
+  example:
+  - i: 1.5625 sqrt/q
+    o: [1.25]
+  tests:
+    - name: Negative
+      test:
+      - i: -1 sqrt/q
+        error: "sqrt/q: invalid argument, -1 < 0"
+
+- name: sqrt/f
+  title: Square Root
+  subtitle: double precision floating-point
+  funcs:
+  - name: SqrtFloat64
+    params: [x:Float]
+    returns: [Float]
+  desc: |-
+    The square root of *x*. If *x* is not Complex and is less than zero, an
+    invalid argument error is raised.
+  example:
+  - i: 1.5625 sqrt/f
+    o: [1.25]
+  tests:
+    - name: Negative
+      test:
+      - i: -1 sqrt/f
+        error: "sqrt/f: invalid argument, -1 < 0"
+
+- name: sub/q
+  title: Subtraction
+  subtitle: quad precision floating-point
+  funcs:
+  - name: SubBigFloat
+    params: [x:Float/q, y:Float/q]
+    returns: [Float/q]
+  desc: Subtracts the value of *y* from *x*
+  example:
+  - i: 3.3 2.2 sub/q
+    o: [1.0999999999999999999999999999999997]
+
+- name: sub/f
+  title: Subtraction
+  subtitle: double precision floating-point
+  funcs:
+  - name: SubFloat64
+    params: [x:Float, y:Float]
+    returns: [Float]
+  desc: Subtracts the value of *y* from *x*
+  example:
+  - i: 3.3 2.2 sub/f
+    o: [1.0999999999999996]
+
+- name: sub/sf
+  title: Subtraction
+  subtitle: single precision floating-point
+  funcs:
+  - name: SubFloat32
+    params: [x:Float/s, y:Float/s]
+    returns: [Float/s]
+  desc: Subtracts the value of *y* from *x*
+  example:
+  - i: 3.3 2.2 sub/sf
+    o: [1.0999999]

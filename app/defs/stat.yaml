@@ -19,6 +19,18 @@ ops:
     - i: average
       error: "div: division undefined"
 
+- name: binomial
+  title: Binomial coefficient
+  funcs:
+  - name: Binomial
+    params: [n:Int/s64, k:Int/s64]
+    returns: [Int]
+  desc: |-
+    Binomial coefficient where *k* elements are chosen from a set of *n*.
+  example:
+    - i: 4 2 binomial
+      o: [6]
+
 - name: factorial
   aliases: [fact]
   title: Factorial

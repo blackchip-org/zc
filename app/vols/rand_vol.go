@@ -12,7 +12,7 @@ var Rand = zc.Vol{
 	Ops: []zc.Op{
 		ops.Rand,
 		ops.RandSeed,
-		ops.RandSeedGet,
+		ops.RandSeedQ,
 		ops.RandTake,
 		ops.RandI,
 		ops.Roll,

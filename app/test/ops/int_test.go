@@ -8,9 +8,410 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
+func TestOpDocs_Int_AddS(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/s 1 add/s min.int/s eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_AddS16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("32767 1 add/s16")
+	c.AssertStack("-32768")
+}
+
+func TestOpDocs_Int_AddS32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2147483647 1 add/s32")
+	c.AssertStack("-2147483648")
+}
+
+func TestOpDocs_Int_AddS64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("9223372036854775807 1 add/s64")
+	c.AssertStack("-9223372036854775808")
+}
+
+func TestOpDocs_Int_AddS8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("127 1 add/s8")
+	c.AssertStack("-128")
+}
+
+func TestOpDocs_Int_AddU(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/u 1 add/u 0 eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_AddU16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("65535 1 add/u16")
+	c.AssertStack("0")
+}
+
+func TestOpDocs_Int_AddU32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("4294967295 1 add/u32")
+	c.AssertStack("0")
+}
+
+func TestOpDocs_Int_AddU64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("18446744073709551615 1 add/u64")
+	c.AssertStack("0")
+}
+
+func TestOpDocs_Int_AddU8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("255 1 add/u8")
+	c.AssertStack("0")
+}
+
+func TestOpDocs_Int_DataInt(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0x1234 int-data")
+	c.AssertStack("data: 1234")
+
+	c.Eval("data-int hex")
+	c.AssertStack("0x1234")
+}
+
 func TestOpDocs_Int_IntData(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("0x1234 int-data")
 	c.AssertStack("data: 1234")
+}
+
+func TestOpDocs_Int_IntQ(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 1,234 int?")
+	c.AssertStack("true")
+
+	c.Eval("c 1.234 int?")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQS(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 1,234 int?/s")
+	c.AssertStack("true")
+
+	c.Eval("c 20000000000000000000 int?/s")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQS16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 10,000 int?/s16")
+	c.AssertStack("true")
+
+	c.Eval("c 100,000 int?/s16")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQS32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 1,000,000,000 int?/s32")
+	c.AssertStack("true")
+
+	c.Eval("c 10,000,000,000 int?/s32")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQS64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 1,000,000,000,000,000,000 int?/s64")
+	c.AssertStack("true")
+
+	c.Eval("c 10,000,000,000,000,000,000 int?/s64")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQS8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 100 int?/s8")
+	c.AssertStack("true")
+
+	c.Eval("c 200 int?/s8")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQU(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 1,234 int?/u")
+	c.AssertStack("true")
+
+	c.Eval("c 20,000,000,000,000,000,000 int?/u")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQU16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 10,000 int?/u16")
+	c.AssertStack("true")
+
+	c.Eval("c 100,000 int?/u16")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQU32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 1,000,000,000 int?/u32")
+	c.AssertStack("true")
+
+	c.Eval("c 10,000,000,000 int?/u32")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQU64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 10,000,000,000,000,000,000 int?/u64")
+	c.AssertStack("true")
+
+	c.Eval("c 100,000,000,000,000,000,000 int?/u64")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_IntQU8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 200 int?/u8")
+	c.AssertStack("true")
+
+	c.Eval("c 300 int?/u8")
+	c.AssertStack("false")
+}
+
+func TestOpDocs_Int_MaxIntS(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/s 1 add/s min.int/s eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntS16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/s16")
+	c.AssertStack("32767")
+
+	c.Eval("1 15 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntS32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/s32")
+	c.AssertStack("2147483647")
+
+	c.Eval("1 31 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntS64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/s64")
+	c.AssertStack("9223372036854775807")
+
+	c.Eval("1 63 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntS8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/s8")
+	c.AssertStack("127")
+
+	c.Eval("1 7 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntU(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/u 1 add/u 0 eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntU16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/u16")
+	c.AssertStack("65535")
+
+	c.Eval("1 16 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntU32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/u32")
+	c.AssertStack("4294967295")
+
+	c.Eval("1 32 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntU64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/u64")
+	c.AssertStack("18446744073709551615")
+
+	c.Eval("1 64 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MaxIntU8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("max.int/u8")
+	c.AssertStack("255")
+
+	c.Eval("1 8 lsh 1 sub eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MinIntS(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("min.int/s64 1 sub/s max.int/s64 eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MinIntS16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("min.int/s16")
+	c.AssertStack("-32768")
+
+	c.Eval("-1 15 lsh eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MinIntS32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("min.int/s32")
+	c.AssertStack("-2147483648")
+
+	c.Eval("-1 31 lsh eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MinIntS64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("min.int/s64")
+	c.AssertStack("-9223372036854775808")
+
+	c.Eval("-1 63 lsh eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_MinIntS8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("min.int/s8")
+	c.AssertStack("-128")
+
+	c.Eval("-1 7 lsh eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_SubS(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("min.int/s 1 sub/s max.int/s eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_SubS16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-32768 1 sub/s16")
+	c.AssertStack("32767")
+}
+
+func TestOpDocs_Int_SubS32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-2147483648 1 sub/s32")
+	c.AssertStack("2147483647")
+}
+
+func TestOpDocs_Int_SubS64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-9223372036854775808 1 sub/s64")
+	c.AssertStack("9223372036854775807")
+}
+
+func TestOpDocs_Int_SubS8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("-128 1 sub/s8")
+	c.AssertStack("127")
+}
+
+func TestOpDocs_Int_SubU(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 1 sub/u max.int/u eq")
+	c.AssertStack("true")
+}
+
+func TestOpDocs_Int_SubU16(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 1 sub/u16")
+	c.AssertStack("65535")
+}
+
+func TestOpDocs_Int_SubU32(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 1 sub/u32")
+	c.AssertStack("4294967295")
+}
+
+func TestOpDocs_Int_SubU64(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 1 sub/u64")
+	c.AssertStack("18446744073709551615")
+}
+
+func TestOpDocs_Int_SubU8(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("0 1 sub/u8")
+	c.AssertStack("255")
 }
