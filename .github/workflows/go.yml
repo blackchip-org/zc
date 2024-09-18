@@ -27,7 +27,7 @@ jobs:
       run: sudo apt update 
 
     - name: Install Dependencies
-      run: sudo apt install libproj-dev
+      run: sudo apt install git libproj-dev
       
     - name: Gen
       run: ./make ops 
