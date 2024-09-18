@@ -4,8 +4,8 @@ github.com/alecthomas/repr v0.4.0 h1:GhI2A8MACjfegCPVq9f1FLvIBS+DrQ2KQBFZP1iFzXc
 github.com/alecthomas/repr v0.4.0/go.mod h1:Fr0507jx4eOXV7AlPV6AVZLYrLIuIeSOWtW57eE/O/4=
 github.com/blackchip-org/dms v0.1.0 h1:78N9HxCRiumM3zrGwuM+q2kFM2sh6FhW5LFofB2Wn+E=
 github.com/blackchip-org/dms v0.1.0/go.mod h1:82Ee0ylgD+HbGDD23AqbuOCIdTlbBcYPNXNCqO5ha1s=
-github.com/blackchip-org/scan v0.2.0 h1:Q5fwhpHduWJ6HsfQ4eRpGV8gau4wilYN0KOwMn7aq8E=
-github.com/blackchip-org/scan v0.2.0/go.mod h1:eS9QMEdU0CgTZ3uyvO50h1NBet3JwXEGTCWr4e6sJ3w=
+github.com/blackchip-org/scan v0.3.0 h1:05U6BPReMdffoFUFDKB7j3W+KajmtvltRtSeu/qoOIc=
+github.com/blackchip-org/scan v0.3.0/go.mod h1:eS9QMEdU0CgTZ3uyvO50h1NBet3JwXEGTCWr4e6sJ3w=
 github.com/cockroachdb/apd/v3 v3.2.1 h1:U+8j7t0axsIgvQUqthuNm82HIrYXodOV2iWLWtEaIwg=
 github.com/cockroachdb/apd/v3 v3.2.1/go.mod h1:klXJcjp+FffLTHlhIG69tezTDvdP065naDsHzKhYSqc=
 github.com/hexops/gotextdiff v1.0.3 h1:gitA9+qJrrTCsiCl7+kh75nPqQt1cx4ZkudSTLoUqJM=
