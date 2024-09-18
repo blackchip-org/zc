@@ -5,7 +5,7 @@ name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "v6" ]
 
 jobs:
 
@@ -26,14 +26,14 @@ jobs:
     - name: Install Dependencies
       run: sudo apt install libproj-dev
       
-    - name: Build
-      run: go build -tags proj ./...
+    - name: Gen
+      run: ./make ops 
 
     - name: Test
-      run: go test -tags proj ./...
+      run: ./make test
  
     - name: WASM
-      run: GOOS=js GOARCH=wasm go build -o web/zc.wasm cmd/wasm/main.go
+      run: ./make wasm 
       
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v2
