@@ -18,7 +18,7 @@ var Time = zc.Vol{
 		ops.DayYear,
 		ops.Hours,
 		ops.LocalZone,
-		ops.LocalZoneE,
+		ops.LocalZoneQ,
 		ops.MinutesTime,
 		ops.Now,
 		ops.NowReset,

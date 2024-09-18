@@ -5,6 +5,8 @@ import (
 	"math/big"
 
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/app/vars"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func AddBigFloat(c zc.Calc) {
@@ -125,6 +127,19 @@ func PowFloat64(c zc.Calc) {
 	y := zc.Float64.Pop(c)
 	x := zc.Float64.Pop(c)
 	zc.Float64.Push(c, math.Pow(x, y))
+}
+
+func PrecFloat(c zc.Calc) {
+	v := vars.ForFloat(c)
+	prec := zc.Uint.Pop(c)
+	v.Prec = prec
+	c.Notify(msg.PrecisionSet(prec))
+}
+
+func PrecFloatGet(c zc.Calc) {
+	v := vars.ForFloat(c)
+	zc.Uint.Push(c, v.Prec)
+	c.SetLabel(msg.Precision)
 }
 
 func SignBigFloat(c zc.Calc) {

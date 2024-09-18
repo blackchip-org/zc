@@ -8,7 +8,7 @@ import (
 	"github.com/blackchip-org/zc/v6/app"
 )
 
-func TestOpDocs_Real_Dec(t *testing.T) {
+func TestOpDocs_Dec_Dec(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 0xff dec")
@@ -18,30 +18,30 @@ func TestOpDocs_Real_Dec(t *testing.T) {
 	c.AssertStack("0.5")
 }
 
-func TestOpDocs_Real_RoundingMode(t *testing.T) {
+func TestOpDocs_Dec_RoundingModeD(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("rounding.mode?")
+	c.Eval("rounding.mode/d?")
 	c.AssertStack("half.even")
 
 	c.Eval("c 5.55 1 round")
 	c.AssertStack("5.6")
 
-	c.Eval("/down rounding.mode")
+	c.Eval("/down rounding.mode/d")
 	c.AssertNotice("rounding mode set to down")
 
 	c.Eval("c 5.55 1 round")
 	c.AssertStack("5.5")
 }
 
-func TestOpDocs_Real_RoundingModeQ(t *testing.T) {
+func TestOpDocs_Dec_RoundingModeDQ(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("rounding.mode?")
+	c.Eval("rounding.mode/d?")
 	c.AssertStack("half.even")
 }
 
-func TestOpDocs_Real_Trunc(t *testing.T) {
+func TestOpDocs_Dec_Trunc(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("c 3.9 trunc")

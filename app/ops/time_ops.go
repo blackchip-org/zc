@@ -92,19 +92,19 @@ var (
 		Name: "local.zone",
 		Funcs: []zc.Func{
 			{
-				Params:  []zc.Type{},
-				Returns: []zc.Type{zc.String},
-				Eval:    funcs.LocalZone,
-			},
-		},
-	}
-	LocalZoneE = zc.Op{
-		Name: "local.zone=",
-		Funcs: []zc.Func{
-			{
 				Params:  []zc.Type{zc.String},
 				Returns: []zc.Type{},
 				Eval:    funcs.LocalZoneSet,
+			},
+		},
+	}
+	LocalZoneQ = zc.Op{
+		Name: "local.zone?",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.String},
+				Eval:    funcs.LocalZone,
 			},
 		},
 	}

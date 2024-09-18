@@ -3,7 +3,7 @@ title: Date, time, and duration operations
 category: lib
 setup:
 - "'Jan 2 2006 15:04:05 -0700 MST' now="
-- "'MST' local.zone="
+- "'MST' local.zone"
 
 ops:
 - name: add
@@ -109,7 +109,7 @@ ops:
   - i: 10h20m30s hours 2 round
     o: [10.34 h]
 
-- name: local.zone
+- name: local.zone?
   title: Name of the local time zone
   funcs:
   - name: LocalZone
@@ -117,10 +117,10 @@ ops:
   desc: |-
     The name of the local time zone.
   example:
-  - i: local.zone
+  - i: local.zone?
     o: ["time zone: MST"]
 
-- name: local.zone=
+- name: local.zone
   title: Sets the local time zone
   funcs:
   - name: LocalZoneSet
@@ -131,11 +131,11 @@ ops:
   example:
     - i: now time
       o: [3:04:05pm -0700 MST]
-    - i: c /est local.zone=
+    - i: c /est local.zone
       notice: local time zone is now 'EST'
     - i: now time
       o: [5:04:05pm -0500 EST]
-    - i: c /Asia/Jakarta local.zone=
+    - i: c /Asia/Jakarta local.zone
       notice: local time zone is now 'Asia/Jakarta'
     - i: now time
       o: [5:04:05am +0700 WIB]

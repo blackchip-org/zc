@@ -15,18 +15,18 @@ func TestOpDocs_Float_AddF(t *testing.T) {
 	c.AssertStack("3.3000000000000003")
 }
 
-func TestOpDocs_Float_AddQ(t *testing.T) {
+func TestOpDocs_Float_AddSp(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("1.1 2.2 add/q")
-	c.AssertStack("3.3000000000000000000000000000000002")
+	c.Eval("1.1 2.2 add/sp")
+	c.AssertStack("3.3000002")
 }
 
-func TestOpDocs_Float_AddSf(t *testing.T) {
+func TestOpDocs_Float_AddV(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("1.1 2.2 add/sf")
-	c.AssertStack("3.3000002")
+	c.Eval("1.1 2.2 add/v")
+	c.AssertStack("3.3000000000000000000000000000000002")
 }
 
 func TestOpDocs_Float_CbrtF(t *testing.T) {
@@ -60,32 +60,32 @@ func TestOpDocs_Float_DivF_Zero(t *testing.T) {
 	c.AssertError("div/f: division by zero")
 }
 
-func TestOpDocs_Float_DivQ(t *testing.T) {
+func TestOpDocs_Float_DivSp(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("2 3 div/q")
-	c.AssertStack("0.6666666666666666666666666666666666")
-}
-
-func TestOpDocs_Float_DivQ_Zero(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("6.6 0 div/q")
-	c.AssertError("div/q: division by zero")
-}
-
-func TestOpDocs_Float_DivSf(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("2 3 div/sf")
+	c.Eval("2 3 div/sp")
 	c.AssertStack("0.6666667")
 }
 
-func TestOpDocs_Float_DivSf_Zero(t *testing.T) {
+func TestOpDocs_Float_DivSp_Zero(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("6.6 0 div/sf")
-	c.AssertError("div/sf: division by zero")
+	c.Eval("6.6 0 div/sp")
+	c.AssertError("div/sp: division by zero")
+}
+
+func TestOpDocs_Float_DivV(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("2 3 div/v")
+	c.AssertStack("0.6666666666666666666666666666666666")
+}
+
+func TestOpDocs_Float_DivV_Zero(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("6.6 0 div/v")
+	c.AssertError("div/v: division by zero")
 }
 
 func TestOpDocs_Float_ExpF(t *testing.T) {
@@ -116,18 +116,18 @@ func TestOpDocs_Float_MulF(t *testing.T) {
 	c.AssertStack("2.4200000000000004")
 }
 
-func TestOpDocs_Float_MulQ(t *testing.T) {
+func TestOpDocs_Float_MulSp(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("1.1 2.2 mul/q")
-	c.AssertStack("2.4200000000000000000000000000000003")
+	c.Eval("1.1 2.2 mul/sp")
+	c.AssertStack("2.42")
 }
 
-func TestOpDocs_Float_MulSf(t *testing.T) {
+func TestOpDocs_Float_MulV(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("1.1 2.2 mul/sf")
-	c.AssertStack("2.42")
+	c.Eval("1.1 2.2 mul/v")
+	c.AssertStack("2.4200000000000000000000000000000003")
 }
 
 func TestOpDocs_Float_NegF(t *testing.T) {
@@ -143,17 +143,37 @@ func TestOpDocs_Float_NegF(t *testing.T) {
 	c.AssertStack("-6")
 }
 
-func TestOpDocs_Float_NegQ(t *testing.T) {
+func TestOpDocs_Float_NegV(t *testing.T) {
 	c := app.NewCalcTester(t)
 
 	c.Eval("-6")
 	c.AssertStack("-6")
 
-	c.Eval("neg/q")
+	c.Eval("neg/v")
 	c.AssertStack("6")
 
-	c.Eval("neg/q")
+	c.Eval("neg/v")
 	c.AssertStack("-6")
+}
+
+func TestOpDocs_Float_PrecV(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("c 1 3 div/v")
+	c.AssertStack("0.3333333333333333333333333333333333")
+
+	c.Eval("23 prec/v")
+	c.AssertNotice("precision set to 23")
+
+	c.Eval("c 1 3 div/v")
+	c.AssertStack("0.3333333")
+}
+
+func TestOpDocs_Float_PrecVQ(t *testing.T) {
+	c := app.NewCalcTester(t)
+
+	c.Eval("prec/v?")
+	c.AssertStack("precision: 113")
 }
 
 func TestOpDocs_Float_SignF(t *testing.T) {
@@ -183,18 +203,18 @@ func TestOpDocs_Float_SqrtF_Negative(t *testing.T) {
 	c.AssertError("sqrt/f: invalid argument, -1 < 0")
 }
 
-func TestOpDocs_Float_SqrtQ(t *testing.T) {
+func TestOpDocs_Float_SqrtV(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("1.5625 sqrt/q")
+	c.Eval("1.5625 sqrt/v")
 	c.AssertStack("1.25")
 }
 
-func TestOpDocs_Float_SqrtQ_Negative(t *testing.T) {
+func TestOpDocs_Float_SqrtV_Negative(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("-1 sqrt/q")
-	c.AssertError("sqrt/q: invalid argument, -1 < 0")
+	c.Eval("-1 sqrt/v")
+	c.AssertError("sqrt/v: invalid argument, -1 < 0")
 }
 
 func TestOpDocs_Float_SubF(t *testing.T) {
@@ -204,16 +224,16 @@ func TestOpDocs_Float_SubF(t *testing.T) {
 	c.AssertStack("1.0999999999999996")
 }
 
-func TestOpDocs_Float_SubQ(t *testing.T) {
+func TestOpDocs_Float_SubSp(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("3.3 2.2 sub/q")
-	c.AssertStack("1.0999999999999999999999999999999997")
+	c.Eval("3.3 2.2 sub/sp")
+	c.AssertStack("1.0999999")
 }
 
-func TestOpDocs_Float_SubSf(t *testing.T) {
+func TestOpDocs_Float_SubV(t *testing.T) {
 	c := app.NewCalcTester(t)
 
-	c.Eval("3.3 2.2 sub/sf")
-	c.AssertStack("1.0999999")
+	c.Eval("3.3 2.2 sub/v")
+	c.AssertStack("1.0999999999999999999999999999999997")
 }

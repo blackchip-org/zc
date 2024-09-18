@@ -1,5 +1,5 @@
-name: real
-title: Real numbers (decimal and floating point)
+name: dec
+title: Fixed-point operations
 category: lib
 
 ops:
@@ -20,7 +20,7 @@ ops:
   - i: c 1/2 dec
     o: [0.5]
 
-- name: rounding.mode
+- name: rounding.mode/d
   title: Sets the default rounding mode
   funcs:
   - name: RoundingModeSet
@@ -36,16 +36,16 @@ ops:
 
     If *m* is not one of the above, a invalid argument error is raised.
   example:
-  - i: rounding.mode?
+  - i: rounding.mode/d?
     o: ['half.even']
   - i: c 5.55 1 round
     o: [5.6]
-  - i: /down rounding.mode
+  - i: /down rounding.mode/d
     notice: rounding mode set to down
   - i: c 5.55 1 round
     o: [5.5]
 
-- name: rounding.mode?
+- name: rounding.mode/d?
   title: Gets the default rounding mode
   funcs:
   - name: RoundingModeGet
@@ -59,7 +59,7 @@ ops:
     - half.even
     - up
   example:
-  - i: rounding.mode?
+  - i: rounding.mode/d?
     o: ['half.even']
 
 - name: trunc

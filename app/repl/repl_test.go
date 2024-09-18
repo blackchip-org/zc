@@ -110,7 +110,7 @@ func TestReset(t *testing.T) {
 	// set mem location
 	r.Eval("/tmp store")
 	// set state
-	r.Eval("/down rounding.mode")
+	r.Eval("/down rounding.mode/d")
 	r.Eval("reset")
 
 	r.AssertNotice("reset")
@@ -119,6 +119,6 @@ func TestReset(t *testing.T) {
 	r.AssertStack()
 	r.Eval("/tmp load")
 	r.AssertError("load: memory empty: tmp")
-	r.Eval("rounding.mode?")
+	r.Eval("rounding.mode/d?")
 	r.AssertStack("half.even")
 }

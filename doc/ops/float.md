@@ -4,31 +4,53 @@
 
 Floating-point values
 
+## Overview
+
+A floating point value is a number that can either be a:
+
+- `Float`: a double precision floating-point number
+- `Float/v`: a variable precision floating-point number
+- `Float/sp`: a single precision floating-point number
+
+Standard unqualified names (such as `add`) use fixed-point arithmetic when
+available. Use the qualified names (such as `add/f`) to use float-point
+arithmetic instead. 
+
+The precision for the variable precision floating-point operations is set
+to 113 bits in the mantissa by defualt. Use `prec/v` to change this to a
+different value if desired. This type is implemented using the math/big 
+pacakge in the standard go library. 
+
+
+
+
 ## Index
 
-| Operation            | Description                                    
-|----------------------|------------------------------------------------
-| [`add/f`](#addf)     | Addition, double precision floating-point      
-| [`add/q`](#addq)     | Addition, quad precision floating-point        
-| [`add/sf`](#addsf)   | Addition, single precision floating-point      
-| [`cbrt/f`](#cbrtf)   | Cube root, double precision floating point     
-| [`div/f`](#divf)     | Division, double precision floating-point      
-| [`div/q`](#divq)     | Division, quad precision floating-point        
-| [`div/sf`](#divsf)   | Division, sigle precision floating-point       
-| [`exp/f`](#expf)     | Natural exponential                            
-| [`log/f`](#logf)     | Natural logarithm                              
-| [`log10/f`](#log10f) | Decimal logarithm                              
-| [`mul/f`](#mulf)     | Multiplication, double precision floating-point
-| [`mul/q`](#mulq)     | Multiplication, quad precision floating-point  
-| [`mul/sf`](#mulsf)   | Multiplication, single precision floating-point
-| [`neg/f`](#negf)     | Negation, double precision floating-point      
-| [`neg/q`](#negq)     | Negation, quad precision floating-point        
-| [`sign/f`](#signf)   | Sign, double precision floating-point          
-| [`sqrt/f`](#sqrtf)   | Square Root, double precision floating-point   
-| [`sqrt/q`](#sqrtq)   | Square Root, quad precision floating-point     
-| [`sub/f`](#subf)     | Subtraction, double precision floating-point   
-| [`sub/q`](#subq)     | Subtraction, quad precision floating-point     
-| [`sub/sf`](#subsf)   | Subtraction, single precision floating-point   
+| Operation            | Description                                                    
+|----------------------|----------------------------------------------------------------
+| [`add/f`](#addf)     | Addition, double precision floating-point                      
+| [`add/sp`](#addsp)   | Addition, single precision floating-point                      
+| [`add/v`](#addv)     | Addition, variable precision floating-point                    
+| [`cbrt/f`](#cbrtf)   | Cube root, double precision floating point                     
+| [`div/f`](#divf)     | Division, double precision floating-point                      
+| [`div/sp`](#divsp)   | Division, single precision floating-point                      
+| [`div/v`](#divv)     | Division, variable precision floating-point                    
+| [`exp/f`](#expf)     | Natural exponential                                            
+| [`log/f`](#logf)     | Natural logarithm                                              
+| [`log10/f`](#log10f) | Decimal logarithm                                              
+| [`mul/f`](#mulf)     | Multiplication, double precision floating-point                
+| [`mul/sp`](#mulsp)   | Multiplication, single precision floating-point                
+| [`mul/v`](#mulv)     | Multiplication, variable precision floating-point              
+| [`neg/f`](#negf)     | Negation, double precision floating-point                      
+| [`neg/v`](#negv)     | Negation, variable precision floating-point                    
+| [`prec/v`](#precv)   | Set floating-point precision, variable precision floating-point
+| [`prec/v?`](#precv)  | Float precision, variable precision floating-point             
+| [`sign/f`](#signf)   | Sign, double precision floating-point                          
+| [`sqrt/f`](#sqrtf)   | Square Root, double precision floating-point                   
+| [`sqrt/v`](#sqrtv)   | Square Root, variable precision floating-point                 
+| [`sub/f`](#subf)     | Subtraction, double precision floating-point                   
+| [`sub/sp`](#subsp)   | Subtraction, single precision floating-point                   
+| [`sub/v`](#subv)     | Subtraction, variable precision floating-point                 
 
 
 ## Operations
@@ -48,35 +70,35 @@ Example:
 |-----------------|---------------------
 | `1.1 2.2 add/f` | `3.3000000000000003`
 
-### add/q
-
-Adds *x* to *y* using quad precision floating-point numbers.
-
-Stack effects:
-```
-( x:Float/q y:Float/q -- Float/q )
-```
-
-Example:
-
-| Input           | Stack                                 
-|-----------------|---------------------------------------
-| `1.1 2.2 add/q` | `3.3000000000000000000000000000000002`
-
-### add/sf
+### add/sp
 
 Adds *x* to *y* using single precision floating-point numbers.
 
 Stack effects:
 ```
-( x:Float/s y:Float/s -- Float/s )
+( x:Float/sp y:Float/sp -- Float/sp )
 ```
 
 Example:
 
 | Input            | Stack      
 |------------------|------------
-| `1.1 2.2 add/sf` | `3.3000002`
+| `1.1 2.2 add/sp` | `3.3000002`
+
+### add/v
+
+Adds *x* to *y* using variable precision floating-point numbers.
+
+Stack effects:
+```
+( x:Float/v y:Float/v -- Float/v )
+```
+
+Example:
+
+| Input           | Stack                                 
+|-----------------|---------------------------------------
+| `1.1 2.2 add/v` | `3.3000000000000000000000000000000002`
 
 ### cbrt/f
 
@@ -110,35 +132,35 @@ Example:
 |-------------|---------------------
 | `2 3 div/f` | `0.6666666666666666`
 
-### div/q
+### div/sp
 
 Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
 
 Stack effects:
 ```
-( x:Float/q y:Float/q -- Float/q )
-```
-
-Example:
-
-| Input       | Stack                                 
-|-------------|---------------------------------------
-| `2 3 div/q` | `0.6666666666666666666666666666666666`
-
-### div/sf
-
-Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
-
-Stack effects:
-```
-( x:Float/s y:Float/s -- Float/s )
+( x:Float/sp y:Float/sp -- Float/sp )
 ```
 
 Example:
 
 | Input        | Stack      
 |--------------|------------
-| `2 3 div/sf` | `0.6666667`
+| `2 3 div/sp` | `0.6666667`
+
+### div/v
+
+Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
+
+Stack effects:
+```
+( x:Float/v y:Float/v -- Float/v )
+```
+
+Example:
+
+| Input       | Stack                                 
+|-------------|---------------------------------------
+| `2 3 div/v` | `0.6666666666666666666666666666666666`
 
 ### exp/f
 
@@ -200,35 +222,35 @@ Example:
 |-----------------|---------------------
 | `1.1 2.2 mul/f` | `2.4200000000000004`
 
-### mul/q
-
-Multiplies *x* by *y* using quad precision floating-point.
-
-Stack effects:
-```
-( x:Float/q y:Float/q -- Float/q )
-```
-
-Example:
-
-| Input           | Stack                                 
-|-----------------|---------------------------------------
-| `1.1 2.2 mul/q` | `2.4200000000000000000000000000000003`
-
-### mul/sf
+### mul/sp
 
 Multiplies *x* by *y* using single precision floating-point.
 
 Stack effects:
 ```
-( x:Float/s y:Float/s -- Float/s )
+( x:Float/sp y:Float/sp -- Float/sp )
 ```
 
 Example:
 
 | Input            | Stack 
 |------------------|-------
-| `1.1 2.2 mul/sf` | `2.42`
+| `1.1 2.2 mul/sp` | `2.42`
+
+### mul/v
+
+Multiplies *x* by *y* using variable precision floating-point.
+
+Stack effects:
+```
+( x:Float/v y:Float/v -- Float/v )
+```
+
+Example:
+
+| Input           | Stack                                 
+|-----------------|---------------------------------------
+| `1.1 2.2 mul/v` | `2.4200000000000000000000000000000003`
 
 ### neg/f
 
@@ -247,13 +269,13 @@ Example:
 | `neg/f` | `6`  
 | `neg/f` | `-6` 
 
-### neg/q
+### neg/v
 
 Changes the sign of *x*.
 
 Stack effects:
 ```
-( x:Float/q -- Float/q )
+( x:Float/v -- Float/v )
 ```
 
 Example:
@@ -261,8 +283,47 @@ Example:
 | Input   | Stack
 |---------|------
 | `-6`    | `-6` 
-| `neg/q` | `6`  
-| `neg/q` | `-6` 
+| `neg/v` | `6`  
+| `neg/v` | `-6` 
+
+### prec/v
+
+Set the number of bits to be used in mantissa for variable precision 
+floating-point. Common values are:
+
+- quad precision: 113
+- double precision: 52
+- single precision: 23
+
+Stack effects:
+```
+( x:Int/u --  )
+```
+
+Example:
+
+| Input         | Stack                                 
+|---------------|---------------------------------------
+| `c 1 3 div/v` | `0.3333333333333333333333333333333333`
+| `23 prec/v`   | *precision set to 23*                 
+| `c 1 3 div/v` | `0.3333333`                           
+
+### prec/v?
+
+Number of bits used in the mantissa for variable precision floating-point. 
+By default, this is set to 113 which is the size used for quad precision
+floating-point. 
+
+Stack effects:
+```
+(  -- Int/u )
+```
+
+Example:
+
+| Input     | Stack           
+|-----------|-----------------
+| `prec/v?` | `precision: 113`
 
 ### sign/f
 
@@ -298,21 +359,21 @@ Example:
 |-----------------|-------
 | `1.5625 sqrt/f` | `1.25`
 
-### sqrt/q
+### sqrt/v
 
 The square root of *x*. If *x* is not Complex and is less than zero, an
 invalid argument error is raised.
 
 Stack effects:
 ```
-( x:Float/q -- Float/q )
+( x:Float/v -- Float/v )
 ```
 
 Example:
 
 | Input           | Stack 
 |-----------------|-------
-| `1.5625 sqrt/q` | `1.25`
+| `1.5625 sqrt/v` | `1.25`
 
 ### sub/f
 
@@ -329,32 +390,32 @@ Example:
 |-----------------|---------------------
 | `3.3 2.2 sub/f` | `1.0999999999999996`
 
-### sub/q
+### sub/sp
 
 Subtracts the value of *y* from *x*
 
 Stack effects:
 ```
-( x:Float/q y:Float/q -- Float/q )
-```
-
-Example:
-
-| Input           | Stack                                 
-|-----------------|---------------------------------------
-| `3.3 2.2 sub/q` | `1.0999999999999999999999999999999997`
-
-### sub/sf
-
-Subtracts the value of *y* from *x*
-
-Stack effects:
-```
-( x:Float/s y:Float/s -- Float/s )
+( x:Float/sp y:Float/sp -- Float/sp )
 ```
 
 Example:
 
 | Input            | Stack      
 |------------------|------------
-| `3.3 2.2 sub/sf` | `1.0999999`
+| `3.3 2.2 sub/sp` | `1.0999999`
+
+### sub/v
+
+Subtracts the value of *y* from *x*
+
+Stack effects:
+```
+( x:Float/v y:Float/v -- Float/v )
+```
+
+Example:
+
+| Input           | Stack                                 
+|-----------------|---------------------------------------
+| `3.3 2.2 sub/v` | `1.0999999999999999999999999999999997`

@@ -63,7 +63,7 @@ var Types []Type = []Type{
 
 const (
 	PrecFloat128 = 113
-	PrecDec      = vars.DefaultPrec
+	PrecDec      = vars.DefaultDecPrec
 )
 
 var (
@@ -99,13 +99,13 @@ func (t AngleDMSType) Pop(c Calc) types.AngleDMS {
 }
 
 func (t AngleDMSType) Parse(state coll.State, str string) (any, bool, error) {
-	conf := vars.ForReal(state)
+	conf := vars.ForDec(state)
 	p := dms.NewDefaultParser()
 	f, err := p.ParseFields(str)
 	if err != nil {
 		return nil, false, nil
 	}
-	d, err := types.NewAngleDMSFromFields(conf.DecMath, f)
+	d, err := types.NewAngleDMSFromFields(conf.Math, f)
 	if err != nil {
 		return nil, false, nil
 	}
@@ -144,12 +144,12 @@ func (t AnyType) Dup(a any) any {
 type BigFloatType struct{}
 
 func (t BigFloatType) Name() string    { return "BigFloat" }
-func (t BigFloatType) AppName() string { return "Float/q" }
+func (t BigFloatType) AppName() string { return "Float/v" }
 func (t BigFloatType) GoName() string  { return "*big.Float" }
 
-func (t BigFloatType) New() *big.Float {
+func (t BigFloatType) New(prec uint) *big.Float {
 	f := floatPool.New()
-	f.SetPrec(113)
+	f.SetPrec(prec)
 	return f
 }
 
@@ -175,15 +175,16 @@ func (t BigFloatType) Pop(c Calc) *big.Float {
 	return t.As(c.Pop().TypeVal)
 }
 
-func (t BigFloatType) Parse(_ coll.State, str string) (any, bool, error) {
+func (t BigFloatType) Parse(st coll.State, str string) (any, bool, error) {
+	v := vars.ForFloat(st)
 	str = PreParseDecimal(str)
-	v := t.New()
-	_, ok := v.SetString(str)
+	val := t.New(v.Prec)
+	_, ok := val.SetString(str)
 	if !ok {
-		t.Recycle(v)
+		t.Recycle(val)
 		return nil, false, nil
 	}
-	return v, true, nil
+	return val, true, nil
 }
 
 func (t BigFloatType) Format(_ coll.State, a any) string {
@@ -192,9 +193,10 @@ func (t BigFloatType) Format(_ coll.State, a any) string {
 }
 
 func (t BigFloatType) Dup(a any) any {
-	i := t.New()
-	i.Set(t.As(a))
-	return i
+	src := t.As(a)
+	dest := t.New(src.Prec())
+	dest.Set(src)
+	return dest
 }
 
 // ----------------------------------------------------------------------------
@@ -436,7 +438,7 @@ func (t DecimalType) Pop(c Calc) *apd.Decimal {
 }
 
 func (t DecimalType) Parse(state coll.State, str string) (any, bool, error) {
-	d := vars.ForReal(state).DecMath
+	d := vars.ForDec(state).Math
 	str = PreParseDecimal(str)
 	v := t.New()
 	_, cond, err := d.SetString(v, str)
@@ -691,7 +693,7 @@ func (t Float64Type) Dup(a any) any {
 type Float32Type struct{}
 
 func (t Float32Type) Name() string    { return "Float32" }
-func (t Float32Type) AppName() string { return "Float/s" }
+func (t Float32Type) AppName() string { return "Float/sp" }
 func (t Float32Type) GoName() string  { return "float32" }
 
 func (t Float32Type) As(a any) float32 {
@@ -1316,57 +1318,71 @@ func (t Uint64Type) Dup(a any) any {
 }
 
 // ----------------------------------------------------------------------------
-func parseRat(str string) (*big.Rat, bool, error) {
-	r := Rat.New()
-	_, ok := r.SetString(str)
-	if ok {
-		return r, true, nil
+func parseRat(s string) (*big.Rat, bool, error) {
+	i, err := strconv.ParseInt(s, 10, 64)
+	if err == nil {
+		return big.NewRat(i, 1), true, nil
+	}
+	f, err := strconv.ParseFloat(s, 64)
+	if err == nil {
+		return new(big.Rat).SetFloat64(f), true, nil
 	}
 
-	whole := Rat.New()
-	defer Rat.Recycle(whole)
+	sc := scan.NewScannerFromString("", s)
 
-	num, denom := BigInt.New(), BigInt.New()
-	defer BigInt.Recycle(num, denom)
+	var sign, whole, num, denom int64
 
-	s := scan.NewScannerFromString("", str)
-	scan.SignedIntRule.Eval(s)
-	_, ok = whole.SetString(s.Emit().Val)
-	if !ok {
-		Rat.Recycle(r)
+	scan.SignedIntRule.Eval(sc)
+	s1 := sc.Emit().Val
+	i1, err := strconv.ParseInt(s1, 10, 64)
+	if err != nil {
 		return nil, false, nil
 	}
-
-	switch s.This {
-	case ' ', '_', '-':
-		s.Skip()
-	default:
-		Rat.Recycle(r)
-		return nil, false, nil
-	}
-
-	scan.IntRule.Eval(s)
-	_, ok = num.SetString(s.Emit().Val, 10)
-	if !ok {
-		Rat.Recycle(r)
-		return nil, false, nil
-	}
-
-	if s.This == '/' {
-		s.Skip()
+	if i1 < 0 {
+		sign = -1
+		i1 = i1 * -1
 	} else {
-		Rat.Recycle(r)
+		sign = 1
+	}
+	switch sc.This {
+	case '_', '-', ' ':
+		whole = i1
+	case '/':
+		num = i1
+	default:
 		return nil, false, nil
 	}
+	sc.Skip()
 
-	scan.IntRule.Eval(s)
-	_, ok = denom.SetString(s.Emit().Val, 10)
-	if !ok {
-		Rat.Recycle(r)
+	scan.IntRule.Eval(sc)
+	s2 := sc.Emit().Val
+	i2, err := strconv.ParseInt(s2, 10, 64)
+	if err != nil {
 		return nil, false, nil
 	}
+	if whole != 0 {
+		num = i2
+		if sc.This != '/' {
+			return nil, false, nil
+		}
+		sc.Skip()
+		scan.IntRule.Eval(sc)
+		s3 := sc.Emit().Val
+		i3, err := strconv.ParseInt(s3, 10, 64)
+		if err != nil {
+			return nil, false, nil
+		}
+		denom = i3
+	} else {
+		denom = i2
+	}
 
-	r.SetFrac(num, denom)
-	r.Add(r, whole)
+	if whole != 0 {
+		num = num + (denom * whole)
+	}
+	num = num * sign
+
+	r := Rat.New()
+	r.SetFrac64(num, denom)
 	return r, true, nil
 }

@@ -1,19 +1,19 @@
 package vars
 
 import (
-	"errors"
 	"fmt"
 	"math/big"
 
+	"github.com/blackchip-org/zc/v6/msg"
 	"github.com/blackchip-org/zc/v6/pkg/coll"
 	"github.com/cockroachdb/apd/v3"
 )
 
-const RealID = "real"
+const DecID = "dec"
 
 const (
-	DefaultPrec         = 28
-	DefaultRoundingMode = big.ToNearestEven
+	DefaultDecPrec         = 28
+	DefaultDecRoundingMode = big.ToNearestEven
 )
 
 const (
@@ -25,12 +25,12 @@ const (
 	RoundingModeUp       = "up"
 )
 
-type Real struct {
-	DecMath      *apd.Context
+type Dec struct {
+	Math         *apd.Context
 	RoundingMode big.RoundingMode
 }
 
-func (d *Real) GetRoundingMode() string {
+func (d *Dec) GetRoundingMode() string {
 	switch d.RoundingMode {
 	case big.ToPositiveInf:
 		return RoundingModeCeil
@@ -45,11 +45,11 @@ func (d *Real) GetRoundingMode() string {
 	case big.AwayFromZero:
 		return RoundingModeUp
 	default:
-		panic(fmt.Errorf("invalid rounding mode: %v", d.RoundingMode))
+		panic("unreachable")
 	}
 }
 
-func (d *Real) SetRoundingMode(rm string) error {
+func (d *Dec) SetRoundingMode(rm string) error {
 	switch rm {
 	case RoundingModeCeil:
 		d.RoundingMode = big.ToPositiveInf
@@ -64,25 +64,25 @@ func (d *Real) SetRoundingMode(rm string) error {
 	case RoundingModeUp:
 		d.RoundingMode = big.AwayFromZero
 	default:
-		return errors.New("invalid rounding mode")
+		return msg.ErrInvalidRoundingMode(rm)
 	}
-	d.DecMath.Rounding = DecRounder(d.RoundingMode)
+	d.Math.Rounding = DecRounder(d.RoundingMode)
 	return nil
 }
 
-func ForReal(state coll.State) *Real {
-	dv, ok := state.Var(RealID)
+func ForDec(state coll.State) *Dec {
+	dv, ok := state.Var(DecID)
 	if !ok {
-		context := apd.BaseContext.WithPrecision(DefaultPrec)
-		dec := &Real{
-			DecMath:      context,
-			RoundingMode: DefaultRoundingMode,
+		context := apd.BaseContext.WithPrecision(DefaultDecPrec)
+		dec := &Dec{
+			Math:         context,
+			RoundingMode: DefaultDecRoundingMode,
 		}
-		dec.DecMath.Rounding = DecRounder(DefaultRoundingMode)
-		state.NewVar(RealID, dec)
+		dec.Math.Rounding = DecRounder(DefaultDecRoundingMode)
+		state.NewVar(DecID, dec)
 		dv = dec
 	}
-	return dv.(*Real)
+	return dv.(*Dec)
 }
 
 func DecRounder(rm big.RoundingMode) apd.Rounder {

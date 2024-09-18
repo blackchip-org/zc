@@ -7,12 +7,12 @@ import (
 	"github.com/blackchip-org/zc/v6/app/ops"
 )
 
-var Real = zc.Vol{
-	Name: "real",
+var Dec = zc.Vol{
+	Name: "dec",
 	Ops: []zc.Op{
 		ops.Dec,
-		ops.RoundingMode,
-		ops.RoundingModeQ,
+		ops.RoundingModeD,
+		ops.RoundingModeDQ,
 		ops.Trunc,
 	},
 	Macros: []zc.Macro{},

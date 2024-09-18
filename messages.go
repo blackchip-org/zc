@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const (
+var (
 	NoticeInexact = "inexact"
 )
 

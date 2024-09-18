@@ -23,8 +23,8 @@ var (
 			},
 		},
 	}
-	RoundingMode = zc.Op{
-		Name: "rounding.mode",
+	RoundingModeD = zc.Op{
+		Name: "rounding.mode/d",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.String},
@@ -33,8 +33,8 @@ var (
 			},
 		},
 	}
-	RoundingModeQ = zc.Op{
-		Name: "rounding.mode?",
+	RoundingModeDQ = zc.Op{
+		Name: "rounding.mode/d?",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{},

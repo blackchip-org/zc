@@ -13,7 +13,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Bool]
   - name: EqBigFloat
-    params: [x:Float/q, y:Float/q]
+    params: [x:Float/v, y:Float/v]
     returns: [Bool]
   - name: EqRat
     params: [x:Rat, y:Rat]
@@ -66,7 +66,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Bool]
   - name: GtBigFloat
-    params: [x:Float/q, y:Float/q]
+    params: [x:Float/v, y:Float/v]
     returns: [Bool]
   - name: GtRat
     params: [x:Rat, y:Rat]
@@ -118,7 +118,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Bool]
   - name: GteBigFloat
-    params: [x:Float/q, y:Float/q]
+    params: [x:Float/v, y:Float/v]
     returns: [Bool]
   - name: GteRat
     params: [x:Rat, y:Rat]
@@ -170,7 +170,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Bool]
   - name: LtBigFloat
-    params: [x:Float/q, y:Float/q]
+    params: [x:Float/v, y:Float/v]
     returns: [Bool]
   - name: LtRat
     params: [x:Rat, y:Rat]
@@ -222,7 +222,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Bool]
   - name: LteBigFloat
-    params: [x:Float/q, y:Float/q]
+    params: [x:Float/v, y:Float/v]
     returns: [Bool]
   - name: LteRat
     params: [x:Rat, y:Rat]
@@ -274,7 +274,7 @@ ops:
     params: [x:Dec, y:Dec]
     returns: [Bool]
   - name: NeqBigFloat
-    params: [x:Float/q, y:Float/q]
+    params: [x:Float/v, y:Float/v]
     returns: [Bool]
   - name: NeqRat
     params: [x:Rat, y:Rat]
@@ -330,8 +330,8 @@ ops:
     params: [Rat*]
     returns: [Rat*]
   - name: SortBigFloat
-    params: [Float/q*]
-    returns: [Float/q*]
+    params: [Float/v*]
+    returns: [Float/v*]
   - name: SortString
     params: [Text*]
     returns: [Text*]

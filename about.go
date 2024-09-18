@@ -4,7 +4,7 @@ package zc
 
 const (
 	ProgName = "zc"
-	Version = "v6.0.0-beta1"
-	BuildDate = "14 Sep 2024"
-	Commit = "8d56bfc"
+	Version = "OLD"
+	BuildDate = "18 Sep 2024"
+	Commit = "f97f97a"
 )

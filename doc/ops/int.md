@@ -13,7 +13,7 @@ An integer value is a number that can either be a:
 - `Int/u`, `Int/u64`, `Int/u32`, `Int/u16`, `Int/u8`
 
 A `Int` is an integer of an arbitrary size and support is provided by the
-math/big package in the gol standard library. The calculator prefers working
+math/big package in the go standard library. The calculator prefers working
 with `Int` values whenever an operation can use a function in this library.
 
 The `Int/s` and `Int/u` series of types are signed and unsigned integers of a

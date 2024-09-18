@@ -1,0 +1,18 @@
+name: complex
+title: Complex arithmetic 
+category: lib
+
+ops:
+- name: square.root/c
+  aliases: [sqrt/c]
+  title: Square root
+  subtitle: complex number
+  funcs:
+  - name: SqrtComplex
+    params: [x:Complex]
+    returns: [Complex]
+  desc: Square root of *x*
+  example:
+  - i: "-16 sqrt/c"        
+    o: [0+4i]
+

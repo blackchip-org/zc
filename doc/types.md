@@ -12,6 +12,16 @@ but not '6 2/5' which requires a conversion function.
 
 Table of contents:
 
+- [`Angle/DMS`](ops/angle.md)
+- [`Bool`](ops/bool.md)
+- [`Complex`](ops/complex.md)
+- [`Date`](ops/time.md)
+- [`DateTime`](ops/time.md)
+- [`Dec`](ops/dec.md)
+- [`Duration`](ops/time.md)
+- [`Float`](ops/float.md) 
+  - [`Float/v](ops/float.md) 
+  - [`Float/sp`](ops/float.md) 
 - [`Int`](ops/int.md)
   - [`Int/s`](ops/int.md)
   - [`Int/s8`](ops/int.md)
@@ -23,3 +33,5 @@ Table of contents:
   - [`Int/u16`](ops/int.md)
   - [`Int/u32`](ops/int.md)
   - [`Int/u64`](ops/int.md)
+- [`Rat`](ops/rat.md)
+- [`Time`](ops/time.md)

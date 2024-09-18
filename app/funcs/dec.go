@@ -25,7 +25,7 @@ func DecRat(c zc.Calc) {
 }
 
 func RoundingModeSet(c zc.Calc) {
-	conf := vars.ForReal(c)
+	conf := vars.ForDec(c)
 	mode := zc.String.Pop(c)
 	if err := conf.SetRoundingMode(mode); err != nil {
 		c.Raise(zc.ErrInvalidArg(err.Error()))
@@ -35,7 +35,7 @@ func RoundingModeSet(c zc.Calc) {
 }
 
 func RoundingModeGet(c zc.Calc) {
-	conf := vars.ForReal(c)
+	conf := vars.ForDec(c)
 	zc.String.Push(c, conf.GetRoundingMode())
 }
 

@@ -18,23 +18,23 @@ var (
 			},
 		},
 	}
-	AddQ = zc.Op{
-		Name: "add/q",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
-				Returns: []zc.Type{zc.BigFloat},
-				Eval:    funcs.AddBigFloat,
-			},
-		},
-	}
-	AddSf = zc.Op{
-		Name: "add/sf",
+	AddSp = zc.Op{
+		Name: "add/sp",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Float32, zc.Float32},
 				Returns: []zc.Type{zc.Float32},
 				Eval:    funcs.AddFloat32,
+			},
+		},
+	}
+	AddV = zc.Op{
+		Name: "add/v",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+				Returns: []zc.Type{zc.BigFloat},
+				Eval:    funcs.AddBigFloat,
 			},
 		},
 	}
@@ -58,23 +58,23 @@ var (
 			},
 		},
 	}
-	DivQ = zc.Op{
-		Name: "div/q",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
-				Returns: []zc.Type{zc.BigFloat},
-				Eval:    funcs.DivBigFloat,
-			},
-		},
-	}
-	DivSf = zc.Op{
-		Name: "div/sf",
+	DivSp = zc.Op{
+		Name: "div/sp",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Float32, zc.Float32},
 				Returns: []zc.Type{zc.Float32},
 				Eval:    funcs.DivFloat32,
+			},
+		},
+	}
+	DivV = zc.Op{
+		Name: "div/v",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+				Returns: []zc.Type{zc.BigFloat},
+				Eval:    funcs.DivBigFloat,
 			},
 		},
 	}
@@ -118,23 +118,23 @@ var (
 			},
 		},
 	}
-	MulQ = zc.Op{
-		Name: "mul/q",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
-				Returns: []zc.Type{zc.BigFloat},
-				Eval:    funcs.MulBigFloat,
-			},
-		},
-	}
-	MulSf = zc.Op{
-		Name: "mul/sf",
+	MulSp = zc.Op{
+		Name: "mul/sp",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Float32, zc.Float32},
 				Returns: []zc.Type{zc.Float32},
 				Eval:    funcs.MulFloat32,
+			},
+		},
+	}
+	MulV = zc.Op{
+		Name: "mul/v",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+				Returns: []zc.Type{zc.BigFloat},
+				Eval:    funcs.MulBigFloat,
 			},
 		},
 	}
@@ -148,13 +148,33 @@ var (
 			},
 		},
 	}
-	NegQ = zc.Op{
-		Name: "neg/q",
+	NegV = zc.Op{
+		Name: "neg/v",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.BigFloat},
 				Returns: []zc.Type{zc.BigFloat},
 				Eval:    funcs.NegBigFloat,
+			},
+		},
+	}
+	PrecV = zc.Op{
+		Name: "prec/v",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.Uint},
+				Returns: []zc.Type{},
+				Eval:    funcs.PrecFloat,
+			},
+		},
+	}
+	PrecVQ = zc.Op{
+		Name: "prec/v?",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{},
+				Returns: []zc.Type{zc.Uint},
+				Eval:    funcs.PrecFloatGet,
 			},
 		},
 	}
@@ -178,8 +198,8 @@ var (
 			},
 		},
 	}
-	SqrtQ = zc.Op{
-		Name: "sqrt/q",
+	SqrtV = zc.Op{
+		Name: "sqrt/v",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.BigFloat},
@@ -198,23 +218,23 @@ var (
 			},
 		},
 	}
-	SubQ = zc.Op{
-		Name: "sub/q",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
-				Returns: []zc.Type{zc.BigFloat},
-				Eval:    funcs.SubBigFloat,
-			},
-		},
-	}
-	SubSf = zc.Op{
-		Name: "sub/sf",
+	SubSp = zc.Op{
+		Name: "sub/sp",
 		Funcs: []zc.Func{
 			{
 				Params:  []zc.Type{zc.Float32, zc.Float32},
 				Returns: []zc.Type{zc.Float32},
 				Eval:    funcs.SubFloat32,
+			},
+		},
+	}
+	SubV = zc.Op{
+		Name: "sub/v",
+		Funcs: []zc.Func{
+			{
+				Params:  []zc.Type{zc.BigFloat, zc.BigFloat},
+				Returns: []zc.Type{zc.BigFloat},
+				Eval:    funcs.SubBigFloat,
 			},
 		},
 	}

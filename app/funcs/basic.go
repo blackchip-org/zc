@@ -45,7 +45,7 @@ func AddComplex(c zc.Calc) {
 }
 
 func AddDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
@@ -69,7 +69,7 @@ func AddRat(c zc.Calc) {
 // ----------------------------------------------------------------------------
 func CbrtDecimal(c zc.Calc) {
 	var zero apd.Decimal
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 
 	if x.Cmp(&zero) < 0 {
@@ -86,7 +86,7 @@ func CbrtDecimal(c zc.Calc) {
 
 // ----------------------------------------------------------------------------
 func CeilDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	_, err := d.Ceil(x, x)
 	if err != nil {
@@ -119,7 +119,7 @@ func DivComplex(c zc.Calc) {
 }
 
 func DivDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
@@ -172,7 +172,7 @@ func DivModBigInt(c zc.Calc) {
 
 // ----------------------------------------------------------------------------
 func ExpDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	_, err := d.Exp(x, x)
 	if err != nil {
@@ -190,7 +190,7 @@ func ExpComplex(c zc.Calc) {
 
 // ----------------------------------------------------------------------------
 func FloorDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	_, err := d.Floor(x, x)
 	if err != nil {
@@ -202,7 +202,7 @@ func FloorDecimal(c zc.Calc) {
 
 // ----------------------------------------------------------------------------
 func LogDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	_, err := d.Ln(x, x)
 	if err != nil {
@@ -220,7 +220,7 @@ func LogComplex(c zc.Calc) {
 
 // ----------------------------------------------------------------------------
 func Log10Decimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	_, err := d.Log10(x, x)
 	if err != nil {
@@ -268,7 +268,7 @@ func MulComplex(c zc.Calc) {
 }
 
 func MulDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
@@ -303,7 +303,7 @@ func NegComplex(c zc.Calc) {
 }
 
 func NegDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	_, err := d.Neg(x, x)
 	if err != nil {
@@ -336,7 +336,7 @@ func PowComplex(c zc.Calc) {
 }
 
 func PowDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
@@ -365,7 +365,7 @@ func RemBigInt(c zc.Calc) {
 }
 
 func RemDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)
@@ -422,7 +422,7 @@ func SqrtComplex(c zc.Calc) {
 
 func SqrtDecimal(c zc.Calc) {
 	var zero apd.Decimal
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	if x.Cmp(&zero) < 0 {
 		c.Raise(zc.ErrInvalidArg("%v < 0", x.String()))
@@ -454,7 +454,7 @@ func SubComplex(c zc.Calc) {
 }
 
 func SubDecimal(c zc.Calc) {
-	d := vars.ForReal(c).DecMath
+	d := vars.ForDec(c).Math
 	y := zc.Decimal.Pop(c)
 	x := zc.Decimal.Pop(c)
 	defer zc.Decimal.Recycle(y)

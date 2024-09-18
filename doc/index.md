@@ -16,32 +16,32 @@
 - [`acosh`](ops/trig.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
   - [`add/f`](ops/float.md#addf): double precision floating-point
-  - [`add/q`](ops/float.md#addq): quad precision floating-point
   - [`add/s`](ops/int.md#adds): signed architecture sized integer
   - [`add/s16`](ops/int.md#adds16): signed 16-bit integer
   - [`add/s32`](ops/int.md#adds32): signed 32-bit integer
   - [`add/s64`](ops/int.md#adds64): signed 64-bit integer
   - [`add/s8`](ops/int.md#adds8): signed 8-bit integer
-  - [`add/sf`](ops/float.md#addsf): single precision floating-point
+  - [`add/sp`](ops/float.md#addsp): single precision floating-point
   - [`add/u`](ops/int.md#addu): unsigned architecture sized integer
   - [`add/u16`](ops/int.md#addu16): unsigned 16-bit integer
   - [`add/u32`](ops/int.md#addu32): unsigned 32-bit integer
   - [`add/u64`](ops/int.md#addu64): unsigned 64-bit integer
   - [`add/u8`](ops/int.md#addu8): unsigned 8-bit integer
+  - [`add/v`](ops/float.md#addv): variable precision floating-point
 - [`add`](ops/time.md#add): Time or duration addition
   - [`add/f`](ops/float.md#addf): double precision floating-point
-  - [`add/q`](ops/float.md#addq): quad precision floating-point
   - [`add/s`](ops/int.md#adds): signed architecture sized integer
   - [`add/s16`](ops/int.md#adds16): signed 16-bit integer
   - [`add/s32`](ops/int.md#adds32): signed 32-bit integer
   - [`add/s64`](ops/int.md#adds64): signed 64-bit integer
   - [`add/s8`](ops/int.md#adds8): signed 8-bit integer
-  - [`add/sf`](ops/float.md#addsf): single precision floating-point
+  - [`add/sp`](ops/float.md#addsp): single precision floating-point
   - [`add/u`](ops/int.md#addu): unsigned architecture sized integer
   - [`add/u16`](ops/int.md#addu16): unsigned 16-bit integer
   - [`add/u32`](ops/int.md#addu32): unsigned 32-bit integer
   - [`add/u64`](ops/int.md#addu64): unsigned 64-bit integer
   - [`add/u8`](ops/int.md#addu8): unsigned 8-bit integer
+  - [`add/v`](ops/float.md#addv): variable precision floating-point
 - [`and`](ops/bool.md#and): Logical conjunction
 - [`and`](ops/prog.md#and): Bitwise and
 - [`apply`](ops/hof.md#apply): Apply a function using arguments on stack
@@ -90,7 +90,7 @@
 - [`date.time?`](ops/time.md#datetime): Parses text as a date/time
 - [`date?`](ops/time.md#date): Parses text as a date
 - [`day.year`](ops/time.md#dayyear): Day of year
-- [`dec`](ops/real.md#dec): Convert to decimal
+- [`dec`](ops/dec.md#dec): Convert to decimal
   - [`dec`](ops/angle.md#dec): angle
   - [`dec`](ops/prog.md#dec): integer (programmer's calculator)
 - [`deca`](ops/si.md): SI prefix da, 1e01
@@ -103,8 +103,8 @@
 - [`div`](ops/basic.md#div): Division
   - [`div/f`](ops/float.md#divf): double precision floating-point
   - [`div/i`](ops/basic.md#divi): Euclidean integer division
-  - [`div/q`](ops/float.md#divq): quad precision floating-point
-  - [`div/sf`](ops/float.md#divsf): sigle precision floating-point
+  - [`div/sp`](ops/float.md#divsp): single precision floating-point
+  - [`div/v`](ops/float.md#divv): variable precision floating-point
 - [`div.mod`](ops/basic.md#divmod): Division with modulus
 - [`div.rem`](ops/basic.md#divrem): Division with remainder
 - [`dm`](ops/angle.md#degmin): Alias for [deg.min](ops/angle.md#degmin)
@@ -203,8 +203,8 @@
 - [`left.shift`](ops/prog.md#leftshift): Shift bits left
 - [`len`](ops/text.md#len): Length of text in characters
 - [`load`](ops/stack.md#load): Loads a stack from memory
-- [`local.zone`](ops/time.md#localzone): Name of the local time zone
-- [`local.zone=`](ops/time.md#localzone): Sets the local time zone
+- [`local.zone`](ops/time.md#localzone): Sets the local time zone
+- [`local.zone?`](ops/time.md#localzone): Name of the local time zone
 - [`log`](ops/basic.md#log): Natural logarithm
   - [`log/f`](ops/float.md#logf): Natural logarithm
 - [`log10`](ops/basic.md#log10): Decimal logarithm
@@ -253,15 +253,15 @@
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
   - [`mul/f`](ops/float.md#mulf): double precision floating-point
-  - [`mul/q`](ops/float.md#mulq): quad precision floating-point
-  - [`mul/sf`](ops/float.md#mulsf): single precision floating-point
+  - [`mul/sp`](ops/float.md#mulsp): single precision floating-point
+  - [`mul/v`](ops/float.md#mulv): variable precision floating-point
 
 ## n
 - [`n`](ops/stack.md#size): Alias for [size](ops/stack.md#size)
 - [`nano`](ops/si.md): SI prefix n, 1e-09
 - [`neg`](ops/basic.md#neg): Negation
   - [`neg/f`](ops/float.md#negf): double precision floating-point
-  - [`neg/q`](ops/float.md#negq): quad precision floating-point
+  - [`neg/v`](ops/float.md#negv): variable precision floating-point
 - [`neq`](ops/cmp.md#neq): Not equal
 - [`nmi-km`](ops/len.md#nmi-km): Nautical miles to kilometers
 - [`nmi-m`](ops/len.md#nmi-m): Nautical miles to meters
@@ -324,8 +324,6 @@
 - [`rotate`](ops/stack.md#rotate): Rotate top three items
 - [`rotate.13`](ops/crypto.md#rotate13): Rotate characters by 13
 - [`round`](ops/format.md#round): Round number
-- [`rounding.mode`](ops/real.md#roundingmode): Sets the default rounding mode
-- [`rounding.mode?`](ops/real.md#roundingmode): Gets the default rounding mode
 - [`rsh`](ops/prog.md#rightshift): Alias for [right.shift](ops/prog.md#rightshift)
 
 ## s
@@ -357,9 +355,10 @@
 - [`sq`](ops/basic.md#square): Alias for [square](ops/basic.md#square)
 - [`sqrt`](ops/basic.md#squareroot): Alias for [square.root](ops/basic.md#squareroot)
   - [`sqrt/f`](ops/float.md#sqrtf): double precision floating-point
-  - [`sqrt/q`](ops/float.md#sqrtq): quad precision floating-point
+  - [`sqrt/v`](ops/float.md#sqrtv): variable precision floating-point
 - [`square`](ops/basic.md#square): Square of a number
 - [`square.root`](ops/basic.md#squareroot): Square Root
+  - [`square.root/c`](ops/complex.md#squarerootc): complex number
 - [`st`](ops/stack.md#store): Alias for [store](ops/stack.md#store)
 - [`standard.dev.pop`](ops/stat.md#standarddevpop): Population standard deviation
 - [`standard.dev.samp`](ops/stat.md#standarddevsamp): Population standard deviation
@@ -368,32 +367,32 @@
 - [`store`](ops/stack.md#store): Store stack to memory
 - [`sub`](ops/basic.md#sub): Subtraction
   - [`sub/f`](ops/float.md#subf): double precision floating-point
-  - [`sub/q`](ops/float.md#subq): quad precision floating-point
   - [`sub/s`](ops/int.md#subs): signed architecture sized integer
   - [`sub/s16`](ops/int.md#subs16): signed 16-bit integer
   - [`sub/s32`](ops/int.md#subs32): signed 32-bit integer
   - [`sub/s64`](ops/int.md#subs64): signed 64-bit integer
   - [`sub/s8`](ops/int.md#subs8): signed 8-bit integer
-  - [`sub/sf`](ops/float.md#subsf): single precision floating-point
+  - [`sub/sp`](ops/float.md#subsp): single precision floating-point
   - [`sub/u`](ops/int.md#subu): unsigned architecture sized integer
   - [`sub/u16`](ops/int.md#subu16): unsigned 16-bit integer
   - [`sub/u32`](ops/int.md#subu32): unsigned 32-bit integer
   - [`sub/u64`](ops/int.md#subu64): unsigned 64-bit integer
   - [`sub/u8`](ops/int.md#subu8): unsigned 8-bit integer
+  - [`sub/v`](ops/float.md#subv): variable precision floating-point
 - [`sub`](ops/time.md#sub): Time or duration subtraction
   - [`sub/f`](ops/float.md#subf): double precision floating-point
-  - [`sub/q`](ops/float.md#subq): quad precision floating-point
   - [`sub/s`](ops/int.md#subs): signed architecture sized integer
   - [`sub/s16`](ops/int.md#subs16): signed 16-bit integer
   - [`sub/s32`](ops/int.md#subs32): signed 32-bit integer
   - [`sub/s64`](ops/int.md#subs64): signed 64-bit integer
   - [`sub/s8`](ops/int.md#subs8): signed 8-bit integer
-  - [`sub/sf`](ops/float.md#subsf): single precision floating-point
+  - [`sub/sp`](ops/float.md#subsp): single precision floating-point
   - [`sub/u`](ops/int.md#subu): unsigned architecture sized integer
   - [`sub/u16`](ops/int.md#subu16): unsigned 16-bit integer
   - [`sub/u32`](ops/int.md#subu32): unsigned 32-bit integer
   - [`sub/u64`](ops/int.md#subu64): unsigned 64-bit integer
   - [`sub/u8`](ops/int.md#subu8): unsigned 8-bit integer
+  - [`sub/v`](ops/float.md#subv): variable precision floating-point
 - [`sum`](ops/stat.md#sum): Summation
 - [`sw`](ops/stack.md#swap): Alias for [swap](ops/stack.md#swap)
 - [`swap`](ops/stack.md#swap): Swap top two items on the stack
@@ -413,7 +412,7 @@
 - [`time?`](ops/time.md#time): Parses text as a time
 - [`top`](ops/stack.md#top): Take the top item from the stack
 - [`true`](ops/bool.md#true): True
-- [`trunc`](ops/real.md#trunc): Truncate
+- [`trunc`](ops/dec.md#trunc): Truncate
 - [`tuck`](ops/stack.md#tuck): Copy top and place below
 - [`tz`](ops/time.md#timezone): Alias for [time.zone](ops/time.md#timezone)
 

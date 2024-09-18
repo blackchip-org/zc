@@ -44,7 +44,7 @@ ops:
   title: Scientific Notation
   funcs:
   - name: SciBigFloat
-    params: [x:Float/q]
+    params: [x:Float/v]
     returns: [x:Text]
   desc: |-
     Formats *x* using scientific notation

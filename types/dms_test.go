@@ -10,7 +10,7 @@ import (
 )
 
 func TestDMS(t *testing.T) {
-	c := apd.BaseContext.WithPrecision(vars.DefaultPrec)
+	c := apd.BaseContext.WithPrecision(vars.DefaultDecPrec)
 
 	tests := []struct {
 		fields                 dms.Fields
@@ -40,7 +40,7 @@ func TestDMS(t *testing.T) {
 }
 
 func TestDegrees(t *testing.T) {
-	c := apd.BaseContext.WithPrecision(vars.DefaultPrec)
+	c := apd.BaseContext.WithPrecision(vars.DefaultDecPrec)
 
 	tests := []struct {
 		fields dms.Fields
@@ -70,7 +70,7 @@ func TestDegrees(t *testing.T) {
 }
 
 func TestFormat(t *testing.T) {
-	c := apd.BaseContext.WithPrecision(vars.DefaultPrec)
+	c := apd.BaseContext.WithPrecision(vars.DefaultDecPrec)
 
 	tests := []struct {
 		angle  AngleDMS

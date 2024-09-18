@@ -3,16 +3,16 @@ title: Floating-point values
 category: lib
 
 ops:
-- name: add/q
+- name: add/v
   title: Addition
-  subtitle: quad precision floating-point
+  subtitle: variable precision floating-point
   funcs:
   - name: AddBigFloat
-    params: [x:Float/q, y:Float/q]
-    returns: [Float/q]
-  desc: Adds *x* to *y* using quad precision floating-point numbers.
+    params: [x:Float/v, y:Float/v]
+    returns: [Float/v]
+  desc: Adds *x* to *y* using variable precision floating-point numbers.
   example:
-  - i: 1.1 2.2 add/q
+  - i: 1.1 2.2 add/v
     o: [3.3000000000000000000000000000000002]
 
 - name: add/f
@@ -27,16 +27,16 @@ ops:
   - i: 1.1 2.2 add/f
     o: [3.3000000000000003]
 
-- name: add/sf
+- name: add/sp
   title: Addition
   subtitle: single precision floating-point
   funcs:
   - name: AddFloat32
-    params: [x:Float/s, y:Float/s]
-    returns: [Float/s]
+    params: [x:Float/sp, y:Float/sp]
+    returns: [Float/sp]
   desc: Adds *x* to *y* using single precision floating-point numbers.
   example:
-  - i: 1.1 2.2 add/sf
+  - i: 1.1 2.2 add/sp
     o: [3.3000002]
 
 - name: cbrt/f
@@ -60,23 +60,23 @@ ops:
     - i: -1 cbrt/f
       error: "cbrt/f: invalid argument, -1 < 0"
 
-- name: div/q
+- name: div/v
   title: Division
-  subtitle: quad precision floating-point
+  subtitle: variable precision floating-point
   funcs:
   - name: DivBigFloat
-    params: [x:Float/q, y:Float/q]
-    returns: [Float/q]
+    params: [x:Float/v, y:Float/v]
+    returns: [Float/v]
   desc: |-
     Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
   example:
-  - i: 2 3 div/q
+  - i: 2 3 div/v
     o: [0.6666666666666666666666666666666666]
   tests:
   - name: Zero
     test:
-      - i: 6.6 0 div/q
-        error: "div/q: division by zero"
+      - i: 6.6 0 div/v
+        error: "div/v: division by zero"
 
 - name: div/f
   title: Division
@@ -96,23 +96,23 @@ ops:
       - i: 6.6 0 div/f
         error: "div/f: division by zero"
 
-- name: div/sf
+- name: div/sp
   title: Division
-  subtitle: sigle precision floating-point
+  subtitle: single precision floating-point
   funcs:
   - name: DivFloat32
-    params: [x:Float/s, y:Float/s]
-    returns: [Float/s]
+    params: [x:Float/sp, y:Float/sp]
+    returns: [Float/sp]
   desc: |-
     Divides *x* by *y*. If *y* is zero, a division by zero error is raised.
   example:
-    - i: 2 3 div/sf
+    - i: 2 3 div/sp
       o: [0.6666667]
   tests:
   - name: Zero
     test:
-      - i: 6.6 0 div/sf
-        error: "div/sf: division by zero"
+      - i: 6.6 0 div/sp
+        error: "div/sp: division by zero"
 
 - name: exp/f
   title: Natural exponential
@@ -147,16 +147,16 @@ ops:
   - i: 50 log10/f 5 round
     o: [1.69897]
 
-- name: mul/q
+- name: mul/v
   title: Multiplication
-  subtitle: quad precision floating-point
+  subtitle: variable precision floating-point
   funcs:
   - name: MulBigFloat
-    params: [x:Float/q, y:Float/q]
-    returns: [Float/q]
-  desc: Multiplies *x* by *y* using quad precision floating-point.
+    params: [x:Float/v, y:Float/v]
+    returns: [Float/v]
+  desc: Multiplies *x* by *y* using variable precision floating-point.
   example:
-  - i: 1.1 2.2 mul/q
+  - i: 1.1 2.2 mul/v
     o: [2.4200000000000000000000000000000003]
 
 - name: mul/f
@@ -171,32 +171,32 @@ ops:
   - i: 1.1 2.2 mul/f
     o: [2.4200000000000004]
 
-- name: mul/sf
+- name: mul/sp
   title: Multiplication
   subtitle: single precision floating-point
   funcs:
   - name: MulFloat32
-    params: [x:Float/s, y:Float/s]
-    returns: [Float/s]
+    params: [x:Float/sp, y:Float/sp]
+    returns: [Float/sp]
   desc: Multiplies *x* by *y* using single precision floating-point.
   example:
-  - i: 1.1 2.2 mul/sf
+  - i: 1.1 2.2 mul/sp
     o: [2.42]
 
-- name: neg/q
+- name: neg/v
   title: Negation
-  subtitle: quad precision floating-point
+  subtitle: variable precision floating-point
   funcs:
   - name: NegBigFloat
-    params: [x:Float/q]
-    returns: [Float/q]
+    params: [x:Float/v]
+    returns: [Float/v]
   desc: Changes the sign of *x*.
   example:
   - i: -6
     o: [-6]
-  - i: neg/q
+  - i: neg/v
     o: [6]
-  - i: neg/q
+  - i: neg/v
     o: [-6]
 
 - name: neg/f
@@ -214,6 +214,41 @@ ops:
     o: [6]
   - i: neg/f
     o: [-6]
+
+- name: prec/v
+  title: Set floating-point precision
+  subtitle: variable precision floating-point
+  funcs:
+  - name: PrecFloat
+    params: [x:Int/u]
+  desc: |-
+    Set the number of bits to be used in mantissa for variable precision 
+    floating-point. Common values are:
+
+    - quad precision: 113
+    - double precision: 52
+    - single precision: 23
+  example:
+  - i: c 1 3 div/v
+    o: [0.3333333333333333333333333333333333]
+  - i: 23 prec/v
+    notice: precision set to 23 
+  - i: c 1 3 div/v
+    o: [0.3333333]
+
+- name: prec/v?
+  title: Float precision 
+  subtitle: variable precision floating-point 
+  funcs:
+  - name: PrecFloatGet
+    returns: [Int/u]
+  desc: |-
+    Number of bits used in the mantissa for variable precision floating-point. 
+    By default, this is set to 113 which is the size used for quad precision
+    floating-point. 
+  example:
+  - i: prec/v?
+    o: ["precision: 113"]
 
 - name: sign/f
   title: Sign
@@ -233,24 +268,24 @@ ops:
   - i: c 0 sign/f
     o: [0]
 
-- name: sqrt/q
+- name: sqrt/v
   title: Square Root
-  subtitle: quad precision floating-point
+  subtitle: variable precision floating-point
   funcs:
   - name: SqrtBigFloat
-    params: [x:Float/q]
-    returns: [Float/q]
+    params: [x:Float/v]
+    returns: [Float/v]
   desc: |-
     The square root of *x*. If *x* is not Complex and is less than zero, an
     invalid argument error is raised.
   example:
-  - i: 1.5625 sqrt/q
+  - i: 1.5625 sqrt/v
     o: [1.25]
   tests:
     - name: Negative
       test:
-      - i: -1 sqrt/q
-        error: "sqrt/q: invalid argument, -1 < 0"
+      - i: -1 sqrt/v
+        error: "sqrt/v: invalid argument, -1 < 0"
 
 - name: sqrt/f
   title: Square Root
@@ -271,16 +306,16 @@ ops:
       - i: -1 sqrt/f
         error: "sqrt/f: invalid argument, -1 < 0"
 
-- name: sub/q
+- name: sub/v
   title: Subtraction
-  subtitle: quad precision floating-point
+  subtitle: variable precision floating-point
   funcs:
   - name: SubBigFloat
-    params: [x:Float/q, y:Float/q]
-    returns: [Float/q]
+    params: [x:Float/v, y:Float/v]
+    returns: [Float/v]
   desc: Subtracts the value of *y* from *x*
   example:
-  - i: 3.3 2.2 sub/q
+  - i: 3.3 2.2 sub/v
     o: [1.0999999999999999999999999999999997]
 
 - name: sub/f
@@ -295,14 +330,14 @@ ops:
   - i: 3.3 2.2 sub/f
     o: [1.0999999999999996]
 
-- name: sub/sf
+- name: sub/sp
   title: Subtraction
   subtitle: single precision floating-point
   funcs:
   - name: SubFloat32
-    params: [x:Float/s, y:Float/s]
-    returns: [Float/s]
+    params: [x:Float/sp, y:Float/sp]
+    returns: [Float/sp]
   desc: Subtracts the value of *y* from *x*
   example:
-  - i: 3.3 2.2 sub/sf
+  - i: 3.3 2.2 sub/sp
     o: [1.0999999]
