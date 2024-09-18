@@ -407,9 +407,6 @@
 - [`variance.samp`](ops/stat.md#variancesamp): Sample variance
 - [`version`](ops/about.md#version): Calculator version
 
-## x
-- [`xor`](ops/prog.md#xor): Bitwise exclusive or
-
 ## y
 - [`yd-ft`](ops/len.md#yd-ft): Yards to feet
 - [`yd-m`](ops/len.md#yd-m): Yards to meters

@@ -5,7 +5,7 @@ category: calc
 ops:
 - name: and
   ident: AndBigInt
-  title: Bitwise and
+  title: And
   subtitle: bitwise 
   funcs:
   - name: AndBigInt
@@ -126,7 +126,7 @@ ops:
 
 - name: not
   ident: NotBigInt
-  title: Bitwise not
+  title: Not
   subtitle: bitwise
   funcs:
   - name: NotBigInt
@@ -189,7 +189,8 @@ ops:
     o: [0b10]
 
 - name: xor
-  title: Bitwise exclusive or
+  title: Exclusive or
+  subtitle: bitwise
   funcs:
   - name: Xor
     params: [x:Int, y:Int]
