@@ -8,7 +8,7 @@ Programmer's calculator
 
 | Operation                         | Description                                          
 |-----------------------------------|------------------------------------------------------
-| [`and`](#and)                     | Bitwise and                                          
+| [`and`](#and)                     | Bitwise and, bitwise                                 
 | [`bin`](#bin)                     | Binary conversion                                    
 | [`bit`](#bit)                     | Bit value                                            
 | [`bit.len`](#bitlen)              | Bit length                                           
@@ -16,9 +16,9 @@ Programmer's calculator
 | [`dec`](#dec)                     | Decimal conversion, integer (programmer's calculator)
 | [`hex`](#hex)                     | Hexadecimal conversion                               
 | [`left.shift, lsh`](#leftshift)   | Shift bits left                                      
-| [`not`](#not)                     | Bitwise not                                          
+| [`not`](#not)                     | Bitwise not, bitwise                                 
 | [`oct`](#oct)                     | Octal conversion                                     
-| [`or`](#or)                       | Bitwise or                                           
+| [`or`](#or)                       | Bitwise or, bitwise                                  
 | [`right.shift, rsh`](#rightshift) | Shift bits right                                     
 | [`xor`](#xor)                     | Bitwise exclusive or                                 
 

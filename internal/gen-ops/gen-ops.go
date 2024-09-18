@@ -502,7 +502,14 @@ func genIndex(vols []zc.VolDef) {
 	fmt.Fprintf(f, "# Index\n\n")
 
 	section := rune(0)
+	seen := make(map[string]struct{})
+
 	for _, e := range entries {
+		if _, ok := seen[e.name]; ok {
+			fmt.Printf("[WARN]: %v repeated\n", e.name)
+		}
+		seen[e.name] = struct{}{}
+
 		ch, _ := utf8.DecodeRuneInString(e.name)
 		if ch != section && unicode.IsLetter(ch) {
 			section = ch

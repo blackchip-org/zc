@@ -7,7 +7,8 @@ setup:
 
 ops:
 - name: add
-  title: Time or duration addition
+  title: Addition
+  subtitle: time or duration 
   ident: AddTime
   funcs:
   - name: AddDuration
@@ -141,7 +142,12 @@ ops:
       o: [5:04:05am +0700 WIB]
 
 - name: minutes
+  title: Minutes operation
+  stub: true 
+
+- name: minutes
   title: Convert to minutes
+  subtitle: time
   ident: MinutesTime
   funcs:
   - name: MinutesTime
@@ -190,7 +196,12 @@ ops:
     resets `now` to returning the actual time.
 
 - name: seconds
+  title: Seconds operation
+  stub: true 
+
+- name: seconds
   title: Convert time to seconds
+  subtitle: time
   ident: SecondsTime
   funcs:
   - name: SecondsTime
@@ -202,7 +213,8 @@ ops:
     o: [37230 s]
 
 - name: sub
-  title: Time or duration subtraction
+  title: Subtraction
+  subtitle: time or duration
   ident: SubTime
   funcs:
   - name: SubDuration

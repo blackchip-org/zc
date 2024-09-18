@@ -4,8 +4,13 @@ category: lib
 
 ops:
 - name: and
+  title: And operation
+  stub: true 
+
+- name: and
   ident: AndBool
   title: Logical conjunction
+  subtitle: boolean
   funcs:
   - name: AndBool
     params: [x:Bool, y:Bool]
@@ -27,9 +32,14 @@ ops:
   - i: false 
     o: [false]
 
+- name: not 
+  title: Not operation 
+  stub: true 
+
 - name: not
   ident: NotBool
   title: Negation
+  subtitle: boolean
   funcs:
   - name: NotBool
     params: [x:Bool]
@@ -41,9 +51,14 @@ ops:
   - i: not 
     o: [true]
 
+- name: or 
+  title: Or operation
+  stub: true 
+
 - name: or
   ident: OrBool
   title: Logical disjunction
+  subtitle: boolean
   funcs:
   - name: OrBool
     params: [x:Bool, y:Bool]

@@ -6,6 +6,7 @@ ops:
 - name: and
   ident: AndBigInt
   title: Bitwise and
+  subtitle: bitwise 
   funcs:
   - name: AndBigInt
     params: [x:Int, y:Int]
@@ -126,6 +127,7 @@ ops:
 - name: not
   ident: NotBigInt
   title: Bitwise not
+  subtitle: bitwise
   funcs:
   - name: NotBigInt
     params: [x:Int]
@@ -158,6 +160,7 @@ ops:
 - name: or
   ident: OrBigInt
   title: Bitwise or
+  subtitle: bitwise
   funcs:
   - name: OrBigInt
     params: [x:Int, y:Int]

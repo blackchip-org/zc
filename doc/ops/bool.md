@@ -23,16 +23,24 @@ Example:
 
 ## Index
 
-| Operation         | Description        
-|-------------------|--------------------
-| [`and`](#and)     | Logical conjunction
-| [`false`](#false) | False              
-| [`not`](#not)     | Negation           
-| [`or`](#or)       | Logical disjunction
-| [`true`](#true)   | True               
+| Operation         | Description                 
+|-------------------|-----------------------------
+| [`and`](#and)     | And operation               
+| [`and`](#and)     | Logical conjunction, boolean
+| [`false`](#false) | False                       
+| [`not`](#not)     | Not operation               
+| [`not`](#not)     | Negation, boolean           
+| [`or`](#or)       | Or operation                
+| [`or`](#or)       | Logical disjunction, boolean
+| [`true`](#true)   | True                        
 
 
 ## Operations
+
+### and
+
+
+
 
 ### and
 
@@ -68,6 +76,11 @@ Example:
 
 ### not
 
+
+
+
+### not
+
 Negates *x*.
 
 Stack effects:
@@ -81,6 +94,11 @@ Example:
 |------------|--------
 | `true not` | `false`
 | `not`      | `true` 
+
+### or
+
+
+
 
 ### or
 

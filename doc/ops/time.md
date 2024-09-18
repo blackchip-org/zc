@@ -83,7 +83,7 @@ of *hours*`h`*minutes*`m`*seconds*`s`. Zero values may be omitted. Examples:
 
 | Operation                      | Description                         
 |--------------------------------|-------------------------------------
-| [`add`](#add)                  | Time or duration addition           
+| [`add`](#add)                  | Addition, time or duration          
 | [`date`](#date)                | Formats to a common date layout     
 | [`date.time, dt`](#datetime)   | Formats to a common date/time layout
 | [`date.time?, dt?`](#datetime) | Parses text as a date/time          
@@ -92,12 +92,14 @@ of *hours*`h`*minutes*`m`*seconds*`s`. Zero values may be omitted. Examples:
 | [`hours`](#hours)              | Convert to hours                    
 | [`local.zone`](#localzone)     | Sets the local time zone            
 | [`local.zone?`](#localzone)    | Name of the local time zone         
-| [`minutes`](#minutes)          | Convert to minutes                  
+| [`minutes`](#minutes)          | Convert to minutes, time            
+| [`minutes`](#minutes)          | Minutes operation                   
 | [`now`](#now)                  | Current date and time               
 | [`now.reset, now-`](#nowreset) | Cancels override of now             
 | [`now=`](#now)                 | Override now value                  
-| [`seconds`](#seconds)          | Convert time to seconds             
-| [`sub`](#sub)                  | Time or duration subtraction        
+| [`seconds`](#seconds)          | Seconds operation                   
+| [`seconds`](#seconds)          | Convert time to seconds, time       
+| [`sub`](#sub)                  | Subtraction, time or duration       
 | [`time`](#time)                | Formats to a common time layout     
 | [`time.zone, tz`](#timezone)   | Converts time to another time zone  
 | [`time?`](#time)               | Parses text as a time               
@@ -273,6 +275,11 @@ Example:
 |-----------------------------|----------
 | `10h20m30s minutes 2 round` | `620.5 m`
 
+### minutes
+
+
+
+
 ### now
 
 The current date and time. If `now=` has been called, that date and
@@ -319,6 +326,11 @@ Example:
 | `'Nov 5 1955 01:22` | `Nov 5 1955 01:22`                               
 | `now=`              | *now set to 'Sat Nov 5 1955 1:22:00am -0700 MST'*
 | `now`               | `Sat Nov 5 1955 1:22:00am -0700 MST`             
+
+### seconds
+
+
+
 
 ### seconds
 

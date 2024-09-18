@@ -98,6 +98,7 @@ ops:
   aliases: [mins]
   ident: MinutesDMS
   title: Degree angle to minutes
+  subtitle: angle
   funcs:
   - name: MinutesDMS
     params: [x:Angle/DMS]
@@ -119,7 +120,7 @@ ops:
   aliases: [secs]
   ident: SecondsDMS
   title: Degree angle to seconds
-  subtitle: degree angle to seconds
+  subtitle: angle
   funcs:
   - name: SecondsDMS
     params: [x:Angle/DMS]

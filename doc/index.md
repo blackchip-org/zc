@@ -15,6 +15,7 @@
 - [`acos`](ops/trig.md#acos): Inverse cosine
 - [`acosh`](ops/trig.md#acosh): Inverse hyperbolic cosine
 - [`add`](ops/basic.md#add): Addition
+  - [`add`](ops/time.md#add): time or duration
   - [`add/f`](ops/float.md#addf): double precision floating-point
   - [`add/s`](ops/int.md#adds): signed architecture sized integer
   - [`add/s16`](ops/int.md#adds16): signed 16-bit integer
@@ -28,22 +29,9 @@
   - [`add/u64`](ops/int.md#addu64): unsigned 64-bit integer
   - [`add/u8`](ops/int.md#addu8): unsigned 8-bit integer
   - [`add/v`](ops/float.md#addv): variable precision floating-point
-- [`add`](ops/time.md#add): Time or duration addition
-  - [`add/f`](ops/float.md#addf): double precision floating-point
-  - [`add/s`](ops/int.md#adds): signed architecture sized integer
-  - [`add/s16`](ops/int.md#adds16): signed 16-bit integer
-  - [`add/s32`](ops/int.md#adds32): signed 32-bit integer
-  - [`add/s64`](ops/int.md#adds64): signed 64-bit integer
-  - [`add/s8`](ops/int.md#adds8): signed 8-bit integer
-  - [`add/sp`](ops/float.md#addsp): single precision floating-point
-  - [`add/u`](ops/int.md#addu): unsigned architecture sized integer
-  - [`add/u16`](ops/int.md#addu16): unsigned 16-bit integer
-  - [`add/u32`](ops/int.md#addu32): unsigned 32-bit integer
-  - [`add/u64`](ops/int.md#addu64): unsigned 64-bit integer
-  - [`add/u8`](ops/int.md#addu8): unsigned 8-bit integer
-  - [`add/v`](ops/float.md#addv): variable precision floating-point
-- [`and`](ops/bool.md#and): Logical conjunction
-- [`and`](ops/prog.md#and): Bitwise and
+- `and`: And operation
+  - [`and`](ops/bool.md#and): boolean
+  - [`and`](ops/prog.md#and): bitwise
 - [`apply`](ops/hof.md#apply): Apply a function using arguments on stack
 - [`asin`](ops/trig.md#asin): Inverse sine
 - [`asinh`](ops/trig.md#asinh): Inverse hyperbolic sine
@@ -246,9 +234,9 @@
   - [`min.int/s32`](ops/int.md#minints32): Minimum signed 32-bit integer
   - [`min.int/s64`](ops/int.md#minints64): Minimum signed 64-bit integer
   - [`min.int/s8`](ops/int.md#minints8): Minimum signed 8-bit integer
-- [`mins`](ops/angle.md#minutes): Alias for [minutes](ops/angle.md#minutes)
-- [`minutes`](ops/angle.md#minutes): Degree angle to minutes
-- [`minutes`](ops/time.md#minutes): Convert to minutes
+- `minutes`: Minutes operation
+  - [`minutes`](ops/angle.md#minutes): angle
+  - [`minutes`](ops/time.md#minutes): time
 - [`mm-in`](ops/len.md#mm-in): Millimeters to inches
 - [`mod`](ops/basic.md#mod): Modulus
 - [`mul`](ops/basic.md#mul): Multiplication
@@ -265,8 +253,9 @@
 - [`neq`](ops/cmp.md#neq): Not equal
 - [`nmi-km`](ops/len.md#nmi-km): Nautical miles to kilometers
 - [`nmi-m`](ops/len.md#nmi-m): Nautical miles to meters
-- [`not`](ops/bool.md#not): Negation
-- [`not`](ops/prog.md#not): Bitwise not
+- `not`: Not operation
+  - [`not`](ops/bool.md#not): boolean
+  - [`not`](ops/prog.md#not): bitwise
 - [`now`](ops/time.md#now): Current date and time
 - [`now-`](ops/time.md#nowreset): Alias for [now.reset](ops/time.md#nowreset)
 - [`now.reset`](ops/time.md#nowreset): Cancels override of now
@@ -274,8 +263,9 @@
 
 ## o
 - [`oct`](ops/prog.md#oct): Octal conversion
-- [`or`](ops/bool.md#or): Logical disjunction
-- [`or`](ops/prog.md#or): Bitwise or
+- `or`: Or operation
+  - [`or`](ops/bool.md#or): boolean
+  - [`or`](ops/prog.md#or): bitwise
 - [`oz-g`](ops/mass.md#oz-g): Ounces to grams
 - [`ozt-g`](ops/mass.md#ozt-g): Troy ounces to grams
 
@@ -330,8 +320,9 @@
 - [`s`](ops/basic.md#sub): Alias for [sub](ops/basic.md#sub)
 - [`sci`](ops/format.md#scientificnotation): Alias for [scientific.notation](ops/format.md#scientificnotation)
 - [`scientific.notation`](ops/format.md#scientificnotation): Scientific Notation
-- [`seconds`](ops/time.md#seconds): Convert time to seconds
-  - [`seconds`](ops/angle.md#seconds): degree angle to seconds
+- `seconds`: Seconds operation
+  - [`seconds`](ops/angle.md#seconds): angle
+  - [`seconds`](ops/time.md#seconds): time
 - [`seq`](ops/seq.md#sequence): Alias for [sequence](ops/seq.md#sequence)
 - [`sequence`](ops/seq.md#sequence): Sequence of integers
 - [`sha1`](ops/crypto.md#sha1): SHA-1 hash function
@@ -366,20 +357,7 @@
 - [`stdev.s`](ops/stat.md#standarddevsamp): Alias for [standard.dev.samp](ops/stat.md#standarddevsamp)
 - [`store`](ops/stack.md#store): Store stack to memory
 - [`sub`](ops/basic.md#sub): Subtraction
-  - [`sub/f`](ops/float.md#subf): double precision floating-point
-  - [`sub/s`](ops/int.md#subs): signed architecture sized integer
-  - [`sub/s16`](ops/int.md#subs16): signed 16-bit integer
-  - [`sub/s32`](ops/int.md#subs32): signed 32-bit integer
-  - [`sub/s64`](ops/int.md#subs64): signed 64-bit integer
-  - [`sub/s8`](ops/int.md#subs8): signed 8-bit integer
-  - [`sub/sp`](ops/float.md#subsp): single precision floating-point
-  - [`sub/u`](ops/int.md#subu): unsigned architecture sized integer
-  - [`sub/u16`](ops/int.md#subu16): unsigned 16-bit integer
-  - [`sub/u32`](ops/int.md#subu32): unsigned 32-bit integer
-  - [`sub/u64`](ops/int.md#subu64): unsigned 64-bit integer
-  - [`sub/u8`](ops/int.md#subu8): unsigned 8-bit integer
-  - [`sub/v`](ops/float.md#subv): variable precision floating-point
-- [`sub`](ops/time.md#sub): Time or duration subtraction
+  - [`sub`](ops/time.md#sub): time or duration
   - [`sub/f`](ops/float.md#subf): double precision floating-point
   - [`sub/s`](ops/int.md#subs): signed architecture sized integer
   - [`sub/s16`](ops/int.md#subs16): signed 16-bit integer

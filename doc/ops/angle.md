@@ -45,9 +45,9 @@ entering values manually. All of the following parse to the same value:
 | [`deg.min.sec, dms`](#degminsec)             | Degree angle to degrees, minutes and seconds         
 | [`deg.min.sec.round, dmsr`](#degminsecround) | Degree angle to degrees, minutes, and rounded seconds
 | [`dms?`](#dms)                               | Can parse as a decimal degree?                       
-| [`minutes, mins`](#minutes)                  | Degree angle to minutes                              
+| [`minutes, mins`](#minutes)                  | Degree angle to minutes, angle                       
 | [`rad-deg`](#rad-deg)                        | Convert radians to degrees                           
-| [`seconds, secs`](#seconds)                  | Degree angle to seconds, degree angle to seconds     
+| [`seconds, secs`](#seconds)                  | Degree angle to seconds, angle                       
 
 
 ## Operations
