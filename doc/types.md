@@ -10,11 +10,14 @@ of a type if it can be successfully parsed by that type's parse function. The
 parse function for a floating point number can parse values such as 6, 6.4, 6e4
 but not '6 2/5' which requires a conversion function.
 
+The special type `Any` represents any value that can appear on the stack. 
+
 Table of contents:
 
 - [`Angle/DMS`](ops/angle.md)
 - [`Bool`](ops/bool.md)
 - [`Complex`](ops/complex.md)
+- Data
 - [`Date`](ops/time.md)
 - [`DateTime`](ops/time.md)
 - [`Dec`](ops/dec.md)

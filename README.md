@@ -4,7 +4,7 @@ A fun stack-based calculator.
 
 Use the browser version here:
 
-TODO
+https://blackchip-org.github.io/zc
 
 Use tab to auto-complete. First tab completes an operation name as much as
 possible. Next tab shows matching candidates. When using on a mobile device, use
@@ -12,12 +12,14 @@ the "tab" button to emulate pressing the tab button twice.
 
 Example use:
 
-TODO
+https://blackchip-org.github.io/zc/?eval=1+8+seq+[2+sw+pow]+map
 
 ## Documentation
 
 - [Operation Reference](doc/ops.md)
 - [Operations Index](doc/index.md)
+- [Type Reference](doc/types.md)
+- [Stack Notation](doc/stack.md)
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/blackchip-org/zc/v6.svg)](https://pkg.go.dev/github.com/blackchip-org/zc/v6)
 
