@@ -32,6 +32,9 @@ jobs:
     - name: Install Dependencies
       run: sudo apt install git libproj-dev
       
+    - name: Install Go Depenencies
+      run: go install golang.org/x/tools/cmd/goimports@latest
+  
     - name: Gen
       run: ./make ops 
 
