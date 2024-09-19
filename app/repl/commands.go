@@ -7,6 +7,7 @@ import (
 
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 type Cmd func(*Repl, []scan.Token) error
@@ -77,7 +78,7 @@ func redo(r *Repl, _ []scan.Token) error {
 
 func reset(r *Repl, _ []scan.Token) error {
 	r.Calc.Reset()
-	r.Calc.Notify("reset")
+	r.Calc.Notify(msg.Reset())
 	return nil
 }
 

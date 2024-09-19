@@ -57,13 +57,13 @@ func DayYear(c zc.Calc) {
 func Hours(c zc.Calc) {
 	x := zc.Duration.Pop(c)
 	zc.Float64.Push(c, x.Hours())
-	c.SetUnit("h")
+	c.SetUnit(msg.Hours)
 }
 
 func LocalZone(c zc.Calc) {
 	v := vars.ForTime(c)
 	zc.String.Push(c, v.ZoneName)
-	c.SetLabel("time zone")
+	c.SetLabel(msg.TimeZone)
 }
 
 func LocalZoneSet(c zc.Calc) {
@@ -85,13 +85,13 @@ func LocalZoneSet(c zc.Calc) {
 	}
 	v.Zone = loc
 	v.ZoneName = zone
-	c.Notify("local time zone is now %v", msg.Quote(v.ZoneName))
+	c.Notify(msg.LocalTimeZoneSet(zone))
 }
 
 func MinutesTime(c zc.Calc) {
 	x := zc.Duration.Pop(c)
 	zc.Float64.Push(c, x.Minutes())
-	c.SetUnit("m")
+	c.SetUnit(msg.Meters)
 }
 
 func Now(c zc.Calc) {
@@ -103,19 +103,19 @@ func NowSet(c zc.Calc) {
 	v := vars.ForTime(c)
 	x := zc.DateTime.Pop(c)
 	v.Now = func() time.Time { return x.In(v.Zone) }
-	c.Notify("now set to %v", msg.Quote(zc.DateTime.Format(c, x)))
+	c.Notify(msg.NowSet(zc.DateTime.Format(c, x)))
 }
 
 func NowReset(c zc.Calc) {
 	v := vars.ForTime(c)
 	v.Now = func() time.Time { return time.Now() }
-	c.Notify("now reset")
+	c.Notify(msg.Reset())
 }
 
 func SecondsTime(c zc.Calc) {
 	x := zc.Duration.Pop(c)
 	zc.Float64.Push(c, x.Seconds())
-	c.SetUnit("s")
+	c.SetUnit(msg.Seconds)
 }
 
 func SubDuration(c zc.Calc) {

@@ -32,7 +32,7 @@ func RoundingModeSet(c zc.Calc) {
 		c.Raise(msg.ErrInvalidArg(err.Error()))
 		return
 	}
-	c.Notify("rounding mode set to %v", mode)
+	c.Notify(msg.RoundingModeSet(mode))
 }
 
 func RoundingModeGet(c zc.Calc) {

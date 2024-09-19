@@ -30,7 +30,7 @@ func RandSeed(c zc.Calc) {
 	v.Seed = zc.BigInt.Pop(c)
 	lo, hi := v.SplitSeed()
 	v.Source.Seed(lo, hi)
-	c.Notify("seed set to %v", v.Seed)
+	c.Notify(msg.SeedSet(v.Seed))
 }
 
 func RandSeedGet(c zc.Calc) {

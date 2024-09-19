@@ -370,7 +370,7 @@ func (t DataType) As(a any) *bytes.Buffer {
 
 func (t DataType) Push(c Calc, val *bytes.Buffer) {
 	c.Push(Item{TypeVal: val, Type: t})
-	c.SetLabel(msg.Data())
+	c.SetLabel(msg.Data)
 }
 
 func (t DataType) Pop(c Calc) *bytes.Buffer {

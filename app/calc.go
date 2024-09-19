@@ -150,7 +150,7 @@ func (c *Calc) Reset() {
 	c.temp.Clear()
 	clear(c.mem)
 	clear(c.state)
-	c.Notify("reset")
+	c.Notify(msg.Reset())
 }
 
 func (c *Calc) Eval(line string) error {

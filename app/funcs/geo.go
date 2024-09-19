@@ -5,6 +5,7 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/ext"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 const EarthRadius = 6371000
@@ -47,7 +48,7 @@ func Haversine(c zc.Calc) {
 	r0 := EarthRadius * c0
 
 	zc.Float64.Push(c, r0)
-	c.SetUnit("m")
+	c.SetUnit(msg.Meters)
 }
 
 func Proj(c zc.Calc) {

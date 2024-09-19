@@ -1,9 +1,10 @@
 package msg
 
-func Data() string {
-	return "data"
-}
-
-func Precision() string {
-	return "precision"
-}
+var (
+	Data      = "data"
+	Mod       = "mod"
+	Precision = "precision"
+	Quo       = "quo"
+	Rem       = "rem"
+	TimeZone  = "time zone"
+)

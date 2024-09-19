@@ -166,9 +166,9 @@ func DivModBigInt(c zc.Calc) {
 	}
 	x.DivMod(x, y, m)
 	zc.BigInt.Push(c, x)
-	c.SetLabel("quo")
+	c.SetLabel(msg.Quo)
 	zc.BigInt.Push(c, m)
-	c.SetLabel("mod")
+	c.SetLabel(msg.Mod)
 }
 
 // ----------------------------------------------------------------------------
@@ -505,7 +505,7 @@ func QuoRemBigInt(c zc.Calc) {
 	}
 	x.QuoRem(x, y, r)
 	zc.BigInt.Push(c, x)
-	c.SetLabel("quo")
+	c.SetLabel(msg.Quo)
 	zc.BigInt.Push(c, r)
-	c.SetLabel("rem")
+	c.SetLabel(msg.Rem)
 }

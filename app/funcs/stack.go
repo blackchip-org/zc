@@ -20,7 +20,7 @@ func Copy(c zc.Calc) {
 	t := c.Temp()
 	t = append(t, s...)
 	c.SetTemp(t)
-	c.Notify("copied")
+	c.Notify(msg.Copied())
 }
 
 func Down(c zc.Calc) {
@@ -133,7 +133,7 @@ func Size(c zc.Calc) {
 func Store(c zc.Calc) {
 	n := zc.String.Pop(c)
 	c.Store(n)
-	c.Notify("stored")
+	c.Notify(msg.Stored())
 }
 
 func Swap(c zc.Calc) {

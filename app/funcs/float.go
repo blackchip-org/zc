@@ -139,7 +139,7 @@ func PrecFloat(c zc.Calc) {
 func PrecFloatGet(c zc.Calc) {
 	v := vars.ForFloat(c)
 	zc.Uint.Push(c, v.Prec)
-	c.SetLabel(msg.Precision())
+	c.SetLabel(msg.Precision)
 }
 
 func SignBigFloat(c zc.Calc) {
