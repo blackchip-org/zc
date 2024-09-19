@@ -12,6 +12,7 @@ import (
 	"github.com/blackchip-org/dms"
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6/app/vars"
+	"github.com/blackchip-org/zc/v6/msg"
 	"github.com/blackchip-org/zc/v6/pkg/coll"
 	"github.com/blackchip-org/zc/v6/pkg/ptime"
 	"github.com/blackchip-org/zc/v6/types"
@@ -85,7 +86,7 @@ func (t AngleDMSType) GoName() string  { return "types.AngleDMS" }
 func (t AngleDMSType) As(a any) types.AngleDMS {
 	v, ok := a.(types.AngleDMS)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -162,7 +163,7 @@ func (t BigFloatType) Recycle(vals ...*big.Float) {
 func (t BigFloatType) As(a any) *big.Float {
 	v, ok := a.(*big.Float)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -219,7 +220,7 @@ func (t BigIntType) Recycle(vals ...*big.Int) {
 func (t BigIntType) As(a any) *big.Int {
 	v, ok := a.(*big.Int)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -264,7 +265,7 @@ func (t BoolType) GoName() string  { return "bool" }
 func (t BoolType) As(a any) bool {
 	v, ok := a.(bool)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -311,7 +312,7 @@ func (t ComplexType) GoName() string  { return "complex128" }
 func (t ComplexType) As(a any) complex128 {
 	v, ok := a.(complex128)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -362,14 +363,14 @@ func (t DataType) Recycle(vals ...*bytes.Buffer) {
 func (t DataType) As(a any) *bytes.Buffer {
 	v, ok := a.(*bytes.Buffer)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
 
 func (t DataType) Push(c Calc, val *bytes.Buffer) {
 	c.Push(Item{TypeVal: val, Type: t})
-	c.SetLabel(LabelData)
+	c.SetLabel(msg.Data())
 }
 
 func (t DataType) Pop(c Calc) *bytes.Buffer {
@@ -416,7 +417,7 @@ func (t DecimalType) Recycle(vals ...*apd.Decimal) {
 func (t DecimalType) As(a any) *apd.Decimal {
 	v, ok := a.(*apd.Decimal)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -425,9 +426,9 @@ func (t DecimalType) Push(c Calc, val *apd.Decimal) {
 	switch val.Form {
 	case apd.Infinite:
 		// FIXME: Does the Sign have the direction?
-		c.Raise(ErrInfinity(0))
+		c.Raise(msg.ErrInfinity(0))
 	case apd.NaN:
-		c.Raise(ErrNotANumber)
+		c.Raise(msg.ErrNotANumber())
 	default:
 		c.Push(Item{TypeVal: val, Type: t})
 	}
@@ -445,10 +446,10 @@ func (t DecimalType) Parse(state coll.State, str string) (any, bool, error) {
 	switch {
 	case cond.Overflow() || (err != nil && err.Error() == "exponent out of range"):
 		t.Recycle(v)
-		return nil, false, ErrOverflow(str)
+		return nil, false, msg.ErrOverflow(str)
 	case cond.Underflow():
 		t.Recycle(v)
-		return nil, false, ErrUnderflow(str)
+		return nil, false, msg.ErrUnderflow(str)
 	case err != nil:
 		t.Recycle(v)
 		return nil, false, nil
@@ -480,7 +481,7 @@ func (t DateType) GoName() string  { return "time.Time" }
 func (t DateType) As(a any) time.Time {
 	v, ok := a.(time.Time)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -528,7 +529,7 @@ func (t DateTimeType) GoName() string  { return "time.Time" }
 func (t DateTimeType) As(a any) time.Time {
 	v, ok := a.(time.Time)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -576,7 +577,7 @@ func (t DurationType) GoName() string  { return "time.Duration" }
 func (t DurationType) As(a any) time.Duration {
 	v, ok := a.(time.Duration)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -650,7 +651,7 @@ func (t Float64Type) GoName() string  { return "float64" }
 func (t Float64Type) As(a any) float64 {
 	v, ok := a.(float64)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -658,11 +659,11 @@ func (t Float64Type) As(a any) float64 {
 func (t Float64Type) Push(c Calc, val float64) {
 	switch {
 	case math.IsNaN(val):
-		c.Raise(ErrNotANumber)
+		c.Raise(msg.ErrNotANumber())
 	case math.IsInf(val, 1):
-		c.Raise(ErrInfinity(1))
+		c.Raise(msg.ErrInfinity(1))
 	case math.IsInf(val, -1):
-		c.Raise(ErrInfinity(-1))
+		c.Raise(msg.ErrInfinity(-1))
 	default:
 		c.Push(Item{TypeVal: val, Type: t})
 	}
@@ -699,7 +700,7 @@ func (t Float32Type) GoName() string  { return "float32" }
 func (t Float32Type) As(a any) float32 {
 	v, ok := a.(float32)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -708,11 +709,11 @@ func (t Float32Type) Push(c Calc, val float32) {
 	val64 := float64(val)
 	switch {
 	case math.IsNaN(val64):
-		c.Raise(ErrNotANumber)
+		c.Raise(msg.ErrNotANumber())
 	case math.IsInf(val64, 1):
-		c.Raise(ErrInfinity(1))
+		c.Raise(msg.ErrInfinity(1))
 	case math.IsInf(val64, -1):
-		c.Raise(ErrInfinity(-1))
+		c.Raise(msg.ErrInfinity(-1))
 	default:
 		c.Push(Item{TypeVal: val, Type: t})
 	}
@@ -749,7 +750,7 @@ func (t IntType) GoName() string  { return "int" }
 func (t IntType) As(a any) int {
 	v, ok := a.(int)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -787,7 +788,7 @@ func (t Int8Type) GoName() string  { return "int8" }
 func (t Int8Type) As(a any) int8 {
 	v, ok := a.(int8)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -825,7 +826,7 @@ func (t Int16Type) GoName() string  { return "int16" }
 func (t Int16Type) As(a any) int16 {
 	v, ok := a.(int16)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -863,7 +864,7 @@ func (t Int32Type) GoName() string  { return "int32" }
 func (t Int32Type) As(a any) int32 {
 	v, ok := a.(int32)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -901,7 +902,7 @@ func (t Int64Type) GoName() string  { return "int64" }
 func (t Int64Type) As(a any) int64 {
 	v, ok := a.(int64)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -949,7 +950,7 @@ func (t RatType) Recycle(vals ...*big.Rat) {
 func (t RatType) As(a any) *big.Rat {
 	v, ok := a.(*big.Rat)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -1054,7 +1055,7 @@ func (t StringType) GoName() string  { return "string" }
 func (t StringType) As(a any) string {
 	v, ok := a.(string)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -1089,7 +1090,7 @@ func (t TimeType) GoName() string  { return "time.Time" }
 func (t TimeType) As(a any) time.Time {
 	v, ok := a.(time.Time)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -1137,7 +1138,7 @@ func (t UintType) GoName() string  { return "uint" }
 func (t UintType) As(a any) uint {
 	v, ok := a.(uint)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -1175,7 +1176,7 @@ func (t Uint8Type) GoName() string  { return "uint8" }
 func (t Uint8Type) As(a any) uint8 {
 	v, ok := a.(uint8)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -1213,7 +1214,7 @@ func (t Uint16Type) GoName() string  { return "uint16" }
 func (t Uint16Type) As(a any) uint16 {
 	v, ok := a.(uint16)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -1251,7 +1252,7 @@ func (t Uint32Type) GoName() string  { return "uint32" }
 func (t Uint32Type) As(a any) uint32 {
 	v, ok := a.(uint32)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }
@@ -1289,7 +1290,7 @@ func (t Uint64Type) GoName() string  { return "uint64" }
 func (t Uint64Type) As(a any) uint64 {
 	v, ok := a.(uint64)
 	if !ok {
-		panic(ErrWrongGoType(t, a))
+		panic(msg.ErrWrongGoType(t.GoName(), a))
 	}
 	return v
 }

@@ -237,13 +237,13 @@ Stack effects:
 
 Example:
 
-| Input                        | Stack                                  
-|------------------------------|----------------------------------------
-| `now time`                   | `3:04:05pm -0700 MST`                  
-| `c /est local.zone`          | *local time zone is now 'EST'*         
-| `now time`                   | `5:04:05pm -0500 EST`                  
-| `c /Asia/Jakarta local.zone` | *local time zone is now 'Asia/Jakarta'*
-| `now time`                   | `5:04:05am +0700 WIB`                  
+| Input                        | Stack                                
+|------------------------------|--------------------------------------
+| `now time`                   | `3:04:05pm -0700 MST`                
+| `c /est local.zone`          | *local time zone is now EST*         
+| `now time`                   | `5:04:05pm -0500 EST`                
+| `c /Asia/Jakarta local.zone` | *local time zone is now Asia/Jakarta*
+| `now time`                   | `5:04:05am +0700 WIB`                
 
 ### local.zone?
 

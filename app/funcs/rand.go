@@ -7,6 +7,7 @@ import (
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/vars"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func Rand(c zc.Calc) {
@@ -18,7 +19,7 @@ func RandInt(c zc.Calc) {
 	v := vars.ForRand(c)
 	max := zc.Int.Pop(c)
 	if max < 1 {
-		c.Raise(zc.ErrInvalidArg("%v < 1", max))
+		c.Raise(msg.ErrInvalidArg("%v < 1", max))
 		return
 	}
 	zc.Int.Push(c, v.Rand.IntN(max)+1)
@@ -60,25 +61,25 @@ func Roll(c zc.Calc) {
 	} else {
 		num, err = strconv.ParseInt(tok.Val, 10, 64)
 		if err != nil {
-			c.Raise(zc.ErrInvalidArg("dice count"))
+			c.Raise(msg.ErrInvalidArg(spec))
 			return
 		}
 	}
 
 	if unicode.ToLower(s.This) != 'd' {
-		c.Raise(zc.ErrInvalidArg("missing 'd'"))
+		c.Raise(msg.ErrInvalidArg(spec))
 		return
 	}
 	s.Discard()
 
 	tok, ok = s.Eval(scan.IntRule)
 	if !ok {
-		c.Raise(zc.ErrInvalidArg("sides"))
+		c.Raise(msg.ErrInvalidArg(spec))
 		return
 	}
 	sides, err = strconv.ParseInt(tok.Val, 10, 64)
 	if err != nil {
-		c.Raise(zc.ErrInvalidArg("sides"))
+		c.Raise(msg.ErrInvalidArg(spec))
 		return
 	}
 

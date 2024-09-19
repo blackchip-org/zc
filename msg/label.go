@@ -1,5 +1,9 @@
 package msg
 
-const (
-	Precision = "precision"
-)
+func Data() string {
+	return "data"
+}
+
+func Precision() string {
+	return "precision"
+}

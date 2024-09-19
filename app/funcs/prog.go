@@ -6,6 +6,7 @@ import (
 	"math/big"
 
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func AndBigInt(c zc.Calc) {
@@ -34,7 +35,7 @@ func Bin(c zc.Calc) {
 func Bit(c zc.Calc) {
 	i := zc.Int.Pop(c)
 	if i < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", i))
+		c.Raise(msg.ErrInvalidArg("%v < 0", i))
 		return
 	}
 	x := zc.BigInt.Pop(c)

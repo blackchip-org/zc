@@ -3,6 +3,7 @@ package funcs
 import (
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/vars"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func Dec(c zc.Calc) {
@@ -19,7 +20,7 @@ func DecRat(c zc.Calc) {
 	d := zc.Decimal.New()
 	d.SetFloat64(f)
 	if !exact {
-		c.Notify(zc.NoticeInexact)
+		c.Notify(msg.Inexact())
 	}
 	zc.Decimal.Push(c, d)
 }
@@ -28,7 +29,7 @@ func RoundingModeSet(c zc.Calc) {
 	conf := vars.ForDec(c)
 	mode := zc.String.Pop(c)
 	if err := conf.SetRoundingMode(mode); err != nil {
-		c.Raise(zc.ErrInvalidArg(err.Error()))
+		c.Raise(msg.ErrInvalidArg(err.Error()))
 		return
 	}
 	c.Notify("rounding mode set to %v", mode)

@@ -5,16 +5,17 @@ import (
 	"strconv"
 
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func UTM(c zc.Calc) {
-	p0 := []rune(zc.String.Pop(c))
-	if len(p0) == 0 {
-		c.Raise(zc.ErrInvalidArg("hemisphere"))
+	a := zc.String.Pop(c)
+	if len(a) == 0 {
+		c.Raise(msg.ErrInvalidArg(a))
 		return
 	}
 
-	rZone, hemi := p0[:len(p0)-1], p0[len(p0)-1]
+	rZone, hemi := a[:len(a)-1], a[len(a)-1]
 
 	var base int
 	switch hemi {
@@ -23,13 +24,13 @@ func UTM(c zc.Calc) {
 	case 's', 'S':
 		base = 32700
 	default:
-		c.Raise(zc.ErrInvalidArg("hemisphere"))
+		c.Raise(msg.ErrInvalidArg(a))
 		return
 	}
 
 	zone, err := strconv.Atoi(string(rZone))
 	if err != nil || zone < 0 || zone > 60 {
-		c.Raise(zc.ErrInvalidArg("zone"))
+		c.Raise(msg.ErrInvalidArg(a))
 		return
 	}
 	r0 := fmt.Sprintf("EPSG:%v", base+zone)

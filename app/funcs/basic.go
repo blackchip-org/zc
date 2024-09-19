@@ -6,6 +6,7 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/vars"
+	"github.com/blackchip-org/zc/v6/msg"
 	"github.com/cockroachdb/apd/v3"
 )
 
@@ -73,7 +74,7 @@ func CbrtDecimal(c zc.Calc) {
 	x := zc.Decimal.Pop(c)
 
 	if x.Cmp(&zero) < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", x))
+		c.Raise(msg.ErrInvalidArg("%v < 0", x))
 		return
 	}
 	_, err := d.Cbrt(x, x)
@@ -104,7 +105,7 @@ func DivBigInt(c zc.Calc) {
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	x.Div(x, y)
@@ -126,7 +127,7 @@ func DivDecimal(c zc.Calc) {
 
 	cond, err := d.Quo(x, x, y)
 	if cond.DivisionByZero() {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	if err != nil {
@@ -143,7 +144,7 @@ func DivRat(c zc.Calc) {
 	defer zc.Rat.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 
@@ -160,7 +161,7 @@ func DivModBigInt(c zc.Calc) {
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	x.DivMod(x, y, m)
@@ -244,7 +245,7 @@ func ModBigInt(c zc.Calc) {
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	x.Mod(x, y)
@@ -357,7 +358,7 @@ func RemBigInt(c zc.Calc) {
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	x.Rem(x, y)
@@ -371,7 +372,7 @@ func RemDecimal(c zc.Calc) {
 	defer zc.Decimal.Recycle(y)
 
 	if y.IsZero() {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	_, err := d.Rem(x, x, y)
@@ -407,7 +408,7 @@ func SqrtBigInt(c zc.Calc) {
 	var zero big.Int
 	x := zc.BigInt.Pop(c)
 	if x.Cmp(&zero) < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", x.String()))
+		c.Raise(msg.ErrInvalidArg("%v < 0", x.String()))
 		return
 	}
 	x.Sqrt(x)
@@ -425,7 +426,7 @@ func SqrtDecimal(c zc.Calc) {
 	d := vars.ForDec(c).Math
 	x := zc.Decimal.Pop(c)
 	if x.Cmp(&zero) < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", x.String()))
+		c.Raise(msg.ErrInvalidArg("%v < 0", x.String()))
 		return
 	}
 
@@ -483,7 +484,7 @@ func QuoBigInt(c zc.Calc) {
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	x.Quo(x, y)
@@ -499,7 +500,7 @@ func QuoRemBigInt(c zc.Calc) {
 	defer zc.BigInt.Recycle(y)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	x.QuoRem(x, y, r)

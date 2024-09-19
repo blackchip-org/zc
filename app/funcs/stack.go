@@ -4,6 +4,7 @@ import (
 	"slices"
 
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func Clear(c zc.Calc) {
@@ -12,7 +13,7 @@ func Clear(c zc.Calc) {
 
 func Copy(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(zc.ErrStackEmpty)
+		c.Raise(msg.ErrStackEmpty())
 		return
 	}
 	s := zc.DupItems(c.Stack())
@@ -24,7 +25,7 @@ func Copy(c zc.Calc) {
 
 func Down(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(zc.ErrStackEmpty)
+		c.Raise(msg.ErrStackEmpty())
 		return
 	}
 	if c.Len() == 1 {
@@ -66,7 +67,7 @@ func Load(c zc.Calc) {
 func Pop(c zc.Calc) {
 	t := c.Temp()
 	if len(t) == 0 {
-		c.Raise(zc.ErrStackEmpty)
+		c.Raise(msg.ErrStackEmpty())
 		return
 	}
 	l := len(t)
@@ -79,7 +80,7 @@ func PopAll(c zc.Calc) {
 	s := c.Stack()
 	t := c.Temp()
 	if len(t) == 0 {
-		c.Raise(zc.ErrStackEmpty)
+		c.Raise(msg.ErrStackEmpty())
 		return
 	}
 	s = append(s, t...)
@@ -89,7 +90,7 @@ func PopAll(c zc.Calc) {
 
 func Push(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(zc.ErrStackEmpty)
+		c.Raise(msg.ErrStackEmpty())
 		return
 	}
 	x := c.Pop()
@@ -100,7 +101,7 @@ func Push(c zc.Calc) {
 
 func PushAll(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(zc.ErrStackEmpty)
+		c.Raise(msg.ErrStackEmpty())
 		return
 	}
 	s := c.Stack()

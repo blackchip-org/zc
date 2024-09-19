@@ -5,6 +5,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func Concat(c zc.Calc) {
@@ -30,7 +31,7 @@ func Left(c zc.Calc) {
 	s := zc.String.Pop(c)
 
 	if i > len(s) || i < -len(s) {
-		c.Raise(zc.ErrIndexOutOfRange(i))
+		c.Raise(msg.ErrIndexOutOfRange(i))
 		return
 	}
 
@@ -61,7 +62,7 @@ func Right(c zc.Calc) {
 	s := zc.String.Pop(c)
 
 	if i > len(s) || i < -len(s) {
-		c.Raise(zc.ErrIndexOutOfRange(i))
+		c.Raise(msg.ErrIndexOutOfRange(i))
 		return
 	}
 

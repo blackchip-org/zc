@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/scan"
+	"github.com/blackchip-org/zc/v6/msg"
 	"github.com/blackchip-org/zc/v6/pkg/coll"
 )
 
@@ -49,7 +50,7 @@ func (i Item) String() string {
 		s.WriteString(i.Label)
 		s.WriteString(": ")
 	}
-	s.WriteString(EscapeString(i.Val()))
+	s.WriteString(msg.EscapeString(i.Val()))
 	if i.Unit != "" {
 		s.WriteRune(' ')
 		s.WriteString(i.Unit)

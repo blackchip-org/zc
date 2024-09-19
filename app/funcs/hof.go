@@ -5,13 +5,14 @@ import (
 	"strings"
 
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func Apply(c zc.Calc) {
 	nArgs := int(zc.Uint32.Pop(c))
 	opName := zc.String.Pop(c)
 	if c.Len() < nArgs {
-		c.Raise(zc.ErrNotEnoughArgs)
+		c.Raise(msg.ErrNotEnoughArgs())
 		return
 	}
 	var args []string
@@ -35,13 +36,13 @@ func Filter(c zc.Calc) {
 		dc.Push(v)
 		dc.Eval(opName)
 		if dc.Len() == 0 {
-			c.Raise(zc.ErrNoReturnValues)
+			c.Raise(msg.ErrNoReturnValues())
 			return
 		}
 		out := dc.Pop()
 		r, ok, _ := zc.Bool.Parse(nil, out.Val())
 		if !ok {
-			c.Raise(zc.ErrUnexpectedType(out.Val()))
+			c.Raise(msg.ErrUnexpectedType(out.Val()))
 			return
 		}
 		if r.(bool) {
@@ -59,7 +60,7 @@ func Fold(c zc.Calc) {
 			return
 		}
 		if c.Len() >= before {
-			c.Raise(zc.ErrInvalidArg("%s: does not reduce", opName))
+			c.Raise(msg.ErrDoesNotReduce())
 			return
 		}
 	}

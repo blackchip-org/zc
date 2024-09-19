@@ -6,6 +6,7 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/vars"
+	"github.com/blackchip-org/zc/v6/msg"
 )
 
 func AddDuration(c zc.Calc) {
@@ -78,13 +79,13 @@ func LocalZoneSet(c zc.Calc) {
 	} else {
 		loc, err = time.LoadLocation(zone)
 		if err != nil {
-			c.Raise(zc.ErrInvalidArg("unknown time zone"))
+			c.Raise(msg.ErrUnknownTimeZone(zone))
 			return
 		}
 	}
 	v.Zone = loc
 	v.ZoneName = zone
-	c.Notify("local time zone is now %v", zc.Quote(v.ZoneName))
+	c.Notify("local time zone is now %v", msg.Quote(v.ZoneName))
 }
 
 func MinutesTime(c zc.Calc) {
@@ -102,7 +103,7 @@ func NowSet(c zc.Calc) {
 	v := vars.ForTime(c)
 	x := zc.DateTime.Pop(c)
 	v.Now = func() time.Time { return x.In(v.Zone) }
-	c.Notify("now set to %v", zc.Quote(zc.DateTime.Format(c, x)))
+	c.Notify("now set to %v", msg.Quote(zc.DateTime.Format(c, x)))
 }
 
 func NowReset(c zc.Calc) {
@@ -148,7 +149,7 @@ func TimeIs(c zc.Calc) {
 
 func TimeZone(c zc.Calc) {
 	if runtime.GOARCH == "wasm" {
-		c.Raise(zc.ErrFeatureNotSupported("tz"))
+		c.Raise(msg.ErrFeatureNotSupported("tz"))
 		return
 	}
 
@@ -164,7 +165,7 @@ func TimeZone(c zc.Calc) {
 	} else {
 		loc, err = time.LoadLocation(zone)
 		if err != nil {
-			c.Raise(zc.ErrInvalidArg("unknown time zone: '%v'", zone))
+			c.Raise(msg.ErrUnknownTimeZone(zone))
 			return
 		}
 	}

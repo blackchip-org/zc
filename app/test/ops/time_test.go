@@ -107,13 +107,13 @@ func TestOpDocs_Time_LocalZone(t *testing.T) {
 	c.AssertStack("3:04:05pm -0700 MST")
 
 	c.Eval("c /est local.zone")
-	c.AssertNotice("local time zone is now 'EST'")
+	c.AssertNotice("local time zone is now EST")
 
 	c.Eval("now time")
 	c.AssertStack("5:04:05pm -0500 EST")
 
 	c.Eval("c /Asia/Jakarta local.zone")
-	c.AssertNotice("local time zone is now 'Asia/Jakarta'")
+	c.AssertNotice("local time zone is now Asia/Jakarta")
 
 	c.Eval("now time")
 	c.AssertStack("5:04:05am +0700 WIB")

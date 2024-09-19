@@ -5,6 +5,7 @@ import (
 
 	"github.com/blackchip-org/scan"
 	"github.com/blackchip-org/zc/v6"
+	"github.com/blackchip-org/zc/v6/msg"
 	"github.com/blackchip-org/zc/v6/pkg/coll"
 )
 
@@ -95,21 +96,21 @@ func (c *Calc) Raise(err error) {
 
 func (c *Calc) Label() string {
 	if c.stack.Len() == 0 {
-		panic(zc.ErrStackEmpty)
+		panic(msg.ErrStackEmpty())
 	}
 	return c.stack.Get(0).Label
 }
 
 func (c *Calc) Unit() string {
 	if c.stack.Len() == 0 {
-		panic(zc.ErrStackEmpty)
+		panic(msg.ErrStackEmpty())
 	}
 	return c.stack.Get(0).Unit
 }
 
 func (c *Calc) SetLabel(label string) {
 	if c.stack.Len() == 0 {
-		panic(zc.ErrStackEmpty)
+		panic(msg.ErrStackEmpty())
 	}
 	item := c.stack.Get(0)
 	item.Label = label
@@ -118,7 +119,7 @@ func (c *Calc) SetLabel(label string) {
 
 func (c *Calc) SetUnit(unit string) {
 	if c.stack.Len() == 0 {
-		panic(zc.ErrStackEmpty)
+		panic(msg.ErrStackEmpty())
 	}
 	item := c.stack.Get(0)
 	item.Unit = unit
@@ -138,7 +139,7 @@ func (c *Calc) Store(name string) {
 func (c *Calc) Load(name string) {
 	s, ok := c.mem[name]
 	if !ok {
-		c.Raise(zc.ErrMemoryEmpty(name))
+		c.Raise(msg.ErrMemoryEmpty(name))
 		return
 	}
 	c.Push(s...)
@@ -187,7 +188,7 @@ func (c *Calc) evalValue(val string) {
 func (c *Calc) evalName(name string) {
 	op, ok := c.Catalog.OpFor(name)
 	if !ok {
-		c.Raise(zc.ErrNoSuchOp(name))
+		c.Raise(msg.ErrNoSuchOp(name))
 		return
 	}
 	if len(op.Macro) > 0 {
@@ -197,10 +198,10 @@ func (c *Calc) evalName(name string) {
 	fn, ok, err := c.ResolveOp(op)
 	switch {
 	case err != nil:
-		c.Raise(zc.ErrOp(name, err))
+		c.Raise(msg.ErrOp(name, err))
 		return
 	case !ok:
-		c.Raise(zc.ErrOp(name, c.errTypeMismatch(op)))
+		c.Raise(msg.ErrOp(name, c.errTypeMismatch(op)))
 		return
 	}
 
@@ -213,13 +214,13 @@ func (c *Calc) evalName(name string) {
 		ok, err := c.isFuncMatch(fn.Returns, fn.VarReturn)
 		switch {
 		case err != nil:
-			c.Raise(zc.ErrOp(name, err))
+			c.Raise(msg.ErrOp(name, err))
 			return
 		case !ok:
 			panic("return mismatch: " + name)
 		}
 	} else {
-		c.Err = zc.ErrOp(name, c.Err)
+		c.Err = msg.ErrOp(name, c.Err)
 	}
 }
 
@@ -317,8 +318,8 @@ func (c *Calc) errTypeMismatch(op zc.Op) error {
 			}
 		}
 		if !good {
-			return zc.ErrUnexpectedType(arg.Val())
+			return msg.ErrUnexpectedType(arg.Val())
 		}
 	}
-	return zc.ErrNotEnoughArgs
+	return msg.ErrNotEnoughArgs()
 }

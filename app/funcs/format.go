@@ -5,6 +5,7 @@ import (
 
 	"github.com/blackchip-org/zc/v6"
 	"github.com/blackchip-org/zc/v6/app/vars"
+	"github.com/blackchip-org/zc/v6/msg"
 	"github.com/cockroachdb/apd/v3"
 )
 
@@ -15,7 +16,7 @@ func RoundComplex(c zc.Calc) {
 	x := zc.Complex.Pop(c)
 
 	if p < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", p))
+		c.Raise(msg.ErrInvalidArg("%v < 0", p))
 		return
 	}
 

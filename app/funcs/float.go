@@ -32,7 +32,7 @@ func AddFloat64(c zc.Calc) {
 func CbrtFloat64(c zc.Calc) {
 	x := zc.Float64.Pop(c)
 	if x < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", x))
+		c.Raise(msg.ErrInvalidArg("%v < 0", x))
 		return
 	}
 	z := math.Cbrt(x)
@@ -45,7 +45,7 @@ func DivBigFloat(c zc.Calc) {
 	x := zc.BigFloat.Pop(c)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 
@@ -58,7 +58,7 @@ func DivFloat32(c zc.Calc) {
 	y := zc.Float32.Pop(c)
 	x := zc.Float32.Pop(c)
 	if y == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	zc.Float32.Push(c, x/y)
@@ -68,7 +68,7 @@ func DivFloat64(c zc.Calc) {
 	y := zc.Float64.Pop(c)
 	x := zc.Float64.Pop(c)
 	if y == 0 {
-		c.Raise(zc.ErrDivisionByZero)
+		c.Raise(msg.ErrDivisionByZero())
 		return
 	}
 	zc.Float64.Push(c, x/y)
@@ -139,7 +139,7 @@ func PrecFloat(c zc.Calc) {
 func PrecFloatGet(c zc.Calc) {
 	v := vars.ForFloat(c)
 	zc.Uint.Push(c, v.Prec)
-	c.SetLabel(msg.Precision)
+	c.SetLabel(msg.Precision())
 }
 
 func SignBigFloat(c zc.Calc) {
@@ -163,7 +163,7 @@ func SqrtBigFloat(c zc.Calc) {
 	var zero big.Float
 	x := zc.BigFloat.Pop(c)
 	if x.Cmp(&zero) < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", x.String()))
+		c.Raise(msg.ErrInvalidArg("%v < 0", x.String()))
 		return
 	}
 	x.Sqrt(x)
@@ -173,7 +173,7 @@ func SqrtBigFloat(c zc.Calc) {
 func SqrtFloat64(c zc.Calc) {
 	x := zc.Float64.Pop(c)
 	if x < 0 {
-		c.Raise(zc.ErrInvalidArg("%v < 0", x))
+		c.Raise(msg.ErrInvalidArg("%v < 0", x))
 		return
 	}
 	zc.Float64.Push(c, math.Sqrt(x))
