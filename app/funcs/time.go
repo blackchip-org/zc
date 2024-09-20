@@ -149,7 +149,7 @@ func TimeIs(c zc.Calc) {
 
 func TimeZone(c zc.Calc) {
 	if runtime.GOARCH == "wasm" {
-		c.Raise(msg.ErrFeatureNotSupported("tz"))
+		c.Raise(msg.ErrOpNotSupported)
 		return
 	}
 

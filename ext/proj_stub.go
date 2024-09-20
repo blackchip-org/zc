@@ -5,5 +5,5 @@ package ext
 import "github.com/blackchip-org/zc/v6/msg"
 
 func ProjTransform(p0, p1 float64, source, target string) (float64, float64, error) {
-	return 0, 0, msg.ErrFeatureNotSupported("proj")
+	return 0, 0, msg.ErrOpNotSupported
 }

@@ -2,6 +2,7 @@ package msg
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 	"unicode/utf8"
 
@@ -77,4 +78,18 @@ func Quote(str string) string {
 		}
 	}
 	return quote + s.Emit().Val + quote
+}
+
+func goName(v any) string {
+	if v == nil {
+		return "nil"
+	}
+	var name strings.Builder
+	t := reflect.TypeOf(v)
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+		name.WriteRune('*')
+	}
+	name.WriteString(t.Name())
+	return name.String()
 }
