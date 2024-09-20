@@ -13,19 +13,19 @@ func Clear(c zc.Calc) {
 
 func Copy(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(msg.ErrStackEmpty())
+		c.Raise(msg.ErrStackEmpty)
 		return
 	}
 	s := zc.DupItems(c.Stack())
 	t := c.Temp()
 	t = append(t, s...)
 	c.SetTemp(t)
-	c.Notify(msg.Copied())
+	c.Notify(msg.Copied)
 }
 
 func Down(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(msg.ErrStackEmpty())
+		c.Raise(msg.ErrStackEmpty)
 		return
 	}
 	if c.Len() == 1 {
@@ -67,7 +67,7 @@ func Load(c zc.Calc) {
 func Pop(c zc.Calc) {
 	t := c.Temp()
 	if len(t) == 0 {
-		c.Raise(msg.ErrStackEmpty())
+		c.Raise(msg.ErrStackEmpty)
 		return
 	}
 	l := len(t)
@@ -80,7 +80,7 @@ func PopAll(c zc.Calc) {
 	s := c.Stack()
 	t := c.Temp()
 	if len(t) == 0 {
-		c.Raise(msg.ErrStackEmpty())
+		c.Raise(msg.ErrStackEmpty)
 		return
 	}
 	s = append(s, t...)
@@ -90,7 +90,7 @@ func PopAll(c zc.Calc) {
 
 func Push(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(msg.ErrStackEmpty())
+		c.Raise(msg.ErrStackEmpty)
 		return
 	}
 	x := c.Pop()
@@ -101,7 +101,7 @@ func Push(c zc.Calc) {
 
 func PushAll(c zc.Calc) {
 	if c.Len() == 0 {
-		c.Raise(msg.ErrStackEmpty())
+		c.Raise(msg.ErrStackEmpty)
 		return
 	}
 	s := c.Stack()
@@ -133,7 +133,7 @@ func Size(c zc.Calc) {
 func Store(c zc.Calc) {
 	n := zc.String.Pop(c)
 	c.Store(n)
-	c.Notify(msg.Stored())
+	c.Notify(msg.Stored)
 }
 
 func Swap(c zc.Calc) {

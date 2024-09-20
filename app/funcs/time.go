@@ -109,7 +109,7 @@ func NowSet(c zc.Calc) {
 func NowReset(c zc.Calc) {
 	v := vars.ForTime(c)
 	v.Now = func() time.Time { return time.Now() }
-	c.Notify(msg.Reset())
+	c.Notify(msg.Reset)
 }
 
 func SecondsTime(c zc.Calc) {

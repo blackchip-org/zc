@@ -20,7 +20,7 @@ func DecRat(c zc.Calc) {
 	d := zc.Decimal.New()
 	d.SetFloat64(f)
 	if !exact {
-		c.Notify(msg.Inexact())
+		c.Notify(msg.Inexact)
 	}
 	zc.Decimal.Push(c, d)
 }

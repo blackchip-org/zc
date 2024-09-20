@@ -96,21 +96,21 @@ func (c *Calc) Raise(err error) {
 
 func (c *Calc) Label() string {
 	if c.stack.Len() == 0 {
-		panic(msg.ErrStackEmpty())
+		panic(msg.ErrStackEmpty)
 	}
 	return c.stack.Get(0).Label
 }
 
 func (c *Calc) Unit() string {
 	if c.stack.Len() == 0 {
-		panic(msg.ErrStackEmpty())
+		panic(msg.ErrStackEmpty)
 	}
 	return c.stack.Get(0).Unit
 }
 
 func (c *Calc) SetLabel(label string) {
 	if c.stack.Len() == 0 {
-		panic(msg.ErrStackEmpty())
+		panic(msg.ErrStackEmpty)
 	}
 	item := c.stack.Get(0)
 	item.Label = label
@@ -119,7 +119,7 @@ func (c *Calc) SetLabel(label string) {
 
 func (c *Calc) SetUnit(unit string) {
 	if c.stack.Len() == 0 {
-		panic(msg.ErrStackEmpty())
+		panic(msg.ErrStackEmpty)
 	}
 	item := c.stack.Get(0)
 	item.Unit = unit
@@ -150,7 +150,7 @@ func (c *Calc) Reset() {
 	c.temp.Clear()
 	clear(c.mem)
 	clear(c.state)
-	c.Notify(msg.Reset())
+	c.Notify(msg.Reset)
 }
 
 func (c *Calc) Eval(line string) error {
@@ -321,5 +321,5 @@ func (c *Calc) errTypeMismatch(op zc.Op) error {
 			return msg.ErrUnexpectedType(arg.Val())
 		}
 	}
-	return msg.ErrNotEnoughArgs()
+	return msg.ErrNotEnoughArgs
 }

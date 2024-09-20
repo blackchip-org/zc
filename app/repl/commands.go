@@ -78,7 +78,7 @@ func redo(r *Repl, _ []scan.Token) error {
 
 func reset(r *Repl, _ []scan.Token) error {
 	r.Calc.Reset()
-	r.Calc.Notify(msg.Reset())
+	r.Calc.Notify(msg.Reset)
 	return nil
 }
 

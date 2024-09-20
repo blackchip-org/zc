@@ -12,7 +12,7 @@ func Apply(c zc.Calc) {
 	nArgs := int(zc.Uint32.Pop(c))
 	opName := zc.String.Pop(c)
 	if c.Len() < nArgs {
-		c.Raise(msg.ErrNotEnoughArgs())
+		c.Raise(msg.ErrNotEnoughArgs)
 		return
 	}
 	var args []string
@@ -36,7 +36,7 @@ func Filter(c zc.Calc) {
 		dc.Push(v)
 		dc.Eval(opName)
 		if dc.Len() == 0 {
-			c.Raise(msg.ErrNoReturnValues())
+			c.Raise(msg.ErrNoReturnValues)
 			return
 		}
 		out := dc.Pop()
@@ -60,7 +60,7 @@ func Fold(c zc.Calc) {
 			return
 		}
 		if c.Len() >= before {
-			c.Raise(msg.ErrDoesNotReduce())
+			c.Raise(msg.ErrDoesNotReduce)
 			return
 		}
 	}

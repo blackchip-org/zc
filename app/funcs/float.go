@@ -45,7 +45,7 @@ func DivBigFloat(c zc.Calc) {
 	x := zc.BigFloat.Pop(c)
 
 	if y.Cmp(&zero) == 0 {
-		c.Raise(msg.ErrDivisionByZero())
+		c.Raise(msg.ErrDivisionByZero)
 		return
 	}
 
@@ -58,7 +58,7 @@ func DivFloat32(c zc.Calc) {
 	y := zc.Float32.Pop(c)
 	x := zc.Float32.Pop(c)
 	if y == 0 {
-		c.Raise(msg.ErrDivisionByZero())
+		c.Raise(msg.ErrDivisionByZero)
 		return
 	}
 	zc.Float32.Push(c, x/y)
@@ -68,7 +68,7 @@ func DivFloat64(c zc.Calc) {
 	y := zc.Float64.Pop(c)
 	x := zc.Float64.Pop(c)
 	if y == 0 {
-		c.Raise(msg.ErrDivisionByZero())
+		c.Raise(msg.ErrDivisionByZero)
 		return
 	}
 	zc.Float64.Push(c, x/y)

@@ -26,7 +26,7 @@ func IsFloatErr(c Calc, f float64) bool {
 		c.Raise(msg.ErrInfinity(1))
 		return true
 	case math.IsNaN(f):
-		c.Raise(msg.ErrNotANumber())
+		c.Raise(msg.ErrNotANumber)
 		return true
 	default:
 		return false

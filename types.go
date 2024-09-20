@@ -428,7 +428,7 @@ func (t DecimalType) Push(c Calc, val *apd.Decimal) {
 		// FIXME: Does the Sign have the direction?
 		c.Raise(msg.ErrInfinity(0))
 	case apd.NaN:
-		c.Raise(msg.ErrNotANumber())
+		c.Raise(msg.ErrNotANumber)
 	default:
 		c.Push(Item{TypeVal: val, Type: t})
 	}
@@ -659,7 +659,7 @@ func (t Float64Type) As(a any) float64 {
 func (t Float64Type) Push(c Calc, val float64) {
 	switch {
 	case math.IsNaN(val):
-		c.Raise(msg.ErrNotANumber())
+		c.Raise(msg.ErrNotANumber)
 	case math.IsInf(val, 1):
 		c.Raise(msg.ErrInfinity(1))
 	case math.IsInf(val, -1):
@@ -709,7 +709,7 @@ func (t Float32Type) Push(c Calc, val float32) {
 	val64 := float64(val)
 	switch {
 	case math.IsNaN(val64):
-		c.Raise(msg.ErrNotANumber())
+		c.Raise(msg.ErrNotANumber)
 	case math.IsInf(val64, 1):
 		c.Raise(msg.ErrInfinity(1))
 	case math.IsInf(val64, -1):

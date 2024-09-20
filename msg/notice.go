@@ -5,38 +5,24 @@ import (
 	"math/big"
 )
 
-func Copied() string {
-	return "copied"
-}
-
-func Inexact() string {
-	return "inexact"
-}
-
-func LocalTimeZoneSet(z string) string {
-	return fmt.Sprintf("local time zone is now %v", z)
-}
-
-func NowSet(dt string) string {
-	return fmt.Sprintf("now set to %v", Quote(dt))
-}
-
-func PrecisionSet(p uint) string {
-	return fmt.Sprintf("precision set to %v", p)
-}
-
-func RoundingModeSet(m string) string {
-	return fmt.Sprintf("rounding mode set to %v", m)
-}
-
-func Reset() string {
-	return "reset"
-}
-
-func SeedSet(s *big.Int) string {
-	return fmt.Sprintf("seed set to %v", s)
-}
-
-func Stored() string {
-	return "stored"
-}
+var (
+	Copied           = "copied"
+	Inexact          = "inexact"
+	LocalTimeZoneSet = func(z string) string {
+		return fmt.Sprintf("local time zone is now %v", z)
+	}
+	NowSet = func(dt string) string {
+		return fmt.Sprintf("now set to %v", Quote(dt))
+	}
+	PrecisionSet = func(p uint) string {
+		return fmt.Sprintf("precision set to %v", p)
+	}
+	RoundingModeSet = func(m string) string {
+		return fmt.Sprintf("rounding mode set to %v", m)
+	}
+	Reset   = "reset"
+	SeedSet = func(s *big.Int) string {
+		return fmt.Sprintf("seed set to %v", s)
+	}
+	Stored = "stored"
+)
