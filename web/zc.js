@@ -88,7 +88,7 @@ function annotate(l) {
     }
     text += l.value
     if ( l.unit) {
-        text = `${text}${unit}`
+        text = `${text}<span class='unit'>${l.unit}</unit>`
     }
     return text
 }

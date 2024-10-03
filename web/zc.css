@@ -25,6 +25,10 @@
     color: rgb(127,127,127);
 }
 
+.unit {
+    color: rgb(127,127,127);
+}
+
 @font-face {
     font-family: "Inconsolata";
     src: url("Inconsolata-Regular.ttf")
