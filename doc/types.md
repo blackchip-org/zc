@@ -23,7 +23,7 @@ Table of contents:
 - [`Dec`](ops/dec.md)
 - [`Duration`](ops/time.md)
 - [`Float`](ops/float.md) 
-  - [`Float/v](ops/float.md) 
+  - [`Float/v`](ops/float.md) 
   - [`Float/sp`](ops/float.md) 
 - [`Int`](ops/int.md)
   - [`Int/s`](ops/int.md)
