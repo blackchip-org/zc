@@ -99,6 +99,6 @@ func main() {
 		if entity.Characters == `\` {
 			entity.Characters = `\\\\`
 		}
-		fmt.Fprintf(fent, "- [\"%v\", \"%v\"]\n", name, entity.Characters)
+		fmt.Fprintf(fent, "- [\"%v\", \"/%v\"]\n", name, entity.Characters)
 	}
 }

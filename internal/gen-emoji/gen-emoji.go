@@ -63,7 +63,7 @@ func main() {
 	sort.Strings(names)
 	for _, name := range names {
 		ch := nameToCh[name]
-		fmt.Fprintf(fent, "- [\":%v:\", \"%v\"]\n", name, ch)
+		fmt.Fprintf(fent, "- [\":%v:\", \"/%v\"]\n", name, ch)
 	}
 
 }
