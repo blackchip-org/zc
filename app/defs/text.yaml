@@ -138,17 +138,6 @@ ops:
   - i: "/AB🆎 text-cp /hex map"
     o: [0x41, 0x42, 0x1f18e]
 
-- name: text-data
-  title: Convert text to data
-  funcs:
-  - name: TextToData
-    params: [x:Text]
-    returns: [Data]
-  desc: Converts the text *x* into its byte representation.
-  example:
-  - i: /ABC text-data
-    o: ["data: 414243"]
-
 - name: text-utf8
   title: Convert text to UTF-8 bytes
   funcs:

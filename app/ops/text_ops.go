@@ -99,16 +99,6 @@ var (
 			},
 		},
 	}
-	TextData = zc.Op{
-		Name: "text-data",
-		Funcs: []zc.Func{
-			{
-				Params:  []zc.Type{zc.String},
-				Returns: []zc.Type{zc.Data},
-				Eval:    funcs.TextToData,
-			},
-		},
-	}
 	TextUtf8 = zc.Op{
 		Name: "text-utf8",
 		Funcs: []zc.Func{

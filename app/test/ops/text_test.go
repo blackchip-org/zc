@@ -95,13 +95,6 @@ func TestOpDocs_Text_TextCodePoint(t *testing.T) {
 	c.AssertStack("0x41", "0x42", "0x1f18e")
 }
 
-func TestOpDocs_Text_TextData(t *testing.T) {
-	c := app.NewCalcTester(t)
-
-	c.Eval("/ABC text-data")
-	c.AssertStack("data: 414243")
-}
-
 func TestOpDocs_Text_TextUtf8(t *testing.T) {
 	c := app.NewCalcTester(t)
 

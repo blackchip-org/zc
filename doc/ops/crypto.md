@@ -35,9 +35,9 @@ Stack effects:
 
 Example:
 
-| Input                              | Stack                                   
-|------------------------------------|-----------------------------------------
-| `'Behind the tree!' text-data md5` | `data: bbce0fb98a6a1b308e589d1408968ac2`
+| Input                    | Stack                                   
+|--------------------------|-----------------------------------------
+| `'Behind the tree!' md5` | `data: bbce0fb98a6a1b308e589d1408968ac2`
 
 ### rotate.13
 
@@ -70,9 +70,9 @@ Stack effects:
 
 Example:
 
-| Input                               | Stack                                           
-|-------------------------------------|-------------------------------------------------
-| `'Behind the tree!' text-data sha1` | `data: da6e7f530a9b42a679944f0c9fc0f86ae5534450`
+| Input                     | Stack                                           
+|---------------------------|-------------------------------------------------
+| `'Behind the tree!' sha1` | `data: da6e7f530a9b42a679944f0c9fc0f86ae5534450`
 
 ### sha1.hmac
 
@@ -88,7 +88,7 @@ Example:
 | Input                           | Stack                                           
 |---------------------------------|-------------------------------------------------
 | `'Behind the tree!' /swordfish` | `Behind the tree! \| swordfish`                 
-| `/text-data map sha1.hmac`      | `data: 75859001097e8ad6907a879d340170ef571c8e5c`
+| `sha1.hmac`                     | `data: 75859001097e8ad6907a879d340170ef571c8e5c`
 
 ### sha224
 
@@ -101,9 +101,9 @@ Stack effects:
 
 Example:
 
-| Input                                 | Stack                                                           
-|---------------------------------------|-----------------------------------------------------------------
-| `'Behind the tree!' text-data sha224` | `data: 15eac2f886e0e09a44ce08da58f3386b707885150d6142d1a6e7c608`
+| Input                       | Stack                                                           
+|-----------------------------|-----------------------------------------------------------------
+| `'Behind the tree!' sha224` | `data: 15eac2f886e0e09a44ce08da58f3386b707885150d6142d1a6e7c608`
 
 ### sha224.hmac
 
@@ -119,7 +119,7 @@ Example:
 | Input                           | Stack                                                           
 |---------------------------------|-----------------------------------------------------------------
 | `'Behind the tree!' /swordfish` | `Behind the tree! \| swordfish`                                 
-| `/text-data map sha224.hmac`    | `data: 30ecbacd9aedf890b796eb79032105382ce323f18835f9bbb3867c4a`
+| `sha224.hmac`                   | `data: 30ecbacd9aedf890b796eb79032105382ce323f18835f9bbb3867c4a`
 
 ### sha256
 
@@ -132,9 +132,9 @@ Stack effects:
 
 Example:
 
-| Input                                 | Stack                                                                   
-|---------------------------------------|-------------------------------------------------------------------------
-| `'Behind the tree!' text-data sha256` | `data: 5e19fc5f8ec2aabccef7970385bb9151a421f398d048ced2b2c86757aafebfc3`
+| Input                       | Stack                                                                   
+|-----------------------------|-------------------------------------------------------------------------
+| `'Behind the tree!' sha256` | `data: 5e19fc5f8ec2aabccef7970385bb9151a421f398d048ced2b2c86757aafebfc3`
 
 ### sha256.hmac
 
@@ -150,7 +150,7 @@ Example:
 | Input                           | Stack                                                                   
 |---------------------------------|-------------------------------------------------------------------------
 | `'Behind the tree!' /swordfish` | `Behind the tree! \| swordfish`                                         
-| `/text-data map sha256.hmac`    | `data: 0155d56d7485e9db843792ff48b97a1a96ae0655a92ad7c2324d71ed0410b907`
+| `sha256.hmac`                   | `data: 0155d56d7485e9db843792ff48b97a1a96ae0655a92ad7c2324d71ed0410b907`
 
 ### sha384
 
@@ -163,9 +163,9 @@ Stack effects:
 
 Example:
 
-| Input                                 | Stack                                                                                                   
-|---------------------------------------|---------------------------------------------------------------------------------------------------------
-| `'Behind the tree!' text-data sha384` | `data: 54489c547782d201bb0c8c2c81e77e034695067c98087bd949d13de752dd3843323c7244c1d15776ad52093598420dca`
+| Input                       | Stack                                                                                                   
+|-----------------------------|---------------------------------------------------------------------------------------------------------
+| `'Behind the tree!' sha384` | `data: 54489c547782d201bb0c8c2c81e77e034695067c98087bd949d13de752dd3843323c7244c1d15776ad52093598420dca`
 
 ### sha384.hmac
 
@@ -181,7 +181,7 @@ Example:
 | Input                           | Stack                                                                                                   
 |---------------------------------|---------------------------------------------------------------------------------------------------------
 | `'Behind the tree!' /swordfish` | `Behind the tree! \| swordfish`                                                                         
-| `/text-data map sha384.hmac`    | `data: 401d0de7dd5cdf1ed82002cc1a696ec8d3d636b0388b89cc6f33ec4b237382a16b976f4773c3b0a3979392289a0ceaf9`
+| `sha384.hmac`                   | `data: 401d0de7dd5cdf1ed82002cc1a696ec8d3d636b0388b89cc6f33ec4b237382a16b976f4773c3b0a3979392289a0ceaf9`
 
 ### sha512
 
@@ -194,9 +194,9 @@ Stack effects:
 
 Example:
 
-| Input                                 | Stack                                                                                                                                   
-|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------
-| `'Behind the tree!' text-data sha512` | `data: 431777a80ed22c45b4fe0dc8c7e3a07d8d20df3b796a39068f2fc6f57cd69b6c60f4a6e3151189b97a1ad2fe5888c255e93f28c1e6c9b6f0241b10c34f8f9e86`
+| Input                       | Stack                                                                                                                                   
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------
+| `'Behind the tree!' sha512` | `data: 431777a80ed22c45b4fe0dc8c7e3a07d8d20df3b796a39068f2fc6f57cd69b6c60f4a6e3151189b97a1ad2fe5888c255e93f28c1e6c9b6f0241b10c34f8f9e86`
 
 ### sha512.hmac
 
@@ -212,4 +212,4 @@ Example:
 | Input                           | Stack                                                                                                                                   
 |---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------
 | `'Behind the tree!' /swordfish` | `Behind the tree! \| swordfish`                                                                                                         
-| `/text-data map sha512.hmac`    | `data: 8e4074cf371bc7e83cd508e9a3d4c0ecd9e014aa808f3234b05de26ddad9895ad6d375651b3ac8231806ccd0b9cd477f3df024c1ecd75032a0e827e7f2f98fcf`
+| `sha512.hmac`                   | `data: 8e4074cf371bc7e83cd508e9a3d4c0ecd9e014aa808f3234b05de26ddad9895ad6d375651b3ac8231806ccd0b9cd477f3df024c1ecd75032a0e827e7f2f98fcf`

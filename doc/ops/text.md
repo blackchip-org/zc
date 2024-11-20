@@ -17,7 +17,6 @@ Text operations
 | [`right`](#right)                             | Subset from right                  
 | [`split`](#split)                             | Split text                         
 | [`text-code.point, text-cp`](#text-codepoint) | Convert text to Unicode code points
-| [`text-data`](#text-data)                     | Convert text to data               
 | [`text-utf8`](#text-utf8)                     | Convert text to UTF-8 bytes        
 | [`upper`](#upper)                             | Uppercase                          
 | [`utf8-text`](#utf8-text)                     | Convert UTF-8 bytes to text        
@@ -187,21 +186,6 @@ Example:
 | Input                      | Stack                    
 |----------------------------|--------------------------
 | `/AB🆎 text-cp /hex map`    | `0x41 \| 0x42 \| 0x1f18e`
-
-### text-data
-
-Converts the text *x* into its byte representation.
-
-Stack effects:
-```
-( x:Text -- Data )
-```
-
-Example:
-
-| Input            | Stack         
-|------------------|---------------
-| `/ABC text-data` | `data: 414243`
 
 ### text-utf8
 

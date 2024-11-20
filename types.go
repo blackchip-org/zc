@@ -378,7 +378,10 @@ func (t DataType) Pop(c Calc) *bytes.Buffer {
 }
 
 func (t DataType) Parse(_ coll.State, str string) (any, bool, error) {
-	return nil, false, nil
+	d := dataPool.New()
+	d.Reset()
+	d.WriteString(str)
+	return d, true, nil
 }
 
 func (t DataType) Format(_ coll.State, a any) string {

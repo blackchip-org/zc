@@ -19,7 +19,6 @@ var Text = zc.Vol{
 		ops.Right,
 		ops.Split,
 		ops.TextCodePoint,
-		ops.TextData,
 		ops.TextUtf8,
 		ops.Upper,
 		ops.Utf8Text,

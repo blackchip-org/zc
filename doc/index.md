@@ -383,7 +383,6 @@
 - [`terra`](ops/si.md): SI prefix T, 1e12
 - [`text-code.point`](ops/text.md#text-codepoint): Convert text to Unicode code points
 - [`text-cp`](ops/text.md#text-codepoint): Alias for [text-code.point](ops/text.md#text-codepoint)
-- [`text-data`](ops/text.md#text-data): Convert text to data
 - [`text-utf8`](ops/text.md#text-utf8): Convert text to UTF-8 bytes
 - [`time`](ops/time.md#time): Formats to a common time layout
 - [`time.zone`](ops/time.md#timezone): Converts time to another time zone

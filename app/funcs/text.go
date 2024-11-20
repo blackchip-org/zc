@@ -97,13 +97,6 @@ func TextToCodePoints(c zc.Calc) {
 	}
 }
 
-func TextToData(c zc.Calc) {
-	x := zc.String.Pop(c)
-	d := zc.Data.New()
-	d.Write([]byte(x))
-	zc.Data.Push(c, d)
-}
-
 func TextToUtf8(c zc.Calc) {
 	x := zc.String.Pop(c)
 
