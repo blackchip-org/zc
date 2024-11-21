@@ -22,16 +22,17 @@ type FuncDef struct {
 }
 
 type VolDef struct {
-	Name     string     `yaml:"name"`
-	Ident    string     `yaml:"ident"`
-	Title    string     `yaml:"title"`
-	Subtitle string     `yaml:"subtitle"`
-	Category string     `yaml:"category"`
-	NoIndex  bool       `yaml:"no-index"`
-	Setup    []string   `yaml:"setup"`
-	Ops      []OpDef    `yaml:"ops"`
-	Table    [][]string `yaml:"table"`
-	Overview string
+	Name        string     `yaml:"name"`
+	Ident       string     `yaml:"ident"`
+	Title       string     `yaml:"title"`
+	Subtitle    string     `yaml:"subtitle"`
+	Category    string     `yaml:"category"`
+	NoIndex     bool       `yaml:"no-index"`
+	RemoveSlash bool       `yaml:"remove-slash"`
+	Setup       []string   `yaml:"setup"`
+	Ops         []OpDef    `yaml:"ops"`
+	Table       [][]string `yaml:"table"`
+	Overview    string
 }
 
 type Category struct {

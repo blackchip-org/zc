@@ -283,8 +283,10 @@ func genOpDocs(vols []zc.VolDef) {
 				if len(row) != cols {
 					log.Fatalf("expected %v row entries, got: %v", cols, row)
 				}
-
 				drow := slices.Clone(row)
+				if vol.RemoveSlash && drow[1][0] == '/' {
+					drow[1] = drow[1][1:]
+				}
 				drow[0] = "`" + drow[0] + "`"
 				drow[1] = "`" + drow[1] + "`"
 				tab.Row(drow...)

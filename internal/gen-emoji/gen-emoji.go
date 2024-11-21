@@ -51,7 +51,8 @@ func main() {
 	fmt.Fprintf(fent, "name: emoji\n")
 	fmt.Fprintf(fent, "title: Unicode emoji characters\n")
 	fmt.Fprintf(fent, "category: tab\n")
-	fmt.Fprintf(fent, "no-index: true\n\n")
+	fmt.Fprintf(fent, "no-index: true\n")
+	fmt.Fprintf(fent, "remove-slash: true\n\n")
 	fmt.Fprintf(fent, "table:\n")
 
 	for _, ch := range keys {

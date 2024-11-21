@@ -4,6 +4,7 @@ name: emoji
 title: Unicode emoji characters
 category: tab
 no-index: true
+remove-slash: true
 
 table:
 - [":1st-place-medal:", "/🥇"]

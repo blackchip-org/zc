@@ -4,6 +4,7 @@ name: entity
 title: HTML entity characters
 category: tab
 no-index: true
+remove-slash: true
 
 table:
 - ["&AElig;", "/Æ"]

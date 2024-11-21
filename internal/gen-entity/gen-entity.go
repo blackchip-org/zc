@@ -88,7 +88,8 @@ func main() {
 	fmt.Fprintf(fent, "name: entity\n")
 	fmt.Fprintf(fent, "title: HTML entity characters\n")
 	fmt.Fprintf(fent, "category: tab\n")
-	fmt.Fprintf(fent, "no-index: true\n\n")
+	fmt.Fprintf(fent, "no-index: true\n")
+	fmt.Fprintf(fent, "remove-slash: true\n\n")
 	fmt.Fprintf(fent, "table:\n")
 
 	for _, name := range names {
